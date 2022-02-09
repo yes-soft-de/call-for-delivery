@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\AutoMapping;
-use App\Request\UserRegisterRequest;
-use App\Service\AdminService;
+use App\Controller\BaseController;
+use App\Request\User\UserRegisterRequest;
+use App\Service\Admin\AdminService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Admin;
 
 use App\AutoMapping;
-use App\Entity\UserEntity;
-use App\Manager\AdminManager;
-use App\Request\UserRegisterRequest;
-use App\Response\UserRegisterResponse;
+use App\Entity\User\UserEntity;
+use App\Manager\Admin\AdminManager;
+use App\Request\User\UserRegisterRequest;
+use App\Response\User\UserRegisterResponse;
 
 class AdminService
 {

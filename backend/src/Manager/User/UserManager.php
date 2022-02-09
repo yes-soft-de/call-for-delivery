@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Manager;
+namespace App\Manager\User;
 
 use App\AutoMapping;
-use App\Entity\UserEntity;
-use App\Repository\UserEntityRepository;
-use App\Request\UserRegisterRequest;
+use App\Entity\User\UserEntity;
+use App\Repository\User\UserEntityRepository;
+use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 

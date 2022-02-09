@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Manager;
+namespace App\Manager\Admin;
 
 use App\AutoMapping;
-use App\Request\UserRegisterRequest;
+use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Manager\UserManager;
+use App\Manager\User\UserManager;
 
 class AdminManager
 {
     private $autoMapping;
     private $entityManager;
     private $userManager;
-    private $staffProfileEntityRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager)
     {
