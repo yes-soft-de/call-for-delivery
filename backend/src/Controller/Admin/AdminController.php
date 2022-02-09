@@ -40,7 +40,7 @@ class AdminController extends BaseController
      * @OA\RequestBody(
      *      description="Create new admin",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="userID"),
+     *          @OA\Property(type="string", property="userId"),
      *          @OA\Property(type="string", property="password"),
      *      )
      * )

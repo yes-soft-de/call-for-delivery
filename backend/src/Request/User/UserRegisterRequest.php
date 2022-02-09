@@ -4,7 +4,7 @@ namespace App\Request\User;
 
 class UserRegisterRequest
 {
-    private $userID;
+    private $userId;
 
     private $roles = [];
 
@@ -12,14 +12,14 @@ class UserRegisterRequest
 
     private $userName;
 
-    public function getUserID()
+    public function getUserId()
     {
-        return $this->userID;
+        return $this->userId;
     }
 
-    public function setUserID($userID)
+    public function setUserId($userId)
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
     }
 
     public function getRoles()

@@ -3,7 +3,7 @@
 namespace App\Manager\User;
 
 use App\AutoMapping;
-use App\Entity\User\UserEntity;
+use App\Entity\UserEntity;
 use App\Repository\User\UserEntityRepository;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,13 +27,13 @@ class UserManager
 
     public function clientRegister(UserRegisterRequest $request, $roomID)
     {
-        $user = $this->getUserByUserID($request->getUserID());
+        $user = $this->getUserByUserId($request->getUserId());
 
         if ($user == null) {
 
             $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
-            $user = new UserEntity($request->getUserID());
+            $user = new UserEntity($request->getUserId());
 
             if ($request->getPassword()) {
                 $userRegister->setPassword($this->encoder->hashPassword($user, $request->getPassword()));
@@ -84,21 +84,21 @@ class UserManager
         }
     }
 
-    public function getUserByUserID($userID)
+    public function getUserByUserId($userId)
     {
-        return $this->userRepository->getUserByUserID($userID);
+        return $this->userRepository->getUserByUserId($userId);
     }
 
-    public function getUserByUserIdAndRole($userID, $role)
+    public function getUserByUserIdAndRole($userId, $role)
     {
-        return $this->userRepository->getUserByUserIdAndRole($userID, $role);
+        return $this->userRepository->getUserByUserIdAndRole($userId, $role);
     }
 
     public function createUser(UserRegisterRequest $request)
     {
         $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
-        $user = new UserEntity($request->getUserID());
+        $user = new UserEntity($request->getUserId());
 
         if ($request->getPassword()) {
             $userRegister->setPassword($this->encoder->hashPassword($user, $request->getPassword()));

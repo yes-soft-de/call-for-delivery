@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity;
 
 use App\Repository\User\UserEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +16,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $userID;
+    private $userId;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
@@ -26,7 +26,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct($userID)
     {
-        $this->userID = $userID;
+        $this->userId = $userID;
     }
 
     /**
@@ -36,7 +36,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->userID;
+        return (string) $this->userId;
     }
 
 
@@ -45,14 +45,14 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getUserID(): ?string
+    public function getUserId(): ?string
     {
-        return $this->userID;
+        return $this->userId;
     }
 
-    public function setUserID(string $userID): self
+    public function setUserId(string $userId): self
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -64,7 +64,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->userID;
+        return (string) $this->userId;
     }
 
     /**

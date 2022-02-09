@@ -2,7 +2,7 @@
 
 namespace App\Repository\User;
 
-use App\Entity\User\UserEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -36,25 +36,25 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
         $this->_em->flush();
     }
 
-    public function getUserByUserID($userID)
+    public function getUserByUserId($userId)
     {
         return $this->createQueryBuilder('user')
-            ->select('user.id', 'user.userID')
+            ->select('user.id', 'user.userId')
 
-            ->andWhere('user.userID = :userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('user.userId = :userId')
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getUserByUserIdAndRole($userID, $role)
+    public function getUserByUserIdAndRole($userId, $role)
     {
         return $this->createQueryBuilder('userEntity')
-            ->select('userEntity.id', 'userEntity.userID')
+            ->select('userEntity.id', 'userEntity.userId')
 
-            ->andWhere('userEntity.userID = :userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('userEntity.userId = :userId')
+            ->setParameter('userId', $userId)
 
             ->andWhere('userEntity.roles LIKE :roles')
             ->setParameter('roles', '%"'.$role.'"%')
@@ -64,12 +64,12 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
     }
 
     // return user entity
-    public function getUserEntityByUserID($userID)
+    public function getUserEntityByUserId($userId)
     {
         return $this->createQueryBuilder('userEntity')
 
-            ->andWhere('userEntity.userID = :userID')
-            ->setParameter('userID', $userID)
+            ->andWhere('userEntity.userId = :userId')
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             ->getOneOrNullResult();

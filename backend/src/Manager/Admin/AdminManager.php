@@ -20,14 +20,14 @@ class AdminManager
         $this->userManager = $userManager;
     }
 
-    public function getUserByUserID($userID)
+    public function getUserByUserId($userID)
     {
-        return $this->userManager->getUserByUserID($userID);
+        return $this->userManager->getUserByUserId($userID);
     }
 
     public function adminRegister(UserRegisterRequest $request)
     {
-        $user = $this->userManager->getUserByUserID($request->getUserID());
+        $user = $this->userManager->getUserByUserId($request->getUserId());
 
         if (!$user) {
             $request->setRoles(["ROLE_ADMIN"]);

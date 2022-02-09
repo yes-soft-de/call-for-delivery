@@ -11,8 +11,8 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\User\UserEntity
-                property: userID
+                class: App\Entity\UserEntity
+                property: userId
     firewalls:
         login:
             pattern: ^/login
