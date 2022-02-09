@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Annotations as OA;
 
 class AdminController extends BaseController
 {
@@ -33,6 +34,30 @@ class AdminController extends BaseController
      * @param Request $request
      * @return JsonResponse
      *
+     * @OA\Tag(name="Admin")
+     *
+     * @OA\RequestBody(
+     *      description="Create new admin",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="userID"),
+     *          @OA\Property(type="string", property="password"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the new admin's role and the creation date",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items(example="user")),
+     *                  @OA\Property(type="object", property="createDate"),
+     *                  @OA\Property(type="string", property="found")
+     *          )
+     *      )
+     * )
      */
     public function adminRegister(Request $request): JsonResponse
     {
