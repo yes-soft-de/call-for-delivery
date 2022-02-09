@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:410273886458:android:52f2a76f4b2808391f1943",
         "android_client_info": {
-          "package_name": "de.yessoft.c4d"
+          "package_name": "de.yessoft.c4d_store"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "410273886458-fd6s8r736otlbkkqkmmbdtas3garq9lm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "de.yessoft.c4d",
+            "package_name": "de.yessoft.c4d_store",
             "certificate_hash": "cf19253d03de3b6c173fca234d60f47d2be23129"
           }
         },
@@ -25,7 +25,7 @@
           "client_id": "410273886458-gsetr3e0m82vs9or60s7bjj9bajm6epj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "de.yessoft.c4d",
+            "package_name": "de.yessoft.c4d_store",
             "certificate_hash": "5d0ea43a4853a8b5a5b545feb3861abbc3b221f4"
           }
         },
@@ -33,7 +33,7 @@
           "client_id": "410273886458-macpm74b9o5buv8np8ufpb0cj8r4o4mf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "de.yessoft.c4d",
+            "package_name": "de.yessoft.c4d_store",
             "certificate_hash": "edb6b80410641b007b3dd05698977b4856ce2087"
           }
         },
@@ -41,7 +41,7 @@
           "client_id": "410273886458-q6lu00q0j3r7d3a5s4435bt815em5its.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "de.yessoft.c4d",
+            "package_name": "de.yessoft.c4d_store",
             "certificate_hash": "6c97905b11842062490f89599094b6ccd4a2a174"
           }
         },
@@ -66,7 +66,7 @@
               "client_id": "410273886458-3s63nodh2ileiidmlifa8c4qaeoh1m90.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "de.yessoft.c4d"
+                "bundle_id": "de.yessoft.c4d_store"
               }
             }
           ]
