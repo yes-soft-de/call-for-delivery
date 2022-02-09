@@ -19,6 +19,7 @@
         "lexik/jwt-authentication-bundle": "^2.14",
         "mark-gerarts/automapper-plus-bundle": "^1.4",
         "nelmio/api-doc-bundle": "^4.8",
+        "nelmio/cors-bundle": "2.2.0",
         "sensio/framework-extra-bundle": "^6.2",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "6.0.*",
