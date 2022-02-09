@@ -109,4 +109,9 @@ class UserManager
 
         return $userRegister;
     }
+
+    public function getUserRoleByUserId($userId)
+    {
+        return $this->userRepository->getUserRoleByUserId($userId);
+    }
 }
