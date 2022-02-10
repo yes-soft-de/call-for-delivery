@@ -6,7 +6,6 @@ use App\Request\Image\UploadImageRequest;
 use App\Service\FileUpload\UploadFileService;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +16,11 @@ class FileUploadController extends AbstractController
 {
     private $uploadFile;
     private $validator;
-//    /**
-//     * @var ParameterBagInterface
-//     */
-//    private $params;
 
     public function __construct(UploadFileService $uploadFile, ValidatorInterface $validator)
     {
         $this->uploadFile = $uploadFile;
         $this->validator = $validator;
-//        $this->params = $params;
     }
 
     /**

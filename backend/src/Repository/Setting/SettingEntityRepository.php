@@ -19,7 +19,7 @@ class SettingEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SettingEntity::class);
     }
 
-    public function getSetting()
+    public function getSetting(): ?SettingEntity
     {
         return $this->createQueryBuilder('setting')
 

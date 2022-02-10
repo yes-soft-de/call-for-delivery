@@ -2,7 +2,6 @@
 
 namespace App\Service\Main;
 
-use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
 use App\Service\User\UserService;
 
@@ -25,7 +24,7 @@ class MainService
             $response['userRole'] = $userRole['roles'];
         }
 
-        $response['result'] = BackendHealthStatusConstant::$HEART_IS_BEATING_STATUS;
+        $response['result'] = BackendHealthStatusConstant::HEART_IS_BEATING_STATUS;
 
         return $response;
     }

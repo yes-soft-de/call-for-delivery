@@ -35,7 +35,6 @@ class SettingManager
             $setting = $this->autoMapping->mapToObject(SettingRequest::class, SettingEntity::class, $request, $setting);
 
             $this->entityManager->flush();
-            $this->entityManager->clear();
 
             return $setting;
         }
@@ -47,7 +46,6 @@ class SettingManager
 
         $this->entityManager->persist($setting);
         $this->entityManager->flush();
-        $this->entityManager->clear();
 
         return $setting;
     }
