@@ -22,10 +22,6 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
         api:
             pattern:   ^/api
             stateless: true
@@ -34,6 +30,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            jwt: ~
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
