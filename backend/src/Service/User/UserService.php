@@ -13,7 +13,7 @@ class UserService
         $this->userManager = $userManager;
     }
 
-    public function getUserRoleByUserId($userID)
+    public function getUserRoleByUserId($userID): ?array
     {
         return $this->userManager->getUserRoleByUserId($userID);
     }

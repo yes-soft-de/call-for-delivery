@@ -2,26 +2,20 @@
 
 namespace App\Controller\Main;
 
-use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Main\CheckBackendHeathRequest;
 use App\Service\Main\MainService;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 
 class MainController extends BaseController
 {
-    private $autoMapping;
     private $mainService;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, MainService $mainService)
+    public function __construct(SerializerInterface $serializer, MainService $mainService)
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
         $this->mainService = $mainService;
     }
 
