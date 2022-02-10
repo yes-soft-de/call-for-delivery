@@ -1,0 +1,8 @@
+/.idea/.gitignore
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/php-test-framework.xml
+/.idea/vcs.xml
+/upload/
+upload
+/.DS_Store

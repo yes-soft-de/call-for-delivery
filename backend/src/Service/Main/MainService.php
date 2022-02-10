@@ -2,7 +2,6 @@
 
 namespace App\Service\Main;
 
-use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
 use App\Service\User\UserService;
 
