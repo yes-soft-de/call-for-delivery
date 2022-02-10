@@ -6,7 +6,7 @@ use App\Manager\User\UserManager;
 
 class UserService
 {
-    private $userManager;
+    private UserManager $userManager;
 
     public function __construct(UserManager $userManager)
     {
