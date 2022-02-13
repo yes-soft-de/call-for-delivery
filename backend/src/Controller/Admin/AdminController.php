@@ -15,6 +15,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
 
+/**
+ * @Route("v1/admin/")
+ */
 class AdminController extends BaseController
 {
     private $autoMapping;
@@ -74,9 +77,11 @@ class AdminController extends BaseController
         }
 
         $response = $this->adminService->adminRegister($request);
+
         if (isset($response->found)) {
             return $this->response($response, self::ERROR_USER_FOUND);
         }
+
         return $this->response($response, self::CREATE);
     }
 }

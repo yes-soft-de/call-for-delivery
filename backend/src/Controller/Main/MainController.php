@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 
+/**
+ * @Route("v1/main/")
+ */
 class MainController extends BaseController
 {
     private $mainService;
