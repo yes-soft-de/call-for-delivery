@@ -114,4 +114,15 @@ class UserManager
     {
         return $this->userRepository->getUserRoleByUserId($userId);
     }
+    public function checkUserType($userType,$userID): string
+    {
+        $user = $this->userRepository->find($userID);
+
+        if ($user->getRoles()[0] != $userType){
+            return "no";
+        }
+
+        return "yes";
+    }
+
 }

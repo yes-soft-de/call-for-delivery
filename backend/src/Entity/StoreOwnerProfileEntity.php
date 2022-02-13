@@ -57,6 +57,9 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $stcPay;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $employeeCount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,26 +173,26 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getOpeningTime(): ?\DateTimeInterface
+    public function getOpeningTime()
     {
         return $this->openingTime;
     }
 
-    public function setOpeningTime(?\DateTimeInterface $openingTime): self
+    public function setOpeningTime($openingTime): self
     {
-        $this->openingTime = $openingTime;
+        $this->openingTime = new \DateTime ($openingTime);
 
         return $this;
     }
 
-    public function getClosingTime(): ?\DateTimeInterface
+    public function getClosingTime()
     {
         return $this->closingTime;
     }
 
-    public function setClosingTime(?\DateTimeInterface $closingTime): self
+    public function setClosingTime($closingTime): self
     {
-        $this->closingTime = $closingTime;
+        $this->closingTime = new \DateTime ($closingTime);
 
         return $this;
     }
@@ -238,6 +241,18 @@ class StoreOwnerProfileEntity
     public function setStcPay(?string $stcPay): self
     {
         $this->stcPay = $stcPay;
+
+        return $this;
+    }
+
+    public function getEmployeeCount(): ?int
+    {
+        return $this->employeeCount;
+    }
+
+    public function setEmployeeCount(?int $employeeCount): self
+    {
+        $this->employeeCount = $employeeCount;
 
         return $this;
     }

@@ -4,6 +4,9 @@ namespace App\Service\StoreOwner;
 
 use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Entity\StoreOwnerProfileEntity;
+use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
+use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Service\User\UserService;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
@@ -28,12 +31,17 @@ class StoreOwnerProfileService
         $userRegister = $this->storeOwnerProfileManager->storeOwnerRegister($request);
 
         if ($userRegister == "user is found") {
-        $user['found']="yes";
-
-        return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
+            $user['found']="yes";
+            return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }
       
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+    }
 
+    public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request)
+    {
+        $item = $this->storeOwnerProfileManager->storeOwnerProfileUpdate($request);
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
 }

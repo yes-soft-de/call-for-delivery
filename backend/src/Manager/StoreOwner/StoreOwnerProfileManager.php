@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\User\UserEntityRepository;
 use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
+use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,7 +19,7 @@ class StoreOwnerProfileManager
     private $storeOwnerProfileEntityRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository
-   , UserManager $userManager, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
+        , UserManager                       $userManager, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -35,19 +36,18 @@ class StoreOwnerProfileManager
             $request->setRoles(["ROLE_OWNER"]);
 
             $userRegister = $this->userManager->createUser($request);
-            if($userRegister){
+            if ($userRegister) {
                 return $this->createProfile($request, $userRegister);
-            }
-            else{
+            } else {
                 return 'not created user';
             }
-        }
-        else {
+        } else {
             return $this->createProfileWithUserFound($user, $request);
         }
     }
 
-    public function createProfile(UserRegisterRequest $request, $userRegister){
+    public function createProfile(UserRegisterRequest $request, $userRegister)
+    {
 
         $storeProfile = $this->storeOwnerProfileEntityRepository->getStoreProfileByStoreID($request->getUserID());
 
@@ -80,5 +80,24 @@ class StoreOwnerProfileManager
         }
 
         return 'user is found';
+    }
+
+    public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request)
+    {
+        $item = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserID());
+
+        if ($item) {
+            if ($request->getStoreOwnerName() == null) {
+                $request->setStoreOwnerName($item->getStoreOwnerName());
+            }
+
+            $item = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $item);
+            $item->setOpeningTime($item->getOpeningTime());
+            $item->setClosingTime($item->getClosingTime());
+
+            $this->entityManager->flush();
+
+            return $item;
+        }
     }
 }
