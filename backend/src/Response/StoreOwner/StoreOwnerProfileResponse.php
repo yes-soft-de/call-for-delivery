@@ -15,4 +15,6 @@ class StoreOwnerProfileResponse
     public $status;
 
     public $commission;
+
+    public $employeeCount;
 }
