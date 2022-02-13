@@ -1,5 +1,6 @@
 class ImageAsset {
   static const ROOT = 'assets/images/';
+  static const WELCOME_IMAGES = ROOT + 'welcome_page_images/';
   static const LOGO = ROOT + 'logo.png';
   static const PLACEHOLDER = ROOT + 'place.png';
   static const SEND_ON_ME = ROOT + 'send_on_me.jpg';
@@ -13,6 +14,8 @@ class ImageAsset {
   static const LANGUAGE = ROOT + 'translate.png';
   static const ARAB_LANGUAGE = ROOT + 'saudi-arabia.png';
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
+  /// welcome page images
+  static const OPEN_APP = WELCOME_IMAGES + 'open_app.png';
 }
 
 class SvgAsset {
