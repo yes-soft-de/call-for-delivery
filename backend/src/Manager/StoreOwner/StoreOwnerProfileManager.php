@@ -100,4 +100,9 @@ class StoreOwnerProfileManager
             return $item;
         }
     }
+    public function getStoreProfileByStoreID($userID)
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreProfileByStoreID($userID);
+    }
+
 }

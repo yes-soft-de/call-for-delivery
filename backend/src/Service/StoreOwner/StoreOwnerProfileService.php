@@ -12,16 +12,16 @@ use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class StoreOwnerProfileService
 {
     private $autoMapping;
-    private $userService;
 
-    public function __construct(UserService $userService, AutoMapping $autoMapping, StoreOwnerProfileManager $storeOwnerProfileManager)
+    public function __construct( AutoMapping $autoMapping, StoreOwnerProfileManager $storeOwnerProfileManager,  ParameterBagInterface $params)
     {
+        $this->params = $params->get('upload_base_url') . '/';
         $this->autoMapping = $autoMapping;
-        $this->userService = $userService;
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
     }
 
@@ -44,4 +44,30 @@ class StoreOwnerProfileService
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }
+
+    public function getStoreOwnerProfile($userID)
+    {
+        $response = null;
+
+        $item = $this->storeOwnerProfileManager->getStoreProfileByStoreID($userID);
+
+        if($item)
+        {
+            $item['image'] = $this->getImageParams($item['image'], $this->params.$item['image'], $this->params);
+
+            $response = $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
+        }
+
+        return $response;
+    }
+
+    public function getImageParams($imageURL, $image, $baseURL):array
+    {
+        $item['imageURL'] = $imageURL;
+        $item['image'] = $image;
+        $item['baseURL'] = $baseURL;
+
+        return $item;
+    }
+
 }

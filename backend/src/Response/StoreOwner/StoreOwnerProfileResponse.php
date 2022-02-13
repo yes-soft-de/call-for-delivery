@@ -10,13 +10,7 @@ class StoreOwnerProfileResponse
 
     public $image;
 
-    public $city;
-
     public $phone;
-
-    public $imageURL;
-
-    public $baseURL;
 
     public $status;
 
