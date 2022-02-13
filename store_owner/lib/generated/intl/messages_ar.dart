@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
+        "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
+            "يمكنك الموافقة على مهمتك لتوصيل الطلبية"),
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
@@ -60,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("اختر تاريخ ميلادك"),
         "bookACar": MessageLookupByLibrary.simpleMessage("احجز سيارة توصيل"),
+        "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
+            "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
@@ -113,6 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
+        "checkOrdersDescribtion": MessageLookupByLibrary.simpleMessage(
+            "يمكنك تفقد الطرود القريبة منك لتوصيلها"),
         "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
@@ -158,6 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
+        "deliverDescribtion": MessageLookupByLibrary.simpleMessage(
+            "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
@@ -173,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
+        "earnCashDescribtion": MessageLookupByLibrary.simpleMessage(
+            "بعد اتمامك المهمة ستكافئ جهودك بالمال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
@@ -256,12 +266,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
+        "lanchDescribtion": MessageLookupByLibrary.simpleMessage(
+            "إذا لديك غرض لتوصيله لمكان بعيد عنك لاتقلق افتح تطبيقنا"),
+        "lanchDescribtionCaptain": MessageLookupByLibrary.simpleMessage(
+            "إذا ملكت القدرة لتوصيل الطرود لأجلنا فأنت مرحب بك"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
+        "launch": MessageLookupByLibrary.simpleMessage("شغل تطبيقنا"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
         "loading": MessageLookupByLibrary.simpleMessage("جار التحميل"),
         "locationOfCustomer":
@@ -614,6 +629,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warnning": MessageLookupByLibrary.simpleMessage("ملاحظة هامة"),
         "weDeliver":
             MessageLookupByLibrary.simpleMessage("نوصل الطلب بدلا عنك"),
+        "weDeliverDescribtion": MessageLookupByLibrary.simpleMessage(
+            "نحن سنوصل طردك عنك بأفضل وأسرع طريقة"),
         "weNeedYourImageAndYourDriverLicenceInOrder":
             MessageLookupByLibrary.simpleMessage(
                 "نحتاج صورتك الشخصية وصورة رخصة القيادة للتسجيل"),
