@@ -18,9 +18,8 @@ class UserService
         return $this->userManager->getUserRoleByUserId($userID);
     }
 
-    public function checkUserType($userType,$userID)
+    public function checkUserType($userType,$userID): string
     {
         return $this->userManager->checkUserType($userType,$userID);
-
     }
 }
