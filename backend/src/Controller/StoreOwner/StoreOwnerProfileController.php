@@ -3,7 +3,6 @@
 namespace App\Controller\StoreOwner;
 
 use App\AutoMapping;
-use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
+
+/**
+ * @Route("v1/store/")
+ */
 class StoreOwnerProfileController extends BaseController
 {
+    private $autoMapping;
+    private $validator;
     private $storeOwnerProfileService;
 
     public function __construct( AutoMapping $autoMapping, SerializerInterface $serializer, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService)
@@ -28,22 +33,21 @@ class StoreOwnerProfileController extends BaseController
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->validator = $validator;
         $this->autoMapping = $autoMapping;
-
     }
 
     /**
-     * Create new store .
+     * Create new store.
      * @Route("storeownerregister", name="storeOwnerRegister", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
-     * *
+     *
      * @OA\Tag(name="Store Owner Profile")
      *
      * @OA\RequestBody(
      *      description="Create new store owner",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="userName"),
-     *          @OA\Property(type="string", property="userID"),
+     *          @OA\Property(type="string", property="userId"),
      *          @OA\Property(type="string", property="password"),
      *      )
      * )
@@ -61,25 +65,23 @@ class StoreOwnerProfileController extends BaseController
      *          )
      *      )
      * )
-     *
      */
-    public function storeOwnerRegister(Request $request)
+    public function storeOwnerRegister(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         
         $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
-        if(\count($violations) > 0)
-        {
+        if(\count($violations) > 0) {
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
         $response = $this->storeOwnerProfileService->storeOwnerRegister($request);
-        if($response->found == 1)
-        {
+
+        if($response->found === 1) {
             return $this->response($response, self::ERROR_USER_FOUND);
         }
 
@@ -88,7 +90,7 @@ class StoreOwnerProfileController extends BaseController
 
     /**
      * store: Update store profile.
-     * @Route("/storeowner", name="storeOwnerProfileUpdate", methods={"PUT"})
+     * @Route("storeowner", name="storeOwnerProfileUpdate", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -106,7 +108,7 @@ class StoreOwnerProfileController extends BaseController
      *      description="Update Store Owner Profile",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="storeOwnerName"),
-     *          @OA\Property(type="string", property="image"),
+     *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="string", property="phone"),
      *          @OA\Property(type="string", property="openingTime"),
      *          @OA\Property(type="string", property="closingTime"),
@@ -162,6 +164,7 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->storeOwnerProfileUpdate($request);
         return $this->response($response, self::UPDATE);
     }
+
     /**
      * store: Get store owner profile.
      * @Route("storeownerprofilebyid", name="getStoreOwnerProfile", methods={"GET"})
@@ -186,7 +189,7 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="string", property="image"),
+     *              @OA\Property(type="string", property="images"),
      *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="array", property="branches",
      *                  @OA\Items(
@@ -225,11 +228,10 @@ class StoreOwnerProfileController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getStoreOwnerProfile()
+    public function getStoreOwnerProfile(): JsonResponse
     {
         $response = $this->storeOwnerProfileService->getStoreOwnerProfile($this->getUserId());
 
         return $this->response($response, self::FETCH);
     }
-
 }

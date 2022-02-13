@@ -19,26 +19,26 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, StoreOwnerProfileEntity::class);
     }
 
-    public function getStoreProfileByStoreID($id)
+    public function getStoreProfileByStoreId($id): mixed
     {
         return $this->createQueryBuilder('profile')
 
-            ->select('profile.id', 'profile.storeOwnerName', 'profile.image', 'profile.status', 'profile.phone', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId', 'profile.commission', 'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount')
+            ->select('profile.id', 'profile.storeOwnerName', 'profile.images', 'profile.status', 'profile.phone', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId', 'profile.commission',
+                'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount')
             
-            ->andWhere('profile.storeOwnerID = :id')
-
+            ->andWhere('profile.storeOwnerId = :id')
             ->setParameter('id', $id)
 
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getUserProfile($storeOwnerID)
+    public function getUserProfile($storeOwnerId): mixed
     {
         return $this->createQueryBuilder('profile')
 
-            ->andWhere('profile.storeOwnerID = :storeOwnerID')
-            ->setParameter('storeOwnerID', $storeOwnerID)
+            ->andWhere('profile.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->getQuery()
             ->getOneOrNullResult();

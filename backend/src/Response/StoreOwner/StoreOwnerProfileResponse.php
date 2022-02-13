@@ -8,7 +8,7 @@ class StoreOwnerProfileResponse
 
     public $storeOwnerName;
 
-    public $image;
+    public $images;
 
     public $phone;
 

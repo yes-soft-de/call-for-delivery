@@ -4,11 +4,11 @@ namespace App\Request\StoreOwner;
 
 class StoreOwnerProfileUpdateRequest
 {
-    private $userID;
+    private $userId;
 
     private $storeOwnerName;
 
-    private $image;
+    private $images;
 
     private $phone;
 
@@ -30,9 +30,9 @@ class StoreOwnerProfileUpdateRequest
     /**
      * Get the value of userID
      */
-    public function getUserID()
+    public function getUserId()
     {
-        return $this->userID;
+        return $this->userId;
     }
 
     /**
@@ -40,9 +40,9 @@ class StoreOwnerProfileUpdateRequest
      *
      * @return  self
      */
-    public function setUserID($userID)
+    public function setUserId($userId)
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
 
         return $this;
     }

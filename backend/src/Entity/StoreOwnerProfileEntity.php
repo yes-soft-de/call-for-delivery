@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\Profile\StoreOwnerProfileEntityRepository;
+use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StoreOwnerProfileEntityRepository::class)]
@@ -13,13 +13,13 @@ class StoreOwnerProfileEntity
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $storeOwnerID;
+    private $storeOwnerId;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $storeOwnerName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $image;
+    private $images;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $status;
@@ -35,9 +35,6 @@ class StoreOwnerProfileEntity
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $phone;
-
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private $is_best;
 
     #[ORM\Column(type: 'time', nullable: true)]
     private $openingTime;
@@ -65,14 +62,14 @@ class StoreOwnerProfileEntity
         return $this->id;
     }
 
-    public function getStoreOwnerID(): ?string
+    public function getStoreOwnerId(): ?string
     {
-        return $this->storeOwnerID;
+        return $this->storeOwnerId;
     }
 
-    public function setStoreOwnerID(?string $storeOwnerID): self
+    public function setStoreOwnerId(?string $storeOwnerId): self
     {
-        $this->storeOwnerID = $storeOwnerID;
+        $this->storeOwnerId = $storeOwnerId;
 
         return $this;
     }
@@ -89,14 +86,14 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImages(): ?string
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(?string $image): self
+    public function setImages(?string $images): self
     {
-        $this->image = $image;
+        $this->images = $images;
 
         return $this;
     }
@@ -157,18 +154,6 @@ class StoreOwnerProfileEntity
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getIsBest(): ?bool
-    {
-        return $this->is_best;
-    }
-
-    public function setIsBest(?bool $is_best): self
-    {
-        $this->is_best = $is_best;
 
         return $this;
     }
