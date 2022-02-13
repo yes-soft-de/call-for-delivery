@@ -16,7 +16,7 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Colors.orange;
+    return Color.fromRGBO(33, 32, 156, 1);
   }
 
   static Color get PrimaryDarker {
@@ -29,32 +29,40 @@ class AppThemeDataService {
 
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
-    final lightScheme = ColorScheme.fromSeed(seedColor: Colors.orange);
+    final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: Colors.orange, brightness: Brightness.dark);
+        seedColor: PrimaryColor, brightness: Brightness.dark);
     if (dark == true) {
       return ThemeData(
         brightness: Brightness.dark,
         primaryColor: PrimaryColor,
         primaryColorDark: PrimaryDarker,
+        colorScheme: darkScheme,
         useMaterial3: true,
-   //     colorScheme: darkScheme,
+        //     colorScheme: darkScheme,
         primarySwatch: Colors.orange,
         focusColor: PrimaryColor,
         cardColor: Colors.grey[150],
         fontFamily: GoogleFonts.almarai().fontFamily,
+        textTheme: TextTheme(
+          button:TextStyle(color:Colors.white)
+        )
       );
     }
     return ThemeData(
         brightness: Brightness.light,
         primaryColor: PrimaryColor,
         primaryColorDark: PrimaryDarker,
+        colorScheme: lightScheme,
         useMaterial3: true,
-    //    colorScheme: lightScheme,
+        //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
         primarySwatch: Colors.orange,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
+         textTheme: TextTheme(
+          button:TextStyle(color:Colors.white)
+        ),
         fontFamily: GoogleFonts.almarai().fontFamily,
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
