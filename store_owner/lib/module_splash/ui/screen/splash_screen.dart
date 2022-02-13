@@ -1,3 +1,5 @@
+import 'package:c4d/module_about/about_routes.dart';
+import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
@@ -20,11 +22,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-    //   _getNextRoute().then((route) {
-    //     Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-    //   });
-    // });
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
+    });
     super.initState();
   }
 
@@ -54,12 +56,14 @@ class _SplashScreenState extends State<SplashScreen> {
   String needForLogging(bool login) {
     if (login) {
       return 'home';
+    } else if (AboutHiveHelper().getWelcome()) {
+      return AuthorizationRoutes.LOGIN_SCREEN;
     } else {
       return welcomePage();
     }
   }
 
   String welcomePage() {
-    return 'welcome';
+    return AboutRoutes.ROUTE_ABOUT;
   }
 }
