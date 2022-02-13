@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/state_manager/about_screen_state_manager.dart';
 import 'package:c4d/module_about/ui/states/about/about_state.dart';
 import 'package:c4d/module_about/ui/states/about/about_state_page_owner.dart';
+import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class AboutScreenState extends State<AboutScreen> {
   int currentPage = 0;
   @override
   void initState() {
+    _currentState = AboutStatePageOwner(this,[]);
     widget._stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) setState(() {});
@@ -29,35 +31,10 @@ class AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: widget._scaffoldKey,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-              child: _currentState != null
-                  ? _currentState!.getUI(context)
-                  : SizedBox()),
-          _currentState is AboutStatePageOwner && currentPage != 3
-              ? SizedBox()
-              : GestureDetector(
-                  onTap: () {
-                    // to Register
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      S.of(context).skip,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-        ],
-      ),
-    );
+        key: widget._scaffoldKey, body: _currentState?.getUI(context));
   }
 
   void refresh() {
-    setState(() {
-    });
+    setState(() {});
   }
 }
