@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Constant\StoreOwner\StoreProfileConstant;
+namespace App\Constant\StoreOwner;
 
-abstract class StoreProfileConstant
+final class StoreProfileConstant
 {
-    static $PROFILE_IS_NOT_COMPLETED = "profile is not completed";
+    const PROFILE_IS_NOT_COMPLETED = "profile is not completed";
 
-    static $PROFILE_IS_COMPLETED = "profile is completed";
+    const PROFILE_IS_COMPLETED = "profile is completed";
 
-    static $IMAG_NULL = "image is null";
+    const IMAGE_IS_NULL = "image is null";
 
-    static $OPENING_TIME_NULL = "opening Time is null";
+    const OPENING_TIME_NULL = "opening Time is null";
 
-    static $CLOSING_TIME_NULL = "closing Time is null";
+    const CLOSING_TIME_NULL = "closing Time is null";
 
-    static $HAS_PRODUCT_OR_PRIVATE_ORDER_NULL = "select hasProducts or privateOrders or two";
-
+    const HAS_PRODUCT_OR_PRIVATE_ORDER_NULL = "select hasProducts or privateOrders or two";
 }
