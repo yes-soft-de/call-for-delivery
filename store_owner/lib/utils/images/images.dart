@@ -16,6 +16,8 @@ class ImageAsset {
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
   /// welcome page images
   static const OPEN_APP = WELCOME_IMAGES + 'open_app.png';
+  static const WE_DELIVER = WELCOME_IMAGES + 'we_deliver.png';
+  static const BOOK_CAR = WELCOME_IMAGES + 'book_car.png';
 }
 
 class SvgAsset {
