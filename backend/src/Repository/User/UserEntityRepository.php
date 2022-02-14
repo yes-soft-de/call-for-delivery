@@ -36,7 +36,7 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
         $this->_em->flush();
     }
 
-    public function getUserByUserId($userId)
+    public function getUserByUserId($userId): mixed
     {
         return $this->createQueryBuilder('user')
             ->select('user.id', 'user.userId')
@@ -48,7 +48,7 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getOneOrNullResult();
     }
 
-    public function getUserByUserIdAndRole($userId, $role)
+    public function getUserByUserIdAndRole($userId, $role): mixed
     {
         return $this->createQueryBuilder('userEntity')
             ->select('userEntity.id', 'userEntity.userId')
@@ -64,7 +64,7 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
     }
 
     // return user entity
-    public function getUserEntityByUserId($userId)
+    public function getUserEntityByUserId($userId): mixed
     {
         return $this->createQueryBuilder('userEntity')
 
@@ -75,7 +75,7 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getOneOrNullResult();
     }
 
-    public function getUserRoleByUserId($userId): ?array
+    public function getUserRoleByUserId($userId): mixed
     {
         return $this->createQueryBuilder('userEntity')
             ->select('userEntity.roles')

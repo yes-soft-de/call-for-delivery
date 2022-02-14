@@ -19,11 +19,11 @@ class AdminService
         $this->adminManager = $adminManager;
     }
 
-    public function adminRegister(UserRegisterRequest $request)
+    public function adminRegister(UserRegisterRequest $request): UserRegisterResponse
     {
         $userRegister = $this->adminManager->adminRegister($request);
 
-        if ($userRegister == "user is found")
+        if ($userRegister === "user is found")
         {
             $user['found'] = "yes";
 

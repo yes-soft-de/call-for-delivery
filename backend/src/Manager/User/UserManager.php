@@ -16,8 +16,7 @@ class UserManager
     private $encoder;
     private $userRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository
-    )
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -29,7 +28,7 @@ class UserManager
     {
         $user = $this->getUserByUserId($request->getUserId());
 
-        if ($user == null) {
+        if ($user === null) {
 
             $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
@@ -84,17 +83,17 @@ class UserManager
         }
     }
 
-    public function getUserByUserId($userId)
+    public function getUserByUserId($userId): ?array
     {
         return $this->userRepository->getUserByUserId($userId);
     }
 
-    public function getUserByUserIdAndRole($userId, $role)
+    public function getUserByUserIdAndRole($userId, $role): array
     {
         return $this->userRepository->getUserByUserIdAndRole($userId, $role);
     }
 
-    public function createUser(UserRegisterRequest $request)
+    public function createUser(UserRegisterRequest $request): UserEntity
     {
         $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
@@ -110,8 +109,19 @@ class UserManager
         return $userRegister;
     }
 
-    public function getUserRoleByUserId($userId): ?array
+    public function getUserRoleByUserId($userId): array
     {
         return $this->userRepository->getUserRoleByUserId($userId);
+    }
+
+    public function checkUserType($userType,$userID): string
+    {
+        $user = $this->userRepository->find($userID);
+
+        if ($user->getRoles()[0] !== $userType) {
+            return "no";
+        }
+
+        return "yes";
     }
 }
