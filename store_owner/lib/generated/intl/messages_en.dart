@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
+        "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
+            "You can accept your mission to deliver package"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountAlreadyExist":
             MessageLookupByLibrary.simpleMessage("This account already exist"),
@@ -60,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
+        "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
+            "You need to book a car to deliver your package to your destenation"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
@@ -113,6 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("Chat with Store Owner"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("Check Orders"),
+        "checkOrdersDescribtion": MessageLookupByLibrary.simpleMessage(
+            "You can check the app for packages near you to deliver"),
         "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "Please update your current location if you want to"),
@@ -157,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
+        "deliverDescribtion": MessageLookupByLibrary.simpleMessage(
+            "After accepting your mission you will deliver package to the right destination"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
@@ -172,6 +180,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
+        "earnCashDescribtion": MessageLookupByLibrary.simpleMessage(
+            "After you doing your job your effort will be rewarded by earning money"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
@@ -260,12 +270,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
+        "lanchDescribtion": MessageLookupByLibrary.simpleMessage(
+            "If you have somthing to deliver far from you dont wory just open our app"),
+        "lanchDescribtionCaptain": MessageLookupByLibrary.simpleMessage(
+            "If you have the ability to deliver packages for us you are welcome"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
+        "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
         "locationOfCustomer":
@@ -613,6 +628,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "waiting for a captain to accept this order"),
         "warnning": MessageLookupByLibrary.simpleMessage("Important Note"),
         "weDeliver": MessageLookupByLibrary.simpleMessage("We Deliver"),
+        "weDeliverDescribtion": MessageLookupByLibrary.simpleMessage(
+            "We will deliver your package for you in the fastest way and the best"),
         "weNeedYourImageAndYourDriverLicenceInOrder":
             MessageLookupByLibrary.simpleMessage(
                 "We need your image and your driver licence in order to sign up"),

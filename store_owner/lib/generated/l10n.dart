@@ -4229,6 +4229,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Launch our app`
+  String get launch {
+    return Intl.message(
+      'Launch our app',
+      name: 'launch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have somthing to deliver far from you dont wory just open our app`
+  String get lanchDescribtion {
+    return Intl.message(
+      'If you have somthing to deliver far from you dont wory just open our app',
+      name: 'lanchDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to book a car to deliver your package to your destenation`
+  String get bookACarDescribtion {
+    return Intl.message(
+      'You need to book a car to deliver your package to your destenation',
+      name: 'bookACarDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We will deliver your package for you in the fastest way and the best`
+  String get weDeliverDescribtion {
+    return Intl.message(
+      'We will deliver your package for you in the fastest way and the best',
+      name: 'weDeliverDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have the ability to deliver packages for us you are welcome`
+  String get lanchDescribtionCaptain {
+    return Intl.message(
+      'If you have the ability to deliver packages for us you are welcome',
+      name: 'lanchDescribtionCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can check the app for packages near you to deliver`
+  String get checkOrdersDescribtion {
+    return Intl.message(
+      'You can check the app for packages near you to deliver',
+      name: 'checkOrdersDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can accept your mission to deliver package`
+  String get acceptOrderDescribtion {
+    return Intl.message(
+      'You can accept your mission to deliver package',
+      name: 'acceptOrderDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After accepting your mission you will deliver package to the right destination`
+  String get deliverDescribtion {
+    return Intl.message(
+      'After accepting your mission you will deliver package to the right destination',
+      name: 'deliverDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After you doing your job your effort will be rewarded by earning money`
+  String get earnCashDescribtion {
+    return Intl.message(
+      'After you doing your job your effort will be rewarded by earning money',
+      name: 'earnCashDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

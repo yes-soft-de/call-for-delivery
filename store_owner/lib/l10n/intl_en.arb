@@ -419,19 +419,16 @@
     "recordNumber": "Record Number",
     "nationalAddress": "National Address",
     "taxNumber": "Tax Number",
-    "captainRated": "Captain rated successfully"
-
-
-
-
-
-
-
-
-
-
-
-
+    "captainRated": "Captain rated successfully",
+    "launch": "Launch our app",
+    "lanchDescribtion": "If you have somthing to deliver far from you dont wory just open our app",
+    "bookACarDescribtion": "You need to book a car to deliver your package to your destenation",
+    "weDeliverDescribtion": "We will deliver your package for you in the fastest way and the best",
+    "lanchDescribtionCaptain": "If you have the ability to deliver packages for us you are welcome",
+    "checkOrdersDescribtion": "You can check the app for packages near you to deliver",
+    "acceptOrderDescribtion": "You can accept your mission to deliver package",
+    "deliverDescribtion": "After accepting your mission you will deliver package to the right destination",
+    "earnCashDescribtion": "After you doing your job your effort will be rewarded by earning money"
 
 
 }
