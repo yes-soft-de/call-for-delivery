@@ -36,17 +36,13 @@ class AboutStatePageOwner extends AboutState {
                 label: S.current.launch,
                 description: S.current.lanchDescribtion),
             WelcomeCard(
-                image: ImageAsset.OPEN_APP,
-                label: S.current.launch,
-                description: S.current.lanchDescribtion),
+                image: ImageAsset.BOOK_CAR,
+                label: S.current.bookACar,
+                description: S.current.bookACarDescribtion),
             WelcomeCard(
-                image: ImageAsset.OPEN_APP,
-                label: S.current.launch,
-                description: S.current.lanchDescribtion),
-            WelcomeCard(
-                image: ImageAsset.OPEN_APP,
-                label: S.current.launch,
-                description: S.current.lanchDescribtion),
+                image: ImageAsset.WE_DELIVER,
+                label: S.current.weDeliver,
+                description: S.current.weDeliverDescribtion),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -96,8 +92,7 @@ class AboutStatePageOwner extends AboutState {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    FlatButton(
-                      color: Theme.of(context).primaryColor,
+                    ElevatedButton(
                       onPressed: () {
                         //screenState.requestBooking();
                       },
