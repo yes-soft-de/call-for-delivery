@@ -66,7 +66,7 @@ class LoginStateInit extends LoginState {
                   child: CustomLoginFormField(
                       sufIcon: const Padding(
                         padding: EdgeInsets.only(top: 15.0),
-                        child: Text(CountryCode.COUNTRY_CODE_KSA),
+                        child: Text(''),
                       ),
                       controller: usernameController,
                       phone: true,
