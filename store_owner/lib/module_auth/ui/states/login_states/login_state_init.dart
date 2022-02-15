@@ -20,6 +20,7 @@ class LoginStateInit extends LoginState {
     }
   }
   TextEditingController usernameController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
   @override
@@ -32,80 +33,119 @@ class LoginStateInit extends LoginState {
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             children: [
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0, top: 16),
-                      child: Image.asset(
-                        ImageAsset.LOGO,
-                        width: 150,
-                        height: 150,
-                      ),
-                    )
-                  : Container(),
+              Visibility(
+                  visible: MediaQuery.of(context).viewInsets.bottom == 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 32.0, top: 16),
+                    child: Image.asset(
+                      ImageAsset.LOGO,
+                      width: 150,
+                      height: 150,
+                    ),
+                  )),
+              // phone number
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
                 child: Text(
                   S.of(context).phoneNumber,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.phone),
-                  ),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                      sufIcon: const Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: Text(''),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16, bottom: 26.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
                       ),
-                      controller: usernameController,
-                      phone: true,
-                      contentPadding:
-                          const EdgeInsets.only(top: 15, right: 8.0, left: 8.0),
-                      hintText: '5xxxxxxxx'),
-                ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.phone,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomLoginFormField(
+                        controller: usernameController,
+                        phone: true,
+                        hintText: '5xxxxxxxx'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 28.0),
+                    child: SizedBox(
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomLoginFormField(
+                          contentPadding:
+                              EdgeInsets.only(left: 8.0, right: 8.0),
+                          controller: countryController,
+                          phone: true,
+                          phoneHint: false,
+                          hintText: S.current.countryCode,
+                          sufIcon: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: Container(
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor),
+                              child: Center(
+                                child: Text(
+                                  '+',
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+              // password
+               Padding(
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Text(
                   S.of(context).password,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left:16.0,right: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      child:  Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.lock,color: Theme.of(context).disabledColor,),
+                      ),
+                    ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.lock),
+                  Expanded(
+                    child: CustomLoginFormField(
+                      last: true,
+                      controller: passwordController,
+                      password: true,
+                      hintText: S.of(context).password,
+                    ),
                   ),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                    last: true,
-                    controller: passwordController,
-                    password: true,
-                    contentPadding: const EdgeInsets.fromLTRB(16, 13, 16, 0),
-                    hintText: S.of(context).password,
-                  ),
-                ),
+                  SizedBox(width: 8.0,)
+                ],
               ),
-              Container(
+             Container(
                 height: 16,
               ),
               InkWell(
