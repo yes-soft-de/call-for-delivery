@@ -145,6 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "countryCode": MessageLookupByLibrary.simpleMessage("Country code"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":

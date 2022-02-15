@@ -4319,6 +4319,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Country code`
+  String get countryCode {
+    return Intl.message(
+      'Country code',
+      name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

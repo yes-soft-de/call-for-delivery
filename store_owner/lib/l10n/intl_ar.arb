@@ -427,7 +427,8 @@
     "checkOrdersDescribtion": "يمكنك تفقد الطرود القريبة منك لتوصيلها",
     "acceptOrderDescribtion": "يمكنك الموافقة على مهمتك لتوصيل الطلبية",
     "deliverDescribtion": "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة",
-    "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال"
+    "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال",
+    "countryCode": "رقم النداء"
 
 
 }
