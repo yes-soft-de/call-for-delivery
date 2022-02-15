@@ -429,7 +429,10 @@
     "acceptOrderDescribtion": "You can accept your mission to deliver package",
     "deliverDescribtion": "After accepting your mission you will deliver package to the right destination",
     "earnCashDescribtion": "After you doing your job your effort will be rewarded by earning money",
-    "countryCode": "Country code"
+    "countryCode": "Country code",
+    "confirmPasswordAgain": "Confirm Password",
+    "writePasswordAgain": "Write Password Again"
+
 
 
 

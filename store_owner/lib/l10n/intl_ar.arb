@@ -428,7 +428,9 @@
     "acceptOrderDescribtion": "يمكنك الموافقة على مهمتك لتوصيل الطلبية",
     "deliverDescribtion": "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة",
     "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال",
-    "countryCode": "رقم النداء"
+    "countryCode": "رقم النداء",
+    "confirmPasswordAgain": "تأكيد كلمة السر",
+    "writePasswordAgain": "ادخل كلمة المرور مجددا"
 
 
 }

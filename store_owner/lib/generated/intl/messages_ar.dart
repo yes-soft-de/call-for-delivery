@@ -143,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmPasswordAgain":
+            MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -653,6 +655,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شامل القيمة المضافة"),
         "withoutTax": MessageLookupByLibrary.simpleMessage(
             "السعر غير شامل القيمة المضافة"),
+        "writePasswordAgain":
+            MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(

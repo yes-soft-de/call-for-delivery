@@ -4329,6 +4329,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm Password`
+  String get confirmPasswordAgain {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write Password Again`
+  String get writePasswordAgain {
+    return Intl.message(
+      'Write Password Again',
+      name: 'writePasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -142,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmPasswordAgain":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
@@ -650,6 +652,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Owner"),
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
+        "writePasswordAgain":
+            MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
