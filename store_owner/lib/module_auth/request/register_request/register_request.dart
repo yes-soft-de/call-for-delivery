@@ -14,7 +14,7 @@ class RegisterRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userID'] = CountryCode.COUNTRY_CODE_KSA + userID.toString();
+    data['userID'] = userID.toString();
     data['password'] = this.password;
     data['userName'] = this.userName;
     return data;
