@@ -16,6 +16,7 @@ class RegisterStateInit extends RegisterState {
   RegisterStateInit(this.screenState, {String? error, bool registered = false})
       : super(screenState) {
     if (error != null) {
+      countryController.text = '966';
       if (registered) {
         screenState.userRegistered().whenComplete(() {
           CustomFlushBarHelper.createError(
@@ -33,6 +34,7 @@ class RegisterStateInit extends RegisterState {
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController password2Controller = TextEditingController();
   TextEditingController countryController = TextEditingController();
   final GlobalKey<FormState> _registerKey = GlobalKey<FormState>();
   bool agreed = false;
@@ -49,17 +51,17 @@ class RegisterStateInit extends RegisterState {
               Visibility(
                 visible: MediaQuery.of(context).viewInsets.bottom == 0,
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
                     ImageAsset.LOGO,
-                    width: 85,
-                    height: 85,
+                    width: 50,
+                    height: 50,
                   ),
                 ),
               ),
               // name
               Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 24),
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Text(
                   S.of(context).name,
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -97,7 +99,7 @@ class RegisterStateInit extends RegisterState {
               ),
               // phone number
               Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 32),
+                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
                 child: Text(
                   S.of(context).phoneNumber,
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -166,7 +168,7 @@ class RegisterStateInit extends RegisterState {
               ),
               // password
               Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Text(
                   S.of(context).password,
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -175,27 +177,78 @@ class RegisterStateInit extends RegisterState {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left:16.0,right: 16.0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Theme.of(context).backgroundColor,
                       ),
-                      child:  Padding(
+                      child: Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.lock,color: Theme.of(context).disabledColor,),
+                        child: Icon(
+                          Icons.lock,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomLoginFormField(
+                      controller: passwordController,
+                      confirmationPassword: password2Controller.text,
+                      password: true,
+                      onChanged: (s) {
+                        screenState.refresh();
+                      },
+                      hintText: S.of(context).password,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  )
+                ],
+              ),
+              // confirmation password
+              Padding(
+                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
+                child: Text(
+                  S.of(context).confirmPasswordAgain,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.lock,
+                          color: Theme.of(context).disabledColor,
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
                     child: CustomLoginFormField(
                       last: true,
-                      controller: passwordController,
+                      controller: password2Controller,
+                      confirmationPassword: passwordController.text,
                       password: true,
-                      hintText: S.of(context).password,
+                      onChanged: (s) {
+                        screenState.refresh();
+                      },
+                      hintText: S.of(context).writePasswordAgain,
                     ),
                   ),
-                  SizedBox(width: 8.0,)
+                  SizedBox(
+                    width: 8.0,
+                  )
                 ],
               ),
               Padding(

@@ -19,7 +19,9 @@ class CustomLoginFormField extends StatefulWidget {
   final double? borderRadius;
   final bool validator;
   final bool phoneHint;
+  final String? confirmationPassword;
   final TextStyle? style;
+  final ValueChanged<String>? onChanged;
   @override
   _CustomLoginFormFieldState createState() => _CustomLoginFormFieldState();
 
@@ -30,6 +32,7 @@ class CustomLoginFormField extends StatefulWidget {
       this.preIcon,
       this.sufIcon,
       this.controller,
+      this.confirmationPassword,
       this.readOnly = false,
       this.onTap,
       this.last = false,
@@ -38,8 +41,8 @@ class CustomLoginFormField extends StatefulWidget {
       this.borderRadius,
       this.validator = true,
       this.phoneHint = true,
-      this.style
-      });
+      this.onChanged,
+      this.style});
 }
 
 class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
@@ -69,6 +72,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       style: widget.style,
                       autovalidateMode: mode,
                       onChanged: (s) {
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(s);
+                        }
                         setState(() {});
                       },
                       toolbarOptions: ToolbarOptions(
@@ -89,11 +95,17 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                               } else if (value.length < 6 && widget.password) {
                                 clean = false;
                                 return S.of(context).passwordIsTooShort;
-                              } else if (widget.phone && value.length < 9) {
+                              } else if (widget.phone &&
+                                  widget.phoneHint &&
+                                  value.length < 9) {
                                 clean = false;
                                 return S.of(context).phoneNumbertooShort;
                               } else if (widget.phone && value.length > 9) {
                                 return S.current.phoneNumberLong;
+                              } else if (widget.password &&
+                                  widget.confirmationPassword != value) {
+                                clean = false;
+                                return S.current.passwordNotMatch;
                               } else {
                                 clean = true;
                                 return null;
@@ -134,8 +146,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
               OptionalWidget(
                 effect: widget.password,
                 effectiveWidget: IconButton(
-                  splashRadius: 18,
-                    splashColor: Theme.of(context).colorScheme.secondaryContainer,
+                    splashRadius: 18,
+                    splashColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
                     onPressed: () {
                       if (showPassword) {
                         showPassword = false;
@@ -144,9 +157,12 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       }
                       setState(() {});
                     },
-                    icon: Icon(!showPassword
-                        ? Icons.remove_red_eye_rounded
-                        : Icons.visibility_off_rounded,color: Theme.of(context).disabledColor,)),
+                    icon: Icon(
+                      !showPassword
+                          ? Icons.remove_red_eye_rounded
+                          : Icons.visibility_off_rounded,
+                      color: Theme.of(context).disabledColor,
+                    )),
                 widget: widget.sufIcon,
               )
             ],
