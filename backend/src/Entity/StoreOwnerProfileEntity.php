@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StoreOwnerProfileEntityRepository::class)]
@@ -56,6 +58,14 @@ class StoreOwnerProfileEntity
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $employeeCount;
+
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionEntity::class)]
+    private $subscriptionEntities;
+
+    public function __construct()
+    {
+        $this->subscriptionEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -238,6 +248,36 @@ class StoreOwnerProfileEntity
     public function setEmployeeCount(?int $employeeCount): self
     {
         $this->employeeCount = $employeeCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubscriptionEntity[]
+     */
+    public function getSubscriptionEntities(): Collection
+    {
+        return $this->subscriptionEntities;
+    }
+
+    public function addSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if (!$this->subscriptionEntities->contains($subscriptionEntity)) {
+            $this->subscriptionEntities[] = $subscriptionEntity;
+            $subscriptionEntity->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if ($this->subscriptionEntities->removeElement($subscriptionEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionEntity->getStoreOwner() === $this) {
+                $subscriptionEntity->setStoreOwner(null);
+            }
+        }
 
         return $this;
     }

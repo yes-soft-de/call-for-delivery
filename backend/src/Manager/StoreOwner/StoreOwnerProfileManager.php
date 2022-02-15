@@ -102,4 +102,9 @@ class StoreOwnerProfileManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreProfileByStoreId($userId);
     }
+
+    public function getStoreOwnerProfile($id)
+    {
+        return $this->storeOwnerProfileEntityRepository->find($id);
+    }
 }

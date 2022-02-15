@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PackageEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PackageEntityRepository::class)]
@@ -33,6 +35,14 @@ class PackageEntity
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
+
+    #[ORM\OneToMany(mappedBy: 'package', targetEntity: SubscriptionEntity::class)]
+    private $subscriptionEntities;
+
+    public function __construct()
+    {
+        $this->subscriptionEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,36 @@ class PackageEntity
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubscriptionEntity[]
+     */
+    public function getSubscriptionEntities(): Collection
+    {
+        return $this->subscriptionEntities;
+    }
+
+    public function addSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if (!$this->subscriptionEntities->contains($subscriptionEntity)) {
+            $this->subscriptionEntities[] = $subscriptionEntity;
+            $subscriptionEntity->setPackage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if ($this->subscriptionEntities->removeElement($subscriptionEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionEntity->getPackage() === $this) {
+                $subscriptionEntity->setPackage(null);
+            }
+        }
 
         return $this;
     }

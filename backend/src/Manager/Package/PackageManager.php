@@ -46,6 +46,11 @@ class PackageManager
     {
         return $this->packageRepository->getPackageById($id);
     }
+
+    public function getPackage($id)
+    {
+        return $this->packageRepository->find($id);
+    }
 //TODO not completed
     // public function update(PackageUpdateStateRequest $request)
     // {
