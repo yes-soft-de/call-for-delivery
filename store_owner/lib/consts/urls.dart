@@ -8,9 +8,9 @@ class Urls {
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
-  static const UPLOAD_API = BASE_API + '/uploadfile';
+  static const UPLOAD_API = DOMAIN + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
-  static const OWNER_PROFILE_API = BASE_API + '/userprofile';
+  static const OWNER_PROFILE_API = BASE_API + '/storeowner';
   static const CREATE_TOKEN_API = DOMAIN + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/verifycode';
   static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';

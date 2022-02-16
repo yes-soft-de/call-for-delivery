@@ -1,4 +1,3 @@
-import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
@@ -166,7 +165,7 @@ class LoginStateInit extends LoginState {
                                 onPressed: () {
                                   Navigator.pop(context);
                                   screen.restPass(ResetPassRequest(
-                                      userID: usernameController.text));
+                                      userID: countryController.text + usernameController.text));
                                 });
                           });
                     } else {
@@ -201,7 +200,7 @@ class LoginStateInit extends LoginState {
                 firstButtonTab: () {
                   if (_loginKey.currentState!.validate()) {
                     screen.loginClient(
-                        usernameController.text, passwordController.text);
+                      countryController.text + usernameController.text, passwordController.text);
                   }
                 }),
           ),

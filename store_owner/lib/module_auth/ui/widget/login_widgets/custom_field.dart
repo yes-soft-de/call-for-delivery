@@ -1,6 +1,5 @@
 import 'package:c4d/utils/effect/op_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 
@@ -60,7 +59,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 25),
             color: Theme.of(context).backgroundColor,
           ),
           child: Row(
@@ -105,7 +104,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                 return S.of(context).phoneNumbertooShort;
                               } else if (widget.phone && value.length > 9) {
                                 return S.current.phoneNumberLong;
-                              } else if (widget.password &&
+                              } else if (widget.password && widget.confirmationPassword != null && 
                                   widget.confirmationPassword != value) {
                                 clean = false;
                                 return S.current.passwordNotMatch;
