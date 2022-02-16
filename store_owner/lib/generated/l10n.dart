@@ -4319,6 +4319,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Country code`
+  String get countryCode {
+    return Intl.message(
+      'Country code',
+      name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPasswordAgain {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write Password Again`
+  String get writePasswordAgain {
+    return Intl.message(
+      'Write Password Again',
+      name: 'writePasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jaddah`
+  String get cityHint {
+    return Intl.message(
+      'Jaddah',
+      name: 'cityHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bimo`
+  String get bankNameHint {
+    return Intl.message(
+      'Bimo',
+      name: 'bankNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter phone number`
+  String get pleaseEnterValidPhoneNumber {
+    return Intl.message(
+      'Please enter phone number',
+      name: 'pleaseEnterValidPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid character`
+  String get pleaseEnterValidCountryCode {
+    return Intl.message(
+      'invalid character',
+      name: 'pleaseEnterValidCountryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setup Account`
+  String get storeAccountInit {
+    return Intl.message(
+      'Setup Account',
+      name: 'storeAccountInit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -18,7 +18,7 @@ class CustomMandoobAppBar {
     return AppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
-      title: Text(title),
+      title: Text(title,style: Theme.of(context).textTheme.headline6,),
       leading: canGoBack
           ? Padding(
               padding: const EdgeInsets.all(8.0),

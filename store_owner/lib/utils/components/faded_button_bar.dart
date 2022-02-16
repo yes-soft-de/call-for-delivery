@@ -38,7 +38,6 @@ class FadedButtonBar extends StatelessWidget {
             width: double.maxFinite,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25))),
               onPressed: onPressed,
@@ -46,7 +45,7 @@ class FadedButtonBar extends StatelessWidget {
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
                   text,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: Theme.of(context).textTheme.button,
                 ),
               ),
             ),

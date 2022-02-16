@@ -53,7 +53,7 @@ class AuthService {
           loginResult.statusCode ?? '0'));
     }
     RegisterResponse? response = await _authManager.userTypeCheck(
-        'ROLE_CLIENT', loginResult.token ?? '');
+        'ROLE_OWNER', loginResult.token ?? '');
     if (response?.statusCode != '201') {
       await logout();
       _authSubject.addError(
@@ -61,16 +61,16 @@ class AuthService {
       throw AuthorizationException(
           StatusCodeHelper.getStatusCodeMessages(response?.statusCode ?? '0'));
     }
-    RegisterResponse? responseVerify = await _authManager
-        .checkUserIfVerified(VerifyCodeRequest(userID: username));
+    // RegisterResponse? responseVerify = await _authManager
+    //     .checkUserIfVerified(VerifyCodeRequest(userID: username));
 
-    if (responseVerify?.statusCode != '200') {
-      _prefsHelper.setUsername(username);
-      _prefsHelper.setPassword(password);
-      _authSubject.add(AuthStatus.CODE_SENT);
-      throw AuthorizationException(
-          StatusCodeHelper.getStatusCodeMessages(response?.statusCode ?? '0'));
-    }
+    // if (responseVerify?.statusCode != '200') {
+    //   _prefsHelper.setUsername(username);
+    //   _prefsHelper.setPassword(password);
+    //   _authSubject.add(AuthStatus.CODE_SENT);
+    //   throw AuthorizationException(
+    //       StatusCodeHelper.getStatusCodeMessages(responseVerify?.statusCode ?? '0'));
+    // }
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
@@ -92,7 +92,8 @@ class AuthService {
     }
     _prefsHelper.setUsername(request.userID ?? '');
     _prefsHelper.setPassword(request.password ?? '');
-    _authSubject.add(AuthStatus.CODE_SENT);
+    // _authSubject.add(AuthStatus.CODE_SENT);
+    await loginApi(request.userID??'',request.password??'');
   }
 
   Future<void> verifyCodeApi(VerifyCodeRequest request) async {

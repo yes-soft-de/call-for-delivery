@@ -33,8 +33,6 @@ class LoginScreenState extends State<LoginScreen> {
     if (mounted) setState(() {});
   }
 
-  int? returnToMainScreen;
-  bool? returnToPreviousScreen;
   @override
   void initState() {
     loadingSnapshot = AsyncSnapshot.nothing();
@@ -59,46 +57,28 @@ class LoginScreenState extends State<LoginScreen> {
   dynamic args;
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null) {
-      if (args is bool) returnToPreviousScreen = args;
-      if (args is int) returnToMainScreen = args;
-    }
-    return WillPopScope(
-      onWillPop: () async {
-        // await Navigator.of(context)
-        //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-        return returnToMainScreen == null;
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
       },
-      child: GestureDetector(
-        onTap: () {
-          var focus = FocusScope.of(context);
-          if (focus.canRequestFocus) {
-            focus.unfocus();
-          }
-        },
-        child: Scaffold(
-          appBar: CustomMandoobAppBar.appBar(context,
-              title: S.of(context).login,
-              onTap: returnToMainScreen != null
-                  ? () {
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //     MainRoutes.MAIN_SCREEN, (route) => false);
-                    }
-                  : null),
-          body: FixedContainer(
-            child: loadingSnapshot.connectionState != ConnectionState.waiting
-                ? _currentStates.getUI(context)
-                : Stack(
-                    children: [
-                      _currentStates.getUI(context),
-                      Container(
-                        width: double.maxFinite,
-                        color: Colors.transparent.withOpacity(0.0),
-                      ),
-                    ],
-                  ),
-          ),
+      child: Scaffold(
+        appBar: CustomMandoobAppBar.appBar(context,
+            title: S.of(context).login, canGoBack: Navigator.canPop(context)),
+        body: FixedContainer(
+          child: loadingSnapshot.connectionState != ConnectionState.waiting
+              ? _currentStates.getUI(context)
+              : Stack(
+                  children: [
+                    _currentStates.getUI(context),
+                    Container(
+                      width: double.maxFinite,
+                      color: Colors.transparent.withOpacity(0.0),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
@@ -115,22 +95,8 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-    if (returnToMainScreen != null) {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,
-      //         arguments: returnToMainScreen)
-      //     .then((value) {
-      //   if (returnToMainScreen == 0) {
-      //     showDialog(
-      //         context: context, builder: (context) => getIt<FavouritScreen>());
-      //   }
-      // });
-    } else if (returnToPreviousScreen != null) {
-      Navigator.of(context).pop();
-    } else {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-    }
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(SplashRoutes.SPLASH_SCREEN, (route) => false,arguments: true);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

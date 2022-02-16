@@ -19,14 +19,6 @@ class AppThemeDataService {
     return Color.fromRGBO(33, 32, 156, 1);
   }
 
-  static Color get PrimaryDarker {
-    return Colors.orange;
-  }
-
-  static Color get AccentColor {
-    return Colors.orangeAccent;
-  }
-
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
     final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
@@ -35,15 +27,14 @@ class AppThemeDataService {
     if (dark == true) {
       return ThemeData(
         brightness: Brightness.dark,
-        primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
+  //      primaryColor: PrimaryColor,
         colorScheme: darkScheme,
         useMaterial3: true,
         //     colorScheme: darkScheme,
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.indigo,
         focusColor: PrimaryColor,
         cardColor: Colors.grey[150],
-        fontFamily: GoogleFonts.almarai().fontFamily,
+        fontFamily: 'Dubai',
         textTheme: TextTheme(
           button:TextStyle(color:Colors.white)
         )
@@ -51,19 +42,18 @@ class AppThemeDataService {
     }
     return ThemeData(
         brightness: Brightness.light,
-        primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
+ //       primaryColor: PrimaryColor,
         colorScheme: lightScheme,
         useMaterial3: true,
         //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.indigo,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
          textTheme: TextTheme(
           button:TextStyle(color:Colors.white)
         ),
-        fontFamily: GoogleFonts.almarai().fontFamily,
+        fontFamily: 'Dubai',
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
