@@ -13,6 +13,7 @@ import 'package:c4d/utils/images/images.dart';
 
 class LoginStateInit extends LoginState {
   LoginStateInit(LoginScreenState screen, {String? error}) : super(screen) {
+    countryController.text = '966';
     if (error != null) {
       CustomFlushBarHelper.createError(
               title: S.current.warnning, message: error)
@@ -112,7 +113,7 @@ class LoginStateInit extends LoginState {
                 ],
               ),
               // password
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Text(
                   S.of(context).password,
@@ -122,15 +123,18 @@ class LoginStateInit extends LoginState {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left:16.0,right: 16.0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Theme.of(context).backgroundColor,
                       ),
-                      child:  Padding(
+                      child: Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.lock,color: Theme.of(context).disabledColor,),
+                        child: Icon(
+                          Icons.lock,
+                          color: Theme.of(context).disabledColor,
+                        ),
                       ),
                     ),
                   ),
@@ -142,10 +146,12 @@ class LoginStateInit extends LoginState {
                       hintText: S.of(context).password,
                     ),
                   ),
-                  SizedBox(width: 8.0,)
+                  SizedBox(
+                    width: 8.0,
+                  )
                 ],
               ),
-             Container(
+              Container(
                 height: 16,
               ),
               InkWell(

@@ -15,8 +15,8 @@ class RegisterStateInit extends RegisterState {
   RegisterScreenState screenState;
   RegisterStateInit(this.screenState, {String? error, bool registered = false})
       : super(screenState) {
-    if (error != null) {
       countryController.text = '966';
+    if (error != null) {
       if (registered) {
         screenState.userRegistered().whenComplete(() {
           CustomFlushBarHelper.createError(
@@ -58,44 +58,6 @@ class RegisterStateInit extends RegisterState {
                     height: 50,
                   ),
                 ),
-              ),
-              // name
-              Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80),
-                child: Text(
-                  S.of(context).name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 0.0, right: 16.0, left: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.person,
-                          color: Theme.of(context).disabledColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CustomLoginFormField(
-                      controller: nameController,
-                      hintText: S.of(context).nameHint,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                ],
               ),
               // phone number
               Padding(
@@ -287,7 +249,7 @@ class RegisterStateInit extends RegisterState {
                             userID: usernameController.text.trim() +
                                 countryController.text.trim(),
                             password: passwordController.text,
-                            userName: nameController.text));
+                           ));
                       }
                     }
                   : null,
