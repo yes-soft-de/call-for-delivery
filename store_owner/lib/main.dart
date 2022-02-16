@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
+import 'package:c4d/module_profile/module_profile.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/effect/scroll_behavior.dart';
@@ -84,17 +85,19 @@ class MyApp extends StatefulWidget {
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
   final AboutModule _aboutModule;
+  final ProfileModule _profileModule;
   MyApp(
-    this._themeDataService,
-    this._localizationService,
-    this._fireNotificationService,
-    this._localNotificationService,
-    this._splashModule,
-    this._authorizationModule,
-    this._chatModule,
-    this._settingsModule,
-    this._aboutModule
-  );
+      this._themeDataService,
+      this._localizationService,
+      this._fireNotificationService,
+      this._localNotificationService,
+      this._splashModule,
+      this._authorizationModule,
+      this._chatModule,
+      this._settingsModule,
+      this._aboutModule,
+      this._profileModule
+      );
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
