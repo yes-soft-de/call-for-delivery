@@ -436,7 +436,8 @@
     "cityHint": "Jaddah",
     "bankNameHint": "Bimo",
     "pleaseEnterValidPhoneNumber": "Please enter phone number",
-    "pleaseEnterValidCountryCode": "invalid character"
+    "pleaseEnterValidCountryCode": "invalid character",
+    "storeAccountInit": "Setup Account"
 
 
 

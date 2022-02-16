@@ -435,7 +435,8 @@
     "cityHint": "جدة",
     "bankNameHint": "الراجحي",
     "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
-    "pleaseEnterValidCountryCode": "ادخال خاطئ"
+    "pleaseEnterValidCountryCode": "ادخال خاطئ",
+    "storeAccountInit": "تهيئة الحساب"
 
 
 }

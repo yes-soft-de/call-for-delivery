@@ -4399,6 +4399,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Setup Account`
+  String get storeAccountInit {
+    return Intl.message(
+      'Setup Account',
+      name: 'storeAccountInit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

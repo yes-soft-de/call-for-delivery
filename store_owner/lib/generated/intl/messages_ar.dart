@@ -562,6 +562,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "أنت غير مخول بالقيام بهذا الطلب"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("رقم حساب STC PAY"),
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
+        "storeAccountInit":
+            MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
