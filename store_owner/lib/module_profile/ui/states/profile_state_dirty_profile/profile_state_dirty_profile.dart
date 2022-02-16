@@ -23,7 +23,6 @@ class ProfileStateDirtyProfile extends ProfileState {
           request.name = profile.name;
           request.phone = profile.phone;
           request.image = profile.image;
-          request.stcPay = profile.stcPay;
           request.bankAccountNumber = profile.bankNumber;
           request.bankName = profile.bankName;
           request.city = profile.city;
@@ -32,7 +31,6 @@ class ProfileStateDirtyProfile extends ProfileState {
         onImageUpload: (profile, type, image) {
           request.name = profile.name;
           request.phone = profile.phone;
-          request.stcPay = profile.stcPay;
           request.bankAccountNumber = profile.bankNumber;
           request.bankName = profile.bankName;
           request.image = profile.image;

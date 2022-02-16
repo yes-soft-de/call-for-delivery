@@ -5,6 +5,9 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_profile/ui/screen/init_account_screen.dart';
+import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_success.dart';
+import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_loaded.dart';
+import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_state_loading.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
@@ -27,18 +30,20 @@ class InitAccountStateManager {
   );
   void createProfile(
       ProfileRequest request, InitAccountScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    _stateSubject.add(
+        InitAccountStateLoading(screenState, S.current.uploadingAndSubmitting));
     _profileService.createStoreProfile(request).then((value) {
       if (value.hasError) {
+        _stateSubject.add(InitAccountStateProfileLoaded(screenState));
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
+        _stateSubject.add(InitAccountStateSuccess(screenState));
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.uploadProfileSuccess)
             .show(screenState.context);
-        screenState.moveNext();
       }
     });
   }

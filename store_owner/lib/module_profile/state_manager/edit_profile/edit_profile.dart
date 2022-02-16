@@ -38,16 +38,10 @@ class EditProfileStateManager {
               name: value.name,
               image: value.image,
               phone: value.phone,
-              drivingLicence: value.drivingLicence,
               city: value.city,
-              branch: '-1',
               bankName: value.bankName,
               bankAccountNumber: value.accountID,
-              stcPay: value.stcPay,
-              car: value.car,
-              age: value.age.toString(),
-              mechanicLicense: value.mechanicLicense,
-              identity: value.identity),
+              ),
           false,
         ));
       }

@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/init_account.state_manager.dart';
-import 'package:c4d/module_profile/ui/states/init_account_profile_loaded.dart';
+import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_loaded.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,23 +24,22 @@ class InitAccountScreenState extends State<InitAccountScreen> {
   late StreamSubscription _streamSubscription;
   late States currentState;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   void refresh() {
     if (mounted) {
       setState(() {});
     }
   }
 
-  void moveNext() {
-    
+  void moveNext() {}
+  void initProfile(ProfileRequest request) {
+    widget._stateManager.createProfile(request, this);
   }
 
   @override
   void initState() {
+    currentState = InitAccountStateProfileLoaded(this);
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
-      currentState = InitAccountStateProfileLoaded(this);
       if (mounted) {
         setState(() {});
       }
@@ -48,7 +50,9 @@ class InitAccountScreenState extends State<InitAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      appBar: CustomMandoobAppBar.appBar(context,
+          title: S.current.storeAccountInit,
+          canGoBack: Navigator.of(context).canPop()),
       body: currentState.getUI(context),
     );
   }

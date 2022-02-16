@@ -84,7 +84,7 @@ class ProfileRepository {
   Future<ActionResponse?> createOwnerProfile(
       ProfileRequest profileRequest) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.post(
+    var response = await _apiClient.put(
       Urls.OWNER_PROFILE_API,
       profileRequest.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},

@@ -47,7 +47,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             profileRequest!.phone!.replaceFirst(countryCode, '0');
       }
 
-      _stcPayController.text = profileRequest?.stcPay ?? '';
+    //  _stcPayController.text = profileRequest?.stcPay ?? '';
       _bankAccountNumberController.text = profileRequest?.bankAccountNumber ?? '';
       _bankNameController.text = profileRequest?.bankName ?? '';
       _cityController.text = profileRequest?.city ?? '';
@@ -189,7 +189,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 color: Theme.of(context).primaryColor,
                 child: Text(S.of(context).save),
                 onPressed: () {
-                  if (_formKey.currentState?.validate() == true && ((profileRequest?.identity != null && profileRequest?.mechanicLicense != null && profileRequest?.drivingLicence != null) || !widget.isCaptain)) {
+                  if (_formKey.currentState?.validate() == true) {
                     String phone = _phoneController.text;
                     if (phone[0] == '0') {
                       phone = phone.substring(1);

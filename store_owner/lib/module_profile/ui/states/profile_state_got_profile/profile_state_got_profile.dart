@@ -21,7 +21,6 @@ class ProfileStateGotProfile extends ProfileState {
         onProfileSaved: (profile) {
           request.name = profile.name;
           request.phone = profile.phone;
-          request.stcPay = profile.stcPay;
           request.bankAccountNumber = profile.bankNumber;
           request.bankName = profile.bankName;
           request.image = profile.image;
@@ -32,7 +31,6 @@ class ProfileStateGotProfile extends ProfileState {
         onImageUpload: (profile, type, image) {
           request.name = profile.name;
           request.phone = profile.phone;
-          request.stcPay = profile.stcPay;
           request.bankAccountNumber = profile.bankNumber;
           request.bankName = profile.bankName;
           request.image = profile.image;
