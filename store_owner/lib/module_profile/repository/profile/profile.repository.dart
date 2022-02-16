@@ -8,7 +8,7 @@ import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_profile/response/get_branches_response.dart';
 import 'package:c4d/module_profile/response/get_records_response.dart';
 import 'package:c4d/module_profile/response/profile_response.dart';
-import 'package:c4d/utils/logger/logger.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -41,53 +41,6 @@ class ProfileRepository {
     }
   }
 
-  Future<ProfileResponseModel?> getCaptainProfile() async {
-    await _authService.refreshToken();
-    try {
-      var token = await _authService.getToken();
-      dynamic response = await _apiClient.get(
-        Urls.CAPTAIN_PROFILE_API,
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
-      if (response == null) {
-        return null;
-      }
-      return ProfileResponse.fromJson(response).data;
-    } on AuthorizationException {
-      return null;
-    } on TokenExpiredException {
-      return null;
-    } catch (e, stack) {
-      Logger().error(e.toString(), '${e.toString()}:\n${stack.toString()}',
-          StackTrace.current);
-      return null;
-    }
-  }
-
-  Future<bool> createOwnerProfile(ProfileRequest profileRequest) async {
-    var token = await _authService.getToken();
-    dynamic response;
-    try {
-      response = await _apiClient.post(
-        Urls.OWNER_PROFILE_API,
-        profileRequest.toJson(),
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
-    } catch (e) {}
-    try {
-      await _apiClient.put(
-        Urls.OWNER_PROFILE_API,
-        profileRequest.toJson(),
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
-    } catch (e) {}
-
-    if (response != null) return true;
-
-    return false;
-  }
-
- 
   Future<Branch?> createBranch(CreateBranchRequest createBranch) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
@@ -126,18 +79,17 @@ class ProfileRepository {
     return GetRecordsResponse.fromJson(response).data;
   }
 
-  // Future<List<Terms>> getTerms(UserRole role) async {
-  //   var token = await _authService.getToken();
-  //   dynamic response;
-  //   if (role == UserRole.ROLE_CAPTAIN) {
-  //     response = await _apiClient
-  //         .get(Urls.TERMS_CAPTAIN, headers: {'Authorization': 'Bearer $token'});
-  //   } else {
-  //     response = await _apiClient
-  //         .get(Urls.TERMS_OWNER, headers: {'Authorization': 'Bearer $token'});
-  //   }
-  //   if (response == null) return null;
+// new repo function shape
 
-  //   return TermsResponse.fromJson(response).data;
-  // }
+  Future<ActionResponse?> createOwnerProfile(
+      ProfileRequest profileRequest) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.OWNER_PROFILE_API,
+      profileRequest.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/manager/profile/profile.manager.dart';
@@ -7,6 +8,8 @@ import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_profile/response/profile_response.dart';
+import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -22,16 +25,16 @@ class ProfileService {
   );
 
   Future<ProfileResponseModel?> getProfile() async {
-        return _manager.getOwnerProfile(); 
-    }
-
+    return _manager.getOwnerProfile();
+  }
 
   Future<bool> createProfile(ProfileRequest profileRequest) async {
-        return _manager.createOwnerProfile(profileRequest);
+    return false;
   }
 
   Future<bool> updateProfile(ProfileRequest profileRequest) async {
-       return _manager.createOwnerProfile(profileRequest); 
+    //     return _manager.createOwnerProfile(profileRequest);
+    return false;
   }
 
   Future<bool> saveBranch(List<Branch> branchList) async {
@@ -63,7 +66,7 @@ class ProfileService {
     if (branches == null) {
       // Get the Branches from the backend
       branches = await _manager.getMyBranches();
-      await _preferencesHelper.cacheBranch(branches??[]);
+      await _preferencesHelper.cacheBranch(branches ?? []);
     }
 
     return branches;
@@ -80,11 +83,11 @@ class ProfileService {
     }
     records.forEach((e) {
       if (e.state == 'delivered') {
-        activity[e.id??0] = ActivityModel(
+        activity[e.id ?? 0] = ActivityModel(
             startDate: DateTime.fromMillisecondsSinceEpoch(
-                e.record?.first.date?.timestamp??0 * 1000),
+                e.record?.first.date?.timestamp ?? 0 * 1000),
             endDate: DateTime.fromMillisecondsSinceEpoch(
-                e.record?.last.date?.timestamp??0 * 1000),
+                e.record?.last.date?.timestamp ?? 0 * 1000),
             activity: '${e.brancheName}, #${e.id.toString()}');
       }
     });
@@ -113,4 +116,15 @@ class ProfileService {
   //   var role = await _authService.userRole;
   //   return await _manager.getTerms(role);
   // }
+  // new service function form
+  Future<DataModel> createStoreProfile(ProfileRequest request) async {
+    ActionResponse? actionResponse = await _manager.createOwnerProfile(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

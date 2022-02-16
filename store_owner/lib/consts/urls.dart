@@ -1,14 +1,14 @@
-// Developing Domain ===> 'http://138.197.186.138/';
-// Production Domain ===> 'http://206.189.61.207'
-// Named Domain ===> 'https://mandoob.password-please.com'
-// Named Domain ===> 'https://api.al-mandob.com'
+// Developing Domain ===> 'http://134.209.241.49/';
+// Production Domain ===> ''
+// Named Domain ===> ''
+// Named Domain ===> ''
 
 class Urls {
-  static const String DOMAIN = 'https://api.al-mandob.com';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
-  static const SIGN_UP_API = BASE_API + '/createAdmin';
+  static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/verifycode';
