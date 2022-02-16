@@ -4,7 +4,7 @@ namespace App\Manager\Package;
 
 use App\AutoMapping;
 use App\Entity\PackageEntity;
-use App\Repository\Package\PackageEntityRepository;
+use App\Repository\PackageEntityRepository;
 use App\Request\Package\PackageCreateRequest;
 use App\Request\Package\PackageUpdateStateRequest;
 use Doctrine\ORM\EntityManagerInterface;

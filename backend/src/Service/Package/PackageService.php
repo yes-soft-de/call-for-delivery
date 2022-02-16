@@ -58,7 +58,6 @@ class PackageService
        $item = $this->packageManager->getPackageById($id);
 
        return $this->autoMapping->map("array", PackageResponse::class, $item);
-       
     }
 //TODO not completed
     // public function update($request)

@@ -4,7 +4,7 @@ namespace App\Manager\StoreOwner;
 
 use App\AutoMapping;
 use App\Entity\StoreOwnerProfileEntity;
-use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
+use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;

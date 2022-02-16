@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\StoreOwner;
+namespace App\Repository;
 
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

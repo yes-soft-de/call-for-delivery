@@ -62,6 +62,7 @@ class SubscriptionController extends BaseController
 
         return $this->response($result, self::CREATE);
     }
+    
     /**
      * @Route("nextsubscription", name="nextSubscription", methods={"POST"})
      * @IsGranted("ROLE_OWNER")

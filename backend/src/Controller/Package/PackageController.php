@@ -28,8 +28,7 @@ class PackageController extends BaseController
     private $validator;
     private $packageService;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, 
-    ValidatorInterface $validator, PackageService $packageService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, PackageService $packageService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
@@ -62,7 +61,7 @@ class PackageController extends BaseController
      *          @OA\Property(type="integer", property="carCount"),
      *          @OA\Property(type="string", property="city"),
      *          @OA\Property(type="integer", property="orderCount"),
-     *          @OA\Property(type="integer", property="status"),
+     *          @OA\Property(type="string", property="status"),
      *      )
      * )
      *
@@ -80,7 +79,7 @@ class PackageController extends BaseController
      *            @OA\Property(type="integer", property="carCount"),
      *            @OA\Property(type="string", property="city"),
      *            @OA\Property(type="integer", property="orderCount"),
-     *            @OA\Property(type="integer", property="status"),
+     *            @OA\Property(type="string", property="status"),
      *      )
      *   )
      * )
@@ -128,7 +127,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="integer", property="status"),
+     *              @OA\Property(type="string", property="status"),
      *          )
      *       )
      *    )
@@ -171,7 +170,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="integer", property="status"),
+     *              @OA\Property(type="string", property="status"),
      *          )
      *       )
      *    )
@@ -208,7 +207,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="integer", property="status"),
+     *              @OA\Property(type="string", property="status"),
      *       )
      *    )
      * )
