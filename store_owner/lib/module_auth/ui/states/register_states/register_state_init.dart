@@ -15,7 +15,7 @@ class RegisterStateInit extends RegisterState {
   RegisterScreenState screenState;
   RegisterStateInit(this.screenState, {String? error, bool registered = false})
       : super(screenState) {
-      countryController.text = '966';
+    countryController.text = '966';
     if (error != null) {
       if (registered) {
         screenState.userRegistered().whenComplete(() {
@@ -40,6 +40,7 @@ class RegisterStateInit extends RegisterState {
   bool agreed = false;
   @override
   Widget getUI(BuildContext context) {
+    print(RegExp(r'[0-9٠-٩]').allMatches('959796748').length);
     return Stack(
       children: [
         Form(
@@ -103,7 +104,7 @@ class RegisterStateInit extends RegisterState {
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
-                          phone: true,
+                          numbers: true,
                           phoneHint: false,
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
@@ -246,10 +247,9 @@ class RegisterStateInit extends RegisterState {
                   ? () {
                       if (_registerKey.currentState!.validate()) {
                         screen.registerClient(RegisterRequest(
-                            userID: usernameController.text.trim() +
-                                countryController.text.trim(),
-                            password: passwordController.text,
-                           ));
+                          userID: countryController.text.trim()+usernameController.text.trim(),
+                          password: passwordController.text,
+                        ));
                       }
                     }
                   : null,
