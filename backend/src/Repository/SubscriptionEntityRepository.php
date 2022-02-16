@@ -59,6 +59,27 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getSubscriptionForStoreOwner($storeOwner): array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id','subscription.status', 'packageEntity.name',
+                'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture'
+                , 'subscription.isFuture')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+
+            ->andWhere('subscription.storeOwner = :storeOwner')
+
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+
+            ->getQuery()
+
+            ->getResult();
+    }
+
 
 
 

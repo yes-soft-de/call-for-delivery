@@ -95,20 +95,9 @@ class SubscriptionManager
         return $this->subscribeRepository->getIsFuture($storeOwner);
     }
     
-    public function getSubscriptionForStoreOwner($storeOwner)
+    public function getSubscriptionForStoreOwner($storeOwner): array
     {
-        // $subscribes = $this->subscribeRepository->getSubscriptionForStoreOwner($storeOwner);
-        $subscribes = $this->subscribeRepository->findBy(['storeOwner' => $storeOwner]);
-       
-        foreach($subscribes as $subscribe){
-          
-            $subscribe->getPackage()->getName();
-           
-            $results[] = $this->autoMapping->map( SubscriptionEntity::class, MySubscriptionsResponse::class, $subscribe);
-            
-        }
-
-        return $results;
+         return $this->subscribeRepository->getSubscriptionForStoreOwner($storeOwner);
     }
 
     public function subscriptionUpdateState(SubscriptionUpdateStateRequest $request)

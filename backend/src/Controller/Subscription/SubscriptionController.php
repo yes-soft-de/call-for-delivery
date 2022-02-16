@@ -17,6 +17,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Validator\Constraints\Json;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
 /**
  * @Route("v1/subscription/")
@@ -37,10 +39,46 @@ class SubscriptionController extends BaseController
     }
 
     /**
+     * store: create a subscription.
      * @Route("subscription", name="createSubscription", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="package", description="package id ,required"),
+     *          @OA\Property(type="string", property="note"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *            @OA\Property(type="object", property="startDate"),
+     *            @OA\Property(type="object", property="endDate"),
+     *            @OA\Property(type="string", property="status"),
+     *            @OA\Property(type="string", property="note"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
      */
     public function createSubscription(Request $request): JsonResponse
     {
@@ -91,14 +129,46 @@ class SubscriptionController extends BaseController
     }
 
     /**
-     * @Route("subscriptionforstoreowner", name="getSubscriptionForStoreOwner", methods={"GET"})
+     * store:get subscriptions to the store owner with the identification of the current subscription.
+     * @Route("subscriptionsforstoreowner", name="getSubscriptionsForStoreOwner", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns subscriptions",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *            @OA\Items(
+     *                @OA\Property(type="integer", property="id"),
+     *                @OA\Property(type="string", property="packageName"),
+     *                @OA\Property(type="object", property="startDate"),
+     *                @OA\Property(type="object", property="endDate"),
+     *                @OA\Property(type="string", property="status"),
+     *                @OA\Property(type="string", property="note"),
+     *                @OA\Property(type="string", property="isCurrent"),
+     *            )
+     *        )
+     *     )
+     * )
+     *
+     * @Security(name="Bearer")
      */
     public function getSubscriptionForStoreOwner(): JsonResponse
     {
         $result = $this->subscriptionService->getSubscriptionForStoreOwner($this->getUserId());
-      
+
         return $this->response($result, self::FETCH);
     }
 

@@ -75,7 +75,7 @@ class SubscriptionService
         return 0;
     }
 
-    public function getSubscriptionForStoreOwner($storeOwner)
+    public function getSubscriptionForStoreOwner($storeOwner): array
     {
        $response = [];
 
@@ -86,31 +86,30 @@ class SubscriptionService
     //    }
 
        $subscriptions = $this->subscriptionManager->getSubscriptionForStoreOwner($storeOwner);
-    //    dd($subscriptions);
+
        foreach ($subscriptions as $subscription) {
           
-            // $subscription->isCurrent = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
+             $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
             
-        //     if ($currentSubscription) {
-        // //         $this->subscriptionIsActive($storeOwner, $currentSubscription['id']);
-               
-        //         if ($currentSubscription['id'] == $subscription->isCurrent) {
-                    
-        //             $subscription->isCurrent= SubscriptionConstant::SUBSCRIBE_CURRENT;
-        //         }
-               
-        //         else {
-                   
-        //             $subscription->isCurrent = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
-        //         }
-               
-        //     }
+             if ($currentSubscription) {
+//               $this->subscriptionIsActive($storeOwner, $currentSubscription['id']);
 
-            $response[] = $this->autoMapping->map(MySubscriptionsResponse::class, MySubscriptionsResponse::class, $subscription);
-           
+                 //Check if the subscription is the current subscription?
+                 if ($subscription['id'] === $currentSubscription['id']) {
+
+                     $subscription['isCurrent']= SubscriptionConstant::SUBSCRIBE_CURRENT;
+                 }
+               
+                 else {
+
+                     $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
+                 }
+               
+             }
+
+            $response[] = $this->autoMapping->map("array", MySubscriptionsResponse::class, $subscription);
         }
-        
-        // dd($response);
+
         return $response;
     }
   

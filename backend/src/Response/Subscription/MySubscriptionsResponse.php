@@ -6,9 +6,7 @@ class MySubscriptionsResponse
 {
     public $id;
 
-    public $ownerID;
-
-    public $package;
+    public $packageName;
 
     public $startDate;
 
