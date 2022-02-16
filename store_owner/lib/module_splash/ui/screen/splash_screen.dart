@@ -1,6 +1,7 @@
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
+import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -55,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   String needForLogging(bool login) {
     if (login) {
-      return 'home';
+      return ProfileRoutes.INIT_ACCOUNT;
     } else if (AboutHiveHelper().getWelcome()) {
       return AuthorizationRoutes.LOGIN_SCREEN;
     } else {
