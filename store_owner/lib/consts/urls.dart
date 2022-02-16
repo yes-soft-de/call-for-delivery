@@ -5,12 +5,13 @@
 
 class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
-  static const String BASE_API = DOMAIN + '';
+  static const String BASE_API = DOMAIN + '/v1/store';
+  static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
-  static const CREATE_TOKEN_API = BASE_API + '/login_check';
+  static const CREATE_TOKEN_API = DOMAIN + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/verifycode';
   static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';
   static const RESEND_CODE_API = BASE_API + '/resendnewverificationcode';
@@ -51,7 +52,7 @@ class Urls {
   static const GET_ORDER_LOGS = BASE_API + '/orderLogs';
   static const GET_CAPTAINS_LOGS = BASE_API + '/ordersandcountbycaptainid/';
   static const GET_STORES_LOGS = BASE_API + '/ordersandcountbystoreprofileid/';
-  static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
+  static const CHECK_USER_ROLE = BASE_API_USER + '/checkUserType';
   static const STORE_CATEGORIES = BASE_API + '/storecategories';
   static const GET_STORE_CATEGORY = BASE_API + '/storecategory/';
   static const GET_PRODUCT_CATEGORY = BASE_API + '/storeproductcategory/';
