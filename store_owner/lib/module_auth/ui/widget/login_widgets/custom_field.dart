@@ -22,6 +22,7 @@ class CustomLoginFormField extends StatefulWidget {
   final String? confirmationPassword;
   final TextStyle? style;
   final ValueChanged<String>? onChanged;
+  final bool numbers;
   @override
   _CustomLoginFormFieldState createState() => _CustomLoginFormFieldState();
 
@@ -42,7 +43,9 @@ class CustomLoginFormField extends StatefulWidget {
       this.validator = true,
       this.phoneHint = true,
       this.onChanged,
-      this.style});
+      this.style,
+      this.numbers = false
+      });
 }
 
 class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
@@ -106,6 +109,14 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                   widget.confirmationPassword != value) {
                                 clean = false;
                                 return S.current.passwordNotMatch;
+                              } else if (widget.phone &&
+                                  RegExp(r'[0-9٠-٩]').allMatches(value).length != value.length) {
+                                clean = false;
+                                return S.current.pleaseEnterValidPhoneNumber;
+                              } else if (widget.numbers &&
+                                  RegExp(r'[0-9٠-٩]').allMatches(value).length != value.length) {
+                                clean = false;
+                                return S.current.pleaseEnterValidCountryCode;
                               } else {
                                 clean = true;
                                 return null;
@@ -115,13 +126,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       onTap: widget.onTap,
                       controller: widget.controller,
                       readOnly: widget.readOnly,
-                      keyboardType: widget.phone ? TextInputType.phone : null,
-                      inputFormatters: widget.phone
-                          ? <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp('^[5|9][0-9]*')),
-                            ]
-                          : [],
+                      keyboardType: widget.phone | widget.numbers ? TextInputType.phone : null,
                       obscureText: widget.password && !showPassword,
                       onEditingComplete:
                           widget.last ? null : () => node.nextFocus(),
