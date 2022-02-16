@@ -16,6 +16,8 @@ class SubscriptionCreateRequest
 
     private $isFuture;
 
+    private $note;
+
     /**
      * @param mixed $storeOwner
      */

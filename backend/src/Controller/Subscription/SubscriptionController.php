@@ -42,7 +42,7 @@ class SubscriptionController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function createSubscription(Request $request)
+    public function createSubscription(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
