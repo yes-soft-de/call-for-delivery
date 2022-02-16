@@ -7,6 +7,7 @@ use App\Controller\BaseController;
 use App\Request\Package\PackageCreateRequest;
 use App\Request\Package\PackageUpdateStateRequest;
 use App\Service\Package\PackageService;
+use Doctrine\ORM\NonUniqueResultException;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -185,14 +186,15 @@ class PackageController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-  /**
+    /**
      * Get specific package.
      * @Route("package/{id}", name="getPackageById", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param $id
      * @return JsonResponse
-     * 
+     *
      * @OA\Tag(name="Package")
-     * 
+     *
      * @OA\Response(
      *      response=200,
      *      description="Returns package",
@@ -211,6 +213,7 @@ class PackageController extends BaseController
      *       )
      *    )
      * )
+     * @throws NonUniqueResultException
      */
     public function getPackageById($id): JsonResponse
     {

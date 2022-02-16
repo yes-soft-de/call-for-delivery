@@ -8,6 +8,7 @@ use App\Manager\Package\PackageManager;
 use App\Request\Package\PackageCreateRequest;
 use App\Response\Package\PackageResponse;
 use App\Response\Package\PackageActiveResponse;
+use Doctrine\ORM\NonUniqueResultException;
 
 class PackageService
 {
@@ -20,6 +21,10 @@ class PackageService
         $this->packageManager = $packageManager;
     }
 
+    /**
+     * @param PackageCreateRequest $request
+     * @return PackageResponse
+     */
     public function createPackage(PackageCreateRequest $request): PackageResponse
     {
         $result = $this->packageManager->createPackage($request);
@@ -27,6 +32,9 @@ class PackageService
         return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
     }
 
+    /**
+     * @return array
+     */
     public function getActivePackages(): array
     {
         $response = [];
@@ -53,6 +61,11 @@ class PackageService
         return $response;
     }
 
+    /**
+     * @param $id
+     * @return array|mixed|null
+     * @throws NonUniqueResultException
+     */
     public function getPackageById($id)
     {
        $item = $this->packageManager->getPackageById($id);

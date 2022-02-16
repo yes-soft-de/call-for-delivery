@@ -8,6 +8,7 @@ use App\Repository\PackageEntityRepository;
 use App\Request\Package\PackageCreateRequest;
 use App\Request\Package\PackageUpdateStateRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 
 class PackageManager
 {
@@ -22,6 +23,10 @@ class PackageManager
         $this->packageRepository = $packageRepository;
     }
 
+    /**
+     * @param PackageCreateRequest $request
+     * @return mixed
+     */
     public function createPackage(PackageCreateRequest $request): mixed
     {
         $packageEntity = $this->autoMapping->map(PackageCreateRequest::class, PackageEntity::class, $request);
@@ -42,7 +47,12 @@ class PackageManager
         return $this->packageRepository->getAllPackages();
     }
 
-    public function getPackageById($id)
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function getPackageById($id): mixed
     {
         return $this->packageRepository->getPackageById($id);
     }

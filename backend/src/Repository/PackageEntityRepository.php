@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\PackageEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\Package\PackageConstant;
 
@@ -20,6 +21,9 @@ class PackageEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, PackageEntity::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function getActivePackages(): mixed
     {
         return $this->createQueryBuilder('package')
@@ -34,6 +38,9 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return mixed
+     */
     public function getAllPackages(): mixed
     {
         return $this->createQueryBuilder('package')
@@ -42,7 +49,12 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
     public function getPackageById($id): mixed
     {
         return $this->createQueryBuilder('package')
