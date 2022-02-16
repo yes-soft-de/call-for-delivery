@@ -72,11 +72,11 @@ class PackageService
 
        return $this->autoMapping->map("array", PackageResponse::class, $item);
     }
-//TODO not completed
-    // public function update($request)
-    // {
-    //     $result = $this->packageManager->update($request);
 
-    //     return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
-    // }
+     public function updatePackage($request): PackageResponse
+     {
+         $result = $this->packageManager->updatePackage($request);
+
+         return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
+     }
 }

@@ -222,29 +222,73 @@ class PackageController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    //TODO not completed
-    // /**
-    //  * @Route("package", name="updatePackage", methods={"PUT"})
-    //  * @IsGranted("ROLE_ADMIN")
-    //  * @param Request $request
-    //  * @return JsonResponse
-    //  */
-    // public function update(Request $request)
-    // {
-    //     $data = json_decode($request->getContent(), true);
+     /**
+      * admin:Update new package by admin
+      * @Route("package", name="updatePackage", methods={"PUT"})
+      * @IsGranted("ROLE_ADMIN")
+      * @param Request $request
+      * @return JsonResponse
+      *
+      * @OA\Tag(name="Package")
+      *
+      * @OA\Parameter(
+      *      name="token",
+      *      in="header",
+      *      description="token to be passed as a header",
+      *      required=true
+      * )
+      *
+      * @OA\RequestBody(
+      *      description="package",
+      *      @OA\JsonContent(
+      *          @OA\Property(type="integer", property="id"),
+      *          @OA\Property(type="string", property="name"),
+      *          @OA\Property(type="number", property="cost"),
+      *          @OA\Property(type="string", property="note"),
+      *          @OA\Property(type="integer", property="carCount"),
+      *          @OA\Property(type="string", property="city"),
+      *          @OA\Property(type="integer", property="orderCount"),
+      *          @OA\Property(type="string", property="status"),
+      *      )
+      * )
+      *
+      * @OA\Response(
+      *      response=201,
+      *      description="Returns new package",
+      *      @OA\JsonContent(
+      *          @OA\Property(type="string", property="status_code"),
+      *          @OA\Property(type="string", property="msg"),
+      *          @OA\Property(type="object", property="Data",
+      *            @OA\Property(type="integer", property="id"),
+      *            @OA\Property(type="string", property="name"),
+      *            @OA\Property(type="number", property="cost"),
+      *            @OA\Property(type="string", property="note"),
+      *            @OA\Property(type="integer", property="carCount"),
+      *            @OA\Property(type="string", property="city"),
+      *            @OA\Property(type="integer", property="orderCount"),
+      *            @OA\Property(type="string", property="status"),
+      *      )
+      *   )
+      * )
+      *
+      * @Security(name="Bearer")
+      */
+     public function updatePackage(Request $request): JsonResponse
+     {
+         $data = json_decode($request->getContent(), true);
 
-    //     $request = $this->autoMapping->map(\stdClass::class, PackageUpdateStateRequest::class, (object) $data);
+         $request = $this->autoMapping->map(\stdClass::class, PackageUpdateStateRequest::class, (object) $data);
 
-    //     $violations = $this->validator->validate($request);
+         $violations = $this->validator->validate($request);
 
-    //     if (\count($violations) > 0) {
-    //         $violationsString = (string) $violations;
+         if (\count($violations) > 0) {
+             $violationsString = (string) $violations;
 
-    //         return new JsonResponse($violationsString, Response::HTTP_OK);
-    //     }
+             return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
 
-    //     $result = $this->packageService->update($request);
+         $result = $this->packageService->updatePackage($request);
 
-    //     return $this->response($result, self::UPDATE);
-    // }
+         return $this->response($result, self::UPDATE);
+     }
 }

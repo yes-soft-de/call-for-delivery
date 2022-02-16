@@ -6,6 +6,7 @@ use App\Entity\SubscriptionEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -22,6 +23,9 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionEntity::class);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function getIsFuture($storeOwner): mixed
     {
         return $this->createQueryBuilder('subscription')
@@ -64,9 +68,8 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('subscription')
 
             ->select ('IDENTITY( subscription.package)')
-            ->addSelect('subscription.id','subscription.status', 'packageEntity.name',
-                'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture'
-                , 'subscription.isFuture')
+            ->addSelect('subscription.id','subscription.status','subscription.startDate',
+                'subscription.endDate', 'subscription.note', 'subscription.isFuture')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
 
             ->andWhere('subscription.storeOwner = :storeOwner')

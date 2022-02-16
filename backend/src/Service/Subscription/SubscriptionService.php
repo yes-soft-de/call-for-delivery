@@ -54,9 +54,9 @@ class SubscriptionService
         $IsFuture = $this->getIsFuture($request->getStoreOwner());
         if ( $IsFuture == 0)
         {
-           $SubscriptionCurrent = $this->getSubscriptionCurrent($request->getOwnerID());
+           $subscriptionCurrent = $this->getSubscriptionCurrent($request->getOwnerID());
         
-           $status = $this->subscriptionIsActive($request->getOwnerID(), $SubscriptionCurrent['id']);
+           $status = $this->subscriptionIsActive($request->getOwnerID(), $subscriptionCurrent['id']);
            $subscriptionResult = $this->subscriptionManager->nextSubscription($request, $status);
             
            $response = $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);

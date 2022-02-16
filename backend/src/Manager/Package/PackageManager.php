@@ -61,18 +61,20 @@ class PackageManager
     {
         return $this->packageRepository->find($id);
     }
-//TODO not completed
-    // public function update(PackageUpdateStateRequest $request)
-    // {
-    //     $entity = $this->packageRepository->find($request->getId());
 
-    //     if (!$entity) {
-    //         return null;
-    //     }
-    //     $entity = $this->autoMapping->mapToObject(PackageUpdateStateRequest::class, PackageEntity::class, $request, $entity);
+     public function updatePackage(PackageUpdateStateRequest $request)
+     {
 
-    //     $this->entityManager->flush();
+         $entity = $this->packageRepository->find($request->getId());
 
-    //     return $entity;
-    // }
+         if ($entity) {
+
+             $entity = $this->autoMapping->mapToObject(PackageUpdateStateRequest::class, PackageEntity::class, $request, $entity);
+
+             $this->entityManager->flush();
+
+             return $entity;
+         }
+
+     }
 }
