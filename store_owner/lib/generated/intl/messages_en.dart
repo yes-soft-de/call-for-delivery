@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
+        "bankNameHint": MessageLookupByLibrary.simpleMessage("Bimo"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
         "bill": MessageLookupByLibrary.simpleMessage("Bill"),
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
@@ -132,6 +133,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
+        "cityHint": MessageLookupByLibrary.simpleMessage("Jaddah"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),

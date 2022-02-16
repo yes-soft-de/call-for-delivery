@@ -431,7 +431,11 @@
     "earnCashDescribtion": "After you doing your job your effort will be rewarded by earning money",
     "countryCode": "Country code",
     "confirmPasswordAgain": "Confirm Password",
-    "writePasswordAgain": "Write Password Again"
+    "writePasswordAgain": "Write Password Again",
+    "city": "City",
+    "cityHint": "Jaddah",
+    "bankNameHint": "Bimo"
+
 
 
 

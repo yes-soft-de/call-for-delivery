@@ -4349,6 +4349,36 @@ class S {
       args: [],
     );
   }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jaddah`
+  String get cityHint {
+    return Intl.message(
+      'Jaddah',
+      name: 'cityHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bimo`
+  String get bankNameHint {
+    return Intl.message(
+      'Bimo',
+      name: 'bankNameHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

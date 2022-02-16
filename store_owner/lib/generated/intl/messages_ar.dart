@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
+        "bankNameHint": MessageLookupByLibrary.simpleMessage("الراجحي"),
         "bestStore": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "bill": MessageLookupByLibrary.simpleMessage("الفاتورة"),
         "birthDate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
@@ -131,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر مدينة تواجدك"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
+        "city": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "cityHint": MessageLookupByLibrary.simpleMessage("جدة"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),

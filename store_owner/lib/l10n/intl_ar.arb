@@ -430,7 +430,10 @@
     "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال",
     "countryCode": "رقم النداء",
     "confirmPasswordAgain": "تأكيد كلمة السر",
-    "writePasswordAgain": "ادخل كلمة المرور مجددا"
+    "writePasswordAgain": "ادخل كلمة المرور مجددا",
+    "city": "المدينة",
+    "cityHint": "جدة",
+    "bankNameHint": "الراجحي"
 
 
 }
