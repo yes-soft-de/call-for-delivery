@@ -434,7 +434,11 @@
     "writePasswordAgain": "Write Password Again",
     "city": "City",
     "cityHint": "Jaddah",
-    "bankNameHint": "Bimo"
+    "bankNameHint": "Bimo",
+    "pleaseEnterValidPhoneNumber": "Please enter phone number",
+    "pleaseEnterValidCountryCode": "invalid character"
+
+
 
 
 

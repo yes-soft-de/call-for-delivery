@@ -433,7 +433,9 @@
     "writePasswordAgain": "ادخل كلمة المرور مجددا",
     "city": "المدينة",
     "cityHint": "جدة",
-    "bankNameHint": "الراجحي"
+    "bankNameHint": "الراجحي",
+    "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
+    "pleaseEnterValidCountryCode": "ادخال خاطئ"
 
 
 }

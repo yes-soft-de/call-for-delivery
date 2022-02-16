@@ -425,6 +425,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "الرجاء تحميل mandob_moshtarayat"),
+        "pleaseEnterValidCountryCode":
+            MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
+        "pleaseEnterValidPhoneNumber":
+            MessageLookupByLibrary.simpleMessage("ادخل رقم هاتف صالح"),
         "pleaseEnterYourEmail": MessageLookupByLibrary.simpleMessage(
             "الرجاء ادخال البريد الالكتروني"),
         "pleaseInputPhoneNumber":
