@@ -76,6 +76,7 @@ class AuthService {
     _prefsHelper.setToken(loginResult.token);
     await updateCategoryFavorite();
     _authSubject.add(AuthStatus.AUTHORIZED);
+
   }
 
   Future<void> registerApi(RegisterRequest request) async {
@@ -92,8 +93,7 @@ class AuthService {
     }
     _prefsHelper.setUsername(request.userID ?? '');
     _prefsHelper.setPassword(request.password ?? '');
-    // _authSubject.add(AuthStatus.CODE_SENT);
-    await loginApi(request.userID??'',request.password??'');
+    _authSubject.add(AuthStatus.CODE_SENT);
   }
 
   Future<void> verifyCodeApi(VerifyCodeRequest request) async {
