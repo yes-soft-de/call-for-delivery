@@ -49,6 +49,9 @@ class BaseController extends AbstractController
     const STORE_OWNER_PROFILE_NOT_EXIST = ["store owner profile not exist!", "9157"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
+    // subscription
+    const SUBSCRIPTION_WAITE_ACTIVE = ["You have a subscription waiting to be activated", "9301"];
+    const SUBSCRIPTION_UNSUBSCRIBED = ["You do not have a subscription", "9302"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
 

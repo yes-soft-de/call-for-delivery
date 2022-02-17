@@ -13,6 +13,7 @@ use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
 use dateTime;
 use App\Constant\Subscription\SubscriptionConstant;
+use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionService
 {
@@ -25,20 +26,21 @@ class SubscriptionService
         $this->subscriptionManager = $subscriptionManager;
     }
 
-    public function createSubscription(SubscriptionCreateRequest $request)
+    public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionResponse
     {
         $response = SubscriptionConstant::ERROR;
 
         $isFuture = $this->getIsFuture($request->getStoreOwner());
-        if ( $isFuture == 0) {
+        if ( $isFuture === 0) {
 
             $status = SubscriptionConstant::SUBSCRIBE_INACTIVE;
 
-            // $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
-   
-            // if($subscriptionCurrent) {
-            //     $status = $this->subscriptionIsActive($request->getStoreOwner(), $subscriptionCurrent['id']);
-            // }
+            $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
+  
+            if($subscriptionCurrent) {
+
+                $status = $this->subscriptionIsActive($request->getStoreOwner(), $subscriptionCurrent['id']);
+            }
 
             $subscriptionResult = $this->subscriptionManager->createSubscription($request, $status);
 
@@ -48,20 +50,21 @@ class SubscriptionService
         return $response;
     }
     
-    public function nextSubscription(SubscriptionNextRequest $request)
+    public function nextSubscription(SubscriptionNextRequest $request): mixed
     {
-        $response="error";
-        $IsFuture = $this->getIsFuture($request->getStoreOwner());
-        if ( $IsFuture == 0)
-        {
-           $subscriptionCurrent = $this->getSubscriptionCurrent($request->getOwnerID());
+        $isFuture = $this->getIsFuture($request->getStoreOwner());
+        if ( $isFuture === 0) {
+
+           $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
         
-           $status = $this->subscriptionIsActive($request->getOwnerID(), $subscriptionCurrent['id']);
-           $subscriptionResult = $this->subscriptionManager->nextSubscription($request, $status);
+           $status = $this->subscriptionIsActive($request->getStoreOwner(), $subscriptionCurrent['id']);
+
+           $result = $this->subscriptionManager->nextSubscription($request, $status);
             
-           $response = $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
+           return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
         }
-        return $response;
+
+        return SubscriptionConstant::ERROR;
     }
 
     public function getIsFuture($storeOwner): INT
@@ -82,7 +85,7 @@ class SubscriptionService
        $currentSubscription = $this->getSubscriptionCurrent($storeOwner);
 
     //    if ($currentSubscription) {
-    //         $this->saveFinishAuto($ownerID, $currentSubscription['id']);
+    //         $this->checkValidityOfSubscription($ownerID, $currentSubscription['id']);
     //    }
 
        $subscriptions = $this->subscriptionManager->getSubscriptionForStoreOwner($storeOwner);
@@ -120,11 +123,9 @@ class SubscriptionService
         return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
     }
 
-    public function updateFinish($id, $status)
+    public function updateSubscribeStateToFinish($id, $status): string
     {
-        $result = $this->subscriptionManager->updateFinish($id, $status);
-       
-        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+        return $this->subscriptionManager->updateSubscribeStateToFinish($id, $status);
     }
 
     public function changeIsFutureToFalse($id)
@@ -156,80 +157,105 @@ class SubscriptionService
         return $response;
     }
 
-    public function subscriptionIsActive($storeOwner, $subscribeId)
+    public function subscriptionIsActive($id)
     {
-        $res = $this->saveFinishAuto($storeOwner, $subscribeId);
-        if($res->carsStatus){
+        // $res = $this->checkValidityOfSubscription($storeOwner, $subscribeId);
+        // if($res->carsStatus){
 
-            return SubscriptionConstant::CARS_FINISHED;
-        }
+        //     return SubscriptionConstant::CARS_FINISHED;
+        // }
  
-        $item = $this->subscriptionManager->subscriptionIsActive($storeOwner, $subscribeId);
+        $item = $this->subscriptionManager->subscriptionIsActive($id);
         if ($item) { 
 
           return  $item['status'];
         }       
      }
 
-    // check subscription , if time is finish or order count is finish, change status value to 'finished'
-    public function saveFinishAuto($storeOwner, $subscribeId)
+    /**
+     * This function is incomplete, it is used only to show the shape of the response,
+     *  when the table of orders is complete, we will return to it.
+     * check subscription , if time is finish or order count is finish, change status value to 'finished'
+     * @throws NonUniqueResultException
+     */
+    public function checkValidityOfSubscription($storeOwner, $subscribeId)
     {
         $response = [];
         //Get full information for the current subscription
       
-        $remainingOrdersOfPackage = $this->subscriptionManager->getRemainingOrders($storeOwner, $subscribeId);
-        dd($remainingOrdersOfPackage);
-        $countCancelledOrder = $this->subscriptionManager->getCountCancelledOrders($subscribeId);
-        $countActiveCars = $this->subscriptionManager-> getCountActiveCars($storeOwner, $subscribeId);
-        
-        $remainingOrdersOfPackage['remainingOrders']= $remainingOrdersOfPackage['remainingOrderss'] + $countCancelledOrder['countCancelledOrder'];
+        // $remainingOrdersOfPackage = $this->subscriptionManager->getRemainingOrders($storeOwner, $subscribeId);
+        $remainingOrdersOfPackage = [];
       
-        $remainingOrdersOfPackage['countActiveCars'] = $countActiveCars['countActiveCars'];
-        $countDeliveredOrder = $this->subscriptionManager->getCountDeliveredOrders($storeOwner, $subscribeId);
+        // $countCarsBusy = $this->subscriptionManager->getCountCarsBusy($storeOwner, $subscribeId);
+        $countCarsBusy = 5;
+        // $remainingOrdersOfPackage['countCarsBusy'] = $countCarsBusy['countCarsBusy'];
+        $remainingOrdersOfPackage['countCarsBusy'] = $countCarsBusy;
 
-        $remainingOrdersOfPackage['countOrdersDelivered'] = $countDeliveredOrder['countDeliveredOrders'];
+        // $countDeliveredOrder = $this->subscriptionManager->getCountDeliveredOrders($storeOwner, $subscribeId);
 
+        // $remainingOrdersOfPackage['countOrdersDelivered'] = $countDeliveredOrder['countDeliveredOrders'];
+        $remainingOrdersOfPackage['countOrdersDelivered'] = 5;
+        $remainingOrdersOfPackage['subscriptionEndDate'] = null;
         if ($remainingOrdersOfPackage['subscriptionEndDate']) {
    
-            $startDate =$remainingOrdersOfPackage['subscriptionStartDate'];
+            $startDate = $remainingOrdersOfPackage['subscriptionStartDate'];
             $endDate = date_timestamp_get($remainingOrdersOfPackage['subscriptionEndDate']);
             $endDate1 = $remainingOrdersOfPackage['subscriptionEndDate'];
             
-            $now =date_timestamp_get(new DateTime("now"));
+            $now = date_timestamp_get(new DateTime("now"));
 
-            if ($endDate1->format('y-m-d') != $startDate->format('y-m-d'))  {
-
-            if ( $endDate <= $now)  {
-    
-                $this->updateFinish($remainingOrdersOfPackage['subscriptionID'], 'date finished');
-                if($this->getNextSubscription($ownerID)) {
-                    $this->changeIsFutureToFalse($this->getNextSubscription($ownerID));
-                    }
-                $response[] = ["subscripe finished, date is finished"];
-            }
-
-            if ($remainingOrdersOfPackage['remainingOrders'] == 0)  {
+            if ($endDate1->format('y-m-d') !== $startDate->format('y-m-d'))  {
+               //Check subscription expiry date
+                if ( $endDate <= $now )  {
         
-                $this->updateFinish($remainingOrdersOfPackage['subscriptionID'], 'orders finished');
-                if($this->getNextSubscription($ownerID)) {
-                $this->changeIsFutureToFalse($this->getNextSubscription($ownerID));
+                    $updateState = $this->updateSubscribeStateToFinish($remainingOrdersOfPackage['subscriptionId'], SubscriptionConstant::DATE_FINISHED);
+                
+                    if($updateState === SubscriptionConstant::UPDATE_STATE) {
+
+                        if($this->getNextSubscription($storeOwner)) {
+
+                            $this->changeIsFutureToFalse($this->getNextSubscription($storeOwner));
+
+                            }
+
+                        $response[] = [SubscriptionConstant::DATE_FINISHED];
+                     }
+
+                     $response[] = [SubscriptionConstant::ERROR];
                 }
-                $response[] = ["subscripe finished, count Orders is finished"];
+
+            if ($remainingOrdersOfPackage['remainingOrders'] === 0)  {
+        
+                $this->updateSubscribeStateToFinish($remainingOrdersOfPackage['subscriptionId'], SubscriptionConstant::ORDERS_FINISHED);
+               
+                if($updateState === SubscriptionConstant::UPDATE_STATE) {
+               
+                    if($this->getNextSubscription($storeOwner)) {
+                
+                        $this->changeIsFutureToFalse($this->getNextSubscription($storeOwner));
+                    }
+                
+                    $response[] = [SubscriptionConstant::ORDERS_FINISHED];
+                }
+
+                $response[] = [SubscriptionConstant::ERROR];
             }
                
-            if ((int)$remainingOrdersOfPackage['packageCarCount'] - (int)$countActiveCars['countActiveCars'] == 0)  {
-            $remainingOrdersOfPackage['carsStatus']= 'cars finished';
-            $response[] = ["cars finished"];
-                 }
+            if ((int)$remainingOrdersOfPackage['packageCarCount'] - (int)$countCarsBusy['countCarsBusy'] === 0)  {
+               
+                $remainingOrdersOfPackage['carsStatus']= SubscriptionConstant::CARS_FINISHED;
+               
+                $response[] = [SubscriptionConstant::CARS_FINISHED];   
+            }
          }   
         }
 
-
         $response = $this->autoMapping->map('array', RemainingOrdersResponse::class, $remainingOrdersOfPackage);
-        $subscribeStatus = $this->subscriptionManager->subscriptionIsActive($ownerID, $subscribeId);
         
+        $subscribeStatus = $this->subscriptionManager->subscriptionIsActive($subscribeId);
+    
         if ($subscribeStatus['status']) {
-            $response->subscriptionstatus = $subscribeStatus['status'];
+            $response->subscriptionStatus = $subscribeStatus['status'];
         }
      
         return $response;
@@ -271,14 +297,17 @@ class SubscriptionService
         return $this->subscriptionManager->getNextSubscription($storeOwner);
     }
 
-    public function packagebalance($storeOwner)
+    public function packagebalance($storeOwner):mixed
     {
-        $response['subscriptionStatus']='unsubscribed';
+        $response = SubscriptionConstant::UNSUBSCRIBED;
+
         $subscribe = $this->getSubscriptionCurrent($storeOwner);
         
         if ($subscribe) {
-           return $this->saveFinishAuto($storeOwner, $subscribe['id']);
+
+           return $this->checkValidityOfSubscription($storeOwner, $subscribe['id']);
         }
+
         return $response;
     }
 

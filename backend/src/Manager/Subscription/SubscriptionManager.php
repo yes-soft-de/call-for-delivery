@@ -18,6 +18,7 @@ use App\Manager\Package\PackageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Response\Subscription\MySubscriptionsResponse;
+use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionManager
 {
@@ -36,7 +37,7 @@ class SubscriptionManager
         $this->packageManager = $packageManager;
     }
 
-    public function createSubscription(SubscriptionCreateRequest $request, $status)
+    public function createSubscription(SubscriptionCreateRequest $request, $status): ?SubscriptionEntity
     { 
         $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
         
@@ -68,26 +69,35 @@ class SubscriptionManager
        return $subscriptionEntity;
     }
 
-    public function nextSubscription(SubscriptionNextRequest $request, $status)
+    public function nextSubscription(SubscriptionNextRequest $request, $status): ?SubscriptionEntity
     {  
-        $request->setStatus('inactive');
-       
-        if($status == "active") {
-             $request->setIsFuture(1);
-             }
-        else{
+        $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
+        
+        if($status == SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+           
+            $request->setIsFuture(1);
+        }
+
+        else {
+          
             $request->setIsFuture(0);
         }
-        $subscriptionEntity = $this->autoMapping->map(SubscriptionNextRequest::class, SubscriptionEntity::class, $request);
-    // tell talal and mohammed befor active    
-    // to save subscribe end date automatic
-       // $subscriptionEntity->setEndDate(date_modify(new DateTime('now'),'+1 month'));
 
-        $this->entityManager->persist($subscriptionEntity);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
+       $package = $this->packageManager->getPackage($request->getPackage());
+       $request->setPackage($package);
 
-        return $subscriptionEntity;
+       $storeOwnerProfile = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStoreOwner());
+       $request->setStoreOwner($storeOwnerProfile);
+      
+       $subscriptionEntity = $this->autoMapping->map(SubscriptionNextRequest::class, SubscriptionEntity::class, $request);
+    
+    //    $subscriptionEntity->setStartDate(new DateTime());
+
+       $this->entityManager->persist($subscriptionEntity);
+
+       $this->entityManager->flush();
+
+       return $subscriptionEntity;
     }
 
     public function getIsFuture($storeOwner): ?array
@@ -116,21 +126,22 @@ class SubscriptionManager
         return $subscribeEntity;
     }
 
-    public function updateFinish($id, $status)
+    public function updateSubscribeStateToFinish($id, $status): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
         
         $subscribeEntity->setStatus($status);
 
-        if (!$subscribeEntity) {
-            return null;
+        if ($subscribeEntity) {
+
+            $this->autoMapping->map(SubscriptionUpdateFinishRequest::class, SubscriptionEntity::class, $subscribeEntity);
+
+            $this->entityManager->flush();
+
+            return SubscriptionConstant::UPDATE_STATE;
         }
 
-        $subscribeEntity = $this->autoMapping->map(SubscriptionUpdateFinishRequest::class, SubscriptionEntity::class, $subscribeEntity);
-
-        $this->entityManager->flush();
-
-        return $subscribeEntity;
+        return SubscriptionConstant::ERROR;
     }
 
     public function changeIsFutureToFalse($id)
@@ -164,9 +175,9 @@ class SubscriptionManager
         return $this->subscribeRepository->getSubscriptionById($id);
     }
 
-    public function subscriptionIsActive($ownerID, $subscribeId)
+    public function subscriptionIsActive($id)
     {
-        return $this->subscribeRepository->subscriptionIsActive($ownerID, $subscribeId);
+        return $this->subscribeRepository->subscriptionIsActive($id);
     }
 
     public function countpendingContracts()
@@ -184,14 +195,20 @@ class SubscriptionManager
         return $this->subscribeRepository->countCancelledContracts();
     }
 
-    public function getRemainingOrders($storeOwner, $id)
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getRemainingOrders($storeOwner, $id): ?array
     {
         return $this->subscribeRepository->getRemainingOrders($storeOwner, $id);
     }
 
-    public function getCountActiveCars($ownerID, $subscribeId)
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getCountCarsBusy($storeOwner, $id): ?array
     {
-        return $this->subscribeRepository->getCountActiveCars($ownerID, $subscribeId);
+        return $this->subscribeRepository->getCountCarsBusy($storeOwner, $id);
     }
    
     public function getCountCancelledOrders($subscribeId)
@@ -199,9 +216,9 @@ class SubscriptionManager
         return $this->subscribeRepository->getCountCancelledOrders($subscribeId);
     }
 
-    public function getCountDeliveredOrders($ownerID, $subscribeId)
+    public function getCountDeliveredOrders($storeOwner, $id)
     {
-        return $this->subscribeRepository->getCountDeliveredOrders($ownerID, $subscribeId);
+        return $this->subscribeRepository->getCountDeliveredOrders($storeOwner, $id);
     }
 
     public function subscripeNewUsers($fromDate, $toDate)

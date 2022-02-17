@@ -15,4 +15,12 @@ final class SubscriptionConstant
     const SUBSCRIBE_NOT_CURRENT = "no";
    
     const CARS_FINISHED = "cars finished";
+
+    const ORDERS_FINISHED = "cars finished";
+
+    const DATE_FINISHED = "date finished";
+
+    const UPDATE_STATE = "updated";
+
+    const UNSUBSCRIBED = "unsubscribed";
 }

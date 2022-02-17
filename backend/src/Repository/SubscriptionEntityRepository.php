@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+// use App\Constant\Order\OrderStateConstant;
 use App\Entity\SubscriptionEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
+// use App\Entity\OrderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,7 +43,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getSubscriptionCurrent($storeOwner): mixed
+    public function getSubscriptionCurrent($storeOwner): ?array
     {
         return $this->createQueryBuilder('subscription')
 
@@ -83,39 +85,116 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-
-
-
-    public function getRemainingOrders($storeOwner, $id)
+    public function subscriptionIsActive($id)
     {
         return $this->createQueryBuilder('subscription')
-//remainingOrderss : remainingOrders with cancelled order
-            ->select('subscription.id as subscriptionID', 
-                'packageEntity.orderCount - count(orderEntity.id) as remainingOrderss', 'packageEntity.orderCount',
-                'packageEntity.name as packageName', 'packageEntity.id as packageID',
-                'count(orderEntity.id) as countOrdersDelivered ', 'subscription.startDate as subscriptionStartDate',
-                'subscription.endDate as subscriptionEndDate', 'storeOwnerProfileEntity.storeOwnerId',
-                'storeOwnerProfileEntity.storeOwnerName', 'packageEntity.carCount as packageCarCount', 
-                'packageEntity.orderCount as packageOrderCount')
 
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribeId = subscription.id')
+            ->select('subscription.status')
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = subscription.storeOwner')
+            ->andWhere("subscription.id = :id")
 
-            ->leftJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.packageID')
-
-            ->andWhere('subscription.storeOwner = :storeOwner' )
-            ->andWhere('subscription.id=:id')
-            
-            ->addGroupBy('subscription.id')
-            ->setMaxResults(1)
-            ->addOrderBy('subscription.id', 'DESC')
-           
-            ->setParameter('storeOwner', $storeOwner)
             ->setParameter('id', $id)
-           
+
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param $storeOwner
+     * @param $id
+     * @return array|null
+     * @throws NonUniqueResultException
+     */
+    public function getRemainingOrders($storeOwner, $id)
+    {
+        // return $this->createQueryBuilder('subscription')
+        //     ->select('subscription.id as subscriptionId', 'subscription.startDate as subscriptionStartDate',
+        //      'subscription.endDate as subscriptionEndDate')
+        //     ->addSelect('packageEntity.orderCount', 'packageEntity.name as packageName', 'packageEntity.id as packageId', 
+        //      'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount')
+        //     ->addSelect('packageEntity.orderCount - count(orderEntity.id) as remainingOrders',
+        //      'count(orderEntity.id) as countOrdersDelivered ')
+        //     ->addSelect('storeOwnerProfileEntity.storeOwnerId', 'storeOwnerProfileEntity.storeOwnerName')
+           
+        //     ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribe = subscription.id')
+
+        //     ->innerJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = subscription.storeOwner')
+
+        //     ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+
+        //     ->andWhere('subscription.storeOwner = :storeOwner' )
+        //     ->andWhere('subscription.id=:id')
+            
+        //     ->addGroupBy('subscription.id')
+
+        //     ->setMaxResults(1)
+
+        //     ->addOrderBy('subscription.id', 'DESC')
+           
+        //     ->setParameter('storeOwner', $storeOwner)
+        //     ->setParameter('id', $id)
+           
+        //     ->getQuery()
+        //     ->getOneOrNullResult();
+    }
+
+    /**
+     * @param $storeOwner
+     * @param $subscribeId
+     * @return array|null
+     * @throws NonUniqueResultException
+     */
+    public function getCountCarsBusy($storeOwner, $id)
+    {
+        // return $this->createQueryBuilder('subscription')
+
+        //     ->select('count(orderEntity.id) as countCarsBusy')
+
+        //     ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.subscribe = subscription.id')
+
+        //     ->andWhere("orderEntity.storeOwner = :storeOwner")
+        //     ->andWhere("orderEntity.subscribe = :id")
+        //     ->andWhere("orderEntity.state != :delivered")
+        //     ->andWhere("orderEntity.state != :cancelled")
+           
+        //     ->setParameter('storeOwner', $storeOwner)
+        //     ->setParameter('id', $id)
+        //     ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+        //     ->setParameter('cancelled', OrderStateConstant::ORDER_STATE_CANCEL)
+
+        //     ->getQuery()
+        //     ->getOneOrNullResult();
+    }
+    
+    public function getCountDeliveredOrders($storeOwner, $id)
+    {
+        // return $this->createQueryBuilder('subscription')
+
+        //     ->select('count (orderEntity.id) as countDeliveredOrders')
+           
+        //     ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = subscription.id')
+           
+        //     ->andWhere("orderEntity.storeOwner = :storeOwner")
+        //     ->andWhere("subscription.id = :id")
+        //     ->andWhere("orderEntity.state = :delivered")
+
+        //     ->setParameter('storeOwner', $storeOwner)
+        //     ->setParameter('id', $id)
+        //     ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+        //     ->getQuery()
+        //     ->getOneOrNullResult();
     }
 }
