@@ -56,7 +56,7 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $stcPay;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $employeeCount;
 
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionEntity::class)]
@@ -240,12 +240,12 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getEmployeeCount(): ?int
+    public function getEmployeeCount(): ?string
     {
         return $this->employeeCount;
     }
 
-    public function setEmployeeCount(?int $employeeCount): self
+    public function setEmployeeCount(?string $employeeCount): self
     {
         $this->employeeCount = $employeeCount;
 
