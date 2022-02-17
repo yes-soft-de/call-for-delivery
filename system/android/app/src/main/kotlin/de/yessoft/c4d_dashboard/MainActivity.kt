@@ -1,4 +1,4 @@
-package de.yessoft.c4d_dashboard
+package de.yessoft.system_control
 
 import io.flutter.embedding.android.FlutterActivity
 
