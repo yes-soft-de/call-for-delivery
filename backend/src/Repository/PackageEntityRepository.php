@@ -27,8 +27,8 @@ class PackageEntityRepository extends ServiceEntityRepository
     public function getActivePackages(): mixed
     {
         return $this->createQueryBuilder('package')
-            ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
-                      package.status, package.city')
+            ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, 
+            package.status, package.city')
 
             ->andWhere("package.status = :status")
             

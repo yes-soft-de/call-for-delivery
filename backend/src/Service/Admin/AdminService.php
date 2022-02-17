@@ -4,7 +4,7 @@ namespace App\Service\Admin;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
-use App\Manager\AdminManager;
+use App\Manager\Admin\AdminManager;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 

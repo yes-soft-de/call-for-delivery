@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Manager\Admin;
 
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
