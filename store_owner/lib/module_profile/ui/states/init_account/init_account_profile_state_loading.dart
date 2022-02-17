@@ -37,7 +37,7 @@ class InitAccountStateLoading extends States {
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10)),
+                          BorderRadius.circular(10),
                       color: Theme.of(context).primaryColor),
                   child: Center(
                     child: Text(

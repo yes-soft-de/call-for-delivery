@@ -121,7 +121,7 @@ class ProfileService {
     ActionResponse? actionResponse = await _manager.createOwnerProfile(request);
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
-    } else if (actionResponse.statusCode != '201') {
+    } else if (actionResponse.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
