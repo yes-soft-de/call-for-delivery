@@ -440,7 +440,9 @@
     "emptyField": "حقل فارغ",
     "InvalidInput": "غير صالح",
     "storeNameIsToShort": "اسم المتجر يجب ألا يقل عن ثلاث حروف",
-    "chooseYourCompanyCapacity": "اختر حجم منشأتك"
+    "chooseYourCompanyCapacity": "اختر حجم منشأتك",
+    "packageInfo": "معلومات الحزمة"
+
 
 
 }

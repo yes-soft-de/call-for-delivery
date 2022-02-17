@@ -4449,6 +4449,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Package Info`
+  String get packageInfo {
+    return Intl.message(
+      'Package Info',
+      name: 'packageInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

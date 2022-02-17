@@ -7,35 +7,47 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../main.dart' as _i57;
-import '../module_about/about_module.dart' as _i51;
+import '../main.dart' as _i70;
+import '../module_about/about_module.dart' as _i59;
 import '../module_about/hive/about_hive_helper.dart' as _i3;
-import '../module_about/manager/about_manager.dart' as _i31;
+import '../module_about/manager/about_manager.dart' as _i33;
 import '../module_about/repository/about_repository.dart' as _i20;
-import '../module_about/service/about_service/about_service.dart' as _i32;
-import '../module_about/state_manager/about_screen_state_manager.dart' as _i44;
-import '../module_auth/authoriazation_module.dart' as _i46;
+import '../module_about/service/about_service/about_service.dart' as _i34;
+import '../module_about/state_manager/about_screen_state_manager.dart' as _i48;
+import '../module_auth/authoriazation_module.dart' as _i50;
 import '../module_auth/manager/auth_manager/auth_manager.dart' as _i21;
 import '../module_auth/presistance/auth_prefs_helper.dart' as _i4;
 import '../module_auth/repository/auth/auth_repository.dart' as _i17;
 import '../module_auth/service/auth_service/auth_service.dart' as _i22;
 import '../module_auth/state_manager/forget_state_manager/forget_password_state_manager.dart'
-    as _i24;
+    as _i25;
 import '../module_auth/state_manager/login_state_manager/login_state_manager.dart'
-    as _i26;
+    as _i27;
 import '../module_auth/state_manager/register_state_manager/register_state_manager.dart'
-    as _i29;
+    as _i30;
 import '../module_auth/ui/screen/forget_password_screen/forget_password_screen.dart'
-    as _i37;
-import '../module_auth/ui/screen/login_screen/login_screen.dart' as _i38;
-import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i41;
-import '../module_chat/chat_module.dart' as _i53;
-import '../module_chat/manager/chat/chat_manager.dart' as _i33;
+    as _i40;
+import '../module_auth/ui/screen/login_screen/login_screen.dart' as _i41;
+import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i44;
+import '../module_branches/branches_module.dart' as _i68;
+import '../module_branches/manager/branches_manager.dart' as _i35;
+import '../module_branches/repository/branches_repository.dart' as _i23;
+import '../module_branches/service/branches_list_service.dart' as _i51;
+import '../module_branches/state_manager/branches_list_state_manager/branches_list_state_manager.dart'
+    as _i52;
+import '../module_branches/state_manager/update_branches_state_manager/update_branches_state_manager.dart'
+    as _i58;
+import '../module_branches/ui/screens/branches_list_screen/branches_list_screen.dart'
+    as _i61;
+import '../module_branches/ui/screens/update_branches_screen/update_branches_screen.dart'
+    as _i67;
+import '../module_chat/chat_module.dart' as _i62;
+import '../module_chat/manager/chat/chat_manager.dart' as _i36;
 import '../module_chat/presistance/chat_hive_helper.dart' as _i5;
-import '../module_chat/repository/chat/chat_repository.dart' as _i23;
-import '../module_chat/service/chat/char_service.dart' as _i34;
-import '../module_chat/state_manager/chat_state_manager.dart' as _i35;
-import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i47;
+import '../module_chat/repository/chat/chat_repository.dart' as _i24;
+import '../module_chat/service/chat/char_service.dart' as _i37;
+import '../module_chat/state_manager/chat_state_manager.dart' as _i38;
+import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i53;
 import '../module_localization/presistance/localization_preferences_helper/localization_preferences_helper.dart'
     as _i8;
 import '../module_localization/service/localization_service/localization_service.dart'
@@ -43,38 +55,46 @@ import '../module_localization/service/localization_service/localization_service
 import '../module_network/http_client/http_client.dart' as _i15;
 import '../module_notifications/preferences/notification_preferences/notification_preferences.dart'
     as _i11;
-import '../module_notifications/repository/notification_repo.dart' as _i27;
+import '../module_notifications/repository/notification_repo.dart' as _i28;
 import '../module_notifications/service/fire_notification_service/fire_notification_service.dart'
-    as _i36;
+    as _i39;
 import '../module_notifications/service/local_notification_service/local_notification_service.dart'
     as _i7;
-import '../module_profile/manager/profile/profile.manager.dart' as _i39;
-import '../module_profile/module_profile.dart' as _i56;
+import '../module_profile/manager/profile/profile.manager.dart' as _i42;
+import '../module_profile/module_profile.dart' as _i66;
 import '../module_profile/prefs_helper/profile_prefs_helper.dart' as _i12;
-import '../module_profile/repository/profile/profile.repository.dart' as _i28;
-import '../module_profile/service/profile/profile.service.dart' as _i40;
+import '../module_profile/repository/profile/profile.repository.dart' as _i29;
+import '../module_profile/service/profile/profile.service.dart' as _i43;
 import '../module_profile/state_manager/activity/activity_state_manager.dart'
-    as _i45;
-import '../module_profile/state_manager/edit_profile/edit_profile.dart' as _i48;
-import '../module_profile/state_manager/init_account.state_manager.dart'
     as _i49;
+import '../module_profile/state_manager/edit_profile/edit_profile.dart' as _i54;
+import '../module_profile/state_manager/init_account.state_manager.dart'
+    as _i55;
 import '../module_profile/ui/screen/activity_screen/activity_screen.dart'
-    as _i52;
-import '../module_profile/ui/screen/edit_profile/edit_profile.dart' as _i54;
-import '../module_profile/ui/screen/init_account_screen.dart' as _i55;
-import '../module_settings/settings_module.dart' as _i50;
+    as _i60;
+import '../module_profile/ui/screen/edit_profile/edit_profile.dart' as _i63;
+import '../module_profile/ui/screen/init_account_screen.dart' as _i64;
+import '../module_settings/settings_module.dart' as _i56;
 import '../module_settings/ui/settings_page/choose_local_page.dart' as _i18;
-import '../module_settings/ui/settings_page/settings_page.dart' as _i42;
-import '../module_splash/splash_module.dart' as _i43;
-import '../module_splash/ui/screen/splash_screen.dart' as _i30;
+import '../module_settings/ui/settings_page/settings_page.dart' as _i45;
+import '../module_splash/splash_module.dart' as _i46;
+import '../module_splash/ui/screen/splash_screen.dart' as _i31;
+import '../module_subscription/manager/subscription_manager.dart' as _i47;
+import '../module_subscription/repository/subscription_repository.dart' as _i32;
+import '../module_subscription/service/subscription_service.dart' as _i57;
+import '../module_subscription/state_manager/init_subscription_state_manager.dart'
+    as _i65;
+import '../module_subscription/subscriptions_module.dart' as _i71;
+import '../module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart'
+    as _i69;
 import '../module_theme/pressistance/theme_preferences_helper.dart' as _i13;
 import '../module_theme/service/theme_service/theme_service.dart' as _i16;
 import '../module_upload/manager/upload_manager/upload_manager.dart' as _i19;
 import '../module_upload/repository/upload_repository/upload_repository.dart'
     as _i14;
 import '../module_upload/service/image_upload/image_upload_service.dart'
-    as _i25;
-import '../utils/global/global_state_manager.dart' as _i58;
+    as _i26;
+import '../utils/global/global_state_manager.dart' as _i72;
 import '../utils/helpers/firestore_helper.dart' as _i6;
 import '../utils/logger/logger.dart'
     as _i10; // ignore_for_file: unnecessary_lambdas
@@ -116,100 +136,132 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i21.AuthManager(get<_i17.AuthRepository>()));
   gh.factory<_i22.AuthService>(() =>
       _i22.AuthService(get<_i4.AuthPrefsHelper>(), get<_i21.AuthManager>()));
-  gh.factory<_i23.ChatRepository>(() =>
-      _i23.ChatRepository(get<_i15.ApiClient>(), get<_i22.AuthService>()));
-  gh.factory<_i24.ForgotPassStateManager>(
-      () => _i24.ForgotPassStateManager(get<_i22.AuthService>()));
-  gh.factory<_i25.ImageUploadService>(
-      () => _i25.ImageUploadService(get<_i19.UploadManager>()));
-  gh.factory<_i26.LoginStateManager>(
-      () => _i26.LoginStateManager(get<_i22.AuthService>()));
-  gh.factory<_i27.NotificationRepo>(() =>
-      _i27.NotificationRepo(get<_i15.ApiClient>(), get<_i22.AuthService>()));
-  gh.factory<_i28.ProfileRepository>(() =>
-      _i28.ProfileRepository(get<_i15.ApiClient>(), get<_i22.AuthService>()));
-  gh.factory<_i29.RegisterStateManager>(
-      () => _i29.RegisterStateManager(get<_i22.AuthService>()));
-  gh.factory<_i30.SplashScreen>(
-      () => _i30.SplashScreen(get<_i22.AuthService>()));
-  gh.factory<_i31.AboutManager>(
-      () => _i31.AboutManager(get<_i20.AboutRepository>()));
-  gh.factory<_i32.AboutService>(
-      () => _i32.AboutService(get<_i31.AboutManager>()));
-  gh.factory<_i33.ChatManager>(
-      () => _i33.ChatManager(get<_i23.ChatRepository>()));
-  gh.factory<_i34.ChatService>(() => _i34.ChatService(get<_i33.ChatManager>()));
-  gh.factory<_i35.ChatStateManager>(
-      () => _i35.ChatStateManager(get<_i34.ChatService>()));
-  gh.factory<_i36.FireNotificationService>(() => _i36.FireNotificationService(
-      get<_i11.NotificationsPrefHelper>(), get<_i27.NotificationRepo>()));
-  gh.factory<_i37.ForgotPassScreen>(
-      () => _i37.ForgotPassScreen(get<_i24.ForgotPassStateManager>()));
-  gh.factory<_i38.LoginScreen>(
-      () => _i38.LoginScreen(get<_i26.LoginStateManager>()));
-  gh.factory<_i39.ProfileManager>(
-      () => _i39.ProfileManager(get<_i28.ProfileRepository>()));
-  gh.factory<_i40.ProfileService>(() => _i40.ProfileService(
-      get<_i39.ProfileManager>(),
+  gh.factory<_i23.BranchesRepository>(() =>
+      _i23.BranchesRepository(get<_i15.ApiClient>(), get<_i22.AuthService>()));
+  gh.factory<_i24.ChatRepository>(() =>
+      _i24.ChatRepository(get<_i15.ApiClient>(), get<_i22.AuthService>()));
+  gh.factory<_i25.ForgotPassStateManager>(
+      () => _i25.ForgotPassStateManager(get<_i22.AuthService>()));
+  gh.factory<_i26.ImageUploadService>(
+      () => _i26.ImageUploadService(get<_i19.UploadManager>()));
+  gh.factory<_i27.LoginStateManager>(
+      () => _i27.LoginStateManager(get<_i22.AuthService>()));
+  gh.factory<_i28.NotificationRepo>(() =>
+      _i28.NotificationRepo(get<_i15.ApiClient>(), get<_i22.AuthService>()));
+  gh.factory<_i29.ProfileRepository>(() =>
+      _i29.ProfileRepository(get<_i15.ApiClient>(), get<_i22.AuthService>()));
+  gh.factory<_i30.RegisterStateManager>(
+      () => _i30.RegisterStateManager(get<_i22.AuthService>()));
+  gh.factory<_i31.SplashScreen>(
+      () => _i31.SplashScreen(get<_i22.AuthService>()));
+  gh.factory<_i32.SubscriptionsRepository>(() => _i32.SubscriptionsRepository(
+      get<_i15.ApiClient>(), get<_i22.AuthService>()));
+  gh.factory<_i33.AboutManager>(
+      () => _i33.AboutManager(get<_i20.AboutRepository>()));
+  gh.factory<_i34.AboutService>(
+      () => _i34.AboutService(get<_i33.AboutManager>()));
+  gh.factory<_i35.BranchesManager>(
+      () => _i35.BranchesManager(get<_i23.BranchesRepository>()));
+  gh.factory<_i36.ChatManager>(
+      () => _i36.ChatManager(get<_i24.ChatRepository>()));
+  gh.factory<_i37.ChatService>(() => _i37.ChatService(get<_i36.ChatManager>()));
+  gh.factory<_i38.ChatStateManager>(
+      () => _i38.ChatStateManager(get<_i37.ChatService>()));
+  gh.factory<_i39.FireNotificationService>(() => _i39.FireNotificationService(
+      get<_i11.NotificationsPrefHelper>(), get<_i28.NotificationRepo>()));
+  gh.factory<_i40.ForgotPassScreen>(
+      () => _i40.ForgotPassScreen(get<_i25.ForgotPassStateManager>()));
+  gh.factory<_i41.LoginScreen>(
+      () => _i41.LoginScreen(get<_i27.LoginStateManager>()));
+  gh.factory<_i42.ProfileManager>(
+      () => _i42.ProfileManager(get<_i29.ProfileRepository>()));
+  gh.factory<_i43.ProfileService>(() => _i43.ProfileService(
+      get<_i42.ProfileManager>(),
       get<_i12.ProfilePreferencesHelper>(),
       get<_i22.AuthService>()));
-  gh.factory<_i41.RegisterScreen>(
-      () => _i41.RegisterScreen(get<_i29.RegisterStateManager>()));
-  gh.factory<_i42.SettingsScreen>(() => _i42.SettingsScreen(
+  gh.factory<_i44.RegisterScreen>(
+      () => _i44.RegisterScreen(get<_i30.RegisterStateManager>()));
+  gh.factory<_i45.SettingsScreen>(() => _i45.SettingsScreen(
       get<_i22.AuthService>(),
       get<_i9.LocalizationService>(),
       get<_i16.AppThemeDataService>(),
-      get<_i36.FireNotificationService>()));
-  gh.factory<_i43.SplashModule>(
-      () => _i43.SplashModule(get<_i30.SplashScreen>()));
-  gh.factory<_i44.AboutScreenStateManager>(() => _i44.AboutScreenStateManager(
-      get<_i9.LocalizationService>(), get<_i32.AboutService>()));
-  gh.factory<_i45.ActivityStateManager>(() => _i45.ActivityStateManager(
-      get<_i40.ProfileService>(), get<_i22.AuthService>()));
-  gh.factory<_i46.AuthorizationModule>(() => _i46.AuthorizationModule(
-      get<_i38.LoginScreen>(),
-      get<_i41.RegisterScreen>(),
-      get<_i37.ForgotPassScreen>()));
-  gh.factory<_i47.ChatPage>(() => _i47.ChatPage(
-      get<_i35.ChatStateManager>(),
-      get<_i25.ImageUploadService>(),
+      get<_i39.FireNotificationService>()));
+  gh.factory<_i46.SplashModule>(
+      () => _i46.SplashModule(get<_i31.SplashScreen>()));
+  gh.factory<_i47.SubscriptionsManager>(
+      () => _i47.SubscriptionsManager(get<_i32.SubscriptionsRepository>()));
+  gh.factory<_i48.AboutScreenStateManager>(() => _i48.AboutScreenStateManager(
+      get<_i9.LocalizationService>(), get<_i34.AboutService>()));
+  gh.factory<_i49.ActivityStateManager>(() => _i49.ActivityStateManager(
+      get<_i43.ProfileService>(), get<_i22.AuthService>()));
+  gh.factory<_i50.AuthorizationModule>(() => _i50.AuthorizationModule(
+      get<_i41.LoginScreen>(),
+      get<_i44.RegisterScreen>(),
+      get<_i40.ForgotPassScreen>()));
+  gh.factory<_i51.BranchesListService>(() => _i51.BranchesListService(
+      get<_i35.BranchesManager>(), get<_i12.ProfilePreferencesHelper>()));
+  gh.factory<_i52.BranchesListStateManager>(
+      () => _i52.BranchesListStateManager(get<_i51.BranchesListService>()));
+  gh.factory<_i53.ChatPage>(() => _i53.ChatPage(
+      get<_i38.ChatStateManager>(),
+      get<_i26.ImageUploadService>(),
       get<_i22.AuthService>(),
       get<_i5.ChatHiveHelper>()));
-  gh.factory<_i48.EditProfileStateManager>(() => _i48.EditProfileStateManager(
-      get<_i25.ImageUploadService>(),
-      get<_i40.ProfileService>(),
+  gh.factory<_i54.EditProfileStateManager>(() => _i54.EditProfileStateManager(
+      get<_i26.ImageUploadService>(),
+      get<_i43.ProfileService>(),
       get<_i22.AuthService>()));
-  gh.factory<_i49.InitAccountStateManager>(() => _i49.InitAccountStateManager(
-      get<_i40.ProfileService>(),
+  gh.factory<_i55.InitAccountStateManager>(() => _i55.InitAccountStateManager(
+      get<_i43.ProfileService>(),
       get<_i22.AuthService>(),
-      get<_i25.ImageUploadService>()));
-  gh.factory<_i50.SettingsModule>(() => _i50.SettingsModule(
-      get<_i42.SettingsScreen>(), get<_i18.ChooseLocalScreen>()));
-  gh.factory<_i51.AboutModule>(
-      () => _i51.AboutModule(get<_i44.AboutScreenStateManager>()));
-  gh.factory<_i52.ActivityScreen>(
-      () => _i52.ActivityScreen(get<_i45.ActivityStateManager>()));
-  gh.factory<_i53.ChatModule>(
-      () => _i53.ChatModule(get<_i47.ChatPage>(), get<_i22.AuthService>()));
-  gh.factory<_i54.EditProfileScreen>(
-      () => _i54.EditProfileScreen(get<_i48.EditProfileStateManager>()));
-  gh.factory<_i55.InitAccountScreen>(
-      () => _i55.InitAccountScreen(get<_i49.InitAccountStateManager>()));
-  gh.factory<_i56.ProfileModule>(() => _i56.ProfileModule(
-      get<_i52.ActivityScreen>(),
-      get<_i54.EditProfileScreen>(),
-      get<_i55.InitAccountScreen>()));
-  gh.factory<_i57.MyApp>(() => _i57.MyApp(
+      get<_i26.ImageUploadService>()));
+  gh.factory<_i56.SettingsModule>(() => _i56.SettingsModule(
+      get<_i45.SettingsScreen>(), get<_i18.ChooseLocalScreen>()));
+  gh.factory<_i57.SubscriptionService>(
+      () => _i57.SubscriptionService(get<_i47.SubscriptionsManager>()));
+  gh.factory<_i58.UpdateBranchStateManager>(
+      () => _i58.UpdateBranchStateManager(get<_i51.BranchesListService>()));
+  gh.factory<_i59.AboutModule>(
+      () => _i59.AboutModule(get<_i48.AboutScreenStateManager>()));
+  gh.factory<_i60.ActivityScreen>(
+      () => _i60.ActivityScreen(get<_i49.ActivityStateManager>()));
+  gh.factory<_i61.BranchesListScreen>(
+      () => _i61.BranchesListScreen(get<_i52.BranchesListStateManager>()));
+  gh.factory<_i62.ChatModule>(
+      () => _i62.ChatModule(get<_i53.ChatPage>(), get<_i22.AuthService>()));
+  gh.factory<_i63.EditProfileScreen>(
+      () => _i63.EditProfileScreen(get<_i54.EditProfileStateManager>()));
+  gh.factory<_i64.InitAccountScreen>(
+      () => _i64.InitAccountScreen(get<_i55.InitAccountStateManager>()));
+  gh.factory<_i65.InitSubscriptionStateManager>(() =>
+      _i65.InitSubscriptionStateManager(
+          get<_i57.SubscriptionService>(),
+          get<_i43.ProfileService>(),
+          get<_i22.AuthService>(),
+          get<_i26.ImageUploadService>()));
+  gh.factory<_i66.ProfileModule>(() => _i66.ProfileModule(
+      get<_i60.ActivityScreen>(),
+      get<_i63.EditProfileScreen>(),
+      get<_i64.InitAccountScreen>()));
+  gh.factory<_i67.UpdateBranchScreen>(
+      () => _i67.UpdateBranchScreen(get<_i58.UpdateBranchStateManager>()));
+  gh.factory<_i68.InitAccountModule>(() => _i68.InitAccountModule(
+      get<_i61.BranchesListScreen>(), get<_i67.UpdateBranchScreen>()));
+  gh.factory<_i69.InitSubscriptionScreen>(() =>
+      _i69.InitSubscriptionScreen(get<_i65.InitSubscriptionStateManager>()));
+  gh.factory<_i70.MyApp>(() => _i70.MyApp(
       get<_i16.AppThemeDataService>(),
       get<_i9.LocalizationService>(),
-      get<_i36.FireNotificationService>(),
+      get<_i39.FireNotificationService>(),
       get<_i7.LocalNotificationService>(),
-      get<_i43.SplashModule>(),
-      get<_i46.AuthorizationModule>(),
-      get<_i53.ChatModule>(),
-      get<_i50.SettingsModule>(),
-      get<_i51.AboutModule>(),
-      get<_i56.ProfileModule>()));
-  gh.singleton<_i58.GlobalStateManager>(_i58.GlobalStateManager());
+      get<_i46.SplashModule>(),
+      get<_i50.AuthorizationModule>(),
+      get<_i62.ChatModule>(),
+      get<_i56.SettingsModule>(),
+      get<_i59.AboutModule>(),
+      get<_i66.ProfileModule>()));
+  gh.factory<_i71.InitAccountModule>(
+      () => _i71.InitAccountModule(get<_i69.InitSubscriptionScreen>()));
+  gh.singleton<_i72.GlobalStateManager>(_i72.GlobalStateManager());
   return get;
 }
