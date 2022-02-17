@@ -428,7 +428,7 @@
     "acceptOrderDescribtion": "يمكنك الموافقة على مهمتك لتوصيل الطلبية",
     "deliverDescribtion": "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة",
     "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال",
-    "countryCode": "رقم النداء",
+    "countryCode": "النداء",
     "confirmPasswordAgain": "تأكيد كلمة السر",
     "writePasswordAgain": "ادخل كلمة المرور مجددا",
     "city": "المدينة",
@@ -436,7 +436,9 @@
     "bankNameHint": "الراجحي",
     "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
     "pleaseEnterValidCountryCode": "ادخال خاطئ",
-    "storeAccountInit": "تهيئة الحساب"
+    "storeAccountInit": "تهيئة الحساب",
+    "emptyField": "حقل فارغ",
+    "InvalidInput": "غير صالح"
 
 
 }

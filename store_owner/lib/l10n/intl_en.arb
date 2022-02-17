@@ -145,7 +145,7 @@
     "reasonOfTheReport": "Reason of the report",
     "createNewReport": "Create new Report",
     "help": "Help",
-    "pleaseCompleteTheForm": "Please Complete the Form",
+    "pleaseCompleteTheForm": "Field can't be empty",
     "reportSent": "Report sent",
     "reasonIsRequired": "Reason is Required",
     "pleaseProvideUsWithTheClientName": "Please Provide us with the Client Name",
@@ -429,7 +429,7 @@
     "acceptOrderDescribtion": "You can accept your mission to deliver package",
     "deliverDescribtion": "After accepting your mission you will deliver package to the right destination",
     "earnCashDescribtion": "After you doing your job your effort will be rewarded by earning money",
-    "countryCode": "Country code",
+    "countryCode": "Code",
     "confirmPasswordAgain": "Confirm Password",
     "writePasswordAgain": "Write Password Again",
     "city": "City",
@@ -437,7 +437,9 @@
     "bankNameHint": "Bimo",
     "pleaseEnterValidPhoneNumber": "Please enter phone number",
     "pleaseEnterValidCountryCode": "invalid character",
-    "storeAccountInit": "Setup Account"
+    "storeAccountInit": "Setup Account",
+    "emptyField": "Empty Field",
+    "InvalidInput": "Invalid"
 
 
 
