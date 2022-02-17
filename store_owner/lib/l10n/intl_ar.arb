@@ -438,7 +438,9 @@
     "pleaseEnterValidCountryCode": "ادخال خاطئ",
     "storeAccountInit": "تهيئة الحساب",
     "emptyField": "حقل فارغ",
-    "InvalidInput": "غير صالح"
+    "InvalidInput": "غير صالح",
+    "storeNameIsToShort": "اسم المتجر يجب ألا يقل عن ثلاث حروف",
+    "chooseYourCompanyCapacity": "اختر حجم منشأتك"
 
 
 }

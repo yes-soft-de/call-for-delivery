@@ -4429,6 +4429,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Store name must not be less than 3 character`
+  String get storeNameIsToShort {
+    return Intl.message(
+      'Store name must not be less than 3 character',
+      name: 'storeNameIsToShort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your capacity`
+  String get chooseYourCompanyCapacity {
+    return Intl.message(
+      'Choose your capacity',
+      name: 'chooseYourCompanyCapacity',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -132,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Receipt Location"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
+        "chooseYourCompanyCapacity":
+            MessageLookupByLibrary.simpleMessage("Choose your capacity"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
@@ -568,6 +570,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
+        "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
+            "Store name must not be less than 3 character"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),

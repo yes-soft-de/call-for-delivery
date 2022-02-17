@@ -439,7 +439,11 @@
     "pleaseEnterValidCountryCode": "invalid character",
     "storeAccountInit": "Setup Account",
     "emptyField": "Empty Field",
-    "InvalidInput": "Invalid"
+    "InvalidInput": "Invalid",
+    "storeNameIsToShort": "Store name must not be less than 3 character",
+    "chooseYourCompanyCapacity": "Choose your capacity"
+
+
 
 
 
