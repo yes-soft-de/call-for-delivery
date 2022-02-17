@@ -1,6 +1,6 @@
 class ImageAsset {
   static const ROOT = 'assets/images/';
-  static const LOGO = ROOT + 'logo.png';
+  static const LOGO = ROOT + 'control.png';
   static const PLACEHOLDER = ROOT + 'place.png';
   static const SEND_ON_ME = ROOT + 'send_on_me.jpg';
   static const STORE_CATEGORY_SUPER_MARKET = ROOT + 'super_market.jpg';
@@ -29,4 +29,6 @@ class SvgAsset {
 class LottieAsset {
   static const ROOT = 'assets/animations/';
   static const LOADING_CART = ROOT + 'cart_loading.json';
+  static const SPLASH = ROOT + 'splash.json';
+  static const LOGIN_IMAGE = ROOT + 'login_image.json';
 }

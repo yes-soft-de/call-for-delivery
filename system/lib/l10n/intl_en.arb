@@ -419,9 +419,9 @@
     "recordNumber": "Record Number",
     "nationalAddress": "National Address",
     "taxNumber": "Tax Number",
-    "captainRated": "Captain rated successfully"
-
-
+    "captainRated": "Captain rated successfully",
+    "fine": "I'm fine now",
+    "notWell": "I'm not well"
 
 
 

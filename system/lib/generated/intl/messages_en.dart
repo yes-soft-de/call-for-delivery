@@ -206,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "fine": MessageLookupByLibrary.simpleMessage("I\'m fine now"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -320,6 +321,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription not verified yet"),
         "notVerifiedNumber": MessageLookupByLibrary.simpleMessage(
             "You must enter the code first"),
+        "notWell": MessageLookupByLibrary.simpleMessage("I\'m not well"),
         "note": MessageLookupByLibrary.simpleMessage("Notes"),
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),

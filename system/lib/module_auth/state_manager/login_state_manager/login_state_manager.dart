@@ -22,15 +22,15 @@ class LoginStateManager {
     _authService.authListener.listen((event) {
       _loadingStateSubject.add(AsyncSnapshot.nothing());
       switch (event) {
-        case AuthStatus.CODE_SENT:
-          _screenState.verifyFirst(getIt<AuthPrefsHelper>().getUsername(),
-              getIt<AuthPrefsHelper>().getPassword());
-          break;
+//        case AuthStatus.CODE_SENT:
+//          _screenState.verifyFirst(getIt<AuthPrefsHelper>().getUsername(),
+//              getIt<AuthPrefsHelper>().getPassword());
+//          break;
         case AuthStatus.AUTHORIZED:
           _screenState.moveToNext();
           break;
-        case AuthStatus.NOT_LOGGED_IN:
-          _screenState.moveToForgetPage();
+//        case AuthStatus.NOT_LOGGED_IN:
+//          _screenState.moveToForgetPage();
           break;
         default:
           _loginStateSubject.add(LoginStateInit(_screenState));
