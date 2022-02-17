@@ -16,22 +16,22 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Colors.orange;
+    return Colors.blue.shade900;
   }
 
   static Color get PrimaryDarker {
-    return Colors.orange;
+    return Colors.blue.shade900;
   }
 
   static Color get AccentColor {
-    return Colors.orangeAccent;
+    return Colors.blue.shade900;
   }
 
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
-    final lightScheme = ColorScheme.fromSeed(seedColor: Colors.orange);
+    final lightScheme = ColorScheme.fromSeed(seedColor: Colors.blue.shade900);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: Colors.orange, brightness: Brightness.dark);
+        seedColor:Colors.blue.shade900, brightness: Brightness.dark);
     if (dark == true) {
       return ThemeData(
         brightness: Brightness.dark,
@@ -39,7 +39,7 @@ class AppThemeDataService {
         primaryColorDark: PrimaryDarker,
         useMaterial3: true,
    //     colorScheme: darkScheme,
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.blue,
         focusColor: PrimaryColor,
         cardColor: Colors.grey[150],
         fontFamily: GoogleFonts.almarai().fontFamily,
@@ -52,7 +52,7 @@ class AppThemeDataService {
         useMaterial3: true,
     //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.blue,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
         fontFamily: GoogleFonts.almarai().fontFamily,

@@ -1,3 +1,4 @@
+import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -20,9 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      // _getNextRoute().then((route) {
-      //   Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-      // });
+       _getNextRoute().then((route) {
+         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+       });
     });
     super.initState();
   }
@@ -30,13 +31,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        child: Image.asset(ImageAsset.LOGO,height: 150,width: 150,),
-      ),
+      body:
+      SafeArea(child:  Container(
+          color: Colors.white,
+          child: Center(child: Image.asset(ImageAsset.SPLASH,fit: BoxFit.fill,))) )
     );
   }
 
   Future<String> _getNextRoute() async {
-    return AuthorizationRoutes.LOGIN_SCREEN;
+    await Future.delayed(Duration(seconds: 6));
+    if (widget._authService.isLoggedIn) {
+      return  HomeRoutes.ROUTE_HOME;
+    } else {
+      return AuthorizationRoutes.LOGIN_SCREEN;
+    }
   }
 }

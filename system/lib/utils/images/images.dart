@@ -1,6 +1,6 @@
 class ImageAsset {
   static const ROOT = 'assets/images/';
-  static const LOGO = ROOT + 'logo.png';
+  static const LOGO = ROOT + 'control.png';
   static const PLACEHOLDER = ROOT + 'place.png';
   static const SEND_ON_ME = ROOT + 'send_on_me.jpg';
   static const STORE_CATEGORY_SUPER_MARKET = ROOT + 'super_market.jpg';
@@ -13,6 +13,9 @@ class ImageAsset {
   static const LANGUAGE = ROOT + 'translate.png';
   static const ARAB_LANGUAGE = ROOT + 'saudi-arabia.png';
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
+  static const SPLASHH = ROOT + 'splash.gif';
+  static const SPLASH = ROOT + 'security.gif';
+  static const FIRST = ROOT + 'bg.gif';
 }
 
 class SvgAsset {

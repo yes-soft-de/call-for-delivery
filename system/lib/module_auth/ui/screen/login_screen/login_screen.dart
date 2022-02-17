@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -78,14 +79,6 @@ class LoginScreenState extends State<LoginScreen> {
           }
         },
         child: Scaffold(
-          appBar: CustomMandoobAppBar.appBar(context,
-              title: S.of(context).login,
-              onTap: returnToMainScreen != null
-                  ? () {
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //     MainRoutes.MAIN_SCREEN, (route) => false);
-                    }
-                  : null),
           body: FixedContainer(
             child: loadingSnapshot.connectionState != ConnectionState.waiting
                 ? _currentStates.getUI(context)
@@ -115,47 +108,33 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-    if (returnToMainScreen != null) {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,
-      //         arguments: returnToMainScreen)
-      //     .then((value) {
-      //   if (returnToMainScreen == 0) {
-      //     showDialog(
-      //         context: context, builder: (context) => getIt<FavouritScreen>());
-      //   }
-      // });
-    } else if (returnToPreviousScreen != null) {
-      Navigator.of(context).pop();
-    } else {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-    }
+     Navigator.of(context)
+         .pushNamedAndRemoveUntil( HomeRoutes.ROUTE_HOME, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);
   }
 
-  void verifyFirst(String? userID, String? password) {
-    if (userID == null || password == null) {
-      getIt<AuthService>().logout();
-      Navigator.pushNamedAndRemoveUntil(
-          context, SplashRoutes.SPLASH_SCREEN, (route) => false);
-      return;
-    } else {
-      Navigator.pushNamed(context, AuthorizationRoutes.REGISTER_SCREEN,
-          arguments: {'username': '$userID', 'password': '$password'});
-      CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: S.current.notVerifiedNumber)
-          .show(context);
-    }
-  }
-
-  void restPass(ResetPassRequest request) {
-    widget._stateManager.resetCodeRequest(request, this);
-  }
-
-  void moveToForgetPage() {
-    Navigator.of(context).pushNamed(AuthorizationRoutes.ForgotPass_SCREEN);
-  }
+//  void verifyFirst(String? userID, String? password) {
+//    if (userID == null || password == null) {
+//      getIt<AuthService>().logout();
+//      Navigator.pushNamedAndRemoveUntil(
+//          context, SplashRoutes.SPLASH_SCREEN, (route) => false);
+//      return;
+//    } else {
+//      Navigator.pushNamed(context, AuthorizationRoutes.REGISTER_SCREEN,
+//          arguments: {'username': '$userID', 'password': '$password'});
+//      CustomFlushBarHelper.createError(
+//              title: S.current.warnning, message: S.current.notVerifiedNumber)
+//          .show(context);
+//    }
+//  }
+//
+//  void restPass(ResetPassRequest request) {
+//    widget._stateManager.resetCodeRequest(request, this);
+//  }
+//
+//  void moveToForgetPage() {
+//    Navigator.of(context).pushNamed(AuthorizationRoutes.ForgotPass_SCREEN);
+//  }
 }
