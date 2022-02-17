@@ -7,6 +7,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:lottie/lottie.dart';
 
 @injectable
 class SplashScreen extends StatefulWidget {
@@ -34,12 +35,12 @@ class _SplashScreenState extends State<SplashScreen> {
       body:
       SafeArea(child:  Container(
           color: Colors.white,
-          child: Center(child: Image.asset(ImageAsset.SPLASH,fit: BoxFit.fill,))) )
+          child: Center(child: Lottie.asset(LottieAsset.SPLASH,fit: BoxFit.fill,repeat: false))) )
     );
   }
 
   Future<String> _getNextRoute() async {
-    await Future.delayed(Duration(seconds: 6));
+    await Future.delayed(Duration(seconds: 3));
     if (widget._authService.isLoggedIn) {
       return  HomeRoutes.ROUTE_HOME;
     } else {

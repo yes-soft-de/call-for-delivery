@@ -13,9 +13,6 @@ class ImageAsset {
   static const LANGUAGE = ROOT + 'translate.png';
   static const ARAB_LANGUAGE = ROOT + 'saudi-arabia.png';
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
-  static const SPLASHH = ROOT + 'splash.gif';
-  static const SPLASH = ROOT + 'security.gif';
-  static const FIRST = ROOT + 'bg.gif';
 }
 
 class SvgAsset {
@@ -32,4 +29,6 @@ class SvgAsset {
 class LottieAsset {
   static const ROOT = 'assets/animations/';
   static const LOADING_CART = ROOT + 'cart_loading.json';
+  static const SPLASH = ROOT + 'splash.json';
+  static const LOGIN_IMAGE = ROOT + 'login_image.json';
 }
