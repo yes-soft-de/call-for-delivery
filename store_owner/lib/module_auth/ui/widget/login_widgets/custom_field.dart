@@ -22,6 +22,7 @@ class CustomLoginFormField extends StatefulWidget {
   final TextStyle? style;
   final ValueChanged<String>? onChanged;
   final bool numbers;
+  final bool halfField;
   @override
   _CustomLoginFormFieldState createState() => _CustomLoginFormFieldState();
 
@@ -43,8 +44,8 @@ class CustomLoginFormField extends StatefulWidget {
       this.phoneHint = true,
       this.onChanged,
       this.style,
-      this.numbers = false
-      });
+      this.numbers = false,
+      this.halfField = false});
 }
 
 class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
@@ -90,10 +91,14 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                               }
                               if (value == null) {
                                 clean = false;
-                                return S.of(context).pleaseCompleteField;
+                                return widget.halfField
+                                    ? S.current.emptyField
+                                    : S.of(context).pleaseCompleteField;
                               } else if (value.isEmpty) {
                                 clean = false;
-                                return S.of(context).pleaseCompleteField;
+                                return widget.halfField
+                                    ? S.current.emptyField
+                                    : S.of(context).pleaseCompleteField;
                               } else if (value.length < 6 && widget.password) {
                                 clean = false;
                                 return S.of(context).passwordIsTooShort;
@@ -104,18 +109,25 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                 return S.of(context).phoneNumbertooShort;
                               } else if (widget.phone && value.length > 9) {
                                 return S.current.phoneNumberLong;
-                              } else if (widget.password && widget.confirmationPassword != null && 
+                              } else if (widget.password &&
+                                  widget.confirmationPassword != null &&
                                   widget.confirmationPassword != value) {
                                 clean = false;
                                 return S.current.passwordNotMatch;
                               } else if (widget.phone &&
-                                  RegExp(r'[0-9٠-٩]').allMatches(value).length != value.length) {
+                                  RegExp(r'[0-9٠-٩]')
+                                          .allMatches(value)
+                                          .length !=
+                                      value.length) {
                                 clean = false;
-                                return S.current.pleaseEnterValidPhoneNumber;
+                                return widget.halfField ? S.current.InvalidInput : S.current.pleaseEnterValidPhoneNumber;
                               } else if (widget.numbers &&
-                                  RegExp(r'[0-9٠-٩]').allMatches(value).length != value.length) {
+                                  RegExp(r'[0-9٠-٩]')
+                                          .allMatches(value)
+                                          .length !=
+                                      value.length) {
                                 clean = false;
-                                return S.current.pleaseEnterValidCountryCode;
+                                return  widget.halfField ? S.current.InvalidInput : S.current.pleaseEnterValidCountryCode;
                               } else {
                                 clean = true;
                                 return null;
@@ -125,7 +137,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       onTap: widget.onTap,
                       controller: widget.controller,
                       readOnly: widget.readOnly,
-                      keyboardType: widget.phone | widget.numbers ? TextInputType.phone : null,
+                      keyboardType: widget.phone | widget.numbers
+                          ? TextInputType.phone
+                          : null,
                       obscureText: widget.password && !showPassword,
                       onEditingComplete:
                           widget.last ? null : () => node.nextFocus(),

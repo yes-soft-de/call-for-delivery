@@ -79,10 +79,11 @@ class LoginStateInit extends LoginState {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 28.0),
                     child: SizedBox(
-                      width: 150,
+                      width: 125,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomLoginFormField(
+                          halfField: true,
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
@@ -91,7 +92,7 @@ class LoginStateInit extends LoginState {
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
                             padding:
-                                const EdgeInsets.only(right: 8.0, left: 8.0),
+                                const EdgeInsets.only(right: 4.0, left: 4.0),
                             child: Container(
                               width: 30,
                               decoration: BoxDecoration(
@@ -187,22 +188,25 @@ class LoginStateInit extends LoginState {
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: AuthButtons(
-                firstButtonTitle: S.of(context).login,
-                secondButtonTitle: S.of(context).register,
-                loading: screen.loadingSnapshot.connectionState ==
-                    ConnectionState.waiting,
-                secondButtonTab: () => Navigator.of(context)
-                    .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN,
-                        arguments: screen.args),
-                firstButtonTab: () {
-                  if (_loginKey.currentState!.validate()) {
-                    screen.loginClient(
-                      countryController.text + usernameController.text, passwordController.text);
-                  }
-                }),
+          Visibility(
+            visible: MediaQuery.of(context).viewInsets.bottom == 0,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: AuthButtons(
+                  firstButtonTitle: S.of(context).login,
+                  secondButtonTitle: S.of(context).register,
+                  loading: screen.loadingSnapshot.connectionState ==
+                      ConnectionState.waiting,
+                  secondButtonTab: () => Navigator.of(context)
+                      .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN,
+                          arguments: screen.args),
+                  firstButtonTab: () {
+                    if (_loginKey.currentState!.validate()) {
+                      screen.loginClient(
+                        countryController.text + usernameController.text, passwordController.text);
+                    }
+                  }),
+            ),
           ),
         ],
       ),
