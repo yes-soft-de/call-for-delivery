@@ -62,9 +62,13 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionEntity::class)]
     private $subscriptionEntities;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: OrderEntity::class)]
+    private $orderEntities;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
+        $this->orderEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -276,6 +280,36 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($subscriptionEntity->getStoreOwner() === $this) {
                 $subscriptionEntity->setStoreOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderEntity[]
+     */
+    public function getOrderEntities(): Collection
+    {
+        return $this->orderEntities;
+    }
+
+    public function addOrderEntity(OrderEntity $orderEntity): self
+    {
+        if (!$this->orderEntities->contains($orderEntity)) {
+            $this->orderEntities[] = $orderEntity;
+            $orderEntity->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderEntity(OrderEntity $orderEntity): self
+    {
+        if ($this->orderEntities->removeElement($orderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderEntity->getStoreOwner() === $this) {
+                $orderEntity->setStoreOwner(null);
             }
         }
 
