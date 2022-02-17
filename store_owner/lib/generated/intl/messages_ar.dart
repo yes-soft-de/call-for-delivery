@@ -131,6 +131,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر موقع الاستلام"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("اختر مدينة تواجدك"),
+        "chooseYourCompanyCapacity":
+            MessageLookupByLibrary.simpleMessage("اختر حجم منشأتك"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
@@ -567,6 +569,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
+        "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
+            "اسم المتجر يجب ألا يقل عن ثلاث حروف"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":

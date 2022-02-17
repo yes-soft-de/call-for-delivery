@@ -131,6 +131,15 @@ class InitAccountStateProfileLoaded extends States {
                 controller: _nameController,
                 title: S.current.storeName,
                 hint: S.current.store,
+                onChanged: () {
+                  screenState.refresh();
+                },
+                validator: (String? v) {
+                  if (v == null) return S.current.pleaseCompleteField;
+                  if (v.length < 3) {
+                    return S.current.storeNameIsToShort;
+                  }
+                },
               ),
               // phone number
               Padding(
@@ -258,7 +267,7 @@ class InitAccountStateProfileLoaded extends States {
                                 elevation: 3,
                                 validator: (String? value) {
                                   if (value == null) {
-                                    return S.current.chooseYourSize;
+                                    return S.current.chooseYourCompanyCapacity;
                                   }
                                 },
                                 value: selectedSize,
