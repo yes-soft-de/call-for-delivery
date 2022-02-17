@@ -52,7 +52,8 @@ class StoreOwnerProfileManager
             $storeProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
             $storeProfile->setStatus('inactive');
             $storeProfile->setStoreOwnerId($userRegister->getId());
-            $storeProfile->setStoreOwnerName($request->getUserName());
+            // $storeProfile->setStoreOwnerName($request->getUserName());
+            $storeProfile->setStoreOwnerName(0);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();
