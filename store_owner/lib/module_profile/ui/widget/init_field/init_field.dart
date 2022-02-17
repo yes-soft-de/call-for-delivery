@@ -7,14 +7,19 @@ class InitField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final bool last;
-  const InitField({
-    Key? key,
-    required this.icon,
-    required this.title,
-    required this.controller,
-    required this.hint,
-    this.last = false,
-  }) : super(key: key);
+  final FormFieldValidator<String>? validator;
+  final Function()? onChanged;
+  const InitField(
+      {Key? key,
+      required this.icon,
+      required this.title,
+      required this.controller,
+      required this.hint,
+      this.last = false,
+      this.validator,
+      this.onChanged
+      })
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,6 +59,8 @@ class InitField extends StatelessWidget {
                   controller: controller,
                   hintText: hint,
                   last: last,
+                  validatorFunction: validator,
+                  onChanged: onChanged,
                 ),
               ),
               SizedBox(

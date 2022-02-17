@@ -21,6 +21,7 @@ class CustomFormField extends StatefulWidget {
   final bool validator;
   final bool phone;
   final Function()? onChanged;
+  final FormFieldValidator<String>? validatorFunction;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
@@ -38,7 +39,9 @@ class CustomFormField extends StatefulWidget {
       this.last = false,
       this.validator = true,
       this.phone = false,
-      this.onChanged});
+      this.onChanged,
+      this.validatorFunction
+      });
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -86,7 +89,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             }
             setState(() {});
           },
-          validator: widget.validator
+          validator:widget.validatorFunction != null ? widget.validatorFunction : widget.validator
               ? (value) {
                   if (mode == AutovalidateMode.disabled) {
                     setState(() {
