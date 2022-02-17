@@ -204,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "fine": MessageLookupByLibrary.simpleMessage("I\'m fine now"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -319,6 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لم يتم تفعيل الباقة بعد"),
         "notVerifiedNumber":
             MessageLookupByLibrary.simpleMessage("يجب عليك إدخال الرمز أولاً"),
+        "notWell": MessageLookupByLibrary.simpleMessage("I\'m not well"),
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),

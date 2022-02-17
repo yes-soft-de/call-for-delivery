@@ -4229,6 +4229,26 @@ class S {
       args: [],
     );
   }
+
+  /// `I'm fine now`
+  String get fine {
+    return Intl.message(
+      'I\'m fine now',
+      name: 'fine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I'm not well`
+  String get notWell {
+    return Intl.message(
+      'I\'m not well',
+      name: 'notWell',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
