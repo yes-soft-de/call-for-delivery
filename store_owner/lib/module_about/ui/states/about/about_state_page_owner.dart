@@ -44,7 +44,7 @@ class AboutStatePageOwner extends AboutState {
                 label: S.current.weDeliver,
                 description: S.current.weDeliverDescribtion),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
@@ -86,8 +86,7 @@ class AboutStatePageOwner extends AboutState {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        S
-                            .of(context)
+                        S.of(context)
                             .toFindOutMorePleaseLeaveYourPhonenandWeWill,
                         textAlign: TextAlign.center,
                       ),

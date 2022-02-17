@@ -40,7 +40,6 @@ class RegisterStateInit extends RegisterState {
   bool agreed = false;
   @override
   Widget getUI(BuildContext context) {
-    print(RegExp(r'[0-9٠-٩]').allMatches('959796748').length);
     return Stack(
       children: [
         Form(
@@ -97,10 +96,11 @@ class RegisterStateInit extends RegisterState {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 28.0),
                     child: SizedBox(
-                      width: 150,
+                        width: 125,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomLoginFormField(
+                          halfField:true,
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
@@ -109,7 +109,7 @@ class RegisterStateInit extends RegisterState {
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
                             padding:
-                                const EdgeInsets.only(right: 8.0, left: 8.0),
+                                const EdgeInsets.only(right: 4.0, left: 4.0),
                             child: Container(
                               width: 30,
                               decoration: BoxDecoration(

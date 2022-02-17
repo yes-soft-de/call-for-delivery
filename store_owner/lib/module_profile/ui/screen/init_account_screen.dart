@@ -52,7 +52,7 @@ class InitAccountScreenState extends State<InitAccountScreen> {
     return Scaffold(
       appBar: CustomMandoobAppBar.appBar(context,
           title: S.current.storeAccountInit,
-          canGoBack: Navigator.of(context).canPop()),
+          canGoBack: false),
       body: currentState.getUI(context),
     );
   }

@@ -46,6 +46,7 @@ class InitAccountStateProfileLoaded extends States {
         if (key.currentState?.validate() == true && imagePath != null) {
           screenState.currentState = InitAccountStateLoading(
               screenState, S.current.uploadingAndSubmitting);
+          screenState.refresh();
           getIt<ImageUploadService>().uploadImage(imagePath).then((image) {
             if (image == null) {
               screenState.currentState =
@@ -57,14 +58,13 @@ class InitAccountStateProfileLoaded extends States {
               return;
             }
             ProfileRequest profileRequest = ProfileRequest(
-              name: _nameController.text,
-              phone: _countryController.text + _phoneController.text,
-              city: _cityController.text,
-              image: image,
-              bankName: _bankNameController.text,
-              bankAccountNumber: _bankNumberController.text,
-              employeeSize: selectedSize
-            );
+                name: _nameController.text,
+                phone: _countryController.text + _phoneController.text,
+                city: _cityController.text,
+                image: image,
+                bankName: _bankNameController.text,
+                bankAccountNumber: _bankNumberController.text,
+                employeeSize: selectedSize);
             screenState.initProfile(profileRequest);
           });
         } else if (imagePath == null) {
@@ -220,6 +220,7 @@ class InitAccountStateProfileLoaded extends States {
                 icon: Icons.password_rounded,
                 controller: _bankNumberController,
                 title: S.current.bankAccountNumber,
+                last: true,
                 hint: 'xxxxxxxxxxxxxx',
               ),
               //size
@@ -252,7 +253,8 @@ class InitAccountStateProfileLoaded extends States {
                           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 elevation: 3,
                                 validator: (String? value) {
                                   if (value == null) {
@@ -295,15 +297,15 @@ class InitAccountStateProfileLoaded extends States {
     var sizeDropdowns = <DropdownMenuItem<String>>[];
     sizeDropdowns.add(DropdownMenuItem(
       child: Text(S.of(context).smallLessThan20Employee),
-      value: 'sm',
+      value: '1-20',
     ));
     sizeDropdowns.add(DropdownMenuItem(
       child: Text(S.of(context).mediumMoreThan20EmployeesLessThan100),
-      value: 'md',
+      value: '21-100',
     ));
     sizeDropdowns.add(DropdownMenuItem(
       child: Text(S.of(context).largeMoreThan100Employees),
-      value: 'lg',
+      value: '+100',
     ));
 
     return sizeDropdowns;

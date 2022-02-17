@@ -1500,10 +1500,10 @@ class S {
     );
   }
 
-  /// `Please Complete the Form`
+  /// `Field can't be empty`
   String get pleaseCompleteTheForm {
     return Intl.message(
-      'Please Complete the Form',
+      'Field can\'t be empty',
       name: 'pleaseCompleteTheForm',
       desc: '',
       args: [],
@@ -4320,10 +4320,10 @@ class S {
     );
   }
 
-  /// `Country code`
+  /// `Code`
   String get countryCode {
     return Intl.message(
-      'Country code',
+      'Code',
       name: 'countryCode',
       desc: '',
       args: [],
@@ -4405,6 +4405,26 @@ class S {
     return Intl.message(
       'Setup Account',
       name: 'storeAccountInit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty Field`
+  String get emptyField {
+    return Intl.message(
+      'Empty Field',
+      name: 'emptyField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid`
+  String get InvalidInput {
+    return Intl.message(
+      'Invalid',
+      name: 'InvalidInput',
       desc: '',
       args: [],
     );
