@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
+use App\Repository\StoreOwnerProfileEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StoreOwnerProfileEntityRepository::class)]
@@ -54,8 +56,16 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $stcPay;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $employeeCount;
+
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionEntity::class)]
+    private $subscriptionEntities;
+
+    public function __construct()
+    {
+        $this->subscriptionEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -230,14 +240,44 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
-    public function getEmployeeCount(): ?int
+    public function getEmployeeCount(): ?string
     {
         return $this->employeeCount;
     }
 
-    public function setEmployeeCount(?int $employeeCount): self
+    public function setEmployeeCount(?string $employeeCount): self
     {
         $this->employeeCount = $employeeCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubscriptionEntity[]
+     */
+    public function getSubscriptionEntities(): Collection
+    {
+        return $this->subscriptionEntities;
+    }
+
+    public function addSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if (!$this->subscriptionEntities->contains($subscriptionEntity)) {
+            $this->subscriptionEntities[] = $subscriptionEntity;
+            $subscriptionEntity->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriptionEntity(SubscriptionEntity $subscriptionEntity): self
+    {
+        if ($this->subscriptionEntities->removeElement($subscriptionEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionEntity->getStoreOwner() === $this) {
+                $subscriptionEntity->setStoreOwner(null);
+            }
+        }
 
         return $this;
     }

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -48,6 +49,9 @@ class BaseController extends AbstractController
     const STORE_OWNER_PROFILE_NOT_EXIST = ["store owner profile not exist!", "9157"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
+    // subscription
+    const SUBSCRIPTION_WAITE_ACTIVE = ["You have a subscription waiting to be activated", "9301"];
+    const SUBSCRIPTION_UNSUBSCRIBED = ["You do not have a subscription", "9302"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
 
@@ -147,6 +151,18 @@ class BaseController extends AbstractController
         {
             $encoders = [new JsonEncoder()];
             $normalizers = [new ObjectNormalizer()];
+
+            //--->start update
+            //This modification represents a solution to this problem:
+            //A circular reference has been detected when serializing the object of class "Proxies\__CG__\App\Entity\NameEntity" (configured limit: 1).
+            $defaultContext = [
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                    return $object->getId();
+                },
+            ];
+//            $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
+            //end update -------->
+
             $this->serializer = new Serializer($normalizers, $encoders);
             $result = $this->serializer->serialize($result, "json", [
                 'enable_max_depth' => true]);

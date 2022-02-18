@@ -4,7 +4,7 @@ namespace App\Manager\Setting;
 
 use App\AutoMapping;
 use App\Entity\SettingEntity;
-use App\Repository\Setting\SettingEntityRepository;
+use App\Repository\SettingEntityRepository;
 use App\Request\Setting\SettingRequest;
 use Doctrine\ORM\EntityManagerInterface;
 

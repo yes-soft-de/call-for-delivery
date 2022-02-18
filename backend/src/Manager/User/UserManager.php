@@ -4,7 +4,7 @@ namespace App\Manager\User;
 
 use App\AutoMapping;
 use App\Entity\UserEntity;
-use App\Repository\User\UserEntityRepository;
+use App\Repository\UserEntityRepository;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

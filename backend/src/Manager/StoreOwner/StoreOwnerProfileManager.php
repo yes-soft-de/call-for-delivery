@@ -4,7 +4,7 @@ namespace App\Manager\StoreOwner;
 
 use App\AutoMapping;
 use App\Entity\StoreOwnerProfileEntity;
-use App\Repository\StoreOwner\StoreOwnerProfileEntityRepository;
+use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,7 +52,8 @@ class StoreOwnerProfileManager
             $storeProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
             $storeProfile->setStatus('inactive');
             $storeProfile->setStoreOwnerId($userRegister->getId());
-            $storeProfile->setStoreOwnerName($request->getUserName());
+            // $storeProfile->setStoreOwnerName($request->getUserName());
+            $storeProfile->setStoreOwnerName(0);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();
@@ -101,5 +102,14 @@ class StoreOwnerProfileManager
     public function getStoreProfileByStoreId($userId): ?array
     {
         return $this->storeOwnerProfileEntityRepository->getStoreProfileByStoreId($userId);
+    }
+
+    /**
+     * @param $id
+     * @return StoreOwnerProfileEntity|null
+     */
+    public function getStoreOwnerProfile($id): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->find($id);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\Setting\SettingEntityRepository;
+use App\Repository\SettingEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SettingEntityRepository::class)]
