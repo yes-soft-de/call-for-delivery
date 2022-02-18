@@ -73,7 +73,7 @@ class SubscriptionManager
     {  
         $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
         
-        if($status == SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+        if($status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
            
             $request->setIsFuture(1);
         }
@@ -175,7 +175,12 @@ class SubscriptionManager
         return $this->subscribeRepository->getSubscriptionById($id);
     }
 
-    public function subscriptionIsActive($id)
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function subscriptionIsActive($id):mixed
     {
         return $this->subscribeRepository->subscriptionIsActive($id);
     }

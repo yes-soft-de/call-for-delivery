@@ -26,7 +26,12 @@ class SubscriptionService
         $this->subscriptionManager = $subscriptionManager;
     }
 
-    public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionResponse
+    /**
+     * @param SubscriptionCreateRequest $request
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
         $response = SubscriptionConstant::ERROR;
 
@@ -39,7 +44,7 @@ class SubscriptionService
   
             if($subscriptionCurrent) {
 
-                $status = $this->subscriptionIsActive($request->getStoreOwner(), $subscriptionCurrent['id']);
+                $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
             }
 
             $subscriptionResult = $this->subscriptionManager->createSubscription($request, $status);
@@ -49,7 +54,7 @@ class SubscriptionService
 
         return $response;
     }
-    
+
     public function nextSubscription(SubscriptionNextRequest $request): mixed
     {
         $isFuture = $this->getIsFuture($request->getStoreOwner());
@@ -57,7 +62,7 @@ class SubscriptionService
 
            $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
         
-           $status = $this->subscriptionIsActive($request->getStoreOwner(), $subscriptionCurrent['id']);
+           $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
 
            $result = $this->subscriptionManager->nextSubscription($request, $status);
             
@@ -157,14 +162,19 @@ class SubscriptionService
         return $response;
     }
 
-    public function subscriptionIsActive($id)
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function subscriptionIsActive($id):mixed
     {
         // $res = $this->checkValidityOfSubscription($storeOwner, $subscribeId);
         // if($res->carsStatus){
 
         //     return SubscriptionConstant::CARS_FINISHED;
         // }
- 
+
         $item = $this->subscriptionManager->subscriptionIsActive($id);
         if ($item) { 
 

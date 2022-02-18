@@ -85,7 +85,12 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function subscriptionIsActive($id)
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function subscriptionIsActive($id):mixed
     {
         return $this->createQueryBuilder('subscription')
 
