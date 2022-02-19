@@ -18,33 +18,5 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StoreOwnerBranchEntity::class);
     }
-
-    // /**
-    //  * @return StoreOwnerBranchEntity[] Returns an array of StoreOwnerBranchEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?StoreOwnerBranchEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
 }
