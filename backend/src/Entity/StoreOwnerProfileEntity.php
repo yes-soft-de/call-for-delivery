@@ -62,9 +62,13 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionEntity::class)]
     private $subscriptionEntities;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: StoreOwnerBranchEntity::class)]
+    private $storeOwnerBranchEntities;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
+        $this->storeOwnerBranchEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -276,6 +280,36 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($subscriptionEntity->getStoreOwner() === $this) {
                 $subscriptionEntity->setStoreOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StoreOwnerBranchEntity[]
+     */
+    public function getStoreOwnerBranchEntities(): Collection
+    {
+        return $this->storeOwnerBranchEntities;
+    }
+
+    public function addStoreOwnerBranchEntity(StoreOwnerBranchEntity $storeOwnerBranchEntity): self
+    {
+        if (!$this->storeOwnerBranchEntities->contains($storeOwnerBranchEntity)) {
+            $this->storeOwnerBranchEntities[] = $storeOwnerBranchEntity;
+            $storeOwnerBranchEntity->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOwnerBranchEntity(StoreOwnerBranchEntity $storeOwnerBranchEntity): self
+    {
+        if ($this->storeOwnerBranchEntities->removeElement($storeOwnerBranchEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOwnerBranchEntity->getStoreOwner() === $this) {
+                $storeOwnerBranchEntity->setStoreOwner(null);
             }
         }
 
