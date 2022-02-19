@@ -5,6 +5,7 @@ namespace App\Manager\User;
 use App\AutoMapping;
 use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
+use App\Request\Admin\AdminRegisterRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -107,6 +108,22 @@ class UserManager
         $this->entityManager->flush();
 
         return $userRegister;
+    }
+
+    public function createAdmin(AdminRegisterRequest $request): UserEntity
+    {
+        $adminRegister = $this->autoMapping->map(AdminRegisterRequest::class, UserEntity::class, $request);
+
+        $user = new UserEntity($request->getUserId());
+
+        if ($request->getPassword()) {
+            $adminRegister->setPassword($this->encoder->hashPassword($user, $request->getPassword()));
+        }
+
+        $this->entityManager->persist($adminRegister);
+        $this->entityManager->flush();
+
+        return $adminRegister;
     }
 
     public function getUserRoleByUserId($userId): array

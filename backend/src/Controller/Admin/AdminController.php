@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Admin\AdminRegisterRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Service\Admin\AdminService;
 use stdClass;
@@ -20,9 +21,9 @@ use OpenApi\Annotations as OA;
  */
 class AdminController extends BaseController
 {
-    private $autoMapping;
-    private $validator;
-    private $adminService;
+    private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
+    private AdminService $adminService;
 
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminService $adminService)
     {
@@ -67,7 +68,7 @@ class AdminController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserRegisterRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, AdminRegisterRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {
