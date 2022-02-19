@@ -2,9 +2,13 @@
 
 namespace App\Controller\Main;
 
+use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\User\UserFilterRequest;
 use App\Service\Main\MainService;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
@@ -14,11 +18,13 @@ use OpenApi\Annotations as OA;
  */
 class MainController extends BaseController
 {
-    private $mainService;
+    private AutoMapping $autoMapping;
+    private MainService $mainService;
 
-    public function __construct(SerializerInterface $serializer, MainService $mainService)
+    public function __construct(AutoMapping $autoMapping, SerializerInterface $serializer, MainService $mainService)
     {
         parent::__construct($serializer);
+        $this->autoMapping = $autoMapping;
         $this->mainService = $mainService;
     }
 
@@ -52,6 +58,52 @@ class MainController extends BaseController
     public function checkBackendHealth(): JsonResponse
     {
         $response = $this->mainService->checkBackendHealth($this->getUserId());
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * For testing/debugging issues
+     *
+     * @Route("filterusers", name="filterUsers", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\RequestBody(
+     *      description="filter users according to the following options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="userId"),
+     *          @OA\Property(type="string", property="role"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the users info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function filterUsers(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserFilterRequest::class, (object)$data);
+
+        $response = $this->mainService->filterUsers($request);
 
         return $this->response($response, self::FETCH);
     }

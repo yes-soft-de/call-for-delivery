@@ -141,4 +141,9 @@ class UserManager
 
         return "yes";
     }
+
+    public function filterUsers($request): ?array
+    {
+        return $this->userRepository->filterUsers($request);
+    }
 }

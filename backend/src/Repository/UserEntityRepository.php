@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UserEntity;
+use App\Request\User\UserFilterRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -85,5 +86,25 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function filterUsers(UserFilterRequest $request): ?array
+    {
+        $query = $this->createQueryBuilder('userEntity')
+            ->select('userEntity.id', 'userEntity.userId', 'userEntity.roles');
+
+        if($request->getUserId()) {
+            $query->andWhere('userEntity.userId = :userId');
+            $query->setParameter('userId', $request->getUserId());
+        }
+
+        if($request->getRole()) {
+            $query->andWhere('userEntity.roles LIKE :roles');
+            $query->setParameter('roles', '%'.$request->getRole().'%');
+        }
+
+        $query->orderBy('userEntity.id', 'DESC');
+
+        return $query->getQuery()->getResult();
     }
 }

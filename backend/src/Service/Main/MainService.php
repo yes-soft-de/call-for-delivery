@@ -7,7 +7,7 @@ use App\Service\User\UserService;
 
 class MainService
 {
-    private $userService;
+    private UserService $userService;
 
     public function __construct(UserService $userService)
     {
@@ -27,5 +27,10 @@ class MainService
         $response['result'] = BackendHealthStatusConstant::HEART_IS_BEATING_STATUS;
 
         return $response;
+    }
+
+    public function filterUsers($request): array
+    {
+        return $this->userService->filterUsers($request);
     }
 }
