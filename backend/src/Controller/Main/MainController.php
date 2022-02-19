@@ -5,6 +5,7 @@ namespace App\Controller\Main;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\User\UserFilterRequest;
+use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Service\Main\MainService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -106,5 +107,53 @@ class MainController extends BaseController
         $response = $this->mainService->filterUsers($request);
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("userpasswordbysuperadmin", name="updateUserPasswordBySuperAdmin", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\RequestBody(
+     *      description="update request fields",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="password"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the users info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function updateUserPasswordBySuperAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserPasswordUpdateBySuperAdminRequest::class, (object)$data);
+
+        $result = $this->mainService->updateUserPasswordBySuperAdmin($request);
+
+        if($result === "no user was found!") {
+            return $this->response($result, self::ERROR_USER_NOT_FOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

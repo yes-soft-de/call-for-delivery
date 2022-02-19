@@ -3,8 +3,11 @@
 namespace App\Service\User;
 
 use App\AutoMapping;
+use App\Entity\UserEntity;
 use App\Manager\User\UserManager;
+use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Response\User\FilterUserResponse;
+use App\Response\User\UserRegisterResponse;
 
 class UserService
 {
@@ -39,5 +42,16 @@ class UserService
         }
 
         return $response;
+    }
+
+    public function updateUserPasswordBySuperAdmin(UserPasswordUpdateBySuperAdminRequest $request): string|UserRegisterResponse
+    {
+        $userResult = $this->userManager->updateUserPasswordBySuperAdmin($request);
+
+        if($userResult === "no user was found!") {
+            return $userResult;
+        }
+
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userResult);
     }
 }

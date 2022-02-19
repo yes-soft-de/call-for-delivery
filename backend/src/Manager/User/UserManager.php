@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
 use App\Request\Admin\AdminRegisterRequest;
+use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -145,5 +146,24 @@ class UserManager
     public function filterUsers($request): ?array
     {
         return $this->userRepository->filterUsers($request);
+    }
+
+    public function updateUserPasswordBySuperAdmin(UserPasswordUpdateBySuperAdminRequest $request): string|UserEntity
+    {
+        $userEntity = $this->userRepository->find($request->getId());
+
+        if(!$userEntity) {
+            return "no user was found!";
+
+        } else {
+            $userEntity = $this->autoMapping->mapToObject(UserPasswordUpdateBySuperAdminRequest::class, UserEntity::class,
+                $request, $userEntity);
+
+            $userEntity->setPassword($this->encoder->hashPassword($userEntity, $request->getPassword()));
+
+            $this->entityManager->flush();
+
+            return $userEntity;
+        }
     }
 }
