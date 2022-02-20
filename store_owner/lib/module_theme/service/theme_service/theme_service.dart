@@ -1,3 +1,4 @@
+import 'package:c4d/module_theme/map_style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
@@ -25,24 +26,23 @@ class AppThemeDataService {
     final darkScheme = ColorScheme.fromSeed(
         seedColor: PrimaryColor, brightness: Brightness.dark);
     if (dark == true) {
+      mapStyle(dark);
       return ThemeData(
-        brightness: Brightness.dark,
-  //      primaryColor: PrimaryColor,
-        colorScheme: darkScheme,
-        useMaterial3: true,
-        //     colorScheme: darkScheme,
-        primarySwatch: Colors.indigo,
-        focusColor: PrimaryColor,
-        cardColor: Colors.grey[150],
-        fontFamily: 'Dubai',
-        textTheme: TextTheme(
-          button:TextStyle(color:Colors.white)
-        )
-      );
+          brightness: Brightness.dark,
+          //      primaryColor: PrimaryColor,
+          colorScheme: darkScheme,
+          useMaterial3: true,
+          //     colorScheme: darkScheme,
+          primarySwatch: Colors.indigo,
+          focusColor: PrimaryColor,
+          cardColor: Colors.grey[150],
+          fontFamily: 'Dubai',
+          textTheme: TextTheme(button: TextStyle(color: Colors.white)));
     }
+    mapStyle(dark);
     return ThemeData(
         brightness: Brightness.light,
- //       primaryColor: PrimaryColor,
+        //       primaryColor: PrimaryColor,
         colorScheme: lightScheme,
         useMaterial3: true,
         //    colorScheme: lightScheme,
@@ -50,9 +50,7 @@ class AppThemeDataService {
         primarySwatch: Colors.indigo,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
-         textTheme: TextTheme(
-          button:TextStyle(color:Colors.white)
-        ),
+        textTheme: TextTheme(button: TextStyle(color: Colors.white)),
         fontFamily: 'Dubai',
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
@@ -69,5 +67,17 @@ class AppThemeDataService {
     }
     var activeTheme = await getActiveTheme();
     _darkModeSubject.add(activeTheme);
+  }
+
+  void mapStyle(bool darkMode) {
+    String darkStyle = MapStyle.darkStyle;
+
+    String lightStyle = '''[]''';
+
+    if (darkMode) {
+      _preferencesHelper.setMapStyle(darkStyle);
+    } else {
+      _preferencesHelper.setMapStyle(lightStyle);
+    }
   }
 }
