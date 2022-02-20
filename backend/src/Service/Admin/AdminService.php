@@ -3,10 +3,10 @@
 namespace App\Service\Admin;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Manager\Admin\AdminManager;
 use App\Request\Admin\AdminRegisterRequest;
-use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 
 class AdminService implements AdminServiceInterface
@@ -24,8 +24,8 @@ class AdminService implements AdminServiceInterface
     {
         $userRegister = $this->adminManager->adminRegister($request);
 
-        if ($userRegister === "user is found") {
-            $user['found'] = "yes";
+        if($userRegister === UserReturnResultConstant::USER_IS_FOUND_RESULT) {
+            $user['found'] = UserReturnResultConstant::YES_RESULT;
 
             return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }

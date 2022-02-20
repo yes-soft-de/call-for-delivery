@@ -3,10 +3,12 @@
 namespace App\Controller\Main;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\User\UserFilterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Service\Main\MainService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +68,8 @@ class MainController extends BaseController
     /**
      * For testing/debugging issues
      *
-     * @Route("filterusers", name="filterUsers", methods={"POST"})
+     * @Route("filterusersbysuperadmin", name="filterUsersBySuperAdmin", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -98,19 +101,20 @@ class MainController extends BaseController
      *      )
      * )
      */
-    public function filterUsers(Request $request): JsonResponse
+    public function filterUsersBySuperAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, UserFilterRequest::class, (object)$data);
 
-        $response = $this->mainService->filterUsers($request);
+        $response = $this->mainService->filterUsersBySuperAdmin($request);
 
         return $this->response($response, self::FETCH);
     }
 
     /**
      * @Route("userpasswordbysuperadmin", name="updateUserPasswordBySuperAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -150,7 +154,7 @@ class MainController extends BaseController
 
         $result = $this->mainService->updateUserPasswordBySuperAdmin($request);
 
-        if($result === "no user was found!") {
+        if($result === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
             return $this->response($result, self::ERROR_USER_NOT_FOUND);
         }
 

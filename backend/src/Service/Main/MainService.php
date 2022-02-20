@@ -3,7 +3,6 @@
 namespace App\Service\Main;
 
 use App\Constant\Main\BackendHealthStatusConstant;
-use App\Entity\UserEntity;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Service\User\UserService;
@@ -32,9 +31,9 @@ class MainService
         return $response;
     }
 
-    public function filterUsers($request): array
+    public function filterUsersBySuperAdmin($request): array
     {
-        return $this->userService->filterUsers($request);
+        return $this->userService->filterUsersBySuperAdmin($request);
     }
 
     public function updateUserPasswordBySuperAdmin(UserPasswordUpdateBySuperAdminRequest $request): string|UserRegisterResponse

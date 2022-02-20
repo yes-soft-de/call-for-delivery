@@ -88,7 +88,7 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getOneOrNullResult();
     }
 
-    public function filterUsers(UserFilterRequest $request): ?array
+    public function filterUsersBySuperAdmin(UserFilterRequest $request): ?array
     {
         $query = $this->createQueryBuilder('userEntity')
             ->select('userEntity.id', 'userEntity.userId', 'userEntity.roles');

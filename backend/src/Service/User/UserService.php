@@ -3,6 +3,7 @@
 namespace App\Service\User;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Manager\User\UserManager;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
@@ -30,11 +31,11 @@ class UserService
         return $this->userManager->checkUserType($userType,$userID);
     }
 
-    public function filterUsers($request): array
+    public function filterUsersBySuperAdmin($request): array
     {
         $response = [];
 
-        $users = $this->userManager->filterUsers($request);
+        $users = $this->userManager->filterUsersBySuperAdmin($request);
 
         foreach ($users as $user)
         {
@@ -48,7 +49,7 @@ class UserService
     {
         $userResult = $this->userManager->updateUserPasswordBySuperAdmin($request);
 
-        if($userResult === "no user was found!") {
+        if($userResult === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
             return $userResult;
         }
 
