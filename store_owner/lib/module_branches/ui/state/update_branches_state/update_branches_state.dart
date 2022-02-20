@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as lat;
 
 class UpdateBranchStateLoading extends States {
   UpdateBranchStateLoading(UpdateBranchScreenState screenState)
@@ -79,7 +80,8 @@ class UpdateBranchStateLoaded extends States {
                   subdomains: ['a', 'b', 'c'],
                 ),
                 MarkerLayerOptions(
-                  markers: branchLocation == null ? [] : _getMarkers(context) ?? [],
+                  markers:
+                      branchLocation == null ? [] : _getMarkers(context) ?? [],
                 ),
               ],
             ),
@@ -113,8 +115,8 @@ class UpdateBranchStateLoaded extends States {
                       }
 
                       var myLocation = await Location.instance.getLocation();
-                      LatLng myPos =
-                          LatLng(myLocation.latitude ?? 0, myLocation.longitude ?? 0);
+                      LatLng myPos = LatLng(
+                          myLocation.latitude ?? 0, myLocation.longitude ?? 0);
                       _mapController.move(myPos, 15);
                       saveMarker(myPos);
                       screenState.refresh();
@@ -156,11 +158,14 @@ class UpdateBranchStateLoaded extends States {
                                 if (flag) {
                                   screenState.createBranch(CreateBrancheRequest(
                                       branchName: branchLocation?.branchName,
-                                      location: branchLocation?.location));
+                                      location: lat.LatLng(
+                                          branchLocation?.location.latitude??0,
+                                          branchLocation?.location.longitude??0)));
                                 } else {
                                   screenState.updateBranch(
                                       UpdateBranchesRequest(
-                                          branchName: branchLocation?.branchName,
+                                          branchName:
+                                              branchLocation?.branchName,
                                           location: branchLocation?.location,
                                           city: branchLocation?.city,
                                           id: branchLocation?.id));
@@ -275,7 +280,8 @@ class UpdateBranchStateLoaded extends States {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      _mapController.move(branchLocation?.location ?? LatLng(0, 0), 15);
+                      _mapController.move(
+                          branchLocation?.location ?? LatLng(0, 0), 15);
                     }),
               ],
             ),
