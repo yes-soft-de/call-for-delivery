@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_subscription/state_manager/init_subscription_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -29,7 +30,8 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
   }
 
   void moveToInitBranch() {
-    // navigator
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        BranchesRoutes.BRANCHES_LIST_SCREEN, (route) => false);
   }
 
   @override
@@ -45,8 +47,7 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
   }
 
   void subscribeToPackage(int packageId) {
-    widget._stateManager
-        .subscribePackage(this, packageId);
+    widget._stateManager.subscribePackage(this, packageId);
   }
 
   void getPackages() {}
