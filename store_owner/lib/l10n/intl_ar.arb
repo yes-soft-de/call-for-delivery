@@ -444,5 +444,9 @@
     "packageInfo": "معلومات الحزمة",
     "chooseYourPackageHint": "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا بناءا على مدينتك",
     "close": "إغلاق",
-    "packageSubscriptionSuccess": "تم الاشتراك بنجاح"
+    "packageSubscriptionSuccess": "تم الاشتراك بنجاح",
+    "myLocation": "موقعي",
+    "myLocationDescribtion": "اضغط على العلامة لتذهب لموقعك",
+    "selectedBranchesMenu": "قائمة الأفرع المختارة",
+    "selectedBranchesMenuDescribtion": "اضغط على زر القائمة لعرض الأفرع المختارة"
 }

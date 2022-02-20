@@ -445,7 +445,11 @@
     "packageInfo": "Package Info",
     "chooseYourPackageHint": "Choose your desired package subscriptions based on your city",
     "close": "Close",
-    "packageSubscriptionSuccess": "You subscripted with the package successfully"
+    "packageSubscriptionSuccess": "You subscripted with the package successfully",
+    "myLocation": "My Location",
+    "myLocationDescribtion": "Tap the mark icon to to go to your location",
+    "selectedBranchesMenu": "My Selected Branches",
+    "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches"
 
 
 

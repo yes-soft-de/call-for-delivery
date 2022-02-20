@@ -314,6 +314,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddress": MessageLookupByLibrary.simpleMessage("نقطة الاستلام"),
         "myAddressHint": MessageLookupByLibrary.simpleMessage("حدد عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("رصيدي"),
+        "myLocation": MessageLookupByLibrary.simpleMessage("موقعي"),
+        "myLocationDescribtion": MessageLookupByLibrary.simpleMessage(
+            "اضغط على العلامة لتذهب لموقعك"),
         "myOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
@@ -541,6 +544,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selectedBranchesMenu":
+            MessageLookupByLibrary.simpleMessage("قائمة الأفرع المختارة"),
+        "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
+            "اضغط على زر القائمة لعرض الأفرع المختارة"),
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),

@@ -4489,6 +4489,46 @@ class S {
       args: [],
     );
   }
+
+  /// `My Location`
+  String get myLocation {
+    return Intl.message(
+      'My Location',
+      name: 'myLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the mark icon to to go to your location`
+  String get myLocationDescribtion {
+    return Intl.message(
+      'Tap the mark icon to to go to your location',
+      name: 'myLocationDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Selected Branches`
+  String get selectedBranchesMenu {
+    return Intl.message(
+      'My Selected Branches',
+      name: 'selectedBranchesMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the menu icon to show selected branches`
+  String get selectedBranchesMenuDescribtion {
+    return Intl.message(
+      'Tap the menu icon to show selected branches',
+      name: 'selectedBranchesMenuDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

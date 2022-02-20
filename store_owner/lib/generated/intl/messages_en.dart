@@ -317,6 +317,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddressHint":
             MessageLookupByLibrary.simpleMessage("Please place your address"),
         "myBalance": MessageLookupByLibrary.simpleMessage("My Balance"),
+        "myLocation": MessageLookupByLibrary.simpleMessage("My Location"),
+        "myLocationDescribtion": MessageLookupByLibrary.simpleMessage(
+            "Tap the mark icon to to go to your location"),
         "myOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
@@ -544,6 +547,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selectedBranchesMenu":
+            MessageLookupByLibrary.simpleMessage("My Selected Branches"),
+        "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
+            "Tap the menu icon to show selected branches"),
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
