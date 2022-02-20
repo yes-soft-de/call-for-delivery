@@ -441,7 +441,13 @@
     "emptyField": "Empty Field",
     "InvalidInput": "Invalid",
     "storeNameIsToShort": "Store name must not be less than 3 character",
-    "chooseYourCompanyCapacity": "Choose your capacity"
+    "chooseYourCompanyCapacity": "Choose your capacity",
+    "packageInfo": "Package Info",
+    "chooseYourPackageHint": "Choose your desired package subscriptions based on your city",
+    "close": "Close",
+    "packageSubscriptionSuccess": "You subscripted with the package successfully"
+
+
 
 
 

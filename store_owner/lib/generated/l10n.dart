@@ -4449,6 +4449,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Package Info`
+  String get packageInfo {
+    return Intl.message(
+      'Package Info',
+      name: 'packageInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your desired package subscriptions based on your city`
+  String get chooseYourPackageHint {
+    return Intl.message(
+      'Choose your desired package subscriptions based on your city',
+      name: 'chooseYourPackageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You subscripted with the package successfully`
+  String get packageSubscriptionSuccess {
+    return Intl.message(
+      'You subscripted with the package successfully',
+      name: 'packageSubscriptionSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

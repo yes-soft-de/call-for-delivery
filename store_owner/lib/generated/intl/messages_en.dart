@@ -134,10 +134,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourCompanyCapacity":
             MessageLookupByLibrary.simpleMessage("Choose your capacity"),
+        "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
+            "Choose your desired package subscriptions based on your city"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityHint": MessageLookupByLibrary.simpleMessage("Jaddah"),
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -392,6 +395,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription from settings"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
+        "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
+            "You subscripted with the package successfully"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":

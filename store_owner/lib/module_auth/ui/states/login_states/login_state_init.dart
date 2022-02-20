@@ -89,6 +89,7 @@ class LoginStateInit extends LoginState {
                           controller: countryController,
                           phone: true,
                           phoneHint: false,
+                          maxLength: 3,
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
                             padding:

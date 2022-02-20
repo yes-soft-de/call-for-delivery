@@ -23,6 +23,7 @@ class CustomLoginFormField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final bool numbers;
   final bool halfField;
+  final int? maxLength;
   @override
   _CustomLoginFormFieldState createState() => _CustomLoginFormFieldState();
 
@@ -45,7 +46,8 @@ class CustomLoginFormField extends StatefulWidget {
       this.onChanged,
       this.style,
       this.numbers = false,
-      this.halfField = false});
+      this.halfField = false,
+      this.maxLength});
 }
 
 class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
@@ -120,14 +122,18 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                           .length !=
                                       value.length) {
                                 clean = false;
-                                return widget.halfField ? S.current.InvalidInput : S.current.pleaseEnterValidPhoneNumber;
+                                return widget.halfField
+                                    ? S.current.InvalidInput
+                                    : S.current.pleaseEnterValidPhoneNumber;
                               } else if (widget.numbers &&
                                   RegExp(r'[0-9٠-٩]')
                                           .allMatches(value)
                                           .length !=
                                       value.length) {
                                 clean = false;
-                                return  widget.halfField ? S.current.InvalidInput : S.current.pleaseEnterValidCountryCode;
+                                return widget.halfField
+                                    ? S.current.InvalidInput
+                                    : S.current.pleaseEnterValidCountryCode;
                               } else {
                                 clean = true;
                                 return null;
@@ -147,7 +153,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                           widget.last ? (_) => node.unfocus() : null,
                       textInputAction:
                           widget.last ? null : TextInputAction.next,
-                      maxLength: widget.phone ? 9 : null,
+                      maxLength: widget.phone ? (widget.maxLength ?? 9) : null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: '',
@@ -193,7 +199,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
             child: Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Text(
-                '${widget.controller?.text.length ?? 0}/9',
+                '${widget.controller?.text.length ?? 0}/${(widget.maxLength ?? 9).toString()}',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12,

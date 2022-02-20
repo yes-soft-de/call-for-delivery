@@ -133,10 +133,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر مدينة تواجدك"),
         "chooseYourCompanyCapacity":
             MessageLookupByLibrary.simpleMessage("اختر حجم منشأتك"),
+        "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
+            "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا بناءا على مدينتك"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityHint": MessageLookupByLibrary.simpleMessage("جدة"),
+        "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
@@ -391,6 +394,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك من الإعدادات"),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
+        "packageSubscriptionSuccess":
+            MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":

@@ -23,11 +23,12 @@ class InitAccountStateProfileLoaded extends States {
     this.screenState,
   ) : super(screenState) {
     var number = getIt<AuthService>().username;
-    final sNumber =
+    if (number.isNotEmpty) {
+  final sNumber =
         TheCountryNumber().parseNumber(internationalNumber: '+' + number);
-
     _countryController.text = sNumber.dialCode.substring(1);
     _phoneController.text = sNumber.number;
+    }
   }
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -187,6 +188,8 @@ class InitAccountStateProfileLoaded extends States {
                           controller: _countryController,
                           phone: true,
                           phoneHint: false,
+                          maxLength: 3,
+                          halfField: true,
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
                             padding:
