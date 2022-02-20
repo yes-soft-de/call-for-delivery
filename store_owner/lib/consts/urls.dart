@@ -192,6 +192,7 @@ class Urls {
   static const SUBSCRIPTION_API = DOMAIN + '/v1/subscription/subscription';
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
   static const UPDATE_BRANCH_API = BASE_API + '';
+  static const CREATE_BRANCH_API = DOMAIN + '';
   
 
 }
