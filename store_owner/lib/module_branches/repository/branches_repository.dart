@@ -28,7 +28,7 @@ class BranchesRepository {
   Future<BranchListResponse?> getBranches() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-      Urls.UPDATE_BRANCH_API,
+      Urls.BRANCHES_API,
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

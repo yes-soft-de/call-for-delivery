@@ -24,14 +24,13 @@ class BranchesListStateManager {
     _stateSubject.add(BranchListStateLoading(screenState));
     _branchesListService.getBranches().then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState,
-            onPressed: () {}, title: '', error: value.error, hasAppbar: false));
+        _stateSubject.add(ErrorState(screenState, onPressed: () {
+          getBranchesList(screenState);
+        }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState,
-            onPressed: () {},
-            title: '',
-            emptyMessage: S.current.homeDataEmpty,
-            hasAppbar: false));
+        _stateSubject.add(EmptyState(screenState, onPressed: () {
+          getBranchesList(screenState);
+        }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         var data = value as BranchesModel;
         _stateSubject.add(BranchListStateLoaded([], screenState));
