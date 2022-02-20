@@ -188,8 +188,8 @@ class Urls {
   static const CREATE_NEW_TRANS_PRODUCT_CATEGORY =
       BASE_API + '/createstoreproductcategorytranslation';
   static const BRANCHES_API = BASE_API + '/branches';
-  static const PACKAGES_API = BASE_API + '';
-  static const SUBSCRIPTION_API = BASE_API + '';
+  static const PACKAGES_API = DOMAIN + '/v1/package/packagesactive';
+  static const SUBSCRIPTION_API = DOMAIN + '/v1/subscription/subscription';
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
   static const UPDATE_BRANCH_API = BASE_API + '';
   
