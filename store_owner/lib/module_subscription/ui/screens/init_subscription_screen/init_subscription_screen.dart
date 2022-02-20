@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_subscription/state_manager/init_subscription_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+
 @injectable
 class InitSubscriptionScreen extends StatefulWidget {
   final InitSubscriptionStateManager _stateManager;
@@ -39,17 +40,16 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
         setState(() {});
       }
     });
+    widget._stateManager.getPackages(this);
     super.initState();
   }
 
-  void subscribeToPackage() {
-    // widget._stateManager
-    //     .subscribePackage(this, packageId, name, phone, city, renew);
+  void subscribeToPackage(int packageId) {
+    widget._stateManager
+        .subscribePackage(this, packageId);
   }
 
-  void getPackages() {
-    
-  }
+  void getPackages() {}
 
   @override
   Widget build(BuildContext context) {

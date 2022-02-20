@@ -1,15 +1,23 @@
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/logger/logger.dart';
+
 class PackagesResponse {
   List<Data>? data;
   String? statusCode;
   PackagesResponse({this.data});
 
   PackagesResponse.fromJson(Map<String, dynamic> json) {
-    statusCode = json['status_code'];
-    if (json['Data'] != null) {
-      data = <Data>[];
-      json['Data'].forEach((v) {
-        data?.add(new Data.fromJson(v));
-      });
+    try {
+      statusCode = json['status_code'];
+      if (json['Data'] != null) {
+        data = <Data>[];
+        json['Data'].forEach((v) {
+          data?.add(new Data.fromJson(v));
+        });
+      }
+    } catch (e) {
+      Logger().error('Package Response', e.toString(), StackTrace.current);
+      statusCode = '-1';
     }
   }
 
@@ -25,24 +33,23 @@ class PackagesResponse {
 class Data {
   int? id;
   String? name;
-  String? cost;
+  num? cost;
   String? note;
-  String? carCount;
+  num? carCount;
   String? city;
-  String? orderCount;
+  num? orderCount;
   String? status;
-  String? branch;
 
-  Data(
-      {this.id,
-      this.name,
-      this.cost,
-      this.note,
-      this.carCount,
-      this.city,
-      this.orderCount,
-      this.status,
-      this.branch});
+  Data({
+    this.id,
+    this.name,
+    this.cost,
+    this.note,
+    this.carCount,
+    this.city,
+    this.orderCount,
+    this.status,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,7 +60,6 @@ class Data {
     city = json['city'];
     orderCount = json['orderCount'];
     status = json['status'];
-    branch = json['branch'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,7 +72,6 @@ class Data {
     data['city'] = this.city;
     data['orderCount'] = this.orderCount;
     data['status'] = this.status;
-    data['branch'] = this.branch;
     return data;
   }
 }

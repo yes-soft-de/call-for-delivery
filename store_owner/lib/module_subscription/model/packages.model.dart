@@ -5,13 +5,12 @@ import 'package:c4d/module_subscription/response/packages/packages_response.dart
 class PackageModel extends DataModel {
   late int id;
   late String name;
-  late String cost;
+  late num cost;
   late String note;
-  late String carCount;
+  late num carCount;
   late String city;
-  late String orderCount;
+  late num orderCount;
   late String status;
-  late String branch;
 
   PackageModel(
       {required this.id,
@@ -22,7 +21,7 @@ class PackageModel extends DataModel {
       required this.city,
       required this.orderCount,
       required this.status,
-      required this.branch});
+      });
   List<PackageModel> _packageList = [];
   PackageModel.withData(PackagesResponse response) {
     _packageList = [];
@@ -31,13 +30,12 @@ class PackageModel extends DataModel {
       _packageList.add(PackageModel(
           id: element.id ?? -1,
           name: element.name ?? S.current.unknown,
-          cost: element.cost ?? '0',
+          cost: element.cost ?? 0,
           note: element.note ?? '',
-          carCount: element.carCount ?? '0',
+          carCount: element.carCount ?? 0,
           city: element.city ?? '',
-          orderCount: element.orderCount ?? '0',
-          status: element.status ?? 'inActive',
-          branch: element.branch ?? ''));
+          orderCount: element.orderCount ?? 0,
+          status: element.status ?? 'inActive',));
     });
   }
   List<PackageModel> get data => _packageList;

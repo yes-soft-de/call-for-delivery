@@ -24,7 +24,7 @@ class SubscriptionsRepository {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
       Urls.SUBSCRIPTION_API,
-      {'packageID': '$packageId'},
+      {'package': '$packageId'},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

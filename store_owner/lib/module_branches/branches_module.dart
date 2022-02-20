@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class InitAccountModule extends YesModule {
+class BranchesModule extends YesModule {
   final BranchesListScreen _branchesListScreen;
   final UpdateBranchScreen _updateBranchScreen;
-  InitAccountModule(this._branchesListScreen,this._updateBranchScreen) {
+  BranchesModule(this._branchesListScreen,this._updateBranchScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 

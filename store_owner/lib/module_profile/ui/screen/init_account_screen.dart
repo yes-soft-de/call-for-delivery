@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/init_account.state_manager.dart';
 import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_loaded.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -30,7 +31,11 @@ class InitAccountScreenState extends State<InitAccountScreen> {
     }
   }
 
-  void moveNext() {}
+  void moveNext() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN, (route) => false);
+  }
+
   void initProfile(ProfileRequest request) {
     widget._stateManager.createProfile(request, this);
   }
@@ -51,8 +56,7 @@ class InitAccountScreenState extends State<InitAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomMandoobAppBar.appBar(context,
-          title: S.current.storeAccountInit,
-          canGoBack: false),
+          title: S.current.storeAccountInit, canGoBack: false),
       body: currentState.getUI(context),
     );
   }
