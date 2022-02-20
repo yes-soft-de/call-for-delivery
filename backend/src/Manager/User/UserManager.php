@@ -3,18 +3,21 @@
 namespace App\Manager\User;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
+use App\Request\Admin\AdminRegisterRequest;
+use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $encoder;
-    private $userRepository;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private UserPasswordHasherInterface $encoder;
+    private UserEntityRepository $userRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository)
     {
@@ -109,19 +112,66 @@ class UserManager
         return $userRegister;
     }
 
+    /**
+     * This function for persisting new user in the DB with role equals to Admin
+     * It's separated from createUser because of the separation of AdminRegisterRequest and UserRegisterRequest
+     */
+    public function createAdmin(AdminRegisterRequest $request): UserEntity
+    {
+        $adminRegister = $this->autoMapping->map(AdminRegisterRequest::class, UserEntity::class, $request);
+
+        $user = new UserEntity($request->getUserId());
+
+        if ($request->getPassword()) {
+            $adminRegister->setPassword($this->encoder->hashPassword($user, $request->getPassword()));
+        }
+
+        $this->entityManager->persist($adminRegister);
+        $this->entityManager->flush();
+
+        return $adminRegister;
+    }
+
     public function getUserRoleByUserId($userId): array
     {
         return $this->userRepository->getUserRoleByUserId($userId);
     }
 
+    // This function checks if the type of the user being provided is similar to the stored one
     public function checkUserType($userType,$userID): string
     {
         $user = $this->userRepository->find($userID);
 
         if ($user->getRoles()[0] !== $userType) {
+            // the type of the user being retrieved does not match the provided one
             return "no";
         }
 
+        // the type of the user being retrieved matches the provided one
         return "yes";
+    }
+
+    public function filterUsersBySuperAdmin($request): ?array
+    {
+        return $this->userRepository->filterUsersBySuperAdmin($request);
+    }
+
+    public function updateUserPasswordBySuperAdmin(UserPasswordUpdateBySuperAdminRequest $request): string|UserEntity
+    {
+        $userEntity = $this->userRepository->find($request->getId());
+
+        if(! $userEntity) {
+            return UserReturnResultConstant::USER_NOT_FOUND_RESULT;
+
+        } else {
+            $userEntity = $this->autoMapping->mapToObject(UserPasswordUpdateBySuperAdminRequest::class, UserEntity::class,
+                $request, $userEntity);
+
+            $userEntity->setPassword($this->encoder->hashPassword($userEntity, $request->getPassword()));
+
+            $this->entityManager->flush();
+
+            return $userEntity;
+        }
     }
 }

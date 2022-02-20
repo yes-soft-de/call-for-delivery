@@ -1,4 +1,9 @@
 security:
+    role_hierarchy:
+        ROLE_SUPER_ADMIN:
+            class: App\Constant\UserRoleConstant
+            property: ADMIN_ROLE
+
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:

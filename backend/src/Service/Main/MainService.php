@@ -3,11 +3,13 @@
 namespace App\Service\Main;
 
 use App\Constant\Main\BackendHealthStatusConstant;
+use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Response\User\UserRegisterResponse;
 use App\Service\User\UserService;
 
 class MainService
 {
-    private $userService;
+    private UserService $userService;
 
     public function __construct(UserService $userService)
     {
@@ -27,5 +29,15 @@ class MainService
         $response['result'] = BackendHealthStatusConstant::HEART_IS_BEATING_STATUS;
 
         return $response;
+    }
+
+    public function filterUsersBySuperAdmin($request): array
+    {
+        return $this->userService->filterUsersBySuperAdmin($request);
+    }
+
+    public function updateUserPasswordBySuperAdmin(UserPasswordUpdateBySuperAdminRequest $request): string|UserRegisterResponse
+    {
+        return $this->userService->updateUserPasswordBySuperAdmin($request);
     }
 }

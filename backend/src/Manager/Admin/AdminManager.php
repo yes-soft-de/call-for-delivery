@@ -2,13 +2,14 @@
 
 namespace App\Manager\Admin;
 
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
-use App\Request\User\UserRegisterRequest;
+use App\Request\Admin\AdminRegisterRequest;
 use App\Manager\User\UserManager;
 
 class AdminManager
 {
-    private $userManager;
+    private UserManager $userManager;
 
     public function __construct(UserManager $userManager)
     {
@@ -20,23 +21,26 @@ class AdminManager
         return $this->userManager->getUserByUserId($userID);
     }
 
-    public function adminRegister(UserRegisterRequest $request): UserEntity|string
+    public function adminRegister(AdminRegisterRequest $request): UserEntity|string
     {
         $user = $this->userManager->getUserByUserId($request->getUserId());
 
-        if (!$user) {
-            $request->setRoles(["ROLE_ADMIN"]);
+        if (! $user) {
+            if(! $request->getRoles()) {
+                $request->setRoles(["ROLE_ADMIN"]);
+            }
 
-            $userRegister = $this->userManager->createUser($request);
+            $userRegister = $this->userManager->createAdmin($request);
+
             if($userRegister){
                 return $userRegister;
             }
             else{
-                return 'not created user';
+                return UserReturnResultConstant::USER_IS_NOT_CREATED_RESULT;
             }
         }
         else {
-            return 'user is found';
+            return UserReturnResultConstant::USER_IS_FOUND_RESULT;
         }
     }
 }
