@@ -106,6 +106,7 @@ class RegisterStateInit extends RegisterState {
                           controller: countryController,
                           numbers: true,
                           phoneHint: false,
+                          maxLength: 3,
                           hintText: S.current.countryCode,
                           sufIcon: Padding(
                             padding:
