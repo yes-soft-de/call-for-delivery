@@ -38,7 +38,7 @@ class BranchesRepository {
   Future<ActionResponse?> createBranch(CreateBrancheRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-      Urls.UPDATE_BRANCH_API,
+      Urls.CREATE_BRANCH_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
