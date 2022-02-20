@@ -7,7 +7,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../main.dart' as _i70;
+import '../main.dart' as _i71;
 import '../module_about/about_module.dart' as _i59;
 import '../module_about/hive/about_hive_helper.dart' as _i3;
 import '../module_about/manager/about_manager.dart' as _i33;
@@ -84,7 +84,7 @@ import '../module_subscription/repository/subscription_repository.dart' as _i32;
 import '../module_subscription/service/subscription_service.dart' as _i57;
 import '../module_subscription/state_manager/init_subscription_state_manager.dart'
     as _i65;
-import '../module_subscription/subscriptions_module.dart' as _i71;
+import '../module_subscription/subscriptions_module.dart' as _i70;
 import '../module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart'
     as _i69;
 import '../module_theme/pressistance/theme_preferences_helper.dart' as _i13;
@@ -245,11 +245,13 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i64.InitAccountScreen>()));
   gh.factory<_i67.UpdateBranchScreen>(
       () => _i67.UpdateBranchScreen(get<_i58.UpdateBranchStateManager>()));
-  gh.factory<_i68.InitAccountModule>(() => _i68.InitAccountModule(
+  gh.factory<_i68.BranchesModule>(() => _i68.BranchesModule(
       get<_i61.BranchesListScreen>(), get<_i67.UpdateBranchScreen>()));
   gh.factory<_i69.InitSubscriptionScreen>(() =>
       _i69.InitSubscriptionScreen(get<_i65.InitSubscriptionStateManager>()));
-  gh.factory<_i70.MyApp>(() => _i70.MyApp(
+  gh.factory<_i70.SubscriptionsModule>(
+      () => _i70.SubscriptionsModule(get<_i69.InitSubscriptionScreen>()));
+  gh.factory<_i71.MyApp>(() => _i71.MyApp(
       get<_i16.AppThemeDataService>(),
       get<_i9.LocalizationService>(),
       get<_i39.FireNotificationService>(),
@@ -259,9 +261,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i62.ChatModule>(),
       get<_i56.SettingsModule>(),
       get<_i59.AboutModule>(),
-      get<_i66.ProfileModule>()));
-  gh.factory<_i71.InitAccountModule>(
-      () => _i71.InitAccountModule(get<_i69.InitSubscriptionScreen>()));
+      get<_i66.ProfileModule>(),
+      get<_i68.BranchesModule>(),
+      get<_i70.SubscriptionsModule>()));
   gh.singleton<_i72.GlobalStateManager>(_i72.GlobalStateManager());
   return get;
 }

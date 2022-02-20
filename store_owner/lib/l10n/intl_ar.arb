@@ -441,8 +441,8 @@
     "InvalidInput": "غير صالح",
     "storeNameIsToShort": "اسم المتجر يجب ألا يقل عن ثلاث حروف",
     "chooseYourCompanyCapacity": "اختر حجم منشأتك",
-    "packageInfo": "معلومات الحزمة"
-
-
-
+    "packageInfo": "معلومات الحزمة",
+    "chooseYourPackageHint": "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا بناءا على مدينتك",
+    "close": "إغلاق",
+    "packageSubscriptionSuccess": "تم الاشتراك بنجاح"
 }
