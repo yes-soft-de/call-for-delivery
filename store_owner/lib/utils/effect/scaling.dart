@@ -13,7 +13,7 @@ class ScalingWidget extends StatelessWidget {
       return TweenAnimationBuilder(
         duration: Duration(milliseconds: milliseconds ?? 750),
         tween: Tween<double>(begin: 0.1, end: 1),
-        curve: Curves.easeInOut,
+        curve: Curves.linear,
         builder: (context, double val, _) {
           return Opacity(
             opacity: val,
@@ -25,7 +25,7 @@ class ScalingWidget extends StatelessWidget {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: milliseconds ?? 750),
       tween: Tween<double>(begin: 0, end: 1),
-      curve: Curves.easeInOut,
+      curve: Curves.linear,
       builder: (context, double val, _) {
         return Transform.scale(
           scale: val,
