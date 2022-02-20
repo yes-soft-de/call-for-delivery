@@ -39,7 +39,7 @@ class StoreOwnerBranchService
     public function updateBranch($request): string|StoreOwnerBranchResponse
     {
         $result = $this->storeOwnerBranchManager->updateBranch($request);
-        if($result == StoreOwnerBranch::BRANCH_NOT_FOUND){
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND){
 
             return StoreOwnerBranch::BRANCH_NOT_FOUND;
         }
@@ -54,7 +54,7 @@ class StoreOwnerBranchService
     public function deletebranch(StoreOwnerBranchDeleteRequest $request): string|StoreOwnerBranchResponse
     {
         $result = $this->storeOwnerBranchManager->deletebranch($request);
-        if($result == StoreOwnerBranch::BRANCH_NOT_FOUND){
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND){
 
             return StoreOwnerBranch::BRANCH_NOT_FOUND;
         }
@@ -70,11 +70,11 @@ class StoreOwnerBranchService
     {
         $response = [];
 
-        $items = $this->storeOwnerBranchManager->getAllBranches($storeOwnerId);
+        $branches = $this->storeOwnerBranchManager->getAllBranches($storeOwnerId);
 
-        foreach($items as $item) {
+        foreach($branches as $branch) {
 
-            $response[] =  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $item);
+            $response[] =  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
         }
         
         return $response;
@@ -86,8 +86,8 @@ class StoreOwnerBranchService
      */
     public function getBranchById($id): ?StoreOwnerBranchResponse
     {
-        $item = $this->storeOwnerBranchManager->getBranchById($id);
+        $branch = $this->storeOwnerBranchManager->getBranchById($id);
 
-        return  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $item);
+        return  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
     }
 }

@@ -12,7 +12,6 @@ use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
-
 class StoreOwnerBranchManager
 {
     private AutoMapping $autoMapping;
