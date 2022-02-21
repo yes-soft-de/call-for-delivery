@@ -33,8 +33,6 @@ class SubscriptionService
      */
     public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
-        $response = SubscriptionConstant::ERROR;
-
         $isFuture = $this->getIsFuture($request->getStoreOwner());
         if ( $isFuture === 0) {
 
@@ -49,10 +47,10 @@ class SubscriptionService
 
             $subscriptionResult = $this->subscriptionManager->createSubscription($request, $status);
 
-            $response = $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
         }
 
-        return $response;
+        return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
     }
 
     public function nextSubscription(SubscriptionNextRequest $request): mixed
@@ -62,14 +60,28 @@ class SubscriptionService
 
            $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
         
-           $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
+           if($subscriptionCurrent) {
 
-           $result = $this->subscriptionManager->nextSubscription($request, $status);
-            
-           return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+                $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
+                if( $status === SubscriptionConstant::UNSUBSCRIBED ) {
+        
+                    return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
+                }
+               
+                if( $status ) {   
+                
+                    $result = $this->subscriptionManager->nextSubscription($request, $status);
+                    return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+                }              
+           }  
         }
 
-        return SubscriptionConstant::ERROR;
+        if( $isFuture === 1 ) {
+        
+            return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
+        }
+
+        return SubscriptionConstant::UNSUBSCRIBED;
     }
 
     public function getIsFuture($storeOwner): INT
@@ -179,7 +191,9 @@ class SubscriptionService
         if ($item) { 
 
           return  $item['status'];
-        }       
+        } 
+
+        return SubscriptionConstant::UNSUBSCRIBED;     
      }
 
     /**
@@ -259,6 +273,14 @@ class SubscriptionService
             }
          }   
         }
+         //this for tes only
+         $remainingOrdersOfPackage['packageID'] = 1; 
+         $remainingOrdersOfPackage['packageName'] = 'name'; 
+         $remainingOrdersOfPackage['subscriptionId'] = $subscribeId; 
+         $remainingOrdersOfPackage['remainingOrders'] = 5;
+         $remainingOrdersOfPackage['packageCarCount'] = 5;
+         $remainingOrdersOfPackage['packageOrderCount'] = 5;
+         $remainingOrdersOfPackage['carsStatus'] = 5;
 
         $response = $this->autoMapping->map('array', RemainingOrdersResponse::class, $remainingOrdersOfPackage);
         

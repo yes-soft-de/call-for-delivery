@@ -78,7 +78,19 @@ class SubscriptionController extends BaseController
      *      )
      *   )
      * )
+     * 
+     * or
      *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9303"),
+     *          @OA\Property(type="string", property="msg", description="You have subscribed Successfully."),
+     *          @OA\Property(type="string", property="Data", description="You have subscribed"),
+     *      )
+     * )
+     * 
      * @Security(name="Bearer")
      */
     public function createSubscription(Request $request): JsonResponse
@@ -98,6 +110,11 @@ class SubscriptionController extends BaseController
         }
 
         $result = $this->subscriptionService->createSubscription($request);
+        
+        if( $result === SubscriptionConstant::YOU_HAVE_SUBSCRIBED) {
+
+            return $this->response($result, self::YOU_HAVE_SUBSCRIBED);
+        }
 
         return $this->response($result, self::CREATE);
     }
@@ -148,9 +165,9 @@ class SubscriptionController extends BaseController
      *      response="default",
      *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9301"),
-     *          @OA\Property(type="string", property="msg", description="You have a subscription waiting to be activated"),
-     *          @OA\Property(type="string", property="Data", description="error"),
+     *          @OA\Property(type="string", property="status_code", description="9303"),
+     *          @OA\Property(type="string", property="msg", description="You have subscribed Successfully."),
+     *          @OA\Property(type="string", property="Data", description="You have subscribed"),
      *      )
      * )
      * 
@@ -174,9 +191,14 @@ class SubscriptionController extends BaseController
 
         $result = $this->subscriptionService->nextSubscription($request);
     
-        if( $result === SubscriptionConstant::ERROR) {
+        if( $result === SubscriptionConstant::YOU_HAVE_SUBSCRIBED) {
 
-            return $this->response($result, self::SUBSCRIPTION_WAITE_ACTIVE);
+            return $this->response($result, self::YOU_HAVE_SUBSCRIBED);
+        }
+
+        if( $result === SubscriptionConstant::UNSUBSCRIBED) {
+
+            return $this->response($result, self::SUBSCRIBE_THEN_NEXT);
         }
        
         return $this->response($result, self::CREATE);

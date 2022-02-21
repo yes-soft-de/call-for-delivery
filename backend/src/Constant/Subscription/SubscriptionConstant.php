@@ -23,4 +23,6 @@ final class SubscriptionConstant
     const UPDATE_STATE = "updated";
 
     const UNSUBSCRIBED = "unsubscribed";
+
+    const YOU_HAVE_SUBSCRIBED = "You have already subscribed";
 }
