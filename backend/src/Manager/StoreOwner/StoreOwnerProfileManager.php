@@ -3,6 +3,7 @@
 namespace App\Manager\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
@@ -29,7 +30,7 @@ class StoreOwnerProfileManager
     {
         $user = $this->userManager->getUserByUserId($request->getUserId());
 
-        if (!$user) {
+        if (! $user) {
             $request->setRoles(["ROLE_OWNER"]);
 
             $userRegister = $this->userManager->createUser($request);
@@ -37,7 +38,7 @@ class StoreOwnerProfileManager
             if ($userRegister) {
                 return $this->createProfile($request, $userRegister);
             } else {
-                return 'not created user';
+                return UserReturnResultConstant::USER_IS_NOT_CREATED_RESULT;
             }
         } else {
             return $this->createProfileWithUserFound($user, $request);
@@ -66,7 +67,7 @@ class StoreOwnerProfileManager
     {
         $storeProfile = $this->storeOwnerProfileEntityRepository->getStoreProfileByStoreId($user['id']);
 
-        if (!$storeProfile) {
+        if (! $storeProfile) {
             $storeProfile = $this->autoMapping->map(UserRegisterRequest::class, StoreOwnerProfileEntity::class, $request);
 
             $storeProfile->setStatus('inactive');
@@ -77,7 +78,7 @@ class StoreOwnerProfileManager
             $this->entityManager->flush();
         }
 
-        return 'user is found';
+        return UserReturnResultConstant::USER_IS_FOUND_RESULT;
     }
 
     public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request): mixed

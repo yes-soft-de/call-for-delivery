@@ -3,6 +3,7 @@
 namespace App\Controller\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,9 +24,9 @@ use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
  */
 class StoreOwnerProfileController extends BaseController
 {
-    private $autoMapping;
-    private $validator;
-    private $storeOwnerProfileService;
+    private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
+    private StoreOwnerProfileService $storeOwnerProfileService;
 
     public function __construct( AutoMapping $autoMapping, SerializerInterface $serializer, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService)
     {
@@ -81,7 +82,7 @@ class StoreOwnerProfileController extends BaseController
 
         $response = $this->storeOwnerProfileService->storeOwnerRegister($request);
 
-        if($response->found === 1) {
+        if($response->found === UserReturnResultConstant::YES_RESULT) {
             return $this->response($response, self::ERROR_USER_FOUND);
         }
 

@@ -3,6 +3,7 @@
 namespace App\Service\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
@@ -30,8 +31,8 @@ class StoreOwnerProfileService
         //TODO Use roomId (uuid) new feature of symfony .
         $userRegister = $this->storeOwnerProfileManager->storeOwnerRegister($request);
 
-        if ($userRegister === "user is found") {
-            $user['found'] = "yes";
+        if ($userRegister === UserReturnResultConstant::USER_IS_FOUND_RESULT) {
+            $user['found'] = UserReturnResultConstant::YES_RESULT;
             return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }
       
