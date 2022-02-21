@@ -8,6 +8,7 @@ use App\AutoMapping;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -102,6 +103,79 @@ class StoreOwnerBranchController extends BaseController
 
         $result = $this->storeOwnerBranchService->createBranch($request);
            
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * store: create new multiple branches.
+     * @Route("multiplebranches", name="createMultipleBranches", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Branch")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="create multiple branches at once by passing them within the branch field",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="object", property="branches",
+     *              @OA\Property(type="object", property="location",
+     *                  @OA\Property(type="number", property="lat"),
+     *                  @OA\Property(type="number", property="lon"),
+     *              ),
+     *              @OA\Property(type="string", property="name"),
+     *              @OA\Property(type="string", property="city")
+     *          )
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new branches",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="location",
+     *                      @OA\Property(type="number", property="lat"),
+     *                      @OA\Property(type="number", property="lon"),
+     *                  ),
+     *                  @OA\Property(type="string", property="name"),
+     *                  @OA\Property(type="boolean", property="isActive"),
+     *                  @OA\Property(type="string", property="city"),
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createMultipleBranches(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerMultipleBranchesCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->storeOwnerBranchService->createMultipleBranches($request);
+
         return $this->response($result, self::CREATE);
     }
 

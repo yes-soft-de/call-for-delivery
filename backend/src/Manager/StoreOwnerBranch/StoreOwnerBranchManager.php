@@ -52,6 +52,24 @@ class StoreOwnerBranchManager
     }
 
     /**
+     * @param StoreOwnerBranchCreateRequest $request
+     * @return StoreOwnerBranchEntity|null
+     */
+    public function createBranchByStoreOwner(StoreOwnerBranchCreateRequest $request):?StoreOwnerBranchEntity
+    {
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
+
+        $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
+        $entity->setIsActive(1);
+        $entity->setStoreOwner($storeOwner);
+
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        return $entity;
+    }
+
+    /**
      * @param StoreOwnerBranchUpdateRequest $request
      * @return StoreOwnerBranchEntity|string
      */

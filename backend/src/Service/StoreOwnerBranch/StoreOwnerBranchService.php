@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
 
 class StoreOwnerBranchService
@@ -30,6 +31,28 @@ class StoreOwnerBranchService
         $branch = $this->storeOwnerBranchManager->createBranch($request);
 
         return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
+    }
+
+    /**
+     * @param StoreOwnerMultipleBranchesCreateRequest $request
+     * @return array|string
+     */
+    public function createMultipleBranches(StoreOwnerMultipleBranchesCreateRequest $request): array|string
+    {
+        $response = [];
+
+        foreach($request->getBranches() as $branch) {
+
+            $branchRequest = $this->autoMapping->map('array', StoreOwnerBranchCreateRequest::class, $branch);
+
+            $branchRequest->setStoreOwner($request->getStoreOwner());
+
+            $branchResult = $this->storeOwnerBranchManager->createBranchByStoreOwner($branchRequest);
+
+            $response[] = $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branchResult);
+        }
+
+        return $response;
     }
 
     /**
