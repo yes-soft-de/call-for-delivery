@@ -4,20 +4,16 @@ namespace App\Manager\Subscription;
 
 use App\AutoMapping;
 use App\Entity\SubscriptionEntity;
-use App\Entity\PackageEntity;
-use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionNextRequest;
 use App\Request\Subscription\SubscriptionChangeIsFutureRequest;
-use App\Request\Subscription\SubscriptionUpdateStateRequest;
 use App\Request\Subscription\SubscriptionUpdateFinishRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
 use App\Manager\Package\PackageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\Subscription\SubscriptionConstant;
-use App\Response\Subscription\MySubscriptionsResponse;
 use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionManager
@@ -111,21 +107,21 @@ class SubscriptionManager
          return $this->subscribeRepository->getSubscriptionForStoreOwner($storeOwner);
     }
 
-    public function subscriptionUpdateState(SubscriptionUpdateStateRequest $request)
-    {
-        $subscribeEntity = $this->subscribeRepository->find($request->getId());
-        $subscribeEntity->setEndDate(date_modify(new DateTime('now'),'+1 month'));
+    // public function subscriptionUpdateState(SubscriptionUpdateStateRequest $request)
+    // {
+    //     $subscribeEntity = $this->subscribeRepository->find($request->getId());
+    //     $subscribeEntity->setEndDate(date_modify(new DateTime('now'),'+1 month'));
 
-        if (!$subscribeEntity) {
-            return null;
-        }
+    //     if (!$subscribeEntity) {
+    //         return null;
+    //     }
 
-        $subscribeEntity = $this->autoMapping->mapToObject(SubscriptionUpdateStateRequest::class, SubscriptionEntity::class, $request, $subscribeEntity);
+    //     $subscribeEntity = $this->autoMapping->mapToObject(SubscriptionUpdateStateRequest::class, SubscriptionEntity::class, $request, $subscribeEntity);
 
-        $this->entityManager->flush();
+    //     $this->entityManager->flush();
 
-        return $subscribeEntity;
-    }
+    //     return $subscribeEntity;
+    // }
 
     public function updateSubscribeStateToFinish($id, $status): string
     {

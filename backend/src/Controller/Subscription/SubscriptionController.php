@@ -6,7 +6,6 @@ use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionNextRequest;
-use App\Request\Subscription\SubscriptionUpdateStateRequest;
 use App\Service\Subscription\SubscriptionService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Validator\Constraints\Json;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -248,30 +246,30 @@ class SubscriptionController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    /**
-     * @Route("subscriptionUpdateState", name="SubscriptionUpdateState", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function subscriptionUpdateState(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
+    // /**
+    //  * @Route("subscriptionUpdateState", name="SubscriptionUpdateState", methods={"PUT"})
+    //  * @IsGranted("ROLE_ADMIN")
+    //  * @param Request $request
+    //  * @return JsonResponse
+    //  */
+    // public function subscriptionUpdateState(Request $request)
+    // {
+    //     $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(\stdClass::class, SubscriptionUpdateStateRequest::class, (object) $data);
+    //     $request = $this->autoMapping->map(\stdClass::class, SubscriptionUpdateStateRequest::class, (object) $data);
 
-        $violations = $this->validator->validate($request);
+    //     $violations = $this->validator->validate($request);
 
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
+    //     if (\count($violations) > 0) {
+    //         $violationsString = (string) $violations;
 
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
+    //         return new JsonResponse($violationsString, Response::HTTP_OK);
+    //     }
 
-        $result = $this->subscriptionService->subscriptionUpdateState($request);
+    //     $result = $this->subscriptionService->subscriptionUpdateState($request);
 
-        return $this->response($result, self::UPDATE);
-    }
+    //     return $this->response($result, self::UPDATE);
+    // }
 
     /**
      * @Route("getSubscriptionsPending", name="getSubscriptionsPending", methods={"GET"})
