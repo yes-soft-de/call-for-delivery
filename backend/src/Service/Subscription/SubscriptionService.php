@@ -60,14 +60,28 @@ class SubscriptionService
 
            $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
         
-           $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
+           if($subscriptionCurrent) {
 
-           $result = $this->subscriptionManager->nextSubscription($request, $status);
-            
-           return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+                $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
+                if( $status === SubscriptionConstant::UNSUBSCRIBED ) {
+        
+                    return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
+                }
+               
+                if( $status ) {   
+                
+                    $result = $this->subscriptionManager->nextSubscription($request, $status);
+                    return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+                }              
+           }  
         }
 
-        return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
+        if( $isFuture === 1 ) {
+        
+            return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
+        }
+
+        return SubscriptionConstant::UNSUBSCRIBED;
     }
 
     public function getIsFuture($storeOwner): INT
@@ -177,7 +191,9 @@ class SubscriptionService
         if ($item) { 
 
           return  $item['status'];
-        }       
+        } 
+
+        return SubscriptionConstant::UNSUBSCRIBED;     
      }
 
     /**
@@ -262,6 +278,9 @@ class SubscriptionService
          $remainingOrdersOfPackage['packageName'] = 'name'; 
          $remainingOrdersOfPackage['subscriptionId'] = $subscribeId; 
          $remainingOrdersOfPackage['remainingOrders'] = 5;
+         $remainingOrdersOfPackage['packageCarCount'] = 5;
+         $remainingOrdersOfPackage['packageOrderCount'] = 5;
+         $remainingOrdersOfPackage['carsStatus'] = 5;
 
         $response = $this->autoMapping->map('array', RemainingOrdersResponse::class, $remainingOrdersOfPackage);
         

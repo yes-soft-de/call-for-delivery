@@ -24,5 +24,5 @@ final class SubscriptionConstant
 
     const UNSUBSCRIBED = "unsubscribed";
 
-    const YOU_HAVE_SUBSCRIBED = "You have subscribed";
+    const YOU_HAVE_SUBSCRIBED = "You have already subscribed";
 }

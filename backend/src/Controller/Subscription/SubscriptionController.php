@@ -195,6 +195,11 @@ class SubscriptionController extends BaseController
 
             return $this->response($result, self::YOU_HAVE_SUBSCRIBED);
         }
+
+        if( $result === SubscriptionConstant::UNSUBSCRIBED) {
+
+            return $this->response($result, self::SUBSCRIBE_THEN_NEXT);
+        }
        
         return $this->response($result, self::CREATE);
     }
