@@ -252,6 +252,9 @@ class InitAccountStateSelectBranch extends States {
                                 : () {
                                     var index = 0;
                                     for (var element in branchLocation) {
+                                      var last =
+                                          branchLocation.length - 1 == index;
+                                      print(last);
                                       screenState.createBranch(
                                           CreateBranchRequest(
                                               location: GeoJson(
@@ -260,7 +263,7 @@ class InitAccountStateSelectBranch extends States {
                                                   lon: element
                                                       .location.longitude),
                                               name: element.name),
-                                          branchLocation.length - 1 == index);
+                                          last);
                                       index++;
                                     }
                                   },

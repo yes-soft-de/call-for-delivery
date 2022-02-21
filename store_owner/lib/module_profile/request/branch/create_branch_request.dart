@@ -11,7 +11,7 @@ class CreateBranchRequest {
 
   Map<String, dynamic> toJson() {
     return {
-      'brancheName': name,
+      'name': name,
       'location': location.toJson(),
     };
   }

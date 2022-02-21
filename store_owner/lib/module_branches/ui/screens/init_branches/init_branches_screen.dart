@@ -57,7 +57,7 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
     setState(() {});
   }
 
-  void createBranch(CreateBranchRequest request, last) {
+  void createBranch(CreateBranchRequest request, bool last) {
     widget._manager.createBranch(this, request, last);
   }
 

@@ -56,8 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   String needForLogging(bool login) {
     if (login) {
-      return BranchesRoutes.INIT_BRANCHES;
-      //  return ProfileRoutes.INIT_ACCOUNT;
+     return ProfileRoutes.INIT_ACCOUNT;
     } else if (AboutHiveHelper().getWelcome()) {
       return AuthorizationRoutes.LOGIN_SCREEN;
     } else {
