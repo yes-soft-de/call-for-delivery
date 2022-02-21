@@ -6,6 +6,7 @@ import 'package:c4d/module_branches/request/create_branch_request/create_branch_
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_profile/prefs_helper/profile_prefs_helper.dart';
+import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -42,6 +43,16 @@ class BranchesListService {
   }
 
   Future<DataModel> addBranch(CreateBrancheRequest request) async {
+    ActionResponse? response = await _manager.addBranch(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+    Future<DataModel> createBranch(CreateBranchRequest request) async {
     ActionResponse? response = await _manager.createBrannch(request);
     if (response == null) {
       return DataModel.withError(S.current.networkError);

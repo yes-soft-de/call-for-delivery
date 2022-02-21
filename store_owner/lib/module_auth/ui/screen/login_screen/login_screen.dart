@@ -33,10 +33,13 @@ class LoginScreenState extends State<LoginScreen> {
     if (mounted) setState(() {});
   }
 
+  late bool canPop;
   @override
   void initState() {
+    canPop = Navigator.of(context).canPop();
     loadingSnapshot = AsyncSnapshot.nothing();
     _currentStates = LoginStateInit(this);
+
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       if (mounted) {
         setState(() {
@@ -66,7 +69,7 @@ class LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: CustomMandoobAppBar.appBar(context,
-            title: S.of(context).login, canGoBack: Navigator.canPop(context)),
+            title: S.of(context).login, canGoBack: canPop),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
               ? _currentStates.getUI(context)
@@ -95,8 +98,9 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(SplashRoutes.SPLASH_SCREEN, (route) => false,arguments: true);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        SplashRoutes.SPLASH_SCREEN, (route) => false,
+        arguments: true);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

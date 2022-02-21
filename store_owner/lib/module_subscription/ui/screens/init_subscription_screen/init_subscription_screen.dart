@@ -31,7 +31,7 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
 
   void moveToInitBranch() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        BranchesRoutes.BRANCHES_LIST_SCREEN, (route) => false);
+        BranchesRoutes.INIT_BRANCHES, (route) => false);
   }
 
   @override

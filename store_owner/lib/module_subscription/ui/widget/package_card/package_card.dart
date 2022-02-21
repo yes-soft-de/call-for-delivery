@@ -15,15 +15,14 @@ class PackageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = 175.0;
+    var width = 185.0;
     return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 16, right: 16, left: 16),
+      padding: const EdgeInsets.only(top: 16, bottom: 16, right: 8, left: 8),
       child: AnimatedContainer(
           duration: Duration(milliseconds: 450),
           width: width,
           decoration: BoxDecoration(
               gradient: active ? LinearGradient(
-
                 colors: [
                   Theme.of(context).colorScheme.primary.withOpacity(0.7),
                   Theme.of(context).colorScheme.primary.withOpacity(0.8),
@@ -148,7 +147,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 105,
                     child: Text(
                       '${package.orderCount} ' + S.of(context).ordermonth,
                       style: TextStyle(
@@ -191,7 +190,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 105,
                     child: package.carCount != 0
                         ? Text(
                             '${package.carCount} ' + S.of(context).car,
@@ -240,7 +239,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 105,
                     child: Text(
                       '${package.cost} ${S.current.sar}',
                       style: TextStyle(
