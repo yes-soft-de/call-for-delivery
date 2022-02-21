@@ -1,0 +1,63 @@
+App\Request\Subscription\SubscriptionCreateRequest:
+    properties:
+        package:
+            - NotBlank: ~
+
+App\Request\Subscription\SubscriptionNextRequest:
+    properties:
+        package:
+            - NotBlank: ~
+
+App\Request\Package\PackageCreateRequest:
+    properties:
+        name:
+            - NotBlank: ~
+        cost:
+            - NotBlank: ~
+        carCount:
+            - NotBlank: ~
+        orderCount:
+            - NotBlank: ~
+
+App\Request\Package\PackageUpdateStateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+        cost:
+            - NotBlank: ~
+        carCount:
+            - NotBlank: ~
+        orderCount:
+            - NotBlank: ~
+
+App\Request\StoreOwner\StoreOwnerProfileUpdateRequest:
+    properties:
+        storeOwnerName:
+           - NotBlank: ~
+  
+App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest:
+    properties:
+        location:
+           - NotBlank: ~
+        name:
+           - NotBlank: ~
+  
+App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest:
+    properties:
+        id:
+           - NotBlank: ~
+        location:
+           - NotBlank: ~
+        name:
+           - NotBlank: ~
+  
+App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
+    properties:
+        id:
+           - NotBlank: ~
+        isActive:
+           - NotBlank: ~
+
+  
