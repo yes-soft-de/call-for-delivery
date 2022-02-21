@@ -29,9 +29,12 @@ class RegisterScreenState extends State<RegisterScreen> {
   late StreamSubscription _stateSubscription;
   late bool flags = true;
   bool activeResend = false;
+  late bool canPop;
+
   @override
   void initState() {
     super.initState();
+    canPop = Navigator.of(context).canPop();
     loadingSnapshot = AsyncSnapshot.nothing();
     _currentState = RegisterStateInit(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -71,7 +74,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         appBar: CustomMandoobAppBar.appBar(
           context,
           title: S.of(context).register,
-          canGoBack: Navigator.of(context).canPop(),
+          canGoBack:canPop,
         ),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
@@ -132,7 +135,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void moveToNext() {
-    Navigator.of(context).pushNamedAndRemoveUntil(ProfileRoutes.INIT_ACCOUNT, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(ProfileRoutes.INIT_ACCOUNT, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.registerSuccess)
         .show(context);
