@@ -37,29 +37,6 @@ class ProfileService {
     return false;
   }
 
-  Future<bool> saveBranch(List<Branch> branchList) async {
-    var branchesToCache = <Branch>[];
-
-    for (int i = 0; i < branchList.length; i++) {
-      var request = CreateBranchRequest(
-        branchList[i].brancheName.toString(),
-        {
-          'lat': branchList[i].location?.lat,
-          'lon': branchList[i].location?.lon,
-        },
-      );
-
-      var branch = await _manager.createBranch(request);
-
-      if (branch != null) {
-        branchesToCache.add(branch);
-      }
-    }
-
-    await _preferencesHelper.cacheBranch(branchesToCache);
-    return branchesToCache.isNotEmpty;
-  }
-
   Future<List<Branch>?> getMyBranches() async {
     List<Branch>? branches = await _preferencesHelper.getSavedBranch();
 

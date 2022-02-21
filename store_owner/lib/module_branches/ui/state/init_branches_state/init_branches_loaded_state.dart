@@ -2,14 +2,18 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
+import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
+import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_branches/ui/screens/init_branches/init_branches_screen.dart';
 import 'package:c4d/module_branches/ui/widget/branch_card.dart';
+import 'package:c4d/module_branches/ui/widget/edit_branch_dialog.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/google_map_widget.dart';
+import 'package:c4d/utils/effect/scaling.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 
@@ -159,113 +163,117 @@ class InitAccountStateSelectBranch extends States {
             ],
           ),
         ),
-        menu
-            ? TweenAnimationBuilder(
-                duration: Duration(milliseconds: 350),
-                curve: Curves.easeIn,
-                tween: Tween<double>(begin: 0, end: 1),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: double.maxFinite,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10)),
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    child: Flex(
-                      direction: Axis.vertical,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SafeArea(
-                          top: true,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                                alignment: AlignmentDirectional.bottomStart,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        menu = false;
-                                        screenState.refresh();
-                                      },
-                                      child: Container(
-                                        width: 45,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            shape: BoxShape.circle),
-                                        child: Icon(
-                                          Icons.close_rounded,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                      ),
+        Visibility(
+          visible: menu,
+          child: ScalingWidget(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: double.maxFinite,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                child: Flex(
+                  direction: Axis.vertical,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SafeArea(
+                      top: true,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                            alignment: AlignmentDirectional.bottomStart,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    menu = false;
+                                    screenState.refresh();
+                                  },
+                                  child: Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        shape: BoxShape.circle),
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      color: Colors.white,
+                                      size: 20,
                                     ),
-                                    Text(
-                                      S.current.selectedBranchesMenu,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Container(
-                                        width: 45,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle)),
-                                  ],
-                                )),
-                          ),
-                        ),
-                        Expanded(
-                          child: Scrollbar(
-                            child: ListView(
-                              physics: BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              children: _getMarkerCards(context),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                right: 16.0, left: 16, bottom: 8, top: 1),
-                            child: Container(
-                              height: 45,
-                              width: double.maxFinite,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                child: Center(
-                                    child: Text(S.of(context).saveBranches)),
-                                onPressed:
-                                    branchLocation == null ? null : () {},
+                                Text(
+                                  S.current.selectedBranchesMenu,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle)),
+                              ],
+                            )),
+                      ),
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        child: ListView(
+                          physics: BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          children: _getMarkerCards(context),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, bottom: 8, top: 1),
+                        child: Container(
+                          height: 45,
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            child:
+                                Center(child: Text(S.of(context).saveBranches)),
+                            onPressed: branchLocation.isEmpty
+                                ? null
+                                : () {
+                                    var index = 0;
+                                    for (var element in branchLocation) {
+                                      screenState.createBranch(
+                                          CreateBranchRequest(
+                                              location: GeoJson(
+                                                  lat:
+                                                      element.location.latitude,
+                                                  lon: element
+                                                      .location.longitude),
+                                              name: element.name),
+                                          branchLocation.length - 1 == index);
+                                      index++;
+                                    }
+                                  },
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                builder: (_, double? val, child) {
-                  return Transform.scale(
-                    scale: val,
-                    child: child,
-                  );
-                },
-              )
-            : Container()
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -285,35 +293,7 @@ class InitAccountStateSelectBranch extends States {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      var nameController = TextEditingController();
-                      return Dialog(
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            TextFormField(
-                              controller: nameController,
-                              decoration: InputDecoration(
-                                hintText: S.of(context).newName,
-                                labelText: S.of(context).newName,
-                              ),
-                              validator: (name) {
-                                if (name?.isEmpty == true) {
-                                  return S.of(context).nameIsRequired;
-                                }
-                                return null;
-                              },
-                            ),
-                            ElevatedButton(
-                                child: Text(S.of(context).save),
-                                onPressed: () {
-                                  if (nameController.text.isNotEmpty) {
-                                    Navigator.of(context)
-                                        .pop(nameController.text);
-                                  }
-                                })
-                          ],
-                        ),
-                      );
+                      return EditBranchDialog();
                     }).then((result) {
                   if (result != null) {
                     branchLocation[i].name = result;

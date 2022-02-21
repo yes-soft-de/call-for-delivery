@@ -4,6 +4,7 @@ import 'package:c4d/module_branches/request/create_branch_request/create_branch_
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -35,7 +36,17 @@ class BranchesRepository {
     return BranchListResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> createBranch(CreateBrancheRequest request) async {
+  Future<ActionResponse?> createBranch(CreateBranchRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.CREATE_BRANCH_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+    Future<ActionResponse?> addBranch(CreateBrancheRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.CREATE_BRANCH_API,

@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
-import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
 import 'package:c4d/module_branches/state_manager/init_branches_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
+import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   Completer<GoogleMapController> controller = Completer();
   late CustomInfoWindowController customInfoWindowController;
   List<BranchModel> branchLocation = [];
-  
+
   @override
   void initState() {
     customInfoWindowController = CustomInfoWindowController();
@@ -58,8 +57,12 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
     setState(() {});
   }
 
-  void createBranch(CreateBrancheRequest request) {
-    widget._manager.createBranch(this, request);
+  void createBranch(CreateBranchRequest request, last) {
+    widget._manager.createBranch(this, request, last);
+  }
+
+  void moveToOrder() {
+    Navigator.of(context).pushNamedAndRemoveUntil('', (route) => false);
   }
 
   @override
