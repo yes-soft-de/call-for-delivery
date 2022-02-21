@@ -33,8 +33,6 @@ class SubscriptionService
      */
     public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
-        $response = SubscriptionConstant::ERROR;
-
         $isFuture = $this->getIsFuture($request->getStoreOwner());
         if ( $isFuture === 0) {
 
@@ -49,10 +47,10 @@ class SubscriptionService
 
             $subscriptionResult = $this->subscriptionManager->createSubscription($request, $status);
 
-            $response = $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
         }
 
-        return $response;
+        return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
     }
 
     public function nextSubscription(SubscriptionNextRequest $request): mixed
@@ -69,7 +67,7 @@ class SubscriptionService
            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
         }
 
-        return SubscriptionConstant::ERROR;
+        return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
     }
 
     public function getIsFuture($storeOwner): INT
@@ -259,6 +257,11 @@ class SubscriptionService
             }
          }   
         }
+         //this for tes only
+         $remainingOrdersOfPackage['packageID'] = 1; 
+         $remainingOrdersOfPackage['packageName'] = 'name'; 
+         $remainingOrdersOfPackage['subscriptionId'] = $subscribeId; 
+         $remainingOrdersOfPackage['remainingOrders'] = 5;
 
         $response = $this->autoMapping->map('array', RemainingOrdersResponse::class, $remainingOrdersOfPackage);
         

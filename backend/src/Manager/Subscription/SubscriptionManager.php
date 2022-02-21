@@ -39,7 +39,8 @@ class SubscriptionManager
 
     public function createSubscription(SubscriptionCreateRequest $request, $status): ?SubscriptionEntity
     { 
-        $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
+        // change to SUBSCRIBE_INACTIVE
+        $request->setStatus(SubscriptionConstant::SUBSCRIBE_ACTIVE);
         
         if($status == SubscriptionConstant::SUBSCRIBE_ACTIVE) {
            

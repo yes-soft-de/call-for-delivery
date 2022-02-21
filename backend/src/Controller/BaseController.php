@@ -53,6 +53,7 @@ class BaseController extends AbstractController
     // subscription
     const SUBSCRIPTION_WAITE_ACTIVE = ["You have a subscription waiting to be activated", "9301"];
     const SUBSCRIPTION_UNSUBSCRIBED = ["You do not have a subscription", "9302"];
+    const YOU_HAVE_SUBSCRIBED = ["You have subscribed", "9303"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
 
