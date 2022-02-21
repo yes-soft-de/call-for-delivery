@@ -60,4 +60,7 @@ App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
         isActive:
            - NotBlank: ~
 
-  
+App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
+    properties:
+        branches:
+            - NotBlank: ~
