@@ -133,12 +133,12 @@ class SubscriptionService
         return $response;
     }
   
-    public function subscriptionUpdateState($request)
-    {
-        $result = $this->subscriptionManager->subscriptionUpdateState($request);
+    // public function subscriptionUpdateState($request)
+    // {
+    //     $result = $this->subscriptionManager->subscriptionUpdateState($request);
 
-        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
-    }
+    //     return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
+    // }
 
     public function updateSubscribeStateToFinish($id, $status): string
     {
