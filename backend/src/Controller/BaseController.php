@@ -48,6 +48,7 @@ class BaseController extends AbstractController
     const STORE_OWNER_IS_NOT_REGISTERED = ["store owner is not registered!", "9155"];
     const STORE_OWNER_IS_NOT_VERIFIED = ["store owner is not verified!", "9156"];
     const STORE_OWNER_PROFILE_NOT_EXIST = ["store owner profile not exist!", "9157"];
+    const STORE_OWNER_PROFILE_CREATED = ["store owner profile created", "9158"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
     // subscription
@@ -57,6 +58,7 @@ class BaseController extends AbstractController
     const SUBSCRIBE_THEN_NEXT = ["Please subscribe first, then create a subscription for later", "9304"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
+    const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [

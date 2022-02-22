@@ -3,9 +3,13 @@
 namespace App\Service\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
+use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusGetResponse;
+use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusUpdateResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
@@ -56,6 +60,24 @@ class StoreOwnerProfileService
         }
 
         return $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
+    }
+
+    public function getCompleteAccountStatusByStoreOwnerId($storeOwnerId): StoreOwnerCompleteAccountStatusGetResponse
+    {
+        $completeAccountStatusResult = $this->storeOwnerProfileManager->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
+
+        return $this->autoMapping->map('array', StoreOwnerCompleteAccountStatusGetResponse::class, $completeAccountStatusResult);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerCompleteAccountStatusUpdateResponse|string
+    {
+        $storeOwnerProfileResult = $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
+
+        if($storeOwnerProfileResult === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+            return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+        }
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerCompleteAccountStatusUpdateResponse::class, $storeOwnerProfileResult);
     }
 
     public function getImageParams($imageURL, $image, $baseURL): array

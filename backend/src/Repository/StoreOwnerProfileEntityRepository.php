@@ -54,4 +54,16 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getCompleteAccountStatusByStoreOwnerId($storeOwnerId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerProfile')
+            ->select('storeOwnerProfile.completeAccountStatus')
+
+            ->andWhere('storeOwnerProfile.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
