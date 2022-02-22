@@ -39,7 +39,7 @@ class StoreOwnerBranchManager
      */
     public function createBranch(StoreOwnerBranchCreateRequest $request):?StoreOwnerBranchEntity
     {
-        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStoreOwner());
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($request->getStoreOwner());
      
         $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
         $entity->setIsActive(1);
@@ -115,7 +115,9 @@ class StoreOwnerBranchManager
      */
     public function getAllBranches($storeOwnerId): array
     {
-       return $this->storeOwnerBranchEntityRepository->findBy(['storeOwner' => $storeOwnerId]);
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
+       
+       return $this->storeOwnerBranchEntityRepository->findBy(['storeOwner' => $storeOwner->getId()]);
     }
 
     /**
