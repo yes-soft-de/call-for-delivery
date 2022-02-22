@@ -114,6 +114,15 @@ class StoreOwnerProfileManager
         return $this->storeOwnerProfileEntityRepository->find($id);
     }
 
+    /**
+     * @param $storeOwnerId
+     * @return StoreOwnerProfileEntity|null
+     */
+    public function getStoreOwnerProfileByStoreId($storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->findOneBy(["storeOwnerId"=>$storeOwnerId]);
+    }
+
     public function getStoreOwnerProfileByStoreOwnerId($storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
