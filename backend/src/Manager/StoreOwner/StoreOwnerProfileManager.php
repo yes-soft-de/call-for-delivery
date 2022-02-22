@@ -3,9 +3,11 @@
 namespace App\Manager\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
+use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +57,7 @@ class StoreOwnerProfileManager
             $storeProfile->setStoreOwnerId($userRegister->getId());
             // $storeProfile->setStoreOwnerName($request->getUserName());
             $storeProfile->setStoreOwnerName(0);
+            $storeProfile->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();
@@ -73,6 +76,7 @@ class StoreOwnerProfileManager
             $storeProfile->setStatus('inactive');
             $storeProfile->setStoreOwnerId($user['id']);
             $storeProfile->setStoreOwnerName($request->getUserName());
+            $storeProfile->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();
@@ -126,5 +130,28 @@ class StoreOwnerProfileManager
     public function getStoreOwnerProfileByStoreOwnerId($storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    public function getCompleteAccountStatusByStoreOwnerId($storeOwnerId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    {
+        if($request->getCompleteAccountStatus() !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $request->getCompleteAccountStatus() !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+            return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+
+        } else {
+            $storeOwnerProfile = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getStoreOwnerId());
+
+            if ($storeOwnerProfile) {
+                $storeOwnerProfile = $this->autoMapping->mapToObject(StoreOwnerCompleteAccountStatusUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $storeOwnerProfile);
+
+                $this->entityManager->flush();
+
+                return $storeOwnerProfile;
+            }
+        }
     }
 }

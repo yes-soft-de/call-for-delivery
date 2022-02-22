@@ -3,8 +3,10 @@
 namespace App\Controller\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
+use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -234,5 +236,136 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->getStoreOwnerProfile($this->getUserId());
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * store: Get complete account status of store owner profile.
+     * @Route("storeownerprofilecompleteaccountstatus", name="getCompleteAccountStatusOfStoreOwnerProfile", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Store Owner Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the completeAccountStatus of store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns the completeAccountStatus of store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9158"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCompleteAccountStatusByStoreOwnerId(): JsonResponse
+    {
+        $response = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($this->getUserId());
+
+        if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+            return $this->response($response, self::FETCH);
+
+        } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+            return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
+        }
+    }
+
+    /**
+     * store: Update complete account status of the store owner profile.
+     * @Route("storeownerprofilecompleteaccountstatus", name="updateCompleteAccountStatusOfStoreOwnerProfile", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Store Owner Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update Store Owner Profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns the store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9221"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function storeOwnerProfileCompleteAccountStatusUpdate(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerCompleteAccountStatusUpdateRequest::class, (object)$data);
+
+        $request->setStoreOwnerId($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+        if(\count($violations) > 0)
+        {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->storeOwnerProfileService->storeOwnerProfileCompleteAccountStatusUpdate($request);
+
+        if($response === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+            return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }

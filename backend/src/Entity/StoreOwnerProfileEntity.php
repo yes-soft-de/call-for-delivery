@@ -65,6 +65,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: StoreOwnerBranchEntity::class)]
     private $storeOwnerBranchEntities;
 
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $completeAccountStatus;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -312,6 +315,18 @@ class StoreOwnerProfileEntity
                 $storeOwnerBranchEntity->setStoreOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompleteAccountStatus(): ?string
+    {
+        return $this->completeAccountStatus;
+    }
+
+    public function setCompleteAccountStatus(?string $completeAccountStatus): self
+    {
+        $this->completeAccountStatus = $completeAccountStatus;
 
         return $this;
     }
