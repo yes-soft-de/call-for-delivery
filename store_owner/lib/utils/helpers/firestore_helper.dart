@@ -6,7 +6,7 @@ class FireStoreHelper {
   Stream? onInsertChangeWatcher() {
     try {
       return FirebaseFirestore.instance
-          .collection('twaslna_action')
+          .collection('c4d_actions')
           .doc('new_action')
           .collection('action_history')
           .snapshots();
@@ -18,10 +18,23 @@ class FireStoreHelper {
   Future<void> insertWatcher() async {
     try {
       await FirebaseFirestore.instance
-          .collection('twaslna_action')
+          .collection('c4d_actions')
           .doc('new_action')
           .collection('action_history')
-          .add({'date': DateTime.now().toUtc().toIso8601String()});
+          .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
+              Duration(minutes: 1));
+    } catch (e) {
+      return;
+    }
+  }
+
+  Future<void> insertWatcherOrder(int orderId) async {
+    try {
+      FirebaseFirestore.instance
+          .collection('order_state')
+          .doc(orderId.toString())
+          .collection('order_history')
+          .add({'date': DateTime.now().toLocal().toIso8601String()});
     } catch (e) {
       return;
     }
