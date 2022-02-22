@@ -87,7 +87,7 @@ class LoginStateInit extends LoginState {
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
-                          phone: true,
+                          numbers: true,
                           phoneHint: false,
                           maxLength: 3,
                           hintText: S.current.countryCode,
