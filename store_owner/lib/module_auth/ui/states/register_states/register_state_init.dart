@@ -54,8 +54,8 @@ class RegisterStateInit extends RegisterState {
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
                     ImageAsset.LOGO,
-                    width: 50,
-                    height: 50,
+                    width: 100,
+                    height: 100,
                   ),
                 ),
               ),
