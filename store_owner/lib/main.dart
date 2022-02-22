@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
 import 'package:c4d/module_branches/branches_module.dart';
+import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_profile/module_profile.dart';
 import 'package:c4d/module_subscription/subscriptions_module.dart';
 import 'package:device_info/device_info.dart';
@@ -90,7 +91,9 @@ class MyApp extends StatefulWidget {
   final ProfileModule _profileModule;
   final SubscriptionsModule _subscriptionsModule;
   final BranchesModule _branchesModule;
+  final OrdersModule _ordersModule;
   MyApp(
+      this._ordersModule,
       this._themeDataService,
       this._localizationService,
       this._fireNotificationService,
@@ -102,8 +105,7 @@ class MyApp extends StatefulWidget {
       this._aboutModule,
       this._profileModule,
       this._branchesModule,
-      this._subscriptionsModule
-      );
+      this._subscriptionsModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
