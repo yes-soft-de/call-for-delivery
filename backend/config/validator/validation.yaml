@@ -64,3 +64,8 @@ App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
     properties:
         branches:
             - NotBlank: ~
+
+App\Request\CompanyInfo\CompanyInfoUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~

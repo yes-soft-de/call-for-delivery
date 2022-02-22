@@ -57,6 +57,8 @@ class BaseController extends AbstractController
     const SUBSCRIBE_THEN_NEXT = ["Please subscribe first, then create a subscription for later", "9304"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
+    // company
+    const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [
