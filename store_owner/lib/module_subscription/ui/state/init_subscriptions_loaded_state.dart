@@ -54,24 +54,28 @@ class InitSubscriptionsLoadedState extends States {
               ),
             ),
             // City
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).backgroundColor),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                      value: _selectedCity,
-                      items: _getCities(),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      hint: Text(S.current.chooseYourCity),
-                      onChanged: (String? value) {
-                        _selectedCity = value;
-                        screenState.refresh();
-                      }),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Container(
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Theme.of(context).backgroundColor),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        value: _selectedCity,
+                        items: _getCities(),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        hint: Text(S.current.chooseYourCity),
+                        onChanged: (String? value) {
+                          _selectedCity = value;
+                          screenState.refresh();
+                        }),
+                  ),
                 ),
               ),
             ),
@@ -85,7 +89,7 @@ class InitSubscriptionsLoadedState extends States {
                 fade: true,
                 milliseconds: 1000,
                 child: SizedBox(
-                  height: 368,
+                  height: 375,
                   child: ListView(
                     physics: BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics()),
@@ -126,6 +130,9 @@ class InitSubscriptionsLoadedState extends States {
                   ),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 75,
             ),
           ],
         ),
@@ -176,7 +183,10 @@ class InitSubscriptionsLoadedState extends States {
     var cityDropDown = <DropdownMenuItem<String>>[];
     cityNames.forEach((element) {
       cityDropDown.add(DropdownMenuItem(
-        child: Text(element),
+        child: Text(
+          element,
+          overflow: TextOverflow.ellipsis,
+        ),
         value: element,
       ));
     });
