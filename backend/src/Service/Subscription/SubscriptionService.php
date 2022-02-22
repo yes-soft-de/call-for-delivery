@@ -17,9 +17,6 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionService
 {
-    private $autoMapping;
-    private $subscriptionManager;
-
     public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
     {
         $this->autoMapping = $autoMapping;
@@ -33,24 +30,9 @@ class SubscriptionService
      */
     public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
-        $isFuture = $this->getIsFuture($request->getStoreOwner());
-        if ( $isFuture === 0) {
+        $subscription = $this->subscriptionManager->createSubscription($request);
 
-            $status = SubscriptionConstant::SUBSCRIBE_INACTIVE;
-
-            $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
-  
-            if($subscriptionCurrent) {
-
-                $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
-            }
-
-            $subscriptionResult = $this->subscriptionManager->createSubscription($request, $status);
-
-            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscriptionResult);
-        }
-
-        return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
+        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
     }
 
     public function nextSubscription(SubscriptionNextRequest $request): mixed

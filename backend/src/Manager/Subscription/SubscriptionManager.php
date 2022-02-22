@@ -13,40 +13,32 @@ use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
 use App\Manager\Package\PackageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use App\Manager\Subscription\SubscriptionDetailsManager;
+use App\Manager\Subscription\SubscriptionHistoryManager;
 use App\Constant\Subscription\SubscriptionConstant;
 use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionManager
-{
-    private $autoMapping;
-    private $entityManager;
-    private $subscribeRepository;
-    private $packageManager;
-    private $storeOwnerProfileManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, PackageManager $packageManager, StoreOwnerProfileManager $storeOwnerProfileManager)
+{  
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionEntityRepository $subscribeRepository, private PackageManager $packageManager, private StoreOwnerProfileManager $storeOwnerProfileManager, private SubscriptionDetailsManager $subscriptionDetailsManager, private SubscriptionHistoryManager $subscriptionHistoryManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->subscribeRepository = $subscribeRepository;
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
         $this->packageManager = $packageManager;
+        $this->subscriptionDetailsManager = $subscriptionDetailsManager;
+        $this->subscriptionHistoryManager = $subscriptionHistoryManager;
     }
 
-    public function createSubscription(SubscriptionCreateRequest $request, $status): ?SubscriptionEntity
+    public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionEntity
     { 
         // change to SUBSCRIBE_INACTIVE
-        $request->setStatus(SubscriptionConstant::SUBSCRIBE_ACTIVE);
-        
-        if($status == SubscriptionConstant::SUBSCRIBE_ACTIVE) {
-           
-            $request->setIsFuture(1);
-        }
+       $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
+       $request->setIsFuture(0);
 
-        else {
-          
-            $request->setIsFuture(0);
-        }
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
+       $request->setStoreOwner($storeOwner);
 
        $package = $this->packageManager->getPackage($request->getPackage());
        $request->setPackage($package);
@@ -55,13 +47,17 @@ class SubscriptionManager
        $request->setStoreOwner($storeOwnerProfile);
       
        $subscriptionEntity = $this->autoMapping->map(SubscriptionCreateRequest::class, SubscriptionEntity::class, $request);
-    
-    //    $subscriptionEntity->setStartDate(new DateTime());
-
+       $subscriptionEntity->setStartDate(new DateTime());
+      
        $this->entityManager->persist($subscriptionEntity);
-
        $this->entityManager->flush();
-       $this->entityManager->clear();
+
+       if($subscriptionEntity){
+
+          $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity);  
+                    
+          $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity);            
+       }
 
        return $subscriptionEntity;
     }
