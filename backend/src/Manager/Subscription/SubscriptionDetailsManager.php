@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
 {
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SubscriptionDetailsEntityRepository $subscribeDetailsRepository)
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionDetailsEntityRepository $subscribeDetailsRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -51,5 +51,10 @@ class SubscriptionDetailsManager
         $this->entityManager->flush();
  
         return $subscriptionDetailsEntity;
+    }
+
+    public function getSubscriptionCurrent($storeOwner):?SubscriptionDetailsEntity
+    {     
+        return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
     }
 }

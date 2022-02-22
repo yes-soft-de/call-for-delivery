@@ -4,6 +4,7 @@ namespace App\Manager\Subscription;
 
 use App\AutoMapping;
 use App\Entity\SubscriptionEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionNextRequest;
@@ -34,8 +35,7 @@ class SubscriptionManager
     public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionEntity
     { 
         // change to SUBSCRIBE_INACTIVE
-       $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
-       $request->setIsFuture(0);
+       $request->setStatus(SubscriptionConstant::SUBSCRIBE_ACTIVE);
 
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
        $request->setStoreOwner($storeOwner);
@@ -52,56 +52,43 @@ class SubscriptionManager
        $this->entityManager->persist($subscriptionEntity);
        $this->entityManager->flush();
 
-       if($subscriptionEntity){
+       if($subscriptionEntity->getIsFuture() === false) {
 
-          $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity);  
-                    
-          $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity);            
+          $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity);
        }
-
-       return $subscriptionEntity;
-    }
-
-    public function nextSubscription(SubscriptionNextRequest $request, $status): ?SubscriptionEntity
-    {  
-        $request->setStatus(SubscriptionConstant::SUBSCRIBE_INACTIVE);
-        
-        if($status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
-           
-            $request->setIsFuture(1);
-        }
-
-        else {
-          
-            $request->setIsFuture(0);
-        }
-
-       $package = $this->packageManager->getPackage($request->getPackage());
-       $request->setPackage($package);
-
-       $storeOwnerProfile = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStoreOwner());
-       $request->setStoreOwner($storeOwnerProfile);
       
-       $subscriptionEntity = $this->autoMapping->map(SubscriptionNextRequest::class, SubscriptionEntity::class, $request);
-    
-    //    $subscriptionEntity->setStartDate(new DateTime());
-
-       $this->entityManager->persist($subscriptionEntity);
-
-       $this->entityManager->flush();
+       $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity);            
 
        return $subscriptionEntity;
     }
 
-    public function getIsFuture($storeOwner): ?array
+    public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
     {
-        return $this->subscribeRepository->getIsFuture($storeOwner);
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+
+       return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
-    
-    public function getSubscriptionForStoreOwner($storeOwner): array
+
+    public function getSubscriptionsForStoreOwner($storeOwner): array
     {
-         return $this->subscribeRepository->getSubscriptionForStoreOwner($storeOwner);
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+     
+       return $this->subscribeRepository->getSubscriptionsForStoreOwner($storeOwner);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // public function subscriptionUpdateState(SubscriptionUpdateStateRequest $request)
     // {
@@ -222,11 +209,6 @@ class SubscriptionManager
     public function subscripeNewUsers($fromDate, $toDate)
     {
         return $this->subscribeRepository->subscripeNewUsers($fromDate, $toDate);
-    }
-
-    public function getSubscriptionCurrent($storeOwner): ?array
-    {
-        return $this->subscribeRepository->getSubscriptionCurrent($storeOwner);
     }
 
     public function getNextSubscription($storeOwner)

@@ -4,9 +4,9 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Entity\SubscriptionEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Subscription\SubscriptionCreateRequest;
-use App\Request\Subscription\SubscriptionNextRequest;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\SubscriptionByIdResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
@@ -17,7 +17,7 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class SubscriptionService
 {
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
+    public function __construct(private AutoMapping $autoMapping, private SubscriptionManager $subscriptionManager)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
@@ -30,90 +30,116 @@ class SubscriptionService
      */
     public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
+              
+        $isFuture = $this->getIsFutureState($request->getStoreOwner());
+            // dd( $isFuture);
+        $request->setIsFuture($isFuture);
+
         $subscription = $this->subscriptionManager->createSubscription($request);
 
         return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
     }
 
-    public function nextSubscription(SubscriptionNextRequest $request): mixed
+    /**
+     * Check if there is a future subscription
+     * @param storeOwner
+     * @return INT
+     */
+    public function getIsFutureState($storeOwner): INT
     {
-        $isFuture = $this->getIsFuture($request->getStoreOwner());
-        if ( $isFuture === 0) {
+        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
+        if($subscriptionCurrent) {
+            if($subscriptionCurrent->getStatus() === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+             
+                return  1;
+            }
 
-           $subscriptionCurrent = $this->getSubscriptionCurrent($request->getStoreOwner());
-        
-           if($subscriptionCurrent) {
-
-                $status = $this->subscriptionIsActive($subscriptionCurrent['id']);
-                if( $status === SubscriptionConstant::UNSUBSCRIBED ) {
-        
-                    return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
-                }
-               
-                if( $status ) {   
-                
-                    $result = $this->subscriptionManager->nextSubscription($request, $status);
-                    return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $result);
-                }              
-           }  
+            return  0;
         }
 
-        if( $isFuture === 1 ) {
-        
-            return SubscriptionConstant::YOU_HAVE_SUBSCRIBED;   
-        }
-
-        return SubscriptionConstant::UNSUBSCRIBED;
+        return  0;
     }
 
-    public function getIsFuture($storeOwner): INT
+    /**
+     * @param storeOwner
+     * @return SubscriptionDetailsEntity
+     */
+    public function getSubscriptionCurrent($storeOwner):?SubscriptionDetailsEntity
     {
-        $item = $this->subscriptionManager->getIsFuture($storeOwner);
-        if($item) {
-         
-            return $item['isFuture'];    
-        }
+      return $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
 
-        return 0;
     }
-
-    public function getSubscriptionForStoreOwner($storeOwner): array
+    
+    public function getSubscriptionsForStoreOwner($storeOwner): array
     {
        $response = [];
 
-       $currentSubscription = $this->getSubscriptionCurrent($storeOwner);
-
-    //    if ($currentSubscription) {
-    //         $this->checkValidityOfSubscription($ownerID, $currentSubscription['id']);
-    //    }
-
-       $subscriptions = $this->subscriptionManager->getSubscriptionForStoreOwner($storeOwner);
+       $subscriptions = $this->subscriptionManager->getSubscriptionsForStoreOwner($storeOwner);
 
        foreach ($subscriptions as $subscription) {
-          
-             $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
-            
-             if ($currentSubscription) {
-//               $this->subscriptionIsActive($storeOwner, $currentSubscription['id']);
-
-                 //Check if the subscription is the current subscription?
-                 if ($subscription['id'] === $currentSubscription['id']) {
-
-                     $subscription['isCurrent']= SubscriptionConstant::SUBSCRIBE_CURRENT;
-                 }
-               
-                 else {
-
-                     $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
-                 }
-               
-             }
+            if($subscription['subscriptionDetailsId']) {
+             
+                $subscription['isCurrent'] = "yes";
+            }
 
             $response[] = $this->autoMapping->map("array", MySubscriptionsResponse::class, $subscription);
         }
 
         return $response;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     public function getSubscriptionForStoreOwner($storeOwner): array
+//     {
+//        $response = [];
+
+//        $currentSubscription = $this->getSubscriptionCurrent($storeOwner);
+
+//     //    if ($currentSubscription) {
+//     //         $this->checkValidityOfSubscription($ownerID, $currentSubscription['id']);
+//     //    }
+
+//        $subscriptions = $this->subscriptionManager->getSubscriptionForStoreOwner($storeOwner);
+
+//        foreach ($subscriptions as $subscription) {
+          
+//              $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
+            
+//              if ($currentSubscription) {
+// //               $this->subscriptionIsActive($storeOwner, $currentSubscription['id']);
+
+//                  //Check if the subscription is the current subscription?
+//                  if ($subscription['id'] === $currentSubscription['id']) {
+
+//                      $subscription['isCurrent']= SubscriptionConstant::SUBSCRIBE_CURRENT;
+//                  }
+               
+//                  else {
+
+//                      $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT;
+//                  }
+               
+//              }
+
+//             $response[] = $this->autoMapping->map("array", MySubscriptionsResponse::class, $subscription);
+//         }
+
+//         return $response;
+//     }
   
     // public function subscriptionUpdateState($request)
     // {
@@ -301,10 +327,10 @@ class SubscriptionService
         return $response;
     }
 
-    public function getSubscriptionCurrent($storeOwner): ?array
-    {
-        return $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
-    }
+    // public function getSubscriptionCurrent($storeOwner): ?array
+    // {
+    //     return $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
+    // }
 
     public function getNextSubscription($storeOwner)
     {

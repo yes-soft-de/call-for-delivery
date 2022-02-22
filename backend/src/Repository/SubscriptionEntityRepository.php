@@ -4,6 +4,7 @@ namespace App\Repository;
 
 // use App\Constant\Order\OrderStateConstant;
 use App\Entity\SubscriptionEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 // use App\Entity\OrderEntity;
@@ -23,24 +24,6 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SubscriptionEntity::class);
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function getIsFuture($storeOwner): mixed
-    {
-        return $this->createQueryBuilder('subscription')
-            ->select('subscription.isFuture')
-
-            ->andWhere('subscription.storeOwner = :storeOwner')
-            ->andWhere('subscription.isFuture = :isFuture')
-
-            ->setParameter('storeOwner', $storeOwner)
-            ->setParameter('isFuture', 1)
-
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 
     public function getSubscriptionCurrent($storeOwner): ?array
@@ -65,7 +48,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getSubscriptionForStoreOwner($storeOwner): array
+    public function getSubscriptionsForStoreOwner($storeOwner): array
     {
         return $this->createQueryBuilder('subscription')
 
@@ -73,17 +56,36 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->addSelect('subscription.id','subscription.status','subscription.startDate',
                 'subscription.endDate', 'subscription.note', 'subscription.isFuture')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId')
 
             ->andWhere('subscription.storeOwner = :storeOwner')
 
             ->setParameter('storeOwner', $storeOwner)
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
             ->getQuery()
 
             ->getResult();
     }
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
 
     /**
      * @param $id
@@ -103,18 +105,6 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * @param $storeOwner
