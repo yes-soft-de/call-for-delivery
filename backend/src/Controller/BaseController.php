@@ -60,6 +60,8 @@ class BaseController extends AbstractController
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
+    // company
+    const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [

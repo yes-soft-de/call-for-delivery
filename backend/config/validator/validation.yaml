@@ -71,3 +71,8 @@ App\Request\StoreOwnerBranch\StoreOwnerCompleteAccountStatusUpdateRequest:
             - NotBlank: ~
         completeAccountStatus:
             - NotBlank: ~
+
+App\Request\CompanyInfo\CompanyInfoUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
