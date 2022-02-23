@@ -65,6 +65,13 @@ App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
         branches:
             - NotBlank: ~
 
+App\Request\StoreOwnerBranch\StoreOwnerCompleteAccountStatusUpdateRequest:
+    properties:
+        storeOwnerId:
+            - NotBlank: ~
+        completeAccountStatus:
+            - NotBlank: ~
+
 App\Request\CompanyInfo\CompanyInfoUpdateRequest:
     properties:
         id:
