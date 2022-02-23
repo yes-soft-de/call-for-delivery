@@ -48,7 +48,9 @@ class SubscriptionManager
       
        $subscriptionEntity = $this->autoMapping->map(SubscriptionCreateRequest::class, SubscriptionEntity::class, $request);
        $subscriptionEntity->setStartDate(new DateTime());
-      
+   
+       $subscriptionEntity->setEndDate($this->calculatingSubscriptionExpiryDate($subscriptionEntity->getStartDate(), $package->getExpired()));
+
        $this->entityManager->persist($subscriptionEntity);
        $this->entityManager->flush();
 
@@ -136,6 +138,12 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
+    public function calculatingSubscriptionExpiryDate($startDate, $days)
+    {
+        $days = $days.'day';
+       
+        return new DateTime($startDate->format('Y-m-d h:i:s') . $days); 
+    }
 
 
 
@@ -144,6 +152,12 @@ class SubscriptionManager
 
 
 
+
+
+
+
+
+    
 
 
 
