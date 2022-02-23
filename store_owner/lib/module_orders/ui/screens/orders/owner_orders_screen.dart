@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
@@ -8,6 +9,9 @@ import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_profile/response/profile_response.dart';
+import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:c4d/navigator_menu/navigator_menu.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -90,24 +94,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).home,
-          style: TextStyle(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
-          ),
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(ProfileRoutes.EDIT_ACTIVITY_SCREEN);
-              }),
-        ],
-      ),
+      key: GlobalVariable.mainScreenScaffold,
+      appBar: CustomMandoobAppBar.appBar(context,
+          title: S.current.orders, icon: Icons.sort, onTap: () {
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
+      drawer: NavigatorMenu(),
       body: _currentState?.getUI(context),
     );
   }

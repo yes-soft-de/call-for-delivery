@@ -29,14 +29,23 @@ class CustomMandoobAppBar {
                   onTap: onTap ?? () => Navigator.of(context).pop(),
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                           color: Theme.of(context).backgroundColor,
+                           spreadRadius: 1.5,
+                           blurRadius:6,
+                           offset: Offset(-0.2,0)
+                          )
+                        ],
                         color:
-                            buttonBackground ?? Theme.of(context).primaryColor,
-                        shape: BoxShape.circle),
+                            buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
+                        ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(
                         icon ?? Icons.arrow_back,
-                        color: colorIcon ?? Colors.white,
+                        color: colorIcon ?? Theme.of(context).colorScheme.primary
                       ),
                     ),
                   ),
