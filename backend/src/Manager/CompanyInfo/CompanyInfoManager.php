@@ -23,7 +23,7 @@ class CompanyInfoManager
         $this->companyInfoEntityRepository = $companyInfoEntityRepository;
     }
 
-    public function create(CompanyInfoCreateRequest $request)
+    public function create(CompanyInfoCreateRequest $request): string|CompanyInfoEntity
     {
         $companyInfoAll = $this->getCompanyInfo();
 
@@ -35,9 +35,8 @@ class CompanyInfoManager
 
             return $companyInfoEntity;
         }
-        else {
-            return CompanyInfoConstant::COMPANY_INFO_EXISTS;
-        }
+
+        return CompanyInfoConstant::COMPANY_INFO_EXISTS;
     }
 
     public function update(CompanyInfoUpdateRequest $request): string|CompanyInfoEntity

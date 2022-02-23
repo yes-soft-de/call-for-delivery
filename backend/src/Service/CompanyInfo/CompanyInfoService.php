@@ -21,16 +21,16 @@ class CompanyInfoService
         $this->companyInfoManager = $companyInfoManager;
     }
 
-    public function create(CompanyInfoCreateRequest $request)
+    public function create(CompanyInfoCreateRequest $request): CompanyInfoGetResponse
     {
         $companyInfoResult = $this->companyInfoManager->create($request);
 
         if ($companyInfoResult === CompanyInfoConstant::COMPANY_INFO_EXISTS) {
             return $this->getCompanyInfo();
 
-        } else {
-            return $this->autoMapping->map(CompanyInfoEntity::class, CompanyInfoGetResponse::class, $companyInfoResult);
         }
+
+        return $this->autoMapping->map(CompanyInfoEntity::class, CompanyInfoGetResponse::class, $companyInfoResult);
     }
 
     public function update($request): string|CompanyInfoGetResponse
