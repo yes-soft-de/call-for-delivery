@@ -1,4 +1,3 @@
-
 class GetRecordsResponse {
   String? statusCode;
   String? msg;
@@ -10,7 +9,7 @@ class GetRecordsResponse {
     statusCode = json['status_code'];
     msg = json['msg'];
     if (json['Data'] != null) {
-      data =  <ActivityRecord> [];
+      data = <ActivityRecord>[];
       json['Data'].forEach((v) {
         data?.add(new ActivityRecord.fromJson(v));
       });

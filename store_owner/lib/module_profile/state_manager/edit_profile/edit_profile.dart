@@ -1,18 +1,20 @@
+import 'package:c4d/abstracts/states/empty_state.dart';
+import 'package:c4d/abstracts/states/error_state.dart';
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
-import 'package:c4d/module_profile/request/profile/profile_request.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
-import 'package:c4d/module_profile/ui/states/profile_loading/profile_loading.dart';
-import 'package:c4d/module_profile/ui/states/profile_state/profile_state.dart';
-import 'package:c4d/module_profile/ui/states/profile_state_got_profile/profile_state_got_profile.dart';
-import 'package:c4d/module_profile/ui/states/profile_state_no_profile/profile_state_no_profile.dart';
+import 'package:c4d/module_profile/ui/states/edit_profile/edit_profile.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable
 class EditProfileStateManager {
-  final _stateSubject = PublishSubject<ProfileState>();
+  final _stateSubject = PublishSubject<States>();
   final ImageUploadService _imageUploadService;
   final ProfileService _profileService;
   final AuthService _authService;
@@ -23,27 +25,22 @@ class EditProfileStateManager {
     this._authService,
   );
 
-  Stream<ProfileState> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => _stateSubject.stream;
 
-  void getProfile(EditProfileScreenState screenState) {
-    _stateSubject.add(ProfileStateLoading(screenState));
+  void getProfile(ProfileScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
     _profileService.getProfile().then((value) {
-      if (value == null) {
-        _stateSubject
-            .add(ProfileStateNoProfile(screenState, ProfileRequest(), false));
+      if (value.hasError) {
+        _stateSubject.add(ErrorState(screenState, onPressed: () {
+          getProfile(screenState);
+        }, title: S.current.profile));
+      } else if (value.isEmpty) {
+        _stateSubject.add(EmptyState(screenState, onPressed: () {
+          getProfile(screenState);
+        }, title: S.current.profile, emptyMessage: S.current.homeDataEmpty));
       } else {
-        _stateSubject.add(ProfileStateGotProfile(
-          screenState,
-          ProfileRequest(
-              name: value.name,
-              image: value.image,
-              phone: value.phone,
-              city: value.city,
-              bankName: value.bankName,
-              bankAccountNumber: value.accountID,
-              ),
-          false,
-        ));
+        value as ProfileModel;
+        _stateSubject.add(ProfileStateInit(screenState, value.data));
       }
     });
   }

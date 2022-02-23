@@ -5,7 +5,8 @@ class GetBranchesResponse {
   String? msg;
   List<Branch>? data;
 
-  GetBranchesResponse({required this.statusCode,required this.msg,required this.data});
+  GetBranchesResponse(
+      {required this.statusCode, required this.msg, required this.data});
 
   GetBranchesResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];

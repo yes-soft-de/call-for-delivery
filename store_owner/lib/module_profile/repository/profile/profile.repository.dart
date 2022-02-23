@@ -7,7 +7,7 @@ import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_profile/response/get_branches_response.dart';
 import 'package:c4d/module_profile/response/get_records_response.dart';
-import 'package:c4d/module_profile/response/profile_response.dart';
+import 'package:c4d/module_profile/response/profile_response/profile_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,24 +21,15 @@ class ProfileRepository {
     this._authService,
   );
 
-  Future<ProfileResponseModel?> getOwnerProfile() async {
-    try {
-      await _authService.refreshToken();
-      var token = await _authService.getToken();
-      dynamic response = await _apiClient.get(
-        Urls.OWNER_PROFILE_API,
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
-      if (response == null) return null;
+  Future<ProfileResponse?> getOwnerProfile() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.OWNER_PROFILE_API,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
 
-      return ProfileResponse.fromJson(response).data;
-    } on AuthorizationException {
-      return null;
-    } on TokenExpiredException {
-      return null;
-    } catch (e) {
-      return null;
-    }
+    return ProfileResponse.fromJson(response);
   }
 
   Future<Branch?> createBranch(CreateBranchRequest createBranch) async {

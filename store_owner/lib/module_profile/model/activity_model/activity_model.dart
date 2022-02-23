@@ -8,5 +8,5 @@ class ActivityModel {
       {required this.startDate,
       required this.endDate,
       required this.activity,
-       this.isCreate});
+      this.isCreate});
 }

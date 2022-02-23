@@ -38,7 +38,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
     profileRequest = widget.profileRequest;
     if (profileRequest == null) {
     } else {
-      _nameController.text = profileRequest?.name ?? '' ;
+      _nameController.text = profileRequest?.name ?? '';
       if (profileRequest?.phone != null) {
         countryCode = profileRequest!.phone!.contains('+')
             ? profileRequest!.phone!.substring(0, 4)
@@ -47,8 +47,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             profileRequest!.phone!.replaceFirst(countryCode, '0');
       }
 
-    //  _stcPayController.text = profileRequest?.stcPay ?? '';
-      _bankAccountNumberController.text = profileRequest?.bankAccountNumber ?? '';
+      //  _stcPayController.text = profileRequest?.stcPay ?? '';
+      _bankAccountNumberController.text =
+          profileRequest?.bankAccountNumber ?? '';
       _bankNameController.text = profileRequest?.bankName ?? '';
       _cityController.text = profileRequest?.city ?? '';
     }
@@ -74,14 +75,13 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     .then((value) {
                   if (value != null) {
                     profile = ProfileModel(
-                      image: value.path,
-                      name: _nameController.text,
-                      phone: _phoneController.text,
-                      stcPay: _stcPayController.text,
-                      bankNumber: _stcPayController.text,
-                      bankName: _bankAccountNumberController.text,
-                      city: _cityController.text
-                    );
+                        image: value.path,
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        stcPay: _stcPayController.text,
+                        bankNumber: _stcPayController.text,
+                        bankName: _bankAccountNumberController.text,
+                        city: _cityController.text);
                     widget.onImageUpload(profile!, null, null);
                   }
                 });

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class InitAccountStateLoading extends States {
   final String status;
-  InitAccountStateLoading(
-      InitAccountScreenState screenState, this.status)
+  InitAccountStateLoading(InitAccountScreenState screenState, this.status)
       : super(screenState);
 
   @override
@@ -36,13 +35,11 @@ class InitAccountStateLoading extends States {
                   height: 65,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10),
                       color: Theme.of(context).primaryColor),
                   child: Center(
-                    child: Text(
-                      '${status}',
-                      style:Theme.of(context).textTheme.button),
+                    child: Text('${status}',
+                        style: Theme.of(context).textTheme.button),
                   ),
                 ),
               ),
