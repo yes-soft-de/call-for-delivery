@@ -10,52 +10,52 @@ class CompanyInfoGetResponse
     public $id;
 
     /**
-     * @var string|null $id
+     * @var string|null $phone
      */
     public $phone;
 
     /**
-     * @var string|null $id
+     * @var string|null $phoneTwo
      */
     public $phoneTwo;
 
     /**
-     * @var string|null $id
+     * @var string|null $whatsapp
      */
     public $whatsapp;
 
     /**
-     * @var string|null $id
+     * @var string|null $fax
      */
     public $fax;
 
     /**
-     * @var string|null $id
+     * @var string|null $bankName
      */
     public $bankName;
 
     /**
-     * @var string|null $id
+     * @var string|null $stc
      */
     public $stc;
 
     /**
-     * @var string|null $id
+     * @var string|null $email
      */
     public $email;
 
     /**
-     * @var float|null $id
+     * @var float|null $kilometers
      */
     public $kilometers;
 
     /**
-     * @var float|null $id
+     * @var float|null $maxKilometerBonus
      */
     public $maxKilometerBonus;
 
     /**
-     * @var float|null $id
+     * @var float|null $minKilometerBonus
      */
     public $minKilometerBonus;
 }
