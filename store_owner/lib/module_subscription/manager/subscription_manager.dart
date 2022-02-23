@@ -4,16 +4,16 @@ import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class SubscriptionsManager{
+class SubscriptionsManager {
   final SubscriptionsRepository _repository;
 
-  SubscriptionsManager(
-      this._repository
-      );
+  SubscriptionsManager(this._repository);
 
-  Future<PackagesResponse?> getPackages() async => await _repository.getPackages();
+  Future<PackagesResponse?> getPackages() async =>
+      await _repository.getPackages();
 
-  Future<ActionResponse?> subscribePackage(int packageId)async => await _repository.subscribePackage(packageId);
-  Future<ActionResponse?> renewPackage(int packageId)async => await _repository.renewPackage(packageId);
-
+  Future<ActionResponse?> subscribePackage(int packageId) async =>
+      await _repository.subscribePackage(packageId);
+  Future<ActionResponse?> renewPackage(int packageId) async =>
+      await _repository.renewPackage(packageId);
 }

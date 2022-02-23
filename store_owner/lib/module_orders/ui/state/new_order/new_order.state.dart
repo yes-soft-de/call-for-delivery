@@ -299,11 +299,9 @@ class NewOrderStateBranchesLoaded extends NewOrderState {
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
                       if (activeBranch == null) {
-                        
                         return;
                       }
-                    
-                     },
+                    },
                     child: Text(
                       S.of(context).apply,
                       style: TextStyle(
@@ -373,7 +371,7 @@ class NewOrderStateBranchesLoaded extends NewOrderState {
                         ))
                     .toList(),
                 onChanged: (val) {
-               //   activeBranch = val;
+                  //   activeBranch = val;
                 }),
           ),
         ),

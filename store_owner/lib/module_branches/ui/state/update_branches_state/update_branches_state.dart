@@ -159,8 +159,10 @@ class UpdateBranchStateLoaded extends States {
                                   screenState.createBranch(CreateBrancheRequest(
                                       branchName: branchLocation?.branchName,
                                       location: lat.LatLng(
-                                          branchLocation?.location.latitude??0,
-                                          branchLocation?.location.longitude??0)));
+                                          branchLocation?.location.latitude ??
+                                              0,
+                                          branchLocation?.location.longitude ??
+                                              0)));
                                 } else {
                                   screenState.updateBranch(
                                       UpdateBranchesRequest(

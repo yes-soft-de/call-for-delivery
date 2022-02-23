@@ -8,10 +8,10 @@ class OwnerOrderCard extends StatelessWidget {
   final int index;
 
   OwnerOrderCard({
-   required this.time,
-   required this.from,
-   required this.to,
-   required this.index,
+    required this.time,
+    required this.from,
+    required this.to,
+    required this.index,
   });
 
   @override

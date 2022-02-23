@@ -75,8 +75,7 @@ class BranchCard extends StatelessWidget {
                   // preview
                   CustomIconButton(
                     onTap: preview,
-                    backgroundColor:
-                        Colors.green[100]!,
+                    backgroundColor: Colors.green[100]!,
                     icon: Icons.location_on_rounded,
                     iconColor: Colors.green,
                   ),

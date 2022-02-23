@@ -7,9 +7,7 @@ import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
-import 'package:c4d/module_profile/profile_routes.dart';
-import 'package:c4d/module_profile/response/profile_response.dart';
-import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +28,7 @@ class OwnerOrdersScreen extends StatefulWidget {
 class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     with WidgetsBindingObserver {
   OwnerOrdersListState? _currentState;
-  ProfileResponseModel? currentProfile;
+  ProfileModel? currentProfile;
   CompanyInfoResponse? _companyInfo;
 
   StreamSubscription? _stateSubscription;

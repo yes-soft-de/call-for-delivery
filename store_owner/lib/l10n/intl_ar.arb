@@ -449,5 +449,14 @@
     "myLocationDescribtion": "اضغط على العلامة لتذهب لموقعك",
     "selectedBranchesMenu": "قائمة الأفرع المختارة",
     "selectedBranchesMenuDescribtion": "اضغط على زر القائمة لعرض الأفرع المختارة",
-    "branchManagement": "إدارة الأفرع"
+    "branchManagement": "إدارة الأفرع",
+    "mySubscription": "اشتراكي",
+    "accountInActivated": "الحساب غير مفعل",
+    "accountActivated": "الحساب مفعل",
+    "updateProfile": "تحديث الملف الشخصي",
+    "employeeSize": "حجم المنشأة"
+
+
+
+
 }

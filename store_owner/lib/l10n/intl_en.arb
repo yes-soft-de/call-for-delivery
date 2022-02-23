@@ -450,7 +450,13 @@
     "myLocationDescribtion": "Tap the mark icon to to go to your location",
     "selectedBranchesMenu": "My Selected Branches",
     "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
-    "branchManagement": "Branch management"
+    "branchManagement": "Branch management",
+    "mySubscription": "My Subscription",
+    "accountInActivated": "Account inactivated",
+    "accountActivated": "Account activated",
+    "updateProfile": "Update profile",
+    "employeeSize": "Employee count"
+
 
 
 

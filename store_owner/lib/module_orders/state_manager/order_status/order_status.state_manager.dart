@@ -14,7 +14,5 @@ class OrderStatusStateManager {
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderStatusStateManager(
-      this._ordersService, this._authService);
-
+  OrderStatusStateManager(this._ordersService, this._authService);
 }

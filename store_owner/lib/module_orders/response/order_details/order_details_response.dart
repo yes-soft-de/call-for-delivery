@@ -25,8 +25,7 @@ class OrderDetailsResponse {
       this.payment,
       this.state,
       this.record,
-      this.error
-      });
+      this.error});
 
   OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];

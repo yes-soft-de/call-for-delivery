@@ -21,7 +21,8 @@ class OrderModel extends DataModel {
   String? chatRoomId;
   late String storeName;
   late String? distance;
-  /// this field to know if we can remove order 
+
+  /// this field to know if we can remove order
   late bool canRemove;
   late GeoJson? costumerLocation;
 

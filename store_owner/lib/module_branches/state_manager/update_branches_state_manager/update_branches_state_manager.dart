@@ -12,8 +12,7 @@ import 'package:rxdart/rxdart.dart';
 class UpdateBranchStateManager {
   final BranchesListService _branchesListService;
   UpdateBranchStateManager(this._branchesListService);
-  final PublishSubject<States> _stateSubject =
-      PublishSubject<States>();
+  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
@@ -29,6 +28,7 @@ class UpdateBranchStateManager {
       }
     });
   }
+
   void createBranch(
       UpdateBranchScreenState state, CreateBrancheRequest request) {
     _stateSubject.add(UpdateBranchStateLoading(state));

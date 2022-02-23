@@ -36,13 +36,13 @@ class OrderDetailsStateOwnerOrderLoaded extends OrderDetailsState {
               FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                  //  showFlush(context, true);
+                    //  showFlush(context, true);
                   },
                   child: Text('S.of(context).yes')),
               FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                  //  showFlush(context, false);
+                    //  showFlush(context, false);
                   },
                   child: Text('S.of(context).no'))
             ],
@@ -59,41 +59,40 @@ class OrderDetailsStateOwnerOrderLoaded extends OrderDetailsState {
         return false;
       },
       child: Scaffold(
-        floatingActionButton:
-            currentOrder.canRemove && currentOrder.status == OrderStatusEnum.WAITING
-                ? FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text(S.of(context).confirm),
-                              content: Container(
-                                height: 50,
-                                child: Text(S.of(context).sureForDelete),
-                              ),
-                              actions: [
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(S.of(context).cancel)),
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.deleteOrder(currentOrder);
-                                    },
-                                    child: Text(S.of(context).confirm)),
-                              ],
-                            );
-                          });
-                    },
-                    backgroundColor: Colors.red,
-                    child: Icon(Icons.delete),
-                  )
-                : null,
-        body:Container()
-        ),
+          floatingActionButton: currentOrder.canRemove &&
+                  currentOrder.status == OrderStatusEnum.WAITING
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: Text(S.of(context).confirm),
+                            content: Container(
+                              height: 50,
+                              child: Text(S.of(context).sureForDelete),
+                            ),
+                            actions: [
+                              FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(S.of(context).cancel)),
+                              FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    screenState.deleteOrder(currentOrder);
+                                  },
+                                  child: Text(S.of(context).confirm)),
+                            ],
+                          );
+                        });
+                  },
+                  backgroundColor: Colors.red,
+                  child: Icon(Icons.delete),
+                )
+              : null,
+          body: Container()),
     );
   }
 }

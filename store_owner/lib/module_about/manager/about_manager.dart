@@ -6,5 +6,6 @@ import 'package:injectable/injectable.dart';
 class AboutManager {
   final AboutRepository _aboutRepository;
   AboutManager(this._aboutRepository);
-  dynamic createAppointment(CreateAppointmentRequest request) => _aboutRepository.createAboutAppointment(request);
+  dynamic createAppointment(CreateAppointmentRequest request) =>
+      _aboutRepository.createAboutAppointment(request);
 }

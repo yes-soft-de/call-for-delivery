@@ -44,7 +44,7 @@ class GeoJson {
     lat = json['lat'];
     lon = json['lon'];
   }
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'lat': lat,
       'lon': lon,

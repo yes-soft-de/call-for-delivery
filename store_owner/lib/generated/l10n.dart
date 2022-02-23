@@ -4539,6 +4539,56 @@ class S {
       args: [],
     );
   }
+
+  /// `My Subscription`
+  String get mySubscription {
+    return Intl.message(
+      'My Subscription',
+      name: 'mySubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account inactivated`
+  String get accountInActivated {
+    return Intl.message(
+      'Account inactivated',
+      name: 'accountInActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account activated`
+  String get accountActivated {
+    return Intl.message(
+      'Account activated',
+      name: 'accountActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update profile`
+  String get updateProfile {
+    return Intl.message(
+      'Update profile',
+      name: 'updateProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Employee count`
+  String get employeeSize {
+    return Intl.message(
+      'Employee count',
+      name: 'employeeSize',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

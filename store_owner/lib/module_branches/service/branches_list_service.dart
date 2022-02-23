@@ -52,7 +52,8 @@ class BranchesListService {
     }
     return DataModel.empty();
   }
-    Future<DataModel> createBranch(CreateBranchRequest request) async {
+
+  Future<DataModel> createBranch(CreateBranchRequest request) async {
     ActionResponse? response = await _manager.createBrannch(request);
     if (response == null) {
       return DataModel.withError(S.current.networkError);

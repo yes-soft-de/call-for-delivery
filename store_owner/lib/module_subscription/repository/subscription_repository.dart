@@ -41,5 +41,4 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
 }

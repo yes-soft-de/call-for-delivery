@@ -63,7 +63,8 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   }
 
   void moveToOrder() {
-    Navigator.of(context).pushNamedAndRemoveUntil(OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
   }
 
   @override

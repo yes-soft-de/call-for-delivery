@@ -13,5 +13,4 @@ class NewOrderStateManager {
   Stream<States> get stateStream => _stateSubject.stream;
 
   NewOrderStateManager(this._service, this._profileService);
-
 }

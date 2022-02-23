@@ -7,7 +7,7 @@ class ResetPassRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userID'] =  this.userID;
+    data['userID'] = this.userID;
     if (role != null) {
       data['role'] = role;
     }

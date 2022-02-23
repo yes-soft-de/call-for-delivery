@@ -12,7 +12,7 @@ class WelcomeCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-   const double imageWidth = 250;
+    const double imageWidth = 250;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +35,8 @@ class WelcomeCard extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 35, left: 35),
-          child: Text(description,
+          child: Text(
+            description,
             style: TextStyle(
                 height: 2, fontWeight: FontWeight.bold, color: Colors.grey),
             textAlign: TextAlign.center,

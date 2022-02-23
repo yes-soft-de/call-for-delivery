@@ -153,7 +153,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                           widget.last ? (_) => node.unfocus() : null,
                       textInputAction:
                           widget.last ? null : TextInputAction.next,
-                      maxLength: widget.phone | widget.numbers ? (widget.maxLength ?? 9) : null,
+                      maxLength: widget.phone | widget.numbers
+                          ? (widget.maxLength ?? 9)
+                          : null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: '',

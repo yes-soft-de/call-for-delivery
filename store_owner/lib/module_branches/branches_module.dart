@@ -20,7 +20,7 @@ class BranchesModule extends YesModule {
     return {
       BranchesRoutes.BRANCHES_LIST_SCREEN: (context) => _branchesListScreen,
       BranchesRoutes.UPDATE_BRANCH_SCREEN: (context) => _updateBranchScreen,
-      BranchesRoutes.INIT_BRANCHES : (context) => _initBranchesScreen
+      BranchesRoutes.INIT_BRANCHES: (context) => _initBranchesScreen
     };
   }
 }

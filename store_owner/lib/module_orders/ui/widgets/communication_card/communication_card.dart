@@ -7,10 +7,10 @@ class CommunicationCard extends StatelessWidget {
   final Color color;
 
   CommunicationCard({
-   required this.text,
-   required this.image,
-   required this.textColor,
-   required this.color,
+    required this.text,
+    required this.image,
+    required this.textColor,
+    required this.color,
   });
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,14 @@ class CommunicationCard extends StatelessWidget {
       ),
       elevation: 4,
       child: Container(
-        padding: EdgeInsets.all(8),
-        child: ListTile(
-          title: Text(text, style: TextStyle(color: getTextColor(context)),),
-          leading: image,
-        )
-      ),
+          padding: EdgeInsets.all(8),
+          child: ListTile(
+            title: Text(
+              text,
+              style: TextStyle(color: getTextColor(context)),
+            ),
+            leading: image,
+          )),
     );
   }
 

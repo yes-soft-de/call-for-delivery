@@ -66,10 +66,8 @@ class AboutStateRequestBooking extends AboutState {
           color: Theme.of(context).primaryColor,
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
-             // screenState.createAppointment(_nameController.text, _phoneController.text);
-            } else {
-          
-            }
+              // screenState.createAppointment(_nameController.text, _phoneController.text);
+            } else {}
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -79,5 +77,4 @@ class AboutStateRequestBooking extends AboutState {
       ],
     );
   }
-
 }

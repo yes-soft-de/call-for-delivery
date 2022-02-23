@@ -67,7 +67,6 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   void goBack(String error) {
-
     Flushbar(
       title: S.of(context).errorHappened,
       message: error,

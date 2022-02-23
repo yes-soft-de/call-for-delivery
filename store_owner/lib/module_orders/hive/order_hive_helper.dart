@@ -11,8 +11,6 @@ class OrderHiveHelper {
   }
 
   void setConfirmOrderState(var orderId, bool answar) {
-   box.put(
-        'captain is in store owner for order $orderId', answar);
+    box.put('captain is in store owner for order $orderId', answar);
   }
-
 }

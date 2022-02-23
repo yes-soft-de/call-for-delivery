@@ -167,7 +167,8 @@ class LoginStateInit extends LoginState {
                                 onPressed: () {
                                   Navigator.pop(context);
                                   screen.restPass(ResetPassRequest(
-                                      userID: countryController.text + usernameController.text));
+                                      userID: countryController.text +
+                                          usernameController.text));
                                 });
                           });
                     } else {
@@ -204,7 +205,8 @@ class LoginStateInit extends LoginState {
                   firstButtonTab: () {
                     if (_loginKey.currentState!.validate()) {
                       screen.loginClient(
-                        countryController.text + usernameController.text, passwordController.text);
+                          countryController.text + usernameController.text,
+                          passwordController.text);
                     }
                   }),
             ),
