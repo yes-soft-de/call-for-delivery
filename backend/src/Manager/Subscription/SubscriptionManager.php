@@ -69,6 +69,14 @@ class SubscriptionManager
        return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
+    public function getSubscriptionCurrentWithRelation($storeOwner): ?array
+    {
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+
+       return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
+       
+    }
+
     public function getSubscriptionsForStoreOwner($storeOwner): array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);

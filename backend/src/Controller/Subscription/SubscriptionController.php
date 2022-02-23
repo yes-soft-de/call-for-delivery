@@ -223,18 +223,17 @@ class SubscriptionController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
+     *                @OA\Property(type="integer", property="id"),
      *                @OA\Property(type="integer", property="packageID"),
      *                @OA\Property(type="string", property="packageName"),
-     *                @OA\Property(type="integer", property="subscriptionId"),
      *                @OA\Property(type="integer", property="remainingOrders"),
-     *                @OA\Property(type="integer", property="countOrdersDelivered"),
-     *                @OA\Property(type="string", property="subscriptionStatus"),
-     *                @OA\Property(type="object", property="subscriptionStartDate"),
-     *                @OA\Property(type="object", property="subscriptionEndDate"),
+     *                @OA\Property(type="integer", property="remainingCars"),
+     *                @OA\Property(type="string", property="remainingTime"),
+     *                @OA\Property(type="object", property="status"),
+     *                @OA\Property(type="object", property="startDate"),
+     *                @OA\Property(type="integer", property="endDate"),
      *                @OA\Property(type="integer", property="packageCarCount"),
      *                @OA\Property(type="integer", property="packageOrderCount"),
-     *                @OA\Property(type="integer", property="countCarsBusy"),
-     *                @OA\Property(type="string", property="carsStatus"),
      *        )
      *     )
      * )
@@ -255,71 +254,7 @@ class SubscriptionController extends BaseController
      */
     public function packageBalance(): JsonResponse
     {
-        $result = $this->subscriptionService->packagebalance($this->getUserId());
-       
-        if( $result === SubscriptionConstant::UNSUBSCRIBED ) {
-
-            return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
-        }
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
-     * store: Get subscription current details.
-     * @Route("subscriptioncurrent", name="getSubscriptionCurrent",methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Subscription")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns package balance",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *                @OA\Property(type="integer", property="packageID"),
-     *                @OA\Property(type="string", property="packageName"),
-     *                @OA\Property(type="integer", property="subscriptionId"),
-     *                @OA\Property(type="integer", property="remainingOrders"),
-     *                @OA\Property(type="integer", property="countOrdersDelivered"),
-     *                @OA\Property(type="string", property="subscriptionStatus"),
-     *                @OA\Property(type="object", property="subscriptionStartDate"),
-     *                @OA\Property(type="object", property="subscriptionEndDate"),
-     *                @OA\Property(type="integer", property="packageCarCount"),
-     *                @OA\Property(type="integer", property="packageOrderCount"),
-     *                @OA\Property(type="integer", property="countCarsBusy"),
-     *                @OA\Property(type="string", property="carsStatus"),
-     *        )
-     *     )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return error.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9302"),
-     *          @OA\Property(type="string", property="msg", description="You do not have a subscription Successfully."),
-     *          @OA\Property(type="string", property="Data", description="error"),
-     *      )
-     * )
-     * 
-     * @Security(name="Bearer")
-     */
-    public function getSubscriptionCurrent(): JsonResponse
-    {
-        $result = $this->subscriptionService->getSubscriptionCurrent($this->getUserId());
+        $result = $this->subscriptionService->packageBalance($this->getUserId());
        
         if( $result === SubscriptionConstant::UNSUBSCRIBED ) {
 

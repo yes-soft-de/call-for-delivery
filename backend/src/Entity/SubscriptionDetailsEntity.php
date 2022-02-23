@@ -16,10 +16,10 @@ class SubscriptionDetailsEntity
     #[ORM\Column(type: 'integer')]
     private $remainingOrders;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'integer', length: 255)]
     private $remainingCars;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'integer', length: 100)]
     private $remainingTime;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
@@ -49,24 +49,24 @@ class SubscriptionDetailsEntity
         return $this;
     }
 
-    public function getRemainingCars(): ?string
+    public function getRemainingCars(): ?int
     {
         return $this->remainingCars;
     }
 
-    public function setRemainingCars(string $remainingCars): self
+    public function setRemainingCars(int $remainingCars): self
     {
         $this->remainingCars = $remainingCars;
 
         return $this;
     }
 
-    public function getRemainingTime(): ?string
+    public function getRemainingTime(): ?int
     {
         return $this->remainingTime;
     }
 
-    public function setRemainingTime(string $remainingTime): self
+    public function setRemainingTime(int $remainingTime): self
     {
         $this->remainingTime = $remainingTime;
 

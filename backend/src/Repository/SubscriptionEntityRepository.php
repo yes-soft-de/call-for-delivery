@@ -26,28 +26,6 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionEntity::class);
     }
 
-    public function getSubscriptionCurrent($storeOwner): ?array
-    {
-        return $this->createQueryBuilder('subscription')
-
-            ->select('subscription.id')
-          
-            ->andWhere('subscription.storeOwner = :storeOwner')
-            ->andWhere('subscription.isFuture = :isFuture')
-
-            ->setParameter('storeOwner', $storeOwner)
-            ->setParameter('isFuture', 0)
-
-            ->addGroupBy('subscription.startDate')
-
-            ->setMaxResults(1)
-            
-            ->addOrderBy('subscription.startDate', 'DESC')
-           
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
     public function getSubscriptionsForStoreOwner($storeOwner): array
     {
         return $this->createQueryBuilder('subscription')
@@ -68,6 +46,30 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
 
             ->getResult();
+    }
+
+    public function getSubscriptionCurrentWithRelation($storeOwner): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
+             'packageEntity.orderCount as packageOrderCount')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
+             'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
+             'subscriptionDetailsEntity.status')
+
+            ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
+
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
     }
 
 

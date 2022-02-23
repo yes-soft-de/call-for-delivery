@@ -28,7 +28,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, 
-            package.status, package.city')
+            package.status, package.city, package.expired')
 
             ->andWhere("package.status = :status")
             
@@ -45,7 +45,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
-                      package.status, package.city')
+                      package.status, package.city, package.expired')
             ->getQuery()
             ->getResult();
     }
@@ -59,7 +59,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
-                      package.status, package.city')
+                      package.status, package.city, package.expired')
 
             ->andWhere("package.id = :id")
             

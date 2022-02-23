@@ -62,12 +62,17 @@ class SubscriptionService
 
     /**
      * @param storeOwner
-     * @return SubscriptionDetailsEntity
+     * @return RemainingOrdersResponse|string
      */
-    public function getSubscriptionCurrent($storeOwner):?SubscriptionDetailsEntity
+    public function packageBalance($storeOwner):RemainingOrdersResponse|string
     {
-      return $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
+        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
+       if($subscription) {
+       
+        return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
+       }
 
+       return SubscriptionConstant::UNSUBSCRIBED;
     }
     
     public function getSubscriptionsForStoreOwner($storeOwner): array
@@ -337,19 +342,19 @@ class SubscriptionService
         return $this->subscriptionManager->getNextSubscription($storeOwner);
     }
 
-    public function packagebalance($storeOwner):mixed
-    {
-        $response = SubscriptionConstant::UNSUBSCRIBED;
+    // public function packagebalance($storeOwner):mixed
+    // {
+    //     $response = SubscriptionConstant::UNSUBSCRIBED;
 
-        $subscribe = $this->getSubscriptionCurrent($storeOwner);
+    //     $subscribe = $this->getSubscriptionCurrent($storeOwner);
         
-        if ($subscribe) {
+    //     if ($subscribe) {
 
-           return $this->checkValidityOfSubscription($storeOwner, $subscribe['id']);
-        }
+    //        return $this->checkValidityOfSubscription($storeOwner, $subscribe['id']);
+    //     }
 
-        return $response;
-    }
+    //     return $response;
+    // }
 
     public function totalAmountOfSubscriptions($ownerID)
     {
