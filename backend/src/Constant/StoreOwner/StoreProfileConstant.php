@@ -23,4 +23,10 @@ final class StoreProfileConstant
     const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
 
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
+
+    const STORE_OWNER_PROFILE_ACTIVE_STATUS = "active";
+
+    const STORE_OWNER_PROFILE_INACTIVE_STATUS = "inactive";
+
+    const STORE_OWNER_PROFILE_ACTIVE_OR_NOT_STATUS = "all";
 }

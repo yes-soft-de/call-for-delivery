@@ -164,4 +164,9 @@ class StoreOwnerProfileManager
 
         return true;
     }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+    }
 }

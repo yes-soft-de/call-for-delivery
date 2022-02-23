@@ -10,6 +10,7 @@ use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusGetResponse;
 use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusUpdateResponse;
+use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
@@ -78,6 +79,23 @@ class StoreOwnerProfileService
         }
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerCompleteAccountStatusUpdateResponse::class, $storeOwnerProfileResult);
+    }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): array
+    {
+        $response = [];
+
+        $storeOwnerProfiles = $this->storeOwnerProfileManager->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+
+        if($storeOwnerProfiles) {
+            foreach($storeOwnerProfiles as $storeOwnerProfile) {
+                $storeOwnerProfile['images'] = $this->getImageParams($storeOwnerProfile['images'], $this->params.$storeOwnerProfile['images'], $this->params);
+
+                $response[] = $this->autoMapping->map('array', StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
+            }
+        }
+
+        return $response;
     }
 
     public function getImageParams($imageURL, $image, $baseURL): array
