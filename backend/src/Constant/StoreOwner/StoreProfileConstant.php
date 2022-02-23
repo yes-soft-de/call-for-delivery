@@ -15,4 +15,12 @@ final class StoreProfileConstant
     const CLOSING_TIME_NULL = "closing Time is null";
 
     const HAS_PRODUCT_OR_PRIVATE_ORDER_NULL = "select hasProducts or privateOrders or two";
+
+    const COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED = "profileCreated";
+
+    const COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED = "profileCompleted";
+
+    const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
+
+    const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 }
