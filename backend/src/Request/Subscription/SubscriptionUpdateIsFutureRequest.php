@@ -2,11 +2,11 @@
 
 namespace App\Request\Subscription;
 
-class SubscriptionUpdateFinishRequest
+class SubscriptionUpdateIsFutureRequest
 {
     private $id;
 
-    private $status;
+    private $isFuture;
 
     /**
      * @return mixed
@@ -16,22 +16,23 @@ class SubscriptionUpdateFinishRequest
         return $this->id;
     }
 
+
     /**
-     * Get the value of status
+     * Get the value of isFuture
      */ 
-    public function getStatus()
+    public function getIsFuture()
     {
-        return $this->status;
+        return $this->isFuture;
     }
 
     /**
-     * Set the value of status
+     * Set the value of isFuture
      *
      * @return  self
      */ 
-    public function setStatus($status)
+    public function setIsFuture($isFuture)
     {
-        $this->status = $status;
+        $this->isFuture = $isFuture;
 
         return $this;
     }

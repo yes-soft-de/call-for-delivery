@@ -7,9 +7,9 @@ use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Subscription\SubscriptionCreateRequest;
-use App\Request\Subscription\SubscriptionNextRequest;
 use App\Request\Subscription\SubscriptionChangeIsFutureRequest;
-use App\Request\Subscription\SubscriptionUpdateFinishRequest;
+use App\Request\Subscription\SubscriptionUpdateRequest;
+use App\Request\Subscription\SubscriptionUpdateIsFutureRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
 use App\Manager\Package\PackageManager;
@@ -69,12 +69,19 @@ class SubscriptionManager
        return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
-    public function getSubscriptionCurrentWithRelation($storeOwner): ?array
+    public function getSubscriptionCurrentWithRelation($storeOwner)
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
 
        return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
        
+    }
+
+    public function getSubscriptionForNextTime($storeOwner)
+    {
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+
+       return $this->subscribeRepository->getSubscriptionForNextTime($storeOwner);       
     }
 
     public function getSubscriptionsForStoreOwner($storeOwner): array
@@ -84,8 +91,45 @@ class SubscriptionManager
        return $this->subscribeRepository->getSubscriptionsForStoreOwner($storeOwner);
     }
 
+    public function updateSubscribeState($id, $status): string
+    {
+        $subscribeEntity = $this->subscribeRepository->find($id);
+        
+        $subscribeEntity->setStatus($status);
 
+        if ($subscribeEntity) {
 
+            $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionEntity::class, $subscribeEntity);
+
+            $this->entityManager->flush();
+          
+            $this->subscriptionDetailsManager->updateSubscriptionDetailsState($id, $status);
+            
+            return SubscriptionConstant::UPDATE_STATE;
+        }
+
+        return SubscriptionConstant::ERROR;
+    }
+
+    public function updateIsFutureAndSubscriptionCurrent($id, $isFuture): string
+    {
+        $subscribeEntity = $this->subscribeRepository->find($id);
+        
+        $subscribeEntity->setIsFuture($isFuture);
+
+        if ($subscribeEntity) {
+
+            $this->autoMapping->map(SubscriptionUpdateIsFutureRequest::class, SubscriptionEntity::class, $subscribeEntity);
+
+            $this->entityManager->flush();
+          
+            $this->subscriptionDetailsManager->createSubscriptionDetails($subscribeEntity);           
+            
+            return SubscriptionConstant::UPDATE_STATE;
+        }
+
+        return SubscriptionConstant::ERROR;
+    }
 
 
 
@@ -114,23 +158,6 @@ class SubscriptionManager
     //     return $subscribeEntity;
     // }
 
-    public function updateSubscribeStateToFinish($id, $status): string
-    {
-        $subscribeEntity = $this->subscribeRepository->find($id);
-        
-        $subscribeEntity->setStatus($status);
-
-        if ($subscribeEntity) {
-
-            $this->autoMapping->map(SubscriptionUpdateFinishRequest::class, SubscriptionEntity::class, $subscribeEntity);
-
-            $this->entityManager->flush();
-
-            return SubscriptionConstant::UPDATE_STATE;
-        }
-
-        return SubscriptionConstant::ERROR;
-    }
 
     public function changeIsFutureToFalse($id)
     {

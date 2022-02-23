@@ -53,7 +53,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('subscription')
 
             ->select ('IDENTITY( subscription.package)')
-            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate')
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
              'packageEntity.orderCount as packageOrderCount')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
@@ -67,6 +67,34 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
             ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function getSubscriptionForNextTime($storeOwner)
+    {
+        return $this->createQueryBuilder('subscription')
+     
+            ->select ('IDENTITY( subscription.package)')
+         
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
+            ->addSelect('packageEntity.id as packageId')
+
+            ->andWhere('subscription.storeOwner = :storeOwner')
+            ->andWhere('subscription.isFuture = :isFuture')
+
+            ->setParameter('storeOwner', $storeOwner)
+            ->setParameter('isFuture', 1)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+           
+            ->addGroupBy('subscription.id')
+
+            ->setMaxResults(1)
+
+            ->addOrderBy('subscription.id', 'ASC')
+        
             ->getQuery()
 
             ->getOneOrNullResult();

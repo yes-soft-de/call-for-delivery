@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
+use App\Request\Subscription\SubscriptionUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
@@ -47,6 +48,19 @@ class SubscriptionDetailsManager
     public function updateSubscriptionDetails(SubscriptionDetailsCreateRequest $request, $subscriptionDetailsEntity):SubscriptionDetailsEntity
     {     
         $subscriptionDetailsEntity = $this->autoMapping->mapToObject(SubscriptionDetailsCreateRequest::class, SubscriptionDetailsEntity::class, $request, $subscriptionDetailsEntity);
+       
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
+    }
+
+    public function updateSubscriptionDetailsState($id, $status):?array
+    {     
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
+
+        $subscriptionDetailsEntity->setStatus($status);
+
+        $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
        
         $this->entityManager->flush();
  

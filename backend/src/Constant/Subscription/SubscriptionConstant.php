@@ -16,7 +16,7 @@ final class SubscriptionConstant
    
     const CARS_FINISHED = "cars finished";
 
-    const ORDERS_FINISHED = "cars finished";
+    const ORDERS_FINISHED = "order finished";
 
     const DATE_FINISHED = "date finished";
 
@@ -25,4 +25,6 @@ final class SubscriptionConstant
     const UNSUBSCRIBED = "unsubscribed";
 
     const YOU_HAVE_SUBSCRIBED = "You have already subscribed";
+
+    const NEW_SUBSCRIPTION_ACTIVATED = "New subscription activated";
 }
