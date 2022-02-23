@@ -1,4 +1,3 @@
-
 import 'package:c4d/utils/logger/logger.dart';
 
 class ActionResponse {

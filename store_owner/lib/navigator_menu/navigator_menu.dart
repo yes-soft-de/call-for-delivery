@@ -1,5 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -79,7 +81,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           CustomNavTile(
               icon: Icons.person,
               onTap: () {
-                Navigator.of(context).pushNamed(ProfileRoutes.ACTIVITY_SCREEN);
+                Navigator.of(context).pushNamed(ProfileRoutes.PROFILE_SCREEN);
               },
               title: S.current.myProfile),
           CustomNavTile(
@@ -87,12 +89,22 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               onTap: () {},
               title: S.current.myBalance),
           CustomNavTile(
+              icon: Icons.subscriptions_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+              },
+              title: S.current.mySubscription),
+          CustomNavTile(
               icon: Icons.compare_arrows_rounded,
               onTap: () {},
               title: S.current.myOrders),
           CustomNavTile(
               icon: Icons.store_rounded,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(BranchesRoutes.BRANCHES_LIST_SCREEN);
+              },
               title: S.current.branchManagement),
           CustomNavTile(
               icon: FontAwesomeIcons.whatsappSquare,

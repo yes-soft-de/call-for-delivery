@@ -10,7 +10,7 @@ class Urls {
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
-  static const OWNER_PROFILE_API = BASE_API + '/storeowner';
+  static const OWNER_PROFILE_API = BASE_API + '/storeownerprofilebyid';
   static const CREATE_TOKEN_API = DOMAIN + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/verifycode';
   static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';
@@ -196,8 +196,4 @@ class Urls {
   static const NEW_ORDER_API = DOMAIN + '/v1/';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/';
   static const DELETE_ORDER = DOMAIN + '/v1/';
-
-  
-  
-
 }
