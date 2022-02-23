@@ -20,6 +20,12 @@ class CompanyInfoUpdateRequest
 
     private string $stc;
 
+    private float $kilometers;
+
+    private float $maxKilometerBonus;
+
+    private float $minKilometerBonus;
+
     /**
      * @return int
      */

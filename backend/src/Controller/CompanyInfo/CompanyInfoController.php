@@ -60,7 +60,10 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="fax"),
      *          @OA\Property(type="string", property="email"),
      *          @OA\Property(type="string", property="bankName"),
-     *          @OA\Property(type="string", property="stc")
+     *          @OA\Property(type="string", property="stc"),
+     *          @OA\Property(type="float", property="kilometers"),
+     *          @OA\Property(type="float", property="maxKilometerBonus"),
+     *          @OA\Property(type="float", property="minKilometerBonus")
      *      )
      * )
      *
@@ -78,7 +81,10 @@ class CompanyInfoController extends BaseController
      *                  @OA\Property(type="string", property="fax"),
      *                  @OA\Property(type="string", property="email"),
      *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc")
+     *                  @OA\Property(type="string", property="stc"),
+     *                  @OA\Property(type="float", property="kilometers"),
+     *                  @OA\Property(type="float", property="maxKilometerBonus"),
+     *                  @OA\Property(type="float", property="minKilometerBonus")
      *          )
      *      )
      * )
@@ -121,7 +127,10 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="fax"),
      *          @OA\Property(type="string", property="email"),
      *          @OA\Property(type="string", property="bankName"),
-     *          @OA\Property(type="string", property="stc")
+     *          @OA\Property(type="string", property="stc"),
+     *          @OA\Property(type="float", property="kilometers"),
+     *          @OA\Property(type="float", property="maxKilometerBonus"),
+     *          @OA\Property(type="float", property="minKilometerBonus")
      *      )
      * )
      *
@@ -139,7 +148,10 @@ class CompanyInfoController extends BaseController
      *                  @OA\Property(type="string", property="fax"),
      *                  @OA\Property(type="string", property="email"),
      *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc")
+     *                  @OA\Property(type="string", property="stc"),
+     *                  @OA\Property(type="float", property="kilometers"),
+     *                  @OA\Property(type="float", property="maxKilometerBonus"),
+     *                  @OA\Property(type="float", property="minKilometerBonus")
      *          )
      *      )
      * )
@@ -201,7 +213,10 @@ class CompanyInfoController extends BaseController
      *                  @OA\Property(type="string", property="fax"),
      *                  @OA\Property(type="string", property="email"),
      *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc")
+     *                  @OA\Property(type="string", property="stc"),
+     *                  @OA\Property(type="float", property="kilometers"),
+     *                  @OA\Property(type="float", property="maxKilometerBonus"),
+     *                  @OA\Property(type="float", property="minKilometerBonus")
      *          )
      *      )
      * )
@@ -240,7 +255,10 @@ class CompanyInfoController extends BaseController
      *                  @OA\Property(type="string", property="fax"),
      *                  @OA\Property(type="string", property="email"),
      *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc")
+     *                  @OA\Property(type="string", property="stc"),
+     *                  @OA\Property(type="float", property="kilometers"),
+     *                  @OA\Property(type="float", property="maxKilometerBonus"),
+     *                  @OA\Property(type="float", property="minKilometerBonus")
      *          )
      *      )
      * )

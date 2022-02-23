@@ -24,7 +24,7 @@ class CompanyInfoEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('companyInfo')
             ->select('companyInfo.id', 'companyInfo.phone', 'companyInfo.phoneTwo', 'companyInfo.email', 'companyInfo.fax', 'companyInfo.whatsapp', 'companyInfo.bankName',
-             'companyInfo.stc')
+             'companyInfo.stc', 'companyInfo.kilometers', 'companyInfo.maxKilometerBonus', 'companyInfo.minKilometerBonus')
 
             ->getQuery()
             ->getOneOrNullResult();
@@ -34,7 +34,7 @@ class CompanyInfoEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('companyInfo')
             ->select('companyInfo.id', 'companyInfo.phone', 'companyInfo.phoneTwo', 'companyInfo.email', 'companyInfo.fax', 'companyInfo.whatsapp', 'companyInfo.bankName',
-                'companyInfo.stc');
+                'companyInfo.stc', 'companyInfo.kilometers', 'companyInfo.maxKilometerBonus', 'companyInfo.minKilometerBonus');
 
         // Another section will be added lately to this function for retrieving the uuid of user's profile according to his/her type
 
