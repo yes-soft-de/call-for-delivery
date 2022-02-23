@@ -8,6 +8,7 @@ use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
+use App\Request\Subscription\SubscriptionRemainingTimeUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
@@ -74,6 +75,21 @@ class SubscriptionDetailsManager
         $subscriptionDetailsEntity->setRemainingOrders($orderRemaining);
 
         $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingOrdersUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
+       
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
+    }
+
+    public function updateRemainingTime($id, $remainingTime):?array
+    {   
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
+        
+        $days = intval($remainingTime);
+      
+        $subscriptionDetailsEntity->setRemainingTime($days);
+
+        $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingTimeUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
        
         $this->entityManager->flush();
  

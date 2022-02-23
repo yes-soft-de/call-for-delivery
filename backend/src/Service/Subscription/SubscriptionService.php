@@ -14,6 +14,7 @@ use App\Response\Subscription\RemainingOrdersResponse;
 use dateTime;
 use App\Constant\Subscription\SubscriptionConstant;
 use Doctrine\ORM\NonUniqueResultException;
+use phpDocumentor\Reflection\Types\Integer;
 
 class SubscriptionService
 {
@@ -118,8 +119,10 @@ class SubscriptionService
     public function checkValidityOfSubscription($storeOwner)
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
+        //check and update RemainingTime
+        $remainingTime = $this->updateRemainingTime($subscription);
        
-        if($subscription) {
+       if($subscription) {
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
                 // $this->updateSubscribeState($subscription['id'], SubscriptionConstant::SUBSCRIBE_INACTIVE);
@@ -134,7 +137,7 @@ class SubscriptionService
                 return SubscriptionConstant::ORDERS_FINISHED;
             }
     
-            if($subscription['remainingTime'] <= 0) {
+            if($subscription['remainingTime'] <= 0 || $remainingTime <=0 ) {
     
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::DATE_FINISHED);
     
@@ -181,6 +184,25 @@ class SubscriptionService
         return $this->checkSubscription($storeOwner);
     }
 
+    public function updateRemainingTime($subscription)
+    {
+        $remainingTime = "";
+        if($subscription['remainingTime'] > 0) {
+           
+            //Get the remaining time by calculating the difference between the start date and the end date.
+            $difference = $subscription['startDate']->diff($subscription['endDate']);
+            if ($difference->d) {
+
+               $remainingTime .= $difference->format("%d");
+             }
+
+            $this->subscriptionManager->updateRemainingTime($subscription['id'], $remainingTime);
+    
+        }
+
+        return $remainingTime;
+    }
+
     public function updateIsFutureAndSubscriptionCurrent($storeOwner): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionForNextTime($storeOwner);
@@ -194,6 +216,10 @@ class SubscriptionService
 
         return SubscriptionConstant::UNSUBSCRIBED;
     }
+
+
+
+
 
 
 
