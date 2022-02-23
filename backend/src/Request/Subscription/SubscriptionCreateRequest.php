@@ -18,6 +18,8 @@ class SubscriptionCreateRequest
 
     private $note;
 
+    private $remainingTime;
+
     /**
      * @param mixed $storeOwner
      */
@@ -81,6 +83,26 @@ class SubscriptionCreateRequest
     public function setPackage($package)
     {
         $this->package = $package;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of remainingTime
+     */ 
+    public function getRemainingTime()
+    {
+        return $this->remainingTime;
+    }
+
+    /**
+     * Set the value of remainingTime
+     *
+     * @return  self
+     */ 
+    public function setRemainingTime($remainingTime)
+    {
+        $this->remainingTime = $remainingTime;
 
         return $this;
     }

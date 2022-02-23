@@ -7,6 +7,7 @@ use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
+use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
@@ -28,8 +29,7 @@ class SubscriptionDetailsManager
         $request->setRemainingCars($subscription->getPackage()->getCarCount());
         $request->setRemainingOrders($subscription->getPackage()->getOrderCount());
         $request->setStatus($subscription->getStatus());
-//for test
-        $request->setRemainingTime('20');
+        $request->setRemainingTime($subscription->getPackage()->getExpired());
 
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["storeOwner" => $subscription->getStoreOwner()]);
         if($subscriptionDetailsEntity) {
@@ -61,6 +61,19 @@ class SubscriptionDetailsManager
         $subscriptionDetailsEntity->setStatus($status);
 
         $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
+       
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
+    }
+
+    public function updateRemainingOrders($id, $orderRemaining):?array
+    {     
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
+
+        $subscriptionDetailsEntity->setRemainingOrders($orderRemaining);
+
+        $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingOrdersUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
        
         $this->entityManager->flush();
  

@@ -165,6 +165,22 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
+    public function updateRemainingOrders($storeOwner): string
+    {
+        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
+
+        if($subscriptionCurrent->getRemainingOrders() > 0) {
+       
+            $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
+          
+            $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription(), $remainingOrders);
+            //for test, change with constant
+            return "ok";
+        }
+
+        return $this->checkSubscription($storeOwner);
+    }
+
     public function updateIsFutureAndSubscriptionCurrent($storeOwner): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionForNextTime($storeOwner);

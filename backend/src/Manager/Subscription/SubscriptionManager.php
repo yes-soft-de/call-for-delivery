@@ -69,6 +69,11 @@ class SubscriptionManager
        return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
+    public function updateRemainingOrders($id, $remainingOrders): ?array
+    {
+       return $this->subscriptionDetailsManager->updateRemainingOrders($id, $remainingOrders);
+    }
+
     public function getSubscriptionCurrentWithRelation($storeOwner)
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
