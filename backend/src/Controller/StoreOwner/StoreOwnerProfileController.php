@@ -285,12 +285,15 @@ class StoreOwnerProfileController extends BaseController
     {
         $response = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($this->getUserId());
 
-        if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
-            return $this->response($response, self::FETCH);
-
-        } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+        if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
             return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
+
+        } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+            return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
+
         }
+
+        return $this->response($response, self::FETCH);
     }
 
     /**

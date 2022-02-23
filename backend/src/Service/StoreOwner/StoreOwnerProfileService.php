@@ -62,7 +62,7 @@ class StoreOwnerProfileService
         return $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
     }
 
-    public function getCompleteAccountStatusByStoreOwnerId($storeOwnerId): StoreOwnerCompleteAccountStatusGetResponse
+    public function getCompleteAccountStatusByStoreOwnerId(string $storeOwnerId): StoreOwnerCompleteAccountStatusGetResponse
     {
         $completeAccountStatusResult = $this->storeOwnerProfileManager->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
 

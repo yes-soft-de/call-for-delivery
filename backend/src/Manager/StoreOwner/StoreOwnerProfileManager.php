@@ -139,7 +139,7 @@ class StoreOwnerProfileManager
 
     public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
     {
-        if($request->getCompleteAccountStatus() !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $request->getCompleteAccountStatus() !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+        if(! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
             return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
 
         } else {
@@ -153,5 +153,15 @@ class StoreOwnerProfileManager
                 return $storeOwnerProfile;
             }
         }
+    }
+
+    public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
+    {
+        if ($completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
+            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+            return false;
+        }
+
+        return true;
     }
 }
