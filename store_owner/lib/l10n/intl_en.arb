@@ -449,7 +449,8 @@
     "myLocation": "My Location",
     "myLocationDescribtion": "Tap the mark icon to to go to your location",
     "selectedBranchesMenu": "My Selected Branches",
-    "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches"
+    "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
+    "branchManagement": "Branch management"
 
 
 

@@ -68,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),

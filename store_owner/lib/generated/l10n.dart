@@ -4529,6 +4529,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch management`
+  String get branchManagement {
+    return Intl.message(
+      'Branch management',
+      name: 'branchManagement',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

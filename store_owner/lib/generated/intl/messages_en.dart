@@ -68,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You need to book a car to deliver your package to your destenation"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
