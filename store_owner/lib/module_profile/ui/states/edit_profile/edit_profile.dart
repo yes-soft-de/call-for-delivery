@@ -120,7 +120,7 @@ class ProfileStateInit extends States {
       leading: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),

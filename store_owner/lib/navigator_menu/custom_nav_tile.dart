@@ -37,7 +37,7 @@ class CustomNavTile extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   icon,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary
                 ),
               ),
             ),

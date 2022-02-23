@@ -246,7 +246,7 @@ class InitAccountStateSelectBranch extends States {
                               ),
                             ),
                             child:
-                                Center(child: Text(S.of(context).saveBranches)),
+                                Center(child: Text(S.of(context).saveBranches,style: Theme.of(context).textTheme.button,)),
                             onPressed: branchLocation.isEmpty
                                 ? null
                                 : () {

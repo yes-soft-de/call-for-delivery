@@ -24,7 +24,7 @@ class ProfileRepository {
   Future<ProfileResponse?> getOwnerProfile() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-      Urls.OWNER_PROFILE_API,
+      Urls.GET_OWNER_PROFILE_API,
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

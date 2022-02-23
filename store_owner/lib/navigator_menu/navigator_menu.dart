@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -114,6 +115,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               icon: Icons.chat_rounded,
               onTap: () {},
               title: S.current.directSupport),
+          CustomNavTile(
+              icon: Icons.settings_rounded,
+              onTap: () {
+                Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
+              },
+              title: S.current.settings),
           CustomNavTile(
               icon: Icons.privacy_tip_rounded,
               onTap: () {},

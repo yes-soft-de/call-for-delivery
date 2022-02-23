@@ -119,7 +119,7 @@ class RegisterStateInit extends RegisterState {
                               child: Center(
                                 child: Text(
                                   '+',
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.button?.copyWith(color: Colors.white),
                                 ),
                               ),
                             ),

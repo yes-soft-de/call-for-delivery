@@ -103,7 +103,9 @@ class PackageCard extends StatelessWidget {
               Text(
                 S.current.packageInfo,
                 style: TextStyle(
-                    color: active ? Colors.white : Colors.black,
+                    color: active
+                        ? Theme.of(context).textTheme.button?.color
+                        : null,
                     fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
@@ -142,7 +144,9 @@ class PackageCard extends StatelessWidget {
                     child: Text(
                       '${package.orderCount} ' + S.of(context).ordermonth,
                       style: TextStyle(
-                        color: active ? Colors.white : null,
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -186,13 +190,17 @@ class PackageCard extends StatelessWidget {
                         ? Text(
                             '${package.carCount} ' + S.of(context).car,
                             style: TextStyle(
-                              color: active ? Colors.white : Colors.black,
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
                             ),
                           )
                         : Text(
                             '∞ ' + S.of(context).car,
                             style: TextStyle(
-                              color: active ? Colors.white : Colors.black,
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
                             ),
                           ),
                   ),
@@ -234,7 +242,10 @@ class PackageCard extends StatelessWidget {
                     child: Text(
                       '${package.cost} ${S.current.sar}',
                       style: TextStyle(
-                          color: active ? Colors.white : Colors.black),
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
+                      ),
                     ),
                   ),
                 ],

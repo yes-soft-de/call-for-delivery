@@ -121,7 +121,7 @@ class InitAccountStateProfileLoaded extends States {
                         child: Center(
                             child: Icon(
                           Icons.camera_alt,
-                          color: Theme.of(context).textTheme.button?.color,
+                          color: Colors.white,
                         ))),
                   ),
                 ),
@@ -202,7 +202,7 @@ class InitAccountStateProfileLoaded extends States {
                               child: Center(
                                 child: Text(
                                   '+',
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.button?.copyWith(color: Colors.white),
                                 ),
                               ),
                             ),

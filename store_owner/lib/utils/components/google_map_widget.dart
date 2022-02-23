@@ -102,8 +102,8 @@ class WindowInfoWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            FontAwesomeIcons.weight,
-                            color: Theme.of(context).primaryColor,
+                            FontAwesomeIcons.store,
+                            color: Theme.of(context).disabledColor,
                           ),
                         ],
                       ),
