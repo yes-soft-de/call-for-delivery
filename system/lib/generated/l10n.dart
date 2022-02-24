@@ -4249,6 +4249,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Check server`
+  String get checkServer {
+    return Intl.message(
+      'Check server',
+      name: 'checkServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `change password`
+  String get changePassword {
+    return Intl.message(
+      'change password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage messages`
+  String get manageMessages {
+    return Intl.message(
+      'Manage messages',
+      name: 'manageMessages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage user`
+  String get manageUser {
+    return Intl.message(
+      'Manage user',
+      name: 'manageUser',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

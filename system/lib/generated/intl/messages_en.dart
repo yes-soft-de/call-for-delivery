@@ -107,12 +107,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("change password"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("Chat With Captain"),
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("Chat with Store Owner"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("Check Orders"),
+        "checkServer": MessageLookupByLibrary.simpleMessage("Check server"),
         "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "Please update your current location if you want to"),
@@ -275,6 +278,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccess": MessageLookupByLibrary.simpleMessage(
             "Your account has been logged successfully"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
+        "manageMessages":
+            MessageLookupByLibrary.simpleMessage("Manage messages"),
+        "manageUser": MessageLookupByLibrary.simpleMessage("Manage user"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
