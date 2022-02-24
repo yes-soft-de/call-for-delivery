@@ -169,4 +169,14 @@ class StoreOwnerProfileManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
     }
+
+    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+    }
 }

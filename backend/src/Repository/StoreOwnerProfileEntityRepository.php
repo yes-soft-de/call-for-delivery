@@ -87,4 +87,40 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerProfile')
+            ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
+                'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
+                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images')
+
+            ->andWhere('storeOwnerProfile.id = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->orderBy('storeOwnerProfile.id', 'DESC')
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerProfile')
+            ->select('storeOwnerBranchEntity.id as branchId', 'storeOwnerBranchEntity.location', 'storeOwnerBranchEntity.name', 'storeOwnerBranchEntity.city', 'storeOwnerBranchEntity.isActive')
+
+            ->andWhere('storeOwnerProfile.id = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->leftJoin(
+                'storeOwnerProfile.storeOwnerBranchEntities',
+                'storeOwnerBranchEntity',
+                Join::ON
+            )
+
+            ->orderBy('storeOwnerBranchEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
