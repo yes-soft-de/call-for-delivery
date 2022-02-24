@@ -65,14 +65,10 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: StoreOwnerBranchEntity::class)]
     private $storeOwnerBranchEntities;
 
-    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionHistoryEntity::class)]
-    private $note;
-
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
         $this->storeOwnerBranchEntities = new ArrayCollection();
-        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -314,36 +310,6 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($storeOwnerBranchEntity->getStoreOwner() === $this) {
                 $storeOwnerBranchEntity->setStoreOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SubscriptionHistoryEntity[]
-     */
-    public function getNote(): Collection
-    {
-        return $this->note;
-    }
-
-    public function addNote(SubscriptionHistoryEntity $note): self
-    {
-        if (!$this->note->contains($note)) {
-            $this->note[] = $note;
-            $note->setStoreOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(SubscriptionHistoryEntity $note): self
-    {
-        if ($this->note->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getStoreOwner() === $this) {
-                $note->setStoreOwner(null);
             }
         }
 
