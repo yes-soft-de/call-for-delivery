@@ -9,7 +9,6 @@ use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
-use App\Request\Subscription\SubscriptionRemainingTimeUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
