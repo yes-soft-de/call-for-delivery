@@ -24,7 +24,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('profile')
 
             ->select('profile.id', 'profile.storeOwnerName', 'profile.images', 'profile.status', 'profile.phone', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId', 'profile.commission',
-                'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount')
+                'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount', 'profile.city', 'profile.storeCategoryId', 'profile.storeCategoryId')
             
             ->andWhere('profile.storeOwnerId = :id')
             ->setParameter('id', $id)

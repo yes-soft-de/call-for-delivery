@@ -192,39 +192,22 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="string", property="images"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="array", property="branches",
-     *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="integer", property="storeOwnerProfileID"),
-     *                      @OA\Property(type="object", property="geoLocation",
-     *                          @OA\Property(type="string", property="lat"),
-     *                          @OA\Property(type="string", property="lon")
-     *
-     *                      ),
-     *                      @OA\Property(type="string", property="city"),
-     *                      @OA\Property(type="string", property="storeOwnerName"),
-     *                      @OA\Property(type="boolean", property="isActive")
-     *                  )
+     *              @OA\Property(type="object", property="images",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL"),
      *              ),
+     *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="string", property="imageURL"),
-     *              @OA\Property(type="string", property="baseURL"),
-     *              @OA\Property(type="number", property="deliveryCost"),
-     *              @OA\Property(type="number", property="rating"),
      *              @OA\Property(type="integer", property="storeCategoryId"),
-     *              @OA\Property(type="string", property="storeCategoryName"),
-     *              @OA\Property(type="boolean", property="privateOrders"),
-     *              @OA\Property(type="boolean", property="hasProducts"),
-     *              @OA\Property(type="string", property="branchName"),
      *              @OA\Property(type="object", property="openingTime"),
      *              @OA\Property(type="object", property="closingTime"),
      *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="string", property="commission"),
+     *              @OA\Property(type="number", property="commission"),
      *              @OA\Property(type="string", property="bankName"),
      *              @OA\Property(type="string", property="bankAccountNumber"),
      *              @OA\Property(type="string", property="stcPay"),
+     *              @OA\Property(type="string", property="employeeCount"),
      *      )
      *   )
      * )

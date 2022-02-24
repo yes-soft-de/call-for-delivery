@@ -12,9 +12,23 @@ class StoreOwnerProfileResponse
 
     public $phone;
 
+    public $city;
+
     public $status;
 
     public $commission;
 
+    public $storeCategoryId;
+
+    public $openingTime;
+
+    public $closingTime;
+
     public $employeeCount;
+
+    public $bankName;
+
+    public $bankAccountNumber;
+
+    public $stcPay;
 }
