@@ -4599,6 +4599,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Whatsapp with us`
+  String get whatsapp {
+    return Intl.message(
+      'Whatsapp with us',
+      name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
