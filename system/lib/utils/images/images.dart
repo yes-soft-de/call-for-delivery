@@ -13,6 +13,11 @@ class ImageAsset {
   static const LANGUAGE = ROOT + 'translate.png';
   static const ARAB_LANGUAGE = ROOT + 'saudi-arabia.png';
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
+  static const PROFILE = ROOT + 'profile.png';
+  static const USERS = ROOT + 'users.png';
+  static const CHECK_SERVER = ROOT + 'check_server.png';
+  static const PASSWORD = ROOT + 'password.png';
+  static const MESSAGES = ROOT + 'messages.png';
 }
 
 class SvgAsset {
