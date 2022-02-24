@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -99,7 +100,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void moveToNext() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        SplashRoutes.SPLASH_SCREEN, (route) => false,
+        OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false,
         arguments: true);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
