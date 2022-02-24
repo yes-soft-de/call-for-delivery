@@ -57,4 +57,17 @@ class BranchesRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> deleteBranch(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.DELETE_BRANCH_API,
+      {'id':id,
+      'isActive':'false'
+      },
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

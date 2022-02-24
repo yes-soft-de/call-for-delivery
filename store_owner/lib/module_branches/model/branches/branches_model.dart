@@ -23,7 +23,8 @@ class BranchesModel extends DataModel {
     var data = response.data;
     data?.forEach((element) {
       _branches.add(BranchesModel(
-          location: LatLng(0, 0),
+          location: LatLng(element.location?.lat?.toDouble() ?? 0,
+              element.location?.lon?.toDouble() ?? 0),
           branchName: element.brancheName ?? S.current.unknown,
           city: element.city ?? '',
           id: element.id ?? -1,
@@ -31,4 +32,5 @@ class BranchesModel extends DataModel {
     });
   }
   BranchesModel.empty();
+  List<BranchesModel> get data => _branches;
 }

@@ -4,14 +4,16 @@ class CustomIconButton extends StatelessWidget {
   final IconData icon;
   final Color backgroundColor;
   final Color iconColor;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final double? radius;
 
   const CustomIconButton(
       {Key? key,
       required this.backgroundColor,
       required this.icon,
       required this.iconColor,
-      required this.onTap})
+      this.radius,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class CustomIconButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(radius??12),
               color: backgroundColor,
               boxShadow: [
                 BoxShadow(
