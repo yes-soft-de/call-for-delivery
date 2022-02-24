@@ -65,12 +65,16 @@ class SubscriptionService
      * @param storeOwner
      * @return RemainingOrdersResponse|string
      */
-    public function packageBalance($storeOwner):RemainingOrdersResponse|string
+    public function packageBalance($storeOwner): RemainingOrdersResponse|string
     {
        $this->checkSubscription($storeOwner);
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
        if($subscription) {
+
+           $countOrders = $this->getCountOngoingOrders($subscription);
+
+           $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
 
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
        }
@@ -82,7 +86,7 @@ class SubscriptionService
      * @param storeOwner
      * @return string
      */
-    public function checkSubscription($storeOwner):string
+    public function checkSubscription($storeOwner): string
     {
        $checkSubscription = $this->checkValidityOfSubscription($storeOwner);
       
@@ -115,19 +119,29 @@ class SubscriptionService
         return $response;
     }
 
-    public function checkValidityOfSubscription($storeOwner)
+    public function checkValidityOfSubscription($storeOwner): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
         //check and update RemainingTime
         $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
-        // $remainingTime = $this->updateRemainingTime($subscription);
+        
+        $remainingCars = $this->checkRemainingCars($subscription);
        
        if($subscription) {
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
                 return SubscriptionConstant::SUBSCRIBE_INACTIVE;
             }
+            
+            //all cars are busy
+            if($remainingCars === SubscriptionConstant::CARS_FINISHED) {
+
+                $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
     
+                return SubscriptionConstant::CARS_FINISHED;
+            }  
+
+            //orders are finished
             if($subscription['remainingOrders'] <= 0) {
                
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::ORDERS_FINISHED);
@@ -135,22 +149,17 @@ class SubscriptionService
                 return SubscriptionConstant::ORDERS_FINISHED;
             }
     
+            //date is finished
             if($subscriptionExpired === SubscriptionConstant::DATE_FINISHED ) {
     
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::DATE_FINISHED);
     
                 return SubscriptionConstant::DATE_FINISHED;
     
-            }
-    
-            if($subscription['remainingCars'] <= 0) {
-               
-                $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
-    
-                return SubscriptionConstant::CARS_FINISHED;
-            }  
-           
-            if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+            } 
+        
+            //there cars available
+            if($remainingCars === SubscriptionConstant::SUBSCRIPTION_OK) {
            
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::SUBSCRIBE_ACTIVE);
     
@@ -166,7 +175,7 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
-    // reduce the number of available orders
+    // reduce the number of available orders, call it only when create order success.
     public function updateRemainingOrders($storeOwner): string
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
@@ -211,25 +220,27 @@ class SubscriptionService
 
     }
 
-    public function updateRemainingTime($subscription)
-    {
-       $remainingTime = "";
-       
-       if(isset($subscription['remainingTime'])) {
-            if($subscription['remainingTime'] > 0) {
-            
-                //Get the remaining time by calculating the difference between the start date and the end date.
-                $difference = $subscription['startDate']->diff($subscription['endDate']);
-                if ($difference->d) {
+       // get count ongoing orders from order Entity , On the basic condition that the order date is within the start and end date of the subscription
+    public function getCountOngoingOrders($subscription): ?INT
+    { 
+        //this below line for mode current only, until create order entity
+        return   $countOrders = 5;
+    }
 
-                $remainingTime .= $difference->format("%d");
-                }
+    public function checkRemainingCars($subscription): string
+    {       
+        if($subscription) {
+            $countOrders = $this->getCountOngoingOrders($subscription);
 
-                $this->subscriptionManager->updateRemainingTime($subscription['id'], $remainingTime);
-            }
+           if($subscription['remainingCars'] - $countOrders <= 0 ) {
+
+                return SubscriptionConstant::CARS_FINISHED;
+           }
+
+           return SubscriptionConstant::SUBSCRIPTION_OK;
         }
 
-        return $remainingTime;
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
     }
 
     public function updateIsFutureAndSubscriptionCurrent($storeOwner): string
