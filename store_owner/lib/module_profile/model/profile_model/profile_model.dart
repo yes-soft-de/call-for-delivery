@@ -4,6 +4,7 @@ import 'package:c4d/module_profile/response/profile_response/profile_response.da
 
 class ProfileModel extends DataModel {
   String? image;
+  String? imageUrl;
   late String name;
   late String phone;
   late String stcPay;
@@ -21,12 +22,15 @@ class ProfileModel extends DataModel {
       required this.bankName,
       required this.city,
       this.employeeCount,
-      this.status});
+      this.status,
+      this.imageUrl
+      });
   late ProfileModel _profile;
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;
     _profile = ProfileModel(
         image: data?.images?.image,
+        imageUrl: data?.images?.imageUrl,
         name: data?.storeOwnerName ?? S.current.unknown,
         phone: data?.phone ?? S.current.unknown,
         bankNumber: '',

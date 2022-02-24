@@ -32,47 +32,21 @@ class ProfileRepository {
     return ProfileResponse.fromJson(response);
   }
 
-  Future<Branch?> createBranch(CreateBranchRequest createBranch) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(
-      Urls.BRANCHES_API,
-      createBranch.toJson(),
-      headers: {'Authorization': 'Bearer $token'},
-    );
-
-    if (response == null) return null;
-
-    return CreateBranchResponse.fromJson(response).data;
-  }
-
-  Future<List<Branch>?> getMyBranches() async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-      Urls.BRANCHES_API,
-      headers: {'Authorization': 'Bearer $token'},
-    );
-
-    if (response == null) return null;
-
-    return GetBranchesResponse.fromJson(response).data;
-  }
-
-  Future<List<ActivityRecord>?> getUserActivityLog() async {
-    await _authService.refreshToken();
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-      Urls.LOG_API,
-      headers: {'Authorization': 'Bearer $token'},
-    );
-
-    if (response == null) return null;
-
-    return GetRecordsResponse.fromJson(response).data;
-  }
-
 // new repo function shape
 
   Future<ActionResponse?> createOwnerProfile(
+      ProfileRequest profileRequest) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.put(
+      Urls.OWNER_PROFILE_API,
+      profileRequest.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateProfile(
       ProfileRequest profileRequest) async {
     var token = await _authService.getToken();
     var response = await _apiClient.put(

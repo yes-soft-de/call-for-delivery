@@ -36,72 +36,16 @@ class ProfileService {
     return ProfileModel.withData(response);
   }
 
-  Future<bool> createProfile(ProfileRequest profileRequest) async {
-    return false;
-  }
-
-  Future<bool> updateProfile(ProfileRequest profileRequest) async {
-    //     return _manager.createOwnerProfile(profileRequest);
-    return false;
-  }
-
-  Future<List<Branch>?> getMyBranches() async {
-    List<Branch>? branches = await _preferencesHelper.getSavedBranch();
-
-    if (branches == null) {
-      // Get the Branches from the backend
-      branches = await _manager.getMyBranches();
-      await _preferencesHelper.cacheBranch(branches ?? []);
+  Future<DataModel> updateProfile(ProfileRequest profileRequest) async {
+    ActionResponse? response = await _manager.updateProfile(profileRequest);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-
-    return branches;
+    return DataModel.empty();
   }
 
-  Future<List<ActivityModel>> getActivity() async {
-    var records = await _manager.getMyLog();
-    var activity = <int, ActivityModel>{};
-    if (records == null) {
-      return [];
-    }
-    if (records.isEmpty) {
-      return [];
-    }
-    records.forEach((e) {
-      if (e.state == 'delivered') {
-        activity[e.id ?? 0] = ActivityModel(
-            startDate: DateTime.fromMillisecondsSinceEpoch(
-                e.record?.first.date?.timestamp ?? 0 * 1000),
-            endDate: DateTime.fromMillisecondsSinceEpoch(
-                e.record?.last.date?.timestamp ?? 0 * 1000),
-            activity: '${e.brancheName}, #${e.id.toString()}');
-      }
-    });
-
-    return activity.values.toList();
-  }
-
-  String getLocalizedState(String status) {
-    if (status == 'pending') {
-      return S.current.orderIsCreated;
-    } else if (status == 'on way to pick order') {
-      return S.current.captainAcceptedOrder;
-    } else if (status == 'in store' || status == 'in_store') {
-      return S.current.captainInStore;
-    } else if (status == 'ongoing' || status == 'piked') {
-      return S.current.captainStartedDelivery;
-    } else if (status == 'cash') {
-      return S.current.captainGotCash;
-    } else if (status == 'delivered') {
-      return S.current.orderIsFinished;
-    }
-    return status;
-  }
-
-  // Future<List<Terms>> getTerms() async {
-  //   var role = await _authService.userRole;
-  //   return await _manager.getTerms(role);
-  // }
-  // new service function form
   Future<DataModel> createStoreProfile(ProfileRequest request) async {
     ActionResponse? actionResponse = await _manager.createOwnerProfile(request);
     if (actionResponse == null) {

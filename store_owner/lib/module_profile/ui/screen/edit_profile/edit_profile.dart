@@ -19,11 +19,17 @@ class ProfileScreenState extends State<ProfileScreen> {
   States? states;
 
   void saveProfile(ProfileRequest request) {
-    //  widget._stateManager.submitProfile(this, request);
+    widget._stateManager.updateProfile(this, request);
   }
 
-  void uploadImage(ProfileRequest request, String? type, [String? image]) {
-    //  widget._stateManager.uploadImage(this, request,type,image);
+  void getProfile() {
+    widget._stateManager.getProfile(this);
+  }
+
+  void refresh() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
