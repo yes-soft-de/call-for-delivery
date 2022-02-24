@@ -30,12 +30,12 @@ import '../module_chat/repository/chat/chat_repository.dart' as _i20;
 import '../module_chat/service/chat/char_service.dart' as _i29;
 import '../module_chat/state_manager/chat_state_manager.dart' as _i30;
 import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i42;
-import '../module_home/home_module.dart' as _i43;
-import '../module_home/manager/check_api_manager.dart' as _i31;
-import '../module_home/repository/check_api_repository.dart' as _i21;
-import '../module_home/service/check_api_service.dart' as _i32;
-import '../module_home/state_manager/check_api_state_manager.dart' as _i33;
-import '../module_home/ui/screen/home_screen.dart' as _i36;
+import '../module_check_api/check_api_module.dart' as _i43;
+import '../module_check_api/manager/check_api_manager.dart' as _i31;
+import '../module_check_api/repository/check_api_repository.dart' as _i21;
+import '../module_check_api/service/check_api_service.dart' as _i32;
+import '../module_check_api/state_manager/check_api_state_manager.dart' as _i33;
+import '../module_check_api/ui/screen/home_screen.dart' as _i36;
 import '../module_localization/presistance/localization_preferences_helper/localization_preferences_helper.dart'
     as _i7;
 import '../module_localization/service/localization_service/localization_service.dart'

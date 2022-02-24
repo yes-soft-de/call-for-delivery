@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_home/state_manager/check_api_state_manager.dart';
-import 'package:c4d/module_home/ui/states/home_state_error.dart';
-import 'package:c4d/module_home/ui/states/home_state_init.dart';
+import 'package:c4d/module_check_api/state_manager/check_api_state_manager.dart';
+import 'package:c4d/module_check_api/ui/states/home_state_error.dart';
+import 'package:c4d/module_check_api/ui/states/home_state_init.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_home/response/check_api.dart';
+import 'package:c4d/module_check_api/response/check_api.dart';
 
 class CheckApiModel extends DataModel {
 String result = '';

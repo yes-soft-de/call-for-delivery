@@ -1,8 +1,8 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_home/manager/check_api_manager.dart';
-import 'package:c4d/module_home/model/check_api_model.dart';
-import 'package:c4d/module_home/response/check_api.dart';
+import 'package:c4d/module_check_api/manager/check_api_manager.dart';
+import 'package:c4d/module_check_api/model/check_api_model.dart';
+import 'package:c4d/module_check_api/response/check_api.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
 
