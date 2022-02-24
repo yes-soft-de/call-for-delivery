@@ -40,7 +40,8 @@ class OwnerOrdersStateManager {
         backgroundColor: Colors.red,
       );
     } else {
-      _profileSubject.add(profile as ProfileModel);
+      profile as ProfileModel;
+      _profileSubject.add(profile.data);
     }
   }
 }

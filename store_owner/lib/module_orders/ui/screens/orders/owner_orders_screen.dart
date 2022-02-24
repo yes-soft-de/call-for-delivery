@@ -102,7 +102,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
-      drawer: NavigatorMenu(profileModel: currentProfile,),
+      drawer: NavigatorMenu(
+        profileModel: currentProfile,
+      ),
       body: _currentState?.getUI(context),
     );
   }
