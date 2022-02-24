@@ -455,7 +455,9 @@
     "accountInActivated": "Account inactivated",
     "accountActivated": "Account activated",
     "updateProfile": "Update profile",
-    "employeeSize": "Employee count"
+    "employeeSize": "Employee count",
+    "profileUpdatedSuccessfully": "Profile has been updated successfully"
+
 
 
 
