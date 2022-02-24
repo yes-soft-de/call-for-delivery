@@ -17,4 +17,10 @@ class CompanyInfoCreateRequest
     private string $bankName;
 
     private string $stc;
+
+    private float $kilometers;
+
+    private float $maxKilometerBonus;
+
+    private float $minKilometerBonus;
 }

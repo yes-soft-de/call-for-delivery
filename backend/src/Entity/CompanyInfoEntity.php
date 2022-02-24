@@ -34,6 +34,15 @@ class CompanyInfoEntity
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $stc;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $kilometers;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $maxKilometerBonus;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $minKilometerBonus;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +128,42 @@ class CompanyInfoEntity
     public function setStc(?string $stc): self
     {
         $this->stc = $stc;
+
+        return $this;
+    }
+
+    public function getKilometers(): ?float
+    {
+        return $this->kilometers;
+    }
+
+    public function setKilometers(?float $kilometers): self
+    {
+        $this->kilometers = $kilometers;
+
+        return $this;
+    }
+
+    public function getMaxKilometerBonus(): ?float
+    {
+        return $this->maxKilometerBonus;
+    }
+
+    public function setMaxKilometerBonus(?float $maxKilometerBonus): self
+    {
+        $this->maxKilometerBonus = $maxKilometerBonus;
+
+        return $this;
+    }
+
+    public function getMinKilometerBonus(): ?float
+    {
+        return $this->minKilometerBonus;
+    }
+
+    public function setMinKilometerBonus(?float $minKilometerBonus): self
+    {
+        $this->minKilometerBonus = $minKilometerBonus;
 
         return $this;
     }

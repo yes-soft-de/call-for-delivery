@@ -4,19 +4,58 @@ namespace App\Response\CompanyInfo;
 
 class CompanyInfoGetResponse
 {
-    public int $id;
+    /**
+     * @var int|null $id
+     */
+    public $id;
 
-    public string $phone;
+    /**
+     * @var string|null $phone
+     */
+    public $phone;
 
-    public string $phoneTwo;
+    /**
+     * @var string|null $phoneTwo
+     */
+    public $phoneTwo;
 
-    public string $whatsapp;
+    /**
+     * @var string|null $whatsapp
+     */
+    public $whatsapp;
 
-    public string $fax;
+    /**
+     * @var string|null $fax
+     */
+    public $fax;
 
-    public string $bankName;
+    /**
+     * @var string|null $bankName
+     */
+    public $bankName;
 
-    public string $stc;
+    /**
+     * @var string|null $stc
+     */
+    public $stc;
 
-    public string $email;
+    /**
+     * @var string|null $email
+     */
+    public $email;
+
+    /**
+     * @var float|null $kilometers
+     */
+    public $kilometers;
+
+    /**
+     * @var float|null $maxKilometerBonus
+     */
+    public $maxKilometerBonus;
+
+    /**
+     * @var float|null $minKilometerBonus
+     */
+    public $minKilometerBonus;
 }
