@@ -1,4 +1,5 @@
 import 'package:c4d/module_check_api/check_api_routes.dart';
+import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String> _getNextRoute() async {
     await Future.delayed(Duration(seconds: 3));
     if (widget._authService.isLoggedIn) {
-      return  CheckApiRoutes.ROUTE_CheckApi;
+      return  HomeRoutes.ROUTE_HOME;
     } else {
       return AuthorizationRoutes.LOGIN_SCREEN;
     }

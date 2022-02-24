@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_check_api/check_api_module.dart';
+import 'package:c4d/module_home/home_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/effect/scroll_behavior.dart';
@@ -84,6 +85,7 @@ class MyApp extends StatefulWidget {
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
   final CheckApiModule _checkApiModule;
+  final HomeModule _homeModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -93,7 +95,8 @@ class MyApp extends StatefulWidget {
       this._authorizationModule,
       this._chatModule,
       this._settingsModule,
-      this._checkApiModule
+      this._checkApiModule,
+      this._homeModule
       );
 
   @override
