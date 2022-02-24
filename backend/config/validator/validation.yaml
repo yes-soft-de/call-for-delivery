@@ -83,3 +83,8 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
             - NotBlank: ~
         status:
             - NotBlank: ~
+
+App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
