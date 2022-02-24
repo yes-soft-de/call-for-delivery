@@ -26,5 +26,15 @@ final class SubscriptionConstant
 
     const YOU_HAVE_SUBSCRIBED = "You have already subscribed";
 
+    const YOU_DO_NOT_HAVE_SUBSCRIBED = "You do not have a subscription";
+
     const NEW_SUBSCRIPTION_ACTIVATED = "New subscription activated";
+    
+    const SUBSCRIPTION_OK = "Ok";
+
+    const SUBSCRIPTION_EXTRA_TIME = "تم تمديد الباقة";
+
+    const IS_FUTURE_TRUE= true;
+
+    const IS_FUTURE_FALSE= false;
 }

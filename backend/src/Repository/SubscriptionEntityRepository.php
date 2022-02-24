@@ -31,8 +31,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('subscription')
 
             ->select ('IDENTITY( subscription.package)')
-            ->addSelect('subscription.id','subscription.status','subscription.startDate',
-                'subscription.endDate', 'subscription.note', 'subscription.isFuture')
+            ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId')
 

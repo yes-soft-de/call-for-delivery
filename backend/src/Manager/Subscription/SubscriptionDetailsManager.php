@@ -4,6 +4,7 @@ namespace App\Manager\Subscription;
 
 use App\AutoMapping;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
@@ -20,7 +21,7 @@ class SubscriptionDetailsManager
         $this->subscribeDetailsRepository = $subscribeDetailsRepository;
     }
 
-    public function createSubscriptionDetails($subscription):SubscriptionDetailsEntity
+    public function createSubscriptionDetails(SubscriptionEntity $subscription): SubscriptionDetailsEntity
     { 
         $request = new SubscriptionDetailsCreateRequest();
 
@@ -30,7 +31,8 @@ class SubscriptionDetailsManager
         $request->setRemainingCars($subscription->getPackage()->getCarCount());
         $request->setRemainingOrders($subscription->getPackage()->getOrderCount());
         $request->setStatus($subscription->getStatus());
-        $request->setRemainingTime($subscription->getPackage()->getExpired());
+        //default value for extra  time is zero
+        $request->setRemainingTime(0);
 
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["storeOwner" => $subscription->getStoreOwner()]);
         if($subscriptionDetailsEntity) {
@@ -46,7 +48,7 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateSubscriptionDetails(SubscriptionDetailsCreateRequest $request, $subscriptionDetailsEntity):SubscriptionDetailsEntity
+    public function updateSubscriptionDetails(SubscriptionDetailsCreateRequest $request, SubscriptionDetailsEntity $subscriptionDetailsEntity): SubscriptionDetailsEntity
     {     
         $subscriptionDetailsEntity = $this->autoMapping->mapToObject(SubscriptionDetailsCreateRequest::class, SubscriptionDetailsEntity::class, $request, $subscriptionDetailsEntity);
        
@@ -55,7 +57,7 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateSubscriptionDetailsState($id, $status):?array
+    public function updateSubscriptionDetailsState($id, $status): ?array
     {     
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
 
@@ -68,7 +70,7 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateRemainingOrders($id, $orderRemaining):?array
+    public function updateRemainingOrders($id, $orderRemaining): ?array
     {     
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
 
@@ -81,22 +83,18 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateRemainingTime($id, $remainingTime):?array
+    public function updateRemainingTime($subscriptionId, $remainingTime): ?subscriptionDetailsEntity
     {   
-        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
-        
-        $days = intval($remainingTime);
-      
-        $subscriptionDetailsEntity->setRemainingTime($days);
-
-        $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingTimeUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $subscriptionId]);
        
+        $subscriptionDetailsEntity->setRemainingTime($remainingTime);
+
         $this->entityManager->flush();
  
         return $subscriptionDetailsEntity;
     }
 
-    public function getSubscriptionCurrent($storeOwner):?SubscriptionDetailsEntity
+    public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
     {     
         return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
     }

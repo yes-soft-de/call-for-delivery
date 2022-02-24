@@ -4,7 +4,6 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Entity\SubscriptionEntity;
-use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
@@ -53,13 +52,13 @@ class SubscriptionService
         if($subscriptionCurrent) {
             if($subscriptionCurrent->getStatus() === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
              
-                return  1;
+                return  SubscriptionConstant::IS_FUTURE_TRUE;
             }
 
-            return  0;
+            return  SubscriptionConstant::IS_FUTURE_FALSE;
         }
 
-        return  0;
+        return  SubscriptionConstant::IS_FUTURE_FALSE;
     }
 
     /**
@@ -107,7 +106,7 @@ class SubscriptionService
        foreach ($subscriptions as $subscription) {
             if($subscription['subscriptionDetailsId']) {
              
-                $subscription['isCurrent'] = "yes";
+                $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT;
             }
 
             $response[] = $this->autoMapping->map("array", MySubscriptionsResponse::class, $subscription);
@@ -120,13 +119,12 @@ class SubscriptionService
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
         //check and update RemainingTime
-        $remainingTime = $this->updateRemainingTime($subscription);
+        $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
+        // $remainingTime = $this->updateRemainingTime($subscription);
        
        if($subscription) {
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
-                // $this->updateSubscribeState($subscription['id'], SubscriptionConstant::SUBSCRIBE_INACTIVE);
-    
                 return SubscriptionConstant::SUBSCRIBE_INACTIVE;
             }
     
@@ -137,7 +135,7 @@ class SubscriptionService
                 return SubscriptionConstant::ORDERS_FINISHED;
             }
     
-            if($subscription['remainingTime'] <= 0 || $remainingTime <=0 ) {
+            if($subscriptionExpired === SubscriptionConstant::DATE_FINISHED ) {
     
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::DATE_FINISHED);
     
@@ -168,6 +166,7 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
+    // reduce the number of available orders
     public function updateRemainingOrders($storeOwner): string
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
@@ -177,27 +176,57 @@ class SubscriptionService
             $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
           
             $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription(), $remainingOrders);
-            //for test, change with constant
-            return "ok";
+           
+            return SubscriptionConstant::SUBSCRIPTION_OK;
         }
 
         return $this->checkSubscription($storeOwner);
     }
 
+    public function checkSubscriptionExpired($subscription): string
+    {       
+        if($subscription) {
+
+            $dateNow = new \DateTime('now');
+            //Is the subscription expired?
+            if($subscription['endDate'] < $dateNow ) {
+                //Is there extra time?
+                if($subscription['remainingTime'] > 0) {
+
+                  $subscription['endDate'] =  new \DateTime($subscription['endDate']->format('Y-m-d h:i:s') . $subscription['remainingTime'].'day');
+                  //update end date and remainingTime and note
+                  $this->subscriptionManager->updateEndDate($subscription['id'], $subscription['endDate'], SubscriptionConstant::SUBSCRIPTION_EXTRA_TIME);
+
+                  return SubscriptionConstant::SUBSCRIPTION_OK;                
+                }
+
+                return SubscriptionConstant::DATE_FINISHED;
+            }
+            
+            return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+
+        }
+
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+
+    }
+
     public function updateRemainingTime($subscription)
     {
-        $remainingTime = "";
-        if($subscription['remainingTime'] > 0) {
-           
-            //Get the remaining time by calculating the difference between the start date and the end date.
-            $difference = $subscription['startDate']->diff($subscription['endDate']);
-            if ($difference->d) {
+       $remainingTime = "";
+       
+       if(isset($subscription['remainingTime'])) {
+            if($subscription['remainingTime'] > 0) {
+            
+                //Get the remaining time by calculating the difference between the start date and the end date.
+                $difference = $subscription['startDate']->diff($subscription['endDate']);
+                if ($difference->d) {
 
-               $remainingTime .= $difference->format("%d");
-             }
+                $remainingTime .= $difference->format("%d");
+                }
 
-            $this->subscriptionManager->updateRemainingTime($subscription['id'], $remainingTime);
-    
+                $this->subscriptionManager->updateRemainingTime($subscription['id'], $remainingTime);
+            }
         }
 
         return $remainingTime;

@@ -9,7 +9,6 @@ class RemainingOrdersResponse
     public $packageName;
     public $remainingOrders;
     public $remainingCars;
-    public $remainingTime;
     public $status;
     public $startDate;
     public $endDate;

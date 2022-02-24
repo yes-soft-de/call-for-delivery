@@ -150,6 +150,21 @@ class SubscriptionManager
         return new DateTime($startDate->format('Y-m-d h:i:s') . $days); 
     }
 
+    public function updateEndDate($id, $endDate, $note)
+    {
+        $subscriptionEntity = $this->subscribeRepository->find($id);
+      
+        $subscriptionEntity->setEndDate($endDate);
+
+        $this->entityManager->flush();
+ 
+        $this->subscriptionDetailsManager->updateRemainingTime($id, 0);
+       
+        $this->subscriptionHistoryManager->updateNoteSubscriptionHistory($id, $note);            
+       
+        return $subscriptionEntity;
+    }
+
 
 
 

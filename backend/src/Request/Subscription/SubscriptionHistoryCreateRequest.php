@@ -10,8 +10,6 @@ class SubscriptionHistoryCreateRequest
 
     private $type;
 
-    private $createdAt;
-
     private $subscription;
 
     /**
@@ -70,26 +68,6 @@ class SubscriptionHistoryCreateRequest
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of createdAt
-     */ 
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set the value of createdAt
-     *
-     * @return  self
-     */ 
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

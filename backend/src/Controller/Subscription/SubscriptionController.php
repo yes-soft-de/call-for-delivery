@@ -228,7 +228,6 @@ class SubscriptionController extends BaseController
      *                @OA\Property(type="string", property="packageName"),
      *                @OA\Property(type="integer", property="remainingOrders"),
      *                @OA\Property(type="integer", property="remainingCars"),
-     *                @OA\Property(type="string", property="remainingTime"),
      *                @OA\Property(type="object", property="status"),
      *                @OA\Property(type="object", property="startDate"),
      *                @OA\Property(type="integer", property="endDate"),
