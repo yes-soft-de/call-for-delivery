@@ -76,3 +76,10 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~

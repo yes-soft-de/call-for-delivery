@@ -8,6 +8,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -178,5 +179,21 @@ class StoreOwnerProfileManager
     public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
+    {
+        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
+
+        if(! $storeOwnerProfileEntity) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileStatusUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
+         $request, $storeOwnerProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $storeOwnerProfileEntity;
     }
 }

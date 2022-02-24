@@ -29,4 +29,6 @@ final class StoreProfileConstant
     const STORE_OWNER_PROFILE_INACTIVE_STATUS = "inactive";
 
     const STORE_OWNER_PROFILE_ACTIVE_OR_NOT_STATUS = "all";
+
+    const STORE_OWNER_PROFILE_NOT_EXISTS = "store owner profile not exists!";
 }

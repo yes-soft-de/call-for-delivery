@@ -7,6 +7,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -491,5 +492,99 @@ class StoreOwnerProfileController extends BaseController
         $response = $this->storeOwnerProfileService->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * admin: Update status of the store owner profile.
+     * @Route("storeownerprofilestatus", name="updateStoreOwnerProfileStatusByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Store Owner Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update Store Owner Profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="int", property="id"),
+     *          @OA\Property(type="string", property="status")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="storeOwnerId"),
+     *              @OA\Property(type="string", property="storeOwnerName"),
+     *              @OA\Property(type="object", property="images",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL")
+     *              ),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="string", property="roomID"),
+     *              @OA\Property(type="string", property="city"),
+     *              @OA\Property(type="integer", property="storeCategoryId"),
+     *              @OA\Property(type="string", property="employeeCount"),
+     *              @OA\Property(type="object", property="openingTime"),
+     *              @OA\Property(type="object", property="closingTime"),
+     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="string", property="commission"),
+     *              @OA\Property(type="string", property="bankName"),
+     *              @OA\Property(type="string", property="bankAccountNumber"),
+     *              @OA\Property(type="string", property="stcPay")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns that store owner profile not exists",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9157"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateStoreOwnerProfileStatusByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileStatusUpdateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if(\count($violations) > 0)
+        {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->storeOwnerProfileService->updateStoreOwnerProfileStatusByAdmin($request);
+
+        if($response === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response($response, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }
