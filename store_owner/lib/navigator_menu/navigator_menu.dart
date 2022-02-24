@@ -7,6 +7,7 @@ import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,6 +92,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               icon: Icons.account_balance_rounded,
               onTap: () {},
               title: S.current.myBalance),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
           CustomNavTile(
               icon: Icons.subscriptions_rounded,
               onTap: () {
@@ -109,14 +116,26 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     .pushNamed(BranchesRoutes.BRANCHES_LIST_SCREEN);
               },
               title: S.current.branchManagement),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
           CustomNavTile(
               icon: FontAwesomeIcons.whatsappSquare,
               onTap: () {},
-              title: S.current.directSupport),
+              title: S.current.whatsapp),
           CustomNavTile(
-              icon: Icons.chat_rounded,
+              icon: Icons.support_agent_rounded,
               onTap: () {},
               title: S.current.directSupport),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
           CustomNavTile(
               icon: Icons.settings_rounded,
               onTap: () {
