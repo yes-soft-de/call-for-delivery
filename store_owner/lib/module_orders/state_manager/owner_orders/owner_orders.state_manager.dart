@@ -1,8 +1,11 @@
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
@@ -28,4 +31,16 @@ class OwnerOrdersStateManager {
     this._authService,
     this._profileService,
   );
+
+  Future<void> initDrawerData() async {
+    var profile = await _profileService.getProfile();
+    if (profile.hasError) {
+      Fluttertoast.showToast(
+        msg: profile.error ?? S.current.errorHappened,
+        backgroundColor: Colors.red,
+      );
+    } else {
+      _profileSubject.add(profile as ProfileModel);
+    }
+  }
 }

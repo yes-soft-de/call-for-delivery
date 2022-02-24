@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
@@ -12,7 +13,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavigatorMenu extends StatefulWidget {
   final double? width;
-  NavigatorMenu({this.width = 275});
+  final ProfileModel? profileModel;
+  NavigatorMenu({this.width = 275, this.profileModel});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -50,14 +52,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 child: CustomNetworkImage(
                     height: double.maxFinite,
                     width: double.maxFinite,
-                    imageSource: ImageAsset.LOGO),
+                    imageSource: widget.profileModel?.image ?? ImageAsset.LOGO),
               ),
             ),
             SizedBox(
               height: 16,
             ),
             Text(
-              'username',
+              widget.profileModel?.name ?? S.current.loading,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Divider(
