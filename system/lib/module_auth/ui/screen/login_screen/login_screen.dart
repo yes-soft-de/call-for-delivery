@@ -109,7 +109,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void moveToNext() {
      Navigator.of(context)
-         .pushNamedAndRemoveUntil( HomeRoutes.ROUTE_HOME, (route) => false);
+         .pushNamedAndRemoveUntil( CheckApiRoutes.ROUTE_CheckApi, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

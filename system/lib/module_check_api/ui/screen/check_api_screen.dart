@@ -3,25 +3,25 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_check_api/state_manager/check_api_state_manager.dart';
-import 'package:c4d/module_check_api/ui/states/home_state_error.dart';
-import 'package:c4d/module_check_api/ui/states/home_state_init.dart';
+import 'package:c4d/module_check_api/ui/states/check_api_state_error.dart';
+import 'package:c4d/module_check_api/ui/states/check_api_state_init.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class HomeScreen extends StatefulWidget {
+class CheckApiScreen extends StatefulWidget {
   final CheckApiStateManager _stateManager;
 
-  HomeScreen(
+  CheckApiScreen(
       this._stateManager,
       );
 
   @override
-  State<StatefulWidget> createState() => HomeScreenState();
+  State<StatefulWidget> createState() => CheckApiScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen>  with SingleTickerProviderStateMixin {
+class CheckApiScreenState extends State<CheckApiScreen>  with SingleTickerProviderStateMixin {
   late StreamSubscription _streamSubscription;
   late States currentState;
   late AsyncSnapshot loadingSnapshot;
@@ -54,7 +54,7 @@ late  AnimationController controller;
       setState(() {});
     });
 
-    currentState = HomeStateInit(this);
+    currentState = CheckApiStateInit(this);
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {

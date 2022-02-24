@@ -83,7 +83,7 @@ class MyApp extends StatefulWidget {
   final AuthorizationModule _authorizationModule;
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
-  final HomeModule _homeModule;
+  final CheckApiModule _checkApiModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -93,7 +93,7 @@ class MyApp extends StatefulWidget {
       this._authorizationModule,
       this._chatModule,
       this._settingsModule,
-      this._homeModule
+      this._checkApiModule
       );
 
   @override

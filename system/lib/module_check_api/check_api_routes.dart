@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-class HomeRoutes {
-  static const ROUTE_HOME = '/home';
+class CheckApiRoutes {
+  static const ROUTE_CheckApi = '/check_api';
 }
