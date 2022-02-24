@@ -155,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
+        "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في حذف الفرع"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
         "confirmPasswordAgain":

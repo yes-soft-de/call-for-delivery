@@ -155,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
+        "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
+            "Confirm deletion of this branch"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
