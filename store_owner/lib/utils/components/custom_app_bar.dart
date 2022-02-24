@@ -18,7 +18,10 @@ class CustomMandoobAppBar {
     return AppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
-      title: Text(title,style: Theme.of(context).textTheme.headline6,),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.headline6,
+      ),
       leading: canGoBack
           ? Padding(
               padding: const EdgeInsets.all(8.0),
@@ -29,15 +32,22 @@ class CustomMandoobAppBar {
                   onTap: onTap ?? () => Navigator.of(context).pop(),
                   child: Container(
                     decoration: BoxDecoration(
-                        color:
-                            buttonBackground ?? Theme.of(context).primaryColor,
-                        shape: BoxShape.circle),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Theme.of(context).backgroundColor,
+                            spreadRadius: 1.5,
+                            blurRadius: 6,
+                            offset: Offset(-0.2, 0))
+                      ],
+                      color: buttonBackground ??
+                          Theme.of(context).scaffoldBackgroundColor,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        icon ?? Icons.arrow_back,
-                        color: colorIcon ?? Colors.white,
-                      ),
+                      child: Icon(icon ?? Icons.arrow_back,
+                          color: colorIcon ??
+                              Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),

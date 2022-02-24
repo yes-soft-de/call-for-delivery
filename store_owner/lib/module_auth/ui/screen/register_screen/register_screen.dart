@@ -74,7 +74,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         appBar: CustomMandoobAppBar.appBar(
           context,
           title: S.of(context).register,
-          canGoBack:canPop,
+          canGoBack: canPop,
         ),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting

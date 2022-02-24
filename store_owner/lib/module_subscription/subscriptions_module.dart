@@ -13,7 +13,8 @@ class SubscriptionsModule extends YesModule {
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN: (context) => _initSubscriptionsScreen,
-   };
+      SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN: (context) =>
+          _initSubscriptionsScreen,
+    };
   }
 }

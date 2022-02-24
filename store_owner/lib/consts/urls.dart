@@ -11,6 +11,7 @@ class Urls {
   static const UPLOAD_API = DOMAIN + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/storeowner';
+  static const GET_OWNER_PROFILE_API = BASE_API + '/storeownerprofilebyid';
   static const CREATE_TOKEN_API = DOMAIN + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/verifycode';
   static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';
@@ -193,6 +194,7 @@ class Urls {
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
   static const UPDATE_BRANCH_API = BASE_API + '';
   static const CREATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
-  
-
+  static const NEW_ORDER_API = DOMAIN + '/v1/';
+  static const OWNER_ORDERS_API = DOMAIN + '/v1/';
+  static const DELETE_ORDER = DOMAIN + '/v1/';
 }

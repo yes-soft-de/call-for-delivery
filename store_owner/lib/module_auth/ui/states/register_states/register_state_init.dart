@@ -54,8 +54,8 @@ class RegisterStateInit extends RegisterState {
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
                     ImageAsset.LOGO,
-                    width: 50,
-                    height: 50,
+                    width: 100,
+                    height: 100,
                   ),
                 ),
               ),
@@ -96,11 +96,11 @@ class RegisterStateInit extends RegisterState {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 28.0),
                     child: SizedBox(
-                        width: 125,
+                      width: 125,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomLoginFormField(
-                          halfField:true,
+                          halfField: true,
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
@@ -119,7 +119,7 @@ class RegisterStateInit extends RegisterState {
                               child: Center(
                                 child: Text(
                                   '+',
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.button?.copyWith(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -248,7 +248,8 @@ class RegisterStateInit extends RegisterState {
                   ? () {
                       if (_registerKey.currentState!.validate()) {
                         screen.registerClient(RegisterRequest(
-                          userID: countryController.text.trim()+usernameController.text.trim(),
+                          userID: countryController.text.trim() +
+                              usernameController.text.trim(),
                           password: passwordController.text,
                         ));
                       }

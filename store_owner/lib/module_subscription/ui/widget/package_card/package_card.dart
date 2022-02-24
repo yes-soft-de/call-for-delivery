@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
+import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,13 +23,14 @@ class PackageCard extends StatelessWidget {
           duration: Duration(milliseconds: 450),
           width: width,
           decoration: BoxDecoration(
-              gradient: active ? LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                  Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                  Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                  Theme.of(context).colorScheme.primary,
-              ]) : null,
+              gradient: active
+                  ? LinearGradient(colors: [
+                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary,
+                    ])
+                  : null,
               borderRadius: BorderRadius.circular(25),
               color: active
                   ? Theme.of(context).colorScheme.primary
@@ -45,49 +47,38 @@ class PackageCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return TweenAnimationBuilder(
-                                duration: Duration(milliseconds: 350),
-                                tween: Tween<double>(begin: 0, end: 1),
-                                curve: Curves.linear,
-                                builder: (context, double val, child) {
-                                  return Transform.scale(
-                                    scale: val,
-                                    child: child,
-                                  );
+              InfoButton(onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return TweenAnimationBuilder(
+                        duration: Duration(milliseconds: 350),
+                        tween: Tween<double>(begin: 0, end: 1),
+                        curve: Curves.linear,
+                        builder: (context, double val, child) {
+                          return Transform.scale(
+                            scale: val,
+                            child: child,
+                          );
+                        },
+                        child: AlertDialog(
+                          title: Text(S.current.note),
+                          content: Container(child: Text(package.note)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          actionsAlignment: MainAxisAlignment.center,
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
                                 },
-                                child: AlertDialog(
-                                  title: Text(S.current.note),
-                                  content: Container(child: Text(package.note)),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  actionsAlignment: MainAxisAlignment.center,
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text(S.current.close)),
-                                  ],
-                                ),
-                              );
-                            });
-                      },
-                      icon: Icon(
-                        Icons.info,
-                        color: active
-                            ? Colors.white
-                            : Theme.of(context).disabledColor,
-                      ))),
+                                child: Text(S.current.close)),
+                          ],
+                        ),
+                      );
+                    });
+              }),
               // package name
               Center(
                 child: Text(
@@ -112,7 +103,9 @@ class PackageCard extends StatelessWidget {
               Text(
                 S.current.packageInfo,
                 style: TextStyle(
-                    color: active ? Colors.white : Colors.black,
+                    color: active
+                        ? Theme.of(context).textTheme.button?.color
+                        : null,
                     fontSize: 14,
                     fontWeight: FontWeight.bold),
               ),
@@ -151,7 +144,9 @@ class PackageCard extends StatelessWidget {
                     child: Text(
                       '${package.orderCount} ' + S.of(context).ordermonth,
                       style: TextStyle(
-                        color: active ? Colors.white : null,
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -195,13 +190,17 @@ class PackageCard extends StatelessWidget {
                         ? Text(
                             '${package.carCount} ' + S.of(context).car,
                             style: TextStyle(
-                              color: active ? Colors.white : Colors.black,
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
                             ),
                           )
                         : Text(
                             '∞ ' + S.of(context).car,
                             style: TextStyle(
-                              color: active ? Colors.white : Colors.black,
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
                             ),
                           ),
                   ),
@@ -243,7 +242,10 @@ class PackageCard extends StatelessWidget {
                     child: Text(
                       '${package.cost} ${S.current.sar}',
                       style: TextStyle(
-                          color: active ? Colors.white : Colors.black),
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
+                      ),
                     ),
                   ),
                 ],

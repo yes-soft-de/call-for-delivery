@@ -70,7 +70,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomMandoobAppBar.appBar(context,
-            title: S.of(context).forgotPass, canGoBack: true),
+            title: S.of(context).forgotPass, canGoBack: canPop),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
               ? _currentStates.getUI(context)

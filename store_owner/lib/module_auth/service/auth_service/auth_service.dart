@@ -52,8 +52,8 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
     }
-    RegisterResponse? response = await _authManager.userTypeCheck(
-        'ROLE_OWNER', loginResult.token ?? '');
+    RegisterResponse? response =
+        await _authManager.userTypeCheck('ROLE_OWNER', loginResult.token ?? '');
     if (response?.statusCode != '201') {
       await logout();
       _authSubject.addError(
@@ -76,7 +76,6 @@ class AuthService {
     _prefsHelper.setToken(loginResult.token);
     await updateCategoryFavorite();
     _authSubject.add(AuthStatus.AUTHORIZED);
-
   }
 
   Future<void> registerApi(RegisterRequest request) async {

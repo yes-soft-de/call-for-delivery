@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
 import 'package:c4d/module_branches/state_manager/init_branches_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
@@ -62,7 +63,8 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   }
 
   void moveToOrder() {
-    Navigator.of(context).pushNamedAndRemoveUntil('', (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
   }
 
   @override

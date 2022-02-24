@@ -20,7 +20,7 @@ class AboutScreenState extends State<AboutScreen> {
   int currentPage = 0;
   @override
   void initState() {
-    _currentState = AboutStatePageOwner(this,[]);
+    _currentState = AboutStatePageOwner(this, []);
     widget._stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) setState(() {});

@@ -3,7 +3,6 @@ import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/ui/screens/branches_list_screen/branches_list_screen.dart';
 import 'package:flutter/material.dart';
 
-
 class BranchListStateLoading extends States {
   BranchListStateLoading(BranchesListScreenState screenState)
       : super(screenState);

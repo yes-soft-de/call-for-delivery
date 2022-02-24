@@ -15,6 +15,7 @@ class ImageAsset {
   static const ARAB_LANGUAGE = ROOT + 'saudi-arabia.png';
   static const ENGLISH_LANGUAGE = ROOT + 'united-kingdom.png';
   static const SHOP_PIN = ROOT + 'shop_pin.png';
+
   /// welcome page images
   static const OPEN_APP = WELCOME_IMAGES + 'open_app.png';
   static const WE_DELIVER = WELCOME_IMAGES + 'we_deliver.png';
@@ -36,5 +37,4 @@ class LottieAsset {
   static const ROOT = 'assets/animations/';
   static const LOADING_CART = ROOT + 'cart_loading.json';
   static const CREATED_SUCCESSFULLY = ROOT + 'register-success.json';
-
 }

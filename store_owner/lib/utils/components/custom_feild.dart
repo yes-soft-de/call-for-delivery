@@ -40,8 +40,7 @@ class CustomFormField extends StatefulWidget {
       this.validator = true,
       this.phone = false,
       this.onChanged,
-      this.validatorFunction
-      });
+      this.validatorFunction});
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -89,31 +88,33 @@ class _CustomFormFieldState extends State<CustomFormField> {
             }
             setState(() {});
           },
-          validator:widget.validatorFunction != null ? widget.validatorFunction : widget.validator
-              ? (value) {
-                  if (mode == AutovalidateMode.disabled) {
-                    setState(() {
-                      mode = AutovalidateMode.onUserInteraction;
-                      clean = false;
-                    });
-                  }
-                  if (value == null) {
-                    clean = false;
-                    return S.of(context).pleaseCompleteField;
-                  } else if (value.isEmpty) {
-                    clean = false;
-                    return S.of(context).pleaseCompleteField;
-                  } else if (value.length < 8 &&
-                      widget.numbers &&
-                      widget.phone) {
-                    clean = false;
-                    return S.of(context).phoneNumbertooShort;
-                  } else {
-                    clean = true;
-                    return null;
-                  }
-                }
-              : null,
+          validator: widget.validatorFunction != null
+              ? widget.validatorFunction
+              : widget.validator
+                  ? (value) {
+                      if (mode == AutovalidateMode.disabled) {
+                        setState(() {
+                          mode = AutovalidateMode.onUserInteraction;
+                          clean = false;
+                        });
+                      }
+                      if (value == null) {
+                        clean = false;
+                        return S.of(context).pleaseCompleteField;
+                      } else if (value.isEmpty) {
+                        clean = false;
+                        return S.of(context).pleaseCompleteField;
+                      } else if (value.length < 8 &&
+                          widget.numbers &&
+                          widget.phone) {
+                        clean = false;
+                        return S.of(context).phoneNumbertooShort;
+                      } else {
+                        clean = true;
+                        return null;
+                      }
+                    }
+                  : null,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.hintText,

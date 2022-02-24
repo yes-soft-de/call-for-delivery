@@ -20,7 +20,8 @@ class AboutService {
   }
 
   Future<bool> createAppointment(String name, String phoneNumber) async {
-    await _manager.createAppointment(CreateAppointmentRequest(name, phoneNumber));
+    await _manager
+        .createAppointment(CreateAppointmentRequest(name, phoneNumber));
     return true;
   }
 }

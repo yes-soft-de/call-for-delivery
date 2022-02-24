@@ -119,7 +119,7 @@ class EmptyChatPage extends StatelessWidget {
                     onTap: () {},
                     onMessageSend: (msg) {
                       _chatStateManager.sendMessage(
-                          chatRoomId, msg, _authService.username,args);
+                          chatRoomId, msg, _authService.username, args);
                       if (sendSupport) {
                         if (getIt<AuthService>().isLoggedIn == false) {
                           getIt<AuthPrefsHelper>()

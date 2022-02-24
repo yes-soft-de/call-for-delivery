@@ -34,13 +34,13 @@ class Branch {
 
   Branch(
       {this.id,
-        this.ownerID,
-        this.location,
-        this.city,
-        this.brancheName,
-        this.free,
-        this.userName,
-        this.status});
+      this.ownerID,
+      this.location,
+      this.city,
+      this.brancheName,
+      this.free,
+      this.userName,
+      this.status});
 
   Branch.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,7 +78,6 @@ class Location {
   Location({this.lat, this.lon});
 
   Location.fromJson(Map<String, dynamic> json) {
-
     lat = double.tryParse(json['lat'].toString());
     lon = double.parse(json['lon'].toString());
   }

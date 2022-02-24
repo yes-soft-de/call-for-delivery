@@ -29,14 +29,44 @@ class AppThemeDataService {
       mapStyle(dark);
       return ThemeData(
           brightness: Brightness.dark,
-          //      primaryColor: PrimaryColor,
           colorScheme: darkScheme,
           useMaterial3: true,
-          //     colorScheme: darkScheme,
           primarySwatch: Colors.indigo,
           focusColor: PrimaryColor,
+          checkboxTheme: CheckboxThemeData(
+            checkColor:
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.grey;
+              }
+              return Colors.white;
+            }),
+            fillColor:
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.black;
+              }
+              return Colors.indigo;
+            }),
+          ),
           cardColor: Colors.grey[150],
           fontFamily: 'Dubai',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+          )),
           textTheme: TextTheme(button: TextStyle(color: Colors.white)));
     }
     mapStyle(dark);

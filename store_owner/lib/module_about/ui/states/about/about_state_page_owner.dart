@@ -86,7 +86,8 @@ class AboutStatePageOwner extends AboutState {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        S.of(context)
+                        S
+                            .of(context)
                             .toFindOutMorePleaseLeaveYourPhonenandWeWill,
                         textAlign: TextAlign.center,
                       ),

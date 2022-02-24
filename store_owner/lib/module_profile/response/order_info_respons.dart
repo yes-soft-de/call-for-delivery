@@ -1,4 +1,5 @@
-import 'profile_response.dart';
+
+import '../../module_orders/response/order_details/order_details_response.dart';
 
 class OrderInfoRespons {
   int? id;
@@ -20,27 +21,26 @@ class OrderInfoRespons {
   String? countOrdersInDay;
   Owner? owner;
   var kilometer;
-  OrderInfoRespons({
-    this.id,
-    this.ownerID,
-    this.userName,
-    this.date,
-    this.updateDate,
-    this.note,
-    this.payment,
-    this.recipientName,
-    this.recipientPhone,
-    this.fromBranch,
-    this.branchCity,
-    this.acceptedOrder,
-    this.record,
-    this.completionTime,
-    this.uuid,
-    this.countOrdersInMonth,
-    this.countOrdersInDay,
-    this.owner,
-    this.kilometer
-  });
+  OrderInfoRespons(
+      {this.id,
+      this.ownerID,
+      this.userName,
+      this.date,
+      this.updateDate,
+      this.note,
+      this.payment,
+      this.recipientName,
+      this.recipientPhone,
+      this.fromBranch,
+      this.branchCity,
+      this.acceptedOrder,
+      this.record,
+      this.completionTime,
+      this.uuid,
+      this.countOrdersInMonth,
+      this.countOrdersInDay,
+      this.owner,
+      this.kilometer});
 
   OrderInfoRespons.fromJson(Map<String, dynamic> json) {
     id = json['id'];

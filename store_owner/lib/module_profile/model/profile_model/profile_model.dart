@@ -1,25 +1,40 @@
-class ProfileModel {
+import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_profile/response/profile_response/profile_response.dart';
+
+class ProfileModel extends DataModel {
   String? image;
-  String name;
-  String phone;
-  String stcPay;
-  String bankNumber;
-  String bankName;
-  String? drivingLicence;
-  String city;
-  String? identity;
-  String? mechanicLicense;
+  late String name;
+  late String phone;
+  late String stcPay;
+  late String bankNumber;
+  late String bankName;
+  late String city;
+  late String? employeeCount;
+  late String? status;
   ProfileModel(
-      {
-      required this.image,
+      {required this.image,
       required this.name,
       required this.phone,
       required this.stcPay,
       required this.bankNumber,
       required this.bankName,
-       this.drivingLicence,
       required this.city,
-       this.identity,
-       this.mechanicLicense,
-      });
+      this.employeeCount,
+      this.status});
+  late ProfileModel _profile;
+  ProfileModel.withData(ProfileResponse response) {
+    var data = response.data;
+    _profile = ProfileModel(
+        image: data?.images?.image,
+        name: data?.storeOwnerName ?? S.current.unknown,
+        phone: data?.phone ?? S.current.unknown,
+        bankNumber: '',
+        bankName: '',
+        stcPay: '',
+        city: '',
+        employeeCount: data?.employeeCount,
+        status: data?.status ?? 'inActive');
+  }
+  ProfileModel get data => _profile;
 }

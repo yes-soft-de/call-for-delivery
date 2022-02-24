@@ -87,7 +87,7 @@ class LoginStateInit extends LoginState {
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
                           controller: countryController,
-                          phone: true,
+                          numbers: true,
                           phoneHint: false,
                           maxLength: 3,
                           hintText: S.current.countryCode,
@@ -102,7 +102,7 @@ class LoginStateInit extends LoginState {
                               child: Center(
                                 child: Text(
                                   '+',
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.button?.copyWith(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -167,7 +167,8 @@ class LoginStateInit extends LoginState {
                                 onPressed: () {
                                   Navigator.pop(context);
                                   screen.restPass(ResetPassRequest(
-                                      userID: countryController.text + usernameController.text));
+                                      userID: countryController.text +
+                                          usernameController.text));
                                 });
                           });
                     } else {
@@ -204,7 +205,8 @@ class LoginStateInit extends LoginState {
                   firstButtonTab: () {
                     if (_loginKey.currentState!.validate()) {
                       screen.loginClient(
-                        countryController.text + usernameController.text, passwordController.text);
+                          countryController.text + usernameController.text,
+                          passwordController.text);
                     }
                   }),
             ),

@@ -5,8 +5,7 @@ class UpdateBranchesRequest {
   String? city;
   String? branchName;
   int? id;
-  UpdateBranchesRequest(
-      {this.id, this.location, this.city, this.branchName});
+  UpdateBranchesRequest({this.id, this.location, this.city, this.branchName});
 
   Map<String, dynamic> toJson() {
     return {

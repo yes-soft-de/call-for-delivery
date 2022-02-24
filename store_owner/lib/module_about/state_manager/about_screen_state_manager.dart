@@ -25,14 +25,13 @@ class AboutScreenStateManager {
   }
 
   void requestBooking() {
-   // _stateSubject.add(AboutStateRequestBooking());
+    // _stateSubject.add(AboutStateRequestBooking());
   }
 
   void moveNext() {
-      // _stateSubject.add(AboutStateLoading(this));
-      // _initAccountService.getPackages().then((packages) {
-      //   _stateSubject.add(AboutStatePageOwner(this, packages));
-      // });
+    // _stateSubject.add(AboutStateLoading(this));
+    // _initAccountService.getPackages().then((packages) {
+    //   _stateSubject.add(AboutStatePageOwner(this, packages));
+    // });
   }
-  
 }

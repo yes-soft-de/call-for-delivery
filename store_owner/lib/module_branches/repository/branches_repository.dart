@@ -46,7 +46,8 @@ class BranchesRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-    Future<ActionResponse?> addBranch(CreateBrancheRequest request) async {
+
+  Future<ActionResponse?> addBranch(CreateBrancheRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.CREATE_BRANCH_API,

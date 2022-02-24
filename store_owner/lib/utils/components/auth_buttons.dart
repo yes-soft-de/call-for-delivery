@@ -53,13 +53,13 @@ class AuthButtons extends StatelessWidget {
                     child: loading!
                         ? CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
+                                AlwaysStoppedAnimation<Color>(Theme.of(context).textTheme.button?.color ?? Colors.white),
                           )
                         : Text(
                             firstButtonTitle,
                             style: TextStyle(
                               color: firstButtonTab != null
-                                  ? Colors.white
+                                  ? Theme.of(context).textTheme.button?.color
                                   : Theme.of(context).disabledColor,
                             ),
                           ),
@@ -84,7 +84,7 @@ class AuthButtons extends StatelessWidget {
                   child: Center(
                     child: Text(
                       secondButtonTitle,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.button,
                     ),
                   )),
             ),

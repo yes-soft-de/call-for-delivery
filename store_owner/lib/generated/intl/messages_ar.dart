@@ -33,10 +33,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "يمكنك الموافقة على مهمتك لتوصيل الطلبية"),
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
+        "accountActivated": MessageLookupByLibrary.simpleMessage("الحساب مفعل"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
+        "accountInActivated":
+            MessageLookupByLibrary.simpleMessage("الحساب غير مفعل"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
@@ -68,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
@@ -201,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى توفير البريد الالكتروني"),
+        "employeeSize": MessageLookupByLibrary.simpleMessage("حجم المنشأة"),
         "emptyField": MessageLookupByLibrary.simpleMessage("حقل فارغ"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
@@ -321,6 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
         "myStatus": MessageLookupByLibrary.simpleMessage("حالتي"),
+        "mySubscription": MessageLookupByLibrary.simpleMessage("اشتراكي"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "nameHint": MessageLookupByLibrary.simpleMessage("مثال يزن"),
         "nameIsRequired":
@@ -636,6 +643,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
+        "updateProfile":
+            MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":

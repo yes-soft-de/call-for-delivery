@@ -17,8 +17,7 @@ class InitField extends StatelessWidget {
       required this.hint,
       this.last = false,
       this.validator,
-      this.onChanged
-      })
+      this.onChanged})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

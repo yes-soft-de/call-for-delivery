@@ -33,10 +33,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "You can accept your mission to deliver package"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "accountActivated":
+            MessageLookupByLibrary.simpleMessage("Account activated"),
         "accountAlreadyExist":
             MessageLookupByLibrary.simpleMessage("This account already exist"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
+        "accountInActivated":
+            MessageLookupByLibrary.simpleMessage("Account inactivated"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
@@ -68,6 +72,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You need to book a car to deliver your package to your destenation"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -200,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
+        "employeeSize": MessageLookupByLibrary.simpleMessage("Employee count"),
         "emptyField": MessageLookupByLibrary.simpleMessage("Empty Field"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
@@ -324,6 +331,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
+        "mySubscription":
+            MessageLookupByLibrary.simpleMessage("My Subscription"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameHint": MessageLookupByLibrary.simpleMessage("e.g yazan"),
         "nameIsRequired":
@@ -637,6 +646,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
+        "updateProfile": MessageLookupByLibrary.simpleMessage("Update profile"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),

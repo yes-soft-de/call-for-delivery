@@ -8,7 +8,8 @@ import 'package:injectable/injectable.dart';
 class AboutModule extends YesModule {
   AboutModule(AboutScreenStateManager aboutScreenStateManager) {
     YesModule.RoutesMap.addAll({
-      AboutRoutes.ROUTE_ABOUT: (context) => AboutScreen(aboutScreenStateManager),
+      AboutRoutes.ROUTE_ABOUT: (context) =>
+          AboutScreen(aboutScreenStateManager),
     });
   }
 }
