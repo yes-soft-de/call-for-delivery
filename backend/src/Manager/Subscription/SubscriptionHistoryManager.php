@@ -12,13 +12,19 @@ use DateTime;
 
 class SubscriptionHistoryManager
 {
+    /**
+     * @param AutoMapping $autoMapping
+     * @param EntityManagerInterface $entityManager
+     * @param SubscriptionHistoryEntityRepository $subscribeHistoryRepository
+     */
     public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionHistoryEntityRepository $subscribeHistoryRepository)
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->subscribeHistoryRepository = $subscribeHistoryRepository;
     }
 
+    /**
+     * @param SubscriptionEntity $subscription
+     * @return SubscriptionHistoryEntity
+     */
     public function createSubscriptionHistory(SubscriptionEntity $subscription):SubscriptionHistoryEntity
     { 
         $request = new SubscriptionHistoryCreateRequest();
@@ -36,6 +42,11 @@ class SubscriptionHistoryManager
         return $subscriptionHistoryEntity;
     }
 
+    /**
+     * @param $subscriptionId
+     * @param $note
+     * @return SubscriptionHistoryEntity
+     */
     public function updateNoteSubscriptionHistory($subscriptionId, $note):SubscriptionHistoryEntity
     { 
         $subscriptionHistoryEntity = $this->subscribeHistoryRepository->findOneBy(["subscription" => $subscriptionId]);
@@ -43,8 +54,7 @@ class SubscriptionHistoryManager
         $subscriptionHistoryEntity->setNote($note);
        
         $subscriptionHistoryEntity->setCreatedAt(new DateTime());
-        
-        $this->entityManager->persist($subscriptionHistoryEntity);
+
         $this->entityManager->flush();
  
         return $subscriptionHistoryEntity;

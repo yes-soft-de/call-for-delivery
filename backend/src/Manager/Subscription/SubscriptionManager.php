@@ -18,18 +18,24 @@ use App\Manager\Subscription\SubscriptionHistoryManager;
 use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionManager
-{  
+{
+    /**
+     * @param AutoMapping $autoMapping
+     * @param EntityManagerInterface $entityManager
+     * @param SubscriptionEntityRepository $subscribeRepository
+     * @param PackageManager $packageManager
+     * @param StoreOwnerProfileManager $storeOwnerProfileManager
+     * @param \App\Manager\Subscription\SubscriptionDetailsManager $subscriptionDetailsManager
+     * @param \App\Manager\Subscription\SubscriptionHistoryManager $subscriptionHistoryManager
+     */
     public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionEntityRepository $subscribeRepository, private PackageManager $packageManager, private StoreOwnerProfileManager $storeOwnerProfileManager, private SubscriptionDetailsManager $subscriptionDetailsManager, private SubscriptionHistoryManager $subscriptionHistoryManager)
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->subscribeRepository = $subscribeRepository;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
-        $this->packageManager = $packageManager;
-        $this->subscriptionDetailsManager = $subscriptionDetailsManager;
-        $this->subscriptionHistoryManager = $subscriptionHistoryManager;
     }
 
+    /**
+     * @param SubscriptionCreateRequest $request
+     * @return SubscriptionEntity|null
+     */
     public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionEntity
     { 
         // change to SUBSCRIBE_INACTIVE
@@ -62,6 +68,10 @@ class SubscriptionManager
        return $subscriptionEntity;
     }
 
+    /**
+     * @param $storeOwner
+     * @return SubscriptionDetailsEntity|null
+     */
     public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
@@ -69,6 +79,11 @@ class SubscriptionManager
        return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
+    /**
+     * @param $id
+     * @param $remainingOrders
+     * @return array|null
+     */
     public function updateRemainingOrders($id, $remainingOrders): ?array
     {
        return $this->subscriptionDetailsManager->updateRemainingOrders($id, $remainingOrders);
@@ -89,6 +104,10 @@ class SubscriptionManager
        return $this->subscribeRepository->getSubscriptionForNextTime($storeOwner);       
     }
 
+    /**
+     * @param $storeOwner
+     * @return array|null
+     */
     public function getSubscriptionsForStoreOwner($storeOwner): ?array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
@@ -96,6 +115,11 @@ class SubscriptionManager
        return $this->subscribeRepository->getSubscriptionsForStoreOwner($storeOwner);
     }
 
+    /**
+     * @param $id
+     * @param $status
+     * @return string
+     */
     public function updateSubscribeState($id, $status): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
@@ -116,6 +140,11 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
+    /**
+     * @param $id
+     * @param $isFuture
+     * @return string
+     */
     public function updateIsFutureAndSubscriptionCurrent($id, $isFuture): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
@@ -136,13 +165,24 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
-    public function calculatingSubscriptionExpiryDate($startDate, $days)
+    /**
+     * @param $startDate
+     * @param $days
+     * @return DateTime|null
+     */
+    public function calculatingSubscriptionExpiryDate($startDate, $days): DateTime|null
     {
         $days = $days.'day';
-       
-        return new DateTime($startDate->format('Y-m-d h:i:s') . $days); 
+
+        return new DateTime($startDate->format('Y-m-d h:i:s') . $days);
     }
 
+    /**
+     * @param $id
+     * @param $endDate
+     * @param $note
+     * @return SubscriptionEntity|null
+     */
     public function updateEndDate($id, $endDate, $note): ?SubscriptionEntity
     {
         $subscriptionEntity = $this->subscribeRepository->find($id);

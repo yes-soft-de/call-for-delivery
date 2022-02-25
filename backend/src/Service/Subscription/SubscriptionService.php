@@ -7,7 +7,6 @@ use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
-use App\Response\Subscription\SubscriptionByIdResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
 use dateTime;
@@ -17,16 +16,17 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class SubscriptionService
 {
+    /**
+     * @param AutoMapping $autoMapping
+     * @param SubscriptionManager $subscriptionManager
+     */
     public function __construct(private AutoMapping $autoMapping, private SubscriptionManager $subscriptionManager)
     {
-        $this->autoMapping = $autoMapping;
-        $this->subscriptionManager = $subscriptionManager;
     }
 
     /**
      * @param SubscriptionCreateRequest $request
      * @return mixed
-     * @throws NonUniqueResultException
      */
     public function createSubscription(SubscriptionCreateRequest $request): mixed
     {
@@ -43,7 +43,7 @@ class SubscriptionService
 
     /**
      * Check if there is a future subscription
-     * @param storeOwner
+     * @param $storeOwner
      * @return INT
      */
     public function getIsFutureState($storeOwner): INT
@@ -62,7 +62,7 @@ class SubscriptionService
     }
 
     /**
-     * @param storeOwner
+     * @param $storeOwner
      * @return RemainingOrdersResponse|string
      */
     public function packageBalance($storeOwner): RemainingOrdersResponse|string
@@ -83,7 +83,7 @@ class SubscriptionService
     }
 
     /**
-     * @param storeOwner
+     * @param $storeOwner
      * @return string
      */
     public function checkSubscription($storeOwner): string
@@ -98,7 +98,11 @@ class SubscriptionService
 
        return SubscriptionConstant::UNSUBSCRIBED;
     }
-    
+
+    /**
+     * @param $storeOwner
+     * @return array
+     */
     public function getSubscriptionsForStoreOwner($storeOwner): array
     {
        $response = [];
@@ -119,6 +123,10 @@ class SubscriptionService
         return $response;
     }
 
+    /**
+     * @param $storeOwner
+     * @return string
+     */
     public function checkValidityOfSubscription($storeOwner): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
@@ -170,12 +178,22 @@ class SubscriptionService
         return SubscriptionConstant::UNSUBSCRIBED;
     }
 
+    /**
+     * @param $id
+     * @param $status
+     * @return string
+     */
     public function updateSubscribeState($id, $status): string
     {
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
     // reduce the number of available orders, call it only when create order success.
+
+    /**
+     * @param $storeOwner
+     * @return string
+     */
     public function updateRemainingOrders($storeOwner): string
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
@@ -192,6 +210,10 @@ class SubscriptionService
         return $this->checkSubscription($storeOwner);
     }
 
+    /**
+     * @param $subscription
+     * @return string
+     */
     public function checkSubscriptionExpired($subscription): string
     {       
         if($subscription) {
@@ -217,7 +239,6 @@ class SubscriptionService
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
-
     }
 
        // get count ongoing orders from order Entity , On the basic condition that the order date is within the start and end date of the subscription
@@ -227,6 +248,10 @@ class SubscriptionService
         return   $countOrders = 5;
     }
 
+    /**
+     * @param $subscription
+     * @return string
+     */
     public function checkRemainingCars($subscription): string
     {       
         if($subscription) {
@@ -243,13 +268,17 @@ class SubscriptionService
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
     }
 
+    /**
+     * @param $storeOwner
+     * @return string
+     */
     public function updateIsFutureAndSubscriptionCurrent($storeOwner): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionForNextTime($storeOwner);
   
         if($subscription) {
              
-           $subscription = $this->subscriptionManager->updateIsFutureAndSubscriptionCurrent($subscription['id'], 0);
+           $this->subscriptionManager->updateIsFutureAndSubscriptionCurrent($subscription['id'], 0);
           
            return SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED;
         }

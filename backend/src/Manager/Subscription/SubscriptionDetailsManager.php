@@ -13,11 +13,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SubscriptionDetailsManager
 {
+    /**
+     * @param AutoMapping $autoMapping
+     * @param EntityManagerInterface $entityManager
+     * @param SubscriptionDetailsEntityRepository $subscribeDetailsRepository
+     */
     public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionDetailsEntityRepository $subscribeDetailsRepository)
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->subscribeDetailsRepository = $subscribeDetailsRepository;
     }
 
     public function createSubscriptionDetails(SubscriptionEntity $subscription): SubscriptionDetailsEntity
