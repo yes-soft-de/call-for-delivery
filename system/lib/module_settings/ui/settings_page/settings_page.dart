@@ -1,16 +1,15 @@
-import 'dart:io';
-import 'package:injectable/injectable.dart';
-import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
-import 'package:flutter/material.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
+import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 
 @injectable
 class SettingsScreen extends StatefulWidget {

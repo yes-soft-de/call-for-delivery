@@ -1,8 +1,8 @@
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_settings/ui/settings_page/choose_local_page.dart';
 import 'package:c4d/module_settings/ui/settings_page/settings_page.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class SettingsModule extends YesModule {

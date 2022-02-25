@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
@@ -8,6 +6,8 @@ import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state_code_sent.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state_init.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable

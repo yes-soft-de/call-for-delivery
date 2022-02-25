@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:flutter/material.dart';
 
 class StatusHelper {
   static OrderStatusEnum getStatusEnum(String? status) {

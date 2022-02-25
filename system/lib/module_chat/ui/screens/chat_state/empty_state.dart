@@ -1,7 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:lottie/lottie.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
@@ -15,6 +12,8 @@ import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 final TextEditingController supportName = TextEditingController();
 

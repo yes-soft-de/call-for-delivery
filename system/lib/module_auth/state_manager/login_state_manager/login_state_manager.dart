@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
-import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state_init.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable

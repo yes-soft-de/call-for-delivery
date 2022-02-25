@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
@@ -8,6 +6,8 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/forget_password_screen/forget_password_screen.dart';
 import 'package:c4d/module_auth/ui/states/forget_password_state/forget_password_code_sent.dart';
 import 'package:c4d/module_auth/ui/states/forget_password_state/forget_state_update_password.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable

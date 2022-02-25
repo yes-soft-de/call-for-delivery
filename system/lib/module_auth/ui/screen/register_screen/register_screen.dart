@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
+
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
@@ -9,9 +7,11 @@ import 'package:c4d/module_auth/state_manager/register_state_manager/register_st
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state_code_sent.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state_init.dart';
-import 'package:flutter/material.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class RegisterScreen extends StatefulWidget {

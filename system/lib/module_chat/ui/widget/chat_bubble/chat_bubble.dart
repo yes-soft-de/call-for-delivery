@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:intl/intl.dart';
 
 class ChatBubbleWidget extends StatefulWidget {
   final bool? showImage;

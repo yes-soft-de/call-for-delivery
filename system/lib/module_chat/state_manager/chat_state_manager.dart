@@ -1,8 +1,8 @@
 import 'package:analyzer_plugin/utilities/pair.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_chat/model/chat/chat_model.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../service/chat/char_service.dart';
 

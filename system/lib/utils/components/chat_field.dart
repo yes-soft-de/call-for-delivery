@@ -1,6 +1,6 @@
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:c4d/generated/l10n.dart';
 
 class ChatFormField extends StatefulWidget {
   final double height;

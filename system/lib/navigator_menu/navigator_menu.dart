@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:c4d/di/di_config.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/customIcon/mandob_icons_icons.dart';
+import 'package:flutter/material.dart';
 
 // current last index is 19
 class NavigatorMenu extends StatefulWidget {

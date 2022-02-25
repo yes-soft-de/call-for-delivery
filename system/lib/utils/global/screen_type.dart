@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:flutter/material.dart';
 
 class ScreenType {
   static String getCurrentScreenType() {

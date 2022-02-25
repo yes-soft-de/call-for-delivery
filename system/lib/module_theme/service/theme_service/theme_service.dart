@@ -1,8 +1,7 @@
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 
 @injectable
 class AppThemeDataService {

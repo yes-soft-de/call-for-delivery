@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/components/fixed_container.dart';
 
 class CustomFlushBarHelper {
   static Flushbar createSuccess(

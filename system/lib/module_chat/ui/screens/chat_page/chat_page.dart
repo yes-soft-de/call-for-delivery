@@ -1,16 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:injectable/injectable.dart';
-import 'package:lottie/lottie.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/components/fixed_container.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:soundpool/soundpool.dart';
+
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_chat/model/chat/chat_model.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_chat/state_manager/chat_state_manager.dart';
 import 'package:c4d/module_chat/ui/screens/chat_state/empty_state.dart';
@@ -18,7 +11,15 @@ import 'package:c4d/module_chat/ui/screens/chat_state/loading_state.dart';
 import 'package:c4d/module_chat/ui/widget/chat_bubble/chat_bubble.dart';
 import 'package:c4d/module_chat/ui/widget/chat_writer/chat_writer.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:injectable/injectable.dart';
+import 'package:lottie/lottie.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:soundpool/soundpool.dart';
 
 @injectable
 class ChatPage extends StatefulWidget {

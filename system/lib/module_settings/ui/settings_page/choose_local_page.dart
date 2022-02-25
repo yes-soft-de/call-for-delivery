@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_settings/widget/language_button.dart';
 import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class ChooseLocalScreen extends StatefulWidget {

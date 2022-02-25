@@ -1,5 +1,3 @@
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -12,9 +10,10 @@ import 'package:c4d/module_auth/request/login_request/login_request.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
 import 'package:c4d/module_auth/response/login_response/login_response.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_auth/response/regester_response/regester_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 @Injectable()
 class AuthService {
