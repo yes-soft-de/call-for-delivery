@@ -63,7 +63,7 @@ class PackageCategoryController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
      *            @OA\Property(type="string", property="name"),
-     *            @OA\Property(type="number", property="description"),
+     *            @OA\Property(type="string", property="description"),
      *      )
      *   )
      * )
@@ -110,7 +110,7 @@ class PackageCategoryController extends BaseController
       *      @OA\JsonContent(
       *          @OA\Property(type="integer", property="id"),
       *          @OA\Property(type="string", property="name"),
-      *          @OA\Property(type="number", property="description")
+      *          @OA\Property(type="string", property="description")
       *      )
       * )
       *
@@ -123,7 +123,7 @@ class PackageCategoryController extends BaseController
       *          @OA\Property(type="object", property="Data",
       *            @OA\Property(type="integer", property="id"),
       *            @OA\Property(type="string", property="name"),
-      *            @OA\Property(type="number", property="description")
+      *            @OA\Property(type="string", property="description")
       *      )
       *   )
       * )
@@ -167,12 +167,7 @@ class PackageCategoryController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="number", property="cost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="integer", property="carCount"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="string", property="description"),
      *       )
      *    )
      * )
