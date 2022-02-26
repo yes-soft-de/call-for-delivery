@@ -15,7 +15,7 @@ class UpdateBranchesRequest {
         'lon': this.location?.longitude
       },
       'city': this.city,
-      'brancheName': this.branchName,
+      'name': this.branchName,
     };
   }
 }

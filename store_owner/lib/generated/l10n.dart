@@ -4609,6 +4609,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm deletion of this branch`
+  String get confirmDeletionBranch {
+    return Intl.message(
+      'Confirm deletion of this branch',
+      name: 'confirmDeletionBranch',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

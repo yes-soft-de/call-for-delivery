@@ -1,18 +1,18 @@
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 
 class CreateBranchRequest {
-  String name;
-  GeoJson location;
+  String? name;
+  GeoJson? location;
 
   CreateBranchRequest({
-    required this.name,
-    required this.location,
+     this.name,
+     this.location,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'location': location.toJson(),
+      'location': location?.toJson(),
     };
   }
 }

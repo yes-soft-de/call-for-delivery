@@ -28,7 +28,7 @@ class Data {
     location =
         json['location'] != null ? GeoJson.fromJson(json['location']) : null;
     city = json['city'];
-    brancheName = json['brancheName'];
+    brancheName = json['name'];
     userName = json['userName'];
   }
 }

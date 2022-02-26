@@ -58,4 +58,36 @@ class CustomMandoobAppBar {
       actions: actions,
     );
   }
+
+  static Widget actionIcon(context,
+      {required Function() onTap,
+      Color? buttonBackground,
+      required IconData icon,
+      Color? colorIcon}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(context).backgroundColor,
+                  spreadRadius: 1.5,
+                  blurRadius: 6,
+                  offset: Offset(-0.2, 0))
+            ],
+            color: buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(icon,
+                color: colorIcon ?? Theme.of(context).colorScheme.primary),
+          ),
+        ),
+      ),
+    );
+  }
 }

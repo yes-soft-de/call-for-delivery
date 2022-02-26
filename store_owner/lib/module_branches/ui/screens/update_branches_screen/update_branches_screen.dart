@@ -1,13 +1,18 @@
-import 'package:another_flushbar/flushbar.dart';
+import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
-import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/state_manager/update_branches_state_manager/update_branches_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/update_branches_state/update_branches_state.dart';
+import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -22,10 +27,21 @@ class UpdateBranchScreen extends StatefulWidget {
 
 class UpdateBranchScreenState extends State<UpdateBranchScreen> {
   States? currentState;
+  // google map controller
+  Completer<GoogleMapController> controller = Completer();
+  late CustomInfoWindowController customInfoWindowController;
 
   @override
   void initState() {
+    canPop = Navigator.canPop(context);
     currentState = UpdateBranchStateLoaded(this);
+    customInfoWindowController = CustomInfoWindowController();
+    widget._manager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -33,87 +49,60 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
     widget._manager.updateBranch(this, request);
   }
 
-  void createBranch(CreateBrancheRequest request) {
+  void createBranch(CreateBranchRequest request) {
     widget._manager.createBranch(this, request);
   }
 
   void moveNext(bool success) {
     if (success) {
       // must update the screen before using global state manager
+      getIt<GlobalStateManager>().update();
       Navigator.of(context).pop();
-      Flushbar(
+      CustomFlushBarHelper.createSuccess(
         title: S.of(context).updateBranch,
         message: S.of(context).updateBranchSuccess,
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
-      )..show(context);
+      ).show(context);
     } else {
       Navigator.of(context).pop();
-      Flushbar(
+      CustomFlushBarHelper.createError(
         title: S.of(context).updateBranch,
         message: S.of(context).updateBranchFailure,
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      )..show(context);
+      ).show(context);
     }
   }
 
   void moveNextAfterCreate(bool success) {
-    if (success) {
-      Navigator.of(context).pop();
+        if (success) {
       // must update the screen before using global state manager
-      Flushbar(
+      getIt<GlobalStateManager>().update();
+      Navigator.of(context).pop();
+      CustomFlushBarHelper.createSuccess(
         title: S.of(context).addBranch,
         message: S.of(context).addBranchSuccess,
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
-      )..show(context);
+      ).show(context);
     } else {
       Navigator.of(context).pop();
-      Flushbar(
+      CustomFlushBarHelper.createError(
         title: S.of(context).addBranch,
         message: S.of(context).addBranchFailure,
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      )..show(context);
+      ).show(context);
     }
   }
 
   void refresh() {
     setState(() {});
   }
-
+bool canPop = false;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     BranchesModel? branchesModel = args is BranchesModel ? args : null;
-
     return Scaffold(
       appBar: CustomMandoobAppBar.appBar(context,
           title: branchesModel != null
               ? S.of(context).updateBranch
               : S.of(context).addBranch,
-          canGoBack: Navigator.canPop(context)),
+          canGoBack:canPop ),
       body: currentState?.getUI(context),
     );
   }

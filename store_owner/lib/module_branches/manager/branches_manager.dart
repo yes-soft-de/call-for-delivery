@@ -21,4 +21,7 @@ class BranchesManager {
 
   Future<ActionResponse?> createBrannch(CreateBranchRequest request) async =>
       await _repository.createBranch(request);
+
+  Future<ActionResponse?> deleteBranch(int id) async =>
+      await _repository.deleteBranch(id);
 }
