@@ -198,5 +198,7 @@ class Urls {
   static const OWNER_ORDERS_API = DOMAIN + '/v1/';
   static const DELETE_ORDER = DOMAIN + '/v1/';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
+  static const ACCOUNT_STATUS = BASE_API + '/storeownerprofilecompleteaccountstatus';
+
 
 }

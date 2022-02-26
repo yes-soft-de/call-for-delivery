@@ -1,3 +1,6 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
@@ -100,5 +103,15 @@ class AuthRepository {
     );
     if (result == null) return null;
     return RegisterResponse.fromJson(result);
+  }
+
+  Future<ActionResponse?> accountStatus() async {
+    var token = await getIt<AuthService>().getToken();
+    dynamic result = await _apiClient.get(
+      Urls.ACCOUNT_STATUS,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (result == null) return null;
+    return ActionResponse.fromJson(result);
   }
 }

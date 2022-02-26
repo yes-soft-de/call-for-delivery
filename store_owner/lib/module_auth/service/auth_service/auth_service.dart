@@ -1,3 +1,7 @@
+import 'package:c4d/module_branches/branches_routes.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -74,7 +78,7 @@ class AuthService {
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
-    await updateCategoryFavorite();
+    await accountStatus();
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 
@@ -221,5 +225,32 @@ class AuthService {
     } else {
       loginApi(username, request.newPassword);
     }
+  }
+
+  Future<void> accountStatus() async {
+    var response = await _authManager.accountStatus();
+    if (response?.statusCode != '200') {
+      switch (response?.statusCode) {
+        // profile not filled
+        case '9158':
+          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
+          break;
+        // account didn't subscript yet
+        case '9159':
+          _prefsHelper.setUserCompetedProfile(
+              SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
+          break;
+        // account didn't created any branch
+        case '':
+          _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
+          break;
+        default:
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+      }
+      return;
+    }
+    _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+    return;
   }
 }
