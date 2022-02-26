@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/module_check_api/check_api_module.dart';
 import 'package:c4d/module_home/home_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatefulWidget {
   final AuthorizationModule _authorizationModule;
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
+  final CheckApiModule _checkApiModule;
   final HomeModule _homeModule;
   MyApp(
       this._themeDataService,
@@ -93,6 +95,7 @@ class MyApp extends StatefulWidget {
       this._authorizationModule,
       this._chatModule,
       this._settingsModule,
+      this._checkApiModule,
       this._homeModule
       );
 

@@ -421,7 +421,12 @@
     "captainRated": "تم تقييم الكابتن بنجاح",
 
     "fine": "I'm fine now",
-    "notWell": "I'm not well"
+    "notWell": "I'm not well",
+
+    "checkServer": "التحقق من السيرفر",
+    "changePassword": "تغير كلمة السر",
+    "manageMessages": "إدارة الرسائل",
+    "manageUser": "إدارة المستخدمين"
 
 
 }

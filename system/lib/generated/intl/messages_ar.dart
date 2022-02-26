@@ -107,12 +107,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("تغير كلمة السر"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("التحدث مع الكابتن"),
         "chatWithStoreOwner":
             MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
+        "checkServer":
+            MessageLookupByLibrary.simpleMessage("التحقق من السيرفر"),
         "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
@@ -271,6 +275,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
+        "manageMessages": MessageLookupByLibrary.simpleMessage("إدارة الرسائل"),
+        "manageUser": MessageLookupByLibrary.simpleMessage("إدارة المستخدمين"),
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 موظف"),

@@ -1,3 +1,4 @@
+import 'package:c4d/module_check_api/check_api_routes.dart';
 import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';

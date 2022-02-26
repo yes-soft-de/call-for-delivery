@@ -16,50 +16,66 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Colors.blue.shade900;
-  }
+//    return Color(0xFF65C18C);
+    return Color(0xFF219F94);
 
-  static Color get PrimaryDarker {
-    return Colors.blue.shade900;
-  }
-
-  static Color get AccentColor {
-    return Colors.blue.shade900;
   }
 
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
-    final lightScheme = ColorScheme.fromSeed(seedColor: Colors.blue.shade900);
+    final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor:Colors.blue.shade900, brightness: Brightness.dark);
+        seedColor: PrimaryColor, brightness: Brightness.dark);
     if (dark == true) {
       return ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
-        useMaterial3: true,
-   //     colorScheme: darkScheme,
-        primarySwatch: Colors.blue,
-        focusColor: PrimaryColor,
-        cardColor: Colors.grey[150],
-        fontFamily: GoogleFonts.almarai().fontFamily,
-      );
+          brightness: Brightness.dark,
+          colorScheme: darkScheme,
+          useMaterial3: true,
+          focusColor: PrimaryColor,
+          checkboxTheme: CheckboxThemeData(
+            checkColor:
+            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.grey;
+              }
+              return Colors.white;
+            }),
+            fillColor:
+            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.black;
+              }
+              return PrimaryColor;
+            }),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              )),
+          textTheme: TextTheme(button: TextStyle(color: Colors.white)));
     }
     return ThemeData(
         brightness: Brightness.light,
         primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
+        colorScheme: lightScheme,
         useMaterial3: true,
-    //    colorScheme: lightScheme,
-        focusColor: PrimaryColor,
-        primarySwatch: Colors.blue,
-        cardColor: Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: Color.fromRGBO(236, 239, 241, 1),
-        fontFamily: GoogleFonts.almarai().fontFamily,
+        primarySwatch:Colors.green,
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
-              BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
+          BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
         ));
   }
 

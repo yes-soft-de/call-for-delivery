@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:c4d/module_home/home_routes.dart';
+import 'package:c4d/module_check_api/check_api_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -109,7 +109,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void moveToNext() {
      Navigator.of(context)
-         .pushNamedAndRemoveUntil( HomeRoutes.ROUTE_HOME, (route) => false);
+         .pushNamedAndRemoveUntil( CheckApiRoutes.ROUTE_CheckApi, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

@@ -421,7 +421,12 @@
     "taxNumber": "Tax Number",
     "captainRated": "Captain rated successfully",
     "fine": "I'm fine now",
-    "notWell": "I'm not well"
+    "notWell": "I'm not well",
+
+    "checkServer": "Check server",
+    "changePassword": "Change password",
+    "manageMessages": "Manage messages",
+    "manageUser": "Manage user"
 
 
 
