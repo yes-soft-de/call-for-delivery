@@ -195,9 +195,17 @@ class CompanyInfoController extends BaseController
 
     /**
      * @Route("companyinfo", name="getCompanyInfo", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      *
      * @OA\Tag(name="Company Info")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
      *
      * @OA\Response(
      *      response=201,
@@ -220,6 +228,8 @@ class CompanyInfoController extends BaseController
      *          )
      *      )
      * )
+     *
+     * @Security(name="Bearer")
      */
     public function getCompanyInfo(): JsonResponse
     {
