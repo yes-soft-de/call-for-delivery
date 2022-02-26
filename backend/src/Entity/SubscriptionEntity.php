@@ -51,14 +51,14 @@ class SubscriptionEntity
         return $this;
     }
 
-    public function getEndDate()
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function setEndDate($endDate): self
+    public function setEndDate(?\DateTimeInterface $endDate): self
     {
-        $this->endDate = new \DateTime ($endDate);
+        $this->endDate = $endDate;
 
         return $this;
     }

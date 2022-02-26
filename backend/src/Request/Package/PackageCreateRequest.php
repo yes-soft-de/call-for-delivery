@@ -16,5 +16,7 @@ class PackageCreateRequest
 
     private $orderCount;
 
+    private $expired;
+
     private $status;
 }

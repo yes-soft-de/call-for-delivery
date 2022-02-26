@@ -36,6 +36,9 @@ class PackageEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
+    #[ORM\Column(type: 'integer', length: 100)]
+    private $expired;
+
     #[ORM\OneToMany(mappedBy: 'package', targetEntity: SubscriptionEntity::class)]
     private $subscriptionEntities;
 
@@ -129,6 +132,18 @@ class PackageEntity
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getExpired(): ?int
+    {
+        return $this->expired;
+    }
+
+    public function setExpired(int $expired): self
+    {
+        $this->expired = $expired;
 
         return $this;
     }

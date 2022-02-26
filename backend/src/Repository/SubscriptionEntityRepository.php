@@ -4,6 +4,7 @@ namespace App\Repository;
 
 // use App\Constant\Order\OrderStateConstant;
 use App\Entity\SubscriptionEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 // use App\Entity\OrderEntity;
@@ -25,13 +26,59 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionEntity::class);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function getIsFuture($storeOwner): mixed
+    public function getSubscriptionsForStoreOwner($storeOwner): array
     {
         return $this->createQueryBuilder('subscription')
-            ->select('subscription.isFuture')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId')
+
+            ->andWhere('subscription.storeOwner = :storeOwner')
+
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+
+            ->getQuery()
+
+            ->getResult();
+    }
+
+    public function getSubscriptionCurrentWithRelation($storeOwner): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
+             'packageEntity.orderCount as packageOrderCount')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
+             'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
+             'subscriptionDetailsEntity.status')
+
+            ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
+
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function getSubscriptionForNextTime($storeOwner)
+    {
+        return $this->createQueryBuilder('subscription')
+     
+            ->select ('IDENTITY( subscription.package)')
+         
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
+            ->addSelect('packageEntity.id as packageId')
 
             ->andWhere('subscription.storeOwner = :storeOwner')
             ->andWhere('subscription.isFuture = :isFuture')
@@ -39,51 +86,35 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('storeOwner', $storeOwner)
             ->setParameter('isFuture', 1)
 
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function getSubscriptionCurrent($storeOwner): ?array
-    {
-        return $this->createQueryBuilder('subscription')
-
-            ->select('subscription.id')
-          
-            ->andWhere('subscription.storeOwner = :storeOwner')
-            ->andWhere('subscription.isFuture = :isFuture')
-
-            ->setParameter('storeOwner', $storeOwner)
-            ->setParameter('isFuture', 0)
-
-            ->addGroupBy('subscription.startDate')
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+           
+            ->addGroupBy('subscription.id')
 
             ->setMaxResults(1)
-            
-            ->addOrderBy('subscription.startDate', 'DESC')
-           
+
+            ->addOrderBy('subscription.id', 'ASC')
+        
             ->getQuery()
+
             ->getOneOrNullResult();
     }
 
-    public function getSubscriptionForStoreOwner($storeOwner): array
-    {
-        return $this->createQueryBuilder('subscription')
 
-            ->select ('IDENTITY( subscription.package)')
-            ->addSelect('subscription.id','subscription.status','subscription.startDate',
-                'subscription.endDate', 'subscription.note', 'subscription.isFuture')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
 
-            ->andWhere('subscription.storeOwner = :storeOwner')
 
-            ->setParameter('storeOwner', $storeOwner)
 
-            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
 
-            ->getQuery()
 
-            ->getResult();
-    }
+
+
+
+
+    
+
+
+
+
+
 
     /**
      * @param $id
@@ -103,18 +134,6 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * @param $storeOwner

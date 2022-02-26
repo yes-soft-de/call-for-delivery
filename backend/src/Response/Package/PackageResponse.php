@@ -19,4 +19,6 @@ class PackageResponse
     public $orderCount;
 
     public $status;
+
+    public $expired;
 }

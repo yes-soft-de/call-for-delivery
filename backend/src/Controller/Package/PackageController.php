@@ -62,6 +62,7 @@ class PackageController extends BaseController
      *          @OA\Property(type="integer", property="carCount"),
      *          @OA\Property(type="string", property="city"),
      *          @OA\Property(type="integer", property="orderCount"),
+     *          @OA\Property(type="integer", property="expired"),
      *          @OA\Property(type="string", property="status"),
      *      )
      * )
@@ -80,6 +81,7 @@ class PackageController extends BaseController
      *            @OA\Property(type="integer", property="carCount"),
      *            @OA\Property(type="string", property="city"),
      *            @OA\Property(type="integer", property="orderCount"),
+     *            @OA\Property(type="integer", property="expired"),
      *            @OA\Property(type="string", property="status"),
      *      )
      *   )
@@ -128,6 +130,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
+     *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
      *          )
      *       )
@@ -171,6 +174,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
+     *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
      *          )
      *       )
@@ -209,6 +213,7 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="carCount"),
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
+     *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
      *       )
      *    )
@@ -248,6 +253,7 @@ class PackageController extends BaseController
       *          @OA\Property(type="integer", property="carCount"),
       *          @OA\Property(type="string", property="city"),
       *          @OA\Property(type="integer", property="orderCount"),
+      *          @OA\Property(type="integer", property="expired"),
       *          @OA\Property(type="string", property="status"),
       *      )
       * )
@@ -266,6 +272,7 @@ class PackageController extends BaseController
       *            @OA\Property(type="integer", property="carCount"),
       *            @OA\Property(type="string", property="city"),
       *            @OA\Property(type="integer", property="orderCount"),
+      *            @OA\Property(type="integer", property="expired"),
       *            @OA\Property(type="string", property="status"),
       *      )
       *   )
