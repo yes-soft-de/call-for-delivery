@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PackageCategoryEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PackageCategoryEntityRepository::class)]
@@ -18,6 +20,14 @@ class PackageCategoryEntity
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
+
+    #[ORM\OneToMany(mappedBy: 'packageCategory', targetEntity: PackageEntity::class)]
+    private $packageEntities;
+
+    public function __construct()
+    {
+        $this->packageEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +54,36 @@ class PackageCategoryEntity
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PackageEntity[]
+     */
+    public function getPackageEntities(): Collection
+    {
+        return $this->packageEntities;
+    }
+
+    public function addPackageEntity(PackageEntity $packageEntity): self
+    {
+        if (!$this->packageEntities->contains($packageEntity)) {
+            $this->packageEntities[] = $packageEntity;
+            $packageEntity->setPackageCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePackageEntity(PackageEntity $packageEntity): self
+    {
+        if ($this->packageEntities->removeElement($packageEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($packageEntity->getPackageCategory() === $this) {
+                $packageEntity->setPackageCategory(null);
+            }
+        }
 
         return $this;
     }

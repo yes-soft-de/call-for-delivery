@@ -69,4 +69,22 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param $packageCategory
+     * @return array
+     */
+    public function getPackagesByCategoryId($packageCategory): ?array
+    {
+        return $this->createQueryBuilder('package')
+            ->select('IDENTITY(package.packageCategory)')
+            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city')
+
+            ->andWhere("package.packageCategory = :packageCategory")
+            
+            ->setParameter('packageCategory',$packageCategory)
+            
+            ->getQuery()
+            ->getResult();
+    }
+
 }

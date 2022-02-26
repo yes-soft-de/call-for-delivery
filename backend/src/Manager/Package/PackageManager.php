@@ -75,6 +75,14 @@ class PackageManager
 
              return $entity;
          }
-
      }
+     
+     /**
+     * @param $packageCategory
+     * @return array
+     */
+    public function getPackagesByCategoryId($packageCategory): ?array
+    {
+        return $this->packageRepository->getPackagesByCategoryId($packageCategory);
+    }
 }

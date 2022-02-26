@@ -79,4 +79,13 @@ class PackageService
 
          return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
      }
+     
+    /**
+     * @param $packageCategory
+     * @return array
+     */
+    public function getPackagesByCategoryId($packageCategory): ?array
+    {
+        return $this->packageManager->getPackagesByCategoryId($packageCategory);
+    }
 }

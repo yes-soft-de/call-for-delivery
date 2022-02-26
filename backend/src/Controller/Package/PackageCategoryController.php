@@ -179,22 +179,12 @@ class PackageCategoryController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-
-
-
-
-
-
-
-
-
     /**
-     * Get all active packages.
-     * @Route("packagesactive", name="getActivePackages", methods={"GET"})
+     * Get all packages categories and related packages.
+     * @Route("packagescategories", name="getAllPackagesCategoriesAndPackages", methods={"GET"})
      * @return JsonResponse
      * 
-     * @OA\Tag(name="Package")
-     * 
+     * @OA\Tag(name="Package Category")
      * @OA\Response(
      *      response=201,
      *      description="Returns packages",
@@ -205,65 +195,25 @@ class PackageCategoryController extends BaseController
      *           @OA\Items(    
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="number", property="cost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="integer", property="carCount"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="string", property="description"),
+     *              @OA\Property(type="array", property="packages"),
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="name"),
+     *                      @OA\Property(type="number", property="cost"),
+     *                      @OA\Property(type="string", property="note"),
+     *                      @OA\Property(type="integer", property="carCount"),
+     *                      @OA\Property(type="string", property="city"),
+     *                      @OA\Property(type="integer", property="orderCount"),
+     *                      @OA\Property(type="string", property="status"),
+     *              )
      *          )
      *       )
      *    )
      * )
      */
-    public function getActivePackages(): JsonResponse
+    public function getAllPackagesCategoriesAndPackages(): JsonResponse
     {
-        $result = $this->packageService->getActivePackages();
-
-        return $this->response($result, self::FETCH);
-    }
-    
-    /**
-     * admin:Get all packages.
-     * @Route("packages", name="getAllPackages", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     * 
-     * @OA\Tag(name="Package")
-     * 
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns packages",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *           @OA\Items(    
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="number", property="cost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="integer", property="carCount"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="string", property="status"),
-     *          )
-     *       )
-     *    )
-     * )
-     * 
-     * @Security(name="Bearer")
-     */
-    public function getAllPackages(): JsonResponse
-    {
-        $result = $this->packageService->getAllPackages();
+        $result = $this->packageCategoryService->getAllPackagesCategoriesAndPackages();
 
         return $this->response($result, self::FETCH);
     }

@@ -8,11 +8,10 @@ use App\Repository\PackageCategoryEntityRepository;
 use App\Request\Package\PackageCategoryCreateRequest;
 use App\Request\Package\PackageCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 
 class PackageCategoryManager
 {
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private PackageCategoryEntityRepository $packageCategoryRepository)
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private PackageCategoryEntityRepository $packageCategoryRepository, private PackageManager $packageManager)
     {
     }
 
@@ -50,25 +49,18 @@ class PackageCategoryManager
      */
     public function getPackageCategoryById($id): ?PackageCategoryEntity
     {
-        return $this->packageCategoryRepository->find($id);
+        $packageCategory = $this->packageCategoryRepository->find($id);
+        $packageCategory->getPackageEntities();
+        return $packageCategory;
     }
 
+     /**
+     * @return array|null
+     */
+    public function getAllPackagesCategories(): ?array
+     {
+        $packageCategories = $this->packageCategoryRepository->getAllPackagesCategories();
 
-
-
-
-    public function getActivePackages(): ?array
-    {
-        return $this->packageRepository->getActivePackages();
-    }
-
-    public function getAllPackages(): ?array
-    {
-        return $this->packageRepository->getAllPackages();
-    }
-
-    public function getPackage($id)
-    {
-        return $this->packageRepository->find($id);
+        return $packageCategories;
     }
 }

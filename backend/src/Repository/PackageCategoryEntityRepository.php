@@ -18,33 +18,14 @@ class PackageCategoryEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PackageCategoryEntity::class);
     }
-
-    // /**
-    //  * @return PackageCategoryEntity[] Returns an array of PackageCategoryEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function getAllPackagesCategories(): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('PackageCategory')
+            ->addSelect('PackageCategory.id, PackageCategory.name, PackageCategory.description')
+         
             ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?PackageCategoryEntity
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

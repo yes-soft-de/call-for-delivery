@@ -5,13 +5,14 @@ namespace App\Service\Package;
 use App\AutoMapping;
 use App\Entity\PackageCategoryEntity;
 use App\Manager\Package\PackageCategoryManager;
+use App\Service\Package\PackageService;
 use App\Request\Package\PackageCategoryCreateRequest;
 use App\Response\Package\PackageCategoryResponse;
-use Doctrine\ORM\NonUniqueResultException;
+use App\Response\Package\PackageCategoriesAndPackagesResponse;
 
 class PackageCategoryService
 {
-    public function __construct(private AutoMapping $autoMapping, private PackageCategoryManager $packageCategoryManager)
+    public function __construct(private AutoMapping $autoMapping, private PackageCategoryManager $packageCategoryManager, private PackageService $packageService)
     {
     }
 
@@ -45,29 +46,19 @@ class PackageCategoryService
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getActivePackages(): array
+    public function getAllPackagesCategoriesAndPackages(): ?array
     {
         $response = [];
 
-        $items = $this->packageManager->getActivePackages();
+        $packageCategories = $this->packageCategoryManager->getAllPackagesCategories();
 
-        foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', PackageActiveResponse::class, $item);
-        }
+        foreach ($packageCategories as $packageCategory) {
 
-        return $response;
-    }
+            $packageCategory['package'] = $this->packageService->getPackagesByCategoryId($packageCategory['id']);
 
-    public function getAllPackages(): array
-    {
-        $response = [];
-
-        $items = $this->packageManager->getAllPackages();
-
-        foreach ($items as $item) {
-            $response[] = $this->autoMapping->map('array', PackageResponse::class, $item);
+            $response[] = $this->autoMapping->map("array", PackageCategoriesAndPackagesResponse::class, $packageCategory);
         }
 
         return $response;

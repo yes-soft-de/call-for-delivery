@@ -39,6 +39,10 @@ class PackageEntity
     #[ORM\OneToMany(mappedBy: 'package', targetEntity: SubscriptionEntity::class)]
     private $subscriptionEntities;
 
+    #[ORM\ManyToOne(targetEntity: PackageCategoryEntity::class, inversedBy: 'packageEntities')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $packageCategory;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -159,6 +163,18 @@ class PackageEntity
                 $subscriptionEntity->setPackage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPackageCategory(): ?PackageCategoryEntity
+    {
+        return $this->packageCategory;
+    }
+
+    public function setPackageCategory(?PackageCategoryEntity $packageCategory): self
+    {
+        $this->packageCategory = $packageCategory;
 
         return $this;
     }
