@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
@@ -10,6 +11,7 @@ import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
 import 'package:c4d/module_profile/ui/states/edit_profile/profile_state_loaded.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -56,6 +58,7 @@ class EditProfileStateManager {
             .show(screenState.context);
         getProfile(screenState);
       } else {
+        getIt<GlobalStateManager>().update();
         getProfile(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
