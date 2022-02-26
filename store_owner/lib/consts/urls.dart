@@ -192,7 +192,7 @@ class Urls {
   static const PACKAGES_API = DOMAIN + '/v1/package/packagesactive';
   static const SUBSCRIPTION_API = DOMAIN + '/v1/subscription/subscription';
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
-  static const UPDATE_BRANCH_API = BASE_API + '';
+  static const UPDATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
   static const CREATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
   static const NEW_ORDER_API = DOMAIN + '/v1/';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/';
