@@ -257,7 +257,7 @@ class StoreOwnerProfileController extends BaseController
      *      response="default",
      *      description="Returns the completeAccountStatus of store owner's profile",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9158"),
+     *          @OA\Property(type="string", property="status_code", example="9158 | 9159 | 9160"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="string", property="completeAccountStatus")
@@ -271,12 +271,17 @@ class StoreOwnerProfileController extends BaseController
     {
         $response = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($this->getUserId());
 
-        if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
-            return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
+        if($response->completeAccountStatus) {
+            if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
 
-        } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
-            return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
+            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+                return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
 
+            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
+
+            }
         }
 
         return $this->response($response, self::FETCH);

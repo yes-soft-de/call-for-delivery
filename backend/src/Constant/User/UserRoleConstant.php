@@ -4,7 +4,7 @@ namespace App\Constant\User;
 
 final class UserRoleConstant
 {
-    const SUPER_ADMIN_ROLE = "SUPER_ADMIN_ROLE";
+    const ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
 
-    const ADMIN_ROLE = "ADMIN_ROLE";
+    const ROLE_ADMIN = "ROLE_ADMIN";
 }

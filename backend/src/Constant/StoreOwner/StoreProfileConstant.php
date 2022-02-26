@@ -22,6 +22,8 @@ final class StoreProfileConstant
 
     const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
 
+    const COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED = "branchCreated";
+
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 
     const STORE_OWNER_PROFILE_ACTIVE_STATUS = "active";
