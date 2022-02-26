@@ -11,7 +11,7 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class PackageCategoryService
 {
-    public function __construct(private AutoMapping $autoMapping, private PackageCategoryManager $packageManager)
+    public function __construct(private AutoMapping $autoMapping, private PackageCategoryManager $packageCategoryManager)
     {
     }
 
@@ -24,6 +24,24 @@ class PackageCategoryService
         $packageCategory = $this->packageManager->createPackageCategory($request);
 
         return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
+    }
+    
+    public function updatePackageCategory($request): PackageCategoryResponse
+    {
+        $result = $this->packageCategoryManager->updatePackageCategory($request);
+
+        return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $result);
+    }
+
+    /**
+     * @param $id
+     * @return PackageCategoryResponse|null
+     */
+    public function getPackageCategoryById($id): ?PackageCategoryResponse 
+    {
+       $packageCategory = $this->packageCategoryManager->getPackageCategoryById($id);
+
+       return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
     }
 
     /**
@@ -54,23 +72,4 @@ class PackageCategoryService
 
         return $response;
     }
-
-    /**
-     * @param $id
-     * @return array|mixed|null
-     * @throws NonUniqueResultException
-     */
-    public function getPackageById($id)
-    {
-       $item = $this->packageManager->getPackageById($id);
-
-       return $this->autoMapping->map("array", PackageResponse::class, $item);
-    }
-
-     public function updatePackage($request): PackageResponse
-     {
-         $result = $this->packageManager->updatePackage($request);
-
-         return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
-     }
 }

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\PackageCategoryEntity;
 use App\Repository\PackageCategoryEntityRepository;
 use App\Request\Package\PackageCategoryCreateRequest;
+use App\Request\Package\PackageCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -29,6 +30,33 @@ class PackageCategoryManager
         return $packageCategoryEntity;
     }
 
+    public function updatePackageCategory(PackageCategoryUpdateRequest $request)
+    {
+        $entity = $this->packageCategoryRepository->find($request->getId());
+
+        if ($entity) {
+
+            $entity = $this->autoMapping->mapToObject(PackageCategoryUpdateRequest::class, PackageCategoryEntity::class, $request, $entity);
+
+            $this->entityManager->flush();
+
+            return $entity;
+        }
+    }
+
+    /**
+     * @param $id
+     * @return PackageCategoryEntity|null
+     */
+    public function getPackageCategoryById($id): ?PackageCategoryEntity
+    {
+        return $this->packageCategoryRepository->find($id);
+    }
+
+
+
+
+
     public function getActivePackages(): ?array
     {
         return $this->packageRepository->getActivePackages();
@@ -39,34 +67,8 @@ class PackageCategoryManager
         return $this->packageRepository->getAllPackages();
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     * @throws NonUniqueResultException
-     */
-    public function getPackageById($id): mixed
-    {
-        return $this->packageRepository->getPackageById($id);
-    }
-
     public function getPackage($id)
     {
         return $this->packageRepository->find($id);
     }
-
-     public function updatePackage(PackageUpdateStateRequest $request)
-     {
-
-         $entity = $this->packageRepository->find($request->getId());
-
-         if ($entity) {
-
-             $entity = $this->autoMapping->mapToObject(PackageUpdateStateRequest::class, PackageEntity::class, $request, $entity);
-
-             $this->entityManager->flush();
-
-             return $entity;
-         }
-
-     }
 }
