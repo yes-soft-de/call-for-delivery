@@ -76,3 +76,8 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Package\PackageCategoryCreateRequest:
+    properties:
+        name:
+            - NotBlank: ~
