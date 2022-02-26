@@ -20,7 +20,7 @@ class BranchesRepository {
     var response = await _apiClient.put(
       Urls.UPDATE_BRANCH_API,
       request.toJson(),
-      headers: {'Authorization': 'Bearer ' + '$_apiClient'},
+      headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;
     return ActionResponse.fromJson(response);
@@ -63,7 +63,7 @@ class BranchesRepository {
     dynamic response = await _apiClient.put(
       Urls.DELETE_BRANCH_API,
       {'id':id,
-      'isActive':'false'
+      'isActive':'0'
       },
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

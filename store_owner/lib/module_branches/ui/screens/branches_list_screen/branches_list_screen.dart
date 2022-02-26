@@ -1,9 +1,11 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_branches/state_manager/branches_list_state_manager/branches_list_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/branches_list_state/branches_list_state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,6 +26,13 @@ class BranchesListScreenState extends State<BranchesListScreen> {
     widget._manager.getBranchesList(this);
     widget._manager.stateStream.listen((event) {
       currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      print('===============================================');
+      widget._manager.getBranchesList(this);
       if (mounted) {
         setState(() {});
       }
