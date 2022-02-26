@@ -454,7 +454,10 @@
     "accountInActivated": "الحساب غير مفعل",
     "accountActivated": "الحساب مفعل",
     "updateProfile": "تحديث الملف الشخصي",
-    "employeeSize": "حجم المنشأة"
+    "employeeSize": "حجم المنشأة",
+    "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+    "whatsapp": "واتساب معنا"
+
 
 
 

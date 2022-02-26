@@ -492,6 +492,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no profile data available"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
+        "profileUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Profile has been updated successfully"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
@@ -684,6 +686,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("WELCOME TO TWASLNA APP"),
         "welcomeTomandob_moshtarayat": MessageLookupByLibrary.simpleMessage(
             "Welcome to mandob_moshtarayat"),
+        "whatsapp": MessageLookupByLibrary.simpleMessage("Whatsapp with us"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("Captain"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("Client"),
         "whatsappWithStoreOwner":

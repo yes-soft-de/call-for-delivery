@@ -4589,6 +4589,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Profile has been updated successfully`
+  String get profileUpdatedSuccessfully {
+    return Intl.message(
+      'Profile has been updated successfully',
+      name: 'profileUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whatsapp with us`
+  String get whatsapp {
+    return Intl.message(
+      'Whatsapp with us',
+      name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -17,15 +17,10 @@ class ProfileManager {
 
   Future<ActionResponse?> createOwnerProfile(ProfileRequest profileRequest) =>
       _repository.createOwnerProfile(profileRequest);
+  Future<ActionResponse?> updateProfile(ProfileRequest profileRequest) =>
+      _repository.updateProfile(profileRequest);
 
   Future<ProfileResponse?> getOwnerProfile() => _repository.getOwnerProfile();
-
-  Future<Branch?> createBranch(CreateBranchRequest request) =>
-      _repository.createBranch(request);
-
-  Future<List<Branch>?> getMyBranches() => _repository.getMyBranches();
-
-  Future<List<ActivityRecord>?> getMyLog() => _repository.getUserActivityLog();
 
 //  Future <List<Terms>> getTerms(UserRole role) => _repository.getTerms(role);
 

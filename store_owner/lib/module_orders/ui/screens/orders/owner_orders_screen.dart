@@ -47,6 +47,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
   }
 
+  void getInitData() {
+    widget._stateManager.initDrawerData();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +85,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         );
       }
     });
+    getInitData();
   }
 
   @override
@@ -97,7 +102,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
-      drawer: NavigatorMenu(),
+      drawer: NavigatorMenu(
+        profileModel: currentProfile,
+      ),
       body: _currentState?.getUI(context),
     );
   }

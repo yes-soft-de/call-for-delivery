@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
+import 'package:c4d/module_profile/ui/states/edit_profile/update_profile_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -70,7 +71,7 @@ class ProfileStateInit extends States {
                                 iconData: Icons.person_rounded),
                             customListTile(
                                 title: S.of(context).phoneNumber,
-                                subTitle:'+' + profileModel.phone,
+                                subTitle: '+' + profileModel.phone,
                                 iconData: Icons.phone),
                             customListTile(
                                 title: S.of(context).employeeSize,
@@ -95,7 +96,11 @@ class ProfileStateInit extends States {
               ],
             ),
             label: S.current.updateProfile,
-            onTap: () {}));
+            onTap: () {
+              screenState.states =
+                  UpdateProfileStateLoaded(screenState, profileModel);
+              screenState.refresh();
+            }));
   }
 
   Widget customListTile(
@@ -124,7 +129,8 @@ class ProfileStateInit extends States {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(iconData, color: Theme.of(context).colorScheme.primaryContainer),
+            child: Icon(iconData,
+                color: Theme.of(context).colorScheme.primaryContainer),
           )),
       title: Text(
         title,

@@ -487,6 +487,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد بيانات شخصية متوفرة بعد"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم جلب بياناتك الشخصية بنجاح"),
+        "profileUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
@@ -684,6 +686,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أهلا بك في تطبيق تواصلنا"),
         "welcomeTomandob_moshtarayat": MessageLookupByLibrary.simpleMessage(
             "اهلا بك في mandob_moshtarayat"),
+        "whatsapp": MessageLookupByLibrary.simpleMessage("واتساب معنا"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("الكابتن"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("الزبون"),
         "whatsappWithStoreOwner":
