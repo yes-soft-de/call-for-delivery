@@ -19,10 +19,11 @@ class StatusCodeHelper {
       case '400':
         return S.current.statusCodeBadRequest;
       case '401':
-        getIt<AuthService>().logout();
-        Navigator.of(GlobalVariable.navState.currentContext!)
-            .pushNamedAndRemoveUntil(
-                SplashRoutes.SPLASH_SCREEN, (route) => false);
+        getIt<AuthService>().logout().then((value) {
+          Navigator.of(GlobalVariable.navState.currentContext!)
+              .pushNamedAndRemoveUntil(
+                  SplashRoutes.SPLASH_SCREEN, (route) => false);
+        });
         return S.current.statusCodeUnauthorized;
       case '404':
         return S.current.StatusCodeNotFound;
