@@ -282,9 +282,10 @@ class StoreOwnerProfileController extends BaseController
                 return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
 
             }
+        } elseif ($response->completeAccountStatus === null) {
+            $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+            return $this->response($response, self::FETCH);
         }
-
-        return $this->response($response, self::FETCH);
     }
 
     /**

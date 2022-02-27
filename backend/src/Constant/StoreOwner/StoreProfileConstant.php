@@ -26,6 +26,8 @@ final class StoreProfileConstant
 
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 
+    const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
+
     const STORE_OWNER_PROFILE_ACTIVE_STATUS = "active";
 
     const STORE_OWNER_PROFILE_INACTIVE_STATUS = "inactive";
