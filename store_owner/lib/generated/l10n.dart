@@ -4619,6 +4619,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch deleted successfully`
+  String get deleteBranchSuccess {
+    return Intl.message(
+      'Branch deleted successfully',
+      name: 'deleteBranchSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

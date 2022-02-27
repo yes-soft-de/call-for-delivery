@@ -32,7 +32,7 @@
     "phoneNumber": "رقم الهاتف",
     "sendMeCode": "ارسل رمز التأكيد",
     "language": "اللغة",
-    "signOut": "تسحيل الخروج",
+    "signOut": "تسجيل الخروج",
     "login": "تسجيل الدخول",
     "orderDetails": "تفاصيل الطلب",
     "orderCreatedReturnToOrders": "انتهى انشاء الطلب",
@@ -457,7 +457,8 @@
     "employeeSize": "حجم المنشأة",
     "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
     "whatsapp": "دعم مباشر واتساب",
-    "confirmDeletionBranch": "هل أنت متأكد من رغبتك في حذف الفرع"
+    "confirmDeletionBranch": "هل أنت متأكد من رغبتك في حذف الفرع",
+    "deleteBranchSuccess": "تم حذف الفرع بنجاح"
 
 
 

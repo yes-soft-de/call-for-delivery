@@ -458,7 +458,9 @@
     "employeeSize": "Employee count",
     "profileUpdatedSuccessfully": "Profile has been updated successfully",
     "whatsapp": "Whatsapp with us",
-    "confirmDeletionBranch": "Confirm deletion of this branch"
+    "confirmDeletionBranch": "Confirm deletion of this branch",
+    "deleteBranchSuccess": "Branch deleted successfully"
+
 
 
 
