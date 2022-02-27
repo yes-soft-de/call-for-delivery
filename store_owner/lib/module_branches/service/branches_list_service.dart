@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/manager/branches_manager.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
+import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_profile/prefs_helper/profile_prefs_helper.dart';
@@ -41,7 +42,7 @@ class BranchesListService {
     return DataModel.empty();
   }
 
-  Future<DataModel> addBranch(CreateBrancheRequest request) async {
+  Future<DataModel> addBranches(CreateListBranchesRequest request) async {
     ActionResponse? response = await _manager.addBranch(request);
     if (response == null) {
       return DataModel.withError(S.current.networkError);
