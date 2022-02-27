@@ -72,7 +72,7 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: S.current.storeAccountInit, canGoBack: false),
       body: currentState?.getUI(context),
     );

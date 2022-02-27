@@ -69,7 +69,7 @@ class LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
-        appBar: CustomMandoobAppBar.appBar(context,
+        appBar: CustomC4dAppBar.appBar(context,
             title: S.of(context).login, canGoBack: canPop),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting

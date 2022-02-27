@@ -21,7 +21,7 @@ class InitSubscriptionsLoadedState extends States {
     // _selectedCity = null;
     // _selectedPackageId=null;
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: S.current.storeAccountInit, canGoBack: false),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),

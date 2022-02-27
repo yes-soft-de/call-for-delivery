@@ -25,7 +25,7 @@ class ErrorState extends States {
   Widget getUI(BuildContext context) {
     return Scaffold(
       appBar: hasAppbar
-          ? CustomMandoobAppBar.appBar(context,
+          ? CustomC4dAppBar.appBar(context,
               title: title, buttonBackground: Colors.red)
           : null,
       body: SingleChildScrollView(

@@ -17,7 +17,7 @@ class ProfileStateInit extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-        appBar: CustomMandoobAppBar.appBar(context, title: S.current.myProfile),
+        appBar: CustomC4dAppBar.appBar(context, title: S.current.myProfile),
         body: StackedForm(
             child: CustomListView.custom(
               children: [

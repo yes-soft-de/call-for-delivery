@@ -51,11 +51,11 @@ class BranchesListScreenState extends State<BranchesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(
+      appBar: CustomC4dAppBar.appBar(
         context,
         title: S.current.branchManagement,
         actions: [
-          CustomMandoobAppBar.actionIcon(context, onTap: () {
+          CustomC4dAppBar.actionIcon(context, onTap: () {
             Navigator.of(context)
                 .pushNamed(BranchesRoutes.UPDATE_BRANCH_SCREEN);
           }, icon: Icons.add_rounded)

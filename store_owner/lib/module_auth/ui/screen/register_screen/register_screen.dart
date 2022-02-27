@@ -71,7 +71,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         }
       },
       child: Scaffold(
-        appBar: CustomMandoobAppBar.appBar(
+        appBar: CustomC4dAppBar.appBar(
           context,
           title: S.of(context).register,
           canGoBack: canPop,
