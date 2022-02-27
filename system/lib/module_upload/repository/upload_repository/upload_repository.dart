@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:injectable/injectable.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_upload/response/imgbb/imgbb_response.dart';
 import 'package:c4d/utils/logger/logger.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:image_picker/image_picker.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class UploadRepository {

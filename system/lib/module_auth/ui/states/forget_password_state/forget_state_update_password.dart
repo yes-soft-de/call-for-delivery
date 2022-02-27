@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -8,6 +7,7 @@ import 'package:c4d/module_auth/ui/screen/forget_password_screen/forget_password
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/material.dart';
 
 class ForgotStateUpdatePassword extends States {
   ForgotPassScreenState screenState;

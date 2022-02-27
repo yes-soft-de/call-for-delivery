@@ -1,12 +1,12 @@
 import 'dart:async';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:flutter/material.dart';
 import 'package:c4d/module_auth/request/forget_password_request/verify_new_password_request.dart';
 import 'package:c4d/module_auth/ui/screen/forget_password_screen/forget_password_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:c4d/utils/text_style/text_style.dart';
+import 'package:flutter/material.dart';
 
 class ForgotStatePhoneCodeSent extends States {
   bool retryEnabled = false;

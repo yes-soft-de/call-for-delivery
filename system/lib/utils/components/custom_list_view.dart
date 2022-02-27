@@ -12,4 +12,20 @@ class CustomListView {
       children: children,
     );
   }
+
+
+  static dynamic customGrid(
+      {required List<Widget> children,
+        EdgeInsetsGeometry? padding,
+        ScrollController? controller}) {
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      controller: controller,
+      padding: padding,
+      childAspectRatio: 5/4,
+      physics: BouncingScrollPhysics(parent: NeverScrollableScrollPhysics()),
+      children: children,
+    );
+  }
 }

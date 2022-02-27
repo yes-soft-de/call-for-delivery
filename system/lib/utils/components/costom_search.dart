@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:c4d/generated/l10n.dart';
 
 class CustomDeliverySearch extends StatefulWidget {
   final double height;
@@ -25,8 +23,8 @@ class _CustomDeliverySearchState extends State<CustomDeliverySearch> {
     return Container(
       height: widget.height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        color:Colors.grey.shade300,
       ),
       child: TextField(
         controller: widget.controller,

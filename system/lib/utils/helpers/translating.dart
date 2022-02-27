@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:flutter/cupertino.dart';
 
 class Trans {
   static String localString(String word, BuildContext context) {

@@ -1,11 +1,8 @@
-import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_check_api/model/check_api_model.dart';
 import 'package:c4d/module_check_api/service/check_api_service.dart';
 import 'package:c4d/module_check_api/ui/screen/check_api_screen.dart';
 import 'package:c4d/module_check_api/ui/states/check_api_state_error.dart';
-import 'package:c4d/module_check_api/ui/states/check_api_state_init.dart';
 import 'package:c4d/module_check_api/ui/states/check_state_success.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -31,7 +28,7 @@ class CheckApiStateManager {
               CheckApiStateError(screenState));
         } else {
           CheckApiModel model = value as CheckApiModel;
-          _stateSubject.add(CheckApiStateSuccess(screenState));
+          _stateSubject.add(CheckApiStateSuccess(screenState,model.data));
         }
       }).whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
   }

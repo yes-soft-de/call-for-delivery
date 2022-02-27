@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_check_api/check_api_routes.dart';
 import 'package:c4d/module_home/widget/home_card.dart';
+import 'package:c4d/module_users/users_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -74,7 +75,9 @@ class HomeScreen extends StatelessWidget {
                 Wrap(
                   children: [
                   HomeCard(title: S.of(context).manageMessages,image: ImageAsset.MESSAGES,onTap: (){},),
-                    HomeCard(title: S.of(context).manageUser,image: ImageAsset.USERS,onTap: (){},),
+                    HomeCard(title: S.of(context).manageUser,image: ImageAsset.USERS,onTap: (){
+                      Navigator.pushNamed(context, UsersRoutes.VIEW_ALL);
+                    },),
                 ],),
 
               ],

@@ -3,8 +3,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_check_api/ui/screen/check_api_screen.dart';
 import 'package:c4d/module_check_api/ui/widget/check_button.dart';
-import 'package:c4d/module_check_api/ui/widget/delayed_animation.dart';
-import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -72,6 +70,11 @@ class CheckApiStateError extends States {
                 child: _animatedButtonUI,
               ),
             ),
+
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 20,),
+              child: Text('View response',style: TextStyle(fontWeight: FontWeight.w800),),
+            )
           ],
         ),
       ),

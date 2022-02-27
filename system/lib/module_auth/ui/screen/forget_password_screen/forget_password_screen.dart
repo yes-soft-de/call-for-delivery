@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
 import 'package:c4d/module_auth/request/forget_password_request/verify_new_password_request.dart';
 import 'package:c4d/module_auth/state_manager/forget_state_manager/forget_password_state_manager.dart';
@@ -11,6 +9,8 @@ import 'package:c4d/module_auth/ui/states/forget_password_state/forget_password_
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class ForgotPassScreen extends StatefulWidget {

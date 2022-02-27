@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "admin": MessageLookupByLibrary.simpleMessage("Admin"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
@@ -108,7 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "changePassword":
-            MessageLookupByLibrary.simpleMessage("change password"),
+            MessageLookupByLibrary.simpleMessage("Change password"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("Chat With Captain"),
@@ -219,6 +220,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
+        "forbidden":
+            MessageLookupByLibrary.simpleMessage("You are not allowed"),
         "forgotPass": MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -317,6 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "noUser": MessageLookupByLibrary.simpleMessage("There are no users"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
@@ -511,6 +515,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "search for order by order number"),
+        "searchForUser":
+            MessageLookupByLibrary.simpleMessage("Search for user"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
@@ -562,6 +568,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "superAdmin": MessageLookupByLibrary.simpleMessage("Super admin"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting this order , please confirm"),
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),

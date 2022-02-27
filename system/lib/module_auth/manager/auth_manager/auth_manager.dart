@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/repository/auth/auth_repository.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
@@ -8,6 +7,7 @@ import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
 import 'package:c4d/module_auth/response/login_response/login_response.dart';
 import 'package:c4d/module_auth/response/regester_response/regester_response.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class AuthManager {

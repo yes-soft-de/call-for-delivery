@@ -1,19 +1,15 @@
 import 'dart:async';
-import 'package:c4d/module_check_api/check_api_routes.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
+
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/state_manager/login_state_manager/login_state_manager.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state_init.dart';
-import 'package:flutter/material.dart';
-import 'package:c4d/module_splash/splash_routes.dart';
+import 'package:c4d/module_check_api/check_api_routes.dart';
+import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class LoginScreen extends StatefulWidget {
@@ -109,7 +105,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void moveToNext() {
      Navigator.of(context)
-         .pushNamedAndRemoveUntil( CheckApiRoutes.ROUTE_CheckApi, (route) => false);
+         .pushNamedAndRemoveUntil( HomeRoutes.ROUTE_HOME, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

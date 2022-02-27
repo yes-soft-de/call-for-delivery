@@ -1,4 +1,3 @@
-import 'package:flutter_svg/svg.dart';
 import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -6,12 +5,11 @@ import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
-import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/auth_buttons.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:flutter/material.dart';
 
 class RegisterStateInit extends RegisterState {
   RegisterScreenState screenState;

@@ -1,7 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:lottie/lottie.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -9,6 +6,8 @@ import 'package:c4d/module_chat/state_manager/chat_state_manager.dart';
 import 'package:c4d/module_chat/ui/widget/chat_writer/chat_writer.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LoadingChatPage extends StatelessWidget {
   final ChatStateManager _chatStateManager;

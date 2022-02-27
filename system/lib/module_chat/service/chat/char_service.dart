@@ -1,8 +1,8 @@
-import 'package:injectable/injectable.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_chat/manager/chat/chat_manager.dart';
 import 'package:c4d/module_chat/model/chat/chat_model.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 @injectable
 class ChatService {

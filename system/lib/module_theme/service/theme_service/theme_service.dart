@@ -1,8 +1,7 @@
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 
 @injectable
 class AppThemeDataService {
@@ -16,8 +15,7 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-//    return Color(0xFF65C18C);
-    return Color(0xFF219F94);
+   return Color(0xFF051367);
 
   }
 
@@ -71,7 +69,7 @@ class AppThemeDataService {
         primaryColor: PrimaryColor,
         colorScheme: lightScheme,
         useMaterial3: true,
-        primarySwatch:Colors.green,
+        primarySwatch:Colors.blue,
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:

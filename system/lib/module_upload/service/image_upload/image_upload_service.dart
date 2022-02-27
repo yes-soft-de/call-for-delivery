@@ -1,6 +1,6 @@
-import 'package:injectable/injectable.dart';
 import 'package:c4d/module_upload/manager/upload_manager/upload_manager.dart';
 import 'package:c4d/module_upload/response/imgbb/imgbb_response.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class ImageUploadService {

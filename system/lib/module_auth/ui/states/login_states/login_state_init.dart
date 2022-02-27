@@ -1,13 +1,12 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
-import 'package:c4d/utils/images/images.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:flutter/painting.dart';
+import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../widget/login_widgets/custem_button.dart';
 
 class LoginStateInit extends LoginState {
@@ -39,7 +38,7 @@ class LoginStateInit extends LoginState {
                 flex: 2,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -71,7 +70,7 @@ class LoginStateInit extends LoginState {
                           leading: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -95,7 +94,7 @@ class LoginStateInit extends LoginState {
                           leading: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),

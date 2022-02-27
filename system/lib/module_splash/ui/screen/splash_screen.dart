@@ -1,13 +1,9 @@
-import 'package:c4d/module_check_api/check_api_routes.dart';
-import 'package:c4d/module_home/home_routes.dart';
-import 'package:c4d/utils/images/images.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_home/home_routes.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
-import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:injectable/injectable.dart';
 import 'package:lottie/lottie.dart';
 
 @injectable
