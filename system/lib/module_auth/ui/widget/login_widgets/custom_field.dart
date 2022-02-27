@@ -49,7 +49,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).secondaryHeaderColor,
           ),
           child: Padding(
             padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,

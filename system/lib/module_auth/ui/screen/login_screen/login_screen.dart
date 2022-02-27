@@ -5,6 +5,7 @@ import 'package:c4d/module_auth/state_manager/login_state_manager/login_state_ma
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state_init.dart';
 import 'package:c4d/module_check_api/check_api_routes.dart';
+import 'package:c4d/module_home/home_routes.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void moveToNext() {
      Navigator.of(context)
-         .pushNamedAndRemoveUntil( CheckApiRoutes.ROUTE_CheckApi, (route) => false);
+         .pushNamedAndRemoveUntil( HomeRoutes.ROUTE_HOME, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

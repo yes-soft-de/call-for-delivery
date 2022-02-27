@@ -38,7 +38,7 @@ class LoginStateInit extends LoginState {
                 flex: 2,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -70,7 +70,7 @@ class LoginStateInit extends LoginState {
                           leading: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -94,7 +94,7 @@ class LoginStateInit extends LoginState {
                           leading: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).secondaryHeaderColor,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
