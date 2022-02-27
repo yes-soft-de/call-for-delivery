@@ -52,7 +52,7 @@ class BranchesListStateManager {
       } else {
         getBranchesList(screenState);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.deleteSuccess)
+                title: S.current.warnning, message: S.current.deleteBranchSuccess)
             .show(screenState.context);
       }
     });
