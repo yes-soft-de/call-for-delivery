@@ -186,9 +186,10 @@ class PackageCategoryController extends BaseController
      * @return JsonResponse
      * 
      * @OA\Tag(name="Package Category")
+     * 
      * @OA\Response(
      *      response=201,
-     *      description="Returns packages",
+     *      description="Returns categories and packages ",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -197,7 +198,7 @@ class PackageCategoryController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="string", property="description"),
-     *              @OA\Property(type="array", property="packages"),
+     *              @OA\Property(type="array", property="packages",
      *                  @OA\Items(
      *                      @OA\Property(type="string", property="name"),
      *                      @OA\Property(type="number", property="cost"),
@@ -206,6 +207,7 @@ class PackageCategoryController extends BaseController
      *                      @OA\Property(type="string", property="city"),
      *                      @OA\Property(type="integer", property="orderCount"),
      *                      @OA\Property(type="string", property="status"),
+     *                  )
      *              )
      *          )
      *       )
@@ -237,7 +239,7 @@ class PackageCategoryController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="string", property="description"),
-     *              @OA\Property(type="array", property="packages"),
+     *              @OA\Property(type="array", property="packages",
      *                  @OA\Items(
      *                      @OA\Property(type="string", property="name"),
      *                      @OA\Property(type="number", property="cost"),
@@ -246,6 +248,7 @@ class PackageCategoryController extends BaseController
      *                      @OA\Property(type="string", property="city"),
      *                      @OA\Property(type="integer", property="orderCount"),
      *                      @OA\Property(type="string", property="status"),
+     *                  )
      *              )
      *          )
      *       )
