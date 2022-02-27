@@ -109,7 +109,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar:
-            CustomMandoobAppBar.appBar(context, title: S.current.orderDetails),
+            CustomC4dAppBar.appBar(context, title: S.current.orderDetails),
         body: currentState.getUI(context),
       ),
     );
