@@ -116,8 +116,8 @@ class StoreOwnerBranchManager
     public function getAllBranches($storeOwnerId): array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
-       
-       return $this->storeOwnerBranchEntityRepository->findBy(['storeOwner' => $storeOwner->getId()]);
+
+       return $this->storeOwnerBranchEntityRepository->getActiveBranchesByStoreOwnerId($storeOwner->getId());
     }
 
     /**

@@ -89,7 +89,7 @@ class StoreOwnerBranchService
      * @param $storeOwnerId
      * @return array
      */
-    public function getAllBranches($storeOwnerId):array
+    public function getAllBranches($storeOwnerId): array
     {
         $response = [];
 
@@ -97,7 +97,7 @@ class StoreOwnerBranchService
 
         foreach($branches as $branch) {
 
-            $response[] =  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
+            $response[] =  $this->autoMapping->map('array', StoreOwnerBranchResponse::class, $branch);
         }
         
         return $response;
