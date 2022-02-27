@@ -25,5 +25,8 @@ class Urls {
   static const NOTIFICATIONNEWCHAT_ANYN_API =
       BASE_API + '/notificationnewchatanonymous';
   static const CHECK_USER_ROLE = BASE_API + '/checkUserType';
+
   static const CHECK_API_HEALTH = BASE_API_VERSION + '/checkbackendhealth';
+  static const GET_USERS = BASE_API_VERSION + '/filterusersbysuperadmin';
+  static const UPDATE_USER_PASSWORD = BASE_API_VERSION + '/userpasswordbysuperadmin';
 }
