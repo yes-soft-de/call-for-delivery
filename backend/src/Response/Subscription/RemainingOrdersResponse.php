@@ -4,16 +4,14 @@ namespace App\Response\Subscription;
 
 class RemainingOrdersResponse
 {
-    public $packageID;
+    public $id;
+    public $packageId;
     public $packageName;
-    public $subscriptionId;
     public $remainingOrders;
-    public $countOrdersDelivered;
-    public $subscriptionStatus;
-    public $subscriptionStartDate;
-    public $subscriptionEndDate;
+    public $remainingCars;
+    public $status;
+    public $startDate;
+    public $endDate;
     public $packageCarCount;
     public $packageOrderCount;
-    public $countCarsBusy;
-    public $carsStatus;
 }

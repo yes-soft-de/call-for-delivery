@@ -4,5 +4,8 @@ namespace App\Response\StoreOwner;
 
 class StoreOwnerCompleteAccountStatusGetResponse
 {
-    public ?string $completeAccountStatus;
+    /**
+     * @var string|null
+     */
+    public $completeAccountStatus;
 }

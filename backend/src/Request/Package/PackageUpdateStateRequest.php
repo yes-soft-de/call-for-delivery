@@ -19,6 +19,8 @@ class PackageUpdateStateRequest
     private $orderCount;
 
     private $status;
+    
+    private $expired;
 
     /**
      * @return mixed

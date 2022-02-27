@@ -7,6 +7,8 @@ use App\Controller\BaseController;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Service\Admin\AdminService;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,10 +38,18 @@ class AdminController extends BaseController
     /**
      * Create new admin.
      * @Route("createadmin", name="createAdmin", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Admin")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
      *
      * @OA\RequestBody(
      *      description="Create new admin",
@@ -63,6 +73,8 @@ class AdminController extends BaseController
      *          )
      *      )
      * )
+     *
+     * @Security(name="Bearer")
      */
     public function adminRegister(Request $request): JsonResponse
     {

@@ -18,5 +18,7 @@ class PackageActiveResponse
 
     public $orderCount;
 
+    public $expired;
+
     public $status;
 }

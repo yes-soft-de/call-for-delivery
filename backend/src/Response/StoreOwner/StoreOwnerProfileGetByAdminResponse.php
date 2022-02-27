@@ -2,33 +2,37 @@
 
 namespace App\Response\StoreOwner;
 
-class StoreOwnerProfileResponse
+class StoreOwnerProfileGetByAdminResponse
 {
     public $id;
+
+    public $storeOwnerId;
 
     public $storeOwnerName;
 
     public $images;
 
-    public $phone;
+    public $status;
+
+    public $roomID;
 
     public $city;
 
-    public $status;
-
-    public $commission;
-
     public $storeCategoryId;
+
+    public $phone;
 
     public $openingTime;
 
     public $closingTime;
 
-    public $employeeCount;
+    public $commission;
 
     public $bankName;
 
     public $bankAccountNumber;
 
     public $stcPay;
+
+    public $employeeCount;
 }

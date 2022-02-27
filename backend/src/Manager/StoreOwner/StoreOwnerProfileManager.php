@@ -8,6 +8,8 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
+use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -158,10 +160,60 @@ class StoreOwnerProfileManager
     public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
     {
         if ($completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
-            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
             return false;
         }
 
         return true;
+    }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+    }
+
+    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
+    {
+        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
+
+        if(! $storeOwnerProfileEntity) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileStatusUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
+         $request, $storeOwnerProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $storeOwnerProfileEntity;
+    }
+
+    public function updateStoreOwnerProfileByAdmin(StoreOwnerProfileUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
+    {
+        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
+
+        if(! $storeOwnerProfileEntity) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
+            $request, $storeOwnerProfileEntity);
+
+        $storeOwnerProfileEntity->setOpeningTime($request->getOpeningTime());
+        $storeOwnerProfileEntity->setClosingTime($request->getClosingTime());
+
+        $this->entityManager->flush();
+
+        return $storeOwnerProfileEntity;
     }
 }

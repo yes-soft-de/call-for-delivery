@@ -7,9 +7,13 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
+use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusGetResponse;
 use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusUpdateResponse;
+use App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
+use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
@@ -78,6 +82,58 @@ class StoreOwnerProfileService
         }
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerCompleteAccountStatusUpdateResponse::class, $storeOwnerProfileResult);
+    }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): array
+    {
+        $response = [];
+
+        $storeOwnerProfiles = $this->storeOwnerProfileManager->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+
+        if($storeOwnerProfiles) {
+            foreach($storeOwnerProfiles as $storeOwnerProfile) {
+                $storeOwnerProfile['images'] = $this->getImageParams($storeOwnerProfile['images'], $this->params.$storeOwnerProfile['images'], $this->params);
+
+                $response[] = $this->autoMapping->map('array', StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
+            }
+        }
+
+        return $response;
+    }
+
+    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?StoreOwnerProfileByIdGetByAdminResponse
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileManager->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
+
+        if($storeOwnerProfile) {
+            $storeOwnerProfile['images'] = $this->getImageParams($storeOwnerProfile['images'], $this->params.$storeOwnerProfile['images'], $this->params);
+        }
+
+        $storeOwnerProfile['branches'] = $this->storeOwnerProfileManager->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+
+        return $this->autoMapping->map('array', StoreOwnerProfileByIdGetByAdminResponse::class, $storeOwnerProfile);
+    }
+
+    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileGetByAdminResponse
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileManager->updateStoreOwnerProfileStatusByAdmin($request);
+
+        if($storeOwnerProfile === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
+    }
+
+    public function updateStoreOwnerProfileByAdmin(StoreOwnerProfileUpdateByAdminRequest $request): string|StoreOwnerProfileGetByAdminResponse
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileManager->updateStoreOwnerProfileByAdmin($request);
+
+        if($storeOwnerProfile === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
     }
 
     public function getImageParams($imageURL, $image, $baseURL): array

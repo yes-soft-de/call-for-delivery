@@ -12,6 +12,8 @@ class StoreOwnerProfileUpdateRequest
 
     private $phone;
 
+    private $city;
+
     private $storeCategoryId;
 
     private $openingTime;

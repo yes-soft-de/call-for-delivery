@@ -50,6 +50,7 @@ class BaseController extends AbstractController
     const STORE_OWNER_PROFILE_NOT_EXIST = ["store owner profile not exist!", "9157"];
     const STORE_OWNER_PROFILE_CREATED = ["store owner profile created", "9158"];
     const STORE_OWNER_SUBSCRIPTION_CREATED = ["store owner profile created", "9159"];
+    const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
     // subscription

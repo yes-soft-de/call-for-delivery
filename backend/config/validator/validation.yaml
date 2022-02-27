@@ -83,3 +83,14 @@ App\Request\Package\PackageCategoryCreateRequest:
     properties:
         name:
             - NotBlank: ~
+            
+App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
+
+App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
+    properties:
+        id:
