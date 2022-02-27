@@ -22,12 +22,16 @@ class PackageCategoryService
      */
     public function createPackageCategory(PackageCategoryCreateRequest $request): PackageCategoryResponse
     {
-        $packageCategory = $this->packageManager->createPackageCategory($request);
+        $packageCategory = $this->packageCategoryManager->createPackageCategory($request);
 
         return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
     }
     
-    public function updatePackageCategory($request): PackageCategoryResponse
+    /**
+     * @param $request
+     * @return PackageCategoryResponse
+     */
+    public function updatePackageCategory($request): ?PackageCategoryResponse
     {
         $result = $this->packageCategoryManager->updatePackageCategory($request);
 
@@ -41,14 +45,14 @@ class PackageCategoryService
     public function getPackageCategoryById($id): ?PackageCategoryResponse 
     {
        $packageCategory = $this->packageCategoryManager->getPackageCategoryById($id);
-
+      
        return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
     }
 
     /**
      * @return array|null
      */
-    public function getAllPackagesCategoriesAndPackages(): ?array
+    public function getAllPackagesCategoriesAndPackagesForAdmin(): ?array
     {
         $response = [];
 
@@ -56,7 +60,26 @@ class PackageCategoryService
 
         foreach ($packageCategories as $packageCategory) {
 
-            $packageCategory['package'] = $this->packageService->getPackagesByCategoryId($packageCategory['id']);
+            $packageCategory['packages'] = $this->packageService->getPackagesByCategoryIdForAdmin($packageCategory['id']);
+
+            $response[] = $this->autoMapping->map("array", PackageCategoriesAndPackagesResponse::class, $packageCategory);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAllPackagesCategoriesAndPackagesForStore(): ?array
+    {
+        $response = [];
+
+        $packageCategories = $this->packageCategoryManager->getAllPackagesCategories();
+
+        foreach ($packageCategories as $packageCategory) {
+
+            $packageCategory['packages'] = $this->packageService->getAllPackagesCategoriesAndPackagesForStore($packageCategory['id']);
 
             $response[] = $this->autoMapping->map("array", PackageCategoriesAndPackagesResponse::class, $packageCategory);
         }

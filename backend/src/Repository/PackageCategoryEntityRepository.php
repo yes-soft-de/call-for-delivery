@@ -19,7 +19,11 @@ class PackageCategoryEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, PackageCategoryEntity::class);
     }
     
-    public function getAllPackagesCategories(): array
+    
+     /**
+     * @return array|null
+     */
+    public function getAllPackagesCategories(): ?array
     {
         return $this->createQueryBuilder('PackageCategory')
             ->addSelect('PackageCategory.id, PackageCategory.name, PackageCategory.description')

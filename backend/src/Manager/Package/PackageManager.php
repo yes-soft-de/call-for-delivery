@@ -4,6 +4,7 @@ namespace App\Manager\Package;
 
 use App\AutoMapping;
 use App\Entity\PackageEntity;
+use App\Manager\Package\PackageCategoryManager;
 use App\Repository\PackageEntityRepository;
 use App\Request\Package\PackageCreateRequest;
 use App\Request\Package\PackageUpdateStateRequest;
@@ -16,7 +17,7 @@ class PackageManager
     private $entityManager;
     private $packageRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, PackageEntityRepository $packageRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, PackageEntityRepository $packageRepository, private PackageCategoryManager $packageCategoryManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -29,6 +30,10 @@ class PackageManager
      */
     public function createPackage(PackageCreateRequest $request): mixed
     {
+        
+        $packageCategory = $this->packageCategoryManager->getPackageCategoryById($request->getPackageCategory());
+        $request->setPackageCategory($packageCategory);
+
         $packageEntity = $this->autoMapping->map(PackageCreateRequest::class, PackageEntity::class, $request);
 
         $this->entityManager->persist($packageEntity);
@@ -64,7 +69,6 @@ class PackageManager
 
      public function updatePackage(PackageUpdateStateRequest $request)
      {
-
          $entity = $this->packageRepository->find($request->getId());
 
          if ($entity) {
@@ -77,12 +81,21 @@ class PackageManager
          }
      }
      
-     /**
+    /**
      * @param $packageCategory
-     * @return array
+     * @return array|null
      */
-    public function getPackagesByCategoryId($packageCategory): ?array
+    public function getPackagesByCategoryIdForAdmin($packageCategory): ?array
     {
-        return $this->packageRepository->getPackagesByCategoryId($packageCategory);
+        return $this->packageRepository->getPackagesByCategoryIdForAdmin($packageCategory);
+    }
+
+    /**
+     * @param $packageCategory
+     * @return array|null
+     */
+    public function getAllPackagesCategoriesAndPackagesForStore($packageCategory): ?array
+    {
+        return $this->packageRepository->getAllPackagesCategoriesAndPackagesForStore($packageCategory);
     }
 }

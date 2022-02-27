@@ -18,6 +18,8 @@ App\Request\Package\PackageCreateRequest:
             - NotBlank: ~
         orderCount:
             - NotBlank: ~
+        packageCategory:
+            - NotBlank: ~
 
 App\Request\Package\PackageUpdateStateRequest:
     properties:

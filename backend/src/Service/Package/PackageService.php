@@ -40,7 +40,7 @@ class PackageService
         $response = [];
 
         $items = $this->packageManager->getActivePackages();
-
+        
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map('array', PackageActiveResponse::class, $item);
         }
@@ -73,7 +73,12 @@ class PackageService
        return $this->autoMapping->map("array", PackageResponse::class, $item);
     }
 
-     public function updatePackage($request): PackageResponse
+    /**
+     * @param $request
+     * @return PackageResponse|null
+     * @throws NonUniqueResultException
+     */
+     public function updatePackage($request): ?PackageResponse
      {
          $result = $this->packageManager->updatePackage($request);
 
@@ -82,10 +87,37 @@ class PackageService
      
     /**
      * @param $packageCategory
-     * @return array
+     * @return array|null
      */
-    public function getPackagesByCategoryId($packageCategory): ?array
+    public function getPackagesByCategoryIdForAdmin($packageCategory): ?array
     {
-        return $this->packageManager->getPackagesByCategoryId($packageCategory);
+        return $this->packageManager->getPackagesByCategoryIdForAdmin($packageCategory);
+    }
+
+    /**
+     * @param $packageCategory
+     * @return array|null
+     */
+    public function getAllPackagesCategoriesAndPackagesForStore($packageCategory): ?array
+    {
+        return $this->packageManager->getAllPackagesCategoriesAndPackagesForStore($packageCategory);
+    }
+
+    
+    /**
+     * @param $packageCategory
+     * @return array|null
+     */
+    public function getAllPackagesByCategoryId($packageCategoryId): ?array
+    {
+        $response = [];
+
+        $packages = $this->packageManager->getAllPackagesCategoriesAndPackagesForStore($packageCategoryId);
+
+        foreach ($packages as $package) {
+            $response[] = $this->autoMapping->map('array', PackageResponse::class, $package);
+        }
+
+        return $response;
     }
 }

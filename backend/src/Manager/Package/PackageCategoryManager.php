@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PackageCategoryManager
 {
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private PackageCategoryEntityRepository $packageCategoryRepository, private PackageManager $packageManager)
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private PackageCategoryEntityRepository $packageCategoryRepository)
     {
     }
 
@@ -29,7 +29,11 @@ class PackageCategoryManager
         return $packageCategoryEntity;
     }
 
-    public function updatePackageCategory(PackageCategoryUpdateRequest $request)
+    /**
+     * @param PackageCategoryUpdateRequest $request
+     * @return PackageCategoryEntity|null
+     */
+    public function updatePackageCategory(PackageCategoryUpdateRequest $request): ?PackageCategoryEntity
     {
         $entity = $this->packageCategoryRepository->find($request->getId());
 
@@ -38,9 +42,9 @@ class PackageCategoryManager
             $entity = $this->autoMapping->mapToObject(PackageCategoryUpdateRequest::class, PackageCategoryEntity::class, $request, $entity);
 
             $this->entityManager->flush();
-
-            return $entity;
         }
+     
+        return $entity;
     }
 
     /**
@@ -49,9 +53,7 @@ class PackageCategoryManager
      */
     public function getPackageCategoryById($id): ?PackageCategoryEntity
     {
-        $packageCategory = $this->packageCategoryRepository->find($id);
-        $packageCategory->getPackageEntities();
-        return $packageCategory;
+        return $this->packageCategoryRepository->find($id);
     }
 
      /**

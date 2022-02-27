@@ -180,8 +180,9 @@ class PackageCategoryController extends BaseController
     }
 
     /**
-     * Get all packages categories and related packages.
+     * admin: Get all packages categories and related packages.
      * @Route("packagescategories", name="getAllPackagesCategoriesAndPackages", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      * 
      * @OA\Tag(name="Package Category")
@@ -211,9 +212,49 @@ class PackageCategoryController extends BaseController
      *    )
      * )
      */
-    public function getAllPackagesCategoriesAndPackages(): JsonResponse
+    public function getAllPackagesCategoriesAndPackagesForAdmin(): JsonResponse
     {
-        $result = $this->packageCategoryService->getAllPackagesCategoriesAndPackages();
+        $result = $this->packageCategoryService->getAllPackagesCategoriesAndPackagesForAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store: Get all packages categories and related packages.
+     * @Route("packagescategoriesforstore", name="getAllPackagesCategoriesAndPackagesForStore", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     * 
+     * @OA\Tag(name="Package Category")
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns packages",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *           @OA\Items(    
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="name"),
+     *              @OA\Property(type="string", property="description"),
+     *              @OA\Property(type="array", property="packages"),
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="name"),
+     *                      @OA\Property(type="number", property="cost"),
+     *                      @OA\Property(type="string", property="note"),
+     *                      @OA\Property(type="integer", property="carCount"),
+     *                      @OA\Property(type="string", property="city"),
+     *                      @OA\Property(type="integer", property="orderCount"),
+     *                      @OA\Property(type="string", property="status"),
+     *              )
+     *          )
+     *       )
+     *    )
+     * )
+     */
+    public function getAllPackagesCategoriesAndPackagesForStore(): JsonResponse
+    {
+        $result = $this->packageCategoryService->getAllPackagesCategoriesAndPackagesForStore();
 
         return $this->response($result, self::FETCH);
     }
