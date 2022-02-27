@@ -3,11 +3,13 @@
 namespace App\Controller\Main;
 
 use App\AutoMapping;
+use App\Constant\Main\MainDeleteConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\User\UserFilterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Service\Main\MainService;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -75,6 +77,13 @@ class MainController extends BaseController
      *
      * @OA\Tag(name="Main")
      *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
      * @OA\RequestBody(
      *      description="filter users according to the following options",
      *      @OA\JsonContent(
@@ -100,6 +109,8 @@ class MainController extends BaseController
      *          )
      *      )
      * )
+     *
+     * @Security(name="Bearer")
      */
     public function filterUsersBySuperAdmin(Request $request): JsonResponse
     {
@@ -119,6 +130,13 @@ class MainController extends BaseController
      * @return JsonResponse
      *
      * @OA\Tag(name="Main")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
      *
      * @OA\RequestBody(
      *      description="update request fields",
@@ -145,6 +163,8 @@ class MainController extends BaseController
      *          )
      *      )
      * )
+     *
+     * @Security(name="Bearer")
      */
     public function updateUserPasswordBySuperAdmin(Request $request): JsonResponse
     {
@@ -159,5 +179,42 @@ class MainController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * @Route("deletepackagesandsubscriptions", name="deletePackagesAndSubscriptions", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted message when delete done successfully",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="deleted")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deletePackagesAndSubscriptions(): JsonResponse
+    {
+        $response = $this->mainService->deletePackagesAndSubscriptions();
+
+        if($response === MainDeleteConstant::DELETED) {
+            return $this->response($response, self::DELETE);
+        }
+
+        return $this->json($response);
     }
 }
