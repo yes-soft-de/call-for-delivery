@@ -293,9 +293,8 @@ class PackageController extends BaseController
      }
 
     /**
-     * admin:Get all packages by category id.
+     * Get all packages by category id.
      * @Route("packagesbycategoryid/{packageCategoryId}", name="getAllPackagesByCategoryId", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      * 
      * @OA\Tag(name="Package")
