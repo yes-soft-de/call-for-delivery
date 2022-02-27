@@ -18,6 +18,8 @@ App\Request\Package\PackageCreateRequest:
             - NotBlank: ~
         orderCount:
             - NotBlank: ~
+        packageCategory:
+            - NotBlank: ~
 
 App\Request\Package\PackageUpdateStateRequest:
     properties:
@@ -77,6 +79,11 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
         id:
             - NotBlank: ~
 
+App\Request\Package\PackageCategoryCreateRequest:
+    properties:
+        name:
+            - NotBlank: ~
+            
 App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
@@ -87,4 +94,3 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
-            - NotBlank: ~

@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\PackageEntity;
+use App\Entity\PackageCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\Package\PackageConstant;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method PackageEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -69,4 +71,41 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param $packageCategory
+     * @return array|null
+     */
+    public function getPackagesByCategoryIdForAdmin($packageCategory): ?array
+    {
+        return $this->createQueryBuilder('package')
+            ->select('IDENTITY(package.packageCategory)')
+            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
+
+            ->andWhere("package.packageCategory = :packageCategory")
+            
+            ->setParameter('packageCategory',$packageCategory)
+            
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $packageCategory
+     * @return array|null
+     */
+    public function getAllPackagesCategoriesAndPackagesForStore($packageCategory): ?array
+    {
+        return $this->createQueryBuilder('package')
+            ->select('IDENTITY(package.packageCategory)')
+            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
+
+            ->andWhere("package.packageCategory = :packageCategory")
+            ->andWhere("package.status = :status")
+            
+            ->setParameter('status',PackageConstant::PACKAGE_ACTIVE)
+            ->setParameter('packageCategory',$packageCategory)
+            
+            ->getQuery()
+            ->getResult();
+    }
 }
