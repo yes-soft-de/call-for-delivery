@@ -4260,10 +4260,10 @@ class S {
     );
   }
 
-  /// `change password`
+  /// `Change password`
   String get changePassword {
     return Intl.message(
-      'change password',
+      'Change password',
       name: 'changePassword',
       desc: '',
       args: [],
@@ -4285,6 +4285,56 @@ class S {
     return Intl.message(
       'Manage user',
       name: 'manageUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Admin`
+  String get admin {
+    return Intl.message(
+      'Admin',
+      name: 'admin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Super admin`
+  String get superAdmin {
+    return Intl.message(
+      'Super admin',
+      name: 'superAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are not allowed`
+  String get forbidden {
+    return Intl.message(
+      'You are not allowed',
+      name: 'forbidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for user`
+  String get searchForUser {
+    return Intl.message(
+      'Search for user',
+      name: 'searchForUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are no users`
+  String get noUser {
+    return Intl.message(
+      'There are no users',
+      name: 'noUser',
       desc: '',
       args: [],
     );

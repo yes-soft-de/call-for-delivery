@@ -426,7 +426,14 @@
     "checkServer": "Check server",
     "changePassword": "Change password",
     "manageMessages": "Manage messages",
-    "manageUser": "Manage user"
+    "manageUser": "Manage user",
+
+    "admin": "Admin",
+    "superAdmin": "Super admin",
+    "forbidden": "You are not allowed",
+
+    "searchForUser": "Search for user",
+    "noUser": "There are no users"
 
 
 
