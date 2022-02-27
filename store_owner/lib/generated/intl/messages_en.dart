@@ -180,6 +180,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "deleteBranchSuccess":
+            MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
@@ -543,6 +545,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveBranch": MessageLookupByLibrary.simpleMessage("Save Branch"),
+        "saveBranchAlert": MessageLookupByLibrary.simpleMessage(
+            "If you have any difficulties with saving branches please reach out our support team"),
         "saveBranches": MessageLookupByLibrary.simpleMessage("Save Branches"),
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("Save Location as Branch 01"),

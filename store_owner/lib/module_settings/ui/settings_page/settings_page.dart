@@ -36,8 +36,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
-          title: S.of(context).settings),
+      appBar:
+          CustomMandoobAppBar.appBar(context, title: S.of(context).settings),
       body: FixedContainer(
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
@@ -51,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).backgroundColor,
                 ),
                 child: Flex(
                   direction: Axis.vertical,
@@ -63,10 +63,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ListTileSwitch(
                       value: Theme.of(context).brightness == Brightness.dark,
                       leading: Icon(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Icons.nightlight_round_rounded
-                              : Icons.wb_sunny,
-                          color: Colors.white),
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Icons.nightlight_round_rounded
+                            : Icons.wb_sunny,
+                      ),
                       onChanged: (mode) {
                         widget._themeDataService.switchDarkMode(mode);
                       },
@@ -76,24 +76,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Theme.of(context).scaffoldBackgroundColor,
                       title: Text(
                         S.of(context).darkMode,
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.language, color: Colors.white),
+                      leading: Icon(Icons.language),
                       title: Text(
                         S.of(context).language,
-                        style: TextStyle(color: Colors.white),
                       ),
                       trailing: DropdownButton(
-                          dropdownColor: Theme.of(context).primaryColor,
                           value: Localizations.localeOf(context).languageCode,
-                          style: TextStyle(color: Colors.white),
                           underline: Container(),
                           icon: Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.arrow_drop_down_rounded,
-                                color: Colors.white),
+                            child: Icon(
+                              Icons.arrow_drop_down_rounded,
+                            ),
                           ),
                           items: [
                             DropdownMenuItem(
@@ -117,16 +114,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }),
                     ),
                     ListTile(
-                      leading: Icon(Icons.person_rounded, color: Colors.white),
+                      leading: Icon(Icons.person_rounded),
                       title: Text(
                         S.of(context).signOut,
-                        style: TextStyle(color: Colors.white),
                       ),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 10.0, left: 10.0),
                         child: Icon(
                           Icons.logout_rounded,
-                          color: Colors.white,
                         ),
                       ),
                       onTap: () {

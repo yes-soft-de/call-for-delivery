@@ -4619,6 +4619,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch deleted successfully`
+  String get deleteBranchSuccess {
+    return Intl.message(
+      'Branch deleted successfully',
+      name: 'deleteBranchSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have any difficulties with saving branches please reach out our support team`
+  String get saveBranchAlert {
+    return Intl.message(
+      'If you have any difficulties with saving branches please reach out our support team',
+      name: 'saveBranchAlert',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
@@ -10,6 +11,7 @@ import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -76,6 +78,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       if (mounted) {
         setState(() {});
       }
+    });
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      getInitData();
     });
     DeepLinksService.checkForGeoLink().then((value) {
       if (value != null) {

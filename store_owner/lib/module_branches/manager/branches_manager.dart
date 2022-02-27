@@ -1,5 +1,6 @@
 import 'package:c4d/module_branches/repository/branches_repository.dart';
 import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
+import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
@@ -16,7 +17,7 @@ class BranchesManager {
       await _repository.getBranches();
   Future<ActionResponse?> updateBranch(UpdateBranchesRequest request) async =>
       await _repository.updateBranch(request);
-  Future<ActionResponse?> addBranch(CreateBrancheRequest request) async =>
+  Future<ActionResponse?> addBranch(CreateListBranchesRequest request) async =>
       await _repository.addBranch(request);
 
   Future<ActionResponse?> createBrannch(CreateBranchRequest request) async =>

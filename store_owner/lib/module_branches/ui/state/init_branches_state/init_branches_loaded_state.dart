@@ -3,6 +3,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
 import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
+import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_branches/ui/screens/init_branches/init_branches_screen.dart';
 import 'package:c4d/module_branches/ui/widget/branch_card.dart';
@@ -245,27 +246,26 @@ class InitAccountStateSelectBranch extends States {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child:
-                                Center(child: Text(S.of(context).saveBranches,style: Theme.of(context).textTheme.button,)),
+                            child: Center(
+                                child: Text(
+                              S.of(context).saveBranches,
+                              style: Theme.of(context).textTheme.button,
+                            )),
                             onPressed: branchLocation.isEmpty
                                 ? null
                                 : () {
-                                    var index = 0;
+                                    var request = <CreateBranchRequest>[];
                                     for (var element in branchLocation) {
-                                      var last =
-                                          branchLocation.length - 1 == index;
-                                      print(last);
-                                      screenState.createBranch(
-                                          CreateBranchRequest(
-                                              location: GeoJson(
-                                                  lat:
-                                                      element.location.latitude,
-                                                  lon: element
-                                                      .location.longitude),
-                                              name: element.name),
-                                          last);
-                                      index++;
+                                      request.add(CreateBranchRequest(
+                                          name: element.name,
+                                          location: GeoJson(
+                                              lat: element.location.latitude,
+                                              lon:
+                                                  element.location.longitude)));
                                     }
+                                    screenState.createBranch(
+                                        CreateListBranchesRequest(
+                                            branches: request));
                                   },
                           ),
                         ),
@@ -321,6 +321,27 @@ class InitAccountStateSelectBranch extends States {
   }
 
   void saveMarker(LatLng location) {
+    if (markers.isEmpty) {
+      showDialog(
+          context: screenState.context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(S.current.note),
+              content: Container(child: Text(S.current.saveBranchAlert)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(S.current.close)),
+              ],
+            );
+          });
+    }
     branchLocation.add(
         BranchModel(location: location, name: '${branchLocation.length + 1}'));
     screenState.refresh();

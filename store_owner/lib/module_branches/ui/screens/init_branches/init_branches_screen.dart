@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
+import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/state_manager/init_branches_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -58,8 +59,8 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
     setState(() {});
   }
 
-  void createBranch(CreateBranchRequest request, bool last) {
-    widget._manager.createBranch(this, request, last);
+  void createBranch(CreateListBranchesRequest request) {
+    widget._manager.createBranch(this, request);
   }
 
   void moveToOrder() {

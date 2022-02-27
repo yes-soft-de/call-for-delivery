@@ -194,9 +194,12 @@ class Urls {
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
   static const UPDATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
   static const CREATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
+  static const CREATE_BRANCH_LIST_API = DOMAIN + '/v1/StoreOwnerBranch/multiplebranches';
   static const NEW_ORDER_API = DOMAIN + '/v1/';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/';
   static const DELETE_ORDER = DOMAIN + '/v1/';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
+  static const ACCOUNT_STATUS = BASE_API + '/storeownerprofilecompleteaccountstatus';
+
 
 }
