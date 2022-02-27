@@ -23,8 +23,8 @@ class _CustomDeliverySearchState extends State<CustomDeliverySearch> {
     return Container(
       height: widget.height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        color:Colors.grey.shade300,
       ),
       child: TextField(
         controller: widget.controller,
