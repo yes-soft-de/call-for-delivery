@@ -241,7 +241,7 @@ class AuthService {
               SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
           break;
         // account didn't created any branch
-        case '':
+        case '9160':
           _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
           break;
         default:
