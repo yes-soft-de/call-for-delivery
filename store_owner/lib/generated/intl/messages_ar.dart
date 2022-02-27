@@ -540,6 +540,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),
         "save": MessageLookupByLibrary.simpleMessage("الحفظ"),
         "saveBranch": MessageLookupByLibrary.simpleMessage("حفظ الفرع"),
+        "saveBranchAlert": MessageLookupByLibrary.simpleMessage(
+            "في حال واجهت صعوبة في تحديد مكان الفرع بدقة الرجاء التواصل مع الإدارة"),
         "saveBranches": MessageLookupByLibrary.simpleMessage("حفظ الفروع"),
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("احفظ مكان الفرع 01"),

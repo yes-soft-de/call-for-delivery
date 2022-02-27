@@ -545,6 +545,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveBranch": MessageLookupByLibrary.simpleMessage("Save Branch"),
+        "saveBranchAlert": MessageLookupByLibrary.simpleMessage(
+            "If you have any difficulties with saving branches please reach out our support team"),
         "saveBranches": MessageLookupByLibrary.simpleMessage("Save Branches"),
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("Save Location as Branch 01"),
