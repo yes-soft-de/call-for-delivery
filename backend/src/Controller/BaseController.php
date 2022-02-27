@@ -164,11 +164,11 @@ class BaseController extends AbstractController
             //--->start update
             //This modification represents a solution to this problem:
             //A circular reference has been detected when serializing the object of class "Proxies\__CG__\App\Entity\NameEntity" (configured limit: 1).
-            $defaultContext = [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                    return $object->getId();
-                },
-            ];
+//            $defaultContext = [
+//                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+//                    return $object->getId();
+//                },
+//            ];
 //            $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
             //end update -------->
 
