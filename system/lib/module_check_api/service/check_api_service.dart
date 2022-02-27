@@ -23,6 +23,6 @@ class CheckApiService {
           StatusCodeHelper.getStatusCodeMessages(_checkApiResponse.statusCode));
     }
 //    if (_checkApiResponse.data == null) return DataModel.withError(_error);
-    return CheckApiModel.withData(_checkApiResponse.data!);
+    return CheckApiModel.withData(_checkApiResponse);
   }
 }

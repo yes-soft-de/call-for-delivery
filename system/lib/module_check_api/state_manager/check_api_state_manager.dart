@@ -28,7 +28,7 @@ class CheckApiStateManager {
               CheckApiStateError(screenState));
         } else {
           CheckApiModel model = value as CheckApiModel;
-          _stateSubject.add(CheckApiStateSuccess(screenState));
+          _stateSubject.add(CheckApiStateSuccess(screenState,model.data));
         }
       }).whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
   }

@@ -1,14 +1,17 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_check_api/model/check_api_model.dart';
 import 'package:c4d/module_check_api/ui/screen/check_api_screen.dart';
 import 'package:c4d/module_check_api/ui/widget/check_button.dart';
+import 'package:c4d/module_check_api/ui/widget/view_response_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CheckApiStateSuccess extends States {
   final CheckApiScreenState screenState;
-  CheckApiStateSuccess(this.screenState) : super(screenState);
+  final CheckApiModel model;
+  CheckApiStateSuccess(this.screenState, this.model) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -69,6 +72,19 @@ class CheckApiStateSuccess extends States {
                 child: _animatedButtonUI,
               ),
             ),
+            InkWell(
+              onTap: (){
+                showDialog(context: context, builder: (context)
+                {
+                  return ViewResponseDialog(model.result);
+                });
+
+              },
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(top: 20,),
+                child: Text('View response',style: TextStyle(fontWeight: FontWeight.w800),),
+              ),
+            )
           ],
         ),
       ),

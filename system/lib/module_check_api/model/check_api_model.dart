@@ -10,9 +10,9 @@ CheckApiModel(
     {required this.result,
     });
 
-CheckApiModel.withData(Data data) : super.withData() {
+CheckApiModel.withData(CheckApiResponse data) : super.withData() {
   _model = CheckApiModel(
-    result: data.result ?? '',
+    result: data.toJson().toString(),
   );
 }
 

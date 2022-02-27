@@ -70,6 +70,11 @@ class CheckApiStateError extends States {
                 child: _animatedButtonUI,
               ),
             ),
+
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 20,),
+              child: Text('View response',style: TextStyle(fontWeight: FontWeight.w800),),
+            )
           ],
         ),
       ),
