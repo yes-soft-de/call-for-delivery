@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_branches/ui/screens/init_branches/init_branches_screen.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
@@ -22,10 +23,10 @@ class InitBranchesStateManager {
   InitBranchesStateManager(
     this._branchesListService,
   );
-  void createBranch(InitBranchesScreenState screenState,
-      CreateBranchRequest request, bool last) {
+  void createBranch(
+      InitBranchesScreenState screenState, CreateListBranchesRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    _branchesListService.createBranch(request).then((value) {
+    _branchesListService.addBranches(request).then((value) {
       if (value.hasError) {
         _stateSubject.add(InitAccountStateSelectBranch(screenState));
         CustomFlushBarHelper.createError(
@@ -33,11 +34,10 @@ class InitBranchesStateManager {
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        if (last) {
-          screenState.moveToOrder();
-        }
-        Fluttertoast.showToast(
-            msg: S.current.addBranchSuccess, backgroundColor: Colors.green);
+        screenState.moveToOrder();
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.addBranchSuccess)
+            .show(screenState.context);
       }
     });
   }
