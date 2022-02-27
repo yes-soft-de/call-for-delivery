@@ -345,6 +345,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هناك مشكلة بالاتصال بالشبكة الرجاء إعادة المحاولة لاحقا"),
         "newName": MessageLookupByLibrary.simpleMessage("اسم جديد"),
         "newOrder": MessageLookupByLibrary.simpleMessage("طلب جديد"),
+        "newOrderHint": MessageLookupByLibrary.simpleMessage(
+            "بإمكانك عن طريق هذا الزر إضافة طلبات جديدة"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),

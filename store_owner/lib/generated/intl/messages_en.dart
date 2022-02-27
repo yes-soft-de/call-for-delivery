@@ -349,6 +349,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is problem with your connection , please try again"),
         "newName": MessageLookupByLibrary.simpleMessage("New name"),
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
+        "newOrderHint": MessageLookupByLibrary.simpleMessage(
+            "This button let you to make a new order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":

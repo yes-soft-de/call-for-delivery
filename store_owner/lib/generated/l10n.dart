@@ -4639,6 +4639,16 @@ class S {
       args: [],
     );
   }
+
+  /// `This button let you to make a new order`
+  String get newOrderHint {
+    return Intl.message(
+      'This button let you to make a new order',
+      name: 'newOrderHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

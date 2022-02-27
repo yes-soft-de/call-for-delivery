@@ -22,7 +22,7 @@ class EmptyState extends States {
   Widget getUI(BuildContext context) {
     return Scaffold(
       appBar:
-          hasAppbar ? CustomMandoobAppBar.appBar(context, title: title) : null,
+          hasAppbar ? CustomC4dAppBar.appBar(context, title: title) : null,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Flex(

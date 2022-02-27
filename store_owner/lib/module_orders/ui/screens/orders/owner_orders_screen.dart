@@ -13,8 +13,10 @@ import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 
 @injectable
 class OwnerOrdersScreen extends StatefulWidget {
@@ -56,6 +58,16 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   @override
   void initState() {
     super.initState();
+    // feature discovery
+    SchedulerBinding.instance?.addPostFrameCallback((Duration duration) async {
+      FeatureDiscovery.discoverFeatures(
+        context,
+        const <String>{
+          'newOrder',
+        },
+      );
+    });
+    //
     WidgetsBinding.instance?.addObserver(this);
 
     _currentState = OrdersListStateInit(this);
@@ -82,33 +94,49 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getInitData();
     });
-    DeepLinksService.checkForGeoLink().then((value) {
-      if (value != null) {
-        Navigator.of(context).pushNamed(
-          OrdersRoutes.NEW_ORDER_SCREEN,
-          arguments: value,
-        );
-      }
-    });
     getInitData();
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (ModalRoute.of(context)?.settings.name ==
-        OrdersRoutes.NEW_ORDER_SCREEN) {}
-  }
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
       drawer: NavigatorMenu(
         profileModel: currentProfile,
+      ),
+      floatingActionButton: DescribedFeatureOverlay(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(S.current.newOrder),
+        description: Text(S.current.newOrderHint),
+        overflowMode: OverflowMode.extendBackground,
+        featureId: 'newOrder',
+        tapTarget: Text(
+          S.current.newOrder,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold
+          ),
+        ),
+        child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            )),
+            onPressed: () {
+              Navigator.of(context).pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
+            },
+            icon: Icon(Icons.add_rounded,
+                color: Theme.of(context).textTheme.button?.color),
+            label: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(S.current.newOrder),
+            )),
       ),
       body: _currentState?.getUI(context),
     );

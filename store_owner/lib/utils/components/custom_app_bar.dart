@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/global/screen_type.dart';
 
-class CustomMandoobAppBar {
+class CustomC4dAppBar {
   static PreferredSizeWidget appBar(BuildContext context,
       {required title,
       GestureTapCallback? onTap,

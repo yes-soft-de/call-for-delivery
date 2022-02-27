@@ -98,7 +98,7 @@ bool canPop = false;
     var args = ModalRoute.of(context)?.settings.arguments;
     BranchesModel? branchesModel = args is BranchesModel ? args : null;
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: branchesModel != null
               ? S.of(context).updateBranch
               : S.of(context).addBranch,

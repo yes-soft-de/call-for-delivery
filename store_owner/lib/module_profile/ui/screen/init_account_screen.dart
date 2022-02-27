@@ -55,7 +55,7 @@ class InitAccountScreenState extends State<InitAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: S.current.storeAccountInit, canGoBack: false),
       body: currentState.getUI(context),
     );

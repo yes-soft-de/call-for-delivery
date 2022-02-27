@@ -57,7 +57,7 @@ class UpdateProfileStateLoaded extends States {
         return false;
       },
       child: Scaffold(
-          appBar: CustomMandoobAppBar.appBar(context,
+          appBar: CustomC4dAppBar.appBar(context,
               title: S.current.updateProfile, onTap: () {
             screenState.getProfile();
           }),
