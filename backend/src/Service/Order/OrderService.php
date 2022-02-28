@@ -7,7 +7,6 @@ use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
-use Doctrine\ORM\NonUniqueResultException;
 
 class OrderService
 {
@@ -15,4 +14,14 @@ class OrderService
     {
     }
 
+    /**
+     * @param OrderCreateRequest $request
+     * @return OrderResponse
+     */
+    public function createOrder(OrderCreateRequest $request): OrderResponse
+    {
+        $order = $this->orderManager->createOrder($request);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
+    }
 }

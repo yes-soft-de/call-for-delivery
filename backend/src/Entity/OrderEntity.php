@@ -16,7 +16,7 @@ class OrderEntity
     #[ORM\Column(type: 'string', length: 150)]
     private $state;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $payment;
 
     #[ORM\Column(type: 'float', nullable: true)]
@@ -124,14 +124,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getDeliveryDate(): ?\DateTimeInterface
+    public function getDeliveryDate()
     {
         return $this->deliveryDate;
     }
 
-    public function setDeliveryDate(\DateTimeInterface $deliveryDate): self
+    public function setDeliveryDate($deliveryDate): self
     {
-        $this->deliveryDate = $deliveryDate;
+        $this->deliveryDate =  new \DateTime($deliveryDate);
 
         return $this;
     }

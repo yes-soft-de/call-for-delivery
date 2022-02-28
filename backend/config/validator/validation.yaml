@@ -94,3 +94,18 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
+
+App\Request\Order\OrderCreateRequest:
+    properties:
+        orderCost:
+              - NotBlank: ~
+        deliveryDate:
+              - NotBlank: ~
+        destination:
+              - NotBlank: ~
+        detail:
+              - NotBlank: ~
+        branch:
+              - NotBlank: ~
+
+

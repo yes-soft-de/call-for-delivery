@@ -28,12 +28,6 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $images;
 
-    #[ORM\Column(type: 'datetime')]
-    private $createdAt;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private $updatedAt;
-
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'storeOrderDetailsEntities')]
     #[ORM\JoinColumn(nullable: false)]
     private $branch;
@@ -103,30 +97,6 @@ class StoreOrderDetailsEntity
     public function setImages(?string $images): self
     {
         $this->images = $images;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
