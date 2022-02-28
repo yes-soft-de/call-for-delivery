@@ -3,6 +3,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
@@ -107,7 +108,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }),
+      }, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          Navigator.of(context).pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+        }, icon: Icons.notifications_rounded)
+      ]),
       drawer: NavigatorMenu(
         profileModel: currentProfile,
       ),
