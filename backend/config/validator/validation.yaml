@@ -20,6 +20,8 @@ App\Request\Package\PackageCreateRequest:
             - NotBlank: ~
         packageCategory:
             - NotBlank: ~
+        expired:
+            - NotBlank: ~
 
 App\Request\Package\PackageUpdateStateRequest:
     properties:
