@@ -41,6 +41,5 @@ class AuthManager {
           VerifyResetPassCodeRequest request) =>
       _authRepository.verifyResetPassCodeRequest(request);
 
-  Future<ActionResponse?> accountStatus() =>
-      _authRepository.accountStatus();
+  Future<ActionResponse?> accountStatus() => _authRepository.accountStatus();
 }

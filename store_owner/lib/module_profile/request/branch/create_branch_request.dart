@@ -5,8 +5,8 @@ class CreateBranchRequest {
   GeoJson? location;
 
   CreateBranchRequest({
-     this.name,
-     this.location,
+    this.name,
+    this.location,
   });
 
   Map<String, dynamic> toJson() {

@@ -52,8 +52,9 @@ class AuthButtons extends StatelessWidget {
                   child: Center(
                     child: loading!
                         ? CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Theme.of(context).textTheme.button?.color ?? Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).textTheme.button?.color ??
+                                    Colors.white),
                           )
                         : Text(
                             firstButtonTitle,

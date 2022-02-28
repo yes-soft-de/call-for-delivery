@@ -119,9 +119,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         featureId: 'newOrder',
         tapTarget: Text(
           S.current.newOrder,
-          style: TextStyle(color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold),
         ),
         child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(

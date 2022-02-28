@@ -11,7 +11,7 @@ class CustomNavTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left:8.0,right: 8.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: SizedBox(
         height: 60,
         child: Scaffold(
@@ -38,10 +38,8 @@ class CustomNavTile extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.primary
-                  ),
+                  child:
+                      Icon(icon, color: Theme.of(context).colorScheme.primary),
                 ),
               ),
               title: Text(title),

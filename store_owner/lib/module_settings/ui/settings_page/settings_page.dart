@@ -36,8 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).settings),
+      appBar: CustomC4dAppBar.appBar(context, title: S.of(context).settings),
       body: FixedContainer(
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),

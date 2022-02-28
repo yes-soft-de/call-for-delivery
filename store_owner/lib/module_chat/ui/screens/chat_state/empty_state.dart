@@ -40,8 +40,7 @@ class EmptyChatPage extends StatelessWidget {
         }
       },
       child: Scaffold(
-          appBar:
-              CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
+          appBar: CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
           body: Stack(
             children: [
               Column(

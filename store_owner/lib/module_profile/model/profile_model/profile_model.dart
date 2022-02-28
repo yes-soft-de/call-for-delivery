@@ -23,8 +23,7 @@ class ProfileModel extends DataModel {
       required this.city,
       this.employeeCount,
       this.status,
-      this.imageUrl
-      });
+      this.imageUrl});
   late ProfileModel _profile;
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;

@@ -79,7 +79,8 @@ class CustomC4dAppBar {
                   blurRadius: 6,
                   offset: Offset(-0.2, 0))
             ],
-            color: buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
+            color:
+                buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
