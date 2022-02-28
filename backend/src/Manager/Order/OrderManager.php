@@ -42,4 +42,24 @@ class OrderManager
 
        return $orderEntity;
     }
+
+    /**
+     * @param $userId
+     * @return array|null
+     */
+    public function getStoreOrders($userId): ?array
+    {      
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
+       
+       return  $this->orderRepository->getStoreOrders($storeOwner->getId());     
+    }
+
+    /**
+     * @param $id
+     * @return array|null
+     */
+    public function getSpecificOrderForStore($id): ?array
+    {      
+       return  $this->orderRepository->getSpecificOrderForStore($id);     
+    }
 }
