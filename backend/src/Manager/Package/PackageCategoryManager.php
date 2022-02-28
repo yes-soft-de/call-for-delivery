@@ -17,9 +17,9 @@ class PackageCategoryManager
 
     /**
      * @param PackageCategoryCreateRequest $request
-     * @return mixed
+     * @return PackageCategoryEntity
      */
-    public function createPackageCategory(PackageCategoryCreateRequest $request): mixed
+    public function createPackageCategory(PackageCategoryCreateRequest $request): PackageCategoryEntity
     {
         $packageCategoryEntity = $this->autoMapping->map(PackageCategoryCreateRequest::class, PackageCategoryEntity::class, $request);
 

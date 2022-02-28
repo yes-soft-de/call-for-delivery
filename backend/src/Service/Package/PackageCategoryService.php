@@ -5,7 +5,6 @@ namespace App\Service\Package;
 use App\AutoMapping;
 use App\Entity\PackageCategoryEntity;
 use App\Manager\Package\PackageCategoryManager;
-use App\Service\Package\PackageService;
 use App\Request\Package\PackageCategoryCreateRequest;
 use App\Response\Package\PackageCategoryResponse;
 use App\Response\Package\PackageCategoriesAndPackagesResponse;
@@ -26,10 +25,10 @@ class PackageCategoryService
 
         return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
     }
-    
+
     /**
      * @param $request
-     * @return PackageCategoryResponse
+     * @return PackageCategoryResponse|null
      */
     public function updatePackageCategory($request): ?PackageCategoryResponse
     {
