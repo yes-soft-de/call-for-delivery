@@ -7,7 +7,6 @@ use App\Controller\BaseController;
 use App\Request\Package\PackageCategoryCreateRequest;
 use App\Request\Package\PackageCategoryUpdateRequest;
 use App\Service\Package\PackageCategoryService;
-use Doctrine\ORM\NonUniqueResultException;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
