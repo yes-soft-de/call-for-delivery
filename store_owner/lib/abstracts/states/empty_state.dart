@@ -10,7 +10,7 @@ class EmptyState extends States {
   final String emptyMessage;
   final String title;
   final bool hasAppbar;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   EmptyState(this.screenState,
       {required this.emptyMessage,
       required this.title,
@@ -21,8 +21,7 @@ class EmptyState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar:
-          hasAppbar ? CustomC4dAppBar.appBar(context, title: title) : null,
+      appBar: hasAppbar ? CustomC4dAppBar.appBar(context, title: title) : null,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Flex(
@@ -44,20 +43,23 @@ class EmptyState extends States {
               ImageAsset.EMPTY_SVG,
               height: MediaQuery.of(context).size.height * 0.5,
             ),
-            Center(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 0),
-                    onPressed: onPressed,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        S.of(context).refresh,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ))),
+            Visibility(
+              visible: onPressed != null,
+              child: Center(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 0),
+                      onPressed: onPressed,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          S.of(context).refresh,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ))),
+            ),
           ],
         ),
       ),
