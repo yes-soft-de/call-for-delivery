@@ -96,7 +96,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     public function getAllPackagesCategoriesAndPackagesForStore($packageCategory): ?array
     {
         return $this->createQueryBuilder('package')
-            ->select('IDENTITY(package.packageCategory)')
+            ->select('IDENTITY(package.packageCategory) as packageCategoryId')
             ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
 
             ->andWhere("package.packageCategory = :packageCategory")
