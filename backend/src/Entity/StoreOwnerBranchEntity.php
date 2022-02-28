@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StoreOwnerBranchEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StoreOwnerBranchEntityRepository::class)]
@@ -27,6 +29,14 @@ class StoreOwnerBranchEntity
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'storeOwnerBranchEntities')]
     private $storeOwner;
+
+    #[ORM\OneToMany(mappedBy: 'branch', targetEntity: StoreOrderDetailsEntity::class)]
+    private $storeOrderDetailsEntities;
+
+    public function __construct()
+    {
+        $this->storeOrderDetailsEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class StoreOwnerBranchEntity
     public function setStoreOwner(?StoreOwnerProfileEntity $storeOwner): self
     {
         $this->storeOwner = $storeOwner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StoreOrderDetailsEntity[]
+     */
+    public function getStoreOrderDetailsEntities(): Collection
+    {
+        return $this->storeOrderDetailsEntities;
+    }
+
+    public function addStoreOrderDetailsEntity(StoreOrderDetailsEntity $storeOrderDetailsEntity): self
+    {
+        if (!$this->storeOrderDetailsEntities->contains($storeOrderDetailsEntity)) {
+            $this->storeOrderDetailsEntities[] = $storeOrderDetailsEntity;
+            $storeOrderDetailsEntity->setBranch($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOrderDetailsEntity(StoreOrderDetailsEntity $storeOrderDetailsEntity): self
+    {
+        if ($this->storeOrderDetailsEntities->removeElement($storeOrderDetailsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOrderDetailsEntity->getBranch() === $this) {
+                $storeOrderDetailsEntity->setBranch(null);
+            }
+        }
 
         return $this;
     }

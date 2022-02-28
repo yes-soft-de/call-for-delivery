@@ -68,10 +68,14 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $completeAccountStatus;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: OrderEntity::class)]
+    private $orderEntities;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
         $this->storeOwnerBranchEntities = new ArrayCollection();
+        $this->orderEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -327,6 +331,36 @@ class StoreOwnerProfileEntity
     public function setCompleteAccountStatus(?string $completeAccountStatus): self
     {
         $this->completeAccountStatus = $completeAccountStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderEntity[]
+     */
+    public function getOrderEntities(): Collection
+    {
+        return $this->orderEntities;
+    }
+
+    public function addOrderEntity(OrderEntity $orderEntity): self
+    {
+        if (!$this->orderEntities->contains($orderEntity)) {
+            $this->orderEntities[] = $orderEntity;
+            $orderEntity->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderEntity(OrderEntity $orderEntity): self
+    {
+        if ($this->orderEntities->removeElement($orderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderEntity->getStoreOwner() === $this) {
+                $orderEntity->setStoreOwner(null);
+            }
+        }
 
         return $this;
     }
