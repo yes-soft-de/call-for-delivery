@@ -110,13 +110,4 @@ App\Request\Order\OrderCreateRequest:
         branch:
               - NotBlank: ~
 
-App\Request\Image\ImageCreateRequest:
-    properties:
-        imagePath:
-            - NotBlank: ~
-        entityType:
-            - NotBlank: ~
-        imageAim:
-            - NotBlank: ~
-        itemId:
-            - NotBlank: ~
+
