@@ -1,25 +1,30 @@
+import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
+import 'package:c4d/module_subscription/model/packages_categories_model.dart';
 import 'package:c4d/module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart';
 import 'package:c4d/module_subscription/ui/widget/package_card/package_card.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class InitSubscriptionsLoadedState extends States {
-  List<PackageModel> packages;
+  List<PackageCategoriesModel> packages;
   final InitSubscriptionScreenState screenState;
   InitSubscriptionsLoadedState(this.screenState, this.packages)
       : super(screenState);
   int? _selectedPackageId;
   String? _selectedCity;
+  String? _selectedCategories;
+  List<PackageModel> _packages = [];
+
   @override
   Widget getUI(BuildContext context) {
-    // _selectedCity = null;
-    // _selectedPackageId=null;
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.storeAccountInit, canGoBack: false),
@@ -53,7 +58,7 @@ class InitSubscriptionsLoadedState extends States {
                 lineThickness: 4,
               ),
             ),
-            // City
+            // categories
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: Container(
@@ -65,16 +70,61 @@ class InitSubscriptionsLoadedState extends States {
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2(
-                        value: _selectedCity,
-                        items: _getCities(),
+                        value: _selectedCategories,
+                        items: _getCatagories(),
                         dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                         ),
-                        hint: Text(S.current.chooseYourCity),
+                        hint: Text(S.current.choosePackageCategories),
                         onChanged: (String? value) {
-                          _selectedCity = value;
+                          _packages = packages
+                              .singleWhere(
+                                  (element) => element.id.toString() == value)
+                              .packages;
+                          _selectedCategories = value;
                           screenState.refresh();
                         }),
+                  ),
+                ),
+              ),
+            ),
+            // there is no packages available in this category
+            Visibility(
+                visible: _packages.isEmpty && _selectedCategories != null,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(S.current.emptyPackagesCategory,style: Theme.of(context).textTheme.bodyLarge,),
+                      SvgPicture.asset(SvgAsset.EMPTY_SVG,width: 125,height: 125,)
+                    ],
+                  ),
+                )),
+            // City
+            Visibility(
+              visible: _packages.isNotEmpty,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0,top: 8.0),
+                child: Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).backgroundColor),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                          value: _selectedCity,
+                          items: _getCities(),
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          hint: Text(S.current.chooseYourCity),
+                          onChanged: (String? value) {
+                            _selectedCity = value;
+                            screenState.refresh();
+                          }),
+                    ),
                   ),
                 ),
               ),
@@ -141,19 +191,19 @@ class InitSubscriptionsLoadedState extends States {
   }
 
   List<Widget> _getPackages(String? city) {
-    if (packages == null) {
+    if (_packages == null) {
       return [];
     }
-    if (packages.isEmpty) {
+    if (_packages.isEmpty) {
       return [];
     }
     if (_selectedCity == null) {
       return [];
     }
     List<PackageModel> cityPackage = [];
-    for (int i = 0; i < packages.length; i++) {
-      if (packages[i].city == city) {
-        cityPackage.add(packages[i]);
+    for (int i = 0; i < _packages.length; i++) {
+      if (_packages[i].city == city) {
+        cityPackage.add(_packages[i]);
       }
     }
     return cityPackage.map((element) {
@@ -175,8 +225,8 @@ class InitSubscriptionsLoadedState extends States {
   }
 
   List<DropdownMenuItem<String>> _getCities() {
-    var cityNames = <String>{};
-    packages.forEach((element) {
+    var cityNames = <String>[];
+    _packages.forEach((element) {
       cityNames.add('${element.city}');
     });
 
@@ -191,6 +241,20 @@ class InitSubscriptionsLoadedState extends States {
       ));
     });
 
+    return cityDropDown;
+  }
+
+  List<DropdownMenuItem<String>> _getCatagories() {
+    var cityDropDown = <DropdownMenuItem<String>>[];
+    packages.forEach((element) {
+      cityDropDown.add(DropdownMenuItem(
+        child: Text(
+          element.name,
+          overflow: TextOverflow.ellipsis,
+        ),
+        value: element.id.toString(),
+      ));
+    });
     return cityDropDown;
   }
 }

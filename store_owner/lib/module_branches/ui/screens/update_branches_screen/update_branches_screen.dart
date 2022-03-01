@@ -72,7 +72,7 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
   }
 
   void moveNextAfterCreate(bool success) {
-        if (success) {
+    if (success) {
       // must update the screen before using global state manager
       getIt<GlobalStateManager>().update();
       Navigator.of(context).pop();
@@ -92,7 +92,8 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
   void refresh() {
     setState(() {});
   }
-bool canPop = false;
+
+  bool canPop = false;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -102,7 +103,7 @@ bool canPop = false;
           title: branchesModel != null
               ? S.of(context).updateBranch
               : S.of(context).addBranch,
-          canGoBack:canPop ),
+          canGoBack: canPop),
       body: currentState?.getUI(context),
     );
   }

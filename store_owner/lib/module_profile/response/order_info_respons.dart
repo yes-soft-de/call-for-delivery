@@ -1,4 +1,3 @@
-
 import '../../module_orders/response/order_details/order_details_response.dart';
 
 class OrderInfoRespons {

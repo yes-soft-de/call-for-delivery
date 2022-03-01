@@ -132,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
         "chooseLocation": MessageLookupByLibrary.simpleMessage("اختر موقع"),
+        "choosePackageCategories":
+            MessageLookupByLibrary.simpleMessage("اختر تصنيف الاشتراك المناسب"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع الاستلام"),
         "chooseYourCity":
@@ -212,6 +214,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يرجى توفير البريد الالكتروني"),
         "employeeSize": MessageLookupByLibrary.simpleMessage("حجم المنشأة"),
         "emptyField": MessageLookupByLibrary.simpleMessage("حقل فارغ"),
+        "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
+            "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),

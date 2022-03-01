@@ -4649,6 +4649,26 @@ class S {
       args: [],
     );
   }
+
+  /// `There is no packages in this category`
+  String get emptyPackagesCategory {
+    return Intl.message(
+      'There is no packages in this category',
+      name: 'emptyPackagesCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose package category`
+  String get choosePackageCategories {
+    return Intl.message(
+      'Choose package category',
+      name: 'choosePackageCategories',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

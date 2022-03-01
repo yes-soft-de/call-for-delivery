@@ -461,7 +461,9 @@
     "confirmDeletionBranch": "Confirm deletion of this branch",
     "deleteBranchSuccess": "Branch deleted successfully",
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
-    "newOrderHint": "This button let you to make a new order"
+    "newOrderHint": "This button let you to make a new order",
+    "emptyPackagesCategory": "There is no packages in this category",
+    "choosePackageCategories": "Choose package category"
 
 
 

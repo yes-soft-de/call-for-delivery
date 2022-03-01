@@ -63,9 +63,7 @@ class BranchesRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       Urls.DELETE_BRANCH_API,
-      {'id':id,
-      'isActive':'0'
-      },
+      {'id': id, 'isActive': '0'},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

@@ -46,8 +46,7 @@ class ProfileRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> updateProfile(
-      ProfileRequest profileRequest) async {
+  Future<ActionResponse?> updateProfile(ProfileRequest profileRequest) async {
     var token = await _authService.getToken();
     var response = await _apiClient.put(
       Urls.OWNER_PROFILE_API,

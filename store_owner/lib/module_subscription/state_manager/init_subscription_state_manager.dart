@@ -6,6 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
+import 'package:c4d/module_subscription/model/packages_categories_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart';
 import 'package:c4d/module_subscription/ui/state/init_subscriptions_loaded_state.dart';
@@ -33,7 +34,7 @@ class InitSubscriptionStateManager {
   );
   void getPackages(InitSubscriptionScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
-    _initAccountService.getPackages().then((value) {
+    _initAccountService.getCategoriesPackages().then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getPackages(screenState);
@@ -45,7 +46,7 @@ class InitSubscriptionStateManager {
             title: S.current.storeAccountInit,
             emptyMessage: S.current.homeDataEmpty));
       } else {
-        value as PackageModel;
+        value as PackageCategoriesModel;
         _stateSubject
             .add(InitSubscriptionsLoadedState(screenState, value.data));
       }

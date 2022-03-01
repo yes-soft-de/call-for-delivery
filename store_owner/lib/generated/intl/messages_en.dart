@@ -134,6 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Destination Location"),
         "chooseLocation":
             MessageLookupByLibrary.simpleMessage("choose location"),
+        "choosePackageCategories":
+            MessageLookupByLibrary.simpleMessage("Choose package category"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("Choose Receipt Location"),
         "chooseYourCity":
@@ -212,6 +214,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "employeeSize": MessageLookupByLibrary.simpleMessage("Employee count"),
         "emptyField": MessageLookupByLibrary.simpleMessage("Empty Field"),
+        "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
+            "There is no packages in this category"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
