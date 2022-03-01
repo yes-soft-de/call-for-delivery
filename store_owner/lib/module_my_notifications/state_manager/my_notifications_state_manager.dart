@@ -27,8 +27,7 @@ class MyNotificationsStateManager {
         if (value.hasError) {
           _stateSubject.add(ErrorState(screenState,
               title: S.current.notifications,
-              error: value.error ?? S.current.errorHappened,
-              onPressed: () {
+              error: value.error ?? S.current.errorHappened, onPressed: () {
             getNotifications(screenState);
           }));
         } else if (value.isEmpty) {

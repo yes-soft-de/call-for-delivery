@@ -12,19 +12,17 @@ class Data {
   String? bankName;
   String? bankNumber;
 
-
-  Data({
-    this.id,
-    this.storeOwnerName,
-    this.images,
-    this.phone,
-    this.status,
-    this.commission,
-    this.employeeCount,
-    this.bankName,
-    this.bankNumber,
-    this.city
-  });
+  Data(
+      {this.id,
+      this.storeOwnerName,
+      this.images,
+      this.phone,
+      this.status,
+      this.commission,
+      this.employeeCount,
+      this.bankName,
+      this.bankNumber,
+      this.city});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,

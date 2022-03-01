@@ -25,8 +25,7 @@ class ErrorState extends States {
   Widget getUI(BuildContext context) {
     return Scaffold(
       appBar: hasAppbar
-          ? CustomC4dAppBar.appBar(context,
-              title: title,colorIcon: Colors.red)
+          ? CustomC4dAppBar.appBar(context, title: title, colorIcon: Colors.red)
           : null,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(

@@ -110,7 +110,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context).pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+          Navigator.of(context)
+              .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
         }, icon: Icons.notifications_rounded)
       ]),
       drawer: NavigatorMenu(
