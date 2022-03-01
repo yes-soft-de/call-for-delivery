@@ -1,3 +1,4 @@
+import 'package:c4d/module_main/main_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -20,9 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      // _getNextRoute().then((route) {
-      //   Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-      // });
+       _getNextRoute().then((route) {
+         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+       });
     });
     super.initState();
   }
@@ -37,6 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<String> _getNextRoute() async {
+    if (widget._authService.isLoggedIn) {
+      return MainRoutes.MAIN_SCREEN;
+    }
+    if (getIt<LocalizationService>().choosed() == false) {
+      return SettingRoutes.CHOOSE_LANGUAGE;
+    }
     return AuthorizationRoutes.LOGIN_SCREEN;
   }
 }

@@ -419,19 +419,14 @@
     "recordNumber": "Record Number",
     "nationalAddress": "National Address",
     "taxNumber": "Tax Number",
-    "captainRated": "Captain rated successfully"
+    "captainRated": "Captain rated successfully",
+    "exitWarning": "Please press again to exit",
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "countCompletedOrders": "Completed Orders",
+    "countOngoingOrders": "Ongoing Orders",
+    "countClients": "Clients Count",
+    "countCaptains": "Captains Count",
+    "countProducts": "Products Count",
+    "countStores": "Stores Count",
+    "countTodayOrder": "Today Order"
 }

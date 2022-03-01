@@ -41,7 +41,7 @@ class EmptyChatPage extends StatelessWidget {
       },
       child: Scaffold(
           appBar:
-              CustomMandoobAppBar.appBar(context, title: S.current.chatRoom),
+          CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
           body: Stack(
             children: [
               Column(

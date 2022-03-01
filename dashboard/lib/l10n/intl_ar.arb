@@ -418,7 +418,13 @@
     "recordNumber": "رقم السجل",
     "nationalAddress": "العنوان الوطني",
     "taxNumber": "الرقم الضريبي",
-    "captainRated": "تم تقييم الكابتن بنجاح"
-
-
+    "captainRated": "تم تقييم الكابتن بنجاح",
+    "exitWarning": "اضغط مرة اخرى للخروج من التطبيق",
+    "countCompletedOrders": "الطلبات المكتملة",
+    "countOngoingOrders": "الطلبات الجارية",
+    "countClients": "عدد العملاء",
+    "countCaptains": "عدد الكباتن",
+    "countProducts": "عدد المنتجات",
+    "countStores": "عدد المتاجر",
+    "countTodayOrder": "الطلبات اليوم"
 }

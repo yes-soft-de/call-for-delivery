@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -16,50 +15,73 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Colors.orange;
-  }
-
-  static Color get PrimaryDarker {
-    return Colors.orange;
-  }
-
-  static Color get AccentColor {
-    return Colors.orangeAccent;
+    return Color.fromRGBO(33, 32, 156, 1);
   }
 
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
-    final lightScheme = ColorScheme.fromSeed(seedColor: Colors.orange);
+    final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: Colors.orange, brightness: Brightness.dark);
+        seedColor: PrimaryColor, brightness: Brightness.dark);
     if (dark == true) {
       return ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
-        useMaterial3: true,
-   //     colorScheme: darkScheme,
-        primarySwatch: Colors.orange,
-        focusColor: PrimaryColor,
-        cardColor: Colors.grey[150],
-        fontFamily: GoogleFonts.almarai().fontFamily,
-      );
+          brightness: Brightness.dark,
+          colorScheme: darkScheme,
+          useMaterial3: true,
+          primarySwatch: Colors.indigo,
+          focusColor: PrimaryColor,
+          checkboxTheme: CheckboxThemeData(
+            checkColor:
+            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.grey;
+              }
+              return Colors.white;
+            }),
+            fillColor:
+            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+              const Set<MaterialState> interactiveStates = <MaterialState>{
+                MaterialState.pressed,
+                MaterialState.hovered,
+                MaterialState.focused,
+              };
+              if (states.any(interactiveStates.contains)) {
+                return Colors.black;
+              }
+              return Colors.indigo;
+            }),
+          ),
+          cardColor: Colors.grey[150],
+          fontFamily: 'Dubai',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              )),
+          textTheme: TextTheme(button: TextStyle(color: Colors.white)));
     }
     return ThemeData(
         brightness: Brightness.light,
-        primaryColor: PrimaryColor,
-        primaryColorDark: PrimaryDarker,
+        //       primaryColor: PrimaryColor,
+        colorScheme: lightScheme,
         useMaterial3: true,
-    //    colorScheme: lightScheme,
+        //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.indigo,
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
-        fontFamily: GoogleFonts.almarai().fontFamily,
+        textTheme: TextTheme(button: TextStyle(color: Colors.white)),
+        fontFamily: 'Dubai',
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
-              BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
+          BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
         ));
   }
 
