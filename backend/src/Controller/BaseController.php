@@ -63,6 +63,8 @@ class BaseController extends AbstractController
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
     // company
     const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
+    // package
+    const PACKAGE_NOT_EXIST = ["package not exist", "9351"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [

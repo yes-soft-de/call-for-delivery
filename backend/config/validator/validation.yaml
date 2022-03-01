@@ -21,7 +21,7 @@ App\Request\Package\PackageCreateRequest:
         packageCategory:
             - NotBlank: ~
 
-App\Request\Package\PackageUpdateStateRequest:
+App\Request\Package\PackageUpdateRequest:
     properties:
         id:
             - NotBlank: ~
@@ -32,6 +32,13 @@ App\Request\Package\PackageUpdateStateRequest:
         carCount:
             - NotBlank: ~
         orderCount:
+            - NotBlank: ~
+
+App\Request\Package\PackageStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
             - NotBlank: ~
 
 App\Request\StoreOwner\StoreOwnerProfileUpdateRequest:

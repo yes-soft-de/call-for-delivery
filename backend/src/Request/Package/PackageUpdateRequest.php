@@ -2,7 +2,7 @@
 
 namespace App\Request\Package;
 
-class PackageUpdateStateRequest
+class PackageUpdateRequest
 {
     private $id;
 
@@ -17,8 +17,6 @@ class PackageUpdateStateRequest
     private $city;
 
     private $orderCount;
-
-    private $status;
     
     private $expired;
 

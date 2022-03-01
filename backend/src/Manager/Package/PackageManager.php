@@ -3,11 +3,13 @@
 namespace App\Manager\Package;
 
 use App\AutoMapping;
+use App\Constant\Package\PackageConstant;
 use App\Entity\PackageEntity;
 use App\Manager\Package\PackageCategoryManager;
 use App\Repository\PackageEntityRepository;
 use App\Request\Package\PackageCreateRequest;
-use App\Request\Package\PackageUpdateStateRequest;
+use App\Request\Package\PackageStatusUpdateRequest;
+use App\Request\Package\PackageUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -67,19 +69,35 @@ class PackageManager
         return $this->packageRepository->find($id);
     }
 
-     public function updatePackage(PackageUpdateStateRequest $request)
+     public function updatePackage(PackageUpdateRequest $request): string|PackageEntity
      {
          $entity = $this->packageRepository->find($request->getId());
 
          if ($entity) {
-
-             $entity = $this->autoMapping->mapToObject(PackageUpdateStateRequest::class, PackageEntity::class, $request, $entity);
+             $entity = $this->autoMapping->mapToObject(PackageUpdateRequest::class, PackageEntity::class, $request, $entity);
 
              $this->entityManager->flush();
 
              return $entity;
          }
+
+         return PackageConstant::PACKAGE_NOT_EXIST;
      }
+
+    public function updatePackageStatus(PackageStatusUpdateRequest $request): string|PackageEntity
+    {
+        $entity = $this->packageRepository->find($request->getId());
+
+        if ($entity) {
+            $entity = $this->autoMapping->mapToObject(PackageStatusUpdateRequest::class, PackageEntity::class, $request, $entity);
+
+            $this->entityManager->flush();
+
+            return $entity;
+        }
+
+        return PackageConstant::PACKAGE_NOT_EXIST;
+    }
      
     /**
      * @param $packageCategory

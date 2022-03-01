@@ -3,6 +3,7 @@
 namespace App\Service\Package;
 
 use App\AutoMapping;
+use App\Constant\Package\PackageConstant;
 use App\Entity\PackageEntity;
 use App\Manager\Package\PackageManager;
 use App\Request\Package\PackageCreateRequest;
@@ -73,17 +74,27 @@ class PackageService
        return $this->autoMapping->map("array", PackageResponse::class, $item);
     }
 
-    /**
-     * @param $request
-     * @return PackageResponse|null
-     * @throws NonUniqueResultException
-     */
-     public function updatePackage($request): ?PackageResponse
+    public function updatePackage($request): string|PackageResponse
      {
-         $result = $this->packageManager->updatePackage($request);
+         $packageResult = $this->packageManager->updatePackage($request);
 
-         return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $result);
+         if($packageResult === PackageConstant::PACKAGE_NOT_EXIST) {
+             return $packageResult;
+         }
+
+         return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $packageResult);
      }
+
+    public function updatePackageStatus($request): string|PackageResponse
+    {
+        $packageResult = $this->packageManager->updatePackageStatus($request);
+
+        if($packageResult === PackageConstant::PACKAGE_NOT_EXIST) {
+            return $packageResult;
+        }
+
+        return $this->autoMapping->map(PackageEntity::class, PackageResponse::class, $packageResult);
+    }
      
     /**
      * @param $packageCategory

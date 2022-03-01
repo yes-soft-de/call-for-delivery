@@ -3,9 +3,11 @@
 namespace App\Controller\Package;
 
 use App\AutoMapping;
+use App\Constant\Package\PackageConstant;
 use App\Controller\BaseController;
 use App\Request\Package\PackageCreateRequest;
-use App\Request\Package\PackageUpdateStateRequest;
+use App\Request\Package\PackageStatusUpdateRequest;
+use App\Request\Package\PackageUpdateRequest;
 use App\Service\Package\PackageService;
 use Doctrine\ORM\NonUniqueResultException;
 use stdClass;
@@ -278,13 +280,25 @@ class PackageController extends BaseController
       *   )
       * )
       *
+      * or
+      *
+      * @OA\Response(
+      *      response="default",
+      *      description="Returns new package",
+      *      @OA\JsonContent(
+      *          @OA\Property(type="string", property="status_code", example="9351"),
+      *          @OA\Property(type="string", property="msg"),
+      *          @OA\Property(type="string", property="Data", example="package not exist")
+      *      )
+      * )
+      *
       * @Security(name="Bearer")
       */
      public function updatePackage(Request $request): JsonResponse
      {
          $data = json_decode($request->getContent(), true);
 
-         $request = $this->autoMapping->map(\stdClass::class, PackageUpdateStateRequest::class, (object) $data);
+         $request = $this->autoMapping->map(\stdClass::class, PackageUpdateRequest::class, (object) $data);
 
          $violations = $this->validator->validate($request);
 
@@ -296,8 +310,93 @@ class PackageController extends BaseController
 
          $result = $this->packageService->updatePackage($request);
 
+         if($result === PackageConstant::PACKAGE_NOT_EXIST) {
+             return $this->response($result, self::PACKAGE_NOT_EXIST);
+         }
+
          return $this->response($result, self::UPDATE);
      }
+
+    /**
+     * admin:Update new package by admin
+     * @Route("packagestatus", name="updatePackageStatus", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Package")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update package status",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="status")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new package",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *            @OA\Property(type="string", property="name"),
+     *            @OA\Property(type="number", property="cost"),
+     *            @OA\Property(type="string", property="note"),
+     *            @OA\Property(type="integer", property="carCount"),
+     *            @OA\Property(type="string", property="city"),
+     *            @OA\Property(type="integer", property="orderCount"),
+     *            @OA\Property(type="integer", property="expired"),
+     *            @OA\Property(type="string", property="status"),
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns new package",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9351"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="package not exist")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updatePackageStatus(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, PackageStatusUpdateRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->packageService->updatePackageStatus($request);
+
+        if($result === PackageConstant::PACKAGE_NOT_EXIST) {
+            return $this->response($result, self::PACKAGE_NOT_EXIST);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
 
     /**
      * Get all packages by category id.
