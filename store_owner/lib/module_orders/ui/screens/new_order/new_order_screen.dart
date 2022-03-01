@@ -52,6 +52,9 @@ class NewOrderScreenState extends State<NewOrderScreen> {
   TextEditingController noteController = TextEditingController();
   TextEditingController receiptNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController toController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+
   String? payments;
   //
   @override
