@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
 import 'package:c4d/module_auth/request/forget_password_request/verify_new_password_request.dart';
 import 'package:c4d/module_auth/state_manager/forget_state_manager/forget_password_state_manager.dart';
@@ -66,7 +65,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomMandoobAppBar.appBar(context,
+        appBar: CustomC4dAppBar.appBar(context,
             title: S.of(context).forgotPass, canGoBack: true),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
