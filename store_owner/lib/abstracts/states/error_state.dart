@@ -26,7 +26,7 @@ class ErrorState extends States {
     return Scaffold(
       appBar: hasAppbar
           ? CustomC4dAppBar.appBar(context,
-              title: title, buttonBackground: Colors.red)
+              title: title,colorIcon: Colors.red)
           : null,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(
