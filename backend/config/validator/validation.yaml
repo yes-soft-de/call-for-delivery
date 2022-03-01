@@ -117,3 +117,12 @@ App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest:
         storeOwnerProfileId:
             - NotBlank: ~
 
+App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        location:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+

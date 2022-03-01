@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Repository\StoreOwnerBranchEntityRepository;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -94,6 +95,22 @@ class StoreOwnerBranchManager
         if ($entity) {
              
             $entity = $this->autoMapping->mapToObject(StoreOwnerBranchUpdateRequest::class, StoreOwnerBranchEntity::class, $request, $entity);
+
+            $this->entityManager->flush();
+
+            return $entity;
+        }
+
+        return StoreOwnerBranch::BRANCH_NOT_FOUND;
+    }
+
+    public function updateBranchByAdmin(StoreOwnerBranchUpdateByAdminRequest $request): StoreOwnerBranchEntity|string
+    {
+        $entity = $this->storeOwnerBranchEntityRepository->find($request->getId());
+
+        if ($entity) {
+
+            $entity = $this->autoMapping->mapToObject(StoreOwnerBranchUpdateByAdminRequest::class, StoreOwnerBranchEntity::class, $request, $entity);
 
             $this->entityManager->flush();
 

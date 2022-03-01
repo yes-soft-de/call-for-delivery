@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
@@ -82,12 +83,23 @@ class StoreOwnerBranchService
     public function updateBranch($request): string|StoreOwnerBranchResponse
     {
         $result = $this->storeOwnerBranchManager->updateBranch($request);
-        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND){
 
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND) {
             return StoreOwnerBranch::BRANCH_NOT_FOUND;
         }
 
         return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $result);
+    }
+
+    public function updateBranchByAdmin(StoreOwnerBranchUpdateByAdminRequest $request): string|StoreOwnerBranchGetForAdminResponse
+    {
+        $result = $this->storeOwnerBranchManager->updateBranchByAdmin($request);
+
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND) {
+            return StoreOwnerBranch::BRANCH_NOT_FOUND;
+        }
+
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchGetForAdminResponse::class, $result);
     }
 
     /**
