@@ -20,6 +20,8 @@ App\Request\Package\PackageCreateRequest:
             - NotBlank: ~
         packageCategory:
             - NotBlank: ~
+        expired:
+            - NotBlank: ~
 
 App\Request\Package\PackageUpdateStateRequest:
     properties:
@@ -95,13 +97,16 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
 
-App\Request\Image\ImageCreateRequest:
+App\Request\Order\OrderCreateRequest:
     properties:
-        imagePath:
-            - NotBlank: ~
-        entityType:
-            - NotBlank: ~
-        imageAim:
-            - NotBlank: ~
-        itemId:
-            - NotBlank: ~
+        orderCost:
+              - NotBlank: ~
+        deliveryDate:
+              - NotBlank: ~
+        destination:
+              - NotBlank: ~
+        detail:
+              - NotBlank: ~
+        branch:
+              - NotBlank: ~
+
