@@ -74,9 +74,9 @@ class SubscriptionManager
      */
     public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
     {
-       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
 
-       return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
+        return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
     /**
@@ -196,5 +196,11 @@ class SubscriptionManager
         $this->subscriptionHistoryManager->updateNoteSubscriptionHistory($id, $note);            
        
         return $subscriptionEntity;
+    }
+
+    
+    public function countOrders($subscription): ?array
+    {
+       return $this->subscribeRepository->countOrders($subscription);
     }
 }

@@ -72,7 +72,7 @@ class SubscriptionDetailsManager
     }
 
     public function updateRemainingOrders($id, $orderRemaining): ?array
-    {     
+    {   
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
 
         $subscriptionDetailsEntity->setRemainingOrders($orderRemaining);
@@ -96,7 +96,7 @@ class SubscriptionDetailsManager
     }
 
     public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
-    {     
+    {   
         return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
     }
 }

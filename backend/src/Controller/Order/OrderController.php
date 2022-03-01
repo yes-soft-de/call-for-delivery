@@ -97,7 +97,12 @@ class OrderController extends BaseController
         }
 
         $result = $this->orderService->createOrder($request);
-
+      
+        if (isset($result->canCreateOrder)) {
+      
+            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
+        
         return $this->response($result, self::CREATE);
     }
     
