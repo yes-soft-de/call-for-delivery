@@ -205,4 +205,6 @@ class Urls {
   static const ACCOUNT_STATUS =
       BASE_API + '/storeownerprofilecompleteaccountstatus';
   static const GET_MY_NOTIFICATION = BASE_API + '/';
+  static const GET_SUBSCRIPTION_BALANCE = DOMAIN + '/v1/subscription/packagebalance';
+
 }

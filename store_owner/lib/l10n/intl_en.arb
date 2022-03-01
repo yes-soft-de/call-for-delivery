@@ -199,7 +199,7 @@
     "renewNewPlan": "Subscription with new package",
     "successRenew": "Your subscription has been renewed",
     "warnning": "Important Note",
-    "inactive": "Your subscription not activate yet please wait",
+    "SubscriptionInactive": "Your subscription not activate yet please wait",
     "outOforders": "You reach your limit of orders you can renew your subscription from settings",
     "finishedDate": "Your subscription is out of date please renew your subscription",
     "unaccept": "Your request not accepted from administration you can contact us to get info",
@@ -463,7 +463,15 @@
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
     "newOrderHint": "This button let you to make a new order",
     "emptyPackagesCategory": "There is no packages in this category",
-    "choosePackageCategories": "Choose package category"
+    "choosePackageCategories": "Choose package category",
+    "active": "Active",
+    "subscriptionStatus": "Subscription status",
+    "inactive": "Inactive",
+    "expirationData": "Expiration date",
+    "ExpiredSubscriptions": "Expired subscriptions please renew your subscription"
+
+
+
 
 
 

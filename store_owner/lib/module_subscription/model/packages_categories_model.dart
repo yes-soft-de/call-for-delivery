@@ -16,23 +16,23 @@ class PackageCategoriesModel extends DataModel {
     _packageList = [];
     var data = response.data;
     data?.forEach((element) {
-    var packages = <PackageModel>[];
-    element.packages?.forEach((element) {
-      packages.add(PackageModel(
-        id: element.id ?? -1,
-        name: element.name ?? S.current.unknown,
-        cost: element.cost ?? 0,
-        note: element.note ?? '',
-        carCount: element.carCount ?? 0,
-        city: element.city ?? '',
-        orderCount: element.orderCount ?? 0,
-        status: element.status ?? 'inActive',
-      ));
-    });
+      var packages = <PackageModel>[];
+      element.packages?.forEach((element) {
+        packages.add(PackageModel(
+          id: element.id ?? -1,
+          name: element.name ?? S.current.unknown,
+          cost: element.cost ?? 0,
+          note: element.note ?? '',
+          carCount: element.carCount ?? 0,
+          city: element.city ?? '',
+          orderCount: element.orderCount ?? 0,
+          status: element.status ?? 'inActive',
+        ));
+      });
       _packageList.add(PackageCategoriesModel(
         id: element.id ?? -1,
         name: element.name ?? S.current.unknown,
-        packages:packages,
+        packages: packages,
       ));
     });
   }
