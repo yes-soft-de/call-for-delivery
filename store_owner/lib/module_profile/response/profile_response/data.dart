@@ -8,6 +8,10 @@ class Data {
   String? status;
   dynamic commission;
   String? employeeCount;
+  String? city;
+  String? bankName;
+  String? bankNumber;
+
 
   Data({
     this.id,
@@ -17,6 +21,9 @@ class Data {
     this.status,
     this.commission,
     this.employeeCount,
+    this.bankName,
+    this.bankNumber,
+    this.city
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -29,6 +36,9 @@ class Data {
         status: json['status'] as String?,
         commission: json['commission'] as dynamic,
         employeeCount: json['employeeCount'] as String?,
+        city: json['city'] as String?,
+        bankName: json['bankName'] as String?,
+        bankNumber: json['bankAccountNumber'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
