@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
@@ -49,6 +50,24 @@ class StoreOwnerBranchService
             $branchRequest->setStoreOwner($request->getStoreOwner());
 
             $branchResult = $this->storeOwnerBranchManager->createBranchByStoreOwner($branchRequest);
+
+            $response[] = $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branchResult);
+        }
+
+        return $response;
+    }
+
+    public function createMultipleBranchesByAdmin(StoreOwnerMultipleBranchesCreateByAdminRequest $request): array|string
+    {
+        $response = [];
+
+        foreach($request->getBranches() as $branch) {
+
+            $branchRequest = $this->autoMapping->map('array', StoreOwnerBranchCreateRequest::class, $branch);
+
+            $branchRequest->setStoreOwner($request->getStoreOwnerProfileId());
+
+            $branchResult = $this->storeOwnerBranchManager->createBranchesByAdmin($branchRequest);
 
             $response[] = $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branchResult);
         }

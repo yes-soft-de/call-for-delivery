@@ -110,4 +110,10 @@ App\Request\Order\OrderCreateRequest:
         branch:
               - NotBlank: ~
 
+App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest:
+    properties:
+        branches:
+            - NotBlank: ~
+        storeOwnerProfileId:
+            - NotBlank: ~
 
