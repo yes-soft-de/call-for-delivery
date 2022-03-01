@@ -9,6 +9,7 @@ use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
+use App\Response\Subscription\CanCreateOrderResponse;
 use dateTime;
 use App\Constant\Subscription\SubscriptionConstant;
 use Doctrine\ORM\NonUniqueResultException;
@@ -284,5 +285,35 @@ class SubscriptionService
         }
 
         return SubscriptionConstant::UNSUBSCRIBED;
+    }
+
+     /**
+     * @param $storeOwner
+     * @return CanCreateOrderResponse
+     */
+    public function canCreateOrder($storeOwner): CanCreateOrderResponse
+    {
+      $packageBalance = $this->packageBalance($storeOwner);
+      
+      if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
+
+        $item['subscriptionStatus'] = $packageBalance->status;
+
+        if($packageBalance->status ===  SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+         
+          $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
+        }
+        else{
+  
+          $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+        }
+      
+        return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
+      }
+
+      $item['subscriptionStatus'] = SubscriptionConstant::UNSUBSCRIBED;
+      $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+
+      return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
     }
 }

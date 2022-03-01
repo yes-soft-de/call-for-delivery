@@ -37,4 +37,8 @@ final class SubscriptionConstant
     const IS_FUTURE_TRUE= true;
 
     const IS_FUTURE_FALSE= false;
+    
+    const CAN_CREATE_ORDER= true;
+
+    const CAN_NOT_CREATE_ORDER= false;
 }

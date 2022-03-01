@@ -203,4 +203,41 @@ class SubscriptionController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * store: Check the store subscription, and is it possible to create an order .
+     * @Route("cancreateorder", name="canCreateOrder",methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns subscription status",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                @OA\Property(type="string", property="canCreateOrder"),
+     *                @OA\Property(type="string", property="subscriptionStatus"),
+     *        )
+     *     )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function canCreateOrder(): JsonResponse
+    {
+        $result = $this->subscriptionService->canCreateOrder($this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
 }
