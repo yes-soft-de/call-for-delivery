@@ -36,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomMandoobAppBar.appBar(context,
+      appBar: CustomC4dAppBar.appBar(context,
           title: S.of(context).settings, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
@@ -101,14 +101,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             DropdownMenuItem(
                               child: Text(
                                 'العربية',
-                                style: TextStyle(),
                               ),
                               value: 'ar',
                             ),
                             DropdownMenuItem(
                               child: Text(
                                 'English',
-                                style: TextStyle(),
                               ),
                               value: 'en',
                             ),
