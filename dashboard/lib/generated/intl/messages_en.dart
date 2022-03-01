@@ -139,6 +139,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
+        "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),
+        "countCompletedOrders":
+            MessageLookupByLibrary.simpleMessage("Completed Orders"),
+        "countOngoingOrders":
+            MessageLookupByLibrary.simpleMessage("Ongoing Orders"),
+        "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
+        "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
+        "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":
@@ -196,6 +205,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, Exceeded time allowed"),
+        "exitWarning":
+            MessageLookupByLibrary.simpleMessage("Please press again to exit"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),

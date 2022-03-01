@@ -140,6 +140,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
+        "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
+        "countClients": MessageLookupByLibrary.simpleMessage("عدد العملاء"),
+        "countCompletedOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات المكتملة"),
+        "countOngoingOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
+        "countProducts": MessageLookupByLibrary.simpleMessage("عدد المنتجات"),
+        "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
+        "countTodayOrder":
+            MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
@@ -196,6 +206,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
+        "exitWarning": MessageLookupByLibrary.simpleMessage(
+            "اضغط مرة اخرى للخروج من التطبيق"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),

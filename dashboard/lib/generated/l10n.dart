@@ -4229,6 +4229,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Please press again to exit`
+  String get exitWarning {
+    return Intl.message(
+      'Please press again to exit',
+      name: 'exitWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed Orders`
+  String get countCompletedOrders {
+    return Intl.message(
+      'Completed Orders',
+      name: 'countCompletedOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing Orders`
+  String get countOngoingOrders {
+    return Intl.message(
+      'Ongoing Orders',
+      name: 'countOngoingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients Count`
+  String get countClients {
+    return Intl.message(
+      'Clients Count',
+      name: 'countClients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains Count`
+  String get countCaptains {
+    return Intl.message(
+      'Captains Count',
+      name: 'countCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products Count`
+  String get countProducts {
+    return Intl.message(
+      'Products Count',
+      name: 'countProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores Count`
+  String get countStores {
+    return Intl.message(
+      'Stores Count',
+      name: 'countStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today Order`
+  String get countTodayOrder {
+    return Intl.message(
+      'Today Order',
+      name: 'countTodayOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
