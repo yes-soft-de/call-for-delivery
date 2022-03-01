@@ -29,6 +29,7 @@ class BaseController extends AbstractController
     const ERROR = ["error","9201"];
     const ERROR_ORDER_REMOVE = ["error","9202"];
     const ERROR_ORDER_UPDATE = ["error","9203"];
+    const ERROR_ORDER_CAN_NOT_CREATE = ["error","9204"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users

@@ -8,21 +8,34 @@ use App\Manager\Order\OrderManager;
 use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
+use App\Response\Subscription\CanCreateOrderResponse;
+use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\Subscription\SubscriptionService;
 
 class OrderService
 {
-    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager)
+    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager, private SubscriptionService $subscriptionService)
     {
     }
 
     /**
      * @param OrderCreateRequest $request
-     * @return OrderResponse
+     * @return OrderResponse|CanCreateOrderResponse
      */
-    public function createOrder(OrderCreateRequest $request): OrderResponse
+    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse
     {
-        $order = $this->orderManager->createOrder($request);
+        $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner()); 
+     
+        if($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+      
+            return  $canCreateOrder;
+        }
 
+        $order = $this->orderManager->createOrder($request);
+        if($order) {
+
+         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner());
+        }
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 

@@ -72,7 +72,6 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwner);
        if($subscription) {
-
            $countOrders = $this->getCountOngoingOrders($subscription);
 
            $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
@@ -189,23 +188,22 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
-    // reduce the number of available orders, call it only when create order success.
-
     /**
      * @param $storeOwner
      * @return string
      */
     public function updateRemainingOrders($storeOwner): string
     {
-        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
-
-        if($subscriptionCurrent->getRemainingOrders() > 0) {
+        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner->getStoreOwnerId());
+        if($subscriptionCurrent) {
+            if($subscriptionCurrent->getRemainingOrders() > 0) {
        
-            $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
-          
-            $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription(), $remainingOrders);
-           
-            return SubscriptionConstant::SUBSCRIPTION_OK;
+                $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
+              
+                $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription(), $remainingOrders);
+               
+                return SubscriptionConstant::SUBSCRIPTION_OK;
+            }
         }
 
         return $this->checkSubscription($storeOwner);
@@ -242,11 +240,16 @@ class SubscriptionService
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
     }
 
-       // get count ongoing orders from order Entity , On the basic condition that the order date is within the start and end date of the subscription
-    public function getCountOngoingOrders($subscription): ?INT
+    /**
+     * Get count of ongoing orders within the current subscription date
+     * @param $subscription
+     * @return int|null
+     */
+    public function getCountOngoingOrders($subscription): ?int
     { 
-        //this below line for mode current only, until create order entity
-        return   $countOrders = 5;
+        $countOrders = $this->subscriptionManager->countOrders($subscription);
+
+        return $countOrders['countOrders'];
     }
 
     /**
