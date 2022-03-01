@@ -120,16 +120,11 @@ class StoreOwnerBranchManager
         return StoreOwnerBranch::BRANCH_NOT_FOUND;
     }
 
-    /**
-     * @param StoreOwnerBranchDeleteRequest $request
-     * @return StoreOwnerBranchEntity|string
-     */
-    public function deletebranch(StoreOwnerBranchDeleteRequest $request): StoreOwnerBranchEntity|string
+    public function deleteBranch(StoreOwnerBranchDeleteRequest $request): StoreOwnerBranchEntity|string
     {
         $entity = $this->storeOwnerBranchEntityRepository->find($request->getId());
 
         if ($entity) {
-             
             $entity = $this->autoMapping->mapToObject(StoreOwnerBranchDeleteRequest::class, StoreOwnerBranchEntity::class, $request, $entity);
 
             $this->entityManager->flush();

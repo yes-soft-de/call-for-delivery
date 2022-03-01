@@ -106,11 +106,11 @@ class StoreOwnerBranchService
      * @param StoreOwnerBranchDeleteRequest $request
      * @return StoreOwnerBranchResponse|string
      */
-    public function deletebranch(StoreOwnerBranchDeleteRequest $request): string|StoreOwnerBranchResponse
+    public function deleteBranch(StoreOwnerBranchDeleteRequest $request): string|StoreOwnerBranchResponse
     {
-        $result = $this->storeOwnerBranchManager->deletebranch($request);
-        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND){
+        $result = $this->storeOwnerBranchManager->deleteBranch($request);
 
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND) {
             return StoreOwnerBranch::BRANCH_NOT_FOUND;
         }
 

@@ -429,7 +429,7 @@ class StoreOwnerBranchController extends BaseController
      *      description="branch",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="object", property="isActive"),
+     *          @OA\Property(type="integer", property="isActive"),
      *      )
      * )
      *
@@ -479,13 +479,92 @@ class StoreOwnerBranchController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->storeOwnerBranchService->deletebranch($request);
+        $result = $this->storeOwnerBranchService->deleteBranch($request);
         if($result === StoreOwnerBranch::BRANCH_NOT_FOUND ) {
 
             return $this->response($result, self::ERROR);
         }
 
             return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: Delete an existing branch
+     * @Route("deletebranchbyadmin", name="deleteBranchByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Branch")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="delete branch by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="isActive"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns deleted branch info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *            @OA\Property(type="object", property="location",
+     *              @OA\Property(type="number", property="lat"),
+     *              @OA\Property(type="number", property="lon"),
+     *              ),
+     *            @OA\Property(type="string", property="name"),
+     *            @OA\Property(type="boolean", property="isActive"),
+     *            @OA\Property(type="string", property="city"),
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9201"),
+     *          @OA\Property(type="string", property="msg", description="error Successfully."),
+     *          @OA\Property(type="string", property="Data", description="not found"),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteBranchByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, StoreOwnerBranchDeleteRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->storeOwnerBranchService->deleteBranch($request);
+
+        if($result === StoreOwnerBranch::BRANCH_NOT_FOUND ) {
+            return $this->response($result, self::ERROR);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 
     /**
