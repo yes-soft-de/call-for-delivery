@@ -30,6 +30,8 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
             ->andWhere('storeOwnerBranch.isActive = :active')
             ->setParameter('active', 1)
 
+            ->orderBy('storeOwnerBranch.id', 'DESC')
+
             ->getQuery()
             ->getResult();
     }

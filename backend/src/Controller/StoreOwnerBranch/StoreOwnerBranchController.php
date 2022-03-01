@@ -409,4 +409,40 @@ class StoreOwnerBranchController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin :Get branches of a specific store owner
+     * @Route("branchesbystoreownerid/{storeOwnerId}", name="getBranchesByStoreOwnerId", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param $storeOwnerId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Branch")
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns branches of the store",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                @OA\Property(type="integer", property="id"),
+     *                @OA\Property(type="object", property="location",
+     *                    @OA\Property(type="number", property="lat"),
+     *                    @OA\Property(type="number", property="lon"),
+     *                  ),
+     *                @OA\Property(type="string", property="name"),
+     *                @OA\Property(type="boolean", property="isActive"),
+     *                @OA\Property(type="string", property="city")
+     *           )
+     *      )
+     *  )
+     *
+     */
+    public function getBranchesByStoreOwnerIdForAdmin($storeOwnerId): JsonResponse
+    {
+        $result = $this->storeOwnerBranchService->getActiveBranchesByStoreOwnerIdForAdmin($storeOwnerId);
+
+        return $this->response($result, self::FETCH);
+    }
 }

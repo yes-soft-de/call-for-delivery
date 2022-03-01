@@ -9,6 +9,7 @@ use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
+use App\Response\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
 
 class StoreOwnerBranchService
@@ -112,5 +113,18 @@ class StoreOwnerBranchService
         $branch = $this->storeOwnerBranchManager->getBranchById($id);
 
         return  $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
+    }
+
+    public function getActiveBranchesByStoreOwnerIdForAdmin(int $storeOwnerId): array
+    {
+        $response = [];
+
+        $branches = $this->storeOwnerBranchManager->getActiveBranchesByStoreOwnerIdForAdmin($storeOwnerId);
+
+        foreach($branches as $branch) {
+            $response[] = $this->autoMapping->map('array', StoreOwnerBranchGetForAdminResponse::class, $branch);
+        }
+
+        return $response;
     }
 }

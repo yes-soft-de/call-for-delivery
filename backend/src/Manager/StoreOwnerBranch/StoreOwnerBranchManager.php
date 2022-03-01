@@ -128,4 +128,9 @@ class StoreOwnerBranchManager
     {
        return $this->storeOwnerBranchEntityRepository->find($id);
     }
+
+    public function getActiveBranchesByStoreOwnerIdForAdmin(int $storeOwnerId): ?array
+    {
+        return $this->storeOwnerBranchEntityRepository->getActiveBranchesByStoreOwnerId($storeOwnerId);
+    }
 }
