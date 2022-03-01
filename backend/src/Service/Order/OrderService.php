@@ -36,6 +36,7 @@ class OrderService
 
          $this->subscriptionService->updateRemainingOrders($request->getStoreOwner());
         }
+        
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
@@ -46,7 +47,9 @@ class OrderService
     public function getStoreOrders($userId): ?array
     {
         $response = [];
+       
         $orders = $this->orderManager->getStoreOrders($userId);
+       
         foreach ($orders as $order) {
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
