@@ -94,3 +94,14 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
+
+App\Request\Image\ImageCreateRequest:
+    properties:
+        imagePath:
+            - NotBlank: ~
+        entityType:
+            - NotBlank: ~
+        imageAim:
+            - NotBlank: ~
+        itemId:
+            - NotBlank: ~
