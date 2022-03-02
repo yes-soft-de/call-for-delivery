@@ -1,0 +1,478 @@
+import 'dart:io';
+import 'package:c4d/module_stores/model/stores_model.dart';
+import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_stores/response/stores_response.dart';
+import 'package:c4d/module_stores/ui/state/store_categories/stores_loaded_state.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
+import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/components/stacked_form.dart';
+import 'package:c4d/utils/effect/checked.dart';
+
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+
+
+
+class UpdateStoreWidget extends StatefulWidget {
+  final Function(StoresModel) updateStore;
+  UpdateStoreRequest request;
+
+  UpdateStoreWidget({required this.updateStore,required this.request});
+
+  @override
+  _UpdateStoreWidgetState createState() => _UpdateStoreWidgetState();
+}
+
+class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _cityController;
+
+  late TextEditingController _bankName;
+  late TextEditingController _bankAccountNumber;
+  late TextEditingController _stcPay;
+
+  String? imagePath;
+  String? selectedSize;
+
+
+  TimeOfDay? openingTime;
+  TimeOfDay? closingTime;
+  String? status ;
+  var date = DateTime.now();
+  int val = 1;
+  @override
+  Widget build(BuildContext context) {
+    return StackedForm(
+        child: Form(
+          key: _key,
+          child: Container(
+            width: double.maxFinite,
+            child: Center(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: 600,
+                ),
+                child: CustomListView.custom(
+                    padding: EdgeInsets.only(right: 16, left: 16),
+                    children: [
+                      //store name
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.storeName,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: _nameController,
+                        hintText: S.current.storeName,
+                      ),
+
+                      //store phone
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.phoneNumber,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: _phoneController,
+                        hintText: S.current.phoneNumber,
+                      ),
+
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.city,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: _cityController,
+                        hintText: S.current.city,
+                      ),
+                      // bank name
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.bankName,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: _bankName,
+                        hintText: S.current.bankName,
+                      ),
+
+                      Visibility(
+                        visible: val == 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12.0, bottom: 8, right: 12, top: 16.0),
+                              child: Text(
+                                S.current.bankAccountNumber,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            CustomFormField(
+                              controller: _bankAccountNumber,
+                              hintText: S.current.bankAccountNumber,
+                              validator: val == 1 ? true : false,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: val == 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12.0, bottom: 8, right: 12, top: 16.0),
+                              child: Text(
+                                S.current.stcPayCode,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            CustomFormField(
+                              controller: _stcPay,
+                              hintText: S.current.stcPayCode,
+                              validator: val == 2 ? true : false,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: ListTile(
+                              title: Text(S.of(context).bankAccountNumber,
+                                  style: TextStyle(fontSize: 12)),
+                              leading: Radio(
+                                value: 1,
+                                groupValue: val,
+                                onChanged: (value) {
+                                  val = value as int;
+                                  setState(() {});
+                                },
+                                activeColor: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: ListTile(
+                              title: Text(
+                                S.of(context).stcPayCode,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              leading: Radio(
+                                  value: 2,
+                                  groupValue: val,
+                                  onChanged: (value) {
+                                    val = value as int;
+                                    setState(() {});
+                                  },
+                                  activeColor: Theme.of(context).accentColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+
+                      // store image
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                            child: Text(
+                          S.current.storeImage,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ImagePicker.platform
+                              .getImage(
+                                  source: ImageSource.gallery, imageQuality: 70)
+                              .then((value) {
+                            if (value != null) {
+                              imagePath = value.path;
+                              setState(() {});
+                            }
+                          });
+                        },
+                        child: Checked(
+                          child: Icon(
+                            Icons.image,
+                            size: 150,
+                          ),
+                          checked: imagePath != null && imagePath != '',
+                          checkedWidget: SizedBox(
+                              height: 150,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: imagePath?.contains('http') == true
+                                      ? Image.network(imagePath ?? '')
+                                      : Image.file(
+                                          File(imagePath ?? ''),
+                                          fit: BoxFit.cover,
+                                        ))),
+                        ),
+                      ),
+                      // Store Shift
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 32.0, left: 16, right: 16),
+                        child: Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Text(
+                              S.current.workTime + ' : ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(25),
+                          elevation: 0.5,
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            onTap: () {
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                if (value == null) {
+                                } else {
+                                  openingTime = value;
+                                  setState(() {});
+                                }
+                              });
+                            },
+                            title: Text(S.of(context).openingTime),
+                            trailing: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Theme.of(context).backgroundColor),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    openingTime?.format(context).toString() ??
+                                        '00:00 ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(25),
+                          elevation: 0.5,
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            onTap: () {
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                if (value == null) {
+                                } else {
+                                  closingTime = value;
+                                  setState(() {});
+                                }
+                              });
+                            },
+                            title: Text(S.of(context).closingTime),
+                            trailing: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Theme.of(context).backgroundColor),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    closingTime?.format(context).toString() ??
+                                        '00:00 ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ),
+
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.chooseYourSize,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Theme.of(context).backgroundColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 8.0, left: 8.0),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButtonFormField(
+                                        autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                        elevation: 3,
+                                        validator: (String? value) {
+                                          if (value == null) {
+                                            return S.current
+                                                .chooseYourSize;
+                                          }
+                                        },
+                                        value: selectedSize,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                          S.of(context).chooseYourSize,
+                                          hintMaxLines: 2,
+                                          helperMaxLines: 2,
+                                          border: InputBorder.none,
+                                        ),
+                                        items: _getSizes(context),
+                                        onChanged: (String? value) {
+                                          selectedSize = value;
+                                        }),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100,
+                      ),
+                    ]),
+              ),
+            ),
+          ),
+        ),
+        label: S.current.update,
+        onTap: () {
+          if (_key.currentState!.validate() &&
+              openingTime != null &&
+              closingTime != null) {
+            if (imagePath?.contains('http') == true && widget.request != null) {
+              imagePath = widget.request.image ?? '';
+            }
+            widget.updateStore(
+              StoresModel(
+                id: widget.request.id,
+                  status: status??'active' ,imageUrl: imagePath??'',
+                  storeOwnerName: _nameController.text.trim(),
+                openingTime:
+              DateTime(date.year, date.month, date.day, openingTime!.hour,
+                  openingTime!.minute)
+                  .toUtc(),
+                closingTime:DateTime(date.year, date.month, date.day, closingTime!.hour,
+                    closingTime!.minute)
+                    .toUtc(),
+                phone: _phoneController.text.trim(),
+                city: _cityController.text,
+                bankName: _bankName.text,
+                bankAccountNumber: _bankAccountNumber.text
+              ));
+          } else {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning,
+                    message: S.current.pleaseCompleteTheForm)
+                .show(context);
+          }
+        });
+  }
+
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    _cityController = TextEditingController();
+    _phoneController = TextEditingController();
+    _bankAccountNumber = TextEditingController();
+    _bankName = TextEditingController();
+    _stcPay = TextEditingController();
+
+    if (widget.request != null) {
+      _nameController.text = widget.request.storeOwnerName ?? '';
+      imagePath = widget.request.image ?? null;
+      if (imagePath == '' || imagePath?.contains('/original-image/') == false) {
+        imagePath = null;
+      }
+      openingTime = TimeOfDay.fromDateTime(DateTime.parse(
+          widget.request.openingTime ?? DateTime.now().toString()));
+      closingTime = TimeOfDay.fromDateTime(DateTime.parse(
+          widget.request.closingTime ?? DateTime.now().toString()));
+      status = widget.request.status ?? 'active';
+      _bankAccountNumber.text = widget.request.bankAccountNumber ?? '';
+      _bankName.text = widget.request.bankName ?? '';
+      _stcPay.text = widget.request.stcPay ?? '';
+      val = _bankAccountNumber.text != '' ? 1 : 2;
+      _cityController.text =widget.request.city ?? '';
+      _phoneController.text =widget.request.phone ?? '';
+      selectedSize =widget.request.employeeCount ?? '1-20';
+    }
+    super.initState();
+  }
+  List<DropdownMenuItem<String>> _getSizes(BuildContext context) {
+    var sizeDropdowns = <DropdownMenuItem<String>>[];
+    sizeDropdowns.add(DropdownMenuItem(
+      child: Text(S.of(context).smallLessThan20Employee),
+      value: '1-20',
+    ));
+    sizeDropdowns.add(DropdownMenuItem(
+      child: Text(S.of(context).mediumMoreThan20EmployeesLessThan100),
+      value: '21-100',
+    ));
+    sizeDropdowns.add(DropdownMenuItem(
+      child: Text(S.of(context).largeMoreThan100Employees),
+      value: '+100',
+    ));
+
+    return sizeDropdowns;
+  }
+}

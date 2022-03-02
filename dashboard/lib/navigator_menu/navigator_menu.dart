@@ -2,6 +2,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
+import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -54,6 +55,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
 
             customListTile(getIt<MainModule>().homeScreen, S.current.home,
                 FontAwesomeIcons.home),
+            // Store
+            customExpansionTile(
+                title: S.current.stores,
+                icon: FontAwesomeIcons.store,
+                children: [
+                  customListTile(getIt<StoresModule>().storesScreen,
+                      S.current.storesList, Icons.storefront_rounded, true),
+                  customListTile(
+                      getIt<StoresModule>().storesInActiveScreen,
+                      S.current.storesInActive,
+                      FontAwesomeIcons.storeSlash,
+                      true),
+                ],
+                page: widget.currentPage),
             customListTile(getIt<SettingsModule>().settingsScreen,
                 S.current.settings, FontAwesomeIcons.cog),
           ])),
