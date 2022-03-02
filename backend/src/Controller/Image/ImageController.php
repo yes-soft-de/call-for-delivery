@@ -37,8 +37,8 @@ class ImageController extends BaseController
      *      description="Create new image",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="imagePath"),
-     *          @OA\Property(type="string", property="entityType"),
-     *          @OA\Property(type="string", property="imageAim"),
+     *          @OA\Property(type="integer", property="entityType"),
+     *          @OA\Property(type="integer", property="usedAs"),
      *          @OA\Property(type="integer", property="itemId")
      *      )
      * )
@@ -52,8 +52,8 @@ class ImageController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *                  @OA\Property(type="integer", property="id"),
      *                  @OA\Property(type="string", property="imagePath"),
-     *                  @OA\Property(type="string", property="entityType"),
-     *                  @OA\Property(type="string", property="imageAim"),
+     *                  @OA\Property(type="integer", property="entityType"),
+     *                  @OA\Property(type="integer", property="usedAs"),
      *                  @OA\Property(type="integer", property="itemId")
      *          )
      *      )
@@ -79,10 +79,10 @@ class ImageController extends BaseController
 
     /**
      * Get images. THIS JUST FOR TESTING CREATE IMAGE FUNCTIONS
-     * @Route("images/{itemId}/{entityType}/{imageAim}", name="getImagesByItemIdAndEntityTypeAndImageAim", methods={"GET"})
+     * @Route("images/{itemId}/{entityType}/{usedAs}", name="getImagesByItemIdAndEntityTypeAndImageAim", methods={"GET"})
      * @param int $itemId
-     * @param string $entityType
-     * @param string $imageAim
+     * @param int $entityType
+     * @param int $usedAs
      * @return JsonResponse
      *
      * @OA\Tag(name="Image Test")
@@ -95,11 +95,7 @@ class ImageController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="object", property="image",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
+     *                  @OA\Property(type="string", property="imagePath"),
      *                  @OA\Property(type="string", property="entityType"),
      *                  @OA\Property(type="string", property="imageAim"),
      *                  @OA\Property(type="integer", property="itemId")
@@ -107,10 +103,10 @@ class ImageController extends BaseController
      *      )
      * )
      */
-    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, string $entityType, string $imageAim): JsonResponse
+    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): JsonResponse
     {
-        $response = $this->imageService->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $imageAim);
+        $response = $this->imageService->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
 
-        return $this->response($response, self::CREATE);
+        return $this->response($response, self::FETCH);
     }
 }

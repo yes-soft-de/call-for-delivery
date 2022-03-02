@@ -8,9 +8,9 @@ class ImageCreateResponse
 
     public string $imagePath;
 
-    public string $entityType;
+    public int $entityType;
 
-    public string $imageAim;
+    public int $usedAs;
 
     public int $itemId;
 }

@@ -14,7 +14,7 @@ class ImageManager
     {
     }
 
-    public function create(ImageCreateRequest $request)
+    public function create(ImageCreateRequest $request): ImageEntity
     {
         $imageEntity = $this->autoMapping->map(ImageCreateRequest::class, ImageEntity::class, $request);
 
@@ -24,8 +24,8 @@ class ImageManager
         return $imageEntity;
     }
 
-    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, string $entityType, string $imageAim): ?array
+    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?array
     {
-        return $this->imageEntityRepository->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $imageAim);
+        return $this->imageEntityRepository->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
     }
 }

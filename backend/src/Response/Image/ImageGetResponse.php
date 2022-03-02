@@ -10,7 +10,7 @@ class ImageGetResponse
 
     public $entityType;
 
-    public $imageAim;
+    public $usedAs;
 
     public $itemId;
 }

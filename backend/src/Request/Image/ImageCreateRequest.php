@@ -8,7 +8,7 @@ class ImageCreateRequest
 
     private $entityType;
 
-    private $imageAim;
+    private $usedAs;
 
     private $itemId;
 
@@ -17,14 +17,14 @@ class ImageCreateRequest
         $this->imagePath = $imagePath;
     }
 
-    public function setEntityType(string $entityType): void
+    public function setEntityType(int $entityType): void
     {
         $this->entityType = $entityType;
     }
 
-    public function setImageAim(string $imageAim): void
+    public function setUsedAs(int $usedAs): void
     {
-        $this->imageAim = $imageAim;
+        $this->usedAs = $usedAs;
     }
 
     public function setItemId(int $itemId): void

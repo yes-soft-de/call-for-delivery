@@ -16,14 +16,14 @@ class ImageEntity
     #[ORM\Column(type: 'string', length: 255)]
     private $imagePath;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'integer')]
     private $entityType;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $imageAim;
 
     #[ORM\Column(type: 'integer')]
     private $itemId;
+
+    #[ORM\Column(type: 'integer')]
+    private $usedAs;
 
     public function getId(): ?int
     {
@@ -42,26 +42,14 @@ class ImageEntity
         return $this;
     }
 
-    public function getEntityType(): ?string
+    public function getEntityType(): ?int
     {
         return $this->entityType;
     }
 
-    public function setEntityType(string $entityType): self
+    public function setEntityType(int $entityType): self
     {
         $this->entityType = $entityType;
-
-        return $this;
-    }
-
-    public function getImageAim(): ?string
-    {
-        return $this->imageAim;
-    }
-
-    public function setImageAim(string $imageAim): self
-    {
-        $this->imageAim = $imageAim;
 
         return $this;
     }
@@ -74,6 +62,18 @@ class ImageEntity
     public function setItemId(int $itemId): self
     {
         $this->itemId = $itemId;
+
+        return $this;
+    }
+
+    public function getUsedAs(): ?int
+    {
+        return $this->usedAs;
+    }
+
+    public function setUsedAs(int $usedAs): self
+    {
+        $this->usedAs = $usedAs;
 
         return $this;
     }

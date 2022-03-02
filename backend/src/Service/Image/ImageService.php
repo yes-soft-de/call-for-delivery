@@ -19,24 +19,22 @@ class ImageService
         $this->params = $params->get('upload_base_url') . '/';
     }
 
-    public function create(ImageCreateRequest $request)
+    public function create(ImageCreateRequest $request): ImageCreateResponse
     {
         $imageResult = $this->imageManager->create($request);
 
         return $this->autoMapping->map(ImageEntity::class, ImageCreateResponse::class, $imageResult);
     }
 
-    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, string $entityType, string $imageAim): ?array
+    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?array
     {
         $response = [];
 
-        $imagesResult = $this->imageManager->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $imageAim);
+        $imageEntityResults = $this->imageManager->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
 
-        if($imagesResult) {
-            foreach ($imagesResult as $image) {
-                $image['image'] = $this->getImageParams($image['imagePath'], $this->params.$image['imagePath'], $this->params);
-
-                $response[] = $this->autoMapping->map('array', ImageGetResponse::class, $image);
+        if($imageEntityResults) {
+            foreach ($imageEntityResults as $imageEntity) {
+                $response[] = $this->autoMapping->map(ImageEntity::class, ImageGetResponse::class, $imageEntity);
             }
         }
 

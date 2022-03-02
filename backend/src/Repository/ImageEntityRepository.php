@@ -19,10 +19,9 @@ class ImageEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ImageEntity::class);
     }
 
-    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, string $entityType, string $imageAim): ?array
+    public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?array
     {
         return $this->createQueryBuilder('image')
-            ->select('image.id', 'image.entityType', 'image.imageAim', 'image.imagePath', 'image.itemId')
 
             ->andWhere('image.itemId = :itemId')
             ->setParameter('itemId', $itemId)
@@ -30,8 +29,8 @@ class ImageEntityRepository extends ServiceEntityRepository
             ->andWhere('image.entityType = :entityType')
             ->setParameter('entityType', $entityType)
 
-            ->andWhere('image.imageAim = :imageAim')
-            ->setParameter('imageAim', $imageAim)
+            ->andWhere('image.usedAs = :usedAs')
+            ->setParameter('usedAs', $usedAs)
 
             ->orderBy('image.id', 'DESC')
 

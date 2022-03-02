@@ -4,9 +4,9 @@ namespace App\Constant\Image;
 
 final class ImageEntityTypeConstant
 {
-    const ENTITY_TYPE_ORDER = "order";
+    const ENTITY_TYPE_ORDER = 0;
 
-    const ENTITY_TYPE_STORE_OWNER_PROFILE = "storeOwnerProfile";
+    const ENTITY_TYPE_STORE_OWNER_PROFILE = 1;
 
-    const ENTITY_TYPE_CAPTAIN_PROFILE = "captainProfile";
+    const ENTITY_TYPE_CAPTAIN_PROFILE = 2;
 }
