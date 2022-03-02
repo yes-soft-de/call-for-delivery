@@ -55,7 +55,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
-             'packageEntity.orderCount as packageOrderCount')
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
              'subscriptionDetailsEntity.status')
