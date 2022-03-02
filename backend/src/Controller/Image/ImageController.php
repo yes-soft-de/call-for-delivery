@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 
 /**
- * @Route("v1/imagetest/")
+ * @Route("v1/image/")
  */
 class ImageController extends BaseController
 {
