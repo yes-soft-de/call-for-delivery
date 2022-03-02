@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\StoreOwnerBranch;
+namespace App\Request\Admin\StoreOwnerBranch;
 
 class StoreOwnerMultipleBranchesCreateByAdminRequest
 {

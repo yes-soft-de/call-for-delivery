@@ -4,14 +4,14 @@ namespace App\Request\StoreOwnerBranch;
 
 class StoreOwnerBranchDeleteRequest
 {
-    private $id;
+    private int $id;
 
-    private $isActive;
+    private bool $isActive;
 
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

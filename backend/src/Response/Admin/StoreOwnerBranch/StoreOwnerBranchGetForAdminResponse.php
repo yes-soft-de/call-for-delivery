@@ -1,16 +1,25 @@
 <?php
 
-namespace App\Response\StoreOwnerBranch;
+namespace App\Response\Admin\StoreOwnerBranch;
 
 class StoreOwnerBranchGetForAdminResponse
 {
-    public $id;
+    public int $id;
 
-    public $location;
+    public array $location;
 
+    /**
+     * @var string|null
+     */
     public $city;
 
+    /**
+     * @var string|null
+     */
     public $name;
 
+    /**
+     * @var bool|null
+     */
     public $isActive;
 }
