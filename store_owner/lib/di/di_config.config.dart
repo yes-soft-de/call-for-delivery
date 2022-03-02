@@ -295,8 +295,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
           get<_i27.ImageUploadService>()));
   gh.factory<_i76.MyNotificationsModule>(
       () => _i76.MyNotificationsModule(get<_i63.MyNotificationsScreen>()));
-  gh.factory<_i77.NewOrderStateManager>(() => _i77.NewOrderStateManager(
-      get<_i64.OrdersService>(), get<_i50.ProfileService>()));
+  gh.factory<_i77.NewOrderStateManager>(
+      () => _i77.NewOrderStateManager(get<_i64.OrdersService>()));
   gh.factory<_i78.OrderStatusStateManager>(() => _i78.OrderStatusStateManager(
       get<_i64.OrdersService>(), get<_i23.AuthService>()));
   gh.factory<_i79.OwnerOrdersScreen>(() => _i79.OwnerOrdersScreen(

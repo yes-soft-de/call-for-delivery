@@ -4719,6 +4719,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Choose Branch`
+  String get chooseBranch {
+    return Intl.message(
+      'Choose Branch',
+      name: 'chooseBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order created successfully`
+  String get orderCreatedSuccessfully {
+    return Intl.message(
+      'Order created successfully',
+      name: 'orderCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new order`
+  String get confirmMakeOrder {
+    return Intl.message(
+      'Are you sure about creating new order',
+      name: 'confirmMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

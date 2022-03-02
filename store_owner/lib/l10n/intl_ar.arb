@@ -467,7 +467,10 @@
     "subscriptionStatus": "حالة الاشتراك",
     "inactive": "غير مفعل",
     "expirationData": "تاريخ الانتهاء",
-    "ExpiredSubscriptions": "اشتراكك منتهي الصلاحية الرجاء تجديده"
+    "ExpiredSubscriptions": "اشتراكك منتهي الصلاحية الرجاء تجديده",
+    "chooseBranch": "اختر الفرع",
+    "confirmMakeOrder": "هل انت متأكد من رغبتك في إنشاء طلب جديد",
+    "orderCreatedSuccessfully": "تم إنشاء الطلب بنجاح"
 
 
 

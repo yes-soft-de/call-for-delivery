@@ -109,7 +109,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                   value.length < 9) {
                                 clean = false;
                                 return S.of(context).phoneNumbertooShort;
-                              } else if (widget.phone && value.length > 9) {
+                              } else if (widget.phone && value.length > (widget.maxLength ?? 9)) {
                                 return S.current.phoneNumberLong;
                               } else if (widget.password &&
                                   widget.confirmationPassword != null &&

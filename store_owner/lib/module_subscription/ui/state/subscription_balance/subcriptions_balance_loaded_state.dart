@@ -207,14 +207,14 @@ class SubscriptionBalanceLoadedState extends States {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.primary),
+                color: danger
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).colorScheme.primary),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.sync_alt_rounded,
-                color: danger
-                    ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).textTheme.button?.color,
+                color: Theme.of(context).textTheme.button?.color,
               ),
             ),
           ),

@@ -232,8 +232,8 @@ class FromBranch {
 class GeoJson {
   double? lat;
   double? lon;
-
-  GeoJson({this.lat, this.lon});
+  String? link;
+  GeoJson({this.lat, this.lon, this.link});
 
   GeoJson.fromJson(dynamic data) {
     var json = <String, dynamic>{};
@@ -261,6 +261,7 @@ class GeoJson {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['lat'] = this.lat;
     data['lon'] = this.lon;
+    data['link'] = this.link;
     return data;
   }
 }
