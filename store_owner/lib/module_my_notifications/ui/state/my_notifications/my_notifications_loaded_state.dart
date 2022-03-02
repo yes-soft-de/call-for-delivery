@@ -22,46 +22,53 @@ class MyNotificationsLoadedState extends States {
         title: S.current.notifications,
       ),
       body: Container(
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: RefreshIndicator(
-          onRefresh: () {
-            return screenState.getNotifications();
-          },
-          child: ListView(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            children: [
-              MyNotificationsAppBar(),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 10.0,
-                  left: 10,
+            onRefresh: () {
+              return screenState.getNotifications();
+            },
+            child: Stack(
+              children: [
+                Center(
+                    child: Image.asset(
+                  'assets/images/notifications.png',
+                  width: 220,
+                )),
+                ListView(
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 10.0,
+                        left: 10,
+                      ),
+                      child: ListTile(
+                        leading: FaIcon(
+                          FontAwesomeIcons.sortAmountDown,
+                          color: Theme.of(context).disabledColor,
+                          size: 18,
+                        ),
+                        title: Text(
+                          S.of(context).sortByEarlier,
+                          style: StyleText.categoryStyle,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: ListView(
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          children: getNotification(context)),
+                    ),
+                    SizedBox(
+                      height: 75,
+                    ),
+                  ],
                 ),
-                child: ListTile(
-                  leading: FaIcon(
-                    FontAwesomeIcons.sortAmountDown,
-                    color: Theme.of(context).primaryColor,
-                    size: 18,
-                  ),
-                  title: Text(
-                    S.of(context).sortByEarlier,
-                    style: StyleText.categoryStyle,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    children: getNotification(context)),
-              ),
-              SizedBox(
-                height: 75,
-              ),
-            ],
-          ),
-        ),
+              ],
+            )),
       ),
     );
   }
@@ -74,7 +81,7 @@ class MyNotificationsLoadedState extends States {
         child: ListTile(
           leading: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
                 color: Theme.of(context).backgroundColor),
             child: Padding(
               padding: const EdgeInsets.all(8.0),

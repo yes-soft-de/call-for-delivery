@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_my_notifications/notification_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -24,7 +25,7 @@ class MyNotificationsStateManager {
     if (_authService.isLoggedIn) {
       _stateSubject.add(LoadingState(screenState));
       _myNotificationsService.getNotification().then((value) {
-        if (value.hasError) {
+        if (value.hasError == false) {
           _stateSubject.add(ErrorState(screenState,
               title: S.current.notifications,
               error: value.error ?? S.current.errorHappened, onPressed: () {
@@ -36,8 +37,13 @@ class MyNotificationsStateManager {
             getNotifications(screenState);
           }, title: ''));
         } else {
-          _stateSubject
-              .add(MyNotificationsLoadedState(screenState, value.data));
+          _stateSubject.add(MyNotificationsLoadedState(screenState, [
+            NotificationModel(
+                orderNumber:'-1',
+                title: S.current.notifications,
+                body: S.current.ExpiredSubscriptions,
+                date: '2022-3-1')
+          ]));
         }
       });
     } else {
