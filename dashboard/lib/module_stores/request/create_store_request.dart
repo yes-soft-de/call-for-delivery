@@ -30,7 +30,7 @@ class UpdateStoreRequest {
     map['id'] = id;
     map['storeOwnerName'] = storeOwnerName;
     map['phone'] = phone;
-    map['image'] = image;
+    map['images'] = image;
     map['closingTime'] = closingTime;
     map['openingTime'] = openingTime;
     map['status'] = status;
