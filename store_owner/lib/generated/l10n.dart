@@ -2041,10 +2041,10 @@ class S {
   }
 
   /// `Your subscription not activate yet please wait`
-  String get inactive {
+  String get SubscriptionInactive {
     return Intl.message(
       'Your subscription not activate yet please wait',
-      name: 'inactive',
+      name: 'SubscriptionInactive',
       desc: '',
       args: [],
     );
@@ -4665,6 +4665,56 @@ class S {
     return Intl.message(
       'Choose package category',
       name: 'choosePackageCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message(
+      'Active',
+      name: 'active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription status`
+  String get subscriptionStatus {
+    return Intl.message(
+      'Subscription status',
+      name: 'subscriptionStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive`
+  String get inactive {
+    return Intl.message(
+      'Inactive',
+      name: 'inactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration date`
+  String get expirationData {
+    return Intl.message(
+      'Expiration date',
+      name: 'expirationData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expired subscriptions please renew your subscription`
+  String get ExpiredSubscriptions {
+    return Intl.message(
+      'Expired subscriptions please renew your subscription',
+      name: 'ExpiredSubscriptions',
       desc: '',
       args: [],
     );

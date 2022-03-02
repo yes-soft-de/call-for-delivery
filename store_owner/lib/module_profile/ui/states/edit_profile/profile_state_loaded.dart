@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
 import 'package:c4d/module_profile/ui/states/edit_profile/update_profile_state_loaded.dart';
+import 'package:c4d/module_profile/ui/widget/custom_list_tile.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -65,15 +66,27 @@ class ProfileStateInit extends States {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            customListTile(
+                            CustomListTile(
                                 title: S.of(context).name,
                                 subTitle: profileModel.name,
                                 iconData: Icons.person_rounded),
-                            customListTile(
+                            CustomListTile(
                                 title: S.of(context).phoneNumber,
                                 subTitle: '+' + profileModel.phone,
                                 iconData: Icons.phone),
-                            customListTile(
+                            CustomListTile(
+                                title: S.of(context).city,
+                                subTitle: profileModel.city,
+                                iconData: Icons.location_city_rounded),
+                            CustomListTile(
+                                title: S.of(context).bankName,
+                                subTitle: profileModel.bankName,
+                                iconData: Icons.account_balance_rounded),
+                            CustomListTile(
+                                title: S.of(context).bankAccountNumber,
+                                subTitle: profileModel.bankNumber,
+                                iconData: Icons.credit_card_rounded),
+                            CustomListTile(
                                 title: S.of(context).employeeSize,
                                 subTitle: profileModel.employeeCount == '1-20'
                                     ? S.current.smallLessThan20Employee
@@ -82,7 +95,7 @@ class ProfileStateInit extends States {
                                             .mediumMoreThan20EmployeesLessThan100
                                         : S.current.largeMoreThan100Employees,
                                 iconData: Icons.people),
-                            customListTile(
+                            CustomListTile(
                                 title: S.of(context).myStatus,
                                 subTitle: profileModel.status,
                                 iconData: Icons.manage_accounts_rounded),
@@ -101,52 +114,5 @@ class ProfileStateInit extends States {
                   UpdateProfileStateLoaded(screenState, profileModel);
               screenState.refresh();
             }));
-  }
-
-  Widget customListTile(
-      {required String title, String? subTitle, required IconData iconData}) {
-    Widget? icon;
-    var context = screenState.context;
-    if (title == S.current.myStatus) {
-      icon = PhysicalModel(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 5,
-          shape: BoxShape.circle,
-          child: Icon(
-            Icons.circle,
-            color: subTitle == 'active' ? Colors.green : Colors.red,
-            size: 30,
-          ));
-      subTitle = subTitle == 'active'
-          ? S.current.accountActivated
-          : S.current.accountInActivated;
-    }
-    return ListTile(
-      leading: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(iconData,
-                color: Theme.of(context).colorScheme.primaryContainer),
-          )),
-      title: Text(
-        title,
-      ),
-      trailing: icon,
-      subtitle: Text(
-        subTitle ?? S.current.unknown,
-        textDirection: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextDirection.ltr
-            : null,
-        textAlign: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextAlign.right
-            : null,
-      ),
-    );
   }
 }

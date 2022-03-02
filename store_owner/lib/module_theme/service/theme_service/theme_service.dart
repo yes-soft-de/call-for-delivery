@@ -24,7 +24,11 @@ class AppThemeDataService {
     var dark = _preferencesHelper.isDarkMode();
     final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: PrimaryColor, brightness: Brightness.dark);
+        seedColor: PrimaryColor, brightness: Brightness.dark,
+        error: Colors.red[900],
+        errorContainer: Colors.red[100],
+        primary: Colors.grey[900]
+        );
     if (dark == true) {
       mapStyle(dark);
       return ThemeData(

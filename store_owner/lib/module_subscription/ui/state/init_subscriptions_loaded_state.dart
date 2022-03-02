@@ -95,8 +95,15 @@ class InitSubscriptionsLoadedState extends States {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Text(S.current.emptyPackagesCategory,style: Theme.of(context).textTheme.bodyLarge,),
-                      SvgPicture.asset(SvgAsset.EMPTY_SVG,width: 125,height: 125,)
+                      Text(
+                        S.current.emptyPackagesCategory,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      SvgPicture.asset(
+                        SvgAsset.EMPTY_SVG,
+                        width: 125,
+                        height: 125,
+                      )
                     ],
                   ),
                 )),
@@ -104,7 +111,7 @@ class InitSubscriptionsLoadedState extends States {
             Visibility(
               visible: _packages.isNotEmpty,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0,top: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                 child: Container(
                   width: double.maxFinite,
                   decoration: BoxDecoration(

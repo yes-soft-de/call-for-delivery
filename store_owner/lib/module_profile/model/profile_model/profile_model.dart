@@ -32,10 +32,10 @@ class ProfileModel extends DataModel {
         imageUrl: data?.images?.imageUrl,
         name: data?.storeOwnerName ?? S.current.unknown,
         phone: data?.phone ?? S.current.unknown,
-        bankNumber: '',
-        bankName: '',
+        bankNumber: data?.bankNumber ?? '',
+        bankName: data?.bankName ?? '',
         stcPay: '',
-        city: '',
+        city: data?.city ?? '',
         employeeCount: data?.employeeCount,
         status: data?.status ?? 'inActive');
   }

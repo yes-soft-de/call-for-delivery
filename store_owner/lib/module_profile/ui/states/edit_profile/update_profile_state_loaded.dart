@@ -23,7 +23,8 @@ class UpdateProfileStateLoaded extends States {
   UpdateProfileStateLoaded(this.screenState, this.profileModel)
       : super(screenState) {
     var number = profileModel.phone;
-    if (number.isNotEmpty || number == '') {
+    if (number == S.current.unknown) number = '';
+    if (number.isNotEmpty || number != '') {
       final sNumber =
           TheCountryNumber().parseNumber(internationalNumber: '+' + number);
       if (sNumber.dialCode.length > 0) {

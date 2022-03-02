@@ -22,11 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
+            "اشتراكك منتهي الصلاحية الرجاء تجديده"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
             "لم يتمكن الخادم من العثور على طلبك"),
+        "SubscriptionInactive": MessageLookupByLibrary.simpleMessage(
+            "اشتراكك غير مفعل بعد الرجاء انتظار التفعيل من قبل الإدارة"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
@@ -43,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
+        "active": MessageLookupByLibrary.simpleMessage("مفعل"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
@@ -233,6 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
+        "expirationData":
+            MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
@@ -278,8 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصلت على الطلب"),
         "iHaveAnAccount": MessageLookupByLibrary.simpleMessage("لدي حساب"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
-        "inactive": MessageLookupByLibrary.simpleMessage(
-            "اشتراكك غير مفعل بعد الرجاء انتظار التفعيل من قبل الإدارة"),
+        "inactive": MessageLookupByLibrary.simpleMessage("غير مفعل"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "سنقوم بأرسال كود تحقق الى رقمك"),
@@ -616,6 +622,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscriptionStatus":
+            MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":

@@ -25,7 +25,7 @@ class ProfileRequest {
     if (this.image != null) {
       data['images'] = this.image;
     }
-    //  data['city'] = this.city;
+    data['city'] = this.city;
     data['bankName'] = this.bankName ?? '';
     data['bankAccountNumber'] = this.bankAccountNumber ?? '';
     data['employeeCount'] = this.employeeSize;

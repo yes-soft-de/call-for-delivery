@@ -1,0 +1,104 @@
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:c4d/module_my_notifications/notification_model.dart';
+import 'package:c4d/module_my_notifications/ui/screen/my_notifications_screen.dart';
+import 'package:c4d/module_my_notifications/ui/widget/my_notifications/my_notifications_app_bar.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
+
+import 'package:c4d/utils/text_style/text_style.dart';
+
+class MyNotificationsLoadedState extends States {
+  MyNotificationsScreenState screenState;
+  List<NotificationModel> model;
+  MyNotificationsLoadedState(this.screenState, this.model) : super(screenState);
+
+  @override
+  Widget getUI(BuildContext context) {
+    return Scaffold(
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.notifications,
+      ),
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: RefreshIndicator(
+            onRefresh: () {
+              return screenState.getNotifications();
+            },
+            child: Stack(
+              children: [
+                Center(
+                    child: Image.asset(
+                  'assets/images/notifications.png',
+                  width: 220,
+                )),
+                ListView(
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 10.0,
+                        left: 10,
+                      ),
+                      child: ListTile(
+                        leading: FaIcon(
+                          FontAwesomeIcons.sortAmountDown,
+                          color: Theme.of(context).disabledColor,
+                          size: 18,
+                        ),
+                        title: Text(
+                          S.of(context).sortByEarlier,
+                          style: StyleText.categoryStyle,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: ListView(
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          children: getNotification(context)),
+                    ),
+                    SizedBox(
+                      height: 75,
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+
+  List<Widget> getNotification(BuildContext context) {
+    List<Widget> children = [];
+    model.forEach((element) {
+      children.add(Padding(
+        padding: EdgeInsets.only(top: 8, bottom: 8),
+        child: ListTile(
+          leading: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).backgroundColor),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.notifications),
+            ),
+          ),
+          title: Text(element.title),
+          subtitle: Text(element.body),
+          trailing: Container(
+              height: double.maxFinite,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 14.0),
+                child: Text(element.date),
+              )),
+        ),
+      ));
+    });
+    return children;
+  }
+}

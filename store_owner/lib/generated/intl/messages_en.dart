@@ -22,11 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
+            "Expired subscriptions please renew your subscription"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
             MessageLookupByLibrary.simpleMessage("Data not found"),
+        "SubscriptionInactive": MessageLookupByLibrary.simpleMessage(
+            "Your subscription not activate yet please wait"),
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
@@ -44,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
+        "active": MessageLookupByLibrary.simpleMessage("Active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
@@ -234,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, Exceeded time allowed"),
+        "expirationData":
+            MessageLookupByLibrary.simpleMessage("Expiration date"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
@@ -283,8 +290,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
-        "inactive": MessageLookupByLibrary.simpleMessage(
-            "Your subscription not activate yet please wait"),
+        "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "We will send a verification code to your number"),
@@ -618,6 +624,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscriptionStatus":
+            MessageLookupByLibrary.simpleMessage("Subscription status"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "successRenew": MessageLookupByLibrary.simpleMessage(

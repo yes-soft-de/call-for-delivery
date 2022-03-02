@@ -1,3 +1,5 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavTile extends StatelessWidget {
@@ -10,6 +12,7 @@ class CustomNavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: SizedBox(
@@ -34,12 +37,16 @@ class CustomNavTile extends StatelessWidget {
                   //       blurRadius: 6,
                   //       offset: Offset(-0.2, 0)),
                   // ],
-                  color: Theme.of(context).colorScheme.primaryContainer,
+                  color: isDark
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).colorScheme.primaryContainer,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      Icon(icon, color: Theme.of(context).colorScheme.primary),
+                  child: Icon(icon,
+                      color: isDark
+                          ? null
+                          : Theme.of(context).colorScheme.primary),
                 ),
               ),
               title: Text(title),

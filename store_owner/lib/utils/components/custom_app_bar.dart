@@ -1,3 +1,5 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/global/screen_type.dart';
 
@@ -10,6 +12,7 @@ class CustomC4dAppBar {
       IconData? icon,
       bool canGoBack = true,
       List<Widget>? actions}) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     if (icon == Icons.menu && ScreenType.isDesktop(context)) {
       icon = null;
       onTap = null;
@@ -47,7 +50,9 @@ class CustomC4dAppBar {
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(icon ?? Icons.arrow_back,
                           color: colorIcon ??
-                              Theme.of(context).colorScheme.primary),
+                              (isDark
+                                  ? null
+                                  : Theme.of(context).colorScheme.primary)),
                     ),
                   ),
                 ),
@@ -64,6 +69,7 @@ class CustomC4dAppBar {
       Color? buttonBackground,
       required IconData icon,
       Color? colorIcon}) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -85,7 +91,8 @@ class CustomC4dAppBar {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(icon,
-                color: colorIcon ?? Theme.of(context).colorScheme.primary),
+                color: colorIcon ??
+                    (isDark ? null : Theme.of(context).colorScheme.primary)),
           ),
         ),
       ),

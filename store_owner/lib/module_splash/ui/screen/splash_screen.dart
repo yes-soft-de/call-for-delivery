@@ -56,7 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String> needForLogging(bool login) async {
     if (login) {
-      return SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN;
       await getIt<AuthService>().accountStatus();
       return AuthPrefsHelper().getAccountStatusPhase();
     } else if (AboutHiveHelper().getWelcome()) {
