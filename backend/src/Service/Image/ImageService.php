@@ -10,7 +10,7 @@ use App\Response\Image\ImageCreateResponse;
 use App\Response\Image\ImageGetResponse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ImageService
+class ImageService implements ImageServiceInterface
 {
     private string $params;
 
