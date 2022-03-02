@@ -8,15 +8,12 @@ use App\Manager\Image\ImageManager;
 use App\Request\Image\ImageCreateRequest;
 use App\Response\Image\ImageCreateResponse;
 use App\Response\Image\ImageGetResponse;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class ImageService implements ImageServiceInterface
 {
-    private string $params;
-
-    public function __construct(private AutoMapping $autoMapping, private ImageManager $imageManager, ParameterBagInterface $params)
+    public function __construct(private AutoMapping $autoMapping, private ImageManager $imageManager, private UploadFileHelperService $uploadFileHelperService)
     {
-        $this->params = $params->get('upload_base_url') . '/';
     }
 
     public function create(ImageCreateRequest $request): ImageCreateResponse
@@ -34,19 +31,14 @@ class ImageService implements ImageServiceInterface
 
         if($imageEntityResults) {
             foreach ($imageEntityResults as $imageEntity) {
-                $response[] = $this->autoMapping->map(ImageEntity::class, ImageGetResponse::class, $imageEntity);
+                $imageResponse = $this->autoMapping->map(ImageEntity::class, ImageGetResponse::class, $imageEntity);
+
+                $imageResponse->image = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+
+                $response[] = $imageResponse;
             }
         }
 
         return $response;
-    }
-
-    public function getImageParams($imageURL, $image, $baseURL): array
-    {
-        $item['imageURL'] = $imageURL;
-        $item['image'] = $image;
-        $item['baseURL'] = $baseURL;
-
-        return $item;
     }
 }

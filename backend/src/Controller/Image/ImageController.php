@@ -37,7 +37,11 @@ class ImageController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="imagePath"),
+     *                  @OA\Property(type="object", property="image",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  ),
      *                  @OA\Property(type="string", property="entityType"),
      *                  @OA\Property(type="string", property="imageAim"),
      *                  @OA\Property(type="integer", property="itemId")
