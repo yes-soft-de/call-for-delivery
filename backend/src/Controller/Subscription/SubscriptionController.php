@@ -186,7 +186,7 @@ class SubscriptionController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", description="9302"),
      *          @OA\Property(type="string", property="msg", description="You do not have a subscription Successfully."),
-     *          @OA\Property(type="string", property="Data", description="error"),
+     *          @OA\Property(type="string", property="Data", description="unsubscribed"),
      *      )
      * )
      * 

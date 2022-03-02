@@ -14,4 +14,5 @@ class RemainingOrdersResponse
     public $endDate;
     public $packageCarCount;
     public $packageOrderCount;
+    public $expired;
 }
