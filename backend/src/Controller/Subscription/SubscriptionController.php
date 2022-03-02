@@ -196,7 +196,7 @@ class SubscriptionController extends BaseController
     {
         $result = $this->subscriptionService->packageBalance($this->getUserId());
        
-        if( $result === SubscriptionConstant::UNSUBSCRIBED ) {
+        if( $result->status === SubscriptionConstant::UNSUBSCRIBED ) {
 
             return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
         }

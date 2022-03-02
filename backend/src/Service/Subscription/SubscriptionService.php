@@ -79,7 +79,9 @@ class SubscriptionService
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
        }
 
-       return SubscriptionConstant::UNSUBSCRIBED;
+       $subscription['status'] =SubscriptionConstant::UNSUBSCRIBED;
+      
+       return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
     }
 
     /**
