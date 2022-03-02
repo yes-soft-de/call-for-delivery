@@ -135,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "Please update your current location if you want to"),
+        "chooseBranch": MessageLookupByLibrary.simpleMessage("Choose Branch"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("Choose Destination Location"),
         "chooseLocation":
@@ -164,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
+        "confirmMakeOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
@@ -386,6 +389,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
             "Order Created, Return to Orders"),
+        "orderCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
