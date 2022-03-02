@@ -186,8 +186,19 @@ class SubscriptionController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", description="9302"),
      *          @OA\Property(type="string", property="msg", description="You do not have a subscription Successfully."),
-     *          @OA\Property(type="string", property="Data", description="unsubscribed"),
-     *      )
+     *          @OA\Property(type="object", property="Data",
+     *                @OA\Property(type="integer", property="id"),
+     *                @OA\Property(type="integer", property="packageID"),
+     *                @OA\Property(type="string", property="packageName"),
+     *                @OA\Property(type="integer", property="remainingOrders"),
+     *                @OA\Property(type="integer", property="remainingCars"),
+     *                @OA\Property(type="object", property="status"),
+     *                @OA\Property(type="object", property="startDate"),
+     *                @OA\Property(type="integer", property="endDate"),
+     *                @OA\Property(type="integer", property="packageCarCount"),
+     *                @OA\Property(type="integer", property="packageOrderCount"),
+     *        )
+     *     )
      * )
      * 
      * @Security(name="Bearer")
