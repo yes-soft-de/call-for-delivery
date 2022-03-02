@@ -308,6 +308,7 @@ class NewOrderStateBranchesLoaded extends States {
                 builder: (context) {
                   return CustomAlertDialog(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         createOrder();
                       },
                       content: S.current.confirmMakeOrder);
