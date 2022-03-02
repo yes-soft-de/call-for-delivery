@@ -9,6 +9,7 @@ import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subcriptions_balance_loaded_state.dart';
+import 'package:c4d/module_subscription/ui/state/subscription_balance/subscription_balance_error.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
@@ -35,14 +36,19 @@ class SubscriptionBalanceStateManager {
     _stateSubject.add(LoadingState(screenState));
     _initAccountService.getSubscriptionBalance().then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getBalance(screenState);
-        }, title: S.current.storeAccountInit, error: value.error));
+        if (S.current.notSubscription != value.error) {
+          _stateSubject.add(ErrorState(screenState, onPressed: () {
+            getBalance(screenState);
+          }, title: S.current.mySubscription, error: value.error));
+        } else {
+          _stateSubject.add(SubscriptionErrorLoadedState(screenState,
+              error: value.error ?? S.current.notSubscription));
+        }
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getBalance(screenState);
         },
-            title: S.current.storeAccountInit,
+            title: S.current.mySubscription,
             emptyMessage: S.current.homeDataEmpty));
       } else {
         value as SubscriptionBalanceModel;
@@ -51,5 +57,4 @@ class SubscriptionBalanceStateManager {
       }
     });
   }
-
 }

@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/widget/single_package_card.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class SubscriptionBalanceLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context, title: S.current.mySubscription),
       body: SingleChildScrollView(
@@ -209,7 +212,9 @@ class SubscriptionBalanceLoadedState extends States {
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.sync_alt_rounded,
-                color: Theme.of(context).textTheme.button?.color,
+                color: danger
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).textTheme.button?.color,
               ),
             ),
           ),
@@ -281,7 +286,6 @@ class SubscriptionBalanceLoadedState extends States {
 
   Widget _getCarsRow(BuildContext context, int filled, int empty,
       [bool danger = false]) {
-    var rtl = Directionality.of(context) == TextDirection.rtl;
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Flex(
