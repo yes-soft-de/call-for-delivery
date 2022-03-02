@@ -1,4 +1,6 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -16,6 +18,8 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? icon;
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
+
     if (title == S.current.myStatus) {
       icon = PhysicalModel(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -39,7 +43,7 @@ class CustomListTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(iconData,
-                color: Theme.of(context).colorScheme.primaryContainer),
+                color:isDark ? null : Theme.of(context).colorScheme.primaryContainer),
           )),
       title: Text(
         title,

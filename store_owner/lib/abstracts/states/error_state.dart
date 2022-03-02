@@ -25,7 +25,7 @@ class ErrorState extends States {
   Widget getUI(BuildContext context) {
     return Scaffold(
       appBar: hasAppbar
-          ? CustomC4dAppBar.appBar(context, title: title, colorIcon: Colors.red)
+          ? CustomC4dAppBar.appBar(context, title: title, colorIcon: Theme.of(context).colorScheme.error)
           : null,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(
@@ -45,7 +45,7 @@ class ErrorState extends States {
                     size: 28.0,
                     color: Colors.white,
                   ),
-                  backgroundColor: Colors.red,
+                  backgroundColor: Theme.of(context).colorScheme.error,
                   borderRadius: BorderRadius.circular(10),
                   flushbarStyle: FlushbarStyle.FLOATING,
                 ),
@@ -63,7 +63,7 @@ class ErrorState extends States {
               Center(
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
+                          primary: Theme.of(context).colorScheme.error,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           elevation: 0),

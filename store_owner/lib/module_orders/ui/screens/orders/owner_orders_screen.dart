@@ -141,7 +141,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                 color: Theme.of(context).textTheme.button?.color),
             label: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Text(S.current.newOrder),
+              child: Text(S.current.newOrder,style:Theme.of(context).textTheme.button),
             )),
       ),
       body: _currentState?.getUI(context),

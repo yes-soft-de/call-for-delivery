@@ -11,7 +11,7 @@ class SubscriptionBalanceResponse {
     return SubscriptionBalanceResponse(
       statusCode: json['status_code'] as String?,
       msg: json['msg'] as String?,
-      data: json['Data'] == null
+      data: json['Data'] == null || json['Data'] is String?
           ? null
           : Data.fromJson(json['Data'] as Map<String, dynamic>),
     );

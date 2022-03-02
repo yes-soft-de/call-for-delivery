@@ -1,4 +1,6 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_branches/ui/widget/custom_icon_button.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
 class BranchCard extends StatelessWidget {
@@ -16,6 +18,8 @@ class BranchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
@@ -53,8 +57,9 @@ class BranchCard extends StatelessWidget {
                   // edit
                   CustomIconButton(
                     onTap: onEdit,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: isDark
+                        ? Theme.of(context).backgroundColor
+                        : Theme.of(context).colorScheme.primaryContainer,
                     icon: Icons.edit,
                     iconColor: Theme.of(context).colorScheme.primary,
                   ),
@@ -102,6 +107,8 @@ class BranchCardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
@@ -145,7 +152,7 @@ class BranchCardList extends StatelessWidget {
                   // edit
                   CustomIconButton(
                     onTap: onEdit,
-                    backgroundColor:
+                    backgroundColor: isDark ? Theme.of(context).backgroundColor:
                         Theme.of(context).colorScheme.primaryContainer,
                     icon: Icons.edit,
                     iconColor: Theme.of(context).colorScheme.primary,
