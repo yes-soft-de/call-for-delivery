@@ -2040,10 +2040,10 @@ class S {
     );
   }
 
-  /// `Your subscription not activate yet please wait`
+  /// `This store is not active yet`
   String get inactive {
     return Intl.message(
-      'Your subscription not activate yet please wait',
+      'This store is not active yet',
       name: 'inactive',
       desc: '',
       args: [],
@@ -4305,6 +4305,226 @@ class S {
     return Intl.message(
       'Today Order',
       name: 'countTodayOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Balance`
+  String get storeBalance {
+    return Intl.message(
+      'Store Balance',
+      name: 'storeBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments for store`
+  String get paymentsForStore {
+    return Intl.message(
+      'Payments for store',
+      name: 'paymentsForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount owed for store`
+  String get remainingAmountForStore {
+    return Intl.message(
+      'Amount owed for store',
+      name: 'remainingAmountForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total payments for store`
+  String get sumPaymentsForStore {
+    return Intl.message(
+      'Total payments for store',
+      name: 'sumPaymentsForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Availability`
+  String get storeAvailable {
+    return Intl.message(
+      'Store Availability',
+      name: 'storeAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Inactive Stores`
+  String get storesInActive {
+    return Intl.message(
+      ' Inactive Stores',
+      name: 'storesInActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores List`
+  String get storesList {
+    return Intl.message(
+      'Stores List',
+      name: 'storesList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Stores`
+  String get addStore {
+    return Intl.message(
+      'Add Stores',
+      name: 'addStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update store`
+  String get updateStore {
+    return Intl.message(
+      'Update store',
+      name: 'updateStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for store`
+  String get searchForStore {
+    return Intl.message(
+      'Search for store',
+      name: 'searchForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Shift`
+  String get workTime {
+    return Intl.message(
+      'Store Shift',
+      name: 'workTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opening Time`
+  String get openingTime {
+    return Intl.message(
+      'Opening Time',
+      name: 'openingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closing Time`
+  String get closingTime {
+    return Intl.message(
+      'Closing Time',
+      name: 'closingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Info`
+  String get storeInfo {
+    return Intl.message(
+      'Store Info',
+      name: 'storeInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Image`
+  String get storeImage {
+    return Intl.message(
+      'Store Image',
+      name: 'storeImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Created Successfully`
+  String get storeCreatedSuccessfully {
+    return Intl.message(
+      'Store Created Successfully',
+      name: 'storeCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Updated Successfully`
+  String get storeUpdatedSuccessfully {
+    return Intl.message(
+      'Store Updated Successfully',
+      name: 'storeUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This store is active`
+  String get active {
+    return Intl.message(
+      'This store is active',
+      name: 'active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `city`
+  String get city {
+    return Intl.message(
+      'city',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty Stuff`
+  String get emptyStaff {
+    return Intl.message(
+      'Empty Stuff',
+      name: 'emptyStaff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment amount`
+  String get paymentAmount {
+    return Intl.message(
+      'Payment amount',
+      name: 'paymentAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this payment`
+  String get areYouSureToDeleteThisPayment {
+    return Intl.message(
+      'Are you sure you want to delete this payment',
+      name: 'areYouSureToDeleteThisPayment',
       desc: '',
       args: [],
     );
