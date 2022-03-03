@@ -2,7 +2,7 @@
 
 namespace App\Constant\Image;
 
-class ImageAimConstant
+class ImageUseAsConstant
 {
     const IMAGE_AIM_PROFILE_IMAGE = 0;
 

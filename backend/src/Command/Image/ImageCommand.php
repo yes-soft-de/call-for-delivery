@@ -2,7 +2,7 @@
 
 namespace App\Command\Image;
 
-use App\Constant\Image\ImageAimConstant;
+use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Request\Image\ImageCreateRequest;
 use App\Service\Image\ImageServiceInterface;
@@ -26,7 +26,7 @@ class ImageCommand extends Command
 
         $imageCreateRequest->setImagePath('image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg');
         $imageCreateRequest->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ORDER);
-        $imageCreateRequest->setUsedAs(ImageAimConstant::IMAGE_AIM_ORDER_IMAGE);
+        $imageCreateRequest->setUsedAs(ImageUseAsConstant::IMAGE_AIM_ORDER_IMAGE);
         $imageCreateRequest->setItemId(1);
 
         return $imageCreateRequest;
