@@ -5,15 +5,27 @@ namespace App\Manager\Package;
 use App\AutoMapping;
 use App\Entity\PackageCategoryEntity;
 use App\Repository\PackageCategoryEntityRepository;
+use App\Request\Admin\Package\PackageCategoryCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PackageCategoryManager
 {
-    private PackageCategoryEntityRepository $packageCategoryRepository;
-
-    public function __construct(PackageCategoryEntityRepository $packageCategoryRepository)
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private PackageCategoryEntityRepository $packageCategoryRepository)
     {
-        $this->packageCategoryRepository = $packageCategoryRepository;
+    }
+
+    /**
+     * @param PackageCategoryCreateRequest $request
+     * @return PackageCategoryEntity
+     */
+    public function createPackageCategory(PackageCategoryCreateRequest $request): PackageCategoryEntity
+    {
+        $packageCategoryEntity = $this->autoMapping->map(PackageCategoryCreateRequest::class, PackageCategoryEntity::class, $request);
+
+        $this->entityManager->persist($packageCategoryEntity);
+        $this->entityManager->flush();
+
+        return $packageCategoryEntity;
     }
 
     public function getPackageCategoryById(int $id): ?PackageCategoryEntity

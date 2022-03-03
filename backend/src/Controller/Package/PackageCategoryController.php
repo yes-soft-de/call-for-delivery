@@ -4,6 +4,7 @@ namespace App\Controller\Package;
 
 use App\Controller\BaseController;
 use App\Service\Package\PackageCategoryService;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
