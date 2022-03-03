@@ -32,7 +32,7 @@ class BranchesListStateManager {
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getBranchesList(screenState);
-        }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
+        }, title: '', emptyMessage: S.current.thereIsNoBranches, hasAppbar: false));
       } else {
         var data = value as BranchesModel;
         _stateSubject.add(BranchListStateLoaded(data.data, screenState));
