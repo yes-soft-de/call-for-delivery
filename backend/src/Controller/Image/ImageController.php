@@ -14,9 +14,12 @@ use OpenApi\Annotations as OA;
  */
 class ImageController extends BaseController
 {
-    public function __construct(SerializerInterface $serializer, private ImageService $imageService)
+    private ImageService $imageService;
+
+    public function __construct(SerializerInterface $serializer, ImageService $imageService)
     {
         parent::__construct($serializer);
+        $this->imageService = $imageService;
     }
 
     /**

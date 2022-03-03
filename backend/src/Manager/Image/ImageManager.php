@@ -10,8 +10,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ImageManager
 {
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private ImageEntityRepository $imageEntityRepository)
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private ImageEntityRepository $imageEntityRepository;
+
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, ImageEntityRepository $imageEntityRepository)
     {
+        $this->autoMapping = $autoMapping;
+        $this->entityManager = $entityManager;
+        $this->imageEntityRepository = $imageEntityRepository;
     }
 
     public function create(ImageCreateRequest $request): ImageEntity

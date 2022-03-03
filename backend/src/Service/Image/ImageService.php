@@ -12,8 +12,15 @@ use App\Service\FileUpload\UploadFileHelperService;
 
 class ImageService implements ImageServiceInterface
 {
-    public function __construct(private AutoMapping $autoMapping, private ImageManager $imageManager, private UploadFileHelperService $uploadFileHelperService)
+    private AutoMapping $autoMapping;
+    private ImageManager $imageManager;
+    private UploadFileHelperService $uploadFileHelperService;
+
+    public function __construct(AutoMapping $autoMapping, ImageManager $imageManager, UploadFileHelperService $uploadFileHelperService)
     {
+        $this->autoMapping = $autoMapping;
+        $this->imageManager = $imageManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function create(ImageCreateRequest $request): ImageCreateResponse
