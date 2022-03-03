@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Request\Package;
+namespace App\Request\Admin\Package;
 
 class PackageStatusUpdateRequest
 {
-    private $id;
+    private int $id;
 
-    private $status;
+    private string $status;
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }

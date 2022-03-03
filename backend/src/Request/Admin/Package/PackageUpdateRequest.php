@@ -1,29 +1,35 @@
 <?php
 
-namespace App\Request\Package;
+namespace App\Request\Admin\Package;
 
 class PackageUpdateRequest
 {
-    private $id;
+    private int $id;
 
-    private $name;
-
-    private $cost;
-
-    private $note;
-
-    private $carCount;
-
-    private $city;
-
-    private $orderCount;
-    
-    private $expired;
+    private string $name;
 
     /**
-     * @return mixed
+     * @var float|null
      */
-    public function getId()
+    private $cost;
+
+    /**
+     * @var string|null
+     */
+    private $note;
+
+    private int $carCount;
+
+    /**
+     * @var string|null
+     */
+    private $city;
+
+    private int $orderCount;
+    
+    private int $expired;
+
+    public function getId(): int
     {
         return $this->id;
     }

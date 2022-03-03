@@ -2,22 +2,11 @@
 
 namespace App\Controller\Package;
 
-use App\AutoMapping;
-use App\Constant\Package\PackageConstant;
 use App\Controller\BaseController;
-use App\Request\Package\PackageCreateRequest;
-use App\Request\Package\PackageStatusUpdateRequest;
-use App\Request\Package\PackageUpdateRequest;
 use App\Service\Package\PackageService;
-use Doctrine\ORM\NonUniqueResultException;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 
@@ -27,88 +16,12 @@ use Nelmio\ApiDocBundle\Annotation\Security;
  */
 class PackageController extends BaseController
 {
-    private $autoMapping;
-    private $validator;
-    private $packageService;
+    private PackageService $packageService;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, PackageService $packageService)
+    public function __construct(SerializerInterface $serializer, PackageService $packageService)
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
         $this->packageService = $packageService;
-    }
-
-    /**
-     * admin:Create new package by admin
-     * @Route("package", name="createPackage", methods={"POST"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Package")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="new package",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="name"),
-     *          @OA\Property(type="number", property="cost"),
-     *          @OA\Property(type="string", property="note"),
-     *          @OA\Property(type="integer", property="carCount"),
-     *          @OA\Property(type="string", property="city"),
-     *          @OA\Property(type="integer", property="orderCount"),
-     *          @OA\Property(type="integer", property="expired"),
-     *          @OA\Property(type="string", property="status"),
-     *          @OA\Property(type="integer", property="packageCategory"),
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns new package",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="name"),
-     *            @OA\Property(type="number", property="cost"),
-     *            @OA\Property(type="string", property="note"),
-     *            @OA\Property(type="integer", property="carCount"),
-     *            @OA\Property(type="string", property="city"),
-     *            @OA\Property(type="integer", property="orderCount"),
-     *            @OA\Property(type="integer", property="expired"),
-     *            @OA\Property(type="string", property="status"),
-     *      )
-     *   )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function createPackage(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, PackageCreateRequest::class, (object)$data);
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->packageService->createPackage($request);
-
-        return $this->response($result, self::CREATE);
     }
 
     /**
@@ -146,57 +59,11 @@ class PackageController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
-    /**
-     * admin:Get all packages.
-     * @Route("packages", name="getAllPackages", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     * 
-     * @OA\Tag(name="Package")
-     * 
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns packages",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *           @OA\Items(    
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="number", property="cost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="integer", property="carCount"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="orderCount"),
-     *              @OA\Property(type="integer", property="expired"),
-     *              @OA\Property(type="string", property="status"),
-     *          )
-     *       )
-     *    )
-     * )
-     * 
-     * @Security(name="Bearer")
-     */
-    public function getAllPackages(): JsonResponse
-    {
-        $result = $this->packageService->getAllPackages();
-
-        return $this->response($result, self::FETCH);
-    }
 
     /**
      * Get specific package.
      * @Route("package/{id}", name="getPackageById", methods={"GET"})
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Package")
@@ -220,191 +87,22 @@ class PackageController extends BaseController
      *       )
      *    )
      * )
-     * @throws NonUniqueResultException
      */
-    public function getPackageById($id): JsonResponse
+    public function getPackageById(int $id): JsonResponse
     {
         $result = $this->packageService->getPackageById($id);
 
         return $this->response($result, self::FETCH);
     }
 
-     /**
-      * admin:Update new package by admin
-      * @Route("package", name="updatePackage", methods={"PUT"})
-      * @IsGranted("ROLE_ADMIN")
-      * @param Request $request
-      * @return JsonResponse
-      *
-      * @OA\Tag(name="Package")
-      *
-      * @OA\Parameter(
-      *      name="token",
-      *      in="header",
-      *      description="token to be passed as a header",
-      *      required=true
-      * )
-      *
-      * @OA\RequestBody(
-      *      description="package",
-      *      @OA\JsonContent(
-      *          @OA\Property(type="integer", property="id"),
-      *          @OA\Property(type="string", property="name"),
-      *          @OA\Property(type="number", property="cost"),
-      *          @OA\Property(type="string", property="note"),
-      *          @OA\Property(type="integer", property="carCount"),
-      *          @OA\Property(type="string", property="city"),
-      *          @OA\Property(type="integer", property="orderCount"),
-      *          @OA\Property(type="integer", property="expired"),
-      *          @OA\Property(type="string", property="status"),
-      *      )
-      * )
-      *
-      * @OA\Response(
-      *      response=201,
-      *      description="Returns new package",
-      *      @OA\JsonContent(
-      *          @OA\Property(type="string", property="status_code"),
-      *          @OA\Property(type="string", property="msg"),
-      *          @OA\Property(type="object", property="Data",
-      *            @OA\Property(type="integer", property="id"),
-      *            @OA\Property(type="string", property="name"),
-      *            @OA\Property(type="number", property="cost"),
-      *            @OA\Property(type="string", property="note"),
-      *            @OA\Property(type="integer", property="carCount"),
-      *            @OA\Property(type="string", property="city"),
-      *            @OA\Property(type="integer", property="orderCount"),
-      *            @OA\Property(type="integer", property="expired"),
-      *            @OA\Property(type="string", property="status"),
-      *      )
-      *   )
-      * )
-      *
-      * or
-      *
-      * @OA\Response(
-      *      response="default",
-      *      description="Returns new package",
-      *      @OA\JsonContent(
-      *          @OA\Property(type="string", property="status_code", example="9351"),
-      *          @OA\Property(type="string", property="msg"),
-      *          @OA\Property(type="string", property="Data", example="package not exist")
-      *      )
-      * )
-      *
-      * @Security(name="Bearer")
-      */
-     public function updatePackage(Request $request): JsonResponse
-     {
-         $data = json_decode($request->getContent(), true);
-
-         $request = $this->autoMapping->map(\stdClass::class, PackageUpdateRequest::class, (object) $data);
-
-         $violations = $this->validator->validate($request);
-
-         if (\count($violations) > 0) {
-             $violationsString = (string) $violations;
-
-             return new JsonResponse($violationsString, Response::HTTP_OK);
-         }
-
-         $result = $this->packageService->updatePackage($request);
-
-         if($result === PackageConstant::PACKAGE_NOT_EXIST) {
-             return $this->response($result, self::PACKAGE_NOT_EXIST);
-         }
-
-         return $this->response($result, self::UPDATE);
-     }
-
-    /**
-     * admin:Update new package by admin
-     * @Route("packagestatus", name="updatePackageStatus", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Package")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="update package status",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="string", property="status")
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns new package",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="name"),
-     *            @OA\Property(type="number", property="cost"),
-     *            @OA\Property(type="string", property="note"),
-     *            @OA\Property(type="integer", property="carCount"),
-     *            @OA\Property(type="string", property="city"),
-     *            @OA\Property(type="integer", property="orderCount"),
-     *            @OA\Property(type="integer", property="expired"),
-     *            @OA\Property(type="string", property="status"),
-     *      )
-     *   )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Returns new package",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9351"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="string", property="Data", example="package not exist")
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function updatePackageStatus(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(\stdClass::class, PackageStatusUpdateRequest::class, (object) $data);
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->packageService->updatePackageStatus($request);
-
-        if($result === PackageConstant::PACKAGE_NOT_EXIST) {
-            return $this->response($result, self::PACKAGE_NOT_EXIST);
-        }
-
-        return $this->response($result, self::UPDATE);
-    }
-
     /**
      * Get all packages by category id.
      * @Route("packagesbycategoryid/{packageCategoryId}", name="getAllPackagesByCategoryId", methods={"GET"})
+     * @param int $packageCategoryId
      * @return JsonResponse
-     * 
+     *
      * @OA\Tag(name="Package")
-     * 
+     *
      * @OA\Parameter(
      *      name="token",
      *      in="header",
@@ -419,7 +117,7 @@ class PackageController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
-     *           @OA\Items(    
+     *           @OA\Items(
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="number", property="cost"),
@@ -432,10 +130,10 @@ class PackageController extends BaseController
      *       )
      *    )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
-    public function getAllPackagesByCategoryId($packageCategoryId): JsonResponse
+    public function getAllPackagesByCategoryId(int $packageCategoryId): JsonResponse
     {
         $result = $this->packageService->getAllPackagesByCategoryId($packageCategoryId);
 

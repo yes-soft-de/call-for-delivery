@@ -3,12 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\PackageEntity;
-use App\Entity\PackageCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\Package\PackageConstant;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method PackageEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,10 +20,7 @@ class PackageEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, PackageEntity::class);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getActivePackages(): mixed
+    public function getActivePackages(): ?array
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, 
@@ -40,10 +34,7 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAllPackages(): mixed
+    public function getAllPackages(): ?array
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
@@ -52,12 +43,7 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     * @throws NonUniqueResultException
-     */
-    public function getPackageById($id): mixed
+    public function getPackageById(int $id): ?array
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
@@ -71,29 +57,20 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param $packageCategory
-     * @return array|null
-     */
-    public function getPackagesByCategoryIdForAdmin($packageCategory): ?array
+    public function getPackagesByCategoryIdForAdmin(int $packageCategory): ?array
     {
         return $this->createQueryBuilder('package')
             ->select('IDENTITY(package.packageCategory)')
             ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
 
             ->andWhere("package.packageCategory = :packageCategory")
-            
             ->setParameter('packageCategory',$packageCategory)
             
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param $packageCategory
-     * @return array|null
-     */
-    public function getAllPackagesCategoriesAndPackagesForStore($packageCategory): ?array
+    public function getAllPackagesCategoriesAndPackagesForStore(int $packageCategory): ?array
     {
         return $this->createQueryBuilder('package')
             ->select('IDENTITY(package.packageCategory)')
