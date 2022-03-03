@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
@@ -14,7 +15,6 @@ import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -32,7 +32,7 @@ class OwnerOrdersScreen extends StatefulWidget {
 
 class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     with WidgetsBindingObserver {
-  OwnerOrdersListState? _currentState;
+  States? _currentState;
   ProfileModel? currentProfile;
   CompanyInfoResponse? _companyInfo;
 
@@ -40,12 +40,14 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
 
-  void getMyOrders() {}
+  Future<void> getMyOrders() async {
+    widget._stateManager.getOrders(this);
+  }
 
   void goToSubscription() {}
 
   void addOrderViaDeepLink(LatLng location) {
-    _currentState = OrdersListStateInit(this);
+    _currentState = LoadingState(this);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       Navigator.of(context)
           .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN, arguments: location);
@@ -59,27 +61,23 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   @override
   void initState() {
     super.initState();
-    // feature discovery
-    SchedulerBinding.instance?.addPostFrameCallback((Duration duration) async {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        const <String>{
-          'newOrder',
-        },
-      );
-    });
-    //
+    _currentState = LoadingState(this);
+    getMyOrders();
     WidgetsBinding.instance?.addObserver(this);
-
-    _currentState = OrdersListStateInit(this);
-
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) {
         setState(() {});
       }
+      if (_currentState is OrdersListStateOrdersLoaded) {
+        FeatureDiscovery.discoverFeatures(
+          context,
+          const <String>{
+            'newOrder',
+          },
+        );
+      }
     });
-
     _profileSubscription = widget._stateManager.profileStream.listen((event) {
       currentProfile = event;
       if (mounted) {
@@ -141,7 +139,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                 color: Theme.of(context).textTheme.button?.color),
             label: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Text(S.current.newOrder,style:Theme.of(context).textTheme.button),
+              child: Text(S.current.newOrder,
+                  style: Theme.of(context).textTheme.button),
             )),
       ),
       body: _currentState?.getUI(context),

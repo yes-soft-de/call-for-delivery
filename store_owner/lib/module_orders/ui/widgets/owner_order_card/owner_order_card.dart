@@ -1,84 +1,132 @@
-import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
 import 'package:flutter/material.dart';
 
 class OwnerOrderCard extends StatelessWidget {
-  final String from;
-  final String to;
-  final String time;
-  final int index;
-
-  OwnerOrderCard({
-    required this.time,
-    required this.from,
-    required this.to,
-    required this.index,
-  });
+  final String orderNumber;
+  final String orderStatus;
+  final String deliveryDate;
+  final String createdDate;
+  final String orderCost;
+  final String note;
+  OwnerOrderCard(
+      {required this.orderNumber,
+      required this.orderStatus,
+      required this.createdDate,
+      required this.deliveryDate,
+      required this.orderCost,
+      required this.note});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      ),
-      elevation: 0,
-      color: index == 0
-          ? AppThemeDataService.PrimaryColor
-          : Theme.of(context).brightness == Brightness.light
-              ? Colors.white
-              : Colors.black,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        height: 115,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).colorScheme.primary.withOpacity(0.85),
+            Theme.of(context).colorScheme.primary.withOpacity(0.85),
+            Theme.of(context).colorScheme.primary.withOpacity(0.9),
+            Theme.of(context).colorScheme.primary.withOpacity(0.93),
+            Theme.of(context).colorScheme.primary.withOpacity(0.95),
+            Theme.of(context).colorScheme.primary,
+          ])),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Align(
+              alignment: AlignmentDirectional.topEnd,
+              child: InfoButton(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(S.current.note),
+                          content: Container(child: Text(note)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          actionsAlignment: MainAxisAlignment.center,
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.close)),
+                          ],
+                        );
+                      });
+                },
+              ),
+            ),
+            // order number & order status
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  'to $to',
-                  style: TextStyle(
-                      color: index == 0
-                          ? Colors.white
-                          : AppThemeDataService.PrimaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10),
-                ),
-                Text(
-                  '$from',
-                  style: TextStyle(
-                      color: index == 0
-                          ? Colors.white
-                          : AppThemeDataService.PrimaryColor,
-                      fontSize: 10),
-                ),
-                Text(
-                  'time: $time',
-                  style: TextStyle(
-                      color: index == 0
-                          ? Colors.white
-                          : AppThemeDataService.PrimaryColor,
-                      fontSize: 10),
-                ),
+                verticalTile(context,
+                    title: S.current.orderNumber, subtitle: orderNumber),
+                verticalTile(context,
+                    title: S.current.orderStatus, subtitle: orderStatus),
               ],
             ),
-            Center(
-              child: CircleAvatar(
-                backgroundColor: index == 0
-                    ? Colors.white
-                    : AppThemeDataService.PrimaryColor,
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: index == 0
-                      ? AppThemeDataService.PrimaryColor
-                      : Colors.white,
-                ),
-              ),
-            )
+            // divider
+            divider(context),
+            // order date & create date
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.deliverDate, subtitle: deliveryDate),
+                verticalTile(context,
+                    title: S.current.createdDate, subtitle: createdDate),
+              ],
+            ),
+            // divider
+            divider(context),
+            // order cost
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.cost, subtitle: orderCost),
+                Icon(
+                  Icons.arrow_circle_left_outlined,
+                  color: Theme.of(context).backgroundColor,
+                )
+              ],
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget verticalTile(context,
+      {required String title, required String subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).backgroundColor),
+        ),
+        Text(
+          subtitle,
+          style:Theme.of(context).textTheme.button?.copyWith(fontWeight: FontWeight.normal)
+        ),
+      ],
+    );
+  }
+
+  Widget divider(context) {
+    Color dividerColor = Theme.of(context).backgroundColor;
+    return Divider(
+      thickness: 2,
+      indent: 16,
+      endIndent: 16,
+      color: dividerColor,
     );
   }
 }

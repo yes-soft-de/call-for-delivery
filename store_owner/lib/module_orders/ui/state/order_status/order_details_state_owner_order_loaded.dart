@@ -59,8 +59,7 @@ class OrderDetailsStateOwnerOrderLoaded extends OrderDetailsState {
         return false;
       },
       child: Scaffold(
-          floatingActionButton: currentOrder.canRemove &&
-                  currentOrder.status == OrderStatusEnum.WAITING
+          floatingActionButton: false
               ? FloatingActionButton(
                   onPressed: () {
                     showDialog(

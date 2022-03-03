@@ -1,4 +1,3 @@
-import 'package:c4d/module_orders/response/orders/orders_response.dart';
 
 class OrderStatusResponse {
   String? statusCode;
@@ -39,16 +38,16 @@ class OrderDetailsData {
   String? recipientName;
   String? recipientPhone;
   String? state;
-  FromBranch? fromBranch;
-  GeoJson? location;
+  // FromBranch? fromBranch;
+  // GeoJson? location;
   String? brancheName;
   String? branchCity;
   List<AcceptedOrder>? acceptedOrder;
   List<dynamic>? record;
   String? uuid;
   Date? createAt;
-  OwnerResponse? ownerResponse;
-  GeoJson? destination2;
+  // OwnerResponse? ownerResponse;
+  // GeoJson? destination2;
   OrderDetailsData(
       {this.id,
       this.ownerID,
@@ -62,16 +61,17 @@ class OrderDetailsData {
       this.recipientPhone,
       this.state,
       this.phone,
-      this.fromBranch,
-      this.location,
+      // this.fromBranch,
+      // this.location,
       this.brancheName,
       this.branchCity,
       this.acceptedOrder,
       this.record,
       this.uuid,
       this.createAt,
-      this.ownerResponse,
-      this.destination2});
+      // this.ownerResponse,
+      // this.destination2
+      });
 
   OrderDetailsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -91,15 +91,15 @@ class OrderDetailsData {
     recipientName = json['recipientName'];
     recipientPhone = json['recipientPhone'];
     state = json['state'];
-    fromBranch = json['fromBranch'] != null
-        ? FromBranch.fromJson(json['fromBranch'])
-        : null;
-    destination2 = json['destination2'] != null
-        ? GeoJson.fromJson(json['destination2'])
-        : null;
-    ownerResponse =
-        json['owner'] != null ? OwnerResponse.fromJson(json['owner']) : null;
-    location = GeoJson.fromJson(json['location']);
+    // fromBranch = json['fromBranch'] != null
+    //     ? FromBranch.fromJson(json['fromBranch'])
+    //     : null;
+    // destination2 = json['destination2'] != null
+    //     ? GeoJson.fromJson(json['destination2'])
+    //     : null;
+    // ownerResponse =
+    //     json['owner'] != null ? OwnerResponse.fromJson(json['owner']) : null;
+    // location = GeoJson.fromJson(json['location']);
     brancheName = json['brancheName'];
     branchCity = json['branchCity'];
     try {
@@ -136,8 +136,8 @@ class OrderDetailsData {
     data['recipientName'] = this.recipientName;
     data['recipientPhone'] = this.recipientPhone;
     data['state'] = this.state;
-    data['fromBranch'] = this.fromBranch;
-    data['location'] = this.location;
+    // data['fromBranch'] = this.fromBranch;
+    // data['location'] = this.location;
     data['brancheName'] = this.brancheName;
     data['branchCity'] = this.branchCity;
     try {

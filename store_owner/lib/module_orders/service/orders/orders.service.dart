@@ -5,16 +5,12 @@ import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_status_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/response/company_info/company_info.dart';
-import 'package:c4d/module_orders/response/order_details/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_status/order_status_response.dart';
-import 'package:c4d/module_orders/response/orders/orders_response.dart';
-import 'package:c4d/module_profile/response/order_info_respons.dart';
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/response/action_response.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -63,12 +59,6 @@ class OrdersService {
     await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
-
-  // Future<OrderInfoRespons> getOrder(int orderId) async {
-  //   Map response = await _ordersManager.getOrder(orderId);
-  //   if (response == null) return null;
-  //   return OrderInfoRespons.fromJson(response);
-  // }
 
   Future<DataModel> deleteOrder(int id) async {
     ActionResponse? response = await _ordersManager.deleteOrder(id);
