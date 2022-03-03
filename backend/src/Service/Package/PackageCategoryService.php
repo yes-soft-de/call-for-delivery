@@ -5,7 +5,7 @@ namespace App\Service\Package;
 use App\AutoMapping;
 use App\Entity\PackageCategoryEntity;
 use App\Manager\Package\PackageCategoryManager;
-use App\Request\Admin\Package\PackageCategoryCreateRequest;
+use App\Request\Package\PackageCategoryCreateRequest;
 use App\Response\Package\PackageCategoryResponse;
 use App\Response\Package\PackageCategoriesAndPackagesResponse;
 
