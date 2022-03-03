@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
@@ -30,8 +31,13 @@ class NewOrderStateManager {
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
-          getBranches(screenState);
-        }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
+          Navigator.of(screenState.context)
+              .pushReplacementNamed(BranchesRoutes.BRANCHES_LIST_SCREEN);
+        },
+            title: '',
+            buttonLabel: S.current.branchManagement,
+            emptyMessage: S.current.thereIsNoBranches,
+            hasAppbar: false));
       } else {
         value as BranchesModel;
         _stateSubject.add(NewOrderStateBranchesLoaded(value.data, screenState));
