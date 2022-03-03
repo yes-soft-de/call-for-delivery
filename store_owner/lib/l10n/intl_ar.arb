@@ -491,7 +491,9 @@
     "payments": "الدفعات",
     "at": "في",
     "paymentAmount": "قيمة الدفعة",
-    "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة"
+    "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة",
+    "deliverDate": "تاريخ التوصيل",
+    "createdDate": "تاريخ الإنشاء"
 
 
 

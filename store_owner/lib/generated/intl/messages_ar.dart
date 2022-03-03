@@ -187,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
         "created": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
+        "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "currentBalance": MessageLookupByLibrary.simpleMessage("الرصيد الحالي"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
@@ -203,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
+        "deliverDate": MessageLookupByLibrary.simpleMessage("تاريخ التوصيل"),
         "deliverDescribtion": MessageLookupByLibrary.simpleMessage(
             "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),

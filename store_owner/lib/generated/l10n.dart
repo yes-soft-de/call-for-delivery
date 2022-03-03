@@ -4959,6 +4959,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Delivery date`
+  String get deliverDate {
+    return Intl.message(
+      'Delivery date',
+      name: 'deliverDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created date`
+  String get createdDate {
+    return Intl.message(
+      'Created date',
+      name: 'createdDate',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
