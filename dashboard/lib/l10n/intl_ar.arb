@@ -198,7 +198,7 @@
     "renewNewPlan": "اشتراك بباقة جديدة",
     "successRenew": "تم تجديد الباقة بنجاح",
     "warnning": "ملاحظة هامة",
-    "inactive": "اشتراكك غير مفعل بعد الرجاء انتظار التفعيل من قبل الإدارة",
+    "inactive": "هذا المتجر غير مُفعل حتى الآن",
     "outOforders": "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك من الإعدادات",
     "finishedDate": "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات",
     "unaccept": "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل",
@@ -426,5 +426,30 @@
     "countCaptains": "عدد الكباتن",
     "countProducts": "عدد المنتجات",
     "countStores": "عدد المتاجر",
-    "countTodayOrder": "الطلبات اليوم"
+    "countTodayOrder": "الطلبات اليوم",
+
+    "storeBalance": "حساب المتجر",
+    "paymentsForStore": "دفعات للمتجر",
+    "remainingAmountForStore": "المبلغ المتبقي للمتجر",
+    "sumPaymentsForStore": "إجمالي الدفعات",
+    "storeAvailable": "المتجر متوفر",
+    "storesInActive": "المتاجر الغير متاحة",
+    "storesList": "قائمة المتاجر",
+    "addStore": "أضف متجر",
+    "updateStore": "تعديل المتجر",
+    "searchForStore": "ابحث عن متجر",
+    "workTime": "أوقات العمل",
+    "openingTime": "وقت الافتتاح",
+    "closingTime": "وقت الإغلاق",
+    "storeInfo": "معلومات المتجر",
+    "storeImage": "صورة المتجر",
+    "storeCreatedSuccessfully": "تم إنشاء المتجر بنجاح",
+    "storeUpdatedSuccessfully": "تم تعديل المتجر بنجاح",
+    "active": "هذا المتجر  فعال",
+    "city": "المدينة",
+
+
+    "emptyStaff": "قائمة فارغة",
+    "paymentAmount": "قيمة الدفعة",
+    "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة"
 }

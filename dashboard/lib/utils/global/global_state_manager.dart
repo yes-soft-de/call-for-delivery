@@ -7,7 +7,7 @@ class GlobalStateManager {
   final PublishSubject _stateSubject = PublishSubject();
   Stream get stateStream => _stateSubject.stream;
 
-  void updateCaptainList() {
+  void updateList() {
     _stateSubject.add(DateTime.now().toString());
   }
 }

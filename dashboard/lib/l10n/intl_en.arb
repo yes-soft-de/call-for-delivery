@@ -199,7 +199,7 @@
     "renewNewPlan": "Subscription with new package",
     "successRenew": "Your subscription has been renewed",
     "warnning": "Important Note",
-    "inactive": "Your subscription not activate yet please wait",
+    "inactive": "This store is not active yet",
     "outOforders": "You reach your limit of orders you can renew your subscription from settings",
     "finishedDate": "Your subscription is out of date please renew your subscription",
     "unaccept": "Your request not accepted from administration you can contact us to get info",
@@ -428,5 +428,33 @@
     "countCaptains": "Captains Count",
     "countProducts": "Products Count",
     "countStores": "Stores Count",
-    "countTodayOrder": "Today Order"
+    "countTodayOrder": "Today Order",
+
+    "storeBalance": "Store Balance",
+    "paymentsForStore": "Payments for store",
+    "remainingAmountForStore": "Amount owed for store",
+    "sumPaymentsForStore": "Total payments for store",
+    "storeAvailable": "Store Availability",
+    "storesInActive": " Inactive Stores",
+    "storesList": "Stores List",
+    "addStore": "Add Stores",
+    "updateStore": "Update store",
+    "searchForStore": "Search for store",
+    "workTime": "Store Shift",
+    "openingTime": "Opening Time",
+    "closingTime": "Closing Time",
+    "storeInfo": "Store Info",
+    "storeImage": "Store Image",
+    "storeCreatedSuccessfully": "Store Created Successfully",
+    "storeUpdatedSuccessfully": "Store Updated Successfully",
+    "active": "This store is active",
+    "city": "city",
+
+
+
+
+    "emptyStaff": "Empty Stuff",
+    "paymentAmount": "Payment amount",
+    "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment"
+
 }
