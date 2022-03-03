@@ -14,8 +14,13 @@ use App\Response\Admin\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 
 class AdminStoreOwnerBranchService
 {
-    public function __construct(private AutoMapping $autoMapping, private AdminStoreOwnerBranchManager $adminStoreOwnerBranchManager)
+    private AutoMapping $autoMapping;
+    private AdminStoreOwnerBranchManager $adminStoreOwnerBranchManager;
+
+    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerBranchManager $adminStoreOwnerBranchManager)
     {
+        $this->autoMapping = $autoMapping;
+        $this->adminStoreOwnerBranchManager = $adminStoreOwnerBranchManager;
     }
 
     public function createMultipleBranchesByAdmin(StoreOwnerMultipleBranchesCreateByAdminRequest $request): array|string

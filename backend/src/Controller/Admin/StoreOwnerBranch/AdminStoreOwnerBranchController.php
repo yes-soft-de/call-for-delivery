@@ -25,9 +25,16 @@ use OpenApi\Annotations as OA;
  */
 class AdminStoreOwnerBranchController extends BaseController
 {
-    public function __construct(SerializerInterface $serializer, private AutoMapping $autoMapping, private ValidatorInterface $validator, private AdminStoreOwnerBranchService $adminStoreOwnerBranchService)
+    private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
+    private AdminStoreOwnerBranchService $adminStoreOwnerBranchService;
+
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminStoreOwnerBranchService $adminStoreOwnerBranchService)
     {
         parent::__construct($serializer);
+        $this->autoMapping = $autoMapping;
+        $this->validator = $validator;
+        $this->adminStoreOwnerBranchService = $adminStoreOwnerBranchService;
     }
 
     /**

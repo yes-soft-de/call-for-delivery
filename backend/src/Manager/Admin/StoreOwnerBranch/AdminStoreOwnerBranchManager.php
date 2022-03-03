@@ -10,8 +10,11 @@ use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
 
 class AdminStoreOwnerBranchManager
 {
-    public function __construct(private StoreOwnerBranchManager $storeOwnerBranchManager)
+    private StoreOwnerBranchManager $storeOwnerBranchManager;
+
+    public function __construct(StoreOwnerBranchManager $storeOwnerBranchManager)
     {
+        $this->storeOwnerBranchManager = $storeOwnerBranchManager;
     }
 
     public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request): ?StoreOwnerBranchEntity
