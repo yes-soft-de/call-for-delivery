@@ -471,7 +471,11 @@
     "ExpiredSubscriptions": "Expired subscriptions please renew your subscription",
     "chooseBranch": "Choose Branch",
     "orderCreatedSuccessfully": "Order created successfully",
-    "confirmMakeOrder": "Are you sure about creating new order"
+    "confirmMakeOrder": "Are you sure about creating new order",
+    "selected": "Selected",
+    "delete": "Delete"
+
+
 
 
 

@@ -190,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
@@ -581,6 +582,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
         "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(

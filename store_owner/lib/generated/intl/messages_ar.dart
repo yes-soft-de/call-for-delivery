@@ -190,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteSuccess":
@@ -576,6 +577,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selected": MessageLookupByLibrary.simpleMessage("تحديد"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("قائمة الأفرع المختارة"),
         "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
