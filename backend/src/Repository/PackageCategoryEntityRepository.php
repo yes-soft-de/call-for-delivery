@@ -18,11 +18,7 @@ class PackageCategoryEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PackageCategoryEntity::class);
     }
-    
-    
-     /**
-     * @return array|null
-     */
+
     public function getAllPackagesCategories(): ?array
     {
         return $this->createQueryBuilder('PackageCategory')
