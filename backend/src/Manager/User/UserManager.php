@@ -11,6 +11,7 @@ use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Manager\ChatRoom\ChatRoomManager;
 
 class UserManager
 {
@@ -19,7 +20,7 @@ class UserManager
     private UserPasswordHasherInterface $encoder;
     private UserEntityRepository $userRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository, private ChatRoomManager $chatRoomManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -108,6 +109,8 @@ class UserManager
 
         $this->entityManager->persist($userRegister);
         $this->entityManager->flush();
+
+        $this->chatRoomManager->createChatRoom($userRegister->getId());
 
         return $userRegister;
     }
