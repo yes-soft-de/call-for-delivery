@@ -10,6 +10,7 @@ class CustomC4dAppBar {
       Color? colorIcon,
       Color? buttonBackground,
       IconData? icon,
+      Widget? widget,
       bool canGoBack = true,
       List<Widget>? actions}) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -30,7 +31,7 @@ class CustomC4dAppBar {
               padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: InkWell(
+                child: widget ?? InkWell(
                   customBorder: CircleBorder(),
                   onTap: onTap ?? () => Navigator.of(context).pop(),
                   child: Container(
@@ -48,7 +49,7 @@ class CustomC4dAppBar {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(icon ?? Icons.arrow_back,
+                      child:Icon(icon ?? Icons.arrow_back,
                           color: colorIcon ??
                               (isDark
                                   ? null

@@ -35,6 +35,8 @@ class StatusCodeHelper {
         return S.current.accountAlreadyExist;
       case '9302':
         return S.current.notSubscription;
+      case '9204':
+        return S.current.outOfCars;
       case '-1':
         return S.current.dataDecodeError;
       default:

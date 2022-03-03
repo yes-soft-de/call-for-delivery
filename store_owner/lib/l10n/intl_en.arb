@@ -166,7 +166,7 @@
     "myPlan": "My Plan",
     "bankAccountNumber": "Bank Account Number",
     "stcPayCode": "STC Pay Code",
-    "currentBalance": "Current Balance:",
+    "currentBalance": "Current Balance",
     "nextPaymentDate": "Next Payment Date:",
     "saudiRiyal": "Saudi Riyal",
     "activePlan": "Active Plan",
@@ -176,7 +176,7 @@
     "completedOrders": "Completed Orders",
     "latestUpdates": "Latest Updates",
     "myBalance": "My Balance",
-    "noImage": "No Image",
+    "noImage": "No Image , Please provide one",
     "howWeWork": "How we work",
     "took": "Took",
     "minutes": "minutes",
@@ -471,7 +471,32 @@
     "ExpiredSubscriptions": "Expired subscriptions please renew your subscription",
     "chooseBranch": "Choose Branch",
     "orderCreatedSuccessfully": "Order created successfully",
-    "confirmMakeOrder": "Are you sure about creating new order"
+    "confirmMakeOrder": "Are you sure about creating new order",
+    "selected": "Selected",
+    "delete": "Delete",
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "orderCostWithDeliveryCost": "Order cost contains delivery tax",
+    "thereIsNoBranches": "There is no branches available",
+    "sumPaymentsToCompany": "Total Payments To Company",
+    "sumPaymentsFromCompany": "Total Payments From Company",
+    "sumPaymentsToCaptain": "Total Payments To Captain",
+    "sumPaymentsFromCaptain": "Total Payments From Captain",
+    "countOrdersDelivered": "Count Orders Delivered",
+    "amountYouOwn": "My Actual Balance",
+    "remainingAmountForCompany": "Remaining Amount For Company",
+    "bounce": "Bounce",
+    "kilometerBonus": "Kilometer Bonus",
+    "netProfit": "Profit",
+    "total": "Total",
+    "payments": "Payments",
+    "at": "At",
+    "paymentAmount": "Payment amount",
+    "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment"
+
+
+
+
 
 
 

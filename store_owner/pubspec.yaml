@@ -118,6 +118,7 @@ dependencies:
   google_maps_flutter: ^2.1.1
   custom_info_window: ^1.0.1
   clippy_flutter: ^2.0.0-nullsafety.1
+  flutter_slidable: ^1.2.0
 
 
 

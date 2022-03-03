@@ -1710,10 +1710,10 @@ class S {
     );
   }
 
-  /// `Current Balance:`
+  /// `Current Balance`
   String get currentBalance {
     return Intl.message(
-      'Current Balance:',
+      'Current Balance',
       name: 'currentBalance',
       desc: '',
       args: [],
@@ -1810,10 +1810,10 @@ class S {
     );
   }
 
-  /// `No Image`
+  /// `No Image , Please provide one`
   String get noImage {
     return Intl.message(
-      'No Image',
+      'No Image , Please provide one',
       name: 'noImage',
       desc: '',
       args: [],
@@ -4745,6 +4745,216 @@ class S {
     return Intl.message(
       'Are you sure about creating new order',
       name: 'confirmMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected`
+  String get selected {
+    return Intl.message(
+      'Selected',
+      name: 'selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get camera {
+    return Intl.message(
+      'Camera',
+      name: 'camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery`
+  String get gallery {
+    return Intl.message(
+      'Gallery',
+      name: 'gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order cost contains delivery tax`
+  String get orderCostWithDeliveryCost {
+    return Intl.message(
+      'Order cost contains delivery tax',
+      name: 'orderCostWithDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no branches available`
+  String get thereIsNoBranches {
+    return Intl.message(
+      'There is no branches available',
+      name: 'thereIsNoBranches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments To Company`
+  String get sumPaymentsToCompany {
+    return Intl.message(
+      'Total Payments To Company',
+      name: 'sumPaymentsToCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments From Company`
+  String get sumPaymentsFromCompany {
+    return Intl.message(
+      'Total Payments From Company',
+      name: 'sumPaymentsFromCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments To Captain`
+  String get sumPaymentsToCaptain {
+    return Intl.message(
+      'Total Payments To Captain',
+      name: 'sumPaymentsToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Payments From Captain`
+  String get sumPaymentsFromCaptain {
+    return Intl.message(
+      'Total Payments From Captain',
+      name: 'sumPaymentsFromCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Orders Delivered`
+  String get countOrdersDelivered {
+    return Intl.message(
+      'Count Orders Delivered',
+      name: 'countOrdersDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Actual Balance`
+  String get amountYouOwn {
+    return Intl.message(
+      'My Actual Balance',
+      name: 'amountYouOwn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining Amount For Company`
+  String get remainingAmountForCompany {
+    return Intl.message(
+      'Remaining Amount For Company',
+      name: 'remainingAmountForCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce`
+  String get bounce {
+    return Intl.message(
+      'Bounce',
+      name: 'bounce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kilometer Bonus`
+  String get kilometerBonus {
+    return Intl.message(
+      'Kilometer Bonus',
+      name: 'kilometerBonus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get netProfit {
+    return Intl.message(
+      'Profit',
+      name: 'netProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message(
+      'Total',
+      name: 'total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments`
+  String get payments {
+    return Intl.message(
+      'Payments',
+      name: 'payments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `At`
+  String get at {
+    return Intl.message(
+      'At',
+      name: 'at',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment amount`
+  String get paymentAmount {
+    return Intl.message(
+      'Payment amount',
+      name: 'paymentAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this payment`
+  String get areYouSureToDeleteThisPayment {
+    return Intl.message(
+      'Are you sure you want to delete this payment',
+      name: 'areYouSureToDeleteThisPayment',
       desc: '',
       args: [],
     );

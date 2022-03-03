@@ -20,7 +20,76 @@ class SubscriptionBalanceLoadedState extends States {
   Widget getUI(BuildContext context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.mySubscription),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.current.mySubscription,
+          actions: [
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    width: double.maxFinite,
+                                    child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            shape: StadiumBorder()),
+                                        onPressed: () {},
+                                        child: Text(S.current.renewNewPlan)),
+                                  ),
+                                  Divider(
+                                    indent: 16,
+                                    endIndent: 16,
+                                    color: Theme.of(context).backgroundColor,
+                                    thickness: 2.5,
+                                  ),
+                                  SizedBox(
+                                    width: double.maxFinite,
+                                    child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            shape: StadiumBorder()),
+                                        onPressed: () {},
+                                        child: Text(S.current.renewOldPlan)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: double.maxFinite,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    shape: StadiumBorder()),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(S.current.close),
+                                )),
+                          ),
+                        )
+                      ],
+                    );
+                  });
+            }, icon: Icons.restart_alt_rounded)
+          ]),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(
@@ -172,9 +241,7 @@ class SubscriptionBalanceLoadedState extends States {
                           SubscriptionsStatusHelper.getStatusMessage(
                               balance.status),
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).disabledColor,
-                              fontSize: 14),
+                              fontWeight: FontWeight.bold, fontSize: 14),
                         )),
                   ),
                 ),

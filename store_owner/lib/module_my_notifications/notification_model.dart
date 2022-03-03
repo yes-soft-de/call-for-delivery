@@ -7,6 +7,7 @@ class NotificationModel {
   String body = S.current.orderDetails;
   String title = S.current.orderNumber;
   String date = '';
+  bool marked = false;
   String? error;
   bool empty = false;
   List<NotificationModel> models = [];
@@ -15,7 +16,9 @@ class NotificationModel {
       {required this.orderNumber,
       required this.title,
       required this.body,
-      required this.date});
+      required this.date,
+      required this.marked
+      });
 
   NotificationModel.Empty() {
     this.empty = true;
@@ -36,6 +39,7 @@ class NotificationModel {
                       DateTime.now().millisecondsSinceEpoch) *
                   1000));
       models.add(NotificationModel(
+          marked: false,
           title: element.title ?? '',
           orderNumber: element.orderNumber.toString(),
           body: element.message ?? '',

@@ -11,11 +11,14 @@ class EmptyState extends States {
   final String title;
   final bool hasAppbar;
   final VoidCallback? onPressed;
+  final String? buttonLabel;
   EmptyState(this.screenState,
       {required this.emptyMessage,
       required this.title,
       this.hasAppbar = true,
-      required this.onPressed})
+      required this.onPressed,
+      this.buttonLabel
+      })
       : super(screenState);
 
   @override
@@ -55,7 +58,7 @@ class EmptyState extends States {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          S.of(context).refresh,
+                         buttonLabel ?? S.of(context).refresh,
                           style: TextStyle(color: Colors.white),
                         ),
                       ))),

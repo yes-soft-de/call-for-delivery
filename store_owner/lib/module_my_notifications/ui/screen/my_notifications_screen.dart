@@ -19,7 +19,7 @@ class MyNotificationsScreen extends StatefulWidget {
 
 class MyNotificationsScreenState extends State<MyNotificationsScreen> {
   late States currentState;
-
+  bool markerMode = false;
   void refresh() {
     if (mounted) {
       setState(() {});

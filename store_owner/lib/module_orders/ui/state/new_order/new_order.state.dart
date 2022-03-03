@@ -93,19 +93,60 @@ class NewOrderStateBranchesLoaded extends States {
                 // phone
                 ListTile(
                   title: LabelText(S.of(context).recipientPhoneNumber),
-                  subtitle: CustomLoginFormField(
-                    hintText: '9665xxxxxxxx',
-                    phone: true,
-                    onTap: () {},
-                    controller: screenState.phoneNumberController,
-                    maxLength: 12,
+                  subtitle: Row(
+                    children: [
+                     Expanded(
+                        child: CustomLoginFormField(
+                            controller: screenState.phoneNumberController,
+                            phone: true,
+                            hintText: '5xxxxxxxx'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 28.0),
+                        child: SizedBox(
+                          width: 125,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomLoginFormField(
+                              halfField: true,
+                              contentPadding:
+                                  EdgeInsets.only(left: 8.0, right: 8.0),
+                              controller: screenState.countryNumberController,
+                              numbers: true,
+                              phoneHint: false,
+                              maxLength: 3,
+                              hintText: S.current.countryCode,
+                              sufIcon: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 4.0, left: 4.0),
+                                child: Container(
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Theme.of(context).primaryColor),
+                                  child: Center(
+                                    child: Text(
+                                      '+',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .button
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 // to
                 ListTile(
-                  title: LabelText(S.of(context).to),
+                  title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
-                    hintText: S.of(context).destinationAddress,
+                    hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
                     controller: screenState.toController,
                   ),
@@ -114,7 +155,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
                   subtitle: CustomFormField(
-                    maxLines: 7,
+                    maxLines: 3,
                     hintText: S.of(context).orderDetailHint,
                     controller: screenState.orderDetailsController,
                   ),
@@ -123,7 +164,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderPrice),
                   subtitle: CustomFormField(
-                    hintText: S.of(context).totalPrice,
+                    hintText: S.of(context).orderCostWithDeliveryCost,
                     onTap: () {},
                     numbers: true,
                     last: true,
@@ -147,13 +188,79 @@ class NewOrderStateBranchesLoaded extends States {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(18),
                         onTap: () {
-                          ImagePicker.platform
-                              .pickImage(source: ImageSource.gallery)
-                              .then((value) async {
-                            memoryBytes = await value?.readAsBytes();
-                            imagePath = value?.path;
-                            screenState.refresh();
-                          });
+                          showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                width: double.maxFinite,
+                                                child: TextButton(
+                                                    style: TextButton.styleFrom(
+                                                        shape: StadiumBorder()),
+                                                    onPressed: () {
+                                                      pickImageFromCamera();
+                                                    },
+                                                    child:
+                                                        Text(S.current.camera)),
+                                              ),
+                                              Divider(
+                                                indent: 16,
+                                                endIndent: 16,
+                                                color: Theme.of(context)
+                                                    .backgroundColor,
+                                                thickness: 2.5,
+                                              ),
+                                              SizedBox(
+                                                width: double.maxFinite,
+                                                child: TextButton(
+                                                    style: TextButton.styleFrom(
+                                                        shape: StadiumBorder()),
+                                                    onPressed: () {
+                                                      pickImageFromGallery();
+                                                    },
+                                                    child: Text(
+                                                        S.current.gallery)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width: double.maxFinite,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                shape: StadiumBorder()),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(S.current.close),
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              });
                         },
                         child: SizedBox(
                           width: 70,
@@ -346,7 +453,8 @@ class NewOrderStateBranchesLoaded extends States {
       screenState.addNewOrder(CreateOrderRequest(
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
-          recipientPhone: screenState.phoneNumberController.text.trim(),
+          recipientPhone: screenState.countryNumberController.text.trim() +
+              screenState.phoneNumberController.text.trim(),
           destination: GeoJson(link: screenState.toController.text.trim()),
           note: screenState.orderDetailsController.text.trim(),
           detail: screenState.orderDetailsController.text.trim(),
@@ -362,7 +470,8 @@ class NewOrderStateBranchesLoaded extends States {
     screenState.addNewOrder(CreateOrderRequest(
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
-        recipientPhone: screenState.phoneNumberController.text.trim(),
+        recipientPhone: screenState.countryNumberController.text.trim() +
+            screenState.phoneNumberController.text.trim(),
         destination: GeoJson(link: screenState.toController.text.trim()),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
@@ -374,10 +483,32 @@ class NewOrderStateBranchesLoaded extends States {
 
   void createOrder() {
     if (imagePath == null) {
-      createOrderWithImage();
+      createOrderWithoutImage();
     } else {
       createOrderWithImage();
     }
+  }
+
+  void pickImageFromCamera() {
+    Navigator.of(screenState.context).pop();
+    ImagePicker.platform
+        .pickImage(source: ImageSource.camera, imageQuality: 80)
+        .then((value) async {
+      memoryBytes = await value?.readAsBytes();
+      imagePath = value?.path;
+      screenState.refresh();
+    });
+  }
+
+  void pickImageFromGallery() {
+    Navigator.of(screenState.context).pop();
+    ImagePicker.platform
+        .pickImage(source: ImageSource.gallery)
+        .then((value) async {
+      memoryBytes = await value?.readAsBytes();
+      imagePath = value?.path;
+      screenState.refresh();
+    });
   }
 
   List<DropdownMenuItem<int>> _getBranches() {
