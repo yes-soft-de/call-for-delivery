@@ -15,7 +15,8 @@ class SubscriptionErrorLoadedState extends States {
   Widget getUI(BuildContext context) {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.mySubscription, colorIcon: Theme.of(context).colorScheme.error),
+          title: S.current.mySubscription,
+          colorIcon: Theme.of(context).colorScheme.error),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(

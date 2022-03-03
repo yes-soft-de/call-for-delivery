@@ -128,7 +128,7 @@ class MyNotificationsLoadedState extends States {
     List<Widget> children = [];
     model.forEach((element) {
       children.add(Padding(
-        padding: const EdgeInsets.only(top:8.0,left: 8.0),
+        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
         child: InkWell(
           onLongPress: () {
             screenState.markerMode = true;
@@ -223,7 +223,8 @@ class MyNotificationsLoadedState extends States {
                       ),
                       Text(
                         element.date,
-                        style: TextStyle(color: Theme.of(context).disabledColor),
+                        style:
+                            TextStyle(color: Theme.of(context).disabledColor),
                       ),
                     ],
                   ),

@@ -43,7 +43,9 @@ class CustomListTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(iconData,
-                color:isDark ? null : Theme.of(context).colorScheme.primaryContainer),
+                color: isDark
+                    ? null
+                    : Theme.of(context).colorScheme.primaryContainer),
           )),
       title: Text(
         title,

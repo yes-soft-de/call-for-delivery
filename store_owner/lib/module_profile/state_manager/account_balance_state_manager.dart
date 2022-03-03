@@ -21,7 +21,5 @@ class AccountBalanceStateManager {
     this._authService,
     this._uploadService,
   );
-  void getAccountBalance(AccountBalanceScreenState screenState){
-
-  }
+  void getAccountBalance(AccountBalanceScreenState screenState) {}
 }

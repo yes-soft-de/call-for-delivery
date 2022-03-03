@@ -17,8 +17,7 @@ class NotificationModel {
       required this.title,
       required this.body,
       required this.date,
-      required this.marked
-      });
+      required this.marked});
 
   NotificationModel.Empty() {
     this.empty = true;
