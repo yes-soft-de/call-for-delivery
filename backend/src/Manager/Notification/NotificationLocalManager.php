@@ -31,7 +31,7 @@ class NotificationLocalManager
     }
 
      /**
-     * @param $userId
+     * @param integer $userId
      * @return array|null
      */
     public function getLocalNotifications($userId): ?array
@@ -40,7 +40,7 @@ class NotificationLocalManager
     }
 
      /**
-     * @param $id
+     * @param integer $id
      * @return NotificationLocalEntity|null
      */
     public function deleteLocalNotification($id): ?NotificationLocalEntity

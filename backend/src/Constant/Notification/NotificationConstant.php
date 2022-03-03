@@ -13,5 +13,4 @@ final class NotificationConstant
     const UPDATE_ORDER_SUCCESS = "تم تعديل الطلب بنجاح";
 
     const NOT_FOUND = "not found";
-
 }

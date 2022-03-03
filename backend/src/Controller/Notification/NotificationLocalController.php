@@ -18,7 +18,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 
 /**
  * Create and fetch order.
- * @Route("v1/NotificationLocal/")
+ * @Route("v1/notificationlocal/")
  */
 class NotificationLocalController extends BaseController
 {

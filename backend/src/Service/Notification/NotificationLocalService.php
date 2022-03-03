@@ -16,10 +16,10 @@ class NotificationLocalService
     }
 
     /**
-     * @param $userId
-     * @param $title
-     * @param $text
-     * @param $orderId
+     * @param integer $userId
+     * @param string $title
+     * @param string $text
+     * @param integer $orderId
      * @return NotificationLocalResponse
      */
     public function createNotificationLocal($userId, $title, $text, $orderId = null): NotificationLocalResponse
@@ -41,7 +41,7 @@ class NotificationLocalService
     }
     
     /**
-     * @param $userId
+     * @param integer $userId
      * @return array|null
      */
     public function getLocalNotifications($userId): ?array
@@ -59,7 +59,7 @@ class NotificationLocalService
     }
 
     /**
-     * @param $id
+     * @param integer $id
      * @return NotificationLocalEntity|null
      */
     public function deleteLocalNotification($id): ?NotificationLocalEntity
