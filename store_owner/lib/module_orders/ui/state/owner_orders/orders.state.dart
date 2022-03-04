@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -24,13 +25,19 @@ class OrdersListStateOrdersLoaded extends States {
     orders.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: OwnerOrderCard(
-          orderNumber: element.id.toString(),
-          orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-          createdDate: element.createdDate,
-          deliveryDate: element.deliveryDate,
-          orderCost: element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
-          note: element.note,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(screenState.context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,arguments: element.id);
+          },
+          child: OwnerOrderCard(
+            orderNumber: element.id.toString(),
+            orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+            createdDate: element.createdDate,
+            deliveryDate: element.deliveryDate,
+            orderCost:
+                element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
+            note: element.note,
+          ),
         ),
       ));
     });

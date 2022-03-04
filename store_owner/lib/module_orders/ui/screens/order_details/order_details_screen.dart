@@ -1,24 +1,24 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class OrderStatusScreen extends StatefulWidget {
+class OrderDetailsScreen extends StatefulWidget {
   final OrderStatusStateManager _stateManager;
-  OrderStatusScreen(this._stateManager);
+  OrderDetailsScreen(this._stateManager);
 
   @override
-  OrderStatusScreenState createState() => OrderStatusScreenState();
+  OrderDetailsScreenState createState() => OrderDetailsScreenState();
 }
 
-class OrderStatusScreenState extends State<OrderStatusScreen> {
-  late int orderId;
+class OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  int orderId = -1;
   late States currentState;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -27,6 +27,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
 
   @override
   void initState() {
+    currentState = LoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -96,9 +97,15 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     }
   }
 
+  bool flag = true;
   @override
   Widget build(BuildContext context) {
-    if (currentState == null) {}
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null && currentState is LoadingState && flag) {
+      orderId = args as int;
+      widget._stateManager.getOrder(this, orderId);
+      flag = false;
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);

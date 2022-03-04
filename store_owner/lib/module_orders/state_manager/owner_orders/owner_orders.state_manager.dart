@@ -55,7 +55,9 @@ class OwnerOrdersStateManager {
         value as OrderModel;
         _stateSubject
             .add(OrdersListStateOrdersLoaded(screenState, orders: value.data));
-        watcher(screenState);
+        if (loading) {
+          watcher(screenState);
+        }
       }
     });
   }

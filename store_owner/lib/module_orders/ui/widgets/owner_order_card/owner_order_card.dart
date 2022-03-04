@@ -110,10 +110,11 @@ class OwnerOrderCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Theme.of(context).backgroundColor),
         ),
-        Text(
-          subtitle,
-          style:Theme.of(context).textTheme.button?.copyWith(fontWeight: FontWeight.normal)
-        ),
+        Text(subtitle,
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }

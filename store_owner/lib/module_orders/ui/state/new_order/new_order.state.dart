@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -187,6 +188,9 @@ class NewOrderStateBranchesLoaded extends States {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(18),
                         onTap: () {
+                          var isDark =
+                              getIt<ThemePreferencesHelper>().isDarkMode();
+
                           showModalBottomSheet(
                               backgroundColor: Colors.transparent,
                               context: context,
@@ -214,8 +218,13 @@ class NewOrderStateBranchesLoaded extends States {
                                                     onPressed: () {
                                                       pickImageFromCamera();
                                                     },
-                                                    child:
-                                                        Text(S.current.camera)),
+                                                    child: Text(
+                                                        S.current.camera,
+                                                        style: isDark
+                                                            ? TextStyle(
+                                                                color: Colors
+                                                                    .white70)
+                                                            : null)),
                                               ),
                                               Divider(
                                                 indent: 16,
@@ -233,7 +242,12 @@ class NewOrderStateBranchesLoaded extends States {
                                                       pickImageFromGallery();
                                                     },
                                                     child: Text(
-                                                        S.current.gallery)),
+                                                        S.current.gallery,
+                                                        style: isDark
+                                                            ? TextStyle(
+                                                                color: Colors
+                                                                    .white70)
+                                                            : null)),
                                               ),
                                             ],
                                           ),
@@ -246,6 +260,7 @@ class NewOrderStateBranchesLoaded extends States {
                                         width: double.maxFinite,
                                         child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
+                                                elevation: 0,
                                                 shape: StadiumBorder()),
                                             onPressed: () {
                                               Navigator.of(context).pop();
@@ -253,7 +268,12 @@ class NewOrderStateBranchesLoaded extends States {
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(10.0),
-                                              child: Text(S.current.close),
+                                              child: Text(
+                                                S.current.close,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .button,
+                                              ),
                                             )),
                                       ),
                                     )
