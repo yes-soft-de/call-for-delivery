@@ -88,7 +88,7 @@ import '../module_orders/state_manager/order_status/order_status.state_manager.d
 import '../module_orders/state_manager/owner_orders/owner_orders.state_manager.dart'
     as _i66;
 import '../module_orders/ui/screens/new_order/new_order_screen.dart' as _i87;
-import '../module_orders/ui/screens/order_status/order_status_screen.dart'
+import '../module_orders/ui/screens/order_details/order_details_screen.dart'
     as _i88;
 import '../module_orders/ui/screens/orders/owner_orders_screen.dart' as _i81;
 import '../module_profile/manager/profile/profile.manager.dart' as _i49;
@@ -329,11 +329,11 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       _i86.InitSubscriptionScreen(get<_i77.InitSubscriptionStateManager>()));
   gh.factory<_i87.NewOrderScreen>(
       () => _i87.NewOrderScreen(get<_i79.NewOrderStateManager>()));
-  gh.factory<_i88.OrderStatusScreen>(
-      () => _i88.OrderStatusScreen(get<_i80.OrderStatusStateManager>()));
+  gh.factory<_i88.OrderDetailsScreen>(
+      () => _i88.OrderDetailsScreen(get<_i80.OrderStatusStateManager>()));
   gh.factory<_i89.OrdersModule>(() => _i89.OrdersModule(
       get<_i87.NewOrderScreen>(),
-      get<_i88.OrderStatusScreen>(),
+      get<_i88.OrderDetailsScreen>(),
       get<_i81.OwnerOrdersScreen>()));
   gh.factory<_i90.SubscriptionBalanceScreen>(() =>
       _i90.SubscriptionBalanceScreen(
