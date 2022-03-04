@@ -127,4 +127,16 @@ class StatusHelper {
         return 0;
     }
   }
+    static int getOrderStatusIndexForStore(OrderStatusEnum status) {
+    switch (status) {
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return 0;
+      case OrderStatusEnum.IN_STORE:
+        return 1;
+      case OrderStatusEnum.DELIVERING:
+        return 2;
+      default:
+        return 0;
+    }
+  }
 }
