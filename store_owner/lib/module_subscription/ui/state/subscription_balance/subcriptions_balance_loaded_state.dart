@@ -24,6 +24,7 @@ class SubscriptionBalanceLoadedState extends States {
           title: S.current.mySubscription,
           actions: [
             CustomC4dAppBar.actionIcon(context, onTap: () {
+              var isDark = getIt<ThemePreferencesHelper>().isDarkMode();
               showModalBottomSheet(
                   backgroundColor: Colors.transparent,
                   context: context,
@@ -48,7 +49,12 @@ class SubscriptionBalanceLoadedState extends States {
                                         style: TextButton.styleFrom(
                                             shape: StadiumBorder()),
                                         onPressed: () {},
-                                        child: Text(S.current.renewNewPlan)),
+                                        child: Text(
+                                          S.current.renewNewPlan,
+                                          style: isDark
+                                              ? TextStyle(color: Colors.white70)
+                                              : null,
+                                        )),
                                   ),
                                   Divider(
                                     indent: 16,
@@ -62,7 +68,12 @@ class SubscriptionBalanceLoadedState extends States {
                                         style: TextButton.styleFrom(
                                             shape: StadiumBorder()),
                                         onPressed: () {},
-                                        child: Text(S.current.renewOldPlan)),
+                                        child: Text(
+                                          S.current.renewOldPlan,
+                                          style: isDark
+                                              ? TextStyle(color: Colors.white70)
+                                              : null,
+                                        )),
                                   ),
                                 ],
                               ),
@@ -81,7 +92,10 @@ class SubscriptionBalanceLoadedState extends States {
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Text(S.current.close),
+                                  child: Text(
+                                    S.current.close,
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
                                 )),
                           ),
                         )
