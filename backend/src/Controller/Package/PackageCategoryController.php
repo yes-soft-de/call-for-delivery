@@ -4,7 +4,6 @@ namespace App\Controller\Package;
 
 use App\Controller\BaseController;
 use App\Service\Package\PackageCategoryService;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -24,35 +23,6 @@ class PackageCategoryController extends BaseController
     {
         parent::__construct($serializer);
         $this->packageCategoryService = $packageCategoryService;
-    }
-
-    /**
-     * Get specific package category.
-     * @Route("packagecategory/{id}", name="getPackageCategoryById", methods={"GET"})
-     * @param int $id
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Package Category")
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns package category",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="string", property="description"),
-     *       )
-     *    )
-     * )
-     */
-    public function getPackageCategoryById(int $id): JsonResponse
-    {
-        $result = $this->packageCategoryService->getPackageCategoryById($id);
-
-        return $this->response($result, self::FETCH);
     }
 
     /**
