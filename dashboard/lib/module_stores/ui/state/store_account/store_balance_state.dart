@@ -220,6 +220,7 @@ class StoreBalanceLoadedState extends States {
                             context: screenState.context,
                             builder: (context) {
                               return CustomAlertDialog(
+                                oneAction: false,
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     screenState

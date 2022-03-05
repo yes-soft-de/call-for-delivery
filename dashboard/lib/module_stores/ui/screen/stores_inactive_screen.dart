@@ -1,4 +1,5 @@
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,9 @@ class StoresInActiveScreenState extends State<StoresInActiveScreen> {
     widget._stateManager.getStores(this);
   }
 
-//  void updateStore(UpdateStoreRequest request) {
-//    widget._stateManager.updateStore(this, request);
-//  }
+  void updateStore(UpdateStoreRequest request) {
+    widget._stateManager.updateStore(this, request);
+  }
 
   void refresh() {
     if (mounted) {
