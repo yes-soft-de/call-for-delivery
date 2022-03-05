@@ -34,7 +34,7 @@ class OrderService
         $order = $this->orderManager->createOrder($request);
         if($order) {
 
-         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner());
+         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);

@@ -19,23 +19,26 @@ use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionManager
 {
-    /**
-     * @param AutoMapping $autoMapping
-     * @param EntityManagerInterface $entityManager
-     * @param SubscriptionEntityRepository $subscribeRepository
-     * @param PackageManager $packageManager
-     * @param StoreOwnerProfileManager $storeOwnerProfileManager
-     * @param \App\Manager\Subscription\SubscriptionDetailsManager $subscriptionDetailsManager
-     * @param \App\Manager\Subscription\SubscriptionHistoryManager $subscriptionHistoryManager
-     */
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private SubscriptionEntityRepository $subscribeRepository, private PackageManager $packageManager, private StoreOwnerProfileManager $storeOwnerProfileManager, private SubscriptionDetailsManager $subscriptionDetailsManager, private SubscriptionHistoryManager $subscriptionHistoryManager)
+    private $autoMapping;
+    private $entityManager;
+    private $packageManager;
+    private $storeOwnerProfileManager;
+    private $subscriptionDetailsManager;
+    private $subscriptionHistoryManager;
+    private $subscribeRepository;
+
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, PackageManager $packageManager, StoreOwnerProfileManager $storeOwnerProfileManager, SubscriptionDetailsManager $subscriptionDetailsManager, SubscriptionHistoryManager $subscriptionHistoryManager)
     {
+        $this->autoMapping = $autoMapping;
+        $this->packageManager = $packageManager;
+        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
+        $this->subscriptionDetailsManager = $subscriptionDetailsManager;
+        $this->subscriptionHistoryManager = $subscriptionHistoryManager;
+        $this->entityManager = $entityManager;
+        $this->subscribeRepository = $subscribeRepository;
+
     }
 
-    /**
-     * @param SubscriptionCreateRequest $request
-     * @return SubscriptionEntity|null
-     */
     public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionEntity
     { 
         // change to SUBSCRIBE_INACTIVE
@@ -68,59 +71,41 @@ class SubscriptionManager
        return $subscriptionEntity;
     }
 
-    /**
-     * @param $storeOwner
-     * @return SubscriptionDetailsEntity|null
-     */
-    public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
+    public function getSubscriptionCurrent(int $storeOwner): ?SubscriptionDetailsEntity
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
 
         return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
-    /**
-     * @param $id
-     * @param $remainingOrders
-     * @return array|null
-     */
-    public function updateRemainingOrders($id, $remainingOrders): ?array
+    public function updateRemainingOrders(int $id, int $remainingOrders): ?array
     {
        return $this->subscriptionDetailsManager->updateRemainingOrders($id, $remainingOrders);
     }
 
-    public function getSubscriptionCurrentWithRelation($storeOwner)
+    public function getSubscriptionCurrentWithRelation(int $storeOwnerId): ?array
     {
-       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 
        return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
        
     }
 
-    public function getSubscriptionForNextTime($storeOwner)
+    public function getSubscriptionForNextTime(int $storeOwner): ?array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
 
        return $this->subscribeRepository->getSubscriptionForNextTime($storeOwner);       
     }
 
-    /**
-     * @param $storeOwner
-     * @return array|null
-     */
-    public function getSubscriptionsForStoreOwner($storeOwner): ?array
+    public function getSubscriptionsForStoreOwner(int $storeOwner): ?array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);
      
        return $this->subscribeRepository->getSubscriptionsForStoreOwner($storeOwner);
     }
 
-    /**
-     * @param $id
-     * @param $status
-     * @return string
-     */
-    public function updateSubscribeState($id, $status): string
+    public function updateSubscribeState(int $id, string $status): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
         
@@ -140,12 +125,7 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
-    /**
-     * @param $id
-     * @param $isFuture
-     * @return string
-     */
-    public function updateIsFutureAndSubscriptionCurrent($id, $isFuture): string
+    public function updateIsFutureAndSubscriptionCurrent(int $id, bool $isFuture): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
         
@@ -165,25 +145,14 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
-    /**
-     * @param $startDate
-     * @param $days
-     * @return DateTime|null
-     */
-    public function calculatingSubscriptionExpiryDate($startDate, $days): DateTime|null
+    public function calculatingSubscriptionExpiryDate(DateTime $startDate, int $days): DateTime|null
     {
         $days = $days.'day';
 
         return new DateTime($startDate->format('Y-m-d h:i:s') . $days);
     }
 
-    /**
-     * @param $id
-     * @param $endDate
-     * @param $note
-     * @return SubscriptionEntity|null
-     */
-    public function updateEndDate($id, $endDate, $note): ?SubscriptionEntity
+    public function updateEndDate(int $id, DateTime $endDate, string $note): ?SubscriptionEntity
     {
         $subscriptionEntity = $this->subscribeRepository->find($id);
       
@@ -198,9 +167,8 @@ class SubscriptionManager
         return $subscriptionEntity;
     }
 
-    
-    public function countOrders($subscription): ?array
+    public function countOrders(int $subscriptionId): ?array
     {
-       return $this->subscribeRepository->countOrders($subscription);
+       return $this->subscribeRepository->countOrders($subscriptionId);
     }
 }

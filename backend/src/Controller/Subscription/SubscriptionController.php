@@ -23,16 +23,17 @@ use App\Constant\Subscription\SubscriptionConstant;
  */
 class SubscriptionController extends BaseController
 {
-    /**
-     * @param SerializerInterface $serializer
-     * @param AutoMapping $autoMapping
-     * @param ValidatorInterface $validator
-     * @param SubscriptionService $subscriptionService
-     */
-    public function __construct( SerializerInterface $serializer, private AutoMapping $autoMapping,
-                                private ValidatorInterface  $validator, private SubscriptionService $subscriptionService)
+    private $autoMapping;
+    private $validator;
+    private $subscriptionService;
+   
+    public function __construct( SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface  $validator, SubscriptionService $subscriptionService)
     {
         parent::__construct($serializer);
+       
+        $this->autoMapping = $autoMapping;
+        $this->validator = $validator;
+        $this->subscriptionService = $subscriptionService;
     }
 
     /**
