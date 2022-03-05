@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\Package;
+namespace App\Response\Admin\Package;
 
-class PackageCategoriesAndPackagesResponse
+class PackageAndCategoryForAdminGetResponse
 {
     /**
      * @var int|null

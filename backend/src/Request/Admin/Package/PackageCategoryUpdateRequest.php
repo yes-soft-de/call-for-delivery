@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Request\Package;
+namespace App\Request\Admin\Package;
 
 class PackageCategoryUpdateRequest
 {
-    private $id;
+    private int $id;
 
-    private $name;
+    private string $name;
 
+    /**
+     * @var string|null
+     */
     private $description;
 
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

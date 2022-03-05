@@ -37,39 +37,6 @@ class PackageCategoryService
         return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $result);
     }
 
-    /**
-     * @param $id
-     * @return PackageCategoryResponse|null
-     */
-    public function getPackageCategoryById($id): ?PackageCategoryResponse 
-    {
-       $packageCategory = $this->packageCategoryManager->getPackageCategoryById($id);
-      
-       return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryResponse::class, $packageCategory);
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getAllPackagesCategoriesAndPackagesForAdmin(): ?array
-    {
-        $response = [];
-
-        $packageCategories = $this->packageCategoryManager->getAllPackagesCategories();
-
-        foreach ($packageCategories as $packageCategory) {
-
-            $packageCategory['packages'] = $this->packageService->getPackagesByCategoryIdForAdmin($packageCategory['id']);
-
-            $response[] = $this->autoMapping->map("array", PackageCategoriesAndPackagesResponse::class, $packageCategory);
-        }
-
-        return $response;
-    }
-
-    /**
-     * @return array|null
-     */
     public function getAllPackagesCategoriesAndPackagesForStore(): ?array
     {
         $response = [];
