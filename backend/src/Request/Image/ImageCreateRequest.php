@@ -4,13 +4,13 @@ namespace App\Request\Image;
 
 class ImageCreateRequest
 {
-    private $imagePath;
+    private string $imagePath;
 
-    private $entityType;
+    private int $entityType;
 
-    private $usedAs;
+    private int $usedAs;
 
-    private $itemId;
+    private int $itemId;
 
     public function setImagePath(string $imagePath): void
     {
