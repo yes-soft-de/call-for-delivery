@@ -7,22 +7,19 @@ use App\Entity\NotificationLocalEntity;
 use App\Manager\Notification\NotificationLocalManager;
 use App\Request\Notification\NotificationLocalCreateRequest;
 use App\Response\Notification\NotificationLocalResponse;
-use App\Constant\Notification\NotificationConstant;
 
 class NotificationLocalService
 {
-    public function __construct(private AutoMapping $autoMapping, private NotificationLocalManager $notificationLocalManager)
+    private $autoMapping;
+    private $notificationLocalManager;
+
+    public function __construct(AutoMapping $autoMapping, NotificationLocalManager $notificationLocalManager)
     {
+        $this->autoMapping = $autoMapping;
+        $this->notificationLocalManager = $notificationLocalManager;
     }
 
-    /**
-     * @param integer $userId
-     * @param string $title
-     * @param string $text
-     * @param integer $orderId
-     * @return NotificationLocalResponse
-     */
-    public function createNotificationLocal($userId, $title, $text, $orderId = null): NotificationLocalResponse
+    public function createNotificationLocal(int $userId, string $title, string $text, int $orderId = null): NotificationLocalResponse
     {
         $request = new NotificationLocalCreateRequest();
 
@@ -42,7 +39,6 @@ class NotificationLocalService
     
     /**
      * @param integer $userId
-     * @return array|null
      */
     public function getLocalNotifications($userId): ?array
     {
@@ -60,7 +56,6 @@ class NotificationLocalService
 
     /**
      * @param integer $id
-     * @return NotificationLocalEntity|null
      */
     public function deleteLocalNotification($id): ?NotificationLocalEntity
     {

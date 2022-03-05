@@ -22,9 +22,12 @@ use Nelmio\ApiDocBundle\Annotation\Security;
  */
 class NotificationLocalController extends BaseController
 {
-    public function __construct(SerializerInterface $serializer, private AutoMapping $autoMapping, private ValidatorInterface $validator, private NotificationLocalService $notificationLocalService)
+    private $notificationLocalService;
+
+    public function __construct(SerializerInterface $serializer, NotificationLocalService $notificationLocalService)
     {
         parent::__construct($serializer);
+        $this->notificationLocalService = $notificationLocalService;
     }
     
     /**

@@ -11,13 +11,19 @@ use DateTime;
 
 class NotificationLocalManager
 {
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private NotificationLocalEntityRepository $notificationLocalRepository)
+    private $autoMapping;
+    private $entityManager;
+    private $notificationLocalRepository;
+
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, NotificationLocalEntityRepository $notificationLocalRepository)
     {
+        $this->autoMapping = $autoMapping;
+        $this->entityManager = $entityManager;
+        $this->notificationLocalRepository = $notificationLocalRepository;
     }
     
     /**
      * @param NotificationLocalCreateRequest $request
-     * @return NotificationLocalEntity|null
      */
     public function createNotificationLocal(NotificationLocalCreateRequest $request): ?NotificationLocalEntity
     {
@@ -32,7 +38,6 @@ class NotificationLocalManager
 
      /**
      * @param integer $userId
-     * @return array|null
      */
     public function getLocalNotifications($userId): ?array
     {
@@ -41,7 +46,6 @@ class NotificationLocalManager
 
      /**
      * @param integer $id
-     * @return NotificationLocalEntity|null
      */
     public function deleteLocalNotification($id): ?NotificationLocalEntity
     {
