@@ -122,7 +122,7 @@ class AdminPackageCategoryController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=201,
+     *      response=204,
      *      description="Returns new package",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -169,8 +169,15 @@ class AdminPackageCategoryController extends BaseController
      *
      * @OA\Tag(name="Package Category")
      *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
      * @OA\Response(
-     *      response=201,
+     *      response=200,
      *      description="Returns categories and packages ",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -195,6 +202,8 @@ class AdminPackageCategoryController extends BaseController
      *       )
      *    )
      * )
+     *
+     * @Security(name="Bearer")
      */
     public function getAllPackagesCategories(): JsonResponse
     {
