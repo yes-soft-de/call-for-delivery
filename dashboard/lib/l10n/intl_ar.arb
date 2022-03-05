@@ -451,5 +451,27 @@
 
     "emptyStaff": "قائمة فارغة",
     "paymentAmount": "قيمة الدفعة",
-    "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة"
+    "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة",
+
+    "packageCategory": "تصنيفات الباقات",
+    "addCategory": "إضاف تصنيف",
+    "ok": "حسناً",
+  "categoryName": "اسم التصنيف",
+  "description": "وصف",
+    "categoryUpdatedSuccessfully": "تم تحديث الفئة بنجاح",
+    "search": "بحث",
+    "packageInfo": "معلومات الباقة",
+    "close": "إغلاق",
+    "carCount": "عدد السيارات",
+    "orderCount": "عدد الطلبات",
+
+    "packageName": "اسم الباقة",
+    "dayCount": "عدد أيام صلاحية الباقة",
+    "packages": "الباقات",
+    "addPackage": "إضافة باقة",
+    "addPackageSuccessfully": "تم إضافة الباقة بنجاح",
+    "updatePackageSuccessfully": "تم تعديل الباقة بنجاح",
+    "chooseCategory": "أختر تصنيف"
+
+
 }
