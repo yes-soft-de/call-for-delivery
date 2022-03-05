@@ -17,17 +17,22 @@ class HomeStateManager {
   HomeStateManager(this._homeService);
 
   void getReport(HomeScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
-    _homeService.getReport().then((value) {
-      if (value.hasError) {
-        _stateSubject
-            .add(HomeLoadedState(screenState, null, error: value.error));
-      } else if (value.isEmpty) {
-        _stateSubject.add(HomeLoadedState(screenState, null));
-      } else {
-        ReportModel data = value as ReportModel;
-        _stateSubject.add(HomeLoadedState(screenState, data));
-      }
-    });
+    ReportModel data = ReportModel(
+        countCompletedOrders: 5, countOngoingOrders: 3, countCaptains: 2,  countStores: 10,);
+    _stateSubject.add(HomeLoadedState(screenState, data));
+
+
+//    _stateSubject.add(LoadingState(screenState));
+//    _homeService.getReport().then((value) {
+//      if (value.hasError) {
+//        _stateSubject
+//            .add(HomeLoadedState(screenState, null, error: value.error));
+//      } else if (value.isEmpty) {
+//        _stateSubject.add(HomeLoadedState(screenState, null));
+//      } else {
+//        ReportModel data = value as ReportModel;
+//        _stateSubject.add(HomeLoadedState(screenState, data));
+//      }
+//    });
   }
 }
