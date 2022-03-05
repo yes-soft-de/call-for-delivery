@@ -14,10 +14,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ImageCommand extends Command
 {
     protected static $defaultName = 'app:create-image';
+    private ImageServiceInterface $imageServiceInterface;
 
-    public function __construct(private ImageServiceInterface $imageServiceInterface)
+    public function __construct(ImageServiceInterface $imageServiceInterface)
     {
         parent::__construct();
+        $this->imageServiceInterface = $imageServiceInterface;
     }
 
     public function imageData(): ImageCreateRequest
@@ -26,7 +28,7 @@ class ImageCommand extends Command
 
         $imageCreateRequest->setImagePath('image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg');
         $imageCreateRequest->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ORDER);
-        $imageCreateRequest->setUsedAs(ImageUseAsConstant::IMAGE_AIM_ORDER_IMAGE);
+        $imageCreateRequest->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ORDER_IMAGE);
         $imageCreateRequest->setItemId(1);
 
         return $imageCreateRequest;
