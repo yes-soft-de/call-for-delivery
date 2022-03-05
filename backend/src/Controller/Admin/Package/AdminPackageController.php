@@ -295,7 +295,7 @@ class AdminPackageController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=201,
+     *      response=200,
      *      description="Returns packages",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -321,6 +321,58 @@ class AdminPackageController extends BaseController
     public function getAllPackages(): JsonResponse
     {
         $result = $this->adminPackageService->getAllPackages();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: Get all packages of a specific category id.
+     * @Route("packagesbycategoryid/{packageCategoryId}", name="getPackagesByPackageCategoryIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $packageCategoryId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Package Category")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns packages of specific category",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *           @OA\Items(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="name"),
+     *              @OA\Property(type="string", property="description"),
+     *              @OA\Property(type="array", property="packages",
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="name"),
+     *                      @OA\Property(type="number", property="cost"),
+     *                      @OA\Property(type="string", property="note"),
+     *                      @OA\Property(type="integer", property="carCount"),
+     *                      @OA\Property(type="string", property="city"),
+     *                      @OA\Property(type="integer", property="orderCount"),
+     *                      @OA\Property(type="string", property="status"),
+     *                  )
+     *              )
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getPackagesByCategoryIdForAdmin(int $packageCategoryId): JsonResponse
+    {
+        $result = $this->adminPackageService->getPackagesByCategoryId($packageCategoryId);
 
         return $this->response($result, self::FETCH);
     }
