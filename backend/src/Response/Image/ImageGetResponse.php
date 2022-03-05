@@ -2,15 +2,21 @@
 
 namespace App\Response\Image;
 
+use DateTime;
+
 class ImageGetResponse
 {
-    public $id;
+    public int $id;
 
-    public $image;
+    public array $image;
 
-    public $entityType;
+    public int $entityType;
 
-    public $usedAs;
+    public int $usedAs;
 
-    public $itemId;
+    public int $itemId;
+
+    public datetime $createdAt;
+
+    public datetime $updatedAt;
 }

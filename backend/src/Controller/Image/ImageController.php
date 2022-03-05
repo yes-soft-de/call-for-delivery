@@ -23,7 +23,7 @@ class ImageController extends BaseController
     }
 
     /**
-     * Get images. THIS JUST FOR TESTING CREATE IMAGE FUNCTIONS
+     * Get images by specific parameters. THIS JUST FOR TESTING CREATE IMAGE FUNCTIONS
      * @Route("images/{itemId}/{entityType}/{usedAs}", name="getImagesByItemIdAndEntityTypeAndImageAim", methods={"GET"})
      * @param int $itemId
      * @param int $entityType
@@ -34,7 +34,7 @@ class ImageController extends BaseController
      *
      * @OA\Response(
      *      response=201,
-     *      description="Returns the images info",
+     *      description="Returns the images info which meet the passed parameters",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -46,8 +46,10 @@ class ImageController extends BaseController
      *                      @OA\Property(type="string", property="baseURL")
      *                  ),
      *                  @OA\Property(type="string", property="entityType"),
-     *                  @OA\Property(type="string", property="imageAim"),
-     *                  @OA\Property(type="integer", property="itemId")
+     *                  @OA\Property(type="integer", property="usedAs"),
+     *                  @OA\Property(type="integer", property="itemId"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="object", property="updatedAt")
      *          )
      *      )
      * )

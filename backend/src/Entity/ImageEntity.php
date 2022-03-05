@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImageEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ImageEntityRepository::class)]
 class ImageEntity
@@ -24,6 +25,14 @@ class ImageEntity
 
     #[ORM\Column(type: 'integer')]
     private $usedAs;
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime')]
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -74,6 +83,30 @@ class ImageEntity
     public function setUsedAs(int $usedAs): self
     {
         $this->usedAs = $usedAs;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
