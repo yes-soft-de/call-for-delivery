@@ -8,7 +8,7 @@ App\Request\Subscription\SubscriptionNextRequest:
         package:
             - NotBlank: ~
 
-App\Request\Package\PackageCreateRequest:
+App\Request\Admin\Package\PackageCreateRequest:
     properties:
         name:
             - NotBlank: ~
@@ -23,7 +23,7 @@ App\Request\Package\PackageCreateRequest:
         expired:
             - NotBlank: ~
 
-App\Request\Package\PackageUpdateStateRequest:
+App\Request\Admin\Package\PackageUpdateRequest:
     properties:
         id:
             - NotBlank: ~
@@ -36,33 +36,40 @@ App\Request\Package\PackageUpdateStateRequest:
         orderCount:
             - NotBlank: ~
 
+App\Request\Admin\Package\PackageStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
+
 App\Request\StoreOwner\StoreOwnerProfileUpdateRequest:
     properties:
         storeOwnerName:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest:
     properties:
         location:
-           - NotBlank: ~
+            - NotBlank: ~
         name:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest:
     properties:
         id:
-           - NotBlank: ~
+            - NotBlank: ~
         location:
-           - NotBlank: ~
+            - NotBlank: ~
         name:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
     properties:
         id:
-           - NotBlank: ~
+            - NotBlank: ~
         isActive:
-           - NotBlank: ~
+            - NotBlank: ~
 
 App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
     properties:
@@ -81,11 +88,11 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
         id:
             - NotBlank: ~
 
-App\Request\Package\PackageCategoryCreateRequest:
+App\Request\Admin\Package\PackageCategoryCreateRequest:
     properties:
         name:
             - NotBlank: ~
-            
+
 App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
@@ -100,14 +107,19 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
 App\Request\Order\OrderCreateRequest:
     properties:
         orderCost:
-              - NotBlank: ~
+            - NotBlank: ~
         deliveryDate:
-              - NotBlank: ~
+            - NotBlank: ~
         destination:
-              - NotBlank: ~
+            - NotBlank: ~
         detail:
-              - NotBlank: ~
+            - NotBlank: ~
         branch:
-              - NotBlank: ~
+            - NotBlank: ~
 
-
+App\Request\Admin\Package\PackageCategoryUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
