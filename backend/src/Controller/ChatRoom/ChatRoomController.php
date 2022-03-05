@@ -2,29 +2,63 @@
 
 namespace App\Controller\ChatRoom;
 
-use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\ChatRoom\ChatRoomCreateRequest;
 use App\Service\ChatRoom\ChatRoomService;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 
 /**
- * Create chat room.
+ * fetch chat room.
  * @Route("v1/chatroom/")
  */
 class ChatRoomController extends BaseController
 {
-    public function __construct(SerializerInterface $serializer, private AutoMapping $autoMapping, private ValidatorInterface $validator, private ChatRoomService $chatRoomService)
+    private $chatRoomService;
+
+    public function __construct(SerializerInterface $serializer, ChatRoomService $chatRoomService)
     {
         parent::__construct($serializer);
+        $this->chatRoomService = $chatRoomService;
+    }
+
+     /**
+      * fetch chat room for user
+     * @Route("chatroom", name="getChatRoom", methods={"GET"})
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Chat Room")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns chat room info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="integer", property="userId"),
+     *                  @OA\Property(type="integer", property="usedAs", description="equal zero mean chat room between admin and user"),
+     *                  @OA\Property(type="string", property="roomId")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getChatRoom(): JsonResponse
+    {
+        $result = $this->chatRoomService->getChatRoom($this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }

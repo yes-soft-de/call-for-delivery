@@ -6,12 +6,6 @@ class ChatRoomCreateRequest
 {
     private int $userId;
 
-    private string $usedAs;
-  
-    private string $createdAt;
-    
-    private string $roomId;
-
     /**
      * Get the value of userId
      */ 

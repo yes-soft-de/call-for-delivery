@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ChatRoomEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ChatRoomEntityRepository::class)]
 class ChatRoomEntity
@@ -21,6 +22,9 @@ class ChatRoomEntity
 
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
+
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private $roomId;
 
     public function getId(): ?int
     {
@@ -59,6 +63,18 @@ class ChatRoomEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getRoomId():? uuid
+    {
+        return $this->roomId;
+    }
+
+    public function setRoomId($roomId): self
+    {
+        $this->roomId = $roomId;
 
         return $this;
     }

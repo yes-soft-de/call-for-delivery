@@ -20,8 +20,7 @@ class ChatRoomResponse
     public $usedAs;
 
     /**
-     * @var uuid|null $roomId
+     * @var string|null $roomId
      */
     public $roomId;
-
 }
