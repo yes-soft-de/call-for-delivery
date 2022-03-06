@@ -4,6 +4,7 @@ namespace App\Controller\Image;
 
 use App\Controller\BaseController;
 use App\Service\Image\ImageService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -25,6 +26,7 @@ class ImageController extends BaseController
     /**
      * Get images by specific parameters. THIS JUST FOR TESTING CREATE IMAGE FUNCTIONS
      * @Route("images/{itemId}/{entityType}/{usedAs}", name="getImagesByItemIdAndEntityTypeAndImageAim", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param int $itemId
      * @param int $entityType
      * @param int $usedAs
