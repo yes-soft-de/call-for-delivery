@@ -27,7 +27,9 @@ class OrdersListStateOrdersLoaded extends States {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            Navigator.of(screenState.context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,arguments: element.id);
+            Navigator.of(screenState.context).pushNamed(
+                OrdersRoutes.ORDER_STATUS_SCREEN,
+                arguments: element.id);
           },
           child: OwnerOrderCard(
             orderNumber: element.id.toString(),

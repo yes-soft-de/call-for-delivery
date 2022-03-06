@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/response/order_details_response/images.dart';
+
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -18,24 +20,25 @@ class Data {
   String? detail;
   int? storeOwnerBranchId;
   String? branchName;
+  Images? image;
 
-  Data({
-    this.id,
-    this.state,
-    this.payment,
-    this.orderCost,
-    this.orderType,
-    this.note,
-    this.deliveryDate,
-    this.createdAt,
-    this.storeOrderDetailsId,
-    this.destination,
-    this.recipientName,
-    this.recipientPhone,
-    this.detail,
-    this.storeOwnerBranchId,
-    this.branchName,
-  });
+  Data(
+      {this.id,
+      this.state,
+      this.payment,
+      this.orderCost,
+      this.orderType,
+      this.note,
+      this.deliveryDate,
+      this.createdAt,
+      this.storeOrderDetailsId,
+      this.destination,
+      this.recipientName,
+      this.recipientPhone,
+      this.detail,
+      this.storeOwnerBranchId,
+      this.branchName,
+      this.image});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
@@ -55,6 +58,9 @@ class Data {
         destination: json['destination'] == null
             ? null
             : Destination.fromJson(json['destination'] as Map<String, dynamic>),
+        image: json['images'] == null
+            ? null
+            : Images.fromJson(json['images'] as Map<String, dynamic>),
         recipientName: json['recipientName'] as String?,
         recipientPhone: json['recipientPhone'] as String?,
         detail: json['detail'] as String?,
