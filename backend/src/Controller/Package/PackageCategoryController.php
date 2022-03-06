@@ -12,7 +12,7 @@ use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 
 /**
- * Create and fetch package Categories.
+ * Fetch package Categories.
  * @Route("v1/packagecategory/")
  */
 class PackageCategoryController extends BaseController

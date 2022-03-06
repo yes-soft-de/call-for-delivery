@@ -39,7 +39,7 @@ class AdminPackageCategoryController extends BaseController
 
     /**
      * admin:Create new package category by admin
-     * @Route("category", name="createPackageCategory", methods={"POST"})
+     * @Route("category", name="createPackageCategoryByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -54,7 +54,7 @@ class AdminPackageCategoryController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="new package category",
+     *      description="new package category create request",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="description"),
@@ -62,22 +62,22 @@ class AdminPackageCategoryController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=201,
-     *      description="Returns new package",
+     *      response=200,
+     *      description="Returns new package category info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
      *            @OA\Property(type="string", property="name"),
-     *            @OA\Property(type="string", property="description"),
+     *            @OA\Property(type="string", property="description")
      *      )
      *   )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function createPackageCategory(Request $request): JsonResponse
+    public function createPackageCategoryByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
