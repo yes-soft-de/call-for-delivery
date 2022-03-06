@@ -68,8 +68,6 @@ App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
     properties:
         id:
             - NotBlank: ~
-        isActive:
-            - NotBlank: ~
 
 App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
     properties:
