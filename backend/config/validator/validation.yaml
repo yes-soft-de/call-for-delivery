@@ -110,6 +110,13 @@ App\Request\Order\OrderCreateRequest:
         branch:
               - NotBlank: ~
 
+App\Request\Admin\Package\PackageCategoryUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
 App\Request\Admin\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest:
     properties:
         branches:
