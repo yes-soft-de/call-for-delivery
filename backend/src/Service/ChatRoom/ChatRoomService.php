@@ -35,6 +35,8 @@ class ChatRoomService
 
     public function getChatRoomsWithStores(): ?array 
     {
+        $response = [];
+         
         $chatRooms = $this->chatRoomManager->getChatRoomsWithStores();
         foreach($chatRooms as $chatRoom) {
         
