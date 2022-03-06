@@ -13,11 +13,23 @@ use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class OrderService
 {
-    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager, private SubscriptionService $subscriptionService, private NotificationLocalService $notificationLocalService)
+    private AutoMapping $autoMapping;
+    private OrderManager $orderManager;
+    private SubscriptionService $subscriptionService;
+    private NotificationLocalService $notificationLocalService;
+    private string $params;
+
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params)
     {
+       $this->params = $params->get('upload_base_url') . '/';
+       $this->autoMapping = $autoMapping;
+       $this->orderManager = $orderManager;
+       $this->subscriptionService = $subscriptionService;
+       $this->notificationLocalService = $notificationLocalService;
     }
 
     /**
@@ -48,7 +60,7 @@ class OrderService
      * @param $userId
      * @return array
      */
-    public function getStoreOrders($userId): ?array
+    public function getStoreOrders(int $userId): ?array
     {
         $response = [];
        
@@ -65,10 +77,21 @@ class OrderService
      * @param $id
      * @return OrdersResponse
      */
-    public function getSpecificOrderForStore($id): ?OrdersResponse
+    public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
+        $order['images'] = $this->getImageParams($order['images'], $this->params.$order['images'], $this->params);
+
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
+    }
+    
+    public function getImageParams($imageURL, $image, $baseURL): array
+    {
+        $item['imageURL'] = $imageURL;
+        $item['image'] = $image;
+        $item['baseURL'] = $baseURL;
+
+        return $item;
     }
 }

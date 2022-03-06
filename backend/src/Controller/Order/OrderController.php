@@ -23,9 +23,17 @@ use Nelmio\ApiDocBundle\Annotation\Security;
  */
 class OrderController extends BaseController
 {
-    public function __construct(SerializerInterface $serializer, private AutoMapping $autoMapping, private ValidatorInterface $validator, private OrderService $orderService)
+    private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
+    private OrderService $orderService;
+
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService)
     {
         parent::__construct($serializer);
+       $this->autoMapping = $autoMapping;
+       $this->validator = $validator;
+       $this->orderService = $orderService;
+
     }
     
     /**
@@ -196,6 +204,11 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="object", property="images",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *              ),
      *          )
      *      )
      *   )
