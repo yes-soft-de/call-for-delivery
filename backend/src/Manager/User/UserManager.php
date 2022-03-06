@@ -99,7 +99,7 @@ class UserManager
         return $this->userRepository->getUserByUserIdAndRole($userId, $role);
     }
 
-    public function createUser(UserRegisterRequest $request): UserEntity
+    public function createUser(UserRegisterRequest $request, int $usedAs): UserEntity
     {
         $userRegister = $this->autoMapping->map(UserRegisterRequest::class, UserEntity::class, $request);
 
@@ -112,7 +112,7 @@ class UserManager
         $this->entityManager->persist($userRegister);
         $this->entityManager->flush();
 
-        $this->chatRoomManager->createChatRoom($userRegister->getId());
+        $this->chatRoomManager->createChatRoom($userRegister->getId(), $usedAs);
 
         return $userRegister;
     }

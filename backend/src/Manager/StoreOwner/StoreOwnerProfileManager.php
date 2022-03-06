@@ -14,6 +14,7 @@ use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\User\UserManager;
+use App\Constant\ChatRoom\ChatRoomConstant;
 
 class StoreOwnerProfileManager
 {
@@ -37,7 +38,7 @@ class StoreOwnerProfileManager
         if (! $user) {
             $request->setRoles(["ROLE_OWNER"]);
 
-            $userRegister = $this->userManager->createUser($request);
+            $userRegister = $this->userManager->createUser($request, ChatRoomConstant::ADMIN_STORE);
 
             if ($userRegister) {
                 return $this->createProfile($request, $userRegister);
