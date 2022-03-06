@@ -31,4 +31,9 @@ class StoreOwnerProfileResponse
     public $bankAccountNumber;
 
     public $stcPay;
+
+    /**
+     * @var string|null $roomId
+     */
+    public $roomId;
 }

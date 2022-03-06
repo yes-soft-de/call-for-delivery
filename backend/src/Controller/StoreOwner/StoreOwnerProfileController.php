@@ -211,6 +211,7 @@ class StoreOwnerProfileController extends BaseController
      *              @OA\Property(type="string", property="bankAccountNumber"),
      *              @OA\Property(type="string", property="stcPay"),
      *              @OA\Property(type="string", property="employeeCount"),
+     *               @OA\Property(type="string", property="roomId"),
      *      )
      *   )
      * )
@@ -469,7 +470,8 @@ class StoreOwnerProfileController extends BaseController
      *                      @OA\Property(type="string", property="name"),
      *                      @OA\Property(type="string", property="city"),
      *                      @OA\Property(type="boolean", property="isActive"),
-     *                  )
+     *                  ),
+     *               @OA\Property(type="string", property="roomId"),
      *              ),
      *      )
      *   )
