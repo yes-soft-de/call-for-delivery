@@ -10,6 +10,7 @@ class Urls {
   static const String BASE_API_CATEGORY = DOMAIN + VERSION_ADMIN + '/packagecategory';
   static const String BASE_API_PACKAGE_ADMIN = DOMAIN + VERSION_ADMIN + '/package';
   static const String BASE_API_PACKAGE = DOMAIN + VERSION + '/package';
+  static const String BASE_API_COMPANY = DOMAIN + VERSION + '/company';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -53,5 +54,8 @@ class Urls {
   static const GET_PACKAGE_BY_CATEGORY = BASE_API_PACKAGE_ADMIN + '/packagesbycategoryid/';
   static const CREATE_PACKAGE = BASE_API_PACKAGE_ADMIN + '/package';
   static const ACTIVE_PACKAGE = BASE_API_PACKAGE_ADMIN + '/packagestatus';
+
+  /*-------------------------------Company-----------------------------------*/
+  static const COMPANY_INFO = BASE_API_COMPANY + '/companyinfo';
 
 }
