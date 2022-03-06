@@ -33,7 +33,7 @@ class Urls {
       BASE_API + '/notificationnewchatanonymous';
   static const CREATE_CAPTAIN_PROFILE = BASE_API + '/captainprofile';
   static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captainisactive';
-  static const ORDER_STATUS_API = BASE_API + '/orderDetails/';
+  static const ORDER_STATUS_API = DOMAIN + '/v1/order/storeorder/';
   static const NEARBY_ORDERS_API = BASE_API + '/closestOrders';
   static const CAPTAIN_ACCEPTED_ORDERS_API = BASE_API + '/getAcceptedOrder';
   static const ACCEPT_ORDER_API = BASE_API + '/acceptedOrder';

@@ -35,7 +35,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   States? _currentState;
   ProfileModel? currentProfile;
   CompanyInfoResponse? _companyInfo;
-
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
@@ -92,6 +91,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getInitData();
+      getMyOrders();
     });
     getInitData();
   }
@@ -104,7 +104,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.orders, icon: Icons.sort, onTap: () {
+          title: S.current.onGoingOrder, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {

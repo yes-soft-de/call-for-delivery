@@ -4979,6 +4979,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Ongoing Order`
+  String get onGoingOrder {
+    return Intl.message(
+      'Ongoing Order',
+      name: 'onGoingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get details {
+    return Intl.message(
+      'Details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

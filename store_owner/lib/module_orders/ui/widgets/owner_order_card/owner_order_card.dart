@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
 import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
 import 'package:flutter/material.dart';
 
@@ -34,31 +35,28 @@ class OwnerOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: InfoButton(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text(S.current.note),
-                          content: Container(child: Text(note)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          actionsAlignment: MainAxisAlignment.center,
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(S.current.close)),
-                          ],
-                        );
-                      });
-                },
-              ),
+            InfoButtonOrder(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(S.current.note),
+                        content: Container(child: Text(note)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        actionsAlignment: MainAxisAlignment.center,
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(S.current.close)),
+                        ],
+                      );
+                    });
+              },
             ),
             // order number & order status
             Row(
@@ -112,10 +110,11 @@ class OwnerOrderCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Theme.of(context).backgroundColor),
         ),
-        Text(
-          subtitle,
-          style:Theme.of(context).textTheme.button?.copyWith(fontWeight: FontWeight.normal)
-        ),
+        Text(subtitle,
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }

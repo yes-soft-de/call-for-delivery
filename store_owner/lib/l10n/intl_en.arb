@@ -494,7 +494,11 @@
     "paymentAmount": "Payment amount",
     "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment",
     "deliverDate": "Delivery date",
-    "createdDate": "Created date"
+    "createdDate": "Created date",
+    "onGoingOrder": "Ongoing Order",
+    "details": "Details"
+
+
 
 
 

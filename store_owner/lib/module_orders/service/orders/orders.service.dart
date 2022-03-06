@@ -3,9 +3,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
-import 'package:c4d/module_orders/model/order_status_model.dart';
+import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/response/order_status/order_status_response.dart';
+import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -38,7 +38,7 @@ class OrdersService {
   }
 
   Future<DataModel> getOrderDetails(int orderId) async {
-    OrderStatusResponse? response =
+    OrderDetailsResponse? response =
         await _ordersManager.getOrderDetails(orderId);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
@@ -46,7 +46,7 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    return OrderStatusModel.withData(response);
+    return OrderDetailsModel.withData(response);
   }
 
   Future<DataModel> addNewOrder(CreateOrderRequest request) async {

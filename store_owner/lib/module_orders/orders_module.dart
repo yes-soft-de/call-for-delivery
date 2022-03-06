@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
-import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 class OrdersModule extends YesModule {
   final OwnerOrdersScreen _ordersScreen;
   final NewOrderScreen _newOrderScreen;
-  final OrderStatusScreen _orderStatus;
+  final OrderDetailsScreen _orderStatus;
   OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }

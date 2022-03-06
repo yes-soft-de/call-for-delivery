@@ -284,7 +284,7 @@
     "myAddressHint": "حدد عنوانك",
     "card": "بطاقة",
     "chooseAddressNote": "يمكنك تعديل مكان التسليم الحالي على الخارطة",
-    "orderTime": "زمن التوصيل",
+    "orderTime": "موعد التوصيل",
     "paymentMethodHint": "اختر",
     "statusCodeOk": "تم جلب المعلومات بنجاح",
     "statusCodeCreated": "نجح الطلب وتم إنشاء تغيير جديد نتيجة لذلك ",
@@ -493,7 +493,9 @@
     "paymentAmount": "قيمة الدفعة",
     "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة",
     "deliverDate": "تاريخ التوصيل",
-    "createdDate": "تاريخ الإنشاء"
+    "createdDate": "تاريخ الإنشاء",
+    "onGoingOrder": "الطلبات الجارية",
+    "details": "تفاصيل"
 
 
 

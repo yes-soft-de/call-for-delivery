@@ -71,7 +71,11 @@ class AppThemeDataService {
               borderRadius: BorderRadius.circular(25),
             ),
           )),
-          textTheme: TextTheme(button: TextStyle(color: Colors.white)));
+          textTheme: TextTheme(
+            button: TextStyle(
+              color: Colors.white,
+            ),
+          ));
     }
     mapStyle(dark);
     return ThemeData(
