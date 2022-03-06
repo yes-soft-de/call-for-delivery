@@ -14,8 +14,8 @@ use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionService
 {
-    private $autoMapping;
-    private $subscriptionManager;
+    private AutoMapping $autoMapping;
+    private SubscriptionManager $subscriptionManager;
 
     public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
     {
@@ -36,7 +36,7 @@ class SubscriptionService
         return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
     }
 
-    public function getIsFutureState(int $storeOwner): INT
+    public function getIsFutureState(int $storeOwner): int
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwner);
         if($subscriptionCurrent) {

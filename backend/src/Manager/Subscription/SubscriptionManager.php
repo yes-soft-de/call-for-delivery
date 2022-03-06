@@ -19,13 +19,13 @@ use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $packageManager;
-    private $storeOwnerProfileManager;
-    private $subscriptionDetailsManager;
-    private $subscriptionHistoryManager;
-    private $subscribeRepository;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private PackageManager $packageManager;
+    private StoreOwnerProfileManager $storeOwnerProfileManager;
+    private SubscriptionDetailsManager $subscriptionDetailsManager;
+    private SubscriptionHistoryManager $subscriptionHistoryManager;
+    private SubscriptionEntityRepository $subscribeRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, PackageManager $packageManager, StoreOwnerProfileManager $storeOwnerProfileManager, SubscriptionDetailsManager $subscriptionDetailsManager, SubscriptionHistoryManager $subscriptionHistoryManager)
     {
