@@ -90,7 +90,7 @@ class ProfileStateInit extends States {
                                 title: S.of(context).employeeSize,
                                 subTitle: profileModel.employeeCount == '1-20'
                                     ? S.current.smallLessThan20Employee
-                                    : profileModel.employeeCount == '20-100'
+                                    : profileModel.employeeCount == '21-100'
                                         ? S.current
                                             .mediumMoreThan20EmployeesLessThan100
                                         : S.current.largeMoreThan100Employees,
