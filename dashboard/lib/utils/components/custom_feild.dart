@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:c4d/utils/global/screen_type.dart';
 
 class CustomFormField extends StatefulWidget {
-  final double height;
   final EdgeInsetsGeometry contentPadding;
   final String? hintText;
   final Widget? preIcon;
@@ -25,7 +24,7 @@ class CustomFormField extends StatefulWidget {
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
   CustomFormField(
-      {this.height = 50,
+      {
       this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
       this.hintText,
       this.preIcon,
@@ -49,7 +48,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
     final node = FocusScope.of(context);
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(12),
         color: Theme.of(context).backgroundColor,
       ),
       child: Padding(
@@ -66,7 +65,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               getIt<LocalizationService>().getLanguage() == 'ar' && kIsWeb
                   ? 16
                   : null,
-          keyboardType: widget.numbers ? TextInputType.phone : null,
+          keyboardType: widget.numbers ? TextInputType.phone :TextInputType.multiline,
           onEditingComplete:
               widget.maxLines != null ? null : () => node.nextFocus(),
           onFieldSubmitted: widget.maxLines == null && widget.last

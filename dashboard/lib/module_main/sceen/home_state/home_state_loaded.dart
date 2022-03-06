@@ -64,7 +64,7 @@ class HomeLoadedState extends States {
                 ),
               ),
               widgetTile(
-                  model?.countClients.toString() ?? '', S.current.countClients),
+                  model?.countStores.toString() ?? '', S.current.countStores),
               widgetTile(model?.countCaptains.toString() ?? '',
                   S.current.countCaptains),
               Padding(
@@ -74,8 +74,7 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).primaryColor.withOpacity(0.3),
                 ),
               ),
-              widgetTile(
-                  model?.countStores.toString() ?? '', S.current.countStores),
+
             ]),
       ),
     );

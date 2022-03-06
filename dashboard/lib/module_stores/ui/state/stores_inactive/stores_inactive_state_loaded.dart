@@ -1,3 +1,6 @@
+import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -135,72 +138,47 @@ class StoresInActiveLoadedState extends States {
                 ),
                 InkWell(
                   onTap: () {
-//                    showDialog(
-//                        barrierDismissible: false,
-//                        context: screenState.context,
-//                        builder: (context) {
-//                          return Container(
-//                            width: MediaQuery.of(context).size.width,
-//                            height: MediaQuery.of(context).size.height,
-//                            child: Scaffold(
-//                              appBar: CustomC4dAppBar.appBar(context,
-//                                  title: S.current.updateStore),
-//                              backgroundColor:
-//                                  Theme.of(context).scaffoldBackgroundColor,
-//                              body: UpdateStoreWidget(
-//                                categories: getChoices(),
-//                                request: UpdateStoreRequest(
-//                                    commission: element.commission,
-//                                    id: element.id.toString(),
-//                                    bankName: element.bankName,
-//                                    bankAccountNumber: element.bankNumber,
-//                                    stcPay: element.stcPay,
-//                                    storeOwnerName: element.storeOwnerName,
-//                                    hasProducts: element.hasProducts ? 1 : 0,
-//                                    privateOrders:
-//                                        element.privateOrders ? 1 : 0,
-//                                    image: element.image,
-//                                    openingTime:
-//                                        element.openingTime?.toIso8601String(),
-//                                    closingTime:
-//                                        element.closingTime?.toIso8601String(),
-//                                    status: element.status,
-//                                    baseImage: element.imageUrl,
-//                                    storeCategoryId:
-//                                        int.parse(element.categoryId)),
-//                                updateStore: (id,
-//                                    name,
-//                                    image,
-//                                    products,
-//                                    privateOrder,
-//                                    open,
-//                                    close,
-//                                    status,
-//                                    commission,
-//                                    bankName,
-//                                    bankNumber,
-//                                    stc) {
-//                                  Navigator.of(context).pop();
-//                                  screenState.updateStore(UpdateStoreRequest(
-//                                      status: status,
-//                                      id: element.id.toString(),
-//                                      storeOwnerName: name,
-//                                      storeCategoryId:
-//                                          int.parse(element.categoryId),
-//                                      image: image,
-//                                      hasProducts: products ? 1 : 0,
-//                                      privateOrders: privateOrder ? 1 : 0,
-//                                      openingTime: open,
-//                                      closingTime: close,
-//                                      commission: double.parse(commission),
-//                                      bankAccountNumber: bankNumber,
-//                                      bankName: bankName,
-//                                      stcPay: stc));
-//                                },
-//                              ),
-//                            ),
-//                          );
-//                        });
+                    showDialog(
+                        barrierDismissible: false,
+                        context: screenState.context,
+                        builder: (context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: Scaffold(
+                              appBar: CustomC4dAppBar.appBar(context,
+                                  title: S.current.updateStore),
+                              backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                              body: UpdateStoreWidget(
+                                request: UpdateStoreRequest(
+                                  id: element.id,
+                                  storeOwnerName: element.storeOwnerName,
+                                  image: element.imageUrl,
+                                  openingTime:
+                                  element.openingTime?.toIso8601String(),
+                                  closingTime:
+                                  element.closingTime?.toIso8601String(),
+                                  status: element.status,
+                                  bankAccountNumber: element.bankAccountNumber,
+                                  bankName: element.bankName,
+                                  city: element.city,phone: element.phone,),
+                                updateStore: (e) {
+                                  Navigator.of(context).pop();
+                                  screenState.updateStore(UpdateStoreRequest(
+                                      status: e.status,
+                                      id: element.id,
+                                      storeOwnerName: e.storeOwnerName,
+                                      image: e.imageUrl,
+                                      openingTime: e.openingTime?.toIso8601String(),
+                                      closingTime: e.closingTime?.toIso8601String(),
+                                      bankName: e.bankName,
+                                      bankAccountNumber: e.bankAccountNumber ,city: e.city ,phone: e.phone));
+                                },
+                              ),
+                            ),
+                          );
+                        });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),

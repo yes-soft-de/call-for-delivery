@@ -455,6 +455,26 @@
 
     "emptyStaff": "Empty Stuff",
     "paymentAmount": "Payment amount",
-    "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment"
+    "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment",
+    "packageCategory": "Packages categories's",
+    "addCategory": "Add category",
+    "ok": "OK",
+    "categoryName": "Category name",
+    "description": "Description",
+    "categoryUpdatedSuccessfully": "Category Updated Successfully",
+    "search": "Search",
+    "packageInfo": "Package info",
+    "close": "Close",
+    "carCount": "Car count",
+    "orderCount": "Order count",
+
+    "packageName": "Package name",
+    "dayCount": "The number of days of validity of the package",
+    "packages": "Packages",
+    "addPackage": "Add package",
+    "addPackageSuccessfully": "Package Added successfully",
+    "updatePackageSuccessfully": "Package updated successfully",
+    "chooseCategory": "Choose category"
+
 
 }

@@ -4529,6 +4529,186 @@ class S {
       args: [],
     );
   }
+
+  /// `Packages categories's`
+  String get packageCategory {
+    return Intl.message(
+      'Packages categories\'s',
+      name: 'packageCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add category`
+  String get addCategory {
+    return Intl.message(
+      'Add category',
+      name: 'addCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category name`
+  String get categoryName {
+    return Intl.message(
+      'Category name',
+      name: 'categoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category Updated Successfully`
+  String get categoryUpdatedSuccessfully {
+    return Intl.message(
+      'Category Updated Successfully',
+      name: 'categoryUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get search {
+    return Intl.message(
+      'Search',
+      name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package info`
+  String get packageInfo {
+    return Intl.message(
+      'Package info',
+      name: 'packageInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Car count`
+  String get carCount {
+    return Intl.message(
+      'Car count',
+      name: 'carCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order count`
+  String get orderCount {
+    return Intl.message(
+      'Order count',
+      name: 'orderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package name`
+  String get packageName {
+    return Intl.message(
+      'Package name',
+      name: 'packageName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The number of days of validity of the package`
+  String get dayCount {
+    return Intl.message(
+      'The number of days of validity of the package',
+      name: 'dayCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Packages`
+  String get packages {
+    return Intl.message(
+      'Packages',
+      name: 'packages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add package`
+  String get addPackage {
+    return Intl.message(
+      'Add package',
+      name: 'addPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Added successfully`
+  String get addPackageSuccessfully {
+    return Intl.message(
+      'Package Added successfully',
+      name: 'addPackageSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package updated successfully`
+  String get updatePackageSuccessfully {
+    return Intl.message(
+      'Package updated successfully',
+      name: 'updatePackageSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose category`
+  String get chooseCategory {
+    return Intl.message(
+      'Choose category',
+      name: 'chooseCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

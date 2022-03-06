@@ -15,7 +15,7 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Color.fromRGBO(33, 32, 156, 1);
+    return Color(0xFF21209C);
   }
 
   ThemeData getActiveTheme() {

@@ -35,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
                 child: Opacity(
                     opacity: 0.1,
                     child: Image.asset(
-                      ImageAsset.DELIVERY_MOTOR,
+                      ImageAsset.DELIVERY,
                       fit: BoxFit.cover,
                       alignment: Alignment.center,
                     ))),
