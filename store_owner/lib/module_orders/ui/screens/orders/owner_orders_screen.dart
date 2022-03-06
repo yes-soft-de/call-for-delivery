@@ -57,6 +57,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     widget._stateManager.initDrawerData();
   }
 
+  bool featureFlag = true;
   @override
   void initState() {
     super.initState();
@@ -68,7 +69,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       if (mounted) {
         setState(() {});
       }
-      if (_currentState is OrdersListStateOrdersLoaded) {
+      if (_currentState is OrdersListStateOrdersLoaded && featureFlag) {
+        featureFlag = false;
         FeatureDiscovery.discoverFeatures(
           context,
           const <String>{
@@ -116,10 +118,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         profileModel: currentProfile,
       ),
       floatingActionButton: DescribedFeatureOverlay(
+        onDismiss: dismiss,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(S.current.newOrder),
         description: Text(S.current.newOrderHint),
-        overflowMode: OverflowMode.extendBackground,
         featureId: 'newOrder',
         tapTarget: Text(
           S.current.newOrder,
@@ -159,5 +161,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       _companySubscription?.cancel();
     }
     super.dispose();
+  }
+
+  Future<bool> dismiss() async {
+    return false;
   }
 }
