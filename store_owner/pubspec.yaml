@@ -135,7 +135,7 @@ dev_dependencies:
   # Flutter Native Splash Screen
   flutter_native_splash: ^1.1.8+4
   # Feature Descovery
-  feature_discovery: ^0.14.0
+  feature_discovery: ^0.14.1
   lehttp_overrides: ^1.0.2
 
 flutter_icons:

@@ -4999,6 +4999,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Opening Time`
+  String get openingTime {
+    return Intl.message(
+      'Opening Time',
+      name: 'openingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closing Time`
+  String get closingTime {
+    return Intl.message(
+      'Closing Time',
+      name: 'closingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work time`
+  String get workTime {
+    return Intl.message(
+      'Work time',
+      name: 'workTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Image`
+  String get orderImage {
+    return Intl.message(
+      'Order Image',
+      name: 'orderImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All city`
+  String get allCity {
+    return Intl.message(
+      'All city',
+      name: 'allCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation`
+  String get validation {
+    return Intl.message(
+      'Validation',
+      name: 'validation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
