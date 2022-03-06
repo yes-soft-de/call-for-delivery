@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Entity\StoreOwnerBranchEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -28,7 +29,9 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
             ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->andWhere('storeOwnerBranch.isActive = :active')
-            ->setParameter('active', 1)
+            ->setParameter('active', StoreOwnerBranch::BRANCH_IS_ACTIVE)
+
+            ->orderBy('storeOwnerBranch.id', 'DESC')
 
             ->getQuery()
             ->getResult();

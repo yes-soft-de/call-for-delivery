@@ -6,8 +6,10 @@ use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Controller\BaseController;
 use App\AutoMapping;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use stdClass;
@@ -271,7 +273,7 @@ class StoreOwnerBranchController extends BaseController
      *      description="branch",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="object", property="isActive"),
+     *          @OA\Property(type="integer", property="isActive"),
      *      )
      * )
      *
@@ -321,7 +323,7 @@ class StoreOwnerBranchController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->storeOwnerBranchService->deletebranch($request);
+        $result = $this->storeOwnerBranchService->deleteBranch($request);
         if($result === StoreOwnerBranch::BRANCH_NOT_FOUND ) {
 
             return $this->response($result, self::ERROR);

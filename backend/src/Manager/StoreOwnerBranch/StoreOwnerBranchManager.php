@@ -7,6 +7,7 @@ use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Repository\StoreOwnerBranchEntityRepository;
+use App\Request\Admin\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
@@ -42,7 +43,7 @@ class StoreOwnerBranchManager
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($request->getStoreOwner());
      
         $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
-        $entity->setIsActive(1);
+        $entity->setIsActive(StoreOwnerBranch::BRANCH_IS_ACTIVE);
         $entity->setStoreOwner($storeOwner);
 
         $this->entityManager->persist($entity);
@@ -60,13 +61,27 @@ class StoreOwnerBranchManager
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
 
         $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
-        $entity->setIsActive(1);
+        $entity->setIsActive(StoreOwnerBranch::BRANCH_IS_ACTIVE);
         $entity->setStoreOwner($storeOwner);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
         return $entity;
+    }
+
+    public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request): ?StoreOwnerBranchEntity
+    {
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStoreOwner());
+
+        $branchEntity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
+        $branchEntity->setIsActive(StoreOwnerBranch::BRANCH_IS_ACTIVE);
+        $branchEntity->setStoreOwner($storeOwner);
+
+        $this->entityManager->persist($branchEntity);
+        $this->entityManager->flush();
+
+        return $branchEntity;
     }
 
     /**
@@ -89,24 +104,36 @@ class StoreOwnerBranchManager
         return StoreOwnerBranch::BRANCH_NOT_FOUND;
     }
 
-    /**
-     * @param StoreOwnerBranchDeleteRequest $request
-     * @return StoreOwnerBranchEntity|string
-     */
-    public function deletebranch(StoreOwnerBranchDeleteRequest $request): StoreOwnerBranchEntity|string
+    public function updateBranchByAdmin(StoreOwnerBranchUpdateByAdminRequest $request): StoreOwnerBranchEntity|string
     {
-        $entity = $this->storeOwnerBranchEntityRepository->find($request->getId());
+        $branchEntity = $this->storeOwnerBranchEntityRepository->find($request->getId());
 
-        if ($entity) {
-             
-            $entity = $this->autoMapping->mapToObject(StoreOwnerBranchDeleteRequest::class, StoreOwnerBranchEntity::class, $request, $entity);
+        if (! $branchEntity) {
+            return StoreOwnerBranch::BRANCH_NOT_FOUND;
+
+        } else {
+            $branchEntity = $this->autoMapping->mapToObject(StoreOwnerBranchUpdateByAdminRequest::class, StoreOwnerBranchEntity::class, $request, $branchEntity);
 
             $this->entityManager->flush();
 
-            return $entity;
+            return $branchEntity;
         }
+    }
 
-        return StoreOwnerBranch::BRANCH_NOT_FOUND;
+    public function deleteBranch(StoreOwnerBranchDeleteRequest $request): StoreOwnerBranchEntity|string
+    {
+        $branchEntity = $this->storeOwnerBranchEntityRepository->find($request->getId());
+
+        if (! $branchEntity) {
+            return StoreOwnerBranch::BRANCH_NOT_FOUND;
+
+        } else {
+            $branchEntity = $this->autoMapping->mapToObject(StoreOwnerBranchDeleteRequest::class, StoreOwnerBranchEntity::class, $request, $branchEntity);
+
+            $this->entityManager->flush();
+
+            return $branchEntity;
+        }
     }
 
     /**
@@ -127,5 +154,10 @@ class StoreOwnerBranchManager
     public function getBranchById($id): ?StoreOwnerBranchEntity
     {
        return $this->storeOwnerBranchEntityRepository->find($id);
+    }
+
+    public function getActiveBranchesByStoreOwnerIdForAdmin(int $storeOwnerId): ?array
+    {
+        return $this->storeOwnerBranchEntityRepository->getActiveBranchesByStoreOwnerId($storeOwnerId);
     }
 }
