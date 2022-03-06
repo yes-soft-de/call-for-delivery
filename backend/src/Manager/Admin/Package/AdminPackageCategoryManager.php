@@ -23,7 +23,7 @@ class AdminPackageCategoryManager
         $this->packageCategoryEntityRepository = $packageCategoryEntityRepository;
     }
 
-    public function createPackageCategory(PackageCategoryCreateRequest $request): mixed
+    public function createPackageCategory(PackageCategoryCreateRequest $request): PackageCategoryEntity
     {
         $packageCategoryEntity = $this->autoMapping->map(PackageCategoryCreateRequest::class, PackageCategoryEntity::class, $request);
 
