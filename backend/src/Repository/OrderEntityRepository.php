@@ -22,7 +22,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderEntity::class);
     }
 
-    public function getStoreOrders($storeOwner): ?array
+    public function getStoreOrders(int $storeOwner): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
 
@@ -38,13 +38,15 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.storeOwner = :storeOwner')
 
             ->setParameter('storeOwner', $storeOwner)
-
+       
+            ->orderBy('orderEntity.id', 'DESC')
+       
             ->getQuery()
 
             ->getResult();
     }
 
-    public function getSpecificOrderForStore($id): ?array
+    public function getSpecificOrderForStore(int $id): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
 

@@ -15,8 +15,20 @@ use DateTime;
 
 class OrderManager
 {
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private OrderEntityRepository $orderRepository, private StoreOwnerProfileManager $storeOwnerProfileManager, private StoreOrderDetailsManager $storeOrderDetailsManager)
+   private AutoMapping $autoMapping;
+   private EntityManagerInterface $entityManager;
+   private OrderEntityRepository $orderRepository;
+   private StoreOwnerProfileManager $storeOwnerProfileManager;
+   private StoreOrderDetailsManager $storeOrderDetailsManager;
+
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager)
     {
+      $this->autoMapping = $autoMapping;
+      $this->entityManager = $entityManager;
+      $this->orderRepository = $orderRepository;
+      $this->storeOwnerProfileManager = $storeOwnerProfileManager;
+      $this->storeOrderDetailsManager = $storeOrderDetailsManager;
+
     }
     
     /**
@@ -47,7 +59,7 @@ class OrderManager
      * @param $userId
      * @return array|null
      */
-    public function getStoreOrders($userId): ?array
+    public function getStoreOrders(int $userId): ?array
     {      
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
        
@@ -58,7 +70,7 @@ class OrderManager
      * @param $id
      * @return array|null
      */
-    public function getSpecificOrderForStore($id): ?array
+    public function getSpecificOrderForStore(int $id): ?array
     {      
        return  $this->orderRepository->getSpecificOrderForStore($id);     
     }

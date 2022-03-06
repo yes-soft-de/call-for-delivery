@@ -16,8 +16,17 @@ use App\Service\Notification\NotificationLocalService;
 
 class OrderService
 {
-    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager, private SubscriptionService $subscriptionService, private NotificationLocalService $notificationLocalService)
+    private AutoMapping $autoMapping;
+    private OrderManager $orderManager;
+    private SubscriptionService $subscriptionService;
+    private NotificationLocalService $notificationLocalService;
+
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService)
     {
+       $this->autoMapping = $autoMapping;
+       $this->orderManager = $orderManager;
+       $this->subscriptionService = $subscriptionService;
+       $this->notificationLocalService = $notificationLocalService;
     }
 
     /**
@@ -48,7 +57,7 @@ class OrderService
      * @param $userId
      * @return array
      */
-    public function getStoreOrders($userId): ?array
+    public function getStoreOrders(int $userId): ?array
     {
         $response = [];
        
@@ -65,7 +74,7 @@ class OrderService
      * @param $id
      * @return OrdersResponse
      */
-    public function getSpecificOrderForStore($id): ?OrdersResponse
+    public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
