@@ -23,6 +23,7 @@ class OrderDetailsModel extends DataModel {
   late String payment;
   late OrderStatusEnum state;
   late String roomID;
+  String? image;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -45,7 +46,9 @@ class OrderDetailsModel extends DataModel {
       required this.roomID,
       required this.canRemove,
       required this.showConfirm,
-      required this.deliveryDate});
+      required this.deliveryDate,
+      required this.image
+      });
 
   late OrderDetailsModel _orders;
 
@@ -68,6 +71,7 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
+        image: element?.image?.image ,
         canRemove:
             _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
         showConfirm: showConfirmingOrderState,

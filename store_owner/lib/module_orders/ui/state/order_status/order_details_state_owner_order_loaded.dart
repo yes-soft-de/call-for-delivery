@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
+import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_moment/simple_moment.dart';
@@ -181,6 +182,43 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       lineThickness: 2.5,
                       dashRadius: 25),
                 ),
+                Visibility(
+                  visible: orderInfo.image != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.image,
+                        ),
+                        title: Text(S.current.orderImage),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: CustomNetworkImage(
+                                height: 100,
+                                imageSource: orderInfo.image ?? '',
+                                width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.info,
@@ -192,7 +230,6 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
-
         // payments
         Padding(
           padding: const EdgeInsets.all(16.0),
