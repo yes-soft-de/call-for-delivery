@@ -9,6 +9,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfileStateInit extends States {
   final ProfileScreenState screenState;
@@ -86,6 +87,18 @@ class ProfileStateInit extends States {
                                 title: S.of(context).bankAccountNumber,
                                 subTitle: profileModel.bankNumber,
                                 iconData: Icons.credit_card_rounded),
+                            CustomListTile(
+                              title: S.current.openingTime,
+                              subTitle: DateFormat.jm().format(
+                                  profileModel.openingTime),
+                              iconData: Icons.store_mall_directory_rounded,
+                            ),
+                            CustomListTile(
+                              title: S.current.closingTime,
+                              subTitle: DateFormat.jm().format(
+                                  profileModel.closingTime),
+                              iconData: Icons.punch_clock_rounded,
+                            ),
                             CustomListTile(
                                 title: S.of(context).employeeSize,
                                 subTitle: profileModel.employeeCount == '1-20'

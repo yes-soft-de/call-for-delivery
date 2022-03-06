@@ -6,6 +6,8 @@ class ProfileRequest {
   String? bankAccountNumber;
   String? bankName;
   String? employeeSize;
+  String? openingTime;
+  String? closingTime;
   ProfileRequest.empty();
 
   ProfileRequest({
@@ -16,6 +18,8 @@ class ProfileRequest {
     this.bankName,
     this.employeeSize,
     this.bankAccountNumber,
+    this.closingTime,
+    this.openingTime
   });
 
   Map<String, dynamic> toJson() {
@@ -29,6 +33,8 @@ class ProfileRequest {
     data['bankName'] = this.bankName ?? '';
     data['bankAccountNumber'] = this.bankAccountNumber ?? '';
     data['employeeCount'] = this.employeeSize;
+    data['closingTime'] = this.closingTime;
+    data['openingTime'] = this.openingTime;
     return data;
   }
 }

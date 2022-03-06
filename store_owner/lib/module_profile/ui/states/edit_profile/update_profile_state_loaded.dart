@@ -15,6 +15,7 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class UpdateProfileStateLoaded extends States {
@@ -31,6 +32,8 @@ class UpdateProfileStateLoaded extends States {
         _countryController.text = sNumber.dialCode.substring(1);
       }
       _phoneController.text = sNumber.number;
+      openingTime = profileModel.openingTime;
+      closingTime = profileModel.closingTime;
     }
     _nameController.text = profileModel.name;
     _bankNameController.text = profileModel.bankName;
@@ -50,7 +53,8 @@ class UpdateProfileStateLoaded extends States {
   String? imagePath;
   String? networkImage;
   Uint8List? imageBytes;
-
+  DateTime? openingTime;
+  DateTime? closingTime;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   @override
   Widget getUI(BuildContext context) {
@@ -211,6 +215,147 @@ class UpdateProfileStateLoaded extends States {
                           ),
                         ],
                       ),
+                      // work Time
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 0.0, right: 16.0, left: 16.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.store_rounded,
+                                  color: Theme.of(context).disabledColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Material(
+                              borderRadius: BorderRadius.circular(25),
+                              elevation: 0.0,
+                              color: Theme.of(context).backgroundColor,
+                              child: ListTile(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                onTap: () {
+                                  showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  ).then((value) {
+                                    if (value == null) {
+                                    } else {
+                                      var now = DateTime.now();
+                                      openingTime = DateTime(
+                                          now.year,
+                                          now.month,
+                                          now.day,
+                                          value.hour,
+                                          value.minute);
+                                      screenState.refresh();
+                                    }
+                                  });
+                                },
+                                title: Text(S.of(context).openingTime),
+                                trailing: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        DateFormat.jm().format(
+                                            openingTime ?? DateTime.now()),
+                                        style:
+                                            Theme.of(context).textTheme.button,
+                                      ),
+                                    )),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 0.0, right: 16.0, left: 16.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.punch_clock_rounded,
+                                  color: Theme.of(context).disabledColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Material(
+                              borderRadius: BorderRadius.circular(25),
+                              elevation: 0.0,
+                              color: Theme.of(context).backgroundColor,
+                              child: ListTile(
+                                  onTap: () {
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    ).then((value) {
+                                      if (value == null) {
+                                      } else {
+                                        var now = DateTime.now();
+                                        closingTime = DateTime(
+                                            now.year,
+                                            now.month,
+                                            now.day,
+                                            value.hour,
+                                            value.minute);
+                                        screenState.refresh();
+                                      }
+                                    });
+                                  },
+                                  title: Text(S.of(context).closingTime),
+                                  trailing: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          DateFormat.jm().format(
+                                              closingTime ?? DateTime.now()),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .button),
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          )
+                        ],
+                      ),
                       // city
                       InitField(
                         icon: Icons.location_city_rounded,
@@ -345,13 +490,16 @@ class UpdateProfileStateLoaded extends States {
 
   void saveWithoutImageUpload() {
     ProfileRequest profileRequest = ProfileRequest(
-        name: _nameController.text,
-        phone: _countryController.text + _phoneController.text,
-        city: _cityController.text,
-        image: imagePath,
-        bankName: _bankNameController.text,
-        bankAccountNumber: _bankNumberController.text,
-        employeeSize: selectedSize);
+      name: _nameController.text,
+      phone: _countryController.text + _phoneController.text,
+      city: _cityController.text,
+      image: imagePath,
+      bankName: _bankNameController.text,
+      bankAccountNumber: _bankNumberController.text,
+      employeeSize: selectedSize,
+      closingTime: closingTime?.toUtc().toIso8601String(),
+      openingTime: openingTime?.toUtc().toIso8601String(),
+    );
     screenState.saveProfile(profileRequest);
   }
 
@@ -369,13 +517,16 @@ class UpdateProfileStateLoaded extends States {
         return;
       }
       ProfileRequest profileRequest = ProfileRequest(
-          name: _nameController.text,
-          phone: _countryController.text + _phoneController.text,
-          city: _cityController.text,
-          image: image,
-          bankName: _bankNameController.text,
-          bankAccountNumber: _bankNumberController.text,
-          employeeSize: selectedSize);
+        name: _nameController.text,
+        phone: _countryController.text + _phoneController.text,
+        city: _cityController.text,
+        image: image,
+        bankName: _bankNameController.text,
+        bankAccountNumber: _bankNumberController.text,
+        employeeSize: selectedSize,
+        closingTime: closingTime?.toIso8601String(),
+        openingTime: openingTime?.toIso8601String(),
+      );
       screenState.saveProfile(profileRequest);
     });
   }
