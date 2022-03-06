@@ -9,12 +9,14 @@ use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
+use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\Subscription\SubscriptionService;
+use App\Service\Notification\NotificationLocalService;
 
 class OrderService
 {
-    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager, private SubscriptionService $subscriptionService)
+    public function __construct(private AutoMapping $autoMapping, private OrderManager $orderManager, private SubscriptionService $subscriptionService, private NotificationLocalService $notificationLocalService)
     {
     }
 
@@ -35,6 +37,8 @@ class OrderService
         if($order) {
 
          $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
+
+         $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);

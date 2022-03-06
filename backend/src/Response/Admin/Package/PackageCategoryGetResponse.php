@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\Package;
+namespace App\Response\Admin\Package;
 
-class PackageCategoriesAndPackagesResponse
+class PackageCategoryGetResponse
 {
     /**
      * @var int|null
@@ -18,9 +18,4 @@ class PackageCategoriesAndPackagesResponse
      * @var string|null
      */
     public $description;
-
-    /**
-     * @var array|null
-     */
-    public $packages;
 }

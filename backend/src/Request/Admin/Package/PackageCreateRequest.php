@@ -1,23 +1,32 @@
 <?php
 
-namespace App\Request\Package;
+namespace App\Request\Admin\Package;
 
 class PackageCreateRequest
 {
-    private $name;
+    private string $name;
 
-    private $cost;
+    private float $cost;
 
+    /**
+     * @var string|null
+     */
     private $note;
 
-    private $carCount;
+    private int $carCount;
 
+    /**
+     * @var string|null
+     */
     private $city;
 
-    private $orderCount;
+    private int $orderCount;
 
-    private $expired;
+    private int $expired;
 
+    /**
+     * @var string|null
+     */
     private $status;
 
     private $packageCategory;
