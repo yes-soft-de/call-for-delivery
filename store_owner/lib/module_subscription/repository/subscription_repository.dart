@@ -31,6 +31,7 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return PackageCategoriesResponse.fromJson(response);
   }
+
   Future<SubscriptionBalanceResponse?> getSubscriptionBalance() async {
     var token = await _authService.getToken();
     var response = await _apiClient.get(

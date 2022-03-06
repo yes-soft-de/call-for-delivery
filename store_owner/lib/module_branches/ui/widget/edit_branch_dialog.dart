@@ -50,7 +50,10 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
                 shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             )),
-            child: Text(S.of(context).save,style: Theme.of(context).textTheme.button,),
+            child: Text(
+              S.of(context).save,
+              style: Theme.of(context).textTheme.button,
+            ),
             onPressed: nameController.text.isNotEmpty == true
                 ? () {
                     Navigator.of(context).pop(nameController.text);

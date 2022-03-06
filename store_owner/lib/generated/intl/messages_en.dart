@@ -189,6 +189,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createNewReport":
             MessageLookupByLibrary.simpleMessage("Create new Report"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
+        "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
@@ -205,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
+        "deliverDate": MessageLookupByLibrary.simpleMessage("Delivery date"),
         "deliverDescribtion": MessageLookupByLibrary.simpleMessage(
             "After accepting your mission you will deliver package to the right destination"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),

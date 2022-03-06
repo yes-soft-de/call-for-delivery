@@ -10,12 +10,12 @@ class ProfileModule {
   final ProfileScreen editProfileScreen;
   final InitAccountScreen initAccountScreen;
   final AccountBalanceScreen accountBalanceScreen;
-  ProfileModule(this.editProfileScreen, this.initAccountScreen,this.accountBalanceScreen) {
+  ProfileModule(this.editProfileScreen, this.initAccountScreen,
+      this.accountBalanceScreen) {
     YesModule.RoutesMap.addAll({
       ProfileRoutes.PROFILE_SCREEN: (context) => editProfileScreen,
       ProfileRoutes.INIT_ACCOUNT: (context) => initAccountScreen,
       ProfileRoutes.ACCOUNT_BALANCE_SCREEN: (context) => accountBalanceScreen
-
     });
   }
 }

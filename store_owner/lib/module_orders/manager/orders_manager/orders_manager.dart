@@ -1,7 +1,7 @@
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/response/order_status/order_status_response.dart';
-import 'package:c4d/module_orders/response/orders/orders_response.dart';
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 

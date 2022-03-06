@@ -3,7 +3,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/response/order_status/order_status_response.dart';
-import 'package:c4d/module_orders/response/orders/orders_response.dart';
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 

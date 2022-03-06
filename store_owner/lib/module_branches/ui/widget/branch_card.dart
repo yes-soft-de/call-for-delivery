@@ -152,8 +152,9 @@ class BranchCardList extends StatelessWidget {
                   // edit
                   CustomIconButton(
                     onTap: onEdit,
-                    backgroundColor: isDark ? Theme.of(context).backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor: isDark
+                        ? Theme.of(context).backgroundColor
+                        : Theme.of(context).colorScheme.primaryContainer,
                     icon: Icons.edit,
                     iconColor: Theme.of(context).colorScheme.primary,
                   ),

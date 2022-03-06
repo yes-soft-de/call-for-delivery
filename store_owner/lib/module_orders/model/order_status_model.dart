@@ -2,8 +2,8 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
+import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/response/order_status/order_status_response.dart';
-import 'package:c4d/module_orders/response/orders/orders_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -60,21 +60,21 @@ class OrderStatusModel extends DataModel {
     _orders = OrderStatusModel(
       to: element?.destination,
       clientPhone: element?.recipientPhone,
-      from: element?.fromBranch?.brancheName ?? S.current.unknown,
+      from: S.current.unknown,
       creationTime: DateHelper.convert(element?.date?.timestamp),
       paymentMethod: element?.payment ?? 'cash',
       id: element?.id ?? -1,
-      branchLocation: element?.fromBranch?.location,
+      branchLocation: GeoJson(),
       canRemove: false,
       captainPhone: null,
       chatRoomId: element?.uuid,
-      costumerLocation: element?.destination2,
+      costumerLocation: GeoJson(),
       distance: null,
       note: element?.note,
-      ownerPhone: element?.ownerResponse?.phone,
+      ownerPhone: '',
       showConfirm: showConfirmingOrderState,
       status: StatusHelper.getStatusEnum(element?.state),
-      storeName: element?.ownerResponse?.userName ?? S.current.unknown,
+      storeName:  S.current.unknown,
     );
   }
 }

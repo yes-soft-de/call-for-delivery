@@ -69,8 +69,10 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.myBalance,),
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.myBalance,
+      ),
       body: currentState.getUI(context),
     );
   }

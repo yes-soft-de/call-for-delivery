@@ -91,7 +91,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           CustomNavTile(
               icon: Icons.account_balance_rounded,
               onTap: () {
-                Navigator.of(context).pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
+                Navigator.of(context)
+                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
               },
               title: S.current.myBalance),
           Divider(

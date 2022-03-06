@@ -40,19 +40,19 @@ class MyNotificationsStateManager {
           _stateSubject.add(MyNotificationsLoadedState(screenState, [
             NotificationModel(
                 marked: false,
-                orderNumber:'-1',
+                orderNumber: '-1',
                 title: S.current.notifications,
                 body: S.current.ExpiredSubscriptions,
                 date: '2022-3-1'),
-                NotificationModel(
+            NotificationModel(
                 marked: false,
-                orderNumber:'-1',
+                orderNumber: '-1',
                 title: S.current.branch,
                 body: S.current.addBranchSuccess,
                 date: '2022-3-2'),
-                NotificationModel(
+            NotificationModel(
                 marked: false,
-                orderNumber:'-1',
+                orderNumber: '-1',
                 title: S.current.mySubscription,
                 body: S.current.ExpiredSubscriptions,
                 date: '2022-3-3')
