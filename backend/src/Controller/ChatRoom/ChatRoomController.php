@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * fetch chat room between admin and user.
@@ -66,7 +67,6 @@ class ChatRoomController extends BaseController
      * admin: get chat rooms with stores
      * @Route("chatroomswithstores", name="getChatRoomsWithStores", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     *
      * @return JsonResponse
      *
      * @OA\Tag(name="Chat Room")
