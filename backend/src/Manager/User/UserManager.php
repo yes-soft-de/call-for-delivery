@@ -19,13 +19,15 @@ class UserManager
     private EntityManagerInterface $entityManager;
     private UserPasswordHasherInterface $encoder;
     private UserEntityRepository $userRepository;
+    private ChatRoomManager $chatRoomManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository, private ChatRoomManager $chatRoomManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, UserEntityRepository $userRepository, ChatRoomManager $chatRoomManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->encoder = $encoder;
         $this->userRepository = $userRepository;
+        $this->chatRoomManager = $chatRoomManager;
     }
 
     public function clientRegister(UserRegisterRequest $request, $roomID)

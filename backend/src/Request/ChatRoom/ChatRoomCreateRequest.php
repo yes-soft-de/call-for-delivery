@@ -9,7 +9,7 @@ class ChatRoomCreateRequest
     /**
      * Get the value of userId
      */ 
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -19,7 +19,7 @@ class ChatRoomCreateRequest
      *
      * @return  self
      */ 
-    public function setUserId($userId)
+    public function setUserId(int $userId)
     {
         $this->userId = $userId;
 

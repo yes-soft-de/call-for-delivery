@@ -13,9 +13,9 @@ use Symfony\Component\Uid\Uuid;
 
 class ChatRoomManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $chatRoomRepository;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private ChatRoomEntityRepository $chatRoomRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, ChatRoomEntityRepository $chatRoomRepository)
     {
@@ -44,11 +44,7 @@ class ChatRoomManager
         return $chatRoom;
     }
 
-    /**
-     * @param $userId
-     * @return ChatRoomEntity
-     */
-    public function createChatRoom($userId): ChatRoomEntity
+    public function createChatRoom(int $userId): ChatRoomEntity
     { 
         $request = new ChatRoomCreateRequest();
      
@@ -57,11 +53,7 @@ class ChatRoomManager
         return $this->create($request);
     }
 
-    /**
-     * @param $userId
-     * @return ChatRoomEntity|null
-     */
-    public function getChatRoom($userId): ?ChatRoomEntity
+    public function getChatRoom(int $userId): ?ChatRoomEntity
     { 
         return $this->chatRoomRepository->findOneBy(["userId" => $userId]);
     }

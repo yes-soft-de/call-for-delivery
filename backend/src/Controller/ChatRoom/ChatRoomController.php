@@ -16,7 +16,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
  */
 class ChatRoomController extends BaseController
 {
-    private $chatRoomService;
+    private ChatRoomService $chatRoomService;
 
     public function __construct(SerializerInterface $serializer, ChatRoomService $chatRoomService)
     {

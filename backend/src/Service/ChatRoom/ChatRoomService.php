@@ -10,8 +10,8 @@ use App\Response\ChatRoom\ChatRoomResponse;
 
 class ChatRoomService
 {
-    private $autoMapping;
-    private $chatRoomManager;
+    private AutoMapping $autoMapping;
+    private ChatRoomManager $chatRoomManager;
 
     public function __construct(AutoMapping $autoMapping, ChatRoomManager $chatRoomManager)
     {
@@ -19,22 +19,7 @@ class ChatRoomService
         $this->chatRoomManager = $chatRoomManager;
     }
 
-    /**
-     * @param ChatRoomCreateRequest $request
-     * @return ChatRoomResponse
-     */
-    public function createChatRoom(ChatRoomCreateRequest $request): ChatRoomResponse
-    {
-        $chatRoom = $this->chatRoomManager->createChatRoom($request);
-        
-        return $this->autoMapping->map(ChatRoomEntity::class, ChatRoomResponse::class, $chatRoom);
-    }
-
-    /**
-     * @param $userId
-     * @return ChatRoomResponse|null
-     */
-    public function getChatRoom($userId): ?ChatRoomResponse
+    public function getChatRoom(int $userId): ?ChatRoomResponse
     {
         $chatRoom = $this->chatRoomManager->getChatRoom($userId);
         
