@@ -72,7 +72,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getSubscriptionForNextTime($storeOwner)
+    public function getSubscriptionForNextTime($storeOwner): ?array
     {
         return $this->createQueryBuilder('subscription')
      
@@ -100,7 +100,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function countOrders($subscription): ?array
+    public function countOrders(int $subscriptionId): ?array
     {
         return $this->createQueryBuilder('subscription')
          
@@ -115,7 +115,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
 
-            ->setParameter('id', $subscription['id'])
+            ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
         

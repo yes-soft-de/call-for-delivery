@@ -36,7 +36,7 @@ class OrderService
         $order = $this->orderManager->createOrder($request);
         if($order) {
 
-         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner());
+         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
 
          $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
         }
