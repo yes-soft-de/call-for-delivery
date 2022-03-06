@@ -13,6 +13,7 @@ use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class OrderService
 {
@@ -20,9 +21,11 @@ class OrderService
     private OrderManager $orderManager;
     private SubscriptionService $subscriptionService;
     private NotificationLocalService $notificationLocalService;
+    private string $params;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params)
     {
+       $this->params = $params->get('upload_base_url') . '/';
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
        $this->subscriptionService = $subscriptionService;
@@ -78,6 +81,17 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
+        $order['images'] = $this->getImageParams($order['images'], $this->params.$order['images'], $this->params);
+
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
+    }
+    
+    public function getImageParams($imageURL, $image, $baseURL): array
+    {
+        $item['imageURL'] = $imageURL;
+        $item['image'] = $image;
+        $item['baseURL'] = $baseURL;
+
+        return $item;
     }
 }

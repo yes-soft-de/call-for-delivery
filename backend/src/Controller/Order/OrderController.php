@@ -204,6 +204,11 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="object", property="images",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *              ),
      *          )
      *      )
      *   )

@@ -33,4 +33,6 @@ class OrdersResponse
     public $storeOwnerBranchId;
   
     public $branchName;
+
+    public $images;
 }
