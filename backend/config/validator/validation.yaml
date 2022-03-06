@@ -46,30 +46,30 @@ App\Request\Admin\Package\PackageStatusUpdateRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateRequest:
     properties:
         storeOwnerName:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest:
     properties:
         location:
-           - NotBlank: ~
+            - NotBlank: ~
         name:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest:
     properties:
         id:
-           - NotBlank: ~
+            - NotBlank: ~
         location:
-           - NotBlank: ~
+            - NotBlank: ~
         name:
-           - NotBlank: ~
-  
+            - NotBlank: ~
+
 App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
     properties:
         id:
-           - NotBlank: ~
+            - NotBlank: ~
         isActive:
-           - NotBlank: ~
+            - NotBlank: ~
 
 App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest:
     properties:
@@ -92,7 +92,7 @@ App\Request\Admin\Package\PackageCategoryCreateRequest:
     properties:
         name:
             - NotBlank: ~
-            
+
 App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
