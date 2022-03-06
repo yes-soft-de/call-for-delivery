@@ -34,6 +34,7 @@
         "symfony/security-bundle": "6.0.*",
         "symfony/serializer": "6.0.*",
         "symfony/stopwatch": "6.0.*",
+        "symfony/uid": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/web-profiler-bundle": "6.0.*",
         "symfony/yaml": "6.0.*"

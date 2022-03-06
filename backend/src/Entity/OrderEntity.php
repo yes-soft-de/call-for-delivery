@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderEntityRepository::class)]
@@ -46,6 +48,14 @@ class OrderEntity
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'orderEntities')]
     #[ORM\JoinColumn(nullable: false)]
     private $storeOwner;
+
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderChatRoomEntity::class)]
+    private $orderChatRoomEntities;
+
+    public function __construct()
+    {
+        $this->orderChatRoomEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -180,6 +190,36 @@ class OrderEntity
     public function setStoreOwner(?StoreOwnerProfileEntity $storeOwner): self
     {
         $this->storeOwner = $storeOwner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderChatRoomEntity[]
+     */
+    public function getOrderChatRoomEntities(): Collection
+    {
+        return $this->orderChatRoomEntities;
+    }
+
+    public function addOrderChatRoomEntity(OrderChatRoomEntity $orderChatRoomEntity): self
+    {
+        if (!$this->orderChatRoomEntities->contains($orderChatRoomEntity)) {
+            $this->orderChatRoomEntities[] = $orderChatRoomEntity;
+            $orderChatRoomEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderChatRoomEntity(OrderChatRoomEntity $orderChatRoomEntity): self
+    {
+        if ($this->orderChatRoomEntities->removeElement($orderChatRoomEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderChatRoomEntity->getOrderId() === $this) {
+                $orderChatRoomEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }
