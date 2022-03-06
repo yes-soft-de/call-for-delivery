@@ -8,11 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class PackageCard extends StatelessWidget {
   final PackageModel package;
   final bool active;
-
-  PackageCard({
-    required this.package,
-    this.active = false,
-  });
+  final bool short;
+  PackageCard({required this.package, this.active = false, this.short = true});
 
   @override
   Widget build(BuildContext context) {
@@ -100,22 +97,28 @@ class PackageCard extends StatelessWidget {
                 ),
               ),
               // package info
-              Text(
-                S.current.packageInfo,
-                style: TextStyle(
-                    color: active
-                        ? Theme.of(context).textTheme.button?.color
-                        : null,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
+              Visibility(
+                visible: short == false,
+                child: Text(
+                  S.current.packageInfo,
+                  style: TextStyle(
+                      color: active
+                          ? Theme.of(context).textTheme.button?.color
+                          : null,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(
-                  color: Colors.transparent,
-                  thickness: 1.5,
-                  endIndent: 24,
-                  indent: 24,
+              Visibility(
+                visible: short == false,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(
+                    color: Colors.transparent,
+                    thickness: 1.5,
+                    endIndent: 24,
+                    indent: 24,
+                  ),
                 ),
               ),
               // order in month
@@ -241,6 +244,50 @@ class PackageCard extends StatelessWidget {
                     width: 105,
                     child: Text(
                       '${package.cost} ${S.current.sar}',
+                      style: TextStyle(
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // expiration
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 32.0, left: 32, top: 8, bottom: 8),
+                child: DottedLine(
+                  dashColor: Theme.of(context).backgroundColor,
+                  lineThickness: 2.5,
+                  dashRadius: 25,
+                  dashLength: 4,
+                ),
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Theme.of(context).backgroundColor),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.date_range_rounded,
+                          color: active
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).disabledColor),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  SizedBox(
+                    width: 105,
+                    child: Text(
+                      '${package.expired}' + ' ' +S.current.day + ' ' +S.current.validation,
                       style: TextStyle(
                         color: active
                             ? Theme.of(context).textTheme.button?.color

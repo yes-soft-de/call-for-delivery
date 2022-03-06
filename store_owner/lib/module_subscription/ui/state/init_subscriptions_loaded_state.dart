@@ -146,7 +146,7 @@ class InitSubscriptionsLoadedState extends States {
                 fade: true,
                 milliseconds: 1000,
                 child: SizedBox(
-                  height: 375,
+                  height: 425,
                   child: ListView(
                     physics: BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics()),
@@ -224,6 +224,7 @@ class InitSubscriptionsLoadedState extends States {
           screenState.refresh();
         },
         child: PackageCard(
+          short: false,
           package: element,
           active: element.id == _selectedPackageId,
         ),
