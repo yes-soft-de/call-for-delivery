@@ -39,7 +39,7 @@ class Data {
   String? city;
   num? orderCount;
   String? status;
-
+  int? expired;
   Data({
     this.id,
     this.name,
@@ -49,6 +49,7 @@ class Data {
     this.city,
     this.orderCount,
     this.status,
+    this.expired
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -60,6 +61,7 @@ class Data {
     city = json['city'];
     orderCount = json['orderCount'];
     status = json['status'];
+    expired = json['expired'];
   }
 
   Map<String, dynamic> toJson() {

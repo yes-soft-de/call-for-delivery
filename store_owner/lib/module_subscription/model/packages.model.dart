@@ -11,17 +11,19 @@ class PackageModel extends DataModel {
   late String city;
   late num orderCount;
   late String status;
+  late int expired;
 
-  PackageModel({
-    required this.id,
-    required this.name,
-    required this.cost,
-    required this.note,
-    required this.carCount,
-    required this.city,
-    required this.orderCount,
-    required this.status,
-  });
+  PackageModel(
+      {required this.id,
+      required this.name,
+      required this.cost,
+      required this.note,
+      required this.carCount,
+      required this.city,
+      required this.orderCount,
+      required this.status,
+      required this.expired});
+
   List<PackageModel> _packageList = [];
   PackageModel.withData(PackagesResponse response) {
     _packageList = [];
@@ -36,6 +38,7 @@ class PackageModel extends DataModel {
         city: element.city ?? '',
         orderCount: element.orderCount ?? 0,
         status: element.status ?? 'inActive',
+        expired: element.expired ?? 0,
       ));
     });
   }
