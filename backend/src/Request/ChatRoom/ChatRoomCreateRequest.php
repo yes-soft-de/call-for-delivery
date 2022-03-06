@@ -6,6 +6,8 @@ class ChatRoomCreateRequest
 {
     private int $userId;
 
+    private int $usedAs;
+
     /**
      * Get the value of userId
      */ 
@@ -22,6 +24,26 @@ class ChatRoomCreateRequest
     public function setUserId(int $userId)
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of usedAs
+     */ 
+    public function getUsedAs()
+    {
+        return $this->usedAs;
+    }
+
+    /**
+     * Set the value of usedAs
+     *
+     * @return  self
+     */ 
+    public function setUsedAs($usedAs)
+    {
+        $this->usedAs = $usedAs;
 
         return $this;
     }
