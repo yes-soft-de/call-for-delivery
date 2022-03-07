@@ -130,4 +130,16 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): string
+    {
+        return $this->createQueryBuilder('storeOwnerProfile')
+            ->select('COUNT(storeOwnerProfile.id)')
+
+            ->andWhere('storeOwnerProfile.status = :storeOwnerProfileStatus')
+            ->setParameter('storeOwnerProfileStatus', $storeOwnerProfileStatus)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

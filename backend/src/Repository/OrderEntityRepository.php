@@ -67,4 +67,25 @@ class OrderEntityRepository extends ServiceEntityRepository
             
             ->getOneOrNullResult();
     }
+
+    public function getOrdersByStateForAdmin(string $state): string
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', $state)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getAllOrdersCountForAdmin(): string
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
