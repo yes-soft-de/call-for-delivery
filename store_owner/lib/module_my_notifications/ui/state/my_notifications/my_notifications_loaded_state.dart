@@ -15,7 +15,8 @@ class MyNotificationsLoadedState extends States {
   List<NotificationModel> model;
   MyNotificationsLoadedState(this.screenState, this.model) : super(screenState);
   bool markAll = false;
-
+  bool sorted = false;
+  String listTile = S.current.sortByEarlier;
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -98,17 +99,31 @@ class MyNotificationsLoadedState extends States {
                           right: 10.0,
                           left: 10,
                         ),
-                        child: ListTile(
-                          onTap: () {},
-                          minLeadingWidth: 4,
-                          leading: FaIcon(
-                            FontAwesomeIcons.sortAmountDown,
-                            color: Theme.of(context).disabledColor,
-                            size: 18,
-                          ),
-                          title: Text(
-                            S.of(context).sortByEarlier,
-                            style: StyleText.categoryStyle,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            onTap: () {
+                              if (sorted) {
+                                sorted = false;
+                                listTile = S.current.sortByEarlier;
+                                model = model.reversed.toList();
+                              } else {
+                                sorted = true;
+                                model = model.reversed.toList();
+                                listTile = S.current.sortedByLatest;
+                              }
+                              screenState.refresh();
+                            },
+                            minLeadingWidth: 4,
+                            leading: FaIcon(
+                              FontAwesomeIcons.sortAmountDown,
+                              color: Theme.of(context).disabledColor,
+                              size: 18,
+                            ),
+                            title: Text(
+                              listTile,
+                              style: StyleText.categoryStyle,
+                            ),
                           ),
                         ),
                       ),
