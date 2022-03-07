@@ -451,7 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOfCars": MessageLookupByLibrary.simpleMessage(
             "There is no car available please wait your ongoing orders to finish"),
         "outOforders": MessageLookupByLibrary.simpleMessage(
-            "You reach your limit of orders you can renew your subscription from settings"),
+            "You reach your limit of orders you can renew your subscription"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
@@ -659,6 +659,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscribeWithPackage":
+            MessageLookupByLibrary.simpleMessage("Subscription packages"),
+        "subscriptionDate":
+            MessageLookupByLibrary.simpleMessage("Subscription date"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription status"),
         "successCreateOrder":

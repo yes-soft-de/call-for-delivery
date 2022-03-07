@@ -267,7 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
-            "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
+            "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":
@@ -389,7 +389,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
-            "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
+            "لم تشترك بباقة بعد الرجاء الاشتراك"),
         "notVerified":
             MessageLookupByLibrary.simpleMessage("لم يتم تفعيل الباقة بعد"),
         "notVerifiedNumber":
@@ -446,7 +446,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOfCars": MessageLookupByLibrary.simpleMessage(
             "لا يوجد سيارات متوفرة لك الرجاء انتظار طلباتك الجارية من الانتهاء"),
         "outOforders": MessageLookupByLibrary.simpleMessage(
-            "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك من الإعدادات"),
+            "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
         "packageSubscriptionSuccess":
@@ -655,6 +655,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscribeWithPackage":
+            MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
+        "subscriptionDate":
+            MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "successCreateOrder":

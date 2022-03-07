@@ -2050,10 +2050,10 @@ class S {
     );
   }
 
-  /// `You reach your limit of orders you can renew your subscription from settings`
+  /// `You reach your limit of orders you can renew your subscription`
   String get outOforders {
     return Intl.message(
-      'You reach your limit of orders you can renew your subscription from settings',
+      'You reach your limit of orders you can renew your subscription',
       name: 'outOforders',
       desc: '',
       args: [],
@@ -5055,6 +5055,26 @@ class S {
     return Intl.message(
       'Validation',
       name: 'validation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription date`
+  String get subscriptionDate {
+    return Intl.message(
+      'Subscription date',
+      name: 'subscriptionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription packages`
+  String get subscribeWithPackage {
+    return Intl.message(
+      'Subscription packages',
+      name: 'subscribeWithPackage',
       desc: '',
       args: [],
     );
