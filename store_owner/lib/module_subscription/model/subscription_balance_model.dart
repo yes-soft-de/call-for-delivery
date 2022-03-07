@@ -14,6 +14,7 @@ class SubscriptionBalanceModel extends DataModel {
   late int packageCarsCount;
   late int packageOrdersCount;
   late String? status;
+  late int expired;
   SubscriptionBalanceModel(
       {required this.packageID,
       required this.id,
@@ -24,7 +25,8 @@ class SubscriptionBalanceModel extends DataModel {
       required this.packageCarsCount,
       required this.packageOrdersCount,
       required this.packageName,
-      this.status});
+      this.status,
+      required this.expired});
   late SubscriptionBalanceModel _balance;
   SubscriptionBalanceModel.withData(SubscriptionBalanceResponse response) {
     var data = response.data;
@@ -38,7 +40,8 @@ class SubscriptionBalanceModel extends DataModel {
         remainingCars: data?.remainingCars ?? 0,
         remainingOrders: data?.remainingOrders ?? 0,
         status: data?.status ?? 'inactive',
-        startDate: DateHelper.convert(data?.startDate?.timestamp));
+        startDate: DateHelper.convert(data?.startDate?.timestamp),
+        expired: data?.expired ?? 0);
   }
   SubscriptionBalanceModel get data => _balance;
 }
