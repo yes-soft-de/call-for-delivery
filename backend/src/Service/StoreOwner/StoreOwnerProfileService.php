@@ -62,7 +62,9 @@ class StoreOwnerProfileService
             $item['images'] = $this->getImageParams($item['images'], $this->params.$item['images'], $this->params);
         }
 
-        $item['roomId'] = $item['roomId']->toBase32();
+        if($item['roomId']) {
+            $item['roomId'] = $item['roomId']->toBase32();
+        }
 
         return $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
     }
