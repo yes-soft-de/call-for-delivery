@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Request\Order\OrderFilterRequest;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -66,5 +68,53 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             
             ->getOneOrNullResult();
+    }
+
+    public function filterStoreOrders(OrderFilterRequest $request, int $storeOwner): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.captainId ', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.images', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId')
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id')
+
+            ->andWhere('orderEntity.storeOwner = :storeOwner')
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getState()) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+        }
+
+        if ($request->getFromDate() !== null && $request->getToDate() === null) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif ($request->getFromDate() === null && $request->getToDate() !== null) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif ($request->getFromDate() !== null && $request->getToDate() !== null) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
