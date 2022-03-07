@@ -11,7 +11,7 @@ use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 
 /**
- * Create and fetch packages.
+ * Fetch packages.
  * @Route("v1/package/")
  */
 class PackageController extends BaseController
