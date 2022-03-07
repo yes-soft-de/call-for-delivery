@@ -1,3 +1,4 @@
+import 'package:c4d/module_profile/response/profile_response/date/date.dart';
 import 'images.dart';
 
 class Data {
@@ -11,6 +12,8 @@ class Data {
   String? city;
   String? bankName;
   String? bankNumber;
+  Date? openingTime;
+  Date? closeTime;
 
   Data(
       {this.id,
@@ -22,7 +25,9 @@ class Data {
       this.employeeCount,
       this.bankName,
       this.bankNumber,
-      this.city});
+      this.city,
+      this.closeTime,
+      this.openingTime});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
@@ -37,6 +42,12 @@ class Data {
         city: json['city'] as String?,
         bankName: json['bankName'] as String?,
         bankNumber: json['bankAccountNumber'] as String?,
+        openingTime: json['openingTime'] == null
+            ? null
+            : Date.fromJson(json['openingTime'] as Map<String, dynamic>),
+        closeTime: json['closingTime'] == null
+            ? null
+            : Date.fromJson(json['closingTime'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {

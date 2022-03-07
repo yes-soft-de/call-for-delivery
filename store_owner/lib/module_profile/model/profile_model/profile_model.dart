@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/response/profile_response/profile_response.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 
 class ProfileModel extends DataModel {
   String? image;
@@ -13,6 +14,8 @@ class ProfileModel extends DataModel {
   late String city;
   late String? employeeCount;
   late String? status;
+  late DateTime openingTime;
+  late DateTime closingTime;
   ProfileModel(
       {required this.image,
       required this.name,
@@ -23,7 +26,9 @@ class ProfileModel extends DataModel {
       required this.city,
       this.employeeCount,
       this.status,
-      this.imageUrl});
+      this.imageUrl,
+      required this.closingTime,
+      required this.openingTime});
   late ProfileModel _profile;
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;
@@ -37,7 +42,9 @@ class ProfileModel extends DataModel {
         stcPay: '',
         city: data?.city ?? '',
         employeeCount: data?.employeeCount,
-        status: data?.status ?? 'inActive');
+        status: data?.status ?? 'inActive',
+        closingTime: DateHelper.convert(data?.closeTime?.timestamp),
+        openingTime: DateHelper.convert(data?.openingTime?.timestamp));
   }
   ProfileModel get data => _profile;
 }

@@ -495,7 +495,14 @@
     "deliverDate": "تاريخ التوصيل",
     "createdDate": "تاريخ الإنشاء",
     "onGoingOrder": "الطلبات الجارية",
-    "details": "تفاصيل"
+    "details": "تفاصيل",
+    "openingTime": "وقت الافتتاح",
+    "closingTime": "وقت الإغلاق",
+    "workTime": "ساعات الدوام",
+    "orderImage": "صورة الطلب",
+    "allCity": "جميع المدن",
+    "validation": "صلاحية"
+
 
 
 

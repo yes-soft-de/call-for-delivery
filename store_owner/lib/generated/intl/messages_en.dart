@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "allCity": MessageLookupByLibrary.simpleMessage("All city"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
@@ -162,6 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityHint": MessageLookupByLibrary.simpleMessage("Jaddah"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -405,6 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
+        "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
@@ -418,6 +421,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+        "orderImage": MessageLookupByLibrary.simpleMessage("Order Image"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
@@ -727,6 +731,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(
@@ -755,6 +760,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Owner"),
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
+        "workTime": MessageLookupByLibrary.simpleMessage("Work time"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

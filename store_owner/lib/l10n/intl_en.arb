@@ -496,34 +496,13 @@
     "deliverDate": "Delivery date",
     "createdDate": "Created date",
     "onGoingOrder": "Ongoing Order",
-    "details": "Details"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "details": "Details",
+    "openingTime": "Opening Time",
+    "closingTime": "Closing Time",
+    "workTime": "Work time",
+    "orderImage": "Order Image",
+    "allCity": "All city",
+    "validation": "Validation"
 
 
 }

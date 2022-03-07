@@ -27,6 +27,7 @@ class PackageCategoriesModel extends DataModel {
           city: element.city ?? '',
           orderCount: element.orderCount ?? 0,
           status: element.status ?? 'inActive',
+          expired: element.expired ?? 0,
         ));
       });
       _packageList.add(PackageCategoriesModel(

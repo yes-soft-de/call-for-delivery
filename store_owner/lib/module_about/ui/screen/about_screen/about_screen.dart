@@ -2,7 +2,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/state_manager/about_screen_state_manager.dart';
 import 'package:c4d/module_about/ui/states/about/about_state.dart';
 import 'package:c4d/module_about/ui/states/about/about_state_page_owner.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -25,7 +24,12 @@ class AboutScreenState extends State<AboutScreen> {
       _currentState = event;
       if (mounted) setState(() {});
     });
+
     super.initState();
+  }
+
+  void getPackages() {
+    widget._stateManager.getPackages(this);
   }
 
   @override

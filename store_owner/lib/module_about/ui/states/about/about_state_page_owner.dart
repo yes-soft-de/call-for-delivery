@@ -1,25 +1,42 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
-import 'package:c4d/module_about/model/package_model.dart';
 import 'package:c4d/module_about/ui/screen/about_screen/about_screen.dart';
 import 'package:c4d/module_about/ui/states/about/about_state.dart';
 import 'package:c4d/module_about/ui/widget/welcome_card.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_subscription/model/packages.model.dart';
+import 'package:c4d/module_subscription/ui/widget/package_card/package_card.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AboutStatePageOwner extends AboutState {
-  int currentPage = 0;
-  final _pageController = PageController(initialPage: 0);
+  int currentPage;
+  late PageController _pageController;
   List<PackageModel> packages;
-
-  AboutStatePageOwner(AboutScreenState screenState, this.packages)
-      : super(screenState);
+  bool loading = true;
+  AboutStatePageOwner(AboutScreenState screenState, this.packages,
+      {this.currentPage = 0})
+      : super(screenState) {
+    _pageController = PageController(initialPage: currentPage);
+    screenState.refresh();
+    _pageController.addListener(() {
+      if (currentPage == 3 && packages.isEmpty) {
+        screenState.getPackages();
+      }
+    });
+    if (packages.isNotEmpty) {
+      loading = false;
+      _selectedCity = S.current.allCity;
+      screenState.refresh();
+    }
+  }
   String? _selectedCity;
   @override
   Widget getUI(BuildContext context) {
+    var isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Stack(
       children: [
         PageView(
@@ -43,69 +60,83 @@ class AboutStatePageOwner extends AboutState {
                 image: ImageAsset.WE_DELIVER,
                 label: S.current.weDeliver,
                 description: S.current.weDeliverDescribtion),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Text(
-                    S.of(context).ourPackages,
-                    style: TextStyle(
-                      fontSize: 24,
+            Visibility(
+              replacement: Center(
+                child: CircularProgressIndicator(),
+              ),
+              visible: loading == false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SafeArea(
+                    top: true,
+                    child: Text(
+                      S.of(context).ourPackages,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Container(
-                    width: 150,
-                    child: DropdownButtonFormField(
-                        value: _selectedCity,
-                        decoration: InputDecoration(
-                          hintText: S.of(context).chooseYourCity,
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).backgroundColor),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: DropdownButton2(
+                            value: _selectedCity,
+                            underline: SizedBox.shrink(),
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            items: _getCities(),
+                            onChanged: (value) {
+                              _selectedCity = value.toString();
+                              screenState.refresh();
+                            }),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 385,
+                    child: ListView(
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      scrollDirection: Axis.horizontal,
+                      children: _selectedCity == null
+                          ? _getPackagesCards()
+                          : _getPackages(_selectedCity),
+                    ),
+                  ),
+                  Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          S
+                              .of(context)
+                              .toFindOutMorePleaseLeaveYourPhonenandWeWill,
+                          textAlign: TextAlign.center,
                         ),
-                        items: _getCities(),
-                        onChanged: (value) {
-                          _selectedCity = value.toString();
-                          screenState.refresh();
-                        }),
-                  ),
-                ),
-                Container(
-                  height: 275,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: _selectedCity == null
-                        ? _getPackagesCards()
-                        : _getPackages(_selectedCity),
-                  ),
-                ),
-                Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        S
-                            .of(context)
-                            .toFindOutMorePleaseLeaveYourPhonenandWeWill,
-                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        //screenState.requestBooking();
-                      },
-                      child: Text(
-                        S.of(context).requestMeeting,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                        onPressed: () {
+                          //screenState.requestBooking();
+                        },
+                        child: Text(
+                          S.of(context).requestMeeting,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 16,
-                ),
-              ],
+                    ],
+                  ),
+                  Container(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -126,7 +157,12 @@ class AboutStatePageOwner extends AboutState {
                               AuthorizationRoutes.REGISTER_SCREEN,
                               (route) => false);
                         },
-                        child: Text(S.current.skip))
+                        child: Text(
+                          S.current.skip,
+                          style: isDark
+                              ? Theme.of(context).textTheme.button
+                              : null,
+                        ))
                     : Text(
                         '${S.of(context).skip}',
                         style: TextStyle(
@@ -148,7 +184,10 @@ class AboutStatePageOwner extends AboutState {
                             curve: Curves.easeIn);
                       }
                     },
-                    child: Text(S.current.next))
+                    child: Text(
+                      S.current.next,
+                      style: isDark ? Theme.of(context).textTheme.button : null,
+                    ))
               ],
             ),
           ),
@@ -168,7 +207,7 @@ class AboutStatePageOwner extends AboutState {
           width: size,
           decoration: BoxDecoration(
               color: i == currentPage
-                  ? Theme.of(context).primaryColor
+                  ? Theme.of(context).colorScheme.primary
                   : Color.fromRGBO(236, 239, 241, 1),
               shape: BoxShape.circle),
         ),
@@ -184,10 +223,10 @@ class AboutStatePageOwner extends AboutState {
   List<Widget> _getPackagesCards() {
     var packagesCards = <Widget>[];
     packages.forEach((package) {
-      // packagesCards.add(PackageCard(
-      //   package: package,
-      //   active: false,
-      // ));
+      packagesCards.add(PackageCard(
+        package: package,
+        active: false,
+      ));
     });
     return packagesCards;
   }
@@ -195,9 +234,9 @@ class AboutStatePageOwner extends AboutState {
   List<DropdownMenuItem<String>> _getCities() {
     var cityNames = <String>{};
     packages.forEach((element) {
-      //   cityNames.add('${element.city}');
+      cityNames.add('${element.city}');
     });
-    //  cityNames.add(S.current.allcity);
+    cityNames.add(S.current.allCity);
     var cityDropDown = <DropdownMenuItem<String>>[];
     cityNames.forEach((element) {
       cityDropDown.add(DropdownMenuItem(
@@ -221,16 +260,15 @@ class AboutStatePageOwner extends AboutState {
     }
     List<PackageModel> cityPackage = [];
     for (int i = 0; i < packages.length; i++) {
-      // if (packages[i].city == city || city == S.current.allcity) {
-      //   cityPackage.add(packages[i]);
-      // }
+      if (packages[i].city == city || city == S.current.allCity) {
+        cityPackage.add(packages[i]);
+      }
     }
-    return [];
-    // return cityPackage.map((element) {
-    //   return PackageCard(
-    //     package: element,
-    //     active: false,
-    //   );
-    // }).toList();
+    return cityPackage.map((element) {
+      return PackageCard(
+        package: element,
+        active: false,
+      );
+    }).toList();
   }
 }

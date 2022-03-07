@@ -127,7 +127,8 @@ class StatusHelper {
         return 0;
     }
   }
-    static int getOrderStatusIndexForStore(OrderStatusEnum status) {
+
+  static int getOrderStatusIndexForStore(OrderStatusEnum status) {
     switch (status) {
       case OrderStatusEnum.GOT_CAPTAIN:
         return 0;

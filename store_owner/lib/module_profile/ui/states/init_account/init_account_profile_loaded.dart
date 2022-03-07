@@ -14,6 +14,7 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class InitAccountStateProfileLoaded extends States {
@@ -40,6 +41,8 @@ class InitAccountStateProfileLoaded extends States {
   String? imagePath;
   Uint8List? imageBytes;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+  DateTime? openingTime;
+  DateTime? closingTime;
   @override
   Widget getUI(BuildContext context) {
     return StackedForm(
@@ -65,7 +68,10 @@ class InitAccountStateProfileLoaded extends States {
                 image: image,
                 bankName: _bankNameController.text,
                 bankAccountNumber: _bankNumberController.text,
-                employeeSize: selectedSize);
+                employeeSize: selectedSize,
+                closingTime: closingTime?.toUtc().toIso8601String(),
+                openingTime: openingTime?.toUtc().toIso8601String(),
+                );
             screenState.initProfile(profileRequest);
           });
         } else if (imagePath == null) {
@@ -216,6 +222,133 @@ class InitAccountStateProfileLoaded extends States {
                   ),
                 ],
               ),
+              // work shift
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 0.0, right: 16.0, left: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.store_rounded,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Material(
+                      borderRadius: BorderRadius.circular(25),
+                      elevation: 0.0,
+                      color: Theme.of(context).backgroundColor,
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        onTap: () {
+                          showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then((value) {
+                            if (value == null) {
+                            } else {
+                              var now = DateTime.now();
+                              openingTime = DateTime(now.year, now.month,
+                                  now.day, value.hour, value.minute);
+                              screenState.refresh();
+                            }
+                          });
+                        },
+                        title: Text(S.of(context).openingTime),
+                        trailing: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Theme.of(context).colorScheme.primary),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                DateFormat.jm()
+                                    .format(openingTime ?? DateTime.now()),
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                            )),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 0.0, right: 16.0, left: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.punch_clock_rounded,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Material(
+                      borderRadius: BorderRadius.circular(25),
+                      elevation: 0.0,
+                      color: Theme.of(context).backgroundColor,
+                      child: ListTile(
+                          onTap: () {
+                            showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            ).then((value) {
+                              if (value == null) {
+                              } else {
+                                var now = DateTime.now();
+                                closingTime = DateTime(now.year, now.month,
+                                    now.day, value.hour, value.minute);
+                                screenState.refresh();
+                              }
+                            });
+                          },
+                          title: Text(S.of(context).closingTime),
+                          trailing: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Theme.of(context).colorScheme.primary),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  DateFormat.jm()
+                                      .format(closingTime ?? DateTime.now()),
+                                  style: Theme.of(context).textTheme.button),
+                            ),
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  )
+                ],
+              ),
+
               // city
               InitField(
                 icon: Icons.location_city_rounded,

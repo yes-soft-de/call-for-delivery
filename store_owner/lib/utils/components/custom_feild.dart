@@ -55,77 +55,89 @@ class _CustomFormFieldState extends State<CustomFormField> {
         color: Theme.of(context).backgroundColor,
       ),
       child: Padding(
-        padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
-        child: TextFormField(
-          autovalidateMode: mode,
-          toolbarOptions: ToolbarOptions(
-              copy: true, paste: true, selectAll: true, cut: true),
-          onTap: widget.onTap,
-          controller: widget.controller,
-          readOnly: widget.readOnly,
-          maxLines: widget.maxLines ?? 1,
-          cursorHeight:
-              getIt<LocalizationService>().getLanguage() == 'ar' && kIsWeb
-                  ? 16
-                  : null,
-          keyboardType: widget.numbers ? TextInputType.phone : null,
-          onEditingComplete:
-              widget.maxLines != null ? null : () => node.nextFocus(),
-          onFieldSubmitted: widget.maxLines == null && widget.last
-              ? (_) => node.unfocus()
-              : null,
-          textInputAction: widget.maxLines == null && widget.last
-              ? null
-              : TextInputAction.next,
-          inputFormatters: widget.numbers
-              ? <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
-                ]
-              : [],
-          onChanged: (v) {
-            if (widget.onChanged != null) {
-              widget.onChanged!();
-            }
-            setState(() {});
-          },
-          validator: widget.validatorFunction != null
-              ? widget.validatorFunction
-              : widget.validator
-                  ? (value) {
-                      if (mode == AutovalidateMode.disabled) {
-                        setState(() {
-                          mode = AutovalidateMode.onUserInteraction;
-                          clean = false;
-                        });
-                      }
-                      if (value == null) {
-                        clean = false;
-                        return S.of(context).pleaseCompleteField;
-                      } else if (value.isEmpty) {
-                        clean = false;
-                        return S.of(context).pleaseCompleteField;
-                      } else if (value.length < 8 &&
-                          widget.numbers &&
-                          widget.phone) {
-                        clean = false;
-                        return S.of(context).phoneNumbertooShort;
-                      } else {
-                        clean = true;
-                        return null;
-                      }
+          padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  autovalidateMode: mode,
+                  toolbarOptions: ToolbarOptions(
+                      copy: true, paste: true, selectAll: true, cut: true),
+                  onTap: widget.onTap,
+                  controller: widget.controller,
+                  readOnly: widget.readOnly,
+                  maxLines: widget.maxLines ?? 1,
+                  cursorHeight:
+                      getIt<LocalizationService>().getLanguage() == 'ar' &&
+                              kIsWeb
+                          ? 16
+                          : null,
+                  keyboardType: widget.numbers ? TextInputType.phone : null,
+                  onEditingComplete:
+                      widget.maxLines != null ? null : () => node.nextFocus(),
+                  onFieldSubmitted: widget.maxLines == null && widget.last
+                      ? (_) => node.unfocus()
+                      : null,
+                  textInputAction: widget.maxLines == null && widget.last
+                      ? null
+                      : TextInputAction.next,
+                  inputFormatters: widget.numbers
+                      ? <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                        ]
+                      : [],
+                  onChanged: (v) {
+                    if (widget.onChanged != null) {
+                      widget.onChanged!();
                     }
-                  : null,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: widget.hintText,
-            prefixIcon: widget.preIcon,
-            suffixIcon: widget.sufIcon,
-            enabledBorder: InputBorder.none,
-            contentPadding: widget.contentPadding,
-            focusedBorder: InputBorder.none,
-          ),
-        ),
-      ),
+                    setState(() {});
+                  },
+                  validator: widget.validatorFunction != null
+                      ? widget.validatorFunction
+                      : widget.validator
+                          ? (value) {
+                              if (mode == AutovalidateMode.disabled) {
+                                setState(() {
+                                  mode = AutovalidateMode.onUserInteraction;
+                                  clean = false;
+                                });
+                              }
+                              if (value == null) {
+                                clean = false;
+                                return S.of(context).pleaseCompleteField;
+                              } else if (value.isEmpty) {
+                                clean = false;
+                                return S.of(context).pleaseCompleteField;
+                              } else if (widget.numbers &&
+                                  num.tryParse(value) == null) {
+                                clean = false;
+                                return S.current.InvalidInput;
+                              } else if (value.length < 8 &&
+                                  widget.numbers &&
+                                  widget.phone) {
+                                clean = false;
+                                return S.of(context).phoneNumbertooShort;
+                              } else {
+                                clean = true;
+                                return null;
+                              }
+                            }
+                          : null,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: widget.hintText,
+                    prefixIcon: widget.preIcon,
+                    enabledBorder: InputBorder.none,
+                    contentPadding: widget.contentPadding,
+                    focusedBorder: InputBorder.none,
+                  ),
+                ),
+              ),
+              Visibility(child: Material(
+                color: Colors.transparent,
+                child: widget.sufIcon ?? SizedBox.shrink())),
+            ],
+          )),
     );
   }
 }

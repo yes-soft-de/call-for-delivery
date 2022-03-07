@@ -18,6 +18,7 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -146,9 +147,16 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
+                    contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
                     controller: screenState.toController,
+                    sufIcon: IconButton(
+                      splashRadius: 18,
+                      color: Theme.of(context).colorScheme.primary,
+                      icon: Icon(Icons.paste_rounded),
+                      onPressed: getClipBoardData,
+                    ),
                   ),
                 ),
                 // order details
@@ -453,10 +461,10 @@ class NewOrderStateBranchesLoaded extends States {
         });
   }
 
-  // Future<String> getClipBoardData() async {
-  //  // ClipboardData data = await Clipboard.getData(Clipboard.kTextPlain);
-  //   return data.text;
-  // }
+  Future<String> getClipBoardData() async {
+    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    return data?.text ?? '';
+  }
 
   // function to upload image then create order
   void createOrderWithImage() {
