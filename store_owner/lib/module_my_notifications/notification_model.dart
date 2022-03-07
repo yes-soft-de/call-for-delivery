@@ -1,15 +1,14 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/response/my_notification_response.dart';
 
-class NotificationModel {
+class NotificationModel extends DataModel {
   String orderNumber = '-1';
   String body = S.current.orderDetails;
   String title = S.current.orderNumber;
   String date = '';
   bool marked = false;
-  String? error;
-  bool empty = false;
   List<NotificationModel> models = [];
 
   NotificationModel(
@@ -19,12 +18,7 @@ class NotificationModel {
       required this.date,
       required this.marked});
 
-  NotificationModel.Empty() {
-    this.empty = true;
-  }
-  NotificationModel.Error(this.error);
-
-  NotificationModel.Data(MyNotificationResponse orders) {
+  NotificationModel.withData(MyNotificationResponse orders) {
     var data = orders.data;
     data?.forEach((element) {
       String notificationDate = DateFormat.jm().format(
@@ -40,14 +34,11 @@ class NotificationModel {
       models.add(NotificationModel(
           marked: false,
           title: element.title ?? '',
-          orderNumber: element.orderNumber.toString(),
-          body: element.message ?? '',
+          orderNumber: element.message?.orderId?.toString() ?? '-1',
+          body: element.message?.text ?? '',
           date: notificationDate));
     });
   }
-  bool get hasError => error != null;
-
-  bool get isEmpty => empty;
 
   List<NotificationModel> get data {
     return models;

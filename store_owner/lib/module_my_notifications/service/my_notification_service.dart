@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/manager/my_notifications_manager.dart';
@@ -11,17 +12,17 @@ class MyNotificationsService {
 
   MyNotificationsService(this._myNotificationsManager);
 
-  Future<NotificationModel> getNotification() async {
+  Future<DataModel> getNotification() async {
     MyNotificationResponse? _myNotificationResponse =
         await _myNotificationsManager.getNotification();
     if (_myNotificationResponse == null) {
-      return NotificationModel.Error(S.current.networkError);
+      return DataModel.withError(S.current.networkError);
     }
     if (_myNotificationResponse.statusCode != '200') {
-      return NotificationModel.Error(StatusCodeHelper.getStatusCodeMessages(
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
           _myNotificationResponse.statusCode));
     }
-    if (_myNotificationResponse.data == null) return NotificationModel.Empty();
-    return NotificationModel.Data(_myNotificationResponse);
+    if (_myNotificationResponse.data == null) return DataModel.empty();
+    return NotificationModel.withData(_myNotificationResponse);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:c4d/module_my_notifications/response/message.dart';
+
 class MyNotificationResponse {
   String? statusCode;
   String? msg;
@@ -30,20 +32,21 @@ class MyNotificationResponse {
 class Data {
   int? id;
   String? title;
-  String? message;
-  int? orderNumber;
+  Message? message;
   CreatedAt? createdAt;
 
-  Data({this.id, this.title, this.message, this.orderNumber, this.createdAt});
+  Data({this.id, this.title, this.message, this.createdAt});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
     title = json['title'];
-    message = json['message'];
-    orderNumber = json['orderNumber'];
+    message = Message.fromJson(json);
     createdAt = json['createdAt'] != null
         ? CreatedAt.fromJson(json['createdAt'])
         : null;
+    message = json['message'] == null
+        ? null
+        : Message.fromJson(json['message'] as Map<String, dynamic>);
   }
 
   Map<String, dynamic> toJson() {
@@ -51,7 +54,6 @@ class Data {
     map['id'] = id;
     map['title'] = title;
     map['message'] = message;
-    map['orderNumber'] = orderNumber;
     if (createdAt != null) {
       map['createdAt'] = createdAt?.toJson();
     }

@@ -25,7 +25,7 @@ class MyNotificationsStateManager {
     if (_authService.isLoggedIn) {
       _stateSubject.add(LoadingState(screenState));
       _myNotificationsService.getNotification().then((value) {
-        if (value.hasError == false) {
+        if (value.hasError) {
           _stateSubject.add(ErrorState(screenState,
               title: S.current.notifications,
               error: value.error ?? S.current.errorHappened, onPressed: () {
@@ -33,30 +33,14 @@ class MyNotificationsStateManager {
           }));
         } else if (value.isEmpty) {
           _stateSubject.add(EmptyState(screenState,
+              title: S.current.notifications,
               emptyMessage: S.current.homeDataEmpty, onPressed: () {
             getNotifications(screenState);
-          }, title: ''));
+          }));
         } else {
-          _stateSubject.add(MyNotificationsLoadedState(screenState, [
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.notifications,
-                body: S.current.ExpiredSubscriptions,
-                date: '2022-3-1'),
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.branch,
-                body: S.current.addBranchSuccess,
-                date: '2022-3-2'),
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.mySubscription,
-                body: S.current.ExpiredSubscriptions,
-                date: '2022-3-3')
-          ]));
+          value as NotificationModel;
+          _stateSubject
+              .add(MyNotificationsLoadedState(screenState, value.data));
         }
       });
     } else {
