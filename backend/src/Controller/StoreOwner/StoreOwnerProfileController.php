@@ -224,72 +224,72 @@ class StoreOwnerProfileController extends BaseController
         return $this->response($response, self::FETCH);
     }
 
-    /**
-     * store: Get complete account status of store owner profile.
-     * @Route("storeownerprofilecompleteaccountstatus", name="getCompleteAccountStatusOfStoreOwnerProfile", methods={"GET"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Store Owner Profile")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the completeAccountStatus of store owner's profile",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
-     *      )
-     *   )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Returns the completeAccountStatus of store owner's profile",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9158 | 9159 | 9160"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
-     *      )
-     *   )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getCompleteAccountStatusByStoreOwnerId(): JsonResponse
-    {
-        $response = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($this->getUserId());
-
-        if($response->completeAccountStatus) {
-            if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
-                return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
-
-            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
-                return $this->response($response, self::STORE_OWNER_PROFILE_COMPLETED);
-
-            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
-                return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
-
-            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
-                return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
-
-            }
-        } elseif ($response->completeAccountStatus === null) {
-            $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
-            return $this->response($response, self::FETCH);
-        }
-    }
+//    /**
+//     * store: Get complete account status of store owner profile.
+//     * @Route("storeownerprofilecompleteaccountstatus", name="getCompleteAccountStatusOfStoreOwnerProfile", methods={"GET"})
+//     * @IsGranted("ROLE_OWNER")
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Store Owner Profile")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @OA\Response(
+//     *      response=200,
+//     *      description="Returns the completeAccountStatus of store owner's profile",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="object", property="Data",
+//     *              @OA\Property(type="string", property="completeAccountStatus")
+//     *      )
+//     *   )
+//     * )
+//     *
+//     * or
+//     *
+//     * @OA\Response(
+//     *      response="default",
+//     *      description="Returns the completeAccountStatus of store owner's profile",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code", example="9158 | 9159 | 9160"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="object", property="Data",
+//     *              @OA\Property(type="string", property="completeAccountStatus")
+//     *      )
+//     *   )
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function getCompleteAccountStatusByStoreOwnerId(): JsonResponse
+//    {
+//        $response = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($this->getUserId());
+//
+//        if($response->completeAccountStatus) {
+//            if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+//                return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
+//
+//            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+//                return $this->response($response, self::STORE_OWNER_PROFILE_COMPLETED);
+//
+//            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+//                return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
+//
+//            } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+//                return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
+//
+//            }
+//        } elseif ($response->completeAccountStatus === null) {
+//            $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+//            return $this->response($response, self::FETCH);
+//        }
+//    }
 
     /**
      * store: Update complete account status of the store owner profile.

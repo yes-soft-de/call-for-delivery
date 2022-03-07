@@ -35,6 +35,7 @@ class BaseController extends AbstractController
     const ERROR_USER_CHECK = ["error user check","9000"];
     const ERROR_USER_FOUND = ["error user found","9001"];
     const ERROR_UNMATCHED_PASSWORDS = ["password and its confirmation are not matched", "9002"];
+    const ERROR_USER_TYPE = ["wrong user type", "9004"];
     const ERROR_USER_NOT_FOUND = ["error user not found", "9005"];
     const ERROR_USER_CREATED = ["error, not created user","9010"];
     // error captain
