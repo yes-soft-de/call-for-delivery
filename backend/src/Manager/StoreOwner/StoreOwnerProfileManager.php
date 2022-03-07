@@ -7,7 +7,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
-use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\Main\CompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
@@ -139,16 +139,16 @@ class StoreOwnerProfileManager
         return $this->storeOwnerProfileEntityRepository->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
     }
 
-    public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
     {
         if(! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
             return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
 
         } else {
-            $storeOwnerProfile = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getStoreOwnerId());
+            $storeOwnerProfile = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserId());
 
             if ($storeOwnerProfile) {
-                $storeOwnerProfile = $this->autoMapping->mapToObject(StoreOwnerCompleteAccountStatusUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $storeOwnerProfile);
+                $storeOwnerProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $storeOwnerProfile);
 
                 $this->entityManager->flush();
 
