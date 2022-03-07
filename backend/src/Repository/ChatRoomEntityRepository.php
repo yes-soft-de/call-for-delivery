@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\ChatRoomEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+use App\Constant\ChatRoom\ChatRoomConstant;
 
 /**
  * @method ChatRoomEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +22,20 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, ChatRoomEntity::class);
     }
 
-    // /**
-    //  * @return ChatRoomEntity[] Returns an array of ChatRoomEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getChatRoomsWithStores(): ?array
+     {   
+        return $this->createQueryBuilder('chatRoom')
 
-    /*
-    public function findOneBySomeField($value): ?ChatRoomEntity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('chatRoom.roomId')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileId, storeOwnerProfile.storeOwnerName, storeOwnerProfile.images')
+          
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'chatRoom.userId = storeOwnerProfile.storeOwnerId')
+
+            ->andWhere('chatRoom.usedAs = :usedAs')
+            ->setParameter('usedAs', ChatRoomConstant::ADMIN_STORE)
+
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
+            ->getResult();
+     }
 }

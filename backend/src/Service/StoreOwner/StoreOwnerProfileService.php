@@ -36,7 +36,6 @@ class StoreOwnerProfileService
 
     public function storeOwnerRegister(UserRegisterRequest $request): UserRegisterResponse
     {
-        //TODO Use roomId (uuid) new feature of symfony .
         $userRegister = $this->storeOwnerProfileManager->storeOwnerRegister($request);
 
         if ($userRegister === UserReturnResultConstant::USER_IS_FOUND_RESULT) {
@@ -62,6 +61,8 @@ class StoreOwnerProfileService
         {
             $item['images'] = $this->getImageParams($item['images'], $this->params.$item['images'], $this->params);
         }
+
+        $item['roomId'] = $item['roomId']->toBase32();
 
         return $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
     }
@@ -107,6 +108,8 @@ class StoreOwnerProfileService
 
         if($storeOwnerProfile) {
             $storeOwnerProfile['images'] = $this->getImageParams($storeOwnerProfile['images'], $this->params.$storeOwnerProfile['images'], $this->params);
+            
+            $storeOwnerProfile['roomId'] = $storeOwnerProfile['roomId']->toBase32();
         }
 
         $storeOwnerProfile['branches'] = $this->storeOwnerProfileManager->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);

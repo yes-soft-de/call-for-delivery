@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\ChatRoomEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -28,10 +29,13 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->select('profile.id', 'profile.storeOwnerName', 'profile.images', 'profile.status', 'profile.phone', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId', 'profile.commission',
                 'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount', 'profile.city', 'profile.storeCategoryId', 'profile.storeCategoryId')
+            ->addSelect('chatRoomEntity.roomId')
+           
+            ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = profile.storeOwnerId')
             
             ->andWhere('profile.storeOwnerId = :id')
             ->setParameter('id', $id)
-
+            
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -94,7 +98,10 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
                 'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
                 'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images')
-
+            ->addSelect('chatRoomEntity.roomId')
+           
+            ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = storeOwnerProfile.storeOwnerId')
+            
             ->andWhere('storeOwnerProfile.id = :storeOwnerProfileId')
             ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
 

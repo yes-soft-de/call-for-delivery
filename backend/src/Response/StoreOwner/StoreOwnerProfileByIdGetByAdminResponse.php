@@ -88,4 +88,9 @@ class StoreOwnerProfileByIdGetByAdminResponse
      * @var array|null $branches
      */
     public $branches;
+    
+    /**
+     * @var string|null $roomId
+     */
+    public $roomId;
 }

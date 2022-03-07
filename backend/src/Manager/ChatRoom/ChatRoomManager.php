@@ -8,7 +8,6 @@ use App\Repository\ChatRoomEntityRepository;
 use App\Request\ChatRoom\ChatRoomCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
-use App\Constant\ChatRoom\ChatRoomConstant;
 use Symfony\Component\Uid\Uuid;
 
 class ChatRoomManager
@@ -36,7 +35,6 @@ class ChatRoomManager
 
         $chatRoom->setRoomId($uuid);
         $chatRoom->setCreatedAt(new DateTime());
-        $chatRoom->setUsedAs(ChatRoomConstant::ADMIN_USER);
 
         $this->entityManager->persist($chatRoom);
         $this->entityManager->flush();
@@ -44,11 +42,12 @@ class ChatRoomManager
         return $chatRoom;
     }
 
-    public function createChatRoom(int $userId): ChatRoomEntity
+    public function createChatRoom(int $userId, int $usedAs): ChatRoomEntity
     { 
         $request = new ChatRoomCreateRequest();
      
         $request->setUserId($userId);
+        $request->setUsedAs($usedAs);
 
         return $this->create($request);
     }
@@ -56,5 +55,10 @@ class ChatRoomManager
     public function getChatRoom(int $userId): ?ChatRoomEntity
     { 
         return $this->chatRoomRepository->findOneBy(["userId" => $userId]);
+    }
+
+    public function getChatRoomsWithStores(): ?array
+    { 
+        return $this->chatRoomRepository->getChatRoomsWithStores();
     }
 }
