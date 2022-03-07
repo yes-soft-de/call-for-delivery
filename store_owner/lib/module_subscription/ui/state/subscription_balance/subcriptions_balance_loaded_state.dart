@@ -21,99 +21,98 @@ class SubscriptionBalanceLoadedState extends States {
   Widget getUI(BuildContext context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.mySubscription,
-          actions: [
-            CustomC4dAppBar.actionIcon(context, onTap: () {
-              var isDark = getIt<ThemePreferencesHelper>().isDarkMode();
-              showModalBottomSheet(
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
+      appBar: CustomC4dAppBar
+          .appBar(context, title: S.current.mySubscription, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          var isDark = getIt<ThemePreferencesHelper>().isDarkMode();
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: double.maxFinite,
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            shape: StadiumBorder()),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pushNamed(
-                                              SubscriptionsRoutes
-                                                  .INIT_SUBSCRIPTIONS_SCREEN,
-                                              arguments: S.current.renewSubscription);
-                                        },
-                                        child: Text(
-                                          S.current.renewNewPlan,
-                                          style: isDark
-                                              ? TextStyle(color: Colors.white70)
-                                              : null,
-                                        )),
-                                  ),
-                                  Divider(
-                                    indent: 16,
-                                    endIndent: 16,
-                                    color: Theme.of(context).backgroundColor,
-                                    thickness: 2.5,
-                                  ),
-                                  SizedBox(
-                                    width: double.maxFinite,
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            shape: StadiumBorder()),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          screenState.renewSubscription(balance.id);
-                                        },
-                                        child: Text(
-                                          S.current.renewOldPlan,
-                                          style: isDark
-                                              ? TextStyle(color: Colors.white70)
-                                              : null,
-                                        )),
-                                  ),
-                                ],
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: double.maxFinite,
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: StadiumBorder()),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pushNamed(
+                                          SubscriptionsRoutes
+                                              .INIT_SUBSCRIPTIONS_SCREEN,
+                                          arguments:
+                                              S.current.renewSubscription);
+                                    },
+                                    child: Text(
+                                      S.current.renewNewPlan,
+                                      style: isDark
+                                          ? TextStyle(color: Colors.white70)
+                                          : null,
+                                    )),
                               ),
-                            ),
+                              Divider(
+                                indent: 16,
+                                endIndent: 16,
+                                color: Theme.of(context).backgroundColor,
+                                thickness: 2.5,
+                              ),
+                              SizedBox(
+                                width: double.maxFinite,
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shape: StadiumBorder()),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.renewSubscription(balance.id);
+                                    },
+                                    child: Text(
+                                      S.current.renewOldPlan,
+                                      style: isDark
+                                          ? TextStyle(color: Colors.white70)
+                                          : null,
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: double.maxFinite,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    shape: StadiumBorder()),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    S.current.close,
-                                    style: Theme.of(context).textTheme.button,
-                                  ),
-                                )),
-                          ),
-                        )
-                      ],
-                    );
-                  });
-            }, icon: Icons.restart_alt_rounded)
-          ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: StadiumBorder()),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                S.current.close,
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                            )),
+                      ),
+                    )
+                  ],
+                );
+              });
+        }, icon: Icons.restart_alt_rounded)
+      ]),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(

@@ -40,17 +40,16 @@ class Data {
   num? orderCount;
   String? status;
   int? expired;
-  Data({
-    this.id,
-    this.name,
-    this.cost,
-    this.note,
-    this.carCount,
-    this.city,
-    this.orderCount,
-    this.status,
-    this.expired
-  });
+  Data(
+      {this.id,
+      this.name,
+      this.cost,
+      this.note,
+      this.carCount,
+      this.city,
+      this.orderCount,
+      this.status,
+      this.expired});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];

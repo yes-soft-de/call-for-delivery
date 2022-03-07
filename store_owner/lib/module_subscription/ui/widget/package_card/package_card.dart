@@ -287,7 +287,11 @@ class PackageCard extends StatelessWidget {
                   SizedBox(
                     width: 105,
                     child: Text(
-                      '${package.expired}' + ' ' +S.current.day + ' ' +S.current.validation,
+                      '${package.expired}' +
+                          ' ' +
+                          S.current.day +
+                          ' ' +
+                          S.current.validation,
                       style: TextStyle(
                         color: active
                             ? Theme.of(context).textTheme.button?.color

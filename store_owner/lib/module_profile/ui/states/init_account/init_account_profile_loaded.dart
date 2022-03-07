@@ -62,16 +62,16 @@ class InitAccountStateProfileLoaded extends States {
               return;
             }
             ProfileRequest profileRequest = ProfileRequest(
-                name: _nameController.text,
-                phone: _countryController.text + _phoneController.text,
-                city: _cityController.text,
-                image: image,
-                bankName: _bankNameController.text,
-                bankAccountNumber: _bankNumberController.text,
-                employeeSize: selectedSize,
-                closingTime: closingTime?.toUtc().toIso8601String(),
-                openingTime: openingTime?.toUtc().toIso8601String(),
-                );
+              name: _nameController.text,
+              phone: _countryController.text + _phoneController.text,
+              city: _cityController.text,
+              image: image,
+              bankName: _bankNameController.text,
+              bankAccountNumber: _bankNumberController.text,
+              employeeSize: selectedSize,
+              closingTime: closingTime?.toUtc().toIso8601String(),
+              openingTime: openingTime?.toUtc().toIso8601String(),
+            );
             screenState.initProfile(profileRequest);
           });
         } else if (imagePath == null) {

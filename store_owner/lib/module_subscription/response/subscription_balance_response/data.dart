@@ -14,19 +14,18 @@ class Data {
   int? packageOrderCount;
   int? expired;
 
-  Data({
-    this.id,
-    this.packageId,
-    this.packageName,
-    this.remainingOrders,
-    this.remainingCars,
-    this.status,
-    this.startDate,
-    this.endDate,
-    this.packageCarCount,
-    this.packageOrderCount,
-    this.expired
-  });
+  Data(
+      {this.id,
+      this.packageId,
+      this.packageName,
+      this.remainingOrders,
+      this.remainingCars,
+      this.status,
+      this.startDate,
+      this.endDate,
+      this.packageCarCount,
+      this.packageOrderCount,
+      this.expired});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
@@ -44,7 +43,6 @@ class Data {
         packageCarCount: json['packageCarCount'] as int?,
         packageOrderCount: json['packageOrderCount'] as int?,
         expired: json['expired'] as int?,
-
       );
 
   Map<String, dynamic> toJson() => {

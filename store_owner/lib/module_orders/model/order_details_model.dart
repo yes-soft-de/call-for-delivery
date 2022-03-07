@@ -47,8 +47,7 @@ class OrderDetailsModel extends DataModel {
       required this.canRemove,
       required this.showConfirm,
       required this.deliveryDate,
-      required this.image
-      });
+      required this.image});
 
   late OrderDetailsModel _orders;
 
@@ -71,7 +70,7 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-        image: element?.image?.image ,
+        image: element?.image?.image,
         canRemove:
             _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
         showConfirm: showConfirmingOrderState,

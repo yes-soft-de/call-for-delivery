@@ -39,16 +39,15 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
       getIt<GlobalStateManager>().update();
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.successRenew)
-            .show(context);
+              title: S.current.warnning, message: S.current.successRenew)
+          .show(context);
     } else {
       Navigator.of(context).pushNamedAndRemoveUntil(
           BranchesRoutes.INIT_BRANCHES, (route) => false);
-          CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.packageSubscriptionSuccess)
-            .show(context);
+      CustomFlushBarHelper.createSuccess(
+              title: S.current.warnning,
+              message: S.current.packageSubscriptionSuccess)
+          .show(context);
     }
   }
 

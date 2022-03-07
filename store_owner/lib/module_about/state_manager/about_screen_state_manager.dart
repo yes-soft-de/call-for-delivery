@@ -37,11 +37,8 @@ class AboutScreenStateManager {
         Fluttertoast.showToast(msg: S.current.homeDataEmpty);
       } else {
         value as PackageModel;
-        _stateSubject.add(AboutStatePageOwner(
-          screenState,
-          value.data,
-          currentPage: 3
-        ));
+        _stateSubject
+            .add(AboutStatePageOwner(screenState, value.data, currentPage: 3));
       }
     });
   }
