@@ -31,7 +31,7 @@ class ChatRoomCreateRequest
     /**
      * Get the value of usedAs
      */ 
-    public function getUsedAs()
+    public function getUsedAs(): ?int
     {
         return $this->usedAs;
     }
@@ -41,7 +41,7 @@ class ChatRoomCreateRequest
      *
      * @return  self
      */ 
-    public function setUsedAs($usedAs)
+    public function setUsedAs(int $usedAs)
     {
         $this->usedAs = $usedAs;
 
