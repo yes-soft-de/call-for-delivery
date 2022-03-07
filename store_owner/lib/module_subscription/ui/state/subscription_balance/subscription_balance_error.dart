@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ class SubscriptionErrorLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.mySubscription,
@@ -27,13 +30,15 @@ class SubscriptionErrorLoadedState extends States {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Theme.of(context).backgroundColor,
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(-0.2, 0)),
-                  ],
+                  boxShadow: isDark
+                      ? []
+                      : [
+                          BoxShadow(
+                              color: Theme.of(context).backgroundColor,
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(-0.2, 0)),
+                        ],
                   borderRadius: BorderRadius.circular(25),
                   color: Theme.of(context).backgroundColor,
                 ),
@@ -46,7 +51,9 @@ class SubscriptionErrorLoadedState extends States {
                           S.current.subscriptionStatus,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.secondary),
+                              color: isDark
+                                  ? null
+                                  : Theme.of(context).colorScheme.secondary),
                         ),
                       ),
                     ),
@@ -76,20 +83,25 @@ class SubscriptionErrorLoadedState extends States {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: 35,
-                              width: 35,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color:
-                                            Theme.of(context).colorScheme.error,
-                                        spreadRadius: 0.1,
-                                        blurRadius: 7,
-                                        offset: Offset(-0.1, 0))
-                                  ],
-                                  color: Theme.of(context).colorScheme.error),
-                            ),
+                                height: 35,
+                                width: 35,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error,
+                                          spreadRadius: 0.1,
+                                          blurRadius: 7,
+                                          offset: Offset(-0.1, 0))
+                                    ],
+                                    color: Theme.of(context).colorScheme.error),
+                                child: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      Theme.of(context).textTheme.button?.color,
+                                )),
                           ),
                           Text(S.current.inactive),
                           SizedBox(
@@ -110,20 +122,15 @@ class SubscriptionErrorLoadedState extends States {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).colorScheme.error,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).colorScheme.error,
-                          spreadRadius: 0.1,
-                          blurRadius: 7,
-                          offset: Offset(-0.1, 0))
-                    ]),
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).colorScheme.error,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                       leading: Icon(
                         Icons.info,
+                        color: Theme.of(context).textTheme.button?.color,
                       ),
                       title: Text(
                         error,
