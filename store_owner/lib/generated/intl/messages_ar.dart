@@ -64,6 +64,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areYouSureAboutDeleteSelectedNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
+        "areYouSureAboutDeleteThisNotification":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
@@ -397,7 +403,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
+        "notificationDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "notificationsDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "openChatRoom":
@@ -627,6 +637,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByEarlier":
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
+        "sortedByLatest":
+            MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "statusCodeBadRequest":

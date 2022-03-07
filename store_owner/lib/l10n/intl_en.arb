@@ -504,7 +504,16 @@
     "allCity": "All city",
     "validation": "Validation",
     "subscriptionDate": "Subscription date",
-    "subscribeWithPackage": "Subscription packages"
+    "subscribeWithPackage": "Subscription packages",
+    "notificationDeletedSuccess": "Notification deleted successfully",
+    "notificationsDeletedSuccess": "Notifications deleted successfully",
+    "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
+    "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
+    "sortedByLatest": "Sorted by latest"
+
+
+
+
 
 
 
