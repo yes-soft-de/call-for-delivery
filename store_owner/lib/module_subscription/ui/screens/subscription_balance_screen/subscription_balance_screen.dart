@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_subscription/state_manager/subscription_balance_state_manager.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,6 +20,7 @@ class SubscriptionBalanceScreen extends StatefulWidget {
 
 class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   late StreamSubscription _streamSubscription;
+  late StreamSubscription _globalStreamSubscription;
   late States currentState;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -26,6 +29,10 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  void renewSubscription(int id) {
+    widget._stateManager.subscribePackage(this, id);
   }
 
   @override
@@ -37,6 +44,10 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
       }
     });
     getBalance();
+    _globalStreamSubscription =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
+      getBalance();
+    });
     super.initState();
   }
 
@@ -55,6 +66,7 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   @override
   void dispose() {
     _streamSubscription.cancel();
+    _globalStreamSubscription.cancel();
     super.dispose();
   }
 }

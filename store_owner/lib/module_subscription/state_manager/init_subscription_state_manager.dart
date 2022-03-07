@@ -64,11 +64,7 @@ class InitSubscriptionStateManager {
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        screenState.moveToInitBranch();
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.packageSubscriptionSuccess)
-            .show(screenState.context);
+        screenState.moveNext();
       }
     });
   }

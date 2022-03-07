@@ -57,4 +57,23 @@ class SubscriptionBalanceStateManager {
       }
     });
   }
+
+  void subscribePackage(
+      SubscriptionBalanceScreenState screenState, int packageId) {
+    _stateSubject.add(LoadingState(screenState));
+    _initAccountService.subscribePackage(packageId).then((value) {
+      if (value.hasError) {
+        getBalance(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getBalance(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.successRenew)
+            .show(screenState.context);
+      }
+    });
+  }
 }
