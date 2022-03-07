@@ -37,7 +37,7 @@ class EditProfileStateManager {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getProfile(screenState);
-        }, title: S.current.profile));
+        }, title: S.current.profile,error: value.error));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getProfile(screenState);
