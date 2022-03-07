@@ -22,12 +22,16 @@ class InitSubscriptionsLoadedState extends States {
   String? _selectedCity;
   String? _selectedCategories;
   List<PackageModel> _packages = [];
-
+  String? appBarTitle;
   @override
   Widget getUI(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null && args is String) {
+      appBarTitle = args;
+    }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.storeAccountInit, canGoBack: false),
+          title: appBarTitle ?? S.current.storeAccountInit, canGoBack: false),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(

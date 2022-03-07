@@ -150,7 +150,7 @@ class SubscriptionErrorLoadedState extends States {
                       shape: StadiumBorder()),
                   onPressed: () {
                     Navigator.of(context).pushNamed(
-                        SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
+                        SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN,arguments: S.current.subscribeWithPackage);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

@@ -54,8 +54,7 @@ class SubscriptionBalanceLoadedState extends States {
                                           Navigator.of(context).pushNamed(
                                               SubscriptionsRoutes
                                                   .INIT_SUBSCRIPTIONS_SCREEN,
-                                              arguments: SubscriptionsRoutes
-                                                  .SUBSCRIPTIONS_SCREEN);
+                                              arguments: S.current.renewSubscription);
                                         },
                                         child: Text(
                                           S.current.renewNewPlan,
