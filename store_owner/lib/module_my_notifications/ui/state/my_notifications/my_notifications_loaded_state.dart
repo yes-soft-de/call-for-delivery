@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -23,7 +24,25 @@ class MyNotificationsLoadedState extends States {
         child: ScalingWidget(
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {},
+            onPressed: () {
+              List<String> notifications = [];
+              model.forEach((element) {
+                if (element.marked) {
+                  notifications.add(element.id.toString());
+                }
+              });
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CustomAlertDialog(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          screenState.deleteNotifications(notifications);
+                        },
+                        content: S.current
+                            .areYouSureAboutDeleteSelectedNotifications);
+                  });
+            },
             child: Icon(Icons.delete_rounded),
           ),
         ),
@@ -170,25 +189,25 @@ class MyNotificationsLoadedState extends States {
               dragDismissible: false,
               // All actions are defined in the children parameter.
               children: [
-                Flexible(
-                  child: Container(
-                    color: Theme.of(context).colorScheme.error,
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Theme.of(context).scaffoldBackgroundColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.delete_rounded,
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                SlidableAction(
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  label: S.current.delete,
+                  icon: Icons.delete,
+                  onPressed: (context) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CustomAlertDialog(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                screenState
+                                    .deleteNotification(element.id.toString());
+                              },
+                              content: S.current
+                                  .areYouSureAboutDeleteThisNotification);
+                        });
+                  },
+                )
               ],
             ),
             child: Row(

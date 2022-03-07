@@ -3,6 +3,9 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_my_notifications/notification_model.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -45,6 +48,49 @@ class MyNotificationsStateManager {
       });
     } else {
       screenState.goToLogin();
+    }
+  }
+
+  void deleteNotification(MyNotificationsScreenState screenState, String id) {
+    _stateSubject.add(LoadingState(screenState));
+    _myNotificationsService.deleteNotification(id).then((value) {
+      if (value.hasError) {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.notificationDeletedSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void deleteNotifications(
+      MyNotificationsScreenState screenState, List<String> notifications) {
+    _stateSubject.add(LoadingState(screenState));
+    for (var id in notifications) {
+      _myNotificationsService.deleteNotification(id).then((value) {
+        if (value.hasError) {
+          Fluttertoast.showToast(
+              msg: value.error ?? S.current.errorHappened,
+              backgroundColor: Theme.of(screenState.context).colorScheme.error,
+              textColor: Colors.white);
+          if (notifications.last == id) {
+            getNotifications(screenState);
+          }
+        } else if (notifications.last == id) {
+          getNotifications(screenState);
+          CustomFlushBarHelper.createSuccess(
+                  title: S.current.warnning,
+                  message: S.current.notificationsDeletedSuccess)
+              .show(screenState.context);
+        }
+      });
     }
   }
 }

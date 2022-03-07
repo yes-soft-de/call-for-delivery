@@ -9,6 +9,7 @@ class NotificationModel extends DataModel {
   String title = S.current.orderNumber;
   String date = '';
   bool marked = false;
+  late int id;
   List<NotificationModel> models = [];
 
   NotificationModel(
@@ -16,7 +17,8 @@ class NotificationModel extends DataModel {
       required this.title,
       required this.body,
       required this.date,
-      required this.marked});
+      required this.marked,
+      required this.id});
 
   NotificationModel.withData(MyNotificationResponse orders) {
     var data = orders.data;
@@ -36,7 +38,8 @@ class NotificationModel extends DataModel {
           title: element.title ?? '',
           orderNumber: element.message?.orderId?.toString() ?? '-1',
           body: element.message?.text ?? '',
-          date: notificationDate));
+          date: notificationDate,
+          id: element.id ?? -1));
     });
   }
 

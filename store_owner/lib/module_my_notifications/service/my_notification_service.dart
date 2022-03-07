@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/manager/my_notifications_manager.dart';
@@ -24,5 +25,18 @@ class MyNotificationsService {
     }
     if (_myNotificationResponse.data == null) return DataModel.empty();
     return NotificationModel.withData(_myNotificationResponse);
+  }
+
+  Future<DataModel> deleteNotification(String id) async {
+    ActionResponse? _myNotificationResponse =
+        await _myNotificationsManager.deleteNotification(id);
+    if (_myNotificationResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_myNotificationResponse.statusCode != '401') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          _myNotificationResponse.statusCode));
+    }
+    return DataModel.empty();
   }
 }
