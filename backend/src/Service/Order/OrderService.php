@@ -11,6 +11,7 @@ use App\Response\Order\OrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -22,14 +23,17 @@ class OrderService
     private SubscriptionService $subscriptionService;
     private NotificationLocalService $notificationLocalService;
     private string $params;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params,
+                                UploadFileHelperService $uploadFileHelperService)
     {
        $this->params = $params->get('upload_base_url') . '/';
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
        $this->subscriptionService = $subscriptionService;
        $this->notificationLocalService = $notificationLocalService;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     /**
@@ -81,7 +85,7 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
-        $order['images'] = $this->getImageParams($order['images'], $this->params.$order['images'], $this->params);
+        $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
