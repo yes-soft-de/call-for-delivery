@@ -10,12 +10,14 @@ class SinglePackageCard extends StatelessWidget {
   final String ordersCount;
   final String carsCount;
   final bool active;
+  final String expired;
   SinglePackageCard(
       {this.active = false,
       required this.packageInfo,
       required this.packageName,
       required this.carsCount,
-      required this.ordersCount});
+      required this.ordersCount,
+      required this.expired});
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +213,50 @@ class SinglePackageCard extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Theme.of(context).backgroundColor),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.date_range_rounded,
+                            color: active
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).disabledColor),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    SizedBox(
+                      width: 105,
+                      child: Text(
+                        '$expired' +
+                            ' ' +
+                            S.current.day +
+                            ' ' +
+                            S.current.validation,
+                        style: TextStyle(
+                          color: active
+                              ? Theme.of(context).textTheme.button?.color
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               SizedBox(
                 height: 16,
               )
