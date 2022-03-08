@@ -36,7 +36,7 @@ class StoreOwnerProfileManager
         $user = $this->userManager->getUserByUserId($request->getUserId());
 
         if (! $user) {
-            $request->setRoles(["ROLE_OWNER"]);
+            $request->setRoles(["ROLE_OWNER", "ROLE_USER"]);
 
             $userRegister = $this->userManager->createUser($request, ChatRoomConstant::ADMIN_STORE);
 
