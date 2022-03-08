@@ -20,7 +20,7 @@ class SubscriptionHistoryEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[ORM\Column(type: 'boolean', length: 100, nullable: true)]
     private $type;
 
     #[ORM\Column(type: 'datetime')]
@@ -58,12 +58,12 @@ class SubscriptionHistoryEntity
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): ?bool
     {
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType(?bool $type): self
     {
         $this->type = $type;
 

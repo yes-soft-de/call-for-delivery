@@ -18,6 +18,8 @@ class SubscriptionDetailsCreateRequest
 
     private $status;
 
+    private $hasExtra;
+
     /**
      * @param mixed $storeOwner
      */
@@ -150,6 +152,26 @@ class SubscriptionDetailsCreateRequest
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hasExtra
+     */ 
+    public function getHasExtra()
+    {
+        return $this->hasExtra;
+    }
+
+    /**
+     * Set the value of hasExtra
+     *
+     * @return  self
+     */ 
+    public function setHasExtra($hasExtra)
+    {
+        $this->hasExtra = $hasExtra;
 
         return $this;
     }

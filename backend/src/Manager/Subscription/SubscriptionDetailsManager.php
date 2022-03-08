@@ -10,6 +10,7 @@ use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionDetailsManager
 {
@@ -22,7 +23,7 @@ class SubscriptionDetailsManager
     {
     }
 
-    public function createSubscriptionDetails(SubscriptionEntity $subscription): SubscriptionDetailsEntity
+    public function createSubscriptionDetails(SubscriptionEntity $subscription, $hasExtra): SubscriptionDetailsEntity
     { 
         $request = new SubscriptionDetailsCreateRequest();
 
@@ -32,6 +33,7 @@ class SubscriptionDetailsManager
         $request->setRemainingCars($subscription->getPackage()->getCarCount());
         $request->setRemainingOrders($subscription->getPackage()->getOrderCount());
         $request->setStatus($subscription->getStatus());
+        $request->setHasExtra($hasExtra);
         //default value for extra  time is zero
         $request->setRemainingTime(0);
 
@@ -42,7 +44,7 @@ class SubscriptionDetailsManager
         }
        
         $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionDetailsCreateRequest::class, SubscriptionDetailsEntity::class, $request);
-       
+      
         $this->entityManager->persist($subscriptionDetailsEntity);
         $this->entityManager->flush();
  
@@ -98,5 +100,21 @@ class SubscriptionDetailsManager
     public function getSubscriptionCurrent($storeOwner): ?SubscriptionDetailsEntity
     {   
         return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
+    }
+    
+    public function updateHasExtra(SubscriptionEntity $subscribeEntity, bool $hasExtra): ?SubscriptionDetailsEntity
+    {     
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $subscribeEntity]);
+        
+        if(!$subscriptionDetailsEntity) {
+     
+            return $subscriptionDetailsEntity;
+        }
+
+        $subscriptionDetailsEntity->setHasExtra($hasExtra);
+
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
     }
 }

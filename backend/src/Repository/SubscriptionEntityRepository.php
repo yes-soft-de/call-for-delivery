@@ -6,6 +6,7 @@ namespace App\Repository;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
+use App\Entity\SubscriptionHistoryEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -58,7 +59,8 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
              'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
-             'subscriptionDetailsEntity.status')
+             'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
+            ->addSelect('subscriptionHistoryEntity.type')
 
             ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
 
@@ -66,6 +68,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
             ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+            ->leftJoin(SubscriptionHistoryEntity::class, 'subscriptionHistoryEntity', Join::WITH, 'subscription.id = subscriptionHistoryEntity.subscription')
 
             ->getQuery()
 

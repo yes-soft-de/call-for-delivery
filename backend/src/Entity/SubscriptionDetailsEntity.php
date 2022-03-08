@@ -32,6 +32,9 @@ class SubscriptionDetailsEntity
     #[ORM\OneToOne(targetEntity: SubscriptionEntity::class, cascade: ['persist', 'remove'])]
     private $lastSubscription;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $hasExtra;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class SubscriptionDetailsEntity
     public function setLastSubscription(?SubscriptionEntity $lastSubscription): self
     {
         $this->lastSubscription = $lastSubscription;
+
+        return $this;
+    }
+
+    public function getHasExtra(): ?bool
+    {
+        return $this->hasExtra;
+    }
+
+    public function setHasExtra(?bool $hasExtra): self
+    {
+        $this->hasExtra = $hasExtra;
 
         return $this;
     }
