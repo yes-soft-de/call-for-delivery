@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Response\Main;
+namespace App\Response\Account;
 
 class CompleteAccountStatusGetResponse
 {

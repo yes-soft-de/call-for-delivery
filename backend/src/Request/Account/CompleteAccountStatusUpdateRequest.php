@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\Main;
+namespace App\Request\Account;
 
 class CompleteAccountStatusUpdateRequest
 {
