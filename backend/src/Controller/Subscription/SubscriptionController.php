@@ -252,4 +252,90 @@ class SubscriptionController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * store: Create Subscription For One Day.
+     * @Route("extrasubscriptionforday", name="CreateSubscriptionForOneDay", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *            @OA\Property(type="object", property="startDate"),
+     *            @OA\Property(type="object", property="endDate"),
+     *            @OA\Property(type="string", property="status"),
+     *            @OA\Property(type="string", property="note"),
+     *      )
+     *   )
+     * )
+     *
+     * or
+     * 
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns new subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9303 or 9304 or 9305"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data", 
+     *            @OA\Property(type="string", property="state"), 
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function subscriptionForOneDay(): JsonResponse
+    {
+        $result = $this->subscriptionService->subscriptionForOneDay($this->getUserId());
+     
+        if (isset($result->state)) {
+            if($result->state === SubscriptionConstant::NOT_POSSIBLE) {
+          
+                return $this->response($result, self::NOT_POSSIBLE);
+            }
+    
+            if($result->state === SubscriptionConstant::YOU_HAVE_SUBSCRIBED) {
+              
+                return $this->response($result, self::YOU_HAVE_SUBSCRIBED);
+            }
+    
+            if($result->state === SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
+              
+                return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
+            }
+        }
+        
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * Delete these lines when completing the payment entity
+     * This router is used to modify some fields assuming that the payment process was completed successfully
+     * @Route("paymentsuccess/{subscriptionExtraId}", name="paymentSuccess", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     */
+    public function paymentSuccess($subscriptionExtraId): JsonResponse
+    {
+        $result = $this->subscriptionService->updateHasExtraAndType($subscriptionExtraId);
+        
+        return $this->response($result, self::UPDATE);
+    }
 }

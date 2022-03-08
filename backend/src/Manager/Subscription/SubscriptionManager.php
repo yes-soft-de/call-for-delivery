@@ -63,10 +63,10 @@ class SubscriptionManager
 
        if($subscriptionEntity->getIsFuture() === false) {
 
-          $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity);
+          $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity, $request->getHasExtra());
        }
       
-       $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity);            
+       $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity, $request->getType());            
 
        return $subscriptionEntity;
     }
@@ -125,7 +125,7 @@ class SubscriptionManager
         return SubscriptionConstant::ERROR;
     }
 
-    public function updateIsFutureAndSubscriptionCurrent(int $id, bool $isFuture): string
+    public function updateIsFutureAndSubscriptionCurrent(int $id, bool $isFuture, bool $hasExtra): string
     {
         $subscribeEntity = $this->subscribeRepository->find($id);
         
@@ -137,7 +137,7 @@ class SubscriptionManager
 
             $this->entityManager->flush();
           
-            $this->subscriptionDetailsManager->createSubscriptionDetails($subscribeEntity);           
+            $this->subscriptionDetailsManager->createSubscriptionDetails($subscribeEntity, $hasExtra);           
             
             return SubscriptionConstant::UPDATE_STATE;
         }
@@ -170,5 +170,25 @@ class SubscriptionManager
     public function countOrders(int $subscriptionId): ?array
     {
        return $this->subscribeRepository->countOrders($subscriptionId);
+    }
+
+    public function updateHasExtraAndType(int $subscriptionExtraId, bool $hasExtra, bool $type): ?string
+    {
+        $subscribeEntity = $this->subscribeRepository->find($subscriptionExtraId);
+
+        if (!$subscribeEntity) {
+
+            return $subscribeEntity;
+        }
+      
+        $subscriptionHistory = $this->subscriptionHistoryManager->updateType($subscribeEntity, $type);
+        if($subscriptionHistory === "this subscription not extra") {
+
+            return "this subscription not extra";
+        }
+
+        $this->subscriptionDetailsManager->updateHasExtra($subscribeEntity, $hasExtra);
+
+        return SubscriptionConstant::UPDATE_STATE;
     }
 }

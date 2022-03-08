@@ -10,6 +10,7 @@ use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
+use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionService
@@ -30,6 +31,8 @@ class SubscriptionService
         $isFuture = $this->getIsFutureState($request->getStoreOwner());
 
         $request->setIsFuture($isFuture);
+        $request->setHasExtra(SubscriptionConstant::IS_HAS_EXTRA_FALSE);
+        $request->setType(SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE);
 
         $subscription = $this->subscriptionManager->createSubscription($request);
 
@@ -58,9 +61,16 @@ class SubscriptionService
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
            $countOrders = $this->getCountOngoingOrders($subscription['id']);
-
+          
+           $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
+           
            $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
 
+           if($subscription['hasExtra'] === true) {
+
+            $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+           }
+           
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
        }
 
@@ -105,6 +115,7 @@ class SubscriptionService
     public function checkValidityOfSubscription(int $storeOwnerId): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
+      
         //check and update RemainingTime
         $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
         
@@ -178,25 +189,31 @@ class SubscriptionService
     public function checkSubscriptionExpired(null|array|SubscriptionEntity $subscription): string
     {       
         if($subscription) {
-
             $dateNow = new \DateTime('now');
+            
+            $endDate = $subscription['endDate'];
+            
+            if($subscription['hasExtra'] === SubscriptionConstant::IS_HAS_EXTRA_TRUE) {
+
+                $endDate =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+            }
+            
             //Is the subscription expired?
-            if($subscription['endDate'] < $dateNow ) {
+            if($endDate < $dateNow ) {
                 //Is there extra time?
-                if($subscription['remainingTime'] > 0) {
+                // if($subscription['remainingTime'] > 0) {
 
-                  $subscription['endDate'] =  new \DateTime($subscription['endDate']->format('Y-m-d h:i:s') . $subscription['remainingTime'].'day');
+                //   $subscription['endDate'] =  new \DateTime($subscription['endDate']->format('Y-m-d h:i:s') . $subscription['remainingTime'].'day');
                   //update end date and remainingTime and note
-                  $this->subscriptionManager->updateEndDate($subscription['id'], $subscription['endDate'], SubscriptionConstant::SUBSCRIPTION_EXTRA_TIME);
+                //   $this->subscriptionManager->updateEndDate($subscription['id'], $subscription['endDate'], SubscriptionConstant::SUBSCRIPTION_EXTRA_TIME);
 
-                  return SubscriptionConstant::SUBSCRIPTION_OK;                
-                }
+                //   return SubscriptionConstant::SUBSCRIPTION_OK;                
+                // }
 
                 return SubscriptionConstant::DATE_FINISHED;
             }
             
             return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
-
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -234,7 +251,7 @@ class SubscriptionService
   
         if($subscription) {
              
-           $this->subscriptionManager->updateIsFutureAndSubscriptionCurrent($subscription['id'], 0);
+           $this->subscriptionManager->updateIsFutureAndSubscriptionCurrent($subscription['id'], 0, SubscriptionConstant::IS_HAS_EXTRA_FALSE);
           
            return SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED;
         }
@@ -266,5 +283,83 @@ class SubscriptionService
       $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
 
       return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
+    }
+    
+    public function subscriptionForOneDay(int $storeOwnerId): SubscriptionExtendResponse|SubscriptionResponse
+    {
+        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
+        if($subscriptionCurrent) {
+
+            if($subscriptionCurrent['type'] === false) {
+
+                if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
+                    
+                    return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+                }
+
+                $subscription['state'] = SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
+
+                return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription);
+            }
+
+            $subscription['state'] = SubscriptionConstant::NOT_POSSIBLE;
+
+            return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription);
+        }
+
+        $subscription['state'] = SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+           
+        return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription); 
+    }
+
+    public function createSubscriptionForOneDay(array $subscriptionCurrent, int $storeOwnerId): ?SubscriptionResponse 
+    {
+        $request = new SubscriptionCreateRequest();
+
+        $request->setStoreOwner($storeOwnerId);
+        $request->setPackage($subscriptionCurrent['packageId']);
+        $request->setIsFuture(SubscriptionConstant::IS_FUTURE_FALSE);
+        $request->setHasExtra(SubscriptionConstant::IS_HAS_EXTRA_TRUE);
+        $request->setType(SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE);
+
+        $subscription = $this->subscriptionManager->createSubscription($request);
+                
+        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+    }
+    
+    //To be used with the extended subscription, to become a normal subscription.
+    //When the payment is successful, call this function to update the extra subscription to the normal subscription
+    public function updateHasExtraAndType(int $subscriptionExtraId): ?string
+    {
+        $hasExtra = SubscriptionConstant::IS_HAS_EXTRA_FALSE;
+        $type = SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE;
+
+        $result = $this->subscriptionManager->updateHasExtraAndType($subscriptionExtraId, $hasExtra, $type);
+        if($result === SubscriptionConstant::SUBSCRIPTION_NOT_EXTRA) {
+        
+            return SubscriptionConstant::SUBSCRIPTION_NOT_EXTRA;
+        }
+       
+        return  $result;
+    }
+    
+    public function canSubscriptionExtra(string $status, bool $type): bool|null
+    {
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) { 
+         
+        return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE; 
+       }  
+
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE) {
+
+        if($status === SubscriptionConstant::ORDERS_FINISHED || $status === SubscriptionConstant::DATE_FINISHED) {
+
+           return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_TRUE;
+        }
+
+        return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE;
+      }
+      
+      return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE;
     }
 }

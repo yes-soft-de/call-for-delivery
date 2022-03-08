@@ -18,6 +18,10 @@ class SubscriptionCreateRequest
 
     private $note;
 
+    private $hasExtra;
+
+    private $type;
+
     /**
      * @param mixed $storeOwner
      */
@@ -81,6 +85,46 @@ class SubscriptionCreateRequest
     public function setPackage($package)
     {
         $this->package = $package;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hasExtra
+     */ 
+    public function getHasExtra()
+    {
+        return $this->hasExtra;
+    }
+
+    /**
+     * Set the value of hasExtra
+     *
+     * @return  self
+     */ 
+    public function setHasExtra($hasExtra)
+    {
+        $this->hasExtra = $hasExtra;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of type
+     */ 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @return  self
+     */ 
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

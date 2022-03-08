@@ -34,11 +34,29 @@ final class SubscriptionConstant
 
     const SUBSCRIPTION_EXTRA_TIME = "تم تمديد الباقة";
 
-    const IS_FUTURE_TRUE= true;
+    const IS_FUTURE_TRUE = true;
 
-    const IS_FUTURE_FALSE= false;
+    const IS_FUTURE_FALSE = false;
     
-    const CAN_CREATE_ORDER= true;
+    const CAN_CREATE_ORDER = true;
 
-    const CAN_NOT_CREATE_ORDER= false;
+    const CAN_NOT_CREATE_ORDER = false;
+   
+    const IS_HAS_EXTRA_TRUE = true;
+   
+    const IS_HAS_EXTRA_FALSE = false;
+    
+    const POSSIBLE_TO_EXTRA_TRUE = true;
+
+    const POSSIBLE_TO_EXTRA_FALSE = false;
+
+    const NOT_POSSIBLE = "not possible to extra the subscription";
+
+    const SUBSCRIPTION_NOT_FOUND = "subscription not found";
+
+    const SUBSCRIPTION_NOT_EXTRA = "this subscription not extra";
+
+    const CAN_SUBSCRIPTION_EXTRA_TRUE = true;
+    
+    const CAN_SUBSCRIPTION_EXTRA_FALSE = false;
 }
