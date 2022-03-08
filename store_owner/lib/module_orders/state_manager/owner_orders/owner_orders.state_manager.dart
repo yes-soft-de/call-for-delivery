@@ -104,11 +104,10 @@ class OwnerOrdersStateManager {
 
   void watcher(OwnerOrdersScreenState screenState) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      // getOrdersFilters(
-      //     screenState,
-      //     FilterOrderRequest(state: screenState.orderFilter ?? 'ongoing'),
-      //     false);
-      getOrders(screenState,false);
+      getOrdersFilters(
+          screenState,
+          FilterOrderRequest(state: screenState.orderFilter ?? 'pending'),
+          false);
     });
   }
 }

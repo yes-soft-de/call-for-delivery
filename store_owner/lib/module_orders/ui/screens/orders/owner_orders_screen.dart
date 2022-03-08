@@ -106,7 +106,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   }
 
   String? orderFilter;
-  int currentIndex = 1;
+  int currentIndex = 0;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {}
 
@@ -163,15 +163,15 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             cursorRadius: BorderRadius.circular(25),
             animationDuration: Duration(milliseconds: 350),
             backgroundColor: Theme.of(context).backgroundColor,
-            currentIndex: 1,
+            currentIndex: currentIndex,
             borderRadius: BorderRadius.circular(25),
             floating: true,
             height: 40,
             cursorColor: Theme.of(context).colorScheme.primary,
             items: [
-              FilterItem(label: S.current.completedOrders),
-              FilterItem(label: S.current.onGoingOrder),
               FilterItem(label: S.current.pendingOrders),
+              FilterItem(label: S.current.onGoingOrder),
+              FilterItem(label: S.current.completedOrders),
             ],
             onItemSelected: (index) {
               if (index == 0) {
