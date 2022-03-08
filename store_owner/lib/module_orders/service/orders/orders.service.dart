@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
@@ -24,6 +25,17 @@ class OrdersService {
     OrdersResponse? response = await _ordersManager.getMyOrders();
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
+  Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
+    OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

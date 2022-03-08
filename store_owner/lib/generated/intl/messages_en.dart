@@ -489,6 +489,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
+        "pendingOrders": MessageLookupByLibrary.simpleMessage("Pending order"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phoneIsRequired":
             MessageLookupByLibrary.simpleMessage("Phone is required"),

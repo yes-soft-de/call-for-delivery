@@ -12,12 +12,14 @@ class EmptyState extends States {
   final bool hasAppbar;
   final VoidCallback? onPressed;
   final String? buttonLabel;
+  final double? size;
   EmptyState(this.screenState,
       {required this.emptyMessage,
       required this.title,
       this.hasAppbar = true,
       required this.onPressed,
-      this.buttonLabel})
+      this.buttonLabel,
+      this.size})
       : super(screenState);
 
   @override
@@ -43,7 +45,7 @@ class EmptyState extends States {
             ),
             SvgPicture.asset(
               ImageAsset.EMPTY_SVG,
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: size ?? MediaQuery.of(context).size.height * 0.5,
             ),
             Visibility(
               visible: onPressed != null,

@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
@@ -62,6 +63,32 @@ class OwnerOrdersStateManager {
     });
   }
 
+  void getOrdersFilters(
+      OwnerOrdersScreenState screenState, FilterOrderRequest request,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
+    _ordersService.getMyOrdersFilter(request).then((value) {
+      if (value.hasError) {
+        _stateSubject.add(ErrorState(screenState, onPressed: () {
+          getOrders(screenState);
+        }, title: '', error: value.error, hasAppbar: false, size: 200));
+      } else if (value.isEmpty) {
+        _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+          getOrders(screenState);
+        }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
+      } else {
+        value as OrderModel;
+        _stateSubject
+            .add(OrdersListStateOrdersLoaded(screenState, orders: value.data));
+        if (loading) {
+          watcher(screenState);
+        }
+      }
+    });
+  }
+
   Future<void> initDrawerData() async {
     var profile = await _profileService.getProfile();
     if (profile.hasError) {
@@ -77,7 +104,11 @@ class OwnerOrdersStateManager {
 
   void watcher(OwnerOrdersScreenState screenState) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      getOrders(screenState, false);
+      // getOrdersFilters(
+      //     screenState,
+      //     FilterOrderRequest(state: screenState.orderFilter ?? 'ongoing'),
+      //     false);
+      getOrders(screenState,false);
     });
   }
 }

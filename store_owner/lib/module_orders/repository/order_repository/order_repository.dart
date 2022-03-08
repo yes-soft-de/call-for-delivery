@@ -2,6 +2,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -46,6 +47,18 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
       Urls.OWNER_ORDERS_API,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) async {
+    await _authService.refreshToken();
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_OWNER_ORDERS_API,
+      request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
