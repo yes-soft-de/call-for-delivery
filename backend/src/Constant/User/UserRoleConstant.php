@@ -8,6 +8,8 @@ final class UserRoleConstant
 
     const ROLE_ADMIN = "ROLE_ADMIN";
 
+    const ROLE_USER = ["ROLE_OWNER", "ROLE_CAPTAIN", "ROLE_SUPPLIER"];
+
     const STORE_OWNER_USER_TYPE = "storeOwnerUserType";
 
     const CAPTAIN_USER_TYPE = "captainUserType";
