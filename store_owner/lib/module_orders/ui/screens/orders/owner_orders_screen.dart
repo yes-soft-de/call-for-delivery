@@ -47,7 +47,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
-        this, FilterOrderRequest(state: orderFilter ?? 'ongoing'), loading);
+        this, FilterOrderRequest(state: orderFilter ?? 'pending'), loading);
   }
 
   void goToSubscription() {}

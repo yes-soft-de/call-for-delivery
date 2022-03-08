@@ -41,6 +41,8 @@ class NewOrderStateBranchesLoaded extends States {
 
   @override
   Widget getUI(context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
+
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
         child: SingleChildScrollView(
@@ -152,9 +154,7 @@ class NewOrderStateBranchesLoaded extends States {
                     onTap: () {},
                     controller: screenState.toController,
                     sufIcon: IconButton(
-                      focusNode: FocusNode(
-                        skipTraversal: true
-                      ),
+                      focusNode: FocusNode(skipTraversal: true),
                       focusColor: Colors.transparent,
                       splashRadius: 18,
                       color: Theme.of(context).colorScheme.primary,
@@ -342,6 +342,13 @@ class NewOrderStateBranchesLoaded extends States {
                       onTap: () {
                         showTimePicker(
                           context: context,
+                          builder: (context, widget) {
+                            if (isDark == false) return widget ?? SizedBox();
+                            return Theme(
+                                data: ThemeData.dark()
+                                    .copyWith(primaryColor: Colors.indigo),
+                                child: widget ?? SizedBox());
+                          },
                           initialTime: TimeOfDay.now(),
                         ).then((value) {
                           if (value == null) {

@@ -8,6 +8,7 @@ import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
 import 'package:c4d/module_profile/ui/widget/init_field/init_field.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
@@ -58,6 +59,7 @@ class UpdateProfileStateLoaded extends States {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   @override
   Widget getUI(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return WillPopScope(
       onWillPop: () async {
         screenState.getProfile();
@@ -247,6 +249,13 @@ class UpdateProfileStateLoaded extends States {
                                 onTap: () {
                                   showTimePicker(
                                     context: context,
+                                    builder: (context, widget) {
+                                      if (isDark == false)
+                                        return widget ?? SizedBox();
+                                      return Theme(
+                                          data: ThemeData.dark(),
+                                          child: widget ?? SizedBox());
+                                    },
                                     initialTime: TimeOfDay.now(),
                                   ).then((value) {
                                     if (value == null) {
@@ -317,6 +326,14 @@ class UpdateProfileStateLoaded extends States {
                                   onTap: () {
                                     showTimePicker(
                                       context: context,
+                                      builder: (context, widget) {
+                                        if (isDark == false)
+                                          return widget ?? SizedBox();
+                                        return Theme(
+                                            data: ThemeData.dark().copyWith(
+                                                primaryColor: Colors.indigo),
+                                            child: widget ?? SizedBox());
+                                      },
                                       initialTime: TimeOfDay.now(),
                                     ).then((value) {
                                       if (value == null) {
