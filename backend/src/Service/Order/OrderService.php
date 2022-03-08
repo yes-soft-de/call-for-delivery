@@ -5,6 +5,7 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
+use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
@@ -97,5 +98,18 @@ class OrderService
         $item['baseURL'] = $baseURL;
 
         return $item;
+    }
+
+    public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterStoreOrders($request, $userId);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
+        }
+
+        return $response;
     }
 }

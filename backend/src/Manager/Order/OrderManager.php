@@ -7,6 +7,7 @@ use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Repository\OrderEntityRepository;
+use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
@@ -73,5 +74,12 @@ class OrderManager
     public function getSpecificOrderForStore(int $id): ?array
     {      
        return  $this->orderRepository->getSpecificOrderForStore($id);     
+    }
+
+    public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
+    {
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
+
+        return $this->orderRepository->filterStoreOrders($request, $storeOwner->getId());
     }
 }
