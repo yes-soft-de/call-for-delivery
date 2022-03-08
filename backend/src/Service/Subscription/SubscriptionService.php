@@ -287,8 +287,9 @@ class SubscriptionService
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
         if($subscriptionCurrent) {
-             // equals null becaus not to get an error for previous subscriptions
-            if($subscriptionCurrent['type'] === false || $subscriptionCurrent['type'] === null) {
+
+            if($subscriptionCurrent['type'] === false) {
+                
                 if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
                     
                     return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
