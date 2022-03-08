@@ -3,9 +3,6 @@ security:
         ROLE_SUPER_ADMIN:
             class: App\Constant\User\UserRoleConstant
             property: ROLE_ADMIN
-        ROLE_USER:
-            class: App\Constant\User\UserRoleConstant
-            property: ROLE_USER
 
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
