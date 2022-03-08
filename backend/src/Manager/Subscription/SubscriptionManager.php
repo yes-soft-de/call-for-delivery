@@ -191,4 +191,9 @@ class SubscriptionManager
 
         return SubscriptionConstant::UPDATE_STATE;
     }
+
+    public function isPackageReadyForSubscription($packageId): ?array {
+       
+        return $this->packageManager->getPackageActiveById($packageId);
+    }
 }

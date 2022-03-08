@@ -95,6 +95,10 @@ class SubscriptionController extends BaseController
         }
 
         $result = $this->subscriptionService->createSubscription($request);
+        if(isset($result->packageState)){
+
+            return $this->response($result, self::PACKAGE_NOT_EXIST);
+        }
 
         return $this->response($result, self::CREATE);
     }
@@ -320,6 +324,11 @@ class SubscriptionController extends BaseController
               
                 return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
             }
+        }
+        
+        if(isset($result->packageState)){
+
+            return $this->response($result, self::PACKAGE_NOT_EXIST);
         }
         
         return $this->response($result, self::CREATE);
