@@ -18,12 +18,17 @@ class UploadFileHelperService
         return $this->params;
     }
 
-    public function getImageParams($imageURL): array
+    public function getImageParams($imageURL): ?array
     {
-        $item['imageURL'] = $imageURL;
-        $item['image'] = $this->params . $imageURL;
-        $item['baseURL'] = $this->params;
+        if(! $imageURL) {
+            return $imageURL;
 
-        return $item;
+        } else {
+            $item['imageURL'] = $imageURL;
+            $item['image'] = $this->params . $imageURL;
+            $item['baseURL'] = $this->params;
+
+            return $item;
+        }
     }
 }

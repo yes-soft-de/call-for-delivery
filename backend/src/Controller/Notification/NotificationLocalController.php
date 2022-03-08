@@ -57,6 +57,7 @@ class NotificationLocalController extends BaseController
      *                      @OA\Property(type="string", property="text"),
      *                      @OA\Property(type="integer", property="orderId"),
      *                  ),
+     *                  @OA\Property(type="object", property="createdAt")
      *              ),
      *          )
      *      )

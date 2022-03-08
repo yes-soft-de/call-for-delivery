@@ -22,7 +22,7 @@ class NotificationLocalEntityRepository extends ServiceEntityRepository
     public function getLocalNotifications($userId): ?array
     {
         return $this->createQueryBuilder('notificationLocal')
-            ->select('notificationLocal.id', 'notificationLocal.title', 'notificationLocal.message')
+            ->select('notificationLocal.id', 'notificationLocal.title', 'notificationLocal.message', 'notificationLocal.createdAt')
 
             ->where('notificationLocal.userId = :userId')
 
