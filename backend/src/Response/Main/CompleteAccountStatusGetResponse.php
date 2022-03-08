@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\StoreOwner;
+namespace App\Response\Main;
 
-class StoreOwnerCompleteAccountStatusGetResponse
+class CompleteAccountStatusGetResponse
 {
     /**
      * @var string|null

@@ -10,7 +10,6 @@ use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
-use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusGetResponse;
 use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusUpdateResponse;
 use App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
@@ -69,11 +68,9 @@ class StoreOwnerProfileService
         return $this->autoMapping->map('array', StoreOwnerProfileResponse::class, $item);
     }
 
-    public function getCompleteAccountStatusByStoreOwnerId(string $storeOwnerId): StoreOwnerCompleteAccountStatusGetResponse
+    public function getCompleteAccountStatusByStoreOwnerId(string $storeOwnerId): ?array
     {
-        $completeAccountStatusResult = $this->storeOwnerProfileManager->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
-
-        return $this->autoMapping->map('array', StoreOwnerCompleteAccountStatusGetResponse::class, $completeAccountStatusResult);
+        return $this->storeOwnerProfileManager->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
     }
 
     public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerCompleteAccountStatusUpdateResponse|string

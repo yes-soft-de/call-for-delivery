@@ -33,4 +33,6 @@ final class StoreProfileConstant
     const STORE_OWNER_PROFILE_ACTIVE_OR_NOT_STATUS = "all";
 
     const STORE_OWNER_PROFILE_NOT_EXISTS = "store owner profile not exists!";
+
+    const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
 }

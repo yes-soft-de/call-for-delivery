@@ -2,20 +2,28 @@
 
 namespace App\Service\Main;
 
+use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Manager\Main\MainManager;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Response\Main\CompleteAccountStatusGetResponse;
 use App\Response\User\UserRegisterResponse;
+use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\User\UserService;
 
 class MainService
 {
     private UserService $userService;
     private MainManager $mainManager;
+    private AutoMapping $autoMapping;
+    private StoreOwnerProfileService $storeOwnerProfileService;
 
-    public function __construct(UserService $userService, MainManager $mainManager)
+    public function __construct(AutoMapping $autoMapping, UserService $userService, MainManager $mainManager, StoreOwnerProfileService $storeOwnerProfileService)
     {
+        $this->autoMapping = $autoMapping;
         $this->userService = $userService;
+        $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->mainManager = $mainManager;
     }
 
@@ -47,5 +55,16 @@ class MainService
     public function deletePackagesAndSubscriptions(): \Exception|string
     {
         return $this->mainManager->deletePackagesAndSubscriptions();
+    }
+
+    public function getCompleteAccountStatusByUserId(string $userId, string $userType): ?CompleteAccountStatusGetResponse
+    {
+        if($userType === UserRoleConstant::STORE_OWNER_USER_TYPE) {
+            $completeAccountStatus = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($userId);
+
+            return $this->autoMapping->map('array', CompleteAccountStatusGetResponse::class, $completeAccountStatus);
+        }
+
+        // sections for captain and supplier will be added lately when both entities will be set
     }
 }

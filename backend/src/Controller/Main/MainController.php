@@ -4,7 +4,9 @@ namespace App\Controller\Main;
 
 use App\AutoMapping;
 use App\Constant\Main\MainDeleteConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
 use App\Request\User\UserFilterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
@@ -216,5 +218,76 @@ class MainController extends BaseController
         }
 
         return $this->json($response);
+    }
+
+    /**
+     * store, captain, and supplies: Get complete account status of the user.
+     * @Route("profilecompleteaccountstatus", name="getCompleteAccountStatusOfUser", methods={"GET"})
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the completeAccountStatus of the user",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns the completeAccountStatus of the user",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9158 | 9159 | 9160 | 9161 | 9004"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCompleteAccountStatusByUserId(): JsonResponse
+    {
+        if ($this->isGranted('ROLE_OWNER')) {
+            $response = $this->mainService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::STORE_OWNER_USER_TYPE);
+
+            if($response->completeAccountStatus) {
+                if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                    return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
+
+                } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+                    return $this->response($response, self::STORE_OWNER_PROFILE_COMPLETED);
+
+                } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+                    return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
+
+                } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                    return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
+
+                }
+            } elseif ($response->completeAccountStatus === null) {
+                $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+                return $this->response($response, self::FETCH);
+            }
+
+        } else {
+            return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+        }
     }
 }
