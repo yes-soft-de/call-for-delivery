@@ -356,18 +356,20 @@ class SubscriptionService
        
         return  $result;
     }
-    
-    public function canSubscriptionExtra(string $status, bool $type): bool|null
+
+    /**
+     * @param string $status
+     * @param bool|null $type
+     * @return bool|null
+     */
+    public function canSubscriptionExtra(string $status, $type): bool|null
     {
-      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) { 
-         
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) {
         return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE; 
-       }  
+      }
 
       if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE) {
-
         if($status === SubscriptionConstant::ORDERS_FINISHED || $status === SubscriptionConstant::DATE_FINISHED) {
-
            return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_TRUE;
         }
 
