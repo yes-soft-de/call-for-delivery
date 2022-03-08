@@ -89,14 +89,14 @@ class ProfileStateInit extends States {
                                 iconData: Icons.credit_card_rounded),
                             CustomListTile(
                               title: S.current.openingTime,
-                              subTitle: DateFormat.jm().format(
-                                  profileModel.openingTime),
+                              subTitle: DateFormat.jm()
+                                  .format(profileModel.openingTime),
                               iconData: Icons.store_mall_directory_rounded,
                             ),
                             CustomListTile(
                               title: S.current.closingTime,
-                              subTitle: DateFormat.jm().format(
-                                  profileModel.closingTime),
+                              subTitle: DateFormat.jm()
+                                  .format(profileModel.closingTime),
                               iconData: Icons.punch_clock_rounded,
                             ),
                             CustomListTile(

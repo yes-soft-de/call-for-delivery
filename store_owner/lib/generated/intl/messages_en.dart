@@ -66,6 +66,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areYouSureAboutDeleteSelectedNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting selected notifications"),
+        "areYouSureAboutDeleteThisNotification":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting this notification"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "at": MessageLookupByLibrary.simpleMessage("At"),
@@ -402,7 +408,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("Notes"),
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
+        "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notification deleted successfully"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notifications deleted successfully"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
@@ -632,6 +642,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sold": MessageLookupByLibrary.simpleMessage("Sold"),
         "sortByEarlier": MessageLookupByLibrary.simpleMessage("By Earlier"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
+        "sortedByLatest":
+            MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(

@@ -6,7 +6,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_my_notifications/state_manager/my_notifications_state_manager.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class MyNotificationsScreen extends StatefulWidget {
@@ -28,6 +27,13 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
 
   Future<void> getNotifications() async {
     widget._stateManager.getNotifications(this);
+  }
+
+  void deleteNotification(String id) {
+    widget._stateManager.deleteNotification(this, id);
+  }
+  void deleteNotifications(List<String> notification) {
+    widget._stateManager.deleteNotifications(this, notification);
   }
 
   void goToLogin() {

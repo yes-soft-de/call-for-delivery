@@ -1,3 +1,4 @@
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_my_notifications/repository/my_notifications_repository.dart';
 import 'package:c4d/module_my_notifications/response/my_notification_response.dart';
@@ -10,4 +11,6 @@ class MyNotificationsManager {
 
   Future<MyNotificationResponse?> getNotification() =>
       _myNotificationsRepository.getMyNotification();
+      Future<ActionResponse?> deleteNotification(String id) =>
+      _myNotificationsRepository.deleteNotification(id);
 }

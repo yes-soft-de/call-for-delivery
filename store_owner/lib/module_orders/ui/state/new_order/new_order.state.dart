@@ -152,6 +152,10 @@ class NewOrderStateBranchesLoaded extends States {
                     onTap: () {},
                     controller: screenState.toController,
                     sufIcon: IconButton(
+                      focusNode: FocusNode(
+                        skipTraversal: true
+                      ),
+                      focusColor: Colors.transparent,
                       splashRadius: 18,
                       color: Theme.of(context).colorScheme.primary,
                       icon: Icon(Icons.paste_rounded),

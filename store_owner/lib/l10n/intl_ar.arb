@@ -503,7 +503,14 @@
     "allCity": "جميع المدن",
     "validation": "صلاحية",
     "subscriptionDate": "تاريخ الاشتراك",
-    "subscribeWithPackage": "الاشتراك بباقة"
+    "subscribeWithPackage": "الاشتراك بباقة",
+    "notificationDeletedSuccess": "تم حذف الإشعار بنجاح",
+    "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
+    "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
+    "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
+    "sortedByLatest": "من الأقدم للأحدث"
+
+
 
 
 

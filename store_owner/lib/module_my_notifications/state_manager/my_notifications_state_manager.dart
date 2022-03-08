@@ -3,6 +3,9 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_my_notifications/notification_model.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -25,7 +28,7 @@ class MyNotificationsStateManager {
     if (_authService.isLoggedIn) {
       _stateSubject.add(LoadingState(screenState));
       _myNotificationsService.getNotification().then((value) {
-        if (value.hasError == false) {
+        if (value.hasError) {
           _stateSubject.add(ErrorState(screenState,
               title: S.current.notifications,
               error: value.error ?? S.current.errorHappened, onPressed: () {
@@ -33,34 +36,61 @@ class MyNotificationsStateManager {
           }));
         } else if (value.isEmpty) {
           _stateSubject.add(EmptyState(screenState,
+              title: S.current.notifications,
               emptyMessage: S.current.homeDataEmpty, onPressed: () {
             getNotifications(screenState);
-          }, title: ''));
+          }));
         } else {
-          _stateSubject.add(MyNotificationsLoadedState(screenState, [
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.notifications,
-                body: S.current.ExpiredSubscriptions,
-                date: '2022-3-1'),
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.branch,
-                body: S.current.addBranchSuccess,
-                date: '2022-3-2'),
-            NotificationModel(
-                marked: false,
-                orderNumber: '-1',
-                title: S.current.mySubscription,
-                body: S.current.ExpiredSubscriptions,
-                date: '2022-3-3')
-          ]));
+          value as NotificationModel;
+          _stateSubject
+              .add(MyNotificationsLoadedState(screenState, value.data));
         }
       });
     } else {
       screenState.goToLogin();
+    }
+  }
+
+  void deleteNotification(MyNotificationsScreenState screenState, String id) {
+    _stateSubject.add(LoadingState(screenState));
+    _myNotificationsService.deleteNotification(id).then((value) {
+      if (value.hasError) {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.notificationDeletedSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void deleteNotifications(
+      MyNotificationsScreenState screenState, List<String> notifications) {
+    _stateSubject.add(LoadingState(screenState));
+    for (var id in notifications) {
+      _myNotificationsService.deleteNotification(id).then((value) {
+        if (value.hasError) {
+          Fluttertoast.showToast(
+              msg: value.error ?? S.current.errorHappened,
+              backgroundColor: Theme.of(screenState.context).colorScheme.error,
+              textColor: Colors.white);
+          if (notifications.last == id) {
+            getNotifications(screenState);
+          }
+        } else if (notifications.last == id) {
+          getNotifications(screenState);
+          CustomFlushBarHelper.createSuccess(
+                  title: S.current.warnning,
+                  message: S.current.notificationsDeletedSuccess)
+              .show(screenState.context);
+        }
+      });
     }
   }
 }

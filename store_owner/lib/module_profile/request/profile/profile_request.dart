@@ -10,17 +10,16 @@ class ProfileRequest {
   String? closingTime;
   ProfileRequest.empty();
 
-  ProfileRequest({
-    this.name,
-    this.phone,
-    this.image,
-    this.city,
-    this.bankName,
-    this.employeeSize,
-    this.bankAccountNumber,
-    this.closingTime,
-    this.openingTime
-  });
+  ProfileRequest(
+      {this.name,
+      this.phone,
+      this.image,
+      this.city,
+      this.bankName,
+      this.employeeSize,
+      this.bankAccountNumber,
+      this.closingTime,
+      this.openingTime});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

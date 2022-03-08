@@ -133,9 +133,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
                   ),
                 ),
               ),
-              Visibility(child: Material(
-                color: Colors.transparent,
-                child: widget.sufIcon ?? SizedBox.shrink())),
+              Visibility(
+                  child: Material(
+                      color: Colors.transparent,
+                      child: widget.sufIcon ?? SizedBox.shrink())),
             ],
           )),
     );
