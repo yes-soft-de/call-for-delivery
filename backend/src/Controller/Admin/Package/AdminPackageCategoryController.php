@@ -89,11 +89,12 @@ class AdminPackageCategoryController extends BaseController
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
+
+        } else {
+            $result = $this->adminPackageCategoryService->createPackageCategory($request);
+
+            return $this->response($result, self::CREATE);
         }
-
-        $result = $this->adminPackageCategoryService->createPackageCategory($request);
-
-        return $this->response($result, self::CREATE);
     }
 
     /**
