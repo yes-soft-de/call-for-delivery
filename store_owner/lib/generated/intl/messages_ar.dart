@@ -483,6 +483,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
+        "pendingOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات قيد الانتظار"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
         "phoneIsRequired":

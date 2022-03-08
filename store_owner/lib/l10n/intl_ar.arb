@@ -508,7 +508,8 @@
     "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
     "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
     "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
-    "sortedByLatest": "من الأقدم للأحدث"
+    "sortedByLatest": "من الأقدم للأحدث",
+    "pendingOrders": "الطلبات قيد الانتظار"
 
 
 

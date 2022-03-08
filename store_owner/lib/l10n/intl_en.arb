@@ -509,7 +509,9 @@
     "notificationsDeletedSuccess": "Notifications deleted successfully",
     "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
     "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
-    "sortedByLatest": "Sorted by latest"
+    "sortedByLatest": "Sorted by latest",
+    "pendingOrders": "Pending order"
+
 
 
 
