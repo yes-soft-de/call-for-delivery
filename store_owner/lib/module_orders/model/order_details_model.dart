@@ -22,7 +22,7 @@ class OrderDetailsModel extends DataModel {
   late num orderCost;
   late String payment;
   late OrderStatusEnum state;
-  late String roomID;
+  late String? roomID;
   String? image;
 
   /// this field to know if we can remove order
@@ -89,7 +89,7 @@ class OrderDetailsModel extends DataModel {
         note: element?.note ?? '',
         orderCost: element?.orderCost ?? 0,
         payment: element?.payment ?? 'cash',
-        roomID: element?.id.toString() ?? '-1',
+        roomID: element?.roomId,
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1);
   }

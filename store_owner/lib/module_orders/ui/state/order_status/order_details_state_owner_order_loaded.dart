@@ -1,5 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -87,6 +88,73 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   style: TextStyle(fontWeight: FontWeight.w600)),
             ),
           ),
+        ),
+        // chat
+        Visibility(
+          visible: orderInfo.roomID != null,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(-0.2, 0)),
+                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.93),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.95),
+                    Theme.of(context).colorScheme.primary,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                        arguments: ChatArgument(
+                            roomID: orderInfo.roomID ?? '',
+                            userType: 'captain'));
+                  },
+                  leading: Icon(
+                    Icons.chat_bubble_rounded,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  title: Text(S.current.chatRoom),
+                  textColor: Theme.of(context).textTheme.button?.color,
+                  subtitle: Text(S.current.chatWithCaptain),
+                  trailing: Icon(Icons.arrow_forward_rounded,
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
+            ),
+          ),
+        ),
+        // listTile
+        ListTile(
+          title: Text(S.current.orderDetails),
+          leading: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color:Theme.of(context).backgroundColor
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(Icons.info_rounded),
+            )),
         ),
         // date widgets
         Padding(
