@@ -55,4 +55,8 @@ final class SubscriptionConstant
     const SUBSCRIPTION_NOT_FOUND = "subscription not found";
 
     const SUBSCRIPTION_NOT_EXTRA = "this subscription not extra";
+
+    const CAN_SUBSCRIPTION_EXTRA_TRUE = true;
+    
+    const CAN_SUBSCRIPTION_EXTRA_FALSE = false;
 }

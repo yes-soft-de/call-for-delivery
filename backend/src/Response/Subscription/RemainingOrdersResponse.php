@@ -15,4 +15,5 @@ class RemainingOrdersResponse
     public $packageCarCount;
     public $packageOrderCount;
     public $expired;
+    public $canSubscriptionExtra;
 }

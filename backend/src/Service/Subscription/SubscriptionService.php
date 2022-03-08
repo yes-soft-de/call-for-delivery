@@ -61,7 +61,9 @@ class SubscriptionService
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
            $countOrders = $this->getCountOngoingOrders($subscription['id']);
-
+          
+           $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
+           
            $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
 
            if($subscription['hasExtra'] === true) {
@@ -289,7 +291,7 @@ class SubscriptionService
         if($subscriptionCurrent) {
 
             if($subscriptionCurrent['type'] === false) {
-                
+
                 if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
                     
                     return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
@@ -339,5 +341,25 @@ class SubscriptionService
         }
        
         return  $result;
+    }
+    
+    public function canSubscriptionExtra(string $status, bool $type): bool|null
+    {
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) { 
+         
+        return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE; 
+       }  
+
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE) {
+
+        if($status === SubscriptionConstant::ORDERS_FINISHED || $status === SubscriptionConstant::DATE_FINISHED) {
+
+           return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_TRUE;
+        }
+
+        return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE;
+      }
+      
+      return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE;
     }
 }
