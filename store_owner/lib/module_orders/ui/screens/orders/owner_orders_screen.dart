@@ -6,10 +6,12 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -32,15 +34,20 @@ class OwnerOrdersScreen extends StatefulWidget {
 
 class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     with WidgetsBindingObserver {
-  States? _currentState;
+  late States _currentState;
   ProfileModel? currentProfile;
   CompanyInfoResponse? _companyInfo;
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
 
-  Future<void> getMyOrders() async {
-    widget._stateManager.getOrders(this);
+  Future<void> getMyOrders([loading = true]) async {
+    widget._stateManager.getOrders(this, loading);
+  }
+
+  Future<void> getMyOrdersFilter([loading = true]) async {
+    widget._stateManager.getOrdersFilters(
+        this, FilterOrderRequest(state: orderFilter ?? 'ongoing'), loading);
   }
 
   void goToSubscription() {}
@@ -93,11 +100,13 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getInitData();
-      getMyOrders();
+      getMyOrdersFilter();
     });
     getInitData();
   }
 
+  String? orderFilter;
+  int currentIndex = 1;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {}
 
@@ -106,7 +115,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.onGoingOrder, icon: Icons.sort, onTap: () {
+          title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {
@@ -145,7 +154,45 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                   style: Theme.of(context).textTheme.button),
             )),
       ),
-      body: _currentState?.getUI(context),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 16,
+          ),
+          FilterBar(
+            cursorRadius: BorderRadius.circular(25),
+            animationDuration: Duration(milliseconds: 350),
+            backgroundColor: Theme.of(context).backgroundColor,
+            currentIndex: 1,
+            borderRadius: BorderRadius.circular(25),
+            floating: true,
+            height: 40,
+            cursorColor: Theme.of(context).colorScheme.primary,
+            items: [
+              FilterItem(label: S.current.completedOrders),
+              FilterItem(label: S.current.onGoingOrder),
+              FilterItem(label: S.current.pendingOrders),
+            ],
+            onItemSelected: (index) {
+              if (index == 0) {
+                orderFilter = 'complete';
+              } else if (index == 1) {
+                orderFilter = 'ongoing';
+              } else {
+                orderFilter = 'pending';
+              }
+              currentIndex = index;
+              getMyOrdersFilter();
+            },
+            selectedContent: Theme.of(context).textTheme.button!.color!,
+            unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Expanded(child: _currentState.getUI(context))
+        ],
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -21,6 +22,7 @@ class OrdersListStateOrdersLoaded extends States {
   }
 
   List<Widget> getOrders() {
+    var context = screenState.context;
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(Padding(
