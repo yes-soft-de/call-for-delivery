@@ -4799,6 +4799,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch management`
+  String get branchManagement {
+    return Intl.message(
+      'Branch management',
+      name: 'branchManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Selected Branches`
+  String get selectedBranchesMenu {
+    return Intl.message(
+      'My Selected Branches',
+      name: 'selectedBranchesMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the menu icon to show selected branches`
+  String get selectedBranchesMenuDescribtion {
+    return Intl.message(
+      'Tap the menu icon to show selected branches',
+      name: 'selectedBranchesMenuDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm deletion of this branch`
+  String get confirmDeletionBranch {
+    return Intl.message(
+      'Confirm deletion of this branch',
+      name: 'confirmDeletionBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch deleted successfully`
+  String get deleteBranchSuccess {
+    return Intl.message(
+      'Branch deleted successfully',
+      name: 'deleteBranchSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have any difficulties with saving branches please reach out our support team`
+  String get saveBranchAlert {
+    return Intl.message(
+      'If you have any difficulties with saving branches please reach out our support team',
+      name: 'saveBranchAlert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Branch`
+  String get chooseBranch {
+    return Intl.message(
+      'Choose Branch',
+      name: 'chooseBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no branches available`
+  String get thereIsNoBranches {
+    return Intl.message(
+      'There is no branches available',
+      name: 'thereIsNoBranches',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

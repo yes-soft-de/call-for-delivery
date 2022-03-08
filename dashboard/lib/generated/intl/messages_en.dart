@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -128,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "Please update your current location if you want to"),
+        "chooseBranch": MessageLookupByLibrary.simpleMessage("Choose Branch"),
         "chooseCategory":
             MessageLookupByLibrary.simpleMessage("Choose category"),
         "chooseDestinationPoint":
@@ -159,6 +162,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
+        "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
+            "Confirm deletion of this branch"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "contactPhoneNumber":
@@ -190,6 +195,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "The number of days of validity of the package"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "deleteBranchSuccess":
+            MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
@@ -553,6 +560,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveBranch": MessageLookupByLibrary.simpleMessage("Save Branch"),
+        "saveBranchAlert": MessageLookupByLibrary.simpleMessage(
+            "If you have any difficulties with saving branches please reach out our support team"),
         "saveBranches": MessageLookupByLibrary.simpleMessage("Save Branches"),
         "saveLocationAsBranch01":
             MessageLookupByLibrary.simpleMessage("Save Location as Branch 01"),
@@ -573,6 +582,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selectedBranchesMenu":
+            MessageLookupByLibrary.simpleMessage("My Selected Branches"),
+        "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
+            "Tap the menu icon to show selected branches"),
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
@@ -639,6 +652,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
+            "There is no branches available"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(

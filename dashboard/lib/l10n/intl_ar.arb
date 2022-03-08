@@ -482,5 +482,13 @@
     "whatsapp": "واتساب",
     "kilometerLimt": "عدد الكيلومترات",
     "kilometerLimtMax": "قيمة التعويض في حال تجاوز حد الكيلومترات",
-    "kilometerLimtMin": "قيمة التعويض في حال عدم تجاوز حد الكيلومترات"
+    "kilometerLimtMin": "قيمة التعويض في حال عدم تجاوز حد الكيلومترات",
+
+    "branchManagement": "إدارة الأفرع",
+  "selectedBranchesMenu": "My Selected Branches",
+  "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
+  "confirmDeletionBranch": "هل تريد حذف هذا الفرع",
+  "deleteBranchSuccess": "تم حذف الفرع بنجاح",
+  "chooseBranch": "Choose Branch",
+  "thereIsNoBranches": "لا يوجد أفرع متاحة"
 }
