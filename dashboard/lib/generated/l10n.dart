@@ -4709,6 +4709,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Company profile created successfully`
+  String get companyProfileCreatedSuccessfully {
+    return Intl.message(
+      'Company profile created successfully',
+      name: 'companyProfileCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company profile updated successfully`
+  String get companyProfileUpdatedSuccessfully {
+    return Intl.message(
+      'Company profile updated successfully',
+      name: 'companyProfileUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company information`
+  String get companyInfo {
+    return Intl.message(
+      'Company information',
+      name: 'companyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone 2`
+  String get phone2 {
+    return Intl.message(
+      'Phone 2',
+      name: 'phone2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fax`
+  String get fax {
+    return Intl.message(
+      'Fax',
+      name: 'fax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whatsapp`
+  String get whatsapp {
+    return Intl.message(
+      'Whatsapp',
+      name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kilometers limit`
+  String get kilometerLimt {
+    return Intl.message(
+      'Kilometers limit',
+      name: 'kilometerLimt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bonus on max limit`
+  String get kilometerLimtMax {
+    return Intl.message(
+      'bonus on max limit',
+      name: 'kilometerLimtMax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bonus on min limit`
+  String get kilometerLimtMin {
+    return Intl.message(
+      'bonus on min limit',
+      name: 'kilometerLimtMin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

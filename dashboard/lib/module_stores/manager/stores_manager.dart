@@ -1,5 +1,5 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
-import 'package:c4d/module_stores/response/action_response.dart';
+import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_stores/repository/stores_repository.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';

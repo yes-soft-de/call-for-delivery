@@ -146,6 +146,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
+        "companyProfileCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "تم إنشاء ملف تعريف الشركة بنجاح"),
+        "companyProfileUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "تم تعديل ملف تعريف الشركة بنجاح"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
@@ -235,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
+        "fax": MessageLookupByLibrary.simpleMessage("الفاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
@@ -288,6 +296,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
+        "kilometerLimt":
+            MessageLookupByLibrary.simpleMessage("عدد الكيلومترات"),
+        "kilometerLimtMax": MessageLookupByLibrary.simpleMessage(
+            "قيمة التعويض في حال تجاوز حد الكيلومترات"),
+        "kilometerLimtMin": MessageLookupByLibrary.simpleMessage(
+            "قيمة التعويض في حال عدم تجاوز حد الكيلومترات"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
@@ -431,6 +445,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
+        "phone2": MessageLookupByLibrary.simpleMessage("رقم الهاتف 2"),
         "phoneIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا برقم الهاتف"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -690,6 +705,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أهلا بك في تطبيق تواصلنا"),
         "welcomeTomandob_moshtarayat": MessageLookupByLibrary.simpleMessage(
             "اهلا بك في mandob_moshtarayat"),
+        "whatsapp": MessageLookupByLibrary.simpleMessage("واتساب"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("الكابتن"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("الزبون"),
         "whatsappWithStoreOwner":

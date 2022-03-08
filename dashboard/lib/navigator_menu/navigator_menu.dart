@@ -1,6 +1,7 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/categories_module.dart';
+import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
@@ -84,6 +85,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.packages,
                       FontAwesomeIcons.wolfPackBattalion,
                       true),
+                ],
+                page: widget.currentPage),
+
+            customExpansionTile(
+                title: S.current.companyInfo,
+                icon: FontAwesomeIcons.solidCopyright,
+                children: [
+//                  customListTile(
+//                      getIt<CompanyModule>().companyFinanceScreen,
+//                      S.current.companyFinance,
+//                      FontAwesomeIcons.moneyCheckAlt,
+//                      true),
+                  customListTile(getIt<CompanyModule>().companyProfileScreen,
+                      S.current.companyInfo, Icons.info, true),
                 ],
                 page: widget.currentPage),
 

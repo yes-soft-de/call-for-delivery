@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_categories/categories_module.dart';
+import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:device_info/device_info.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatefulWidget {
   final MainModule _mainModule;
   final StoresModule _storesModule;
   final CategoriesModule _categoriesModule;
+  final CompanyModule _companyModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -98,7 +100,9 @@ class MyApp extends StatefulWidget {
       this._chatModule,
       this._settingsModule,
       this._mainModule,
-      this._storesModule,this._categoriesModule
+      this._storesModule,
+      this._categoriesModule,
+      this._companyModule
       );
 
   @override

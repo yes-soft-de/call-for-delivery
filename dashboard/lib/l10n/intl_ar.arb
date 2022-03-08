@@ -471,7 +471,16 @@
     "addPackage": "إضافة باقة",
     "addPackageSuccessfully": "تم إضافة الباقة بنجاح",
     "updatePackageSuccessfully": "تم تعديل الباقة بنجاح",
-    "chooseCategory": "أختر تصنيف"
+    "chooseCategory": "أختر تصنيف",
 
+    "companyProfileCreatedSuccessfully": "تم إنشاء ملف تعريف الشركة بنجاح",
+    "companyProfileUpdatedSuccessfully": "تم تعديل ملف تعريف الشركة بنجاح",
+    "companyInfo": "معلومات الشركة",
 
+    "phone2": "رقم الهاتف 2",
+    "fax": "الفاكس",
+    "whatsapp": "واتساب",
+    "kilometerLimt": "عدد الكيلومترات",
+    "kilometerLimtMax": "قيمة التعويض في حال تجاوز حد الكيلومترات",
+    "kilometerLimtMin": "قيمة التعويض في حال عدم تجاوز حد الكيلومترات"
 }

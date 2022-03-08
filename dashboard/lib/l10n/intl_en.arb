@@ -474,7 +474,16 @@
     "addPackage": "Add package",
     "addPackageSuccessfully": "Package Added successfully",
     "updatePackageSuccessfully": "Package updated successfully",
-    "chooseCategory": "Choose category"
+    "chooseCategory": "Choose category",
 
+    "companyProfileCreatedSuccessfully": "Company profile created successfully",
+    "companyProfileUpdatedSuccessfully": "Company profile updated successfully",
+    "companyInfo": "Company information",
 
+    "phone2": "Phone 2",
+    "fax": "Fax",
+    "whatsapp": "Whatsapp",
+    "kilometerLimt": "Kilometers limit",
+    "kilometerLimtMax": "bonus on max limit",
+    "kilometerLimtMin": "bonus on min limit"
 }
