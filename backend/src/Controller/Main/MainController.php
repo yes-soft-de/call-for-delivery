@@ -8,6 +8,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
+use App\Request\Main\CompleteAccountStatusUpdateRequest;
 use App\Request\User\UserFilterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Service\Main\MainService;
@@ -16,9 +17,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("v1/main/")
@@ -26,12 +29,14 @@ use OpenApi\Annotations as OA;
 class MainController extends BaseController
 {
     private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
     private MainService $mainService;
 
-    public function __construct(AutoMapping $autoMapping, SerializerInterface $serializer, MainService $mainService)
+    public function __construct(AutoMapping $autoMapping, SerializerInterface $serializer, ValidatorInterface $validator, MainService $mainService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
+        $this->validator = $validator;
         $this->mainService = $mainService;
     }
 
@@ -284,6 +289,87 @@ class MainController extends BaseController
             } elseif ($response->completeAccountStatus === null) {
                 $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
                 return $this->response($response, self::FETCH);
+            }
+
+        } else {
+            return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+        }
+    }
+
+    /**
+     * store, captain, and supplies: Update complete account status of the user.
+     * @Route("profilecompleteaccountstatus", name="updateCompleteAccountStatusOfTheUser", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update complete account status field request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="completeAccountStatus")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns completeAccountStatus new value",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns completeAccountStatus new value",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9221 | 9004"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="string", property="completeAccountStatus")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateCompleteAccountStatus(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CompleteAccountStatusUpdateRequest::class, (object)$data);
+
+        $request->setUserId($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if(\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        if ($this->isGranted('ROLE_OWNER')) {
+            $response = $this->mainService->updateCompleteAccountStatus($request, UserRoleConstant::STORE_OWNER_USER_TYPE);
+
+            if($response === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+                return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
+
+            } else {
+                return $this->response($response, self::UPDATE);
             }
 
         } else {

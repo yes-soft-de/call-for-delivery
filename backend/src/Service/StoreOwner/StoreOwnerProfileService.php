@@ -6,11 +6,10 @@ use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
-use App\Request\StoreOwner\StoreOwnerCompleteAccountStatusUpdateRequest;
+use App\Request\Main\CompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
-use App\Response\StoreOwner\StoreOwnerCompleteAccountStatusUpdateResponse;
 use App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
@@ -73,15 +72,9 @@ class StoreOwnerProfileService
         return $this->storeOwnerProfileManager->getCompleteAccountStatusByStoreOwnerId($storeOwnerId);
     }
 
-    public function storeOwnerProfileCompleteAccountStatusUpdate(StoreOwnerCompleteAccountStatusUpdateRequest $request): StoreOwnerCompleteAccountStatusUpdateResponse|string
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
     {
-        $storeOwnerProfileResult = $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
-
-        if($storeOwnerProfileResult === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
-            return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
-        }
-
-        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerCompleteAccountStatusUpdateResponse::class, $storeOwnerProfileResult);
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
 
     public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): array

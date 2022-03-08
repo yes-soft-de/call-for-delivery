@@ -4,8 +4,11 @@ namespace App\Service\Main;
 
 use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserRoleConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Main\MainManager;
+use App\Request\Main\CompleteAccountStatusUpdateRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Response\Main\CompleteAccountStatusGetResponse;
 use App\Response\User\UserRegisterResponse;
@@ -63,6 +66,21 @@ class MainService
             $completeAccountStatus = $this->storeOwnerProfileService->getCompleteAccountStatusByStoreOwnerId($userId);
 
             return $this->autoMapping->map('array', CompleteAccountStatusGetResponse::class, $completeAccountStatus);
+        }
+
+        // sections for captain and supplier will be added lately when both entities will be set
+    }
+
+    public function updateCompleteAccountStatus(CompleteAccountStatusUpdateRequest $request, string $userType): CompleteAccountStatusGetResponse|string|null
+    {
+        if($userType === UserRoleConstant::STORE_OWNER_USER_TYPE) {
+            $storeOwnerProfileResult = $this->storeOwnerProfileService->storeOwnerProfileCompleteAccountStatusUpdate($request);
+
+            if($storeOwnerProfileResult === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+                return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+            }
+
+            return $this->autoMapping->map(StoreOwnerProfileEntity::class, CompleteAccountStatusGetResponse::class, $storeOwnerProfileResult);
         }
 
         // sections for captain and supplier will be added lately when both entities will be set
