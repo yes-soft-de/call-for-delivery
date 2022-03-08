@@ -111,7 +111,9 @@ class StoreOwnerProfileService
         if($storeOwnerProfile) {
             $storeOwnerProfile['images'] = $this->getImageParams($storeOwnerProfile['images'], $this->params.$storeOwnerProfile['images'], $this->params);
             
-            $storeOwnerProfile['roomId'] = $storeOwnerProfile['roomId']->toBase32();
+            if($storeOwnerProfile['roomId']) {
+                $storeOwnerProfile['roomId'] = $storeOwnerProfile['roomId']->toBase32();
+            }
         }
 
         $storeOwnerProfile['branches'] = $this->storeOwnerProfileManager->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
