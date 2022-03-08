@@ -32,4 +32,10 @@ class PackageManager
     {
         return $this->packageRepository->getAllPackagesCategoriesAndPackagesForStore($packageCategory);
     }
+    
+    public function getPackageActiveById($id)
+    {
+        return $this->packageRepository->getPackageActiveById($id);
+    }
+
 }

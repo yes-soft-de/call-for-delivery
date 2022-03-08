@@ -85,4 +85,19 @@ class PackageEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getPackageActiveById(int $id): ?array
+    {
+        return $this->createQueryBuilder('package')
+            ->select('package.id')
+
+            ->where("package.id = :id")
+            ->andWhere("package.status = :status")
+           
+            ->setParameter('id',$id) 
+            ->setParameter('status',PackageConstant::PACKAGE_ACTIVE)
+            
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
