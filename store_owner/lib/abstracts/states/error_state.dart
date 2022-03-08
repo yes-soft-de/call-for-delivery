@@ -12,13 +12,15 @@ class ErrorState extends States {
   final String title;
   final bool hasAppbar;
   final VoidCallback onPressed;
+  final double? size;
   State<StatefulWidget> screenState;
   ErrorState(this.screenState,
       {this.error,
       this.errors,
       required this.onPressed,
       required this.title,
-      this.hasAppbar = true})
+      this.hasAppbar = true,
+      this.size})
       : super(screenState);
 
   @override
@@ -56,7 +58,7 @@ class ErrorState extends States {
               ),
               SvgPicture.asset(
                 ImageAsset.ERROR_SVG,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: size ?? MediaQuery.of(context).size.height * 0.5,
               ),
               Container(
                 height: 32,
