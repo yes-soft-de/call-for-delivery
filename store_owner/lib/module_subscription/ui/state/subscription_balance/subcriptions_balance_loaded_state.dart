@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/widget/single_package_card.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -48,7 +49,13 @@ class SubscriptionBalanceLoadedState extends States {
                                     child: TextButton(
                                         style: TextButton.styleFrom(
                                             shape: StadiumBorder()),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pushNamed(
+                                              SubscriptionsRoutes
+                                                  .INIT_SUBSCRIPTIONS_SCREEN,
+                                              arguments: S.current.renewSubscription);
+                                        },
                                         child: Text(
                                           S.current.renewNewPlan,
                                           style: isDark
@@ -67,7 +74,10 @@ class SubscriptionBalanceLoadedState extends States {
                                     child: TextButton(
                                         style: TextButton.styleFrom(
                                             shape: StadiumBorder()),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          screenState.renewSubscription(balance.id);
+                                        },
                                         child: Text(
                                           S.current.renewOldPlan,
                                           style: isDark
@@ -115,19 +125,22 @@ class SubscriptionBalanceLoadedState extends States {
               packageInfo: '',
               packageName: balance.packageName,
               active: true,
+              expired: balance.expired.toString(),
             ),
             // Subscription status
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Theme.of(context).backgroundColor,
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(-0.2, 0)),
-                  ],
+                  boxShadow: isDark
+                      ? []
+                      : [
+                          BoxShadow(
+                              color: Theme.of(context).backgroundColor,
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(-0.2, 0)),
+                        ],
                   borderRadius: BorderRadius.circular(25),
                   color: Theme.of(context).backgroundColor,
                 ),
@@ -140,7 +153,9 @@ class SubscriptionBalanceLoadedState extends States {
                           S.current.subscriptionStatus,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.secondary),
+                              color: isDark
+                                  ? null
+                                  : Theme.of(context).colorScheme.secondary),
                         ),
                       ),
                     ),
@@ -169,8 +184,16 @@ class SubscriptionBalanceLoadedState extends States {
                                       : [],
                                   borderRadius: BorderRadius.circular(10),
                                   color: balance.status == 'inactive'
-                                      ? Colors.green[100]
+                                      ? Theme.of(context).disabledColor
                                       : Colors.green),
+                              child: Visibility(
+                                visible: balance.status != 'inactive',
+                                child: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      Theme.of(context).textTheme.button?.color,
+                                ),
+                              ),
                             ),
                           ),
                           Text(S.current.active),
@@ -180,28 +203,34 @@ class SubscriptionBalanceLoadedState extends States {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: 35,
-                              width: 35,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: balance.status == 'inactive'
-                                      ? [
-                                          BoxShadow(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .error,
-                                              spreadRadius: 0.1,
-                                              blurRadius: 7,
-                                              offset: Offset(-0.1, 0))
-                                        ]
-                                      : [],
-                                  color: balance.status == 'inactive'
-                                      ? Theme.of(context).colorScheme.error
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .error
-                                          .withOpacity(0.3)),
-                            ),
+                                height: 35,
+                                width: 35,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: balance.status == 'inactive'
+                                        ? [
+                                            BoxShadow(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .error,
+                                                spreadRadius: 0.1,
+                                                blurRadius: 7,
+                                                offset: Offset(-0.1, 0))
+                                          ]
+                                        : [],
+                                    color: balance.status == 'inactive'
+                                        ? Theme.of(context).colorScheme.error
+                                        : Theme.of(context).disabledColor),
+                                child: Visibility(
+                                  visible: balance.status == 'inactive',
+                                  child: Icon(
+                                    Icons.check_rounded,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .button
+                                        ?.color,
+                                  ),
+                                )),
                           ),
                           Text(S.current.inactive),
                           SizedBox(
@@ -210,17 +239,55 @@ class SubscriptionBalanceLoadedState extends States {
                         ],
                       ),
                     ),
-                    Text(
-                      S.current.expirationData,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    Text(
-                      intl.DateFormat.yMMMMEEEEd().format(balance.endDate),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).disabledColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              S.current.subscriptionDate,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark
+                                      ? null
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                            ),
+                            Text(
+                              intl.DateFormat.yMMMMEEEEd()
+                                  .format(balance.startDate),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).disabledColor),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              S.current.expirationData,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark
+                                      ? null
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                            ),
+                            Text(
+                              intl.DateFormat.yMMMMEEEEd()
+                                  .format(balance.endDate),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).disabledColor),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 16,
@@ -237,14 +304,16 @@ class SubscriptionBalanceLoadedState extends States {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Colors.yellow,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.yellow,
-                            spreadRadius: 0.1,
-                            blurRadius: 7,
-                            offset: Offset(-0.1, 0))
-                      ]),
+                      color: isDark ? Colors.amber : Colors.yellow,
+                      boxShadow: isDark
+                          ? []
+                          : [
+                              BoxShadow(
+                                  color: Colors.yellow,
+                                  spreadRadius: 0.1,
+                                  blurRadius: 7,
+                                  offset: Offset(-0.1, 0))
+                            ]),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(

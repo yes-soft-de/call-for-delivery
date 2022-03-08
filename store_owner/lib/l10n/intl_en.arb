@@ -200,7 +200,7 @@
     "successRenew": "Your subscription has been renewed",
     "warnning": "Important Note",
     "SubscriptionInactive": "Your subscription not activate yet please wait",
-    "outOforders": "You reach your limit of orders you can renew your subscription from settings",
+    "outOforders": "You reach your limit of orders you can renew your subscription",
     "finishedDate": "Your subscription is out of date please renew your subscription",
     "unaccept": "Your request not accepted from administration you can contact us to get info",
     "outOfCars": "There is no car available please wait your ongoing orders to finish",
@@ -502,7 +502,11 @@
     "workTime": "Work time",
     "orderImage": "Order Image",
     "allCity": "All city",
-    "validation": "Validation"
+    "validation": "Validation",
+    "subscriptionDate": "Subscription date",
+    "subscribeWithPackage": "Subscription packages"
+
+
 
 
 }
