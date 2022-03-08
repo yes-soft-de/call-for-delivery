@@ -67,11 +67,7 @@ class FilterBar extends StatefulWidget {
 class _FilterBarState extends State<FilterBar> {
   late int currentIndex;
   late List<FilterItem> items;
-  late Color selectedContent;
-  late Color unselectedContent;
   late Duration animationDuration;
-  late Color backgroundColor;
-  late Color cursorColor;
   BorderRadius? cursorRadius;
   late bool floating;
   double? opacity;
@@ -87,11 +83,7 @@ class _FilterBarState extends State<FilterBar> {
   void initState() {
     currentIndex = widget.currentIndex;
     items = widget.items;
-    selectedContent = widget.selectedContent;
-    unselectedContent = widget.unselectedContent;
     animationDuration = widget.animationDuration;
-    backgroundColor = widget.backgroundColor;
-    cursorColor = widget.cursorColor;
     cursorRadius = widget.cursorRadius;
     floating = widget.floating;
     borderRadius = widget.borderRadius;
@@ -127,7 +119,7 @@ class _FilterBarState extends State<FilterBar> {
         height: widget.height ?? 75,
         duration: animationDuration,
         decoration: BoxDecoration(
-          color: backgroundColor.withOpacity(opacity ?? 1),
+          color: widget.backgroundColor.withOpacity(opacity ?? 1),
           borderRadius: borderRadius,
         ),
         child: SizedBox(
@@ -147,14 +139,14 @@ class _FilterBarState extends State<FilterBar> {
                   height: itemSize.isEmpty ? 10 : itemSize[currentIndex].height,
                   width: itemSize.isEmpty ? 10 : itemSize[currentIndex].width,
                   decoration: BoxDecoration(
-                    color: cursorColor,
+                    color: widget.cursorColor,
                     gradient: LinearGradient(colors: [
-                      cursorColor.withOpacity(0.85),
-                      cursorColor.withOpacity(0.85),
-                      cursorColor.withOpacity(0.9),
-                      cursorColor.withOpacity(0.93),
-                      cursorColor.withOpacity(0.95),
-                      cursorColor,
+                      widget.cursorColor.withOpacity(0.85),
+                      widget.cursorColor.withOpacity(0.85),
+                      widget.cursorColor.withOpacity(0.9),
+                      widget.cursorColor.withOpacity(0.93),
+                      widget.cursorColor.withOpacity(0.95),
+                      widget.cursorColor,
                     ]),
                     borderRadius: cursorRadius ??
                         BorderRadius.vertical(top: Radius.circular(18)),
@@ -207,8 +199,8 @@ class _FilterBarState extends State<FilterBar> {
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: currentIndex == element.index && end
-                        ? selectedContent
-                        : unselectedContent,
+                        ? widget.selectedContent
+                        : widget.unselectedContent,
                   ),
                   textAlign: TextAlign.center,
                   textScaleFactor: 1,

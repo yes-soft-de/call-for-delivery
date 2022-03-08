@@ -27,20 +27,24 @@ class OrdersListStateOrdersLoaded extends States {
     orders.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          onTap: () {
-            Navigator.of(screenState.context).pushNamed(
-                OrdersRoutes.ORDER_STATUS_SCREEN,
-                arguments: element.id);
-          },
-          child: OwnerOrderCard(
-            orderNumber: element.id.toString(),
-            orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-            createdDate: element.createdDate,
-            deliveryDate: element.deliveryDate,
-            orderCost:
-                element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
-            note: element.note,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              orderCost:
+                  element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
+              note: element.note,
+            ),
           ),
         ),
       ));
