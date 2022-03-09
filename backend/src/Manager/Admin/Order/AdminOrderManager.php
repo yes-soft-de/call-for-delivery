@@ -13,13 +13,13 @@ class AdminOrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function getOrdersByStateForAdmin(string $state): string
+    public function getOrdersByStateForAdmin(string $state): int
     {
-        return $this->orderEntityRepository->getOrdersByStateForAdmin($state);
+        return $this->orderEntityRepository->count(["state" => $state]);
     }
 
-    public function getAllOrdersCountForAdmin(): string
+    public function getAllOrdersCountForAdmin(): int
     {
-        return $this->orderEntityRepository->getAllOrdersCountForAdmin();
+        return count($this->orderEntityRepository->findAll());
     }
 }

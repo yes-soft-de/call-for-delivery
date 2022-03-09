@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Constant\StoreOwner\StoreProfileConstant;
-use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ChatRoomEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -129,17 +128,5 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
-    }
-
-    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): string
-    {
-        return $this->createQueryBuilder('storeOwnerProfile')
-            ->select('COUNT(storeOwnerProfile.id)')
-
-            ->andWhere('storeOwnerProfile.status = :storeOwnerProfileStatus')
-            ->setParameter('storeOwnerProfileStatus', $storeOwnerProfileStatus)
-
-            ->getQuery()
-            ->getSingleScalarResult();
     }
 }

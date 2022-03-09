@@ -13,8 +13,8 @@ class AdminStoreOwnerManager
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
     }
 
-    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): string
+    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): int
     {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesCountByStatusForAdmin($storeOwnerProfileStatus);
+        return $this->storeOwnerProfileEntityRepository->count(["status" => $storeOwnerProfileStatus]);
     }
 }
