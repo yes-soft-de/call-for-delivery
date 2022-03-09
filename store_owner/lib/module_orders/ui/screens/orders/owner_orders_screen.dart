@@ -171,15 +171,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             items: [
               FilterItem(label: S.current.pendingOrders),
               FilterItem(label: S.current.onGoingOrder),
-              FilterItem(label: S.current.completedOrders),
             ],
             onItemSelected: (index) {
               if (index == 0) {
                 orderFilter = 'pending';
-              } else if (index == 1) {
-                orderFilter = 'ongoing';
               } else {
-                orderFilter = 'completed';
+                orderFilter = 'ongoing';
               }
               currentIndex = index;
               getMyOrdersFilter();
