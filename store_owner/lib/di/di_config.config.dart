@@ -7,7 +7,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../main.dart' as _i92;
+import '../main.dart' as _i94;
 import '../module_about/about_module.dart' as _i71;
 import '../module_about/hive/about_hive_helper.dart' as _i3;
 import '../module_about/manager/about_manager.dart' as _i37;
@@ -29,7 +29,7 @@ import '../module_auth/ui/screen/forget_password_screen/forget_password_screen.d
     as _i44;
 import '../module_auth/ui/screen/login_screen/login_screen.dart' as _i45;
 import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i51;
-import '../module_branches/branches_module.dart' as _i85;
+import '../module_branches/branches_module.dart' as _i86;
 import '../module_branches/manager/branches_manager.dart' as _i39;
 import '../module_branches/repository/branches_repository.dart' as _i24;
 import '../module_branches/service/branches_list_service.dart' as _i58;
@@ -44,7 +44,7 @@ import '../module_branches/ui/screens/branches_list_screen/branches_list_screen.
 import '../module_branches/ui/screens/init_branches/init_branches_screen.dart'
     as _i76;
 import '../module_branches/ui/screens/update_branches_screen/update_branches_screen.dart'
-    as _i84;
+    as _i85;
 import '../module_chat/chat_module.dart' as _i74;
 import '../module_chat/manager/chat/chat_manager.dart' as _i40;
 import '../module_chat/presistance/chat_hive_helper.dart' as _i5;
@@ -77,22 +77,24 @@ import '../module_notifications/service/local_notification_service/local_notific
     as _i7;
 import '../module_orders/hive/order_hive_helper.dart' as _i12;
 import '../module_orders/manager/orders_manager/orders_manager.dart' as _i32;
-import '../module_orders/orders_module.dart' as _i89;
+import '../module_orders/orders_module.dart' as _i91;
 import '../module_orders/repository/order_repository/order_repository.dart'
     as _i31;
 import '../module_orders/service/orders/orders.service.dart' as _i65;
 import '../module_orders/state_manager/new_order/new_order.state_manager.dart'
     as _i79;
+import '../module_orders/state_manager/order_logs_state_manager.dart' as _i80;
 import '../module_orders/state_manager/order_status/order_status.state_manager.dart'
-    as _i80;
+    as _i81;
 import '../module_orders/state_manager/owner_orders/owner_orders.state_manager.dart'
     as _i66;
-import '../module_orders/ui/screens/new_order/new_order_screen.dart' as _i87;
+import '../module_orders/ui/screens/new_order/new_order_screen.dart' as _i88;
 import '../module_orders/ui/screens/order_details/order_details_screen.dart'
-    as _i88;
-import '../module_orders/ui/screens/orders/owner_orders_screen.dart' as _i81;
+    as _i89;
+import '../module_orders/ui/screens/order_logs_screen.dart' as _i90;
+import '../module_orders/ui/screens/orders/owner_orders_screen.dart' as _i82;
 import '../module_profile/manager/profile/profile.manager.dart' as _i49;
-import '../module_profile/module_profile.dart' as _i82;
+import '../module_profile/module_profile.dart' as _i83;
 import '../module_profile/prefs_helper/profile_prefs_helper.dart' as _i13;
 import '../module_profile/repository/profile/profile.repository.dart' as _i33;
 import '../module_profile/service/profile/profile.service.dart' as _i50;
@@ -115,12 +117,12 @@ import '../module_subscription/service/subscription_service.dart' as _i69;
 import '../module_subscription/state_manager/init_subscription_state_manager.dart'
     as _i77;
 import '../module_subscription/state_manager/subscription_balance_state_manager.dart'
-    as _i83;
-import '../module_subscription/subscriptions_module.dart' as _i91;
+    as _i84;
+import '../module_subscription/subscriptions_module.dart' as _i93;
 import '../module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart'
-    as _i86;
+    as _i87;
 import '../module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart'
-    as _i90;
+    as _i92;
 import '../module_theme/pressistance/theme_preferences_helper.dart' as _i14;
 import '../module_theme/service/theme_service/theme_service.dart' as _i17;
 import '../module_upload/manager/upload_manager/upload_manager.dart' as _i20;
@@ -128,7 +130,7 @@ import '../module_upload/repository/upload_repository/upload_repository.dart'
     as _i15;
 import '../module_upload/service/image_upload/image_upload_service.dart'
     as _i27;
-import '../utils/global/global_state_manager.dart' as _i93;
+import '../utils/global/global_state_manager.dart' as _i95;
 import '../utils/helpers/firestore_helper.dart' as _i6;
 import '../utils/logger/logger.dart'
     as _i10; // ignore_for_file: unnecessary_lambdas
@@ -305,44 +307,49 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i78.MyNotificationsModule(get<_i64.MyNotificationsScreen>()));
   gh.factory<_i79.NewOrderStateManager>(
       () => _i79.NewOrderStateManager(get<_i65.OrdersService>()));
-  gh.factory<_i80.OrderStatusStateManager>(() => _i80.OrderStatusStateManager(
+  gh.factory<_i80.OrderLogsStateManager>(
+      () => _i80.OrderLogsStateManager(get<_i65.OrdersService>()));
+  gh.factory<_i81.OrderStatusStateManager>(() => _i81.OrderStatusStateManager(
       get<_i65.OrdersService>(), get<_i23.AuthService>()));
-  gh.factory<_i81.OwnerOrdersScreen>(() => _i81.OwnerOrdersScreen(
+  gh.factory<_i82.OwnerOrdersScreen>(() => _i82.OwnerOrdersScreen(
       get<_i66.OwnerOrdersStateManager>(), get<_i79.NewOrderStateManager>()));
-  gh.factory<_i82.ProfileModule>(() => _i82.ProfileModule(
+  gh.factory<_i83.ProfileModule>(() => _i83.ProfileModule(
       get<_i67.ProfileScreen>(),
       get<_i75.InitAccountScreen>(),
       get<_i72.AccountBalanceScreen>()));
-  gh.factory<_i83.SubscriptionBalanceStateManager>(() =>
-      _i83.SubscriptionBalanceStateManager(
+  gh.factory<_i84.SubscriptionBalanceStateManager>(() =>
+      _i84.SubscriptionBalanceStateManager(
           get<_i69.SubscriptionService>(),
           get<_i50.ProfileService>(),
           get<_i23.AuthService>(),
           get<_i27.ImageUploadService>()));
-  gh.factory<_i84.UpdateBranchScreen>(
-      () => _i84.UpdateBranchScreen(get<_i70.UpdateBranchStateManager>()));
-  gh.factory<_i85.BranchesModule>(() => _i85.BranchesModule(
+  gh.factory<_i85.UpdateBranchScreen>(
+      () => _i85.UpdateBranchScreen(get<_i70.UpdateBranchStateManager>()));
+  gh.factory<_i86.BranchesModule>(() => _i86.BranchesModule(
       get<_i73.BranchesListScreen>(),
-      get<_i84.UpdateBranchScreen>(),
+      get<_i85.UpdateBranchScreen>(),
       get<_i76.InitBranchesScreen>()));
-  gh.factory<_i86.InitSubscriptionScreen>(() =>
-      _i86.InitSubscriptionScreen(get<_i77.InitSubscriptionStateManager>()));
-  gh.factory<_i87.NewOrderScreen>(
-      () => _i87.NewOrderScreen(get<_i79.NewOrderStateManager>()));
-  gh.factory<_i88.OrderDetailsScreen>(
-      () => _i88.OrderDetailsScreen(get<_i80.OrderStatusStateManager>()));
-  gh.factory<_i89.OrdersModule>(() => _i89.OrdersModule(
-      get<_i87.NewOrderScreen>(),
-      get<_i88.OrderDetailsScreen>(),
-      get<_i81.OwnerOrdersScreen>()));
-  gh.factory<_i90.SubscriptionBalanceScreen>(() =>
-      _i90.SubscriptionBalanceScreen(
-          get<_i83.SubscriptionBalanceStateManager>()));
-  gh.factory<_i91.SubscriptionsModule>(() => _i91.SubscriptionsModule(
-      get<_i86.InitSubscriptionScreen>(),
-      get<_i90.SubscriptionBalanceScreen>()));
-  gh.factory<_i92.MyApp>(() => _i92.MyApp(
-      get<_i89.OrdersModule>(),
+  gh.factory<_i87.InitSubscriptionScreen>(() =>
+      _i87.InitSubscriptionScreen(get<_i77.InitSubscriptionStateManager>()));
+  gh.factory<_i88.NewOrderScreen>(
+      () => _i88.NewOrderScreen(get<_i79.NewOrderStateManager>()));
+  gh.factory<_i89.OrderDetailsScreen>(
+      () => _i89.OrderDetailsScreen(get<_i81.OrderStatusStateManager>()));
+  gh.factory<_i90.OrderLogsScreen>(
+      () => _i90.OrderLogsScreen(get<_i80.OrderLogsStateManager>()));
+  gh.factory<_i91.OrdersModule>(() => _i91.OrdersModule(
+      get<_i88.NewOrderScreen>(),
+      get<_i89.OrderDetailsScreen>(),
+      get<_i82.OwnerOrdersScreen>(),
+      get<_i90.OrderLogsScreen>()));
+  gh.factory<_i92.SubscriptionBalanceScreen>(() =>
+      _i92.SubscriptionBalanceScreen(
+          get<_i84.SubscriptionBalanceStateManager>()));
+  gh.factory<_i93.SubscriptionsModule>(() => _i93.SubscriptionsModule(
+      get<_i87.InitSubscriptionScreen>(),
+      get<_i92.SubscriptionBalanceScreen>()));
+  gh.factory<_i94.MyApp>(() => _i94.MyApp(
+      get<_i91.OrdersModule>(),
       get<_i17.AppThemeDataService>(),
       get<_i9.LocalizationService>(),
       get<_i43.FireNotificationService>(),
@@ -352,10 +359,10 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i74.ChatModule>(),
       get<_i68.SettingsModule>(),
       get<_i71.AboutModule>(),
-      get<_i82.ProfileModule>(),
-      get<_i85.BranchesModule>(),
-      get<_i91.SubscriptionsModule>(),
+      get<_i83.ProfileModule>(),
+      get<_i86.BranchesModule>(),
+      get<_i93.SubscriptionsModule>(),
       get<_i78.MyNotificationsModule>()));
-  gh.singleton<_i93.GlobalStateManager>(_i93.GlobalStateManager());
+  gh.singleton<_i95.GlobalStateManager>(_i95.GlobalStateManager());
   return get;
 }
