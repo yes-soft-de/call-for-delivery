@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allCity": MessageLookupByLibrary.simpleMessage("All city"),
+        "alreadyExtended": MessageLookupByLibrary.simpleMessage(
+            "Your subscription already extended , You can\'t extend it again"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
@@ -465,6 +467,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "packageExtend": MessageLookupByLibrary.simpleMessage(
+            "Temporary subscription extend"),
+        "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Your subscription extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),

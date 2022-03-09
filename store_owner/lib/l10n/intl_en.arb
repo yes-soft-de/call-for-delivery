@@ -514,7 +514,13 @@
     "renewedFailedYourSubStillActive": "You have already subscribed , and your subscription still valid",
     "renewedNoteYourSubStillActive": "Are you sure about renewing your subscription , because if you do that you will lose current subscriptions",
     "firstDate": "From date",
-    "endDate": "To date"
+    "endDate": "To date",
+    "packageExtendedSuccessfully": "Your subscription extended successfully",
+    "packageExtend": "Temporary subscription extend",
+    "alreadyExtended": "Your subscription already extended , You can't extend it again"
+
+
+
 
 
 

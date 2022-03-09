@@ -513,7 +513,10 @@
     "renewedFailedYourSubStillActive": "لا يمكنك تجديد الاشتراك ،لان اشتراكك الحالي مفعل وصالح للاستخدام",
     "renewedNoteYourSubStillActive": "باقتك الحالية لم تنتهي بعد ، في حال اشتراكك بباقة جديدة ستخسر المتبقي بالباقة",
     "firstDate": "من تاريخ",
-    "endDate": "إلى تاريخ"
+    "endDate": "إلى تاريخ",
+    "packageExtendedSuccessfully": "تم تمديد الاشتراك بنجاح",
+    "packageExtend": "تمديد اضطراري للاشتراك",
+    "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"
 
 
 

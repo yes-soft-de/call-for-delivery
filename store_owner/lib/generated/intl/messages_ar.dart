@@ -61,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
+        "alreadyExtended": MessageLookupByLibrary.simpleMessage(
+            "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -460,6 +462,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageExtend":
+            MessageLookupByLibrary.simpleMessage("تمديد اضطراري للاشتراك"),
+        "packageExtendedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تمديد الاشتراك بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
