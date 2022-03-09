@@ -1,3 +1,4 @@
+import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,8 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
               child: InkWell(
                 customBorder: CircleBorder(),
                 onTap: () {
-//                  Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
-//                      arguments: model?.id ?? -1);
+                  Navigator.of(context).pushNamed(BranchesRoutes.BRANCHES_LIST_SCREEN,
+                      arguments: model?.id ?? -1);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -79,7 +80,7 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
-                      Icons.account_balance_rounded,
+                      Icons.location_on,
                       color: Colors.white,
                     ),
                   ),

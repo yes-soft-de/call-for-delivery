@@ -485,5 +485,16 @@
     "whatsapp": "Whatsapp",
     "kilometerLimt": "Kilometers limit",
     "kilometerLimtMax": "bonus on max limit",
-    "kilometerLimtMin": "bonus on min limit"
+    "kilometerLimtMin": "bonus on min limit",
+
+    "branchManagement": "Branch management",
+    "selectedBranchesMenu": "My Selected Branches",
+    "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
+    "confirmDeletionBranch": "Confirm deletion of this branch",
+    "deleteBranchSuccess": "Branch deleted successfully",
+    "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
+    "chooseBranch": "Choose Branch",
+    "thereIsNoBranches": "There is no branches available"
+
+
 }

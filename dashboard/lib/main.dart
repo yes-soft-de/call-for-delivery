@@ -1,6 +1,6 @@
-// ignore_for_file: unused_field
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
@@ -90,6 +90,7 @@ class MyApp extends StatefulWidget {
   final StoresModule _storesModule;
   final CategoriesModule _categoriesModule;
   final CompanyModule _companyModule;
+  final BranchesModule _branchesModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -102,7 +103,7 @@ class MyApp extends StatefulWidget {
       this._mainModule,
       this._storesModule,
       this._categoriesModule,
-      this._companyModule
+      this._companyModule,this._branchesModule
       );
 
   @override

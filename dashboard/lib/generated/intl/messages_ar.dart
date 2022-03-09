@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookACar": MessageLookupByLibrary.simpleMessage("احجز سيارة توصيل"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
+        "branchManagement":
+            MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
@@ -128,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
+        "chooseBranch": MessageLookupByLibrary.simpleMessage("Choose Branch"),
         "chooseCategory": MessageLookupByLibrary.simpleMessage("أختر تصنيف"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
@@ -158,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
+        "confirmDeletionBranch":
+            MessageLookupByLibrary.simpleMessage("هل تريد حذف هذا الفرع"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
         "contactPhoneNumber":
@@ -190,6 +195,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "deleteBranchSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
@@ -568,6 +575,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selectedBranchesMenu":
+            MessageLookupByLibrary.simpleMessage("My Selected Branches"),
+        "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
+            "Tap the menu icon to show selected branches"),
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
@@ -636,6 +647,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "thereIsNoBranches":
+            MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(

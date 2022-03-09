@@ -12,6 +12,9 @@ class Urls {
   static const String BASE_API_PACKAGE = DOMAIN + VERSION + '/package';
   static const String BASE_API_COMPANY = DOMAIN + VERSION + '/company';
 
+  static const String BASE_API_BRANCH_ADMIN = DOMAIN + VERSION_ADMIN + '/storeownerbranch';
+
+
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -57,5 +60,13 @@ class Urls {
 
   /*-------------------------------Company-----------------------------------*/
   static const COMPANY_INFO = BASE_API_COMPANY + '/companyinfo';
+
+  /*----------------------------branch----------------*/
+  static const UPDATE_BRANCH_API = BASE_API_BRANCH_ADMIN + '/branch';
+  static const CREATE_BRANCH_LIST_API =
+      BASE_API_BRANCH_ADMIN + '/multiplebranches';
+  static const DELETE_BRANCH_API = BASE_API_BRANCH_ADMIN + '/deletebranch';
+  static const GET_BRANCHES_API = BASE_API_BRANCH_ADMIN + '/branches/';
+
 
 }
