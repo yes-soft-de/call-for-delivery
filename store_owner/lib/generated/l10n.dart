@@ -5209,6 +5209,16 @@ class S {
       args: [],
     );
   }
+
+  /// `This Package not available to renew any more`
+  String get packageNotFoundRenew {
+    return Intl.message(
+      'This Package not available to renew any more',
+      name: 'packageNotFoundRenew',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

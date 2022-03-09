@@ -467,6 +467,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageExtendedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تمديد الاشتراك بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
+        "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "هذا الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),

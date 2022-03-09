@@ -41,6 +41,8 @@ class StatusCodeHelper {
         return S.current.renewedFailedYourSubStillActive;
       case '9305':
         return S.current.alreadyExtended;
+      case '9351':
+        return S.current.packageNotFoundRenew;
       case '-1':
         return S.current.dataDecodeError;
       default:

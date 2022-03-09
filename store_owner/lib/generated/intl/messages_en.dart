@@ -472,6 +472,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Your subscription extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
+        "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "This Package not available to renew any more"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
