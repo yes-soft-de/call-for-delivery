@@ -121,3 +121,23 @@ App\Request\Admin\Package\PackageCategoryUpdateRequest:
             - NotBlank: ~
         name:
             - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationToUsersCreateRequest:
+    properties:
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationToUsersUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~

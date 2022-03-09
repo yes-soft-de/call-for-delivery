@@ -13,4 +13,10 @@ final class NotificationConstant
     const UPDATE_ORDER_SUCCESS = "تم تعديل الطلب بنجاح";
 
     const NOT_FOUND = "not found";
+
+    const USER_ID_NULL = 0;
+   
+    const APP_TYPE_STORE = "stores";
+    
+    const APP_TYPE_CAPTAIN = "captains";
 }
