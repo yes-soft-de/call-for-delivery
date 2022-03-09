@@ -62,6 +62,7 @@ class SubscriptionBalanceLoadedState extends States {
                                             builder: (context) {
                                               return CustomAlertDialog(
                                                   onPressed: () {
+                                                    Navigator.of(context).pop();
                                                     Navigator.of(context).pushNamed(
                                                         SubscriptionsRoutes
                                                             .INIT_SUBSCRIPTIONS_SCREEN,
