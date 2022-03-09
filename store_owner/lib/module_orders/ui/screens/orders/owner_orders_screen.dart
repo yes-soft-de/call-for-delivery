@@ -100,7 +100,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getInitData();
-      getMyOrdersFilter();
+      getMyOrdersFilter(false);
     });
     getInitData();
   }
@@ -175,11 +175,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             ],
             onItemSelected: (index) {
               if (index == 0) {
-                orderFilter = 'complete';
+                orderFilter = 'pending';
               } else if (index == 1) {
                 orderFilter = 'ongoing';
               } else {
-                orderFilter = 'pending';
+                orderFilter = 'completed';
               }
               currentIndex = index;
               getMyOrdersFilter();
