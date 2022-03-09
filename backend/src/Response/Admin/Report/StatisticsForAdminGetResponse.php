@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Response\Admin;
+namespace App\Response\Admin\Report;
 
 class StatisticsForAdminGetResponse
 {
-    public string $activeStoresCount;
+    public int $activeStoresCount;
 
-    public string $inactiveStoresCount;
+    public int $inactiveStoresCount;
 
-    public string $ongoingOrdersCount;
+    public int $ongoingOrdersCount;
 
-    public string $allOrdersCount;
+    public int $allOrdersCount;
 }

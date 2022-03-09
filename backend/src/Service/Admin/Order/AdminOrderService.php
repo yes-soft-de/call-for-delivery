@@ -13,12 +13,12 @@ class AdminOrderService
         $this->adminOrderManager = $adminStoreOwnerManager;
     }
 
-    public function getOrdersByStateForAdmin(string $storeOwnerProfileStatus): string
+    public function getOrdersByStateForAdmin(string $storeOwnerProfileStatus): int
     {
         return $this->adminOrderManager->getOrdersByStateForAdmin($storeOwnerProfileStatus);
     }
 
-    public function getAllOrdersCountForAdmin(): string
+    public function getAllOrdersCountForAdmin(): int
     {
         return $this->adminOrderManager->getAllOrdersCountForAdmin();
     }

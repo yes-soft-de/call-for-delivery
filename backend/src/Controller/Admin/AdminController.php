@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Admin\AdminRegisterRequest;
-use App\Request\User\UserRegisterRequest;
 use App\Service\Admin\AdminService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -96,44 +95,5 @@ class AdminController extends BaseController
         }
 
         return $this->response($response, self::CREATE);
-    }
-
-    /**
-     * admin: Get statistics.
-     * @Route("getstatistics", name="getStatisticsForAdmin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Admin")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns packages",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="activeStoresCount"),
-     *              @OA\Property(type="string", property="inactiveStoresCount"),
-     *              @OA\Property(type="string", property="ongoingOrdersCount"),
-     *              @OA\Property(type="string", property="allOrdersCount")
-     *       )
-     *    )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getStatisticsForAdmin(): JsonResponse
-    {
-        $result = $this->adminService->getStatisticsForAdmin();
-
-        return $this->response($result, self::FETCH);
     }
 }

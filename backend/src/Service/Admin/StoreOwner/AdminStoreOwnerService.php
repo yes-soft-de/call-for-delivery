@@ -13,7 +13,7 @@ class AdminStoreOwnerService
         $this->adminStoreOwnerManager = $adminStoreOwnerManager;
     }
 
-    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): string
+    public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): int
     {
         return $this->adminStoreOwnerManager->getStoreOwnersProfilesCountByStatusForAdmin($storeOwnerProfileStatus);
     }
