@@ -5,6 +5,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
+import 'package:c4d/module_subscription/ui/widget/custom_text_button.dart';
 import 'package:c4d/module_subscription/ui/widget/single_package_card.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -28,7 +29,6 @@ class SubscriptionBalanceLoadedState extends States {
       appBar: CustomC4dAppBar
           .appBar(context, title: S.current.mySubscription, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {
-          var isDark = getIt<ThemePreferencesHelper>().isDarkMode();
           showModalBottomSheet(
               backgroundColor: Colors.transparent,
               context: context,
@@ -36,6 +36,7 @@ class SubscriptionBalanceLoadedState extends States {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // buttons
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -46,46 +47,13 @@ class SubscriptionBalanceLoadedState extends States {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              SizedBox(
-                                width: double.maxFinite,
-                                child: TextButton(
-                                    style: TextButton.styleFrom(
-                                        shape: StadiumBorder()),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      if (balanceStatusEnum ==
-                                              BalanceStatus.ACTIVE ||
-                                          balance.status ==
-                                              BalanceStatus.CARS_FINISHED) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return CustomAlertDialog(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    Navigator.of(context).pushNamed(
-                                                        SubscriptionsRoutes
-                                                            .INIT_SUBSCRIPTIONS_SCREEN,
-                                                        arguments: S.current
-                                                            .renewSubscription);
-                                                  },
-                                                  content: S.current
-                                                      .renewedNoteYourSubStillActive);
-                                            });
-                                      } else {
-                                        Navigator.of(context).pushNamed(
-                                            SubscriptionsRoutes
-                                                .INIT_SUBSCRIPTIONS_SCREEN,
-                                            arguments:
-                                                S.current.renewSubscription);
-                                      }
-                                    },
-                                    child: Text(
-                                      S.current.renewNewPlan,
-                                      style: isDark
-                                          ? TextStyle(color: Colors.white70)
-                                          : null,
-                                    )),
+                              // extend subscription
+                              CustomTextButton(
+                                label: S.current.packageExtend,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.extendSubscriptions();
+                                },
                               ),
                               Divider(
                                 indent: 16,
@@ -93,27 +61,59 @@ class SubscriptionBalanceLoadedState extends States {
                                 color: Theme.of(context).backgroundColor,
                                 thickness: 2.5,
                               ),
-                              SizedBox(
-                                width: double.maxFinite,
-                                child: TextButton(
-                                    style: TextButton.styleFrom(
-                                        shape: StadiumBorder()),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.renewSubscription(balance.id);
-                                    },
-                                    child: Text(
-                                      S.current.renewOldPlan,
-                                      style: isDark
-                                          ? TextStyle(color: Colors.white70)
-                                          : null,
-                                    )),
+                              // renew new subscription
+                              CustomTextButton(
+                                label: S.current.renewNewPlan,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  if (balanceStatusEnum ==
+                                          BalanceStatus.ACTIVE ||
+                                      balance.status ==
+                                          BalanceStatus.CARS_FINISHED) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return CustomAlertDialog(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pushNamed(
+                                                    SubscriptionsRoutes
+                                                        .INIT_SUBSCRIPTIONS_SCREEN,
+                                                    arguments: S.current
+                                                        .renewSubscription);
+                                              },
+                                              content: S.current
+                                                  .renewedNoteYourSubStillActive);
+                                        });
+                                  } else {
+                                    Navigator.of(context).pushNamed(
+                                        SubscriptionsRoutes
+                                            .INIT_SUBSCRIPTIONS_SCREEN,
+                                        arguments: S.current.renewSubscription);
+                                  }
+                                },
+                              ),
+                              Divider(
+                                indent: 16,
+                                endIndent: 16,
+                                color: Theme.of(context).backgroundColor,
+                                thickness: 2.5,
+                              ),
+                              // renew current subscription
+
+                              CustomTextButton(
+                                label: S.current.renewOldPlan,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.renewSubscription(balance.id);
+                                },
                               ),
                             ],
                           ),
                         ),
                       ),
                     ),
+                    // close button
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(

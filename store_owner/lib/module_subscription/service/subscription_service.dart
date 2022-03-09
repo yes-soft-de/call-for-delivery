@@ -81,4 +81,14 @@ class SubscriptionService {
     }
     return DataModel.empty();
   }
+   Future<DataModel> extendPackage() async {
+    ActionResponse? response = await _manager.extendPackage();
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

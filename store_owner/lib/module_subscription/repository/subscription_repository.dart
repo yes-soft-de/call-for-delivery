@@ -63,4 +63,15 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> extendSubscriptions() async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.EXTEND_SUBSCRIPTION_API,
+      {},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

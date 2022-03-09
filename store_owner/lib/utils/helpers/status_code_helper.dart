@@ -39,6 +39,8 @@ class StatusCodeHelper {
         return S.current.outOfCars;
       case '9303':
         return S.current.renewedFailedYourSubStillActive;
+      case '9305':
+        return S.current.alreadyExtended;
       case '-1':
         return S.current.dataDecodeError;
       default:
