@@ -35,7 +35,7 @@ class NotificationFromAdminController extends BaseController
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      *
-     * @OA\Tag(name="Admin Notification")
+     * @OA\Tag(name="Notification FROM ADMIN")
      *
      * @OA\Parameter(
      *      name="token",
