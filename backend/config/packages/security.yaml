@@ -1,7 +1,7 @@
 security:
     role_hierarchy:
         ROLE_SUPER_ADMIN:
-            class: App\Constant\UserRoleConstant
+            class: App\Constant\User\UserRoleConstant
             property: ROLE_ADMIN
 
     enable_authenticator_manager: true

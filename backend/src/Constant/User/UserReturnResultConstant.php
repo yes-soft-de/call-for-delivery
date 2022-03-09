@@ -13,4 +13,6 @@ final class UserReturnResultConstant
     const YES_RESULT = "yes";
 
     const NO_RESULT = "no";
+
+    const WRONG_USER_TYPE = "wrongUserType";
 }

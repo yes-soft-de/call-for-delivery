@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Request\StoreOwner;
+namespace App\Request\Account;
 
-class StoreOwnerCompleteAccountStatusUpdateRequest
+class CompleteAccountStatusUpdateRequest
 {
-    private $storeOwnerId;
+    private string $userId;
 
-    private $completeAccountStatus;
+    private string $completeAccountStatus;
 
     /**
      * @return string|null
      */
-    public function getStoreOwnerId(): ?string
+    public function getUserId(): ?string
     {
-        return $this->storeOwnerId;
+        return $this->userId;
     }
 
-    public function setStoreOwnerId($storeOwnerId)
+    public function setUserId($userId)
     {
-        $this->storeOwnerId = $storeOwnerId;
+        $this->userId = $userId;
     }
 
     /**
