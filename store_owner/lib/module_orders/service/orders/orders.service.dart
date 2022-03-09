@@ -35,7 +35,7 @@ class OrdersService {
   Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
     OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '200') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

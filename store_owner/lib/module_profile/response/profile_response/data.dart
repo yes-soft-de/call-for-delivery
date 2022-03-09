@@ -14,7 +14,7 @@ class Data {
   String? bankNumber;
   Date? openingTime;
   Date? closeTime;
-
+  String? roomId;
   Data(
       {this.id,
       this.storeOwnerName,
@@ -27,7 +27,9 @@ class Data {
       this.bankNumber,
       this.city,
       this.closeTime,
-      this.openingTime});
+      this.openingTime,
+      this.roomId
+      });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
@@ -42,6 +44,7 @@ class Data {
         city: json['city'] as String?,
         bankName: json['bankName'] as String?,
         bankNumber: json['bankAccountNumber'] as String?,
+        roomId: json['roomId'] as String?,
         openingTime: json['openingTime'] == null
             ? null
             : Date.fromJson(json['openingTime'] as Map<String, dynamic>),

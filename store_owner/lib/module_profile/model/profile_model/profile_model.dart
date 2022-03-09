@@ -16,6 +16,7 @@ class ProfileModel extends DataModel {
   late String? status;
   late DateTime openingTime;
   late DateTime closingTime;
+  String? roomId;
   ProfileModel(
       {required this.image,
       required this.name,
@@ -28,7 +29,8 @@ class ProfileModel extends DataModel {
       this.status,
       this.imageUrl,
       required this.closingTime,
-      required this.openingTime});
+      required this.openingTime,
+      required this.roomId});
   late ProfileModel _profile;
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;
@@ -44,7 +46,8 @@ class ProfileModel extends DataModel {
         employeeCount: data?.employeeCount,
         status: data?.status ?? 'inActive',
         closingTime: DateHelper.convert(data?.closeTime?.timestamp),
-        openingTime: DateHelper.convert(data?.openingTime?.timestamp));
+        openingTime: DateHelper.convert(data?.openingTime?.timestamp),
+        roomId: data?.roomId);
   }
   ProfileModel get data => _profile;
 }

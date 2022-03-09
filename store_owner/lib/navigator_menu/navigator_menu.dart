@@ -1,5 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
@@ -128,10 +130,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               icon: FontAwesomeIcons.whatsappSquare,
               onTap: () {},
               title: S.current.whatsapp),
-          CustomNavTile(
-              icon: Icons.support_agent_rounded,
-              onTap: () {},
-              title: S.current.directSupport),
+          Visibility(
+            visible: widget.profileModel != null,
+            child: CustomNavTile(
+                icon: Icons.support_agent_rounded,
+                onTap: () {
+                  Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                      arguments: ChatArgument(
+                        userType: 'admin',
+                        support: true,
+                        roomID: widget.profileModel?.roomId ?? '',
+                      ));
+                },
+                title: S.current.directSupport),
+          ),
           Divider(
             indent: 32,
             endIndent: 32,

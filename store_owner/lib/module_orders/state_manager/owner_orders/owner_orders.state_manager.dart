@@ -82,9 +82,6 @@ class OwnerOrdersStateManager {
         value as OrderModel;
         _stateSubject
             .add(OrdersListStateOrdersLoaded(screenState, orders: value.data));
-        if (loading) {
-          watcher(screenState);
-        }
       }
     });
   }
@@ -104,11 +101,10 @@ class OwnerOrdersStateManager {
 
   void watcher(OwnerOrdersScreenState screenState) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      // getOrdersFilters(
-      //     screenState,
-      //     FilterOrderRequest(state: screenState.orderFilter ?? 'ongoing'),
-      //     false);
-      getOrders(screenState,false);
+      getOrdersFilters(
+          screenState,
+          FilterOrderRequest(state: screenState.orderFilter ?? 'pending'),
+          false);
     });
   }
 }
