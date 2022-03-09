@@ -283,6 +283,7 @@ class AdminNotificationToUsersController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+    
     /**
      * admin: get notification by id.
      * @Route("adminnotification/{id}", name="getNotificationByIdForAdmin", methods={"GET"})
