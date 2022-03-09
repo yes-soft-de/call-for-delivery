@@ -4460,10 +4460,10 @@ class S {
     );
   }
 
-  /// `Choose your desired package subscriptions based on your city`
+  /// `Choose your desired package subscriptions based on your wanted category`
   String get chooseYourPackageHint {
     return Intl.message(
-      'Choose your desired package subscriptions based on your city',
+      'Choose your desired package subscriptions based on your wanted category',
       name: 'chooseYourPackageHint',
       desc: '',
       args: [],
@@ -5135,6 +5135,46 @@ class S {
     return Intl.message(
       'Pending order',
       name: 'pendingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have already subscribed , and your subscription still valid`
+  String get renewedFailedYourSubStillActive {
+    return Intl.message(
+      'You have already subscribed , and your subscription still valid',
+      name: 'renewedFailedYourSubStillActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about renewing your subscription , because if you do that you will lose current subscriptions`
+  String get renewedNoteYourSubStillActive {
+    return Intl.message(
+      'Are you sure about renewing your subscription , because if you do that you will lose current subscriptions',
+      name: 'renewedNoteYourSubStillActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From date`
+  String get firstDate {
+    return Intl.message(
+      'From date',
+      name: 'firstDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To date`
+  String get endDate {
+    return Intl.message(
+      'To date',
+      name: 'endDate',
       desc: '',
       args: [],
     );
