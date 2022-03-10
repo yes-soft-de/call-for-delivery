@@ -88,6 +88,9 @@ class OrderService
 
         $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
 
+        // following statement is a temporary one
+        $order['captainUserId'] = $id;
+
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
     
