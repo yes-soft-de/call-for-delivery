@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\OrderChatRoomEntity;
 use App\Request\Order\OrderFilterRequest;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -57,9 +58,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.images')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('orderChatRoomEntity.roomId')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
+            ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captainId = orderEntity.captainId')
             
             ->andWhere('orderEntity.id = :id')
 

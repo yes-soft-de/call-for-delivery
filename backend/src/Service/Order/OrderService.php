@@ -85,9 +85,12 @@ class OrderService
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
-
-        $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
-
+        if($order) {
+            
+            $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
+            //This is for testing, it will be completed after building the captain's entity
+            $order['roomId'] = "12345678912456789";
+        }
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
     
