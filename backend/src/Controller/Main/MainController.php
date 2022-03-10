@@ -4,8 +4,10 @@ namespace App\Controller\Main;
 
 use App\AutoMapping;
 use App\Constant\Main\MainDeleteConstant;
+use App\Constant\Order\OrderResultConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
+use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\User\UserFilterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Service\Main\MainService;
@@ -14,21 +16,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("v1/main/")
  */
 class MainController extends BaseController
 {
+    private ValidatorInterface $validator;
     private AutoMapping $autoMapping;
     private MainService $mainService;
 
-    public function __construct(AutoMapping $autoMapping, SerializerInterface $serializer, MainService $mainService)
+    public function __construct(AutoMapping $autoMapping, SerializerInterface $serializer, MainService $mainService, ValidatorInterface $validator)
     {
         parent::__construct($serializer);
+        $this->validator = $validator;
         $this->autoMapping = $autoMapping;
         $this->mainService = $mainService;
     }
@@ -216,5 +222,88 @@ class MainController extends BaseController
         }
 
         return $this->json($response);
+    }
+
+    /**
+     * update order state
+     * @Route("updateorderstatebysuperadmin", name="updateOrderStateBySuperAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Main")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update order state by super admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="state")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns updated order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType"),
+     *               @OA\Property(type="integer", property="captainId"),
+     *               @OA\Property(type="object", property="createdAt"),
+     *               @OA\Property(type="object", property="updatedAt"),
+     *               @OA\Property(type="integer", property="kilometer")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns order not found response",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9205"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="orderNotFound")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateOrderStateBySuperAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderStateUpdateBySuperAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->mainService->updateOrderStateBySuperAdmin($request);
+
+        if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response($result, self::ERROR_ORDER_NOT_FOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

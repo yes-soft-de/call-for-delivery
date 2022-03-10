@@ -2,21 +2,32 @@
 
 namespace App\Service\Main;
 
+use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
+use App\Constant\Notification\NotificationConstant;
+use App\Constant\Order\OrderResultConstant;
+use App\Entity\OrderEntity;
 use App\Manager\Main\MainManager;
+use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Response\Main\OrderStateUpdateBySuperAdminResponse;
 use App\Response\User\UserRegisterResponse;
+use App\Service\Notification\NotificationLocalService;
 use App\Service\User\UserService;
 
 class MainService
 {
     private UserService $userService;
     private MainManager $mainManager;
+    private AutoMapping $autoMapping;
+    private NotificationLocalService $notificationLocalService;
 
-    public function __construct(UserService $userService, MainManager $mainManager)
+    public function __construct(UserService $userService, MainManager $mainManager, AutoMapping $autoMapping, NotificationLocalService $notificationLocalService)
     {
         $this->userService = $userService;
         $this->mainManager = $mainManager;
+        $this->autoMapping = $autoMapping;
+        $this->notificationLocalService = $notificationLocalService;
     }
 
     public function checkBackendHealth($userId): ?array
@@ -47,5 +58,19 @@ class MainService
     public function deletePackagesAndSubscriptions(): \Exception|string
     {
         return $this->mainManager->deletePackagesAndSubscriptions();
+    }
+
+    public function updateOrderStateBySuperAdmin(OrderStateUpdateBySuperAdminRequest $request)
+    {
+        $orderResult = $this->mainManager->updateOrderStateBySuperAdmin($request);
+
+        if($orderResult === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+
+        } else {
+            $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::UPDATE_ORDER_TITLE, NotificationConstant::UPDATE_ORDER_SUCCESS, $orderResult->getId());
+
+            return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateBySuperAdminResponse::class, $orderResult);
+        }
     }
 }
