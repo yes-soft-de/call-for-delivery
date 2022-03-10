@@ -98,8 +98,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         color: Colors.transparent,
                         child: ListTile(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)
-                          ),
+                              borderRadius: BorderRadius.circular(25)),
                           onTap: () {
                             showDatePicker(
                                     context: context,
@@ -107,7 +106,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                                       bool isDark =
                                           getIt<ThemePreferencesHelper>()
                                               .isDarkMode();
-                      
+
                                       if (isDark == false)
                                         return widget ?? SizedBox();
                                       return Theme(
@@ -154,8 +153,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         color: Colors.transparent,
                         child: ListTile(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)
-                          ),
+                              borderRadius: BorderRadius.circular(25)),
                           onTap: () {
                             showDatePicker(
                                     context: context,

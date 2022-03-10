@@ -24,7 +24,6 @@ class OrdersModule extends YesModule {
       OrdersRoutes.OWNER_ORDERS_SCREEN: (context) => _ordersScreen,
       OrdersRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
       OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN: (context) => _logsScreen,
-
     };
   }
 }

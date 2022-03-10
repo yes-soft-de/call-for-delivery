@@ -32,6 +32,7 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
   void deleteNotification(String id) {
     widget._stateManager.deleteNotification(this, id);
   }
+
   void deleteNotifications(List<String> notification) {
     widget._stateManager.deleteNotifications(this, notification);
   }

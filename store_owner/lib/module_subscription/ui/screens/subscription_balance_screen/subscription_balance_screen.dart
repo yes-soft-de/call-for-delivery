@@ -34,6 +34,7 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   void renewSubscription(int id) {
     widget._stateManager.subscribePackage(this, id);
   }
+
   void extendSubscriptions() {
     widget._stateManager.extendPackage(this);
   }

@@ -11,6 +11,6 @@ class MyNotificationsManager {
 
   Future<MyNotificationResponse?> getNotification() =>
       _myNotificationsRepository.getMyNotification();
-      Future<ActionResponse?> deleteNotification(String id) =>
+  Future<ActionResponse?> deleteNotification(String id) =>
       _myNotificationsRepository.deleteNotification(id);
 }

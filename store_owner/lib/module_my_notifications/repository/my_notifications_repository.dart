@@ -18,9 +18,11 @@ class MyNotificationsRepository {
     if (response == null) return null;
     return MyNotificationResponse.fromJson(response);
   }
+
   Future<ActionResponse?> deleteNotification(String id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.delete(Urls.DELETE_MY_NOTIFICATION + '/$id',
+    dynamic response = await _apiClient.delete(
+        Urls.DELETE_MY_NOTIFICATION + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
