@@ -40,7 +40,12 @@ class CustomC4dAppBar {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                                color:isDark ? Theme.of(context).colorScheme.background.withOpacity(0.5) : Theme.of(context).backgroundColor,
+                                color: isDark
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .background
+                                        .withOpacity(0.5)
+                                    : Theme.of(context).backgroundColor,
                                 spreadRadius: 1.5,
                                 blurRadius: 6,
                                 offset: Offset(-0.2, 0))
@@ -82,7 +87,12 @@ class CustomC4dAppBar {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                  color:isDark ? Theme.of(context).colorScheme.background.withOpacity(0.5) : Theme.of(context).backgroundColor,
+                  color: isDark
+                      ? Theme.of(context)
+                          .colorScheme
+                          .background
+                          .withOpacity(0.5)
+                      : Theme.of(context).backgroundColor,
                   spreadRadius: 1.5,
                   blurRadius: 6,
                   offset: Offset(-0.2, 0))

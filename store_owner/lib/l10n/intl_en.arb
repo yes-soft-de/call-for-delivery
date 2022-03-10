@@ -443,7 +443,7 @@
     "storeNameIsToShort": "Store name must not be less than 3 character",
     "chooseYourCompanyCapacity": "Choose your capacity",
     "packageInfo": "Package Info",
-    "chooseYourPackageHint": "Choose your desired package subscriptions based on your city",
+    "chooseYourPackageHint": "Choose your desired package subscriptions based on your wanted category",
     "close": "Close",
     "packageSubscriptionSuccess": "You subscripted with the package successfully",
     "myLocation": "My Location",
@@ -510,7 +510,22 @@
     "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
     "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
     "sortedByLatest": "Sorted by latest",
-    "pendingOrders": "Pending order"
+    "pendingOrders": "Pending order",
+    "renewedFailedYourSubStillActive": "You have already subscribed , and your subscription still valid",
+    "renewedNoteYourSubStillActive": "Are you sure about renewing your subscription , because if you do that you will lose current subscriptions",
+    "firstDate": "From date",
+    "endDate": "To date",
+    "packageExtendedSuccessfully": "Your subscription extended successfully",
+    "packageExtend": "Temporary subscription extend",
+    "alreadyExtended": "Your subscription already extended , You can't extend it again",
+    "packageNotFoundRenew": "This Package not available to renew any more",
+    "notices": "Notices"
+
+
+
+
+
+
 
 
 

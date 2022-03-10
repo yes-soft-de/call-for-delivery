@@ -1,4 +1,5 @@
 import 'package:c4d/module_subscription/repository/subscription_repository.dart';
+import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -22,4 +23,8 @@ class SubscriptionsManager {
       await _repository.subscribePackage(packageId);
   Future<ActionResponse?> renewPackage(int packageId) async =>
       await _repository.renewPackage(packageId);
+  Future<ActionResponse?> extendPackage() async =>
+      await _repository.extendSubscriptions();
+  Future<CanMakeOrderResponse?> canMakeOrder() async =>
+      await _repository.canMakeOrder();
 }

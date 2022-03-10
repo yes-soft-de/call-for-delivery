@@ -8,10 +8,10 @@ class FilterOrderRequest {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['state'] = this.state;
     if (toDate != null) {
-      data['dateTow'] = this.toDate;
+      data['toDate'] = this.toDate;
     }
     if (fromDate != null) {
-      data['dateOne'] = this.fromDate;
+      data['fromDate'] = this.fromDate;
     }
 
     return data;

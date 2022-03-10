@@ -442,7 +442,7 @@
     "storeNameIsToShort": "اسم المتجر يجب ألا يقل عن ثلاث حروف",
     "chooseYourCompanyCapacity": "اختر حجم منشأتك",
     "packageInfo": "معلومات الحزمة",
-    "chooseYourPackageHint": "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا بناءا على مدينتك",
+    "chooseYourPackageHint": "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا وفق التصنيفات المناسبة لك",
     "close": "إغلاق",
     "packageSubscriptionSuccess": "تم الاشتراك بنجاح",
     "myLocation": "موقعي",
@@ -509,7 +509,16 @@
     "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
     "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
     "sortedByLatest": "من الأقدم للأحدث",
-    "pendingOrders": "الطلبات قيد الانتظار"
+    "pendingOrders": "الطلبات قيد الانتظار",
+    "renewedFailedYourSubStillActive": "لا يمكنك تجديد الاشتراك ،لان اشتراكك الحالي مفعل وصالح للاستخدام",
+    "renewedNoteYourSubStillActive": "باقتك الحالية لم تنتهي بعد ، في حال اشتراكك بباقة جديدة ستخسر المتبقي بالباقة",
+    "firstDate": "من تاريخ",
+    "endDate": "إلى تاريخ",
+    "packageExtendedSuccessfully": "تم تمديد الاشتراك بنجاح",
+    "packageExtend": "تمديد اضطراري للاشتراك",
+    "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى",
+    "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد",
+    "notices": "التنبيهات"
 
 
 

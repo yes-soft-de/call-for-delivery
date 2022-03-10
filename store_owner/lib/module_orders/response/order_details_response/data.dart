@@ -40,8 +40,7 @@ class Data {
       this.storeOwnerBranchId,
       this.branchName,
       this.image,
-      this.roomId
-      });
+      this.roomId});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,

@@ -35,6 +35,10 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
     widget._stateManager.subscribePackage(this, id);
   }
 
+  void extendSubscriptions() {
+    widget._stateManager.extendPackage(this);
+  }
+
   @override
   void initState() {
     _streamSubscription = widget._stateManager.stateStream.listen((event) {

@@ -61,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
+        "alreadyExtended": MessageLookupByLibrary.simpleMessage(
+            "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -160,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourCompanyCapacity":
             MessageLookupByLibrary.simpleMessage("اختر حجم منشأتك"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
-            "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا بناءا على مدينتك"),
+            "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا وفق التصنيفات المناسبة لك"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
@@ -243,6 +245,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyField": MessageLookupByLibrary.simpleMessage("حقل فارغ"),
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
+        "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -275,6 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
+        "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":
             MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
@@ -403,6 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
+        "notices": MessageLookupByLibrary.simpleMessage("التنبيهات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
@@ -458,7 +463,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageExtend":
+            MessageLookupByLibrary.simpleMessage("تمديد اضطراري للاشتراك"),
+        "packageExtendedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تمديد الاشتراك بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
+        "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "هذا الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
@@ -585,6 +596,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كيفية تجديد الإشتراك"),
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("تجديد الاشتراك"),
+        "renewedFailedYourSubStillActive": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك تجديد الاشتراك ،لان اشتراكك الحالي مفعل وصالح للاستخدام"),
+        "renewedNoteYourSubStillActive": MessageLookupByLibrary.simpleMessage(
+            "باقتك الحالية لم تنتهي بعد ، في حال اشتراكك بباقة جديدة ستخسر المتبقي بالباقة"),
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),

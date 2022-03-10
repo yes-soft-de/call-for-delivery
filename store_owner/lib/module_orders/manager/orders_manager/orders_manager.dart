@@ -21,8 +21,8 @@ class OrdersManager {
       _repository.getOrderDetails(orderId);
 
   Future<OrdersResponse?> getMyOrders() => _repository.getMyOrders();
-  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) => _repository.getMyOrdersFilter(request);
-
+  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
+      _repository.getMyOrdersFilter(request);
 
   // Future<Map> getOrder(int orderId) => _repository.getOrder(orderId);
 

@@ -1,22 +1,21 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_my_notifications/state_manager/update_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_my_notifications/state_manager/my_notifications_state_manager.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 
 @injectable
-class MyNotificationsScreen extends StatefulWidget {
-  final MyNotificationsStateManager _stateManager;
-  MyNotificationsScreen(this._stateManager);
+class UpdateScreen extends StatefulWidget {
+  final UpdatesStateManager _stateManager;
+  UpdateScreen(this._stateManager);
 
   @override
-  MyNotificationsScreenState createState() => MyNotificationsScreenState();
+  UpdateScreenState createState() => UpdateScreenState();
 }
 
-class MyNotificationsScreenState extends State<MyNotificationsScreen> {
+class UpdateScreenState extends State<UpdateScreen> {
   late States currentState;
   bool markerMode = false;
   void refresh() {
@@ -25,16 +24,16 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
     }
   }
 
-  Future<void> getNotifications() async {
-    widget._stateManager.getNotifications(this);
+  Future<void> getNotices() async {
+    widget._stateManager.getUpdates(this);
   }
 
   void deleteNotification(String id) {
-    widget._stateManager.deleteNotification(this, id);
+   // widget._stateManager.deleteNotification(this, id);
   }
 
   void deleteNotifications(List<String> notification) {
-    widget._stateManager.deleteNotifications(this, notification);
+ //   widget._stateManager.deleteNotifications(this, notification);
   }
 
   void goToLogin() {
@@ -46,7 +45,7 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
   void initState() {
     currentState = LoadingState(this);
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      widget._stateManager.getNotifications(this);
+      widget._stateManager.getUpdates(this);
     });
     widget._stateManager.stateStream.listen((event) {
       currentState = event;

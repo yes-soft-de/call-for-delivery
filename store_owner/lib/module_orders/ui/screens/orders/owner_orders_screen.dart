@@ -13,9 +13,11 @@ import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -36,10 +38,13 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     with WidgetsBindingObserver {
   late States _currentState;
   ProfileModel? currentProfile;
+  CanMakeOrderModel? status;
+
   CompanyInfoResponse? _companyInfo;
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
+  StreamSubscription? _statusSubscription;
 
   Future<void> getMyOrders([loading = true]) async {
     widget._stateManager.getOrders(this, loading);
@@ -70,6 +75,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     super.initState();
     _currentState = LoadingState(this);
     getMyOrders();
+    getInitData();
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
@@ -98,11 +104,16 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         setState(() {});
       }
     });
+    _statusSubscription = widget._stateManager.statusStream.listen((event) {
+      status = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getInitData();
       getMyOrdersFilter(false);
     });
-    getInitData();
   }
 
   String? orderFilter;
@@ -143,9 +154,18 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                 shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             )),
-            onPressed: () {
-              Navigator.of(context).pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
-            },
+            onPressed: status != null
+                ? () {
+                    if (status?.canCreateOrder == true) {
+                      Navigator.of(context)
+                          .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
+                    } else {
+                      CustomFlushBarHelper.createError(
+                          title: S.current.warnning,
+                          message: status?.status ?? '');
+                    }
+                  }
+                : null,
             icon: Icon(Icons.add_rounded,
                 color: Theme.of(context).textTheme.button?.color),
             label: Padding(
@@ -171,15 +191,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             items: [
               FilterItem(label: S.current.pendingOrders),
               FilterItem(label: S.current.onGoingOrder),
-              FilterItem(label: S.current.completedOrders),
             ],
             onItemSelected: (index) {
               if (index == 0) {
                 orderFilter = 'pending';
-              } else if (index == 1) {
-                orderFilter = 'ongoing';
               } else {
-                orderFilter = 'completed';
+                orderFilter = 'ongoing';
               }
               currentIndex = index;
               getMyOrdersFilter();
