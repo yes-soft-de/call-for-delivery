@@ -37,4 +37,6 @@ class OrdersResponse
     public $images;
 
     public $captainUserId;
+    
+    public $roomId;
 }
