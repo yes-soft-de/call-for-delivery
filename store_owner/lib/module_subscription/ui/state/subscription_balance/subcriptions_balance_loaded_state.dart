@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/balance_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
@@ -6,6 +7,7 @@ import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/widget/single_package_card.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +17,10 @@ class SubscriptionBalanceLoadedState extends States {
   SubscriptionBalanceModel balance;
   final SubscriptionBalanceScreenState screenState;
   SubscriptionBalanceLoadedState(this.screenState, this.balance)
-      : super(screenState);
-
+      : super(screenState) {
+    balanceStatusEnum = SubscriptionsStatusHelper.getStatusEnum(balance.status);
+  }
+  late BalanceStatus balanceStatusEnum;
   @override
   Widget getUI(BuildContext context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -49,11 +53,32 @@ class SubscriptionBalanceLoadedState extends States {
                                         shape: StadiumBorder()),
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      Navigator.of(context).pushNamed(
-                                          SubscriptionsRoutes
-                                              .INIT_SUBSCRIPTIONS_SCREEN,
-                                          arguments:
-                                              S.current.renewSubscription);
+                                      if (balanceStatusEnum ==
+                                              BalanceStatus.ACTIVE ||
+                                          balance.status ==
+                                              BalanceStatus.CARS_FINISHED) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return CustomAlertDialog(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context).pushNamed(
+                                                        SubscriptionsRoutes
+                                                            .INIT_SUBSCRIPTIONS_SCREEN,
+                                                        arguments: S.current
+                                                            .renewSubscription);
+                                                  },
+                                                  content: S.current
+                                                      .renewedNoteYourSubStillActive);
+                                            });
+                                      } else {
+                                        Navigator.of(context).pushNamed(
+                                            SubscriptionsRoutes
+                                                .INIT_SUBSCRIPTIONS_SCREEN,
+                                            arguments:
+                                                S.current.renewSubscription);
+                                      }
                                     },
                                     child: Text(
                                       S.current.renewNewPlan,

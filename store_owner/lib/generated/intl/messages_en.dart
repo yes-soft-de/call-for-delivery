@@ -163,7 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourCompanyCapacity":
             MessageLookupByLibrary.simpleMessage("Choose your capacity"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
-            "Choose your desired package subscriptions based on your city"),
+            "Choose your desired package subscriptions based on your wanted category"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
@@ -245,6 +245,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyField": MessageLookupByLibrary.simpleMessage("Empty Field"),
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "There is no packages in this category"),
+        "endDate": MessageLookupByLibrary.simpleMessage("To date"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -281,6 +282,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
@@ -591,6 +593,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Subscription options"),
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("Renew Subscription"),
+        "renewedFailedYourSubStillActive": MessageLookupByLibrary.simpleMessage(
+            "You have already subscribed , and your subscription still valid"),
+        "renewedNoteYourSubStillActive": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about renewing your subscription , because if you do that you will lose current subscriptions"),
         "reportSent": MessageLookupByLibrary.simpleMessage("Report sent"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),

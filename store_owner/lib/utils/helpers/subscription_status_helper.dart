@@ -1,3 +1,4 @@
+import 'package:c4d/consts/balance_status.dart';
 import 'package:c4d/generated/l10n.dart';
 
 class SubscriptionsStatusHelper {
@@ -17,6 +18,30 @@ class SubscriptionsStatusHelper {
         return S.current.notSubscription;
       default:
         return S.current.errorHappened;
+    }
+  }
+
+  static BalanceStatus getStatusEnum(String? status) {
+    switch (status) {
+      case 'active':
+        return BalanceStatus.ACTIVE;
+      case 'inactive':
+        return BalanceStatus.INACTIVE;
+
+      case 'cars finished':
+        return BalanceStatus.CARS_FINISHED;
+
+      case 'order finished':
+        return BalanceStatus.ORDERS_FINISHED;
+
+      case 'date finished':
+        return BalanceStatus.EXPIRED;
+
+      case 'unsubscribed':
+        return BalanceStatus.UNSUBSCRIBED;
+
+      default:
+        return BalanceStatus.INACTIVE;
     }
   }
 }

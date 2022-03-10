@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
@@ -111,7 +112,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               title: S.current.mySubscription),
           CustomNavTile(
               icon: Icons.compare_arrows_rounded,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN);
+              },
               title: S.current.myOrders),
           CustomNavTile(
               icon: Icons.store_rounded,
