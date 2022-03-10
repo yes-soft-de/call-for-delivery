@@ -3,10 +3,12 @@
 namespace App\Manager\Order;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderResultConstant;
 use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Repository\OrderEntityRepository;
+use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -81,5 +83,21 @@ class OrderManager
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
 
         return $this->orderRepository->filterStoreOrders($request, $storeOwner->getId());
+    }
+
+    public function updateOrderStateBySuperAdmin(OrderStateUpdateBySuperAdminRequest $request): string|OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+
+        } else {
+            $orderEntity = $this->autoMapping->mapToObject(OrderStateUpdateBySuperAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+
+            $this->entityManager->flush();
+
+            return $orderEntity;
+        }
     }
 }

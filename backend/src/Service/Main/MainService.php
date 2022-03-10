@@ -2,9 +2,14 @@
 
 namespace App\Service\Main;
 
+use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
+use App\Constant\Order\OrderResultConstant;
+use App\Entity\OrderEntity;
 use App\Manager\Main\MainManager;
+use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Response\Main\OrderStateUpdateBySuperAdminResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Service\User\UserService;
 
@@ -12,11 +17,13 @@ class MainService
 {
     private UserService $userService;
     private MainManager $mainManager;
+    private AutoMapping $autoMapping;
 
-    public function __construct(UserService $userService, MainManager $mainManager)
+    public function __construct(UserService $userService, MainManager $mainManager, AutoMapping $autoMapping)
     {
         $this->userService = $userService;
         $this->mainManager = $mainManager;
+        $this->autoMapping = $autoMapping;
     }
 
     public function checkBackendHealth($userId): ?array
@@ -47,5 +54,17 @@ class MainService
     public function deletePackagesAndSubscriptions(): \Exception|string
     {
         return $this->mainManager->deletePackagesAndSubscriptions();
+    }
+
+    public function updateOrderStateBySuperAdmin(OrderStateUpdateBySuperAdminRequest $request)
+    {
+        $orderResult = $this->mainManager->updateOrderStateBySuperAdmin($request);
+
+        if($orderResult === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+
+        } else {
+            return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateBySuperAdminResponse::class, $orderResult);
+        }
     }
 }

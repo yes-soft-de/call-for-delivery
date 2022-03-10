@@ -150,3 +150,10 @@ App\Request\Rate\RatingCreateRequest:
             - NotBlank: ~
         rated:
             - NotBlank: ~
+
+App\Request\Main\OrderStateUpdateBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        state:
+            - NotBlank: ~
