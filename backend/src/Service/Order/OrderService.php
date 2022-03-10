@@ -88,6 +88,9 @@ class OrderService
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
+
+            // following statement is a temporary one
+            $order['captainUserId'] = $id;
             //This is for testing, it will be completed after building the captain's entity
             $order['roomId'] = "12345678912456789";
         }
