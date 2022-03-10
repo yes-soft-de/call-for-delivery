@@ -517,7 +517,8 @@
     "packageExtendedSuccessfully": "تم تمديد الاشتراك بنجاح",
     "packageExtend": "تمديد اضطراري للاشتراك",
     "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى",
-    "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد"
+    "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد",
+    "notices": "التنبيهات"
 
 
 

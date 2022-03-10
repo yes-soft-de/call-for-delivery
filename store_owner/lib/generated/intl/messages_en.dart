@@ -412,6 +412,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("Notes"),
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
+        "notices": MessageLookupByLibrary.simpleMessage("Notices"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
