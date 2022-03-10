@@ -75,7 +75,8 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-    Future<CanMakeOrderResponse?> canMakeOrder() async {
+
+  Future<CanMakeOrderResponse?> canMakeOrder() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
       Urls.CAN_MAKE_ORDER_API,

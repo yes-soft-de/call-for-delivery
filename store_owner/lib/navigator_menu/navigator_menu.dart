@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
@@ -130,6 +131,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
+          CustomNavTile(
+              icon: Icons.notifications_active_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
+              },
+              title: S.current.notices),
           CustomNavTile(
               icon: FontAwesomeIcons.whatsappSquare,
               onTap: () {},

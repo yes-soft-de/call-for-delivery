@@ -18,7 +18,7 @@ class CanMakeOrderModel extends DataModel {
     var data = response.data;
     _model = CanMakeOrderModel(
         canCreateOrder: data?.canCreateOrder ?? true,
-        status:data?.subscriptionStatus ?? 'inactive');
+        status: data?.subscriptionStatus ?? 'inactive');
   }
   CanMakeOrderModel get data => _model;
 }

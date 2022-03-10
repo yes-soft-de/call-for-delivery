@@ -4,7 +4,7 @@ import 'package:c4d/utils/effect/scaling.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/module_my_notifications/notification_model.dart';
+import 'package:c4d/module_my_notifications/model/notification_model.dart';
 import 'package:c4d/module_my_notifications/ui/screen/my_notifications_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/text_style/text_style.dart';
@@ -162,7 +162,7 @@ class MyNotificationsLoadedState extends States {
     List<Widget> children = [];
     model.forEach((element) {
       children.add(Padding(
-        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: InkWell(
           onLongPress: () {
             screenState.markerMode = true;

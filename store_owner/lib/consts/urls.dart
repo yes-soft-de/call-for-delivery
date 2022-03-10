@@ -211,6 +211,8 @@ class Urls {
       BASE_API + '/storeownerprofilecompleteaccountstatus';
   static const GET_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationsLocal';
+  static const GET_UPDATES =
+      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforstore';
   static const DELETE_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationLocal';
   static const GET_SUBSCRIPTION_BALANCE =
