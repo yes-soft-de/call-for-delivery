@@ -245,8 +245,8 @@ class OrderController extends BaseController
      *      description="Post a request with filtering orders options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="state"),
-     *          @OA\Property(type="string", property="dateOne"),
-     *          @OA\Property(type="string", property="dateTwo")
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
      *      )
      * )
      *
