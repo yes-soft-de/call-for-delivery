@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\OrderChatRoomEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: OrderChatRoomEntityRepository::class)]
+//this class use chatRoom between captain and store
 class OrderChatRoomEntity
 {
     #[ORM\Id]
@@ -24,6 +26,9 @@ class OrderChatRoomEntity
 
     #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'orderChatRoomEntities')]
     private $orderId;
+
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private $roomId;
 
     public function getId(): ?int
     {
@@ -74,6 +79,18 @@ class OrderChatRoomEntity
     public function setOrderId(?OrderEntity $orderId): self
     {
         $this->orderId = $orderId;
+
+        return $this;
+    }
+    
+    public function getRoomId():? uuid
+    {
+        return $this->roomId;
+    }
+
+    public function setRoomId($roomId): self
+    {
+        $this->roomId = $roomId;
 
         return $this;
     }

@@ -35,4 +35,6 @@ class OrdersResponse
     public $branchName;
 
     public $images;
+    
+    public $roomId;
 }
