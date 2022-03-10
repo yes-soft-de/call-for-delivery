@@ -141,3 +141,12 @@ App\Request\Admin\Notification\AdminNotificationToUsersUpdateRequest:
             - NotBlank: ~
         appType:
             - NotBlank: ~
+
+App\Request\Rate\RatingCreateRequest:
+    properties:
+        rating:
+            - NotBlank: ~
+        rater:
+            - NotBlank: ~
+        rated:
+            - NotBlank: ~
