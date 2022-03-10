@@ -5229,6 +5229,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Copy`
+  String get copy {
+    return Intl.message(
+      'Copy',
+      name: 'copy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Link Copied Successfully`
+  String get copyFinished {
+    return Intl.message(
+      'Link Copied Successfully',
+      name: 'copyFinished',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

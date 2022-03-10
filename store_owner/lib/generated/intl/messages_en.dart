@@ -190,6 +190,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "copy": MessageLookupByLibrary.simpleMessage("Copy"),
+        "copyFinished":
+            MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
