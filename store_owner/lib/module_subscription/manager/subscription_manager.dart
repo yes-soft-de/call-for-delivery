@@ -22,4 +22,6 @@ class SubscriptionsManager {
       await _repository.subscribePackage(packageId);
   Future<ActionResponse?> renewPackage(int packageId) async =>
       await _repository.renewPackage(packageId);
+  Future<ActionResponse?> extendPackage() async =>
+      await _repository.extendSubscriptions();
 }

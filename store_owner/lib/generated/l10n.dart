@@ -5179,6 +5179,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Your subscription extended successfully`
+  String get packageExtendedSuccessfully {
+    return Intl.message(
+      'Your subscription extended successfully',
+      name: 'packageExtendedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Temporary subscription extend`
+  String get packageExtend {
+    return Intl.message(
+      'Temporary subscription extend',
+      name: 'packageExtend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your subscription already extended , You can't extend it again`
+  String get alreadyExtended {
+    return Intl.message(
+      'Your subscription already extended , You can\'t extend it again',
+      name: 'alreadyExtended',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Package not available to renew any more`
+  String get packageNotFoundRenew {
+    return Intl.message(
+      'This Package not available to renew any more',
+      name: 'packageNotFoundRenew',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

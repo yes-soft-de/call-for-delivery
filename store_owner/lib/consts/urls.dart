@@ -194,6 +194,8 @@ class Urls {
       DOMAIN + '/v1/packagecategory/packagescategoriesforstore';
   static const SUBSCRIPTION_API = DOMAIN + '/v1/subscription/subscription';
   static const RENEW_SUBSCRIPTION_API = BASE_API + '';
+  static const EXTEND_SUBSCRIPTION_API = DOMAIN + '/v1/subscription/extrasubscriptionforday';
+
   static const UPDATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
   static const CREATE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/branch';
   static const CREATE_BRANCH_LIST_API =
