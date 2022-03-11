@@ -211,7 +211,7 @@ class _CustomFormFieldWithTranslateState
                         : TextInputAction.next,
                     inputFormatters: widget.numbers
                         ? <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+                            FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
                           ]
                         : [],
                     onChanged: (v) {
