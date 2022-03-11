@@ -40,11 +40,40 @@ class SinglePackageCard extends StatelessWidget {
             children: [
               // package name
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Text(
                       packageName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: edit,
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 20),
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Theme.of(context).backgroundColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.edit,),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Text(
+                      city,
                       style: TextStyle(
                           fontWeight: FontWeight.bold),
                     ),
@@ -65,36 +94,10 @@ class SinglePackageCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Text(
-                      city,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                   InkWell(
-                     onTap: edit,
-                     child: Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 20),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Theme.of(context).backgroundColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.edit,),
-                          )),
-                  ),
-                   )
-                ],
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 16.0),
+                child: Text(packageInfo),
               ),
-
-
               // divider
               Padding(
                 padding: const EdgeInsets.only(
@@ -106,7 +109,6 @@ class SinglePackageCard extends StatelessWidget {
                 ),
               ),
               // package info
-
               Row(children: [
                 Column(children: [
                   Padding(

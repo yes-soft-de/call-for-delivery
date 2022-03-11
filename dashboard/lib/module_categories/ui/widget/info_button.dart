@@ -45,29 +45,37 @@ class _InfoButtonState extends State<InfoButton>
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: AlignmentDirectional.bottomEnd,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: _animationController.isCompleted,
-                child: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Text(
-                      S.current.note,
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).disabledColor,
+          child: AnimatedContainer(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).backgroundColor),
+            height: 35,
+            width: width,
+            duration: Duration(seconds: 1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: _animationController.isCompleted,
+                  child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Text(
+                        S.current.note,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
-              ),
-              Icon(Icons.info, color: Theme.of(context).disabledColor),
-            ],
+                Icon(Icons.info, color: Theme.of(context).disabledColor),
+              ],
+            ),
           ),
         ),
       ),
