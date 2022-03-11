@@ -13,6 +13,8 @@ class Urls {
   static const String BASE_API_COMPANY = DOMAIN + VERSION + '/company';
 
   static const String BASE_API_BRANCH_ADMIN = DOMAIN + VERSION_ADMIN + '/storeownerbranch';
+  static const String BASE_API_NOTICE_ADMIN = DOMAIN + VERSION_ADMIN + '/notification';
+  static const String BASE_API_CHAT_ROM = DOMAIN + VERSION + '/chatroom';
 
 
   /*--------Auth-------------------*/
@@ -67,6 +69,15 @@ class Urls {
       BASE_API_BRANCH_ADMIN + '/multiplebranches';
   static const DELETE_BRANCH_API = BASE_API_BRANCH_ADMIN + '/deletebranch';
   static const GET_BRANCHES_API = BASE_API_BRANCH_ADMIN + '/branches/';
+
+  /*------------------notice----------------*/
+  static const GET_NOTICE = BASE_API_NOTICE_ADMIN+ '/adminnotifications';
+  static const UPDATE_NOTICE = BASE_API_NOTICE_ADMIN+ '/adminnotification';
+  static const CREATE_NOTICE = BASE_API_NOTICE_ADMIN+ '/notificationtoapp';
+
+  /*-------------------chatroom--------------*/
+  static const GET_CHAT_ROOMS = BASE_API_CHAT_ROM+ '/chatroomswithstores';
+
 
 
 }

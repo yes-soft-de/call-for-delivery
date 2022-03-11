@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
+import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -88,6 +89,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ],
                 page: widget.currentPage),
 
+            customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
+                FontAwesomeIcons.stickyNote),
+            customExpansionTile(
+                title: S.current.directSupport,
+                icon: FontAwesomeIcons.headphonesAlt,
+                children: [
+                  customListTile(getIt<StoresModule>().supportScreen,
+                      S.current.stores,  Icons.storefront_rounded, true),
+                ],
+                page: widget.currentPage),
             customExpansionTile(
                 title: S.current.companyInfo,
                 icon: FontAwesomeIcons.solidCopyright,

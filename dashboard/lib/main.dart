@@ -4,6 +4,7 @@ import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
+import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
@@ -91,6 +92,7 @@ class MyApp extends StatefulWidget {
   final CategoriesModule _categoriesModule;
   final CompanyModule _companyModule;
   final BranchesModule _branchesModule;
+  final NoticeModule _noticeModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -103,7 +105,9 @@ class MyApp extends StatefulWidget {
       this._mainModule,
       this._storesModule,
       this._categoriesModule,
-      this._companyModule,this._branchesModule
+      this._companyModule,
+      this._branchesModule,
+      this._noticeModule
       );
 
   @override
