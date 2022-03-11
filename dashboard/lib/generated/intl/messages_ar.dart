@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
+        "addNote": MessageLookupByLibrary.simpleMessage("إضافة تنبيه"),
         "addPackage": MessageLookupByLibrary.simpleMessage("إضافة باقة"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة الباقة بنجاح"),
@@ -102,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
+        "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
@@ -375,6 +377,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
+        "notice": MessageLookupByLibrary.simpleMessage("التنبيهات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
@@ -582,6 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
+        "sendTo": MessageLookupByLibrary.simpleMessage("إرسال إلى"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
@@ -653,6 +657,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
+        "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
