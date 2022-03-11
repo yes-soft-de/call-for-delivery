@@ -1,4 +1,5 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_stores/repository/stores_repository.dart';
@@ -30,4 +31,7 @@ class StoreManager {
 
   Future<ActionResponse?> enableStore(ActiveStoreRequest request) =>
       _storesRepository.enableStore(request);
+
+  Future<StoreNeedSupportResponse?> getStoreSupport() =>
+      _storesRepository.getStoreSupport();
 }
