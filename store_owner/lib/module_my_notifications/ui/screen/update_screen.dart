@@ -29,11 +29,11 @@ class UpdateScreenState extends State<UpdateScreen> {
   }
 
   void deleteNotification(String id) {
-   // widget._stateManager.deleteNotification(this, id);
+    // widget._stateManager.deleteNotification(this, id);
   }
 
   void deleteNotifications(List<String> notification) {
- //   widget._stateManager.deleteNotifications(this, notification);
+    //   widget._stateManager.deleteNotifications(this, notification);
   }
 
   void goToLogin() {

@@ -218,4 +218,5 @@ class Urls {
   static const GET_SUBSCRIPTION_BALANCE =
       DOMAIN + '/v1/subscription/packagebalance';
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
+  static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
 }

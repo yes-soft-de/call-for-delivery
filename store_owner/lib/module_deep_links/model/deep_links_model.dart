@@ -7,5 +7,4 @@ class DeepLinksModel {
     required this.link,
     required this.location,
   });
-  
 }

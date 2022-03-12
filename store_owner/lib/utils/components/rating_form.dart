@@ -113,7 +113,6 @@ class _RatingFormState extends State<RatingForm> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-
                         onPressed: _rate == null
                             ? null
                             : () {
