@@ -216,7 +216,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                 } else if (index == 1) {
                   ordersFilter.state = 'ongoing';
                 } else {
-                  ordersFilter.state = 'complete';
+                  ordersFilter.state = 'delivered';
                 }
                 currentIndex = index;
                 getOrders();
