@@ -24,6 +24,7 @@ class OrderDetailsModel extends DataModel {
   late OrderStatusEnum state;
   late String? roomID;
   String? image;
+  int? captainID;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -47,7 +48,8 @@ class OrderDetailsModel extends DataModel {
       required this.canRemove,
       required this.showConfirm,
       required this.deliveryDate,
-      required this.image});
+      required this.image,
+      required this.captainID});
 
   late OrderDetailsModel _orders;
 
@@ -91,7 +93,8 @@ class OrderDetailsModel extends DataModel {
         payment: element?.payment ?? 'cash',
         roomID: element?.roomId,
         state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1);
+        id: element?.id ?? -1,
+        captainID: element?.captainId?.toInt());
   }
   bool _canRemove(DateTime date) {
     bool canRemove = true;

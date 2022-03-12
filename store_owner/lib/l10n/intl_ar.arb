@@ -518,7 +518,12 @@
     "packageExtend": "تمديد اضطراري للاشتراك",
     "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى",
     "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد",
-    "notices": "التنبيهات"
+    "notices": "التنبيهات",
+    "copy": "نسخ",
+    "copyFinished": "تم النسخ بنجاح",
+    "chooseYourRateFromFiveStar": "اختر التقييم المناسب من خمس نجوم",
+    "comment": "تقييمك",
+    "rateCommentReview": "ملاحظاتك وانطباعاتك وما نحتاجه للتحسين"
 
 
 

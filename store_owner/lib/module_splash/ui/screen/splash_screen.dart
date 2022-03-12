@@ -1,7 +1,7 @@
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
-import 'package:c4d/module_subscription/subscriptions_routes.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';

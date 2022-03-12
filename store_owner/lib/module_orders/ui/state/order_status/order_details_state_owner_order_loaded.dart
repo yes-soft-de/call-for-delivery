@@ -7,6 +7,8 @@ import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/components/rating_form.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_moment/simple_moment.dart';
@@ -30,6 +32,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         color: Theme.of(context).backgroundColor);
     return CustomListView.custom(
       children: [
+        // svg picture
         Padding(
           padding: const EdgeInsets.only(
             top: 8.0,
@@ -39,6 +42,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           child: OrderProgressionHelper.getStatusIcon(
               orderInfo.state, 175, context),
         ),
+        // steps
         Padding(
           padding:
               const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8),
@@ -48,6 +52,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
           ),
         ),
+        // order status
         Padding(
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
@@ -86,6 +91,72 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   StatusHelper.getOrderStatusDescriptionMessages(
                       orderInfo.state),
                   style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+          ),
+        ),
+        // rate
+        Visibility(
+          visible: orderInfo.roomID != null,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.amberAccent.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(-0.2, 0)),
+                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.amberAccent.withOpacity(0.85),
+                    Colors.amberAccent.withOpacity(0.85),
+                    Colors.amberAccent.withOpacity(0.9),
+                    Colors.amberAccent.withOpacity(0.93),
+                    Colors.amberAccent.withOpacity(0.95),
+                    Colors.amberAccent,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onTap: () {
+                    final TextEditingController controller =
+                        TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return RatingForm(
+                            message: S.current.rateCaptainMessage,
+                            onPressed: (rate) {
+                              Navigator.of(context).pop();
+                              screenState.rateCaptain(RatingRequest(
+                                  rated: orderInfo.captainID,
+                                  rating: rate,
+                                  comment: controller.text));
+                            },
+                            title: S.current.rateCaptain,
+                            controller: controller,
+                          );
+                        });
+                  },
+                  leading: Icon(
+                    Icons.star_rounded,
+                    size: 30,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  title: Text(S.current.rating),
+                  textColor: Theme.of(context).textTheme.button?.color,
+                  subtitle: Text(S.current.rateCaptain),
+                  trailing: Icon(Icons.arrow_forward_rounded,
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
             ),
           ),
         ),
@@ -143,7 +214,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
-        // listTile
+        // order details tile
         ListTile(
           title: Text(S.current.orderDetails),
           leading: Container(

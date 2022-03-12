@@ -9,7 +9,9 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -44,6 +46,21 @@ class OrderStatusStateManager {
         if (loading) {
           watcher(screenState, id);
         }
+      }
+    });
+  }
+
+  void rateCaptain(OrderDetailsScreenState screenState, RatingRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.ratingCaptain(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.captainRated)
+            .show(screenState.context);
       }
     });
   }

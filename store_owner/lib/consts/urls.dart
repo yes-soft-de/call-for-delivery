@@ -217,4 +217,5 @@ class Urls {
       DOMAIN + '/v1/notificationlocal/notificationLocal';
   static const GET_SUBSCRIPTION_BALANCE =
       DOMAIN + '/v1/subscription/packagebalance';
+  static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
 }

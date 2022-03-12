@@ -519,7 +519,16 @@
     "packageExtend": "Temporary subscription extend",
     "alreadyExtended": "Your subscription already extended , You can't extend it again",
     "packageNotFoundRenew": "This Package not available to renew any more",
-    "notices": "Notices"
+    "notices": "Notices",
+    "copy": "Copy",
+    "copyFinished": "Link Copied Successfully",
+    "chooseYourRateFromFiveStar": "Choose your rate from five stars",
+    "comment": "Comment",
+    "rateCommentReview": "What we can to improve"
+
+
+
+
 
 
 

@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
 import 'package:c4d/module_my_notifications/ui/screen/update_screen.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -151,6 +153,7 @@ class UpdatesLoadedState extends States {
   }
 
   List<Widget> getNotification(BuildContext context) {
+    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     List<Widget> children = [];
     int index = 0;
     model.forEach((element) {
@@ -192,7 +195,7 @@ class UpdatesLoadedState extends States {
                 blurRadius: 10,
                 spreadRadius: 2,
                 offset: Offset(-0.5,0),
-                color: Theme.of(context).backgroundColor,
+                color:isDark ? Theme.of(context).colorScheme.background.withOpacity(0.5) : Theme.of(context).backgroundColor,
               )],
             ),
             child: Padding(
