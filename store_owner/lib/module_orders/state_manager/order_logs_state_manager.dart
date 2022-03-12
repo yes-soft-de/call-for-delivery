@@ -38,8 +38,7 @@ class OrderLogsStateManager {
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderModel;
-        _stateSubject
-            .add(OrderLogsLoadedState(screenState,value.data));
+        _stateSubject.add(OrderLogsLoadedState(screenState, value.data));
       }
     });
   }

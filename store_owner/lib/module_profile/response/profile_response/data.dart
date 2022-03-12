@@ -28,8 +28,7 @@ class Data {
       this.city,
       this.closeTime,
       this.openingTime,
-      this.roomId
-      });
+      this.roomId});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,

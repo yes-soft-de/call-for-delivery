@@ -76,8 +76,8 @@ class SubscriptionBalanceStateManager {
       }
     });
   }
-    void extendPackage(
-      SubscriptionBalanceScreenState screenState) {
+
+  void extendPackage(SubscriptionBalanceScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     _initAccountService.extendPackage().then((value) {
       if (value.hasError) {
@@ -89,7 +89,8 @@ class SubscriptionBalanceStateManager {
       } else {
         getBalance(screenState);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.packageExtendedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.packageExtendedSuccessfully)
             .show(screenState.context);
       }
     });

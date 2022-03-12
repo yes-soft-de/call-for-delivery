@@ -1,3 +1,4 @@
+import 'package:c4d/module_my_notifications/response/update_response/update_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -18,9 +19,19 @@ class MyNotificationsRepository {
     if (response == null) return null;
     return MyNotificationResponse.fromJson(response);
   }
+
+  Future<UpdateResponse?> getUpdates() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_UPDATES,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return UpdateResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> deleteNotification(String id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.delete(Urls.DELETE_MY_NOTIFICATION + '/$id',
+    dynamic response = await _apiClient.delete(
+        Urls.DELETE_MY_NOTIFICATION + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

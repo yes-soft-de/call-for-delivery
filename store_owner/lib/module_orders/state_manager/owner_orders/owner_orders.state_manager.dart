@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -11,6 +12,8 @@ import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:c4d/module_subscription/model/can_make_order_model.dart';
+import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,6 +29,8 @@ class OwnerOrdersStateManager {
 
   final PublishSubject<States> _stateSubject = PublishSubject();
   final PublishSubject<ProfileModel> _profileSubject = PublishSubject();
+  final PublishSubject<CanMakeOrderModel> _subscriptionStatus =
+      PublishSubject();
   final PublishSubject<CompanyInfoResponse> _companySubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
@@ -33,6 +38,7 @@ class OwnerOrdersStateManager {
   Stream<ProfileModel> get profileStream => _profileSubject.stream;
 
   Stream<CompanyInfoResponse> get companyStream => _companySubject.stream;
+  Stream<CanMakeOrderModel> get statusStream => _subscriptionStatus.stream;
 
   OwnerOrdersStateManager(
     this._ordersService,
@@ -96,6 +102,19 @@ class OwnerOrdersStateManager {
     } else {
       profile as ProfileModel;
       _profileSubject.add(profile.data);
+    }
+    var status = await getIt<SubscriptionService>().getMakingOrderAbility();
+    if (status.hasError) {
+      Fluttertoast.showToast(
+        msg: status.error ?? S.current.errorHappened,
+        backgroundColor: Colors.red,
+      );
+      _subscriptionStatus.add(CanMakeOrderModel(
+          canCreateOrder: false,
+          status: status.error ?? S.current.errorHappened));
+    } else {
+      status as CanMakeOrderModel;
+      _subscriptionStatus.add(status.data);
     }
   }
 

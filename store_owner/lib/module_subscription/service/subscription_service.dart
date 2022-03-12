@@ -1,9 +1,11 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/manager/subscription_manager.dart';
+import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
 import 'package:c4d/module_subscription/model/packages_categories_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
+import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -81,7 +83,8 @@ class SubscriptionService {
     }
     return DataModel.empty();
   }
-   Future<DataModel> extendPackage() async {
+
+  Future<DataModel> extendPackage() async {
     ActionResponse? response = await _manager.extendPackage();
     if (response == null) {
       return DataModel.withError(S.current.networkError);
@@ -90,5 +93,18 @@ class SubscriptionService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> getMakingOrderAbility() async {
+    CanMakeOrderResponse? response = await _manager.canMakeOrder();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) {
+      return DataModel.empty();
+    }
+    return CanMakeOrderModel.withData(response);
   }
 }

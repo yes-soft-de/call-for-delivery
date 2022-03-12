@@ -21,7 +21,10 @@ class CustomNavTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             splashColor: isDark
                 ? null
-                : Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+                : Theme.of(context)
+                    .colorScheme
+                    .primaryContainer
+                    .withOpacity(0.5),
             highlightColor: Theme.of(context).backgroundColor,
             splashFactory: InkRipple.splashFactory,
             onTap: onTap,
@@ -36,8 +39,9 @@ class CustomNavTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(icon,
-                      color:
-                          isDark ? null : Theme.of(context).colorScheme.primary),
+                      color: isDark
+                          ? null
+                          : Theme.of(context).colorScheme.primary),
                 ),
               ),
               title: Text(title),

@@ -147,14 +147,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ListTile(
           title: Text(S.current.orderDetails),
           leading: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color:Theme.of(context).backgroundColor
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(Icons.info_rounded),
-            )),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Theme.of(context).backgroundColor),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(Icons.info_rounded),
+              )),
         ),
         // date widgets
         Padding(
