@@ -151,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "companyFinance":
+            MessageLookupByLibrary.simpleMessage("المعلومات المالية"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
         "companyProfileCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
@@ -167,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل تريد حذف هذا الفرع"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),

@@ -496,5 +496,7 @@
     "title": "عنوان",
     "sendTo": "إرسال إلى",
     "captains": "الكباتن",
-    "notice": "التنبيهات"
+    "notice": "التنبيهات",
+    "companyFinance": "المعلومات المالية",
+    "contactInfo": "معلومات الإتصال"
 }
