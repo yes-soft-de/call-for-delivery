@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ChatRoomEntityRepository::class)]
+//this class use chatRoom between admin and user only
 class ChatRoomEntity
 {
     #[ORM\Id]

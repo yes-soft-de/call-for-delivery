@@ -30,12 +30,14 @@ class BaseController extends AbstractController
     const ERROR_ORDER_REMOVE = ["error","9202"];
     const ERROR_ORDER_UPDATE = ["error","9203"];
     const ERROR_ORDER_CAN_NOT_CREATE = ["error","9204"];
+    const ERROR_ORDER_NOT_FOUND = ["error","9205"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
     const ERROR_USER_CHECK = ["error user check","9000"];
     const ERROR_USER_FOUND = ["error user found","9001"];
     const ERROR_UNMATCHED_PASSWORDS = ["password and its confirmation are not matched", "9002"];
+    const ERROR_USER_TYPE = ["wrong user type", "9004"];
     const ERROR_USER_NOT_FOUND = ["error user not found", "9005"];
     const ERROR_USER_CREATED = ["error, not created user","9010"];
     // error captain
@@ -52,6 +54,7 @@ class BaseController extends AbstractController
     const STORE_OWNER_PROFILE_CREATED = ["store owner profile created", "9158"];
     const STORE_OWNER_SUBSCRIPTION_CREATED = ["store owner profile created", "9159"];
     const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
+    const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
     // subscription
@@ -67,6 +70,8 @@ class BaseController extends AbstractController
     const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
     // package
     const PACKAGE_NOT_EXIST = ["package not exist", "9351"];
+    // notification
+    const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [

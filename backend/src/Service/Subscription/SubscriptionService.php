@@ -11,7 +11,9 @@ use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Response\Subscription\SubscriptionExtendResponse;
+use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Package\PackageConstant;
 
 class SubscriptionService
 {
@@ -24,8 +26,14 @@ class SubscriptionService
         $this->subscriptionManager = $subscriptionManager;
     }
     
-    public function createSubscription(SubscriptionCreateRequest $request): mixed
+    public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
     {
+        $isPackageReady = $this->isPackageReadyForSubscription($request->getPackage());
+        if($isPackageReady->packageState === PackageConstant::PACKAGE_NOT_EXIST) {
+        
+            return $isPackageReady;
+        }
+
         $this->checkSubscription($request->getStoreOwner());
        
         $isFuture = $this->getIsFutureState($request->getStoreOwner());
@@ -285,26 +293,32 @@ class SubscriptionService
       return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
     }
     
-    public function subscriptionForOneDay(int $storeOwnerId): SubscriptionExtendResponse|SubscriptionResponse
+    public function subscriptionForOneDay(int $storeOwnerId): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-        if($subscriptionCurrent) {
-
-            if($subscriptionCurrent['type'] === false) {
-
-                if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
-                    
-                    return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+            if($subscriptionCurrent) {
+            
+                $isPackageReady = $this->isPackageReadyForSubscription($subscriptionCurrent['packageId']);
+                if($isPackageReady->packageState === PackageConstant::PACKAGE_NOT_EXIST) {
+                
+                    return $isPackageReady;
                 }
 
-                $subscription['state'] = SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
+                if($subscriptionCurrent['type'] === false) {
+
+                    if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
+                        
+                        return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+                    }
+
+                    $subscription['state'] = SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
+
+                    return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription);
+                }
+
+                $subscription['state'] = SubscriptionConstant::NOT_POSSIBLE;
 
                 return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription);
-            }
-
-            $subscription['state'] = SubscriptionConstant::NOT_POSSIBLE;
-
-            return $this->autoMapping->map("array", SubscriptionExtendResponse::class, $subscription);
         }
 
         $subscription['state'] = SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -342,18 +356,20 @@ class SubscriptionService
        
         return  $result;
     }
-    
-    public function canSubscriptionExtra(string $status, bool $type): bool|null
+
+    /**
+     * @param string $status
+     * @param bool|null $type
+     * @return bool|null
+     */
+    public function canSubscriptionExtra(string $status, $type): bool|null
     {
-      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) { 
-         
+      if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_TRUE) {
         return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE; 
-       }  
+      }
 
       if($type === SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE) {
-
         if($status === SubscriptionConstant::ORDERS_FINISHED || $status === SubscriptionConstant::DATE_FINISHED) {
-
            return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_TRUE;
         }
 
@@ -362,4 +378,21 @@ class SubscriptionService
       
       return SubscriptionConstant::CAN_SUBSCRIPTION_EXTRA_FALSE;
     }
+
+    public function isPackageReadyForSubscription(int $packageId): SubscriptionErrorResponse
+    {
+        $package = $this->subscriptionManager->isPackageReadyForSubscription($packageId);
+        if(!$package ) {
+         
+            $package['packageState'] = PackageConstant::PACKAGE_NOT_EXIST;
+         }
+
+        else {
+
+            $package['packageState'] = PackageConstant::PACKAGE_EXIST;
+        }
+        
+         return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
+    }
 }
+ 

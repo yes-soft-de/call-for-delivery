@@ -179,4 +179,10 @@ class UserManager
             return $userEntity;
         }
     }
+    
+    public function getUser($id): ?UserEntity
+    {
+        return $this->userRepository->find($id);
+    }
+
 }

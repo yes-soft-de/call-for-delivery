@@ -121,3 +121,39 @@ App\Request\Admin\Package\PackageCategoryUpdateRequest:
             - NotBlank: ~
         name:
             - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationToUsersCreateRequest:
+    properties:
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationToUsersUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+
+App\Request\Rate\RatingCreateRequest:
+    properties:
+        rating:
+            - NotBlank: ~
+        rater:
+            - NotBlank: ~
+        rated:
+            - NotBlank: ~
+
+App\Request\Main\OrderStateUpdateBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        state:
+            - NotBlank: ~

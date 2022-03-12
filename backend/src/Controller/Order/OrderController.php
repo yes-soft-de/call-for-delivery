@@ -4,6 +4,7 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Service\Order\OrderService;
 use stdClass;
@@ -204,6 +205,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="string", property="roomId"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -220,6 +222,73 @@ class OrderController extends BaseController
     public function getSpecificOrderForStore($id): JsonResponse
     {
         $result = $this->orderService->getSpecificOrderForStore($id);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store: filter orders
+     * @Route("filterorders", name="filterOrdersByStoreOwner", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="integer", property="storeOrderDetailsId"),
+     *                  @OA\Property(type="object", property="destination"),
+     *                  @OA\Property(type="string", property="recipientName"),
+     *                  @OA\Property(type="string", property="recipientPhone"),
+     *                  @OA\Property(type="string", property="detail"),
+     *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
+     *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="string", property="images")
+     *          )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterStoreOrders(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterRequest::class, (object)$data);
+
+        $result = $this->orderService->filterStoreOrders($request, $this->getUserId());
 
         return $this->response($result, self::FETCH);
     }

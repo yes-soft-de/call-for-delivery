@@ -5,14 +5,13 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
+use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
-use App\Constant\Image\ImageEntityTypeConstant;
-use App\Constant\Image\ImageUseAsConstant;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\FileUpload\UploadFileHelperService;
@@ -82,9 +81,29 @@ class OrderService
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
+        if($order) {
+            
+            $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
 
-        $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
+            // following statement is a temporary one
+            $order['captainUserId'] = $id;
+            //This is for testing, it will be completed after building the captain's entity
+            $order['roomId'] = "12345678912456789";
+        }
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
+    }
+
+    public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterStoreOrders($request, $userId);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
+        }
+
+        return $response;
     }
 }

@@ -36,6 +36,26 @@ class NotificationLocalService
 
         return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
     }
+
+    public function createNotificationLocalBySuperAdmin(int $userId, string $title, string $text, string $orderState, int $captainUserId = null, int $orderId = null): NotificationLocalResponse
+    {
+        $request = new NotificationLocalCreateRequest();
+
+        $message = [
+            "text" => $text,
+            "orderId"=> $orderId,
+            "orderState"=> $orderState,
+            "captainUserId"=> $captainUserId
+        ];
+
+        $request->setUserId($userId);
+        $request->setTitle($title);
+        $request->setMessage($message);
+
+        $item = $this->notificationLocalManager->createNotificationLocal($request);
+
+        return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
+    }
     
     /**
      * @param integer $userId
