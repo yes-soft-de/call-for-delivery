@@ -3,36 +3,6 @@ import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
-//class UpdatePassDialog extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Dialog(
-//      shape: RoundedRectangleBorder(
-//        borderRadius: BorderRadius.circular(12),
-//      ),
-//      elevation: 0,
-//      backgroundColor: Colors.transparent,
-//      child: contentBox(context),
-//    );
-//  }
-//  contentBox(context){
-//    return Stack(
-//      children: <Widget>[
-//        Container(),// bottom part
-//    Positioned(
-//    left: Constants.padding,
-//    right: Constants.padding,
-//    child: CircleAvatar(
-//    backgroundColor: Colors.transparent,
-//    radius: Constants.avatarRadius,
-//    child: ClipRRect(),
-//    ), top part
-//      ],
-//    );
-//  }
-//}
-
-
 class CustomDialogBox extends StatefulWidget {
   final String title;
   final Function updatePass;

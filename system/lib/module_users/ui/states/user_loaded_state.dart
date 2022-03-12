@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/consts/role_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_users/model/users_model.dart';
 import 'package:c4d/module_users/request/filter_user_request.dart';
@@ -12,7 +12,7 @@ import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/helpers/role_status_helper.dart';
 import 'package:flutter/material.dart';
 
 class UsersLoadedState extends States{
@@ -103,10 +103,10 @@ class UsersLoadedState extends States{
     List<Widget> widgets = [];
     for (RoleEnum element in RoleEnum.values) {
       widgets.add(
-          ChipChoose(title: StatusHelper.getOrderStatusMessages(element),
-            selected:screenState.request.type ==StatusHelper.getEnumStatus(element) ?true: false,
+          ChipChoose(title: StatusRoleHelper.getOrderStatusMessages(element),
+            selected:screenState.request.type ==StatusRoleHelper.getEnumStatus(element) ?true: false,
           onTap: (){
-           screenState.request = FilterUserRequest(type: StatusHelper.getEnumStatus(element));
+           screenState.request = FilterUserRequest(type: StatusRoleHelper.getEnumStatus(element));
             screenState.getUsers( screenState.request);
           },
           ));

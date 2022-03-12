@@ -1,5 +1,5 @@
 import 'package:c4d/module_users/model/users_model.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/helpers/role_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,7 +18,7 @@ class UserCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 3.0,
-       color: StatusHelper.getRoleColor(usersModel.role!),
+       color: StatusRoleHelper.getRoleColor(usersModel.role!),
         child:
           Padding(
         padding: const EdgeInsets.all(12.0),
@@ -46,7 +46,7 @@ class UserCard extends StatelessWidget {
             child: Row(children: [
               Icon(FontAwesomeIcons.volumeUp),
               SizedBox(width: 10,),
-              Text(StatusHelper.getOrderStatusMessages(usersModel.role))
+              Text(StatusRoleHelper.getOrderStatusMessages(usersModel.role))
             ],),
           ),
         ],),

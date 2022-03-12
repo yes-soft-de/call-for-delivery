@@ -48,8 +48,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
     final node = FocusScope.of(context);
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).secondaryHeaderColor,
       ),
       child: Padding(
         padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
