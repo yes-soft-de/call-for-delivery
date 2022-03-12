@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
+        "changeOrderState":
+            MessageLookupByLibrary.simpleMessage("Change order state"),
         "changePassword":
             MessageLookupByLibrary.simpleMessage("تغير كلمة السر"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
@@ -279,6 +281,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "manageMessages": MessageLookupByLibrary.simpleMessage("إدارة الرسائل"),
+        "manageOrder": MessageLookupByLibrary.simpleMessage("إدارة الطلبات"),
         "manageUser": MessageLookupByLibrary.simpleMessage("إدارة المستخدمين"),
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mediumMoreThan20EmployeesLessThan100":
@@ -365,6 +368,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
         "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
+        "orderUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
@@ -540,6 +545,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
+        "state": MessageLookupByLibrary.simpleMessage("الحالة"),
         "statusCodeBadRequest":
             MessageLookupByLibrary.simpleMessage("تعذر على الخادم فهم الطلب"),
         "statusCodeCreated": MessageLookupByLibrary.simpleMessage(
