@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Request\Rate;
-
+use App\Entity\UserEntity;
 class RatingCreateRequest
 {
     private string $comment;
@@ -15,7 +15,7 @@ class RatingCreateRequest
     /**
      * Get the value of rater
      */ 
-    public function getRater()
+    public function getRater(): UserEntity|int
     {
         return $this->rater;
     }
@@ -25,7 +25,7 @@ class RatingCreateRequest
      *
      * @return  self
      */ 
-    public function setRater($rater)
+    public function setRater(UserEntity|int $rater)
     {
         $this->rater = $rater;
 
@@ -35,7 +35,7 @@ class RatingCreateRequest
     /**
      * Get the value of rated
      */ 
-    public function getRated()
+    public function getRated(): UserEntity|int
     {    
         return $this->rated;
     }
@@ -45,7 +45,7 @@ class RatingCreateRequest
      *
      * @return  self
      */ 
-    public function setRated($rated)
+    public function setRated(UserEntity|int $rated)
     {
         $this->rated = $rated;
 

@@ -22,9 +22,9 @@ use App\Controller\BaseController;
  */
 class RatingController extends BaseController
 {
-    private $autoMapping;
-    private $ratingService;
-    private $validator;
+    private AutoMapping $autoMapping;
+    private RatingService $ratingService;
+    private ValidatorInterface $validator;
 
     public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, RatingService $ratingService)
     {
@@ -36,9 +36,8 @@ class RatingController extends BaseController
     }
 
     /**
-     * store: Create rating.
-     * @Route("ratingbystore", name="createRatingByStore", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
+     * Create rating.
+     * @Route("ratingbystore", name="createRating", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      *
@@ -77,7 +76,7 @@ class RatingController extends BaseController
      * 
      * @Security(name="Bearer")
      */
-    public function createRatingByStore(Request $request): JsonResponse
+    public function createRating(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 

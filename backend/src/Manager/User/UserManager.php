@@ -180,7 +180,7 @@ class UserManager
         }
     }
     
-    public function getUser($id): ?UserEntity
+    public function getUserById($id): ?UserEntity
     {
         return $this->userRepository->find($id);
     }

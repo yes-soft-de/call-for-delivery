@@ -12,10 +12,10 @@ use App\Manager\User\UserManager;
 
 class RatingManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $ratingRepository;
-    private $userManager;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private RateEntityRepository $ratingRepository;
+    private UserManager $userManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, RateEntityRepository $ratingRepository, UserManager $userManager)
     {
@@ -27,8 +27,8 @@ class RatingManager
 
     public function createRating(RatingCreateRequest $request): ?RateEntity
     {
-        $request->setRater($this->userManager->getUser($request->getRater()));
-        $request->setRated($this->userManager->getUser($request->getRated()));
+        $request->setRater($this->userManager->getUserById($request->getRater()));
+        $request->setRated($this->userManager->getUserById($request->getRated()));
 
         $entity = $this->autoMapping->map(RatingCreateRequest::class, RateEntity::class, $request);
        
