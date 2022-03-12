@@ -15,10 +15,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
-use App\Service\Image\ImageService;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use App\Request\Image\ImageCreateRequest;
-use App\Response\Image\ImageCreateResponse;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class OrderService
 {
@@ -26,17 +23,15 @@ class OrderService
     private OrderManager $orderManager;
     private SubscriptionService $subscriptionService;
     private NotificationLocalService $notificationLocalService;
-    private ImageService $imageService;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params,
-    ImageService $imageService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService)
     {
-       $this->imageService = $imageService;
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
        $this->subscriptionService = $subscriptionService;
        $this->notificationLocalService = $notificationLocalService;
-       $this->imageService = $imageService;
+       $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     /**
@@ -54,8 +49,6 @@ class OrderService
 
         $order = $this->orderManager->createOrder($request);
         if($order) {
-        
-            $this->createImage($request->getImages(), $order->getId());
         
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
  
@@ -90,20 +83,8 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
-        $order['images'] = $this->imageService->getImagesByItemIdAndEntityTypeAndImageAim($id, ImageEntityTypeConstant::ENTITY_TYPE_ORDER, ImageUseAsConstant::IMAGE_USE_AS_ORDER_IMAGE);
+        $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
-    }
-    
-    public function createImage(string $image, $id): ?ImageCreateResponse
-    {
-        $request = new ImageCreateRequest();
-       
-        $request->setImagePath($image);
-        $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ORDER);
-        $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ORDER_IMAGE);
-        $request->setItemId($id);
-
-        return $this->imageService->create($request);
     }
 }
