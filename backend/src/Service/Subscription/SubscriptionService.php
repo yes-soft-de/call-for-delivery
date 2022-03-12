@@ -175,13 +175,6 @@ class SubscriptionService
     
                 return SubscriptionConstant::SUBSCRIBE_ACTIVE;
             }
-            
-            // if($subscription['remainingOrders'] > 0 && $subscription['remainingCars'] > 0 && $subscriptionExpired === SubscriptionConstant::SUBSCRIPTION_OK) {
-               
-            //     $this->updateSubscribeState($subscription['id'], SubscriptionConstant::SUBSCRIBE_ACTIVE);
-    
-            //     return SubscriptionConstant::SUBSCRIBE_ACTIVE;
-            // }
         }
 
         return SubscriptionConstant::UNSUBSCRIBED;
