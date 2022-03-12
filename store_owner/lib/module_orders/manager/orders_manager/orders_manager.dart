@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/request/rating_request.dart';
@@ -34,4 +35,5 @@ class OrdersManager {
 
   Future sendToRecord(var orderId, answar) =>
       _repository.sendToRecord(orderId, answar);
+  Future<CompanyInfoResponse?> getCompanyInfo() => _repository.getCompanyInfo();
 }
