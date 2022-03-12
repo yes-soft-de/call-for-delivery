@@ -84,7 +84,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         featureFlag = false;
         FeatureDiscovery.discoverFeatures(
           context,
-          const <String>{
+          const <String> {
             'newOrder',
           },
         );
