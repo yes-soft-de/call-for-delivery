@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/response/orders_response/orders_response.dart'
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -80,6 +81,16 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     await FireStoreHelper().insertWatcher();
+    return DataModel.empty();
+  }
+
+  Future<DataModel> ratingCaptain(RatingRequest request) async {
+    ActionResponse? response = await _ordersManager.ratingCaptain(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
     return DataModel.empty();
   }
 }

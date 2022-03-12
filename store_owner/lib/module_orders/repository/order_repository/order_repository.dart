@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -69,6 +70,15 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         '${Urls.DELETE_ORDER}$orderId', {'state': 'canceled'},
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> rateCaptain(RatingRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.RATING_CAPTAIN, request.toJson(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
