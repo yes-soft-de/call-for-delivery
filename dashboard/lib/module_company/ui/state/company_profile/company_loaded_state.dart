@@ -123,53 +123,6 @@ class CompanyLoadedState extends States {
                   phone: true,
                 ),
 
-
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, bottom: 8, right: 12, top: 16.0),
-                      child: Text(
-                        S.current.kilometerLimt,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomFormField(
-                      controller: kilometerLimt,
-                      hintText: S.current.kilometerLimt,
-                      numbers: true,
-                    ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, bottom: 8, right: 12, top: 16.0),
-                      child: Text(
-                        S.current.kilometerLimtMin,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomFormField(
-                      controller: minkilometerLimt,
-                      hintText: S.current.kilometerLimtMin,
-                      numbers: true,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, bottom: 8, right: 12, top: 16.0),
-                      child: Text(
-                        S.current.kilometerLimtMax,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomFormField(
-                      controller: maxkilometerLimt,
-                      hintText: S.current.kilometerLimtMax,
-                      numbers: true,
-                    ),
-
                 // fax
                 Padding(
                   padding: const EdgeInsets.only(

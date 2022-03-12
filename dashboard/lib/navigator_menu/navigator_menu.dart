@@ -103,13 +103,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.companyInfo,
                 icon: FontAwesomeIcons.solidCopyright,
                 children: [
-//                  customListTile(
-//                      getIt<CompanyModule>().companyFinanceScreen,
-//                      S.current.companyFinance,
-//                      FontAwesomeIcons.moneyCheckAlt,
-//                      true),
+                  customListTile(
+                      getIt<CompanyModule>().companyFinanceScreen,
+                      S.current.companyFinance,
+                      FontAwesomeIcons.moneyCheckAlt,
+                      true),
                   customListTile(getIt<CompanyModule>().companyProfileScreen,
-                      S.current.companyInfo, Icons.info, true),
+                      S.current.contactInfo, Icons.info, true),
                 ],
                 page: widget.currentPage),
 

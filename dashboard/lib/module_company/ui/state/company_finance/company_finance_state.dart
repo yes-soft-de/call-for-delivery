@@ -18,59 +18,58 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 class CompanyFinanceLoadedState extends States {
   final CompanyFinanceScreenState screenState;
-  final List<String>? errors;
   final String? error;
   final bool empty;
-  final CompanyDeliveryPriceModel? model;
-  final CompanyFinanceModel? financeModel;
-  CompanyFinanceLoadedState(this.screenState,
-      {this.financeModel,
-      required this.model,
-      this.empty = false,
-      this.error,
-      this.errors})
+  final CompanyProfileModel? model;
+
+  CompanyFinanceLoadedState(this.screenState, this.model,
+      {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {
-      screenState.refresh();
-      CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: error ?? '');
-    }
-    if (errors != null) {
-      screenState.refresh();
-    }
-    if (financeModel != null) {
-      kilometerController.text = financeModel?.kilometers.toString() ?? '';
-      maxKilometerBonusController.text =
-          financeModel?.maxKilometerBonus.toString() ?? '';
-      minKilometerBonusController.text =
-          financeModel?.minKilometerBonus.toString() ?? '';
+      screenState.canAddCategories = false;
       screenState.refresh();
     }
     if (model != null) {
-      deliveryCostController.text = model?.deliveryPrice.toString() ?? '';
-      representativeCommissionController.text = model?.representativeCommission.toString() ?? '';
+      phoneController.text = model?.phone ?? '';
+      phone2Controller.text = model?.phone2 ?? '';
+      whatsappController.text = model?.whatsapp ?? '';
+      faxController.text = model?.fax ?? '';
+      emailController.text = model?.email ?? '';
+      stcController.text = model?.stc ?? '';
+      bankController.text = model?.bank ?? '';
+
+      kilometerLimt.text = model?.kilometers.toString() ?? '';
+      minkilometerLimt.text = model?.minKilometerBonus.toString() ?? '';
+      maxkilometerLimt.text = model?.maxKilometerBonus.toString() ?? '';
       screenState.refresh();
     }
   }
 
   String? id;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  var kilometerController = TextEditingController();
-  var minKilometerBonusController = TextEditingController();
-  var maxKilometerBonusController = TextEditingController();
-  var deliveryCostController = TextEditingController();
-  var representativeCommissionController = TextEditingController();
+  var phoneController = TextEditingController();
+  var phone2Controller = TextEditingController();
+  var whatsappController = TextEditingController();
+  var faxController = TextEditingController();
+  var emailController = TextEditingController();
+  var stcController = TextEditingController();
+  var bankController = TextEditingController();
+
+  var kilometerLimt = TextEditingController();
+  var minkilometerLimt = TextEditingController();
+  var maxkilometerLimt = TextEditingController();
 
   @override
   Widget getUI(BuildContext context) {
-    if (errors != null) {
+    if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
           screenState.getFinance();
         },
-        errors: errors,
+        error: error,
       );
     }
+    print(model?.whatsapp);
     return StackedForm(
         child: Form(
           key: _key,
@@ -78,109 +77,89 @@ class CompanyFinanceLoadedState extends States {
               child: CustomListView.custom(
                   padding: EdgeInsets.only(right: 16, left: 16),
                   children: [
-                // delivery price
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.deliverPrice,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: deliveryCostController,
-                  hintText: S.current.deliverPrice,
-                ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
+                        S.current.kilometerLimt,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: kilometerLimt,
+                      hintText: S.current.kilometerLimt,
+                      numbers: true,
+                    ),
+
 
                     Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.acceptOrder,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: representativeCommissionController,
-                  hintText: S.current.community,
-                ),
-                // kilometer
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimt,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  controller: kilometerController,
-                  hintText: S.current.kilometerLimt,
-                  numbers: true,
-                ),
-                // max kilo
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimtMax,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: maxKilometerBonusController,
-                  hintText: S.current.kilometerLimtMax,
-                ),
-                // min kilo
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-                  child: Text(
-                    S.current.kilometerLimtMin,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                CustomFormField(
-                  numbers: true,
-                  controller: minKilometerBonusController,
-                  hintText: S.current.kilometerLimtMin,
-                  last: true,
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-              ])),
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
+                        S.current.kilometerLimtMin,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: minkilometerLimt,
+                      hintText: S.current.kilometerLimtMin,
+                      numbers: true,
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
+                        S.current.kilometerLimtMax,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: maxkilometerLimt,
+                      hintText: S.current.kilometerLimtMax,
+                      numbers: true,
+                    ),
+
+                    SizedBox(
+                      height: 100,
+                    ),
+                  ])),
         ),
         label: S.current.update,
         onTap: () {
           if (_key.currentState!.validate()) {
-            screenState.updateFinancial(
-              FinancialCompensationRequest(
-                id: financeModel?.id,
-                kilometers: int.parse(kilometerController.text.trim()),
-                maxKilometerBonus:
-                    double.parse(maxKilometerBonusController.text.trim()),
-                minKilometerBonus:
-                    double.parse(minKilometerBonusController.text.trim()),
-              ),
-              DeliveryCompanyFinancialRequest(
+            if (empty || error != null) {
+              screenState.createProfile(CreateCompanyProfile(
+                phone: phoneController.text.trim(),
+                phone2: phone2Controller.text.trim(),
+                whatsapp: whatsappController.text.trim(),
+                fax: faxController.text.trim(),
+                bankName: bankController.text.trim(),
+                stc: stcController.text.trim(),
+                email: emailController.text.trim(),
+              ));
+            } else {
+              screenState.UpdateCompanyProfile(CreateCompanyProfile(
                 id: model?.id,
-                deliveryCost: deliveryCostController.text.trim(),
-                representativeCommission: representativeCommissionController.text.trim()
-              ),
-            );
+                phone: phoneController.text.trim(),
+                phone2: phone2Controller.text.trim(),
+                whatsapp: whatsappController.text.trim(),
+                fax: faxController.text.trim(),
+                bankName: bankController.text.trim(),
+                stc: stcController.text.trim(),
+                email: emailController.text.trim(),
+                minKilometerBonus: minkilometerLimt.text,
+                maxKilometerBonus: maxkilometerLimt.text,
+                kilometers: kilometerLimt.text,
+              ));
+            }
           } else {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm)
+                title: S.current.warnning,
+                message: S.current.pleaseCompleteTheForm)
                 .show(context);
           }
         });

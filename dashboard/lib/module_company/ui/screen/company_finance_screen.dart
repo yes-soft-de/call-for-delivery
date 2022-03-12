@@ -34,21 +34,20 @@ class CompanyFinanceScreenState extends State<CompanyFinanceScreen> {
         refresh();
       }
     });
-//    widget._stateManager.getFinance(this);
+    widget._stateManager.getCompanyProfile(this);
     super.initState();
   }
 
   void getFinance() {
-//    widget._stateManager.getFinance(this);
+    widget._stateManager.getCompanyProfile(this);
   }
 
-  void updateFinancial(
-      FinancialCompensationRequest financialCompensationRequest,
-      DeliveryCompanyFinancialRequest deliverRequest) {
-//    widget._stateManager
-//        .updateFinancial(this, financialCompensationRequest, deliverRequest);
+  void createProfile(CreateCompanyProfile request) {
+    widget._stateManager.createProfile(this, request);
   }
-
+  void UpdateCompanyProfile(CreateCompanyProfile request) {
+    widget._stateManager.UpdateCompanyProfile(this, request);
+  }
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -59,7 +58,7 @@ class CompanyFinanceScreenState extends State<CompanyFinanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).firstName, icon: Icons.menu, onTap: () {
+          title: S.of(context).companyFinance, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
       body: GestureDetector(
