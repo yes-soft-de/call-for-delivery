@@ -114,6 +114,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->where('subscription.id = :id')
             ->andWhere('orderEntity.state != :cancel')
             ->andWhere('orderEntity.state != :delivered')
+            ->andWhere('orderEntity.state != :pending')
              //Orders made within the current subscription date only
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
@@ -121,6 +122,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
         
             ->getQuery()
 

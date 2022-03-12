@@ -196,4 +196,16 @@ class SubscriptionManager
        
         return $this->packageManager->getPackageActiveById($packageId);
     }
+
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
+    {
+        // $subscribeEntity = $this->subscribeRepository->find($id);
+
+        // if ($subscribeEntity) {
+          
+            return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
+        // }
+
+        // return SubscriptionConstant::ERROR;
+    }
 }

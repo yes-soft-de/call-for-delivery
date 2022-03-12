@@ -68,11 +68,11 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
-           $countOrders = $this->getCountOngoingOrders($subscription['id']);
+        //    $countOrders = $this->getCountOngoingOrders($subscription['id']);
           
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
-           $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
+        //    $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
 
            if($subscription['hasExtra'] === true) {
 
@@ -136,6 +136,14 @@ class SubscriptionService
             }
             
             //all cars are busy
+           // $subscription['remainingCars'] <= 0
+            if($remainingCars === SubscriptionConstant::CARS_FINISHED) {
+
+                $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
+    
+                return SubscriptionConstant::CARS_FINISHED;
+            }  
+
             if($remainingCars === SubscriptionConstant::CARS_FINISHED) {
 
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
@@ -167,6 +175,13 @@ class SubscriptionService
     
                 return SubscriptionConstant::SUBSCRIBE_ACTIVE;
             }
+            
+            // if($subscription['remainingOrders'] > 0 && $subscription['remainingCars'] > 0 && $subscriptionExpired === SubscriptionConstant::SUBSCRIPTION_OK) {
+               
+            //     $this->updateSubscribeState($subscription['id'], SubscriptionConstant::SUBSCRIBE_ACTIVE);
+    
+            //     return SubscriptionConstant::SUBSCRIBE_ACTIVE;
+            // }
         }
 
         return SubscriptionConstant::UNSUBSCRIBED;
@@ -221,7 +236,7 @@ class SubscriptionService
                 return SubscriptionConstant::DATE_FINISHED;
             }
             
-            return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+            return SubscriptionConstant::SUBSCRIPTION_OK;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -242,12 +257,21 @@ class SubscriptionService
         if($subscription) {
             $countOrders = $this->getCountOngoingOrders($subscription['id']);
 
-           if($subscription['remainingCars'] - $countOrders <= 0 ) {
+           if($subscription['remainingCars'] >= 0 ) {
+           
+                $remainingCars = $subscription['packageCarCount'] - $countOrders;
 
-                return SubscriptionConstant::CARS_FINISHED;
+                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+
+                if($currentSubscription->getRemainingCars() <= 0 ) {
+                
+                    return SubscriptionConstant::CARS_FINISHED;
+                }
+            
+                return SubscriptionConstant::SUBSCRIPTION_OK;
            }
 
-           return SubscriptionConstant::SUBSCRIPTION_OK;
+          return SubscriptionConstant::CARS_FINISHED;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;

@@ -117,4 +117,18 @@ class SubscriptionDetailsManager
  
         return $subscriptionDetailsEntity;
     }
+    
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
+    {   
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
+
+        $subscriptionDetailsEntity->setRemainingCars($remainingCars);
+        // dd($subscriptionDetailsEntity);
+        // $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
+       
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
+    }
+
 }
