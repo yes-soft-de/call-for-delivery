@@ -521,7 +521,12 @@
     "packageNotFoundRenew": "This Package not available to renew any more",
     "notices": "Notices",
     "copy": "Copy",
-    "copyFinished": "Link Copied Successfully"
+    "copyFinished": "Link Copied Successfully",
+    "chooseYourRateFromFiveStar": "Choose your rate from five stars",
+    "comment": "Comment",
+    "rateCommentReview": "What we can to improve"
+
+
 
 
 

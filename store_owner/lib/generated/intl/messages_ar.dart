@@ -163,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر حجم منشأتك"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا وفق التصنيفات المناسبة لك"),
+        "chooseYourRateFromFiveStar": MessageLookupByLibrary.simpleMessage(
+            "اختر التقييم المناسب من خمس نجوم"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
@@ -172,6 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
+        "comment": MessageLookupByLibrary.simpleMessage("تقييمك"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
@@ -563,6 +566,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
+        "rateCommentReview": MessageLookupByLibrary.simpleMessage(
+            "ملاحظاتك وانطباعاتك وما نحتاجه للتحسين"),
         "rateProduct": MessageLookupByLibrary.simpleMessage("تقييم منتج"),
         "rateProductMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم المنتج من فضلك"),

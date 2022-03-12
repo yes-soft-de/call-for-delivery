@@ -5249,6 +5249,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Choose your rate from five stars`
+  String get chooseYourRateFromFiveStar {
+    return Intl.message(
+      'Choose your rate from five stars',
+      name: 'chooseYourRateFromFiveStar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comment`
+  String get comment {
+    return Intl.message(
+      'Comment',
+      name: 'comment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What we can to improve`
+  String get rateCommentReview {
+    return Intl.message(
+      'What we can to improve',
+      name: 'rateCommentReview',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
