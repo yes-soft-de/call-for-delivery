@@ -78,11 +78,11 @@ class OwnerOrdersStateManager {
     _ordersService.getMyOrdersFilter(request).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getOrders(screenState);
+          getOrdersFilters(screenState,request);
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
-          getOrders(screenState);
+          getOrdersFilters(screenState,request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderModel;
@@ -118,12 +118,12 @@ class OwnerOrdersStateManager {
     }
   }
 
-  void watcher(OwnerOrdersScreenState screenState) {
+  void watcher(OwnerOrdersScreenState screenState,[bool loading = false]) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       getOrdersFilters(
           screenState,
           FilterOrderRequest(state: screenState.orderFilter ?? 'pending'),
-          false);
+          loading);
     });
   }
 }

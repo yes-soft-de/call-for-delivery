@@ -48,10 +48,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   StreamSubscription? _companySubscription;
   StreamSubscription? _statusSubscription;
 
-  Future<void> getMyOrders([loading = true]) async {
-    widget._stateManager.getOrders(this, loading);
-  }
-
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
         this, FilterOrderRequest(state: orderFilter ?? 'pending'), loading);
@@ -76,7 +72,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   void initState() {
     super.initState();
     _currentState = LoadingState(this);
-    getMyOrders();
+    widget._stateManager.watcher(this,true);
     getInitData();
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
