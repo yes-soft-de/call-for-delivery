@@ -1,61 +1,143 @@
 import 'package:c4d/consts/order_status.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:c4d/generated/l10n.dart';
 
 class StatusHelper {
-  static RoleEnum getStatusEnum(String? status) {
-    if (status == 'ROLE_OWNER') {
-      return RoleEnum.STORE_OWNER;
-    } else if (status == 'ROLE_SUPER_ADMIN') {
-      return RoleEnum.SUPER_ADMIN;
-    } else if (status == 'ROLE_ADMIN') {
-      return RoleEnum.ADMIN;
-    } else if (status == 'ROLE_CAPTAIN') {
-      return RoleEnum.CAPTAIN;
+  static OrderStatusEnum getStatusEnum(String? status) {
+    if (status == 'pending') {
+      return OrderStatusEnum.WAITING;
+    } else if (status == 'pickingorder') {
+      return OrderStatusEnum.GOT_CAPTAIN;
+    } else if (status == 'instore') {
+      return OrderStatusEnum.IN_STORE;
+    } else if (status == 'ongoing') {
+      return OrderStatusEnum.DELIVERING;
+    } else if (status == 'delivered') {
+      return OrderStatusEnum.FINISHED;
+    } else if (status == 'cancelled') {
+      return OrderStatusEnum.CANCELLED;
     }
-    return RoleEnum.CAPTAIN;
+    return OrderStatusEnum.WAITING;
   }
 
-  static String getOrderStatusMessages(RoleEnum? orderStatus) {
+  static String getStatusString(OrderStatusEnum? status) {
+    switch (status) {
+      case OrderStatusEnum.WAITING:
+        return 'pending';
+      case OrderStatusEnum.IN_STORE:
+        return 'instore';
+      case OrderStatusEnum.DELIVERING:
+        return 'ongoing';
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return 'pickingorder';
+      case OrderStatusEnum.FINISHED:
+        return 'delivered';
+      case OrderStatusEnum.CANCELLED:
+        return 'cancelled';
+      default:
+        return 'pending';
+    }
+  }
+
+  static String getOrderStatusMessages(OrderStatusEnum? orderStatus) {
     switch (orderStatus) {
-      case RoleEnum.STORE_OWNER:
-        return S.current.storeOwner;
-      case RoleEnum.ADMIN:
-        return S.current.admin;
-      case RoleEnum.SUPER_ADMIN:
-        return S.current.superAdmin;
-      case RoleEnum.CAPTAIN:
-        return S.current.captain;
+      case OrderStatusEnum.WAITING:
+        return S.current.waiting;
+      case OrderStatusEnum.IN_STORE:
+        return S.current.captainInStore;
+      case OrderStatusEnum.DELIVERING:
+        return S.current.captainIsDelivering;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return S.current.captainAcceptedOrder;
+      case OrderStatusEnum.FINISHED:
+        return S.current.iFinishedDelivering;
+      case OrderStatusEnum.CANCELLED:
+        return S.current.cancelled;
       default:
         return S.current.waiting;
     }
   }
-  static Color getRoleColor(RoleEnum status) {
+
+  static String getOrderStatusDescriptionMessages(OrderStatusEnum orderStatus) {
+    switch (orderStatus) {
+      case OrderStatusEnum.WAITING:
+        return S.current.waitingDescription;
+      case OrderStatusEnum.IN_STORE:
+        return S.current.captainInStoreDescription;
+      case OrderStatusEnum.DELIVERING:
+        return S.current.deliveringDescription;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return S.current.captainAcceptOrderDescription;
+      case OrderStatusEnum.FINISHED:
+        return S.current.orderDeliveredDescription;
+      case OrderStatusEnum.CANCELLED:
+        return S.current.cancelledHint;
+      default:
+        return S.current.waitingDescription;
+    }
+  }
+
+  static IconData getOrderStatusIcon(OrderStatusEnum status) {
     switch (status) {
-      case RoleEnum.ADMIN:
-        return Colors.blue.shade50;
-      case RoleEnum.SUPER_ADMIN:
-        return Colors.red.shade50;
-      case RoleEnum.CAPTAIN:
-        return Colors.yellow.shade50;
-      case RoleEnum.STORE_OWNER:
-        return Colors.green.shade50;
+      case OrderStatusEnum.WAITING:
+        return Icons.timer_rounded;
+      case OrderStatusEnum.IN_STORE:
+        return Icons.store_rounded;
+      case OrderStatusEnum.DELIVERING:
+        return Icons.pedal_bike_rounded;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return Icons.account_circle_rounded;
+      case OrderStatusEnum.FINISHED:
+        return Icons.check_circle_rounded;
+      default:
+        return Icons.cancel_rounded;
+    }
+  }
+
+  static Color getOrderStatusColor(OrderStatusEnum status) {
+    switch (status) {
+      case OrderStatusEnum.WAITING:
+        return Colors.orange;
+      case OrderStatusEnum.IN_STORE:
+        return Colors.blue;
+      case OrderStatusEnum.DELIVERING:
+        return Colors.indigo;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return Colors.purple;
+      case OrderStatusEnum.FINISHED:
+        return Colors.green;
       default:
         return Colors.red;
     }
   }
-  static String getEnumStatus(RoleEnum? orderStatus) {
-    switch (orderStatus) {
-      case RoleEnum.STORE_OWNER:
-        return 'ROLE_OWNER';
-      case RoleEnum.ADMIN:
-        return 'ROLE_ADMIN';
-      case RoleEnum.SUPER_ADMIN:
-        return 'ROLE_SUPER_ADMIN';
-      case RoleEnum.CAPTAIN:
-        return 'ROLE_CAPTAIN';
+
+  static int getOrderStatusIndex(OrderStatusEnum status) {
+    switch (status) {
+      case OrderStatusEnum.WAITING:
+        return 0;
+      case OrderStatusEnum.IN_STORE:
+        return 2;
+      case OrderStatusEnum.DELIVERING:
+        return 3;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return 1;
+      case OrderStatusEnum.FINISHED:
+        return 4;
       default:
-        return '';
+        return 0;
+    }
+  }
+
+  static int getOrderStatusIndexForStore(OrderStatusEnum status) {
+    switch (status) {
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return 0;
+      case OrderStatusEnum.IN_STORE:
+        return 1;
+      case OrderStatusEnum.DELIVERING:
+        return 2;
+      default:
+        return 0;
     }
   }
 }

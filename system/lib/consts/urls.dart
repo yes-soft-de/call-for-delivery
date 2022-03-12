@@ -29,4 +29,5 @@ class Urls {
   static const CHECK_API_HEALTH = BASE_API_VERSION + '/checkbackendhealth';
   static const GET_USERS = BASE_API_VERSION + '/filterusersbysuperadmin';
   static const UPDATE_USER_PASSWORD = BASE_API_VERSION + '/userpasswordbysuperadmin';
+  static const UPDATE_ORDER_STATUS = BASE_API_VERSION + '/updateorderstatebysuperadmin';
 }
