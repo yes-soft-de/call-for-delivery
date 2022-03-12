@@ -51,7 +51,7 @@ class StoreOrderDetailsManager
        return  $orderDetailEntity;
     }
 
-    public function createImage(string $image, $id): ImageEntity
+    public function createImage(string $image, int $id): ImageEntity
     {
         $request = new ImageCreateRequest();
        
