@@ -494,7 +494,14 @@
     "deleteBranchSuccess": "Branch deleted successfully",
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
     "chooseBranch": "Choose Branch",
-    "thereIsNoBranches": "There is no branches available"
+    "thereIsNoBranches": "There is no branches available",
+
+    "addNote": "Add Note",
+    "title": "title",
+    "sendTo": "Send to",
+    "captains": "Captains",
+    "notice": "Notice"
+
 
 
 }

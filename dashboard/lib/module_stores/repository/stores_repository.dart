@@ -1,4 +1,5 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -104,5 +105,12 @@ class StoresRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
+  }
+  Future<StoreNeedSupportResponse?> getStoreSupport() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return StoreNeedSupportResponse.fromJson(response);
   }
 }

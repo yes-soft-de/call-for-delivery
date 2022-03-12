@@ -490,5 +490,11 @@
   "confirmDeletionBranch": "هل تريد حذف هذا الفرع",
   "deleteBranchSuccess": "تم حذف الفرع بنجاح",
   "chooseBranch": "Choose Branch",
-  "thereIsNoBranches": "لا يوجد أفرع متاحة"
+  "thereIsNoBranches": "لا يوجد أفرع متاحة",
+
+    "addNote": "إضافة تنبيه",
+    "title": "عنوان",
+    "sendTo": "إرسال إلى",
+    "captains": "الكباتن",
+    "notice": "التنبيهات"
 }

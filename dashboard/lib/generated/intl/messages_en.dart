@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
+        "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addPackage": MessageLookupByLibrary.simpleMessage("Add package"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
@@ -102,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
+        "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
@@ -377,6 +379,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("Notes"),
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
+        "notice": MessageLookupByLibrary.simpleMessage("Notice"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
@@ -589,6 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
+        "sendTo": MessageLookupByLibrary.simpleMessage("Send to"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
@@ -658,6 +662,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
+        "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(

@@ -4879,6 +4879,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Add Note`
+  String get addNote {
+    return Intl.message(
+      'Add Note',
+      name: 'addNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `title`
+  String get title {
+    return Intl.message(
+      'title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send to`
+  String get sendTo {
+    return Intl.message(
+      'Send to',
+      name: 'sendTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains`
+  String get captains {
+    return Intl.message(
+      'Captains',
+      name: 'captains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notice`
+  String get notice {
+    return Intl.message(
+      'Notice',
+      name: 'notice',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

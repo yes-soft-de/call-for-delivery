@@ -154,6 +154,7 @@ class PackagesLoadedState extends States {
         },
       ));
     }
+    widgets.add(SizedBox(height: 100,));
     return widgets;
   }
 

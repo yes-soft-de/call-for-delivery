@@ -1,4 +1,6 @@
+import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -96,5 +98,18 @@ class StoresService {
     }
     if (_storeResponse.data == null) return DataModel.empty();
     return StoreBalanceModel.withData(_storeResponse.data!);
+  }
+  Future<DataModel> getStoreNeedSupport() async {
+    StoreNeedSupportResponse? _clients =
+    await _storeManager.getStoreSupport();
+    if (_clients == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_clients.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_clients.statusCode));
+    }
+    if (_clients.data == null) return DataModel.empty();
+    return StoresNeedSupportModel.withData(_clients.data!);
   }
 }
