@@ -157,3 +157,27 @@ App\Request\Main\OrderStateUpdateBySuperAdminRequest:
             - NotBlank: ~
         state:
             - NotBlank: ~
+
+App\Request\Admin\CaptainOffer\CaptainOfferCreateRequest:
+    properties:
+        carCount:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
+        expired:
+            - NotBlank: ~
+        price:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainOffer\CaptainOfferUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        carCount:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
+        expired:
+            - NotBlank: ~
+        price:
+            - NotBlank: ~
