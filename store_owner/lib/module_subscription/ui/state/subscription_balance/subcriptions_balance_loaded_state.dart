@@ -5,13 +5,17 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
+import 'package:c4d/module_subscription/ui/widget/capicity_widget.dart';
+import 'package:c4d/module_subscription/ui/widget/captain_offer_card.dart';
 import 'package:c4d/module_subscription/ui/widget/custom_text_button.dart';
 import 'package:c4d/module_subscription/ui/widget/single_package_card.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart' as intl;
 
 class SubscriptionBalanceLoadedState extends States {
@@ -100,12 +104,11 @@ class SubscriptionBalanceLoadedState extends States {
                                 thickness: 2.5,
                               ),
                               // renew current subscription
-
                               CustomTextButton(
                                 label: S.current.renewOldPlan,
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  screenState.renewSubscription(balance.id);
+                                  screenState.renewSubscription(balance.packageID);
                                 },
                               ),
                             ],
@@ -143,6 +146,41 @@ class SubscriptionBalanceLoadedState extends States {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // status hint
+            Visibility(
+              visible: balance.status != 'active',
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: isDark ? Colors.amber : Colors.yellow,
+                      boxShadow: isDark
+                          ? []
+                          : [
+                              BoxShadow(
+                                  color: Colors.yellow,
+                                  spreadRadius: 0.1,
+                                  blurRadius: 7,
+                                  offset: Offset(-0.1, 0))
+                            ]),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                        leading: Icon(
+                          Icons.info,
+                        ),
+                        title: Text(
+                          SubscriptionsStatusHelper.getStatusMessage(
+                              balance.status),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        )),
+                  ),
+                ),
+              ),
+            ),
+            // package card
             SinglePackageCard(
               carsCount: balance.packageCarsCount.toString(),
               ordersCount: balance.packageOrdersCount.toString(),
@@ -320,40 +358,7 @@ class SubscriptionBalanceLoadedState extends States {
                 ),
               ),
             ),
-            // status hint
-            Visibility(
-              visible: balance.status != 'active',
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: isDark ? Colors.amber : Colors.yellow,
-                      boxShadow: isDark
-                          ? []
-                          : [
-                              BoxShadow(
-                                  color: Colors.yellow,
-                                  spreadRadius: 0.1,
-                                  blurRadius: 7,
-                                  offset: Offset(-0.1, 0))
-                            ]),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                        leading: Icon(
-                          Icons.info,
-                        ),
-                        title: Text(
-                          SubscriptionsStatusHelper.getStatusMessage(
-                              balance.status),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        )),
-                  ),
-                ),
-              ),
-            ),
+            // capacity bar
             _getOrderRow(
               context,
               balance.remainingOrders,
@@ -365,6 +370,40 @@ class SubscriptionBalanceLoadedState extends States {
                 balance.remainingCars,
                 (balance.packageCarsCount - balance.remainingCars).abs(),
                 (balance.remainingCars / balance.packageCarsCount) < 0.7),
+            // Captain ads
+            Visibility(
+              visible: screenState.snapshot.hasData,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 16,
+                  ),
+                  ListTile(
+                    title: Text(S.current.captainPackageExtra),
+                    leading: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Theme.of(context).backgroundColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Icon(Icons.local_taxi_rounded),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 250,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      children: getCaptains(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 75,
+            )
           ],
         ),
       ),
@@ -373,178 +412,36 @@ class SubscriptionBalanceLoadedState extends States {
 
   Widget _getOrderRow(BuildContext context, int filled, int empty,
       [bool danger = false]) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: danger
-                    ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).colorScheme.primary),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.sync_alt_rounded,
-                color: Theme.of(context).textTheme.button?.color,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 16,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).backgroundColor),
-                    ),
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          flex: filled,
-                          child: Container(
-                            height: 16,
-                            decoration: BoxDecoration(
-                              color: danger == true
-                                  ? Theme.of(context).colorScheme.error
-                                  : Theme.of(context).colorScheme.primary,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          fit: FlexFit.tight,
-                          flex: empty,
-                          child: Container(
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-          ),
-          Container(
-              width: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '${balance.remainingOrders} / ',
-                    style: TextStyle(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${balance.packageOrdersCount}',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
-        ],
-      ),
+    return CapacityBar(
+      danger: danger,
+      empty: empty,
+      filled: filled,
+      remainingCount: balance.remainingOrders,
+      totalCount: balance.packageOrdersCount,
+      icon: Icons.sync_alt_rounded,
     );
   }
 
   Widget _getCarsRow(BuildContext context, int filled, int empty,
       [bool danger = false]) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: danger
-                    ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).colorScheme.primary),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.car_rental_rounded,
-                color: Theme.of(context).textTheme.button?.color,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 16,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).backgroundColor),
-                    ),
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          flex: filled,
-                          child: Container(
-                            height: 16,
-                            decoration: BoxDecoration(
-                              color: danger == true
-                                  ? Theme.of(context).colorScheme.error
-                                  : Theme.of(context).colorScheme.primary,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          fit: FlexFit.tight,
-                          flex: empty,
-                          child: Container(
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-          ),
-          Container(
-              width: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '${balance.remainingCars} / ',
-                    style: TextStyle(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${balance.packageCarsCount >= 999999999 ? '∞' : balance.packageCarsCount}',
-                    style: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.9),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
-        ],
-      ),
-    );
+    return CapacityBar(
+        danger: danger,
+        empty: empty,
+        filled: filled,
+        remainingCount: balance.remainingCars,
+        totalCount: balance.packageCarsCount,
+        icon: Icons.car_rental_rounded);
+  }
+
+  List<Widget> getCaptains(BuildContext context) {
+    List<Widget> widgets = [];
+    widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CaptainOfferCard(
+          captainNumber: '5',
+          price: '25',
+          title: 'Title',
+        )));
+    return widgets;
   }
 }

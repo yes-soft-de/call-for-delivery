@@ -12,6 +12,7 @@ import 'package:c4d/module_subscription/ui/state/subscription_balance/subcriptio
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subscription_balance_error.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -24,7 +25,12 @@ class SubscriptionBalanceStateManager {
 
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
+  final PublishSubject<AsyncSnapshot<Object?>> _captainOffersSubject =
+      PublishSubject();
+
   Stream<States> get stateStream => _stateSubject.stream;
+  Stream<AsyncSnapshot<Object?>> get captainOffersStream =>
+      _captainOffersSubject.stream;
 
   SubscriptionBalanceStateManager(
     this._initAccountService,
@@ -95,4 +101,20 @@ class SubscriptionBalanceStateManager {
       }
     });
   }
+
+  void getCaptainOffers(SubscriptionBalanceScreenState screenState) {
+    _captainOffersSubject.add(AsyncSnapshot.waiting());
+    _initAccountService.getPackages().then((value) {
+      if (value.hasError) {
+        _captainOffersSubject.add(AsyncSnapshot.waiting());
+      } else if (value.isEmpty) {
+        _captainOffersSubject.add(AsyncSnapshot.nothing());
+      } else {
+        // ProductsByCategoriesModel model = value as ProductsByCategoriesModel;
+        // _captainOffersSubject
+        //     .add(AsyncSnapshot.withData(ConnectionState.done, model.data));
+      }
+    });
+  }
+  
 }
