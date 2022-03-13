@@ -1,9 +1,10 @@
+import 'package:c4d/module_deep_links/model/deep_links_model.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:uni_links/uni_links.dart';
 
 class DeepLinksService {
-  static Future<LatLng?> checkForGeoLink() async {
+  static Future<DeepLinksModel?> checkForGeoLink() async {
     var uri = await getInitialUri();
 
     if (uri == null) {
@@ -13,10 +14,12 @@ class DeepLinksService {
       return null;
     }
 
-    return LatLng(
-      double.parse(uri.queryParameters['q']!.split(',')[0]),
-      double.parse(uri.queryParameters['q']!.split(',')[1]),
-    );
+    return DeepLinksModel(
+        location: LatLng(
+          double.parse(uri.queryParameters['q']!.split(',')[0]),
+          double.parse(uri.queryParameters['q']!.split(',')[1]),
+        ),
+        link: uri);
   }
 
   static Future<LatLng?> defaultLocation() async {

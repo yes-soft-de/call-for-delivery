@@ -1,6 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/components/rating_form.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -198,7 +201,10 @@ class MyNotificationsLoadedState extends States {
             endActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const ScrollMotion(),
-              extentRatio: 0.2,
+              extentRatio: element.orderStatus == OrderStatusEnum.FINISHED ||
+                      element.captainID != null
+                  ? 0.7
+                  : 0.2,
               // A pane can dismiss the Slidable.
               dismissible: null,
               dragDismissible: false,
@@ -222,7 +228,36 @@ class MyNotificationsLoadedState extends States {
                                   .areYouSureAboutDeleteThisNotification);
                         });
                   },
-                )
+                ),
+                Visibility(
+                  visible: element.orderStatus == OrderStatusEnum.FINISHED ||
+                      element.captainID != null,
+                  child: SlidableAction(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.amberAccent,
+                    label: S.current.rateCaptain,
+                    icon: Icons.star_rounded,
+                    onPressed: (context) {
+                      final TextEditingController controller =
+                          TextEditingController();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return RatingForm(
+                                onPressed: (rate) {
+                                  Navigator.of(context).pop();
+                                  screenState.rateCaptain(RatingRequest(
+                                      comment: controller.text,
+                                      rating: rate,
+                                      rated: element.captainID));
+                                },
+                                message: S.current.rateCaptainMessage,
+                                title: S.current.rateCaptain,
+                                controller: controller);
+                          });
+                    },
+                  ),
+                ),
               ],
             ),
             child: Row(

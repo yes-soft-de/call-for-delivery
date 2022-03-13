@@ -166,6 +166,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose your capacity"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
             "Choose your desired package subscriptions based on your wanted category"),
+        "chooseYourRateFromFiveStar": MessageLookupByLibrary.simpleMessage(
+            "Choose your rate from five stars"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
@@ -174,6 +176,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
+        "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completedOrders":
@@ -190,6 +193,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "copy": MessageLookupByLibrary.simpleMessage("Copy"),
+        "copyFinished":
+            MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
@@ -567,6 +573,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
+        "rateCommentReview":
+            MessageLookupByLibrary.simpleMessage("What we can to improve"),
         "rateProduct": MessageLookupByLibrary.simpleMessage("Rate Product"),
         "rateProductMessage":
             MessageLookupByLibrary.simpleMessage("Please rate this product"),

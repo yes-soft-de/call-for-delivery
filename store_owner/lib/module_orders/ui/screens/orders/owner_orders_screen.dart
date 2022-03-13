@@ -4,15 +4,17 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
-import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -40,15 +42,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   ProfileModel? currentProfile;
   CanMakeOrderModel? status;
 
-  CompanyInfoResponse? _companyInfo;
+  CompanyInfoModel? _companyInfo;
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
   StreamSubscription? _statusSubscription;
-
-  Future<void> getMyOrders([loading = true]) async {
-    widget._stateManager.getOrders(this, loading);
-  }
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
@@ -74,8 +72,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   void initState() {
     super.initState();
     _currentState = LoadingState(this);
-    getMyOrders();
     getInitData();
+    widget._stateManager.watcher(this, true);
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
@@ -114,6 +112,13 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       getInitData();
       getMyOrdersFilter(false);
     });
+    DeepLinksService.checkForGeoLink().then((value) {
+      if (value != null) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            SettingRoutes.COPY_LINK_SCREEN, (route) => false,
+            arguments: value);
+      }
+    });
   }
 
   String? orderFilter;
@@ -136,6 +141,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       ]),
       drawer: NavigatorMenu(
         profileModel: currentProfile,
+        company: _companyInfo,
       ),
       floatingActionButton: DescribedFeatureOverlay(
         onDismiss: dismiss,
