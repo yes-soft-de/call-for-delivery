@@ -36,13 +36,16 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
         .pushNamed(AuthorizationRoutes.LOGIN_SCREEN, arguments: 1);
   }
 
+  var today = DateTime.now();
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    ordersFilter = FilterOrderRequest(state: 'pending');
-    widget._stateManager.getOrdersFilters(
-        this, FilterOrderRequest(state: ordersFilter.state ?? 'pending'));
+    ordersFilter = FilterOrderRequest(
+        state: 'pending',
+        fromDate: DateTime(today.year,today.month,today.day,0).toIso8601String(),
+        toDate: DateTime.now().toIso8601String());
+    widget._stateManager.getOrdersFilters(this, ordersFilter);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -70,8 +73,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             title: S.current.orderLog,
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
-                ordersFilter.fromDate = null;
-                ordersFilter.toDate = null;
+                ordersFilter.fromDate = DateTime(today.year,today.month,today.day,0).toIso8601String();
+                ordersFilter.toDate = DateTime.now().toIso8601String();
                 currentIndex = 0;
                 ordersFilter.state = 'pending';
                 getOrders();
