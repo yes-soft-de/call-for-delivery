@@ -101,6 +101,10 @@ class StoreOwnerProfileManager
             $item->setOpeningTime($item->getOpeningTime());
             $item->setClosingTime($item->getClosingTime());
 
+            if($item->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                $item->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED);
+            }
+
             $this->entityManager->flush();
 
             return $item;
