@@ -3,9 +3,11 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionEntityRepository;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateIsFutureRequest;
@@ -195,5 +197,15 @@ class SubscriptionManager
     public function isPackageReadyForSubscription($packageId): ?array {
        
         return $this->packageManager->getPackageActiveById($packageId);
+    }
+
+    public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    {
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
 }

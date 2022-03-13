@@ -20,6 +20,8 @@ final class StoreProfileConstant
 
     const COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED = "profileCompleted";
 
+    const COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED = "profileVerified";
+
     const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
 
     const COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED = "branchCreated";
