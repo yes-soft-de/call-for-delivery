@@ -201,8 +201,10 @@ class MyNotificationsLoadedState extends States {
             endActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const ScrollMotion(),
-              extentRatio:element.orderStatus == OrderStatusEnum.FINISHED ||
-                      element.captainID != null ? 0.7 : 0.2,
+              extentRatio: element.orderStatus == OrderStatusEnum.FINISHED ||
+                      element.captainID != null
+                  ? 0.7
+                  : 0.2,
               // A pane can dismiss the Slidable.
               dismissible: null,
               dragDismissible: false,

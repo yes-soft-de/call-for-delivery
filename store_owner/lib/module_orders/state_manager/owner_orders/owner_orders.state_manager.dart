@@ -5,9 +5,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
-import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
@@ -31,13 +31,13 @@ class OwnerOrdersStateManager {
   final PublishSubject<ProfileModel> _profileSubject = PublishSubject();
   final PublishSubject<CanMakeOrderModel> _subscriptionStatus =
       PublishSubject();
-  final PublishSubject<CompanyInfoResponse> _companySubject = PublishSubject();
+  final PublishSubject<CompanyInfoModel> _companySubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
   Stream<ProfileModel> get profileStream => _profileSubject.stream;
 
-  Stream<CompanyInfoResponse> get companyStream => _companySubject.stream;
+  Stream<CompanyInfoModel> get companyStream => _companySubject.stream;
   Stream<CanMakeOrderModel> get statusStream => _subscriptionStatus.stream;
 
   OwnerOrdersStateManager(
@@ -78,11 +78,11 @@ class OwnerOrdersStateManager {
     _ordersService.getMyOrdersFilter(request).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getOrdersFilters(screenState,request);
+          getOrdersFilters(screenState, request);
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
-          getOrdersFilters(screenState,request);
+          getOrdersFilters(screenState, request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderModel;
@@ -93,6 +93,7 @@ class OwnerOrdersStateManager {
   }
 
   Future<void> initDrawerData() async {
+    // profile
     var profile = await _profileService.getProfile();
     if (profile.hasError) {
       Fluttertoast.showToast(
@@ -103,6 +104,7 @@ class OwnerOrdersStateManager {
       profile as ProfileModel;
       _profileSubject.add(profile.data);
     }
+    // can make order
     var status = await getIt<SubscriptionService>().getMakingOrderAbility();
     if (status.hasError) {
       Fluttertoast.showToast(
@@ -116,9 +118,21 @@ class OwnerOrdersStateManager {
       status as CanMakeOrderModel;
       _subscriptionStatus.add(status.data);
     }
+
+    // company info
+    var company = await _ordersService.getCompanyInfo();
+    if (company.hasError) {
+      Fluttertoast.showToast(
+        msg: company.error ?? S.current.errorHappened,
+        backgroundColor: Colors.red,
+      );
+    } else {
+      company as CompanyInfoModel;
+      _companySubject.add(company.data);
+    }
   }
 
-  void watcher(OwnerOrdersScreenState screenState,[bool loading = false]) {
+  void watcher(OwnerOrdersScreenState screenState, [bool loading = false]) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       getOrdersFilters(
           screenState,

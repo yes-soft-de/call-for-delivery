@@ -48,7 +48,7 @@ class _RatingFormState extends State<RatingForm> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).colorScheme.primary),
+                        color: Colors.amber),
                     child: ListTile(
                       title: Text(
                         widget.message,
@@ -70,7 +70,7 @@ class _RatingFormState extends State<RatingForm> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                    SvgAsset.ACCEPT_ORDER,
+                    SvgAsset.RATE_SVG,
                     height: 200,
                     width: 200,
                   ),
@@ -113,7 +113,6 @@ class _RatingFormState extends State<RatingForm> {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-
                         onPressed: _rate == null
                             ? null
                             : () {

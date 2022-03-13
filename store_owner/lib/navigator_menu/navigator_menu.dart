@@ -3,6 +3,7 @@ import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
@@ -14,11 +15,13 @@ import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavigatorMenu extends StatefulWidget {
   final double? width;
   final ProfileModel? profileModel;
-  NavigatorMenu({this.width = 275, this.profileModel});
+  final CompanyInfoModel? company;
+  NavigatorMenu({this.width = 275, this.profileModel, this.company});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -138,10 +141,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
               },
               title: S.current.notices),
-          CustomNavTile(
-              icon: FontAwesomeIcons.whatsappSquare,
-              onTap: () {},
-              title: S.current.whatsapp),
+          Visibility(
+            visible: widget.company != null,
+            child: CustomNavTile(
+                icon: FontAwesomeIcons.whatsappSquare,
+                onTap: () {
+                  var url = 'https://wa.me/${widget.company?.whatsapp}';
+                  canLaunch(url).then((value) {
+                    if (value) {
+                      launch(url);
+                    }
+                  });
+                },
+                title: S.current.whatsapp),
+          ),
           Visibility(
             visible: widget.profileModel != null,
             child: CustomNavTile(

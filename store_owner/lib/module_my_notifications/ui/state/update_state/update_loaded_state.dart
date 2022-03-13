@@ -191,12 +191,19 @@ class UpdatesLoadedState extends States {
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(25),
-              boxShadow: [BoxShadow(
-                blurRadius: 10,
-                spreadRadius: 2,
-                offset: Offset(-0.5,0),
-                color:isDark ? Theme.of(context).colorScheme.background.withOpacity(0.5) : Theme.of(context).backgroundColor,
-              )],
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: Offset(-0.5, 0),
+                  color: isDark
+                      ? Theme.of(context)
+                          .colorScheme
+                          .background
+                          .withOpacity(0.5)
+                      : Theme.of(context).backgroundColor,
+                )
+              ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),

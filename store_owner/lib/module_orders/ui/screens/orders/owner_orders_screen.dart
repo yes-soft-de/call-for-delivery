@@ -6,9 +6,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
-import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
@@ -42,7 +42,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   ProfileModel? currentProfile;
   CanMakeOrderModel? status;
 
-  CompanyInfoResponse? _companyInfo;
+  CompanyInfoModel? _companyInfo;
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
@@ -72,8 +72,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   void initState() {
     super.initState();
     _currentState = LoadingState(this);
-    widget._stateManager.watcher(this,true);
     getInitData();
+    widget._stateManager.watcher(this, true);
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
@@ -141,6 +141,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       ]),
       drawer: NavigatorMenu(
         profileModel: currentProfile,
+        company: _companyInfo,
       ),
       floatingActionButton: DescribedFeatureOverlay(
         onDismiss: dismiss,
