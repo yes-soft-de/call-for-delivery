@@ -432,6 +432,11 @@
     "forbidden": "غير مخول للقيام بذلك",
 
     "searchForUser": "أبحث عن مستخدم",
-    "noUser": "لا يوجد مستخدمين"
+    "noUser": "لا يوجد مستخدمين",
+    "manageOrder": "إدارة الطلبات",
+    "state": "الحالة",
+    "changeOrderState": "Change order state",
+    "orderUpdatedSuccessfully": "Order updated successfully"
+
 
 }

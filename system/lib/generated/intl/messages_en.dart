@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
+        "changeOrderState":
+            MessageLookupByLibrary.simpleMessage("Change order state"),
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Change password"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
@@ -283,6 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "manageMessages":
             MessageLookupByLibrary.simpleMessage("Manage messages"),
+        "manageOrder": MessageLookupByLibrary.simpleMessage("Manage order"),
         "manageUser": MessageLookupByLibrary.simpleMessage("Manage user"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mediumMoreThan20EmployeesLessThan100":
@@ -366,6 +369,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can know your order status in this interface"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
+        "orderUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -542,6 +547,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
+        "state": MessageLookupByLibrary.simpleMessage("State"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),
         "statusCodeCreated": MessageLookupByLibrary.simpleMessage(

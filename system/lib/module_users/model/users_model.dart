@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/consts/role_status.dart';
 import 'package:c4d/module_users/response/users_response.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/helpers/role_status_helper.dart';
 
 class UsersModel extends DataModel {
 int id = -1;
@@ -25,7 +25,7 @@ UsersModel.withData(List<Data> data) : super.withData() {
         UsersModel(
             id: element.id ?? -1,
             userID: element.userId ?? '',
-        role:StatusHelper.getStatusEnum(element.roles?.first ?? '') ));
+        role:StatusRoleHelper.getStatusEnum(element.roles?.first ?? '') ));
   }
 }
 

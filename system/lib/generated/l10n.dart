@@ -4339,6 +4339,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Manage order`
+  String get manageOrder {
+    return Intl.message(
+      'Manage order',
+      name: 'manageOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `State`
+  String get state {
+    return Intl.message(
+      'State',
+      name: 'state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change order state`
+  String get changeOrderState {
+    return Intl.message(
+      'Change order state',
+      name: 'changeOrderState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order updated successfully`
+  String get orderUpdatedSuccessfully {
+    return Intl.message(
+      'Order updated successfully',
+      name: 'orderUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

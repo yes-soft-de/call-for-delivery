@@ -1,6 +1,10 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_check_api/check_api_routes.dart';
 import 'package:c4d/module_home/widget/home_card.dart';
+import 'package:c4d/module_order/manager/order_manager.dart';
+import 'package:c4d/module_order/request/order_state_request.dart';
+import 'package:c4d/module_order/state_manager/orders_state_manager.dart';
+import '../../module_order/ui/widget/update_orderstate_dialog.dart';
 import 'package:c4d/module_users/users_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +12,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  final OrdersStateManager _manager;
+
+  HomeScreen(this._manager);
+
+  @override
+  State<HomeScreen> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +87,16 @@ class HomeScreen extends StatelessWidget {
                 ],),
                 Wrap(
                   children: [
-                  HomeCard(title: S.of(context).manageMessages,image: ImageAsset.MESSAGES,onTap: (){},),
+                  HomeCard(title: S.of(context).manageOrder,image: ImageAsset.ORDER,onTap: (){
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return UpdateOrderInit(loading: false,title:S.of(context).changeOrderState,
+                              updateState: (id ,state){
+                                widget._manager.updateStatus(this ,UpdateOrderStateRequest( id, state));
+                              });
+                        });
+                  },),
                     HomeCard(title: S.of(context).manageUser,image: ImageAsset.USERS,onTap: (){
                       Navigator.pushNamed(context, UsersRoutes.VIEW_ALL);
                     },),
@@ -86,6 +108,12 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  refresh(){
+   setState(() {
+
+   });
   }
 }
 

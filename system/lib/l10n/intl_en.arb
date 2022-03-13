@@ -433,7 +433,11 @@
     "forbidden": "You are not allowed",
 
     "searchForUser": "Search for user",
-    "noUser": "There are no users"
+    "noUser": "There are no users",
+    "manageOrder": "Manage order",
+    "state": "State",
+    "changeOrderState": "Change order state",
+    "orderUpdatedSuccessfully": "Order updated successfully"
 
 
 

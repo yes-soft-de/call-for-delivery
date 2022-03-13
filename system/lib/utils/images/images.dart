@@ -16,6 +16,7 @@ class ImageAsset {
   static const CHECK_SERVER = ROOT + 'check_server.png';
   static const PASSWORD = ROOT + 'password.png';
   static const MESSAGES = ROOT + 'messages.png';
+  static const ORDER = ROOT + 'order_status.png';
 }
 
 class SvgAsset {

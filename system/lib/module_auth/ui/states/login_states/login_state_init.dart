@@ -126,7 +126,7 @@ class LoginStateInit extends LoginState {
                           loading: screen.loadingSnapshot.connectionState ==
                               ConnectionState.waiting,
                           text: S.of(context).login,
-                          bgColor: Theme.of(context).primaryColor,
+                          bgColor: Theme.of(context).primaryColorLight,
                           textColor: Colors.white,
                         ),
                       ],
