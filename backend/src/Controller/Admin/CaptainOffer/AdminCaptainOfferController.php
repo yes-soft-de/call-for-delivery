@@ -23,7 +23,7 @@ use OpenApi\Annotations as OA;
  * admin :Create Captain Offer.
  * @Route("v1/admin/captainoffer/")
  */
-class CaptainOfferController extends BaseController
+class AdminCaptainOfferController extends BaseController
 {
     private AutoMapping $autoMapping;
     private ValidatorInterface $validator;
