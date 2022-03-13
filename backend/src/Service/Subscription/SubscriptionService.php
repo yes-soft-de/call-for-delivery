@@ -136,20 +136,12 @@ class SubscriptionService
             }
             
             //all cars are busy
-           // $subscription['remainingCars'] <= 0
             if($remainingCars === SubscriptionConstant::CARS_FINISHED) {
 
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
     
                 return SubscriptionConstant::CARS_FINISHED;
-            }  
-
-            if($remainingCars === SubscriptionConstant::CARS_FINISHED) {
-
-                $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
-    
-                return SubscriptionConstant::CARS_FINISHED;
-            }  
+            } 
 
             //orders are finished
             if($subscription['remainingOrders'] <= 0) {
