@@ -57,7 +57,7 @@ class CompanyProfileScreenState extends State<CompanyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).companyInfo, icon: Icons.menu, onTap: () {
+          title: S.of(context).contactInfo, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
       body: GestureDetector(

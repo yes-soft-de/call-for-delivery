@@ -4929,6 +4929,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Company finance`
+  String get companyFinance {
+    return Intl.message(
+      'Company finance',
+      name: 'companyFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact info`
+  String get contactInfo {
+    return Intl.message(
+      'Contact info',
+      name: 'contactInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

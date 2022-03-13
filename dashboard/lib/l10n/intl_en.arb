@@ -500,7 +500,9 @@
     "title": "title",
     "sendTo": "Send to",
     "captains": "Captains",
-    "notice": "Notice"
+    "notice": "Notice",
+    "companyFinance": "Company finance",
+    "contactInfo": "Contact info"
 
 
 

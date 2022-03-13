@@ -151,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "companyFinance":
+            MessageLookupByLibrary.simpleMessage("Company finance"),
         "companyInfo":
             MessageLookupByLibrary.simpleMessage("Company information"),
         "companyProfileCreatedSuccessfully":
@@ -168,6 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm deletion of this branch"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
