@@ -1,13 +1,12 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
-import 'package:c4d/module_orders/ui/state/new_order/new_order.state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
 
 @injectable
 class NewOrderScreen extends StatefulWidget {
@@ -51,6 +50,7 @@ class NewOrderScreenState extends State<NewOrderScreen> {
   TextEditingController priceController = TextEditingController();
   String? payments;
   int? branch;
+  LatLng? customerLocation;
   //
   @override
   void initState() {
@@ -62,6 +62,20 @@ class NewOrderScreenState extends State<NewOrderScreen> {
       currentState = event;
       if (mounted) {
         setState(() {});
+      }
+    });
+    toController.addListener(() {
+      if (toController.text.isNotEmpty && toController.text != '') {
+        var data = toController.text.trim();
+        var link = Uri.tryParse(data);
+        if (link != null && link.queryParameters['q'] != null) {
+          customerLocation = LatLng(
+            double.parse(link.queryParameters['q']!.split(',')[0]),
+            double.parse(link.queryParameters['q']!.split(',')[1]),
+          );
+          setState(() {
+          });
+        }
       }
     });
   }

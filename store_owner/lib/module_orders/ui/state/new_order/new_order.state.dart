@@ -472,9 +472,11 @@ class NewOrderStateBranchesLoaded extends States {
         });
   }
 
-  Future<String> getClipBoardData() async {
+  Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-    return data?.text ?? '';
+    screenState.toController.text = data?.text ?? '';
+    screenState.refresh();
+    return;
   }
 
   // function to upload image then create order
@@ -493,7 +495,10 @@ class NewOrderStateBranchesLoaded extends States {
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(link: screenState.toController.text.trim()),
+          destination: GeoJson(
+              link: screenState.toController.text.trim(),
+              lat: screenState.customerLocation?.latitude,
+              lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.parse(screenState.priceController.text.trim()),
@@ -510,7 +515,10 @@ class NewOrderStateBranchesLoaded extends States {
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
-        destination: GeoJson(link: screenState.toController.text.trim()),
+        destination: GeoJson(
+            link: screenState.toController.text.trim(),
+            lat: screenState.customerLocation?.latitude,
+            lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.parse(screenState.priceController.text.trim()),
