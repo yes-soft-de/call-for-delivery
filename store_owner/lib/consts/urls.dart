@@ -208,7 +208,7 @@ class Urls {
   static const DELETE_ORDER = DOMAIN + '/v1/';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
-      BASE_API + '/storeownerprofilecompleteaccountstatus';
+      DOMAIN + '/v1/account/profilecompleteaccountstatus';
   static const GET_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationsLocal';
   static const GET_UPDATES =
