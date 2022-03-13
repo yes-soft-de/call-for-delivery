@@ -103,19 +103,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.amberAccent.withOpacity(0.5),
+                      color: Colors.amber.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 10,
                       offset: Offset(-0.2, 0)),
                 ],
                 gradient: LinearGradient(
                   colors: [
-                    Colors.amberAccent.withOpacity(0.85),
-                    Colors.amberAccent.withOpacity(0.85),
-                    Colors.amberAccent.withOpacity(0.9),
-                    Colors.amberAccent.withOpacity(0.93),
-                    Colors.amberAccent.withOpacity(0.95),
-                    Colors.amberAccent,
+                    Colors.amber.withOpacity(0.85),
+                    Colors.amber.withOpacity(0.85),
+                    Colors.amber.withOpacity(0.9),
+                    Colors.amber.withOpacity(0.93),
+                    Colors.amber.withOpacity(0.95),
+                    Colors.amber,
                   ],
                 ),
                 borderRadius: BorderRadius.circular(25),
