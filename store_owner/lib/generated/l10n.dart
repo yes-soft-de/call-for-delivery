@@ -5279,6 +5279,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Public phone number`
+  String get phoneNumberThatShowsForCaptain {
+    return Intl.message(
+      'Public phone number',
+      name: 'phoneNumberThatShowsForCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `eg`
+  String get eg {
+    return Intl.message(
+      'eg',
+      name: 'eg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra captain`
+  String get extraCaptain {
+    return Intl.message(
+      'Extra captain',
+      name: 'extraCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains Extra Offer`
+  String get captainPackageExtra {
+    return Intl.message(
+      'Captains Extra Offer',
+      name: 'captainPackageExtra',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing`
+  String get ongoing {
+    return Intl.message(
+      'Ongoing',
+      name: 'ongoing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message(
+      'Completed',
+      name: 'completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get cancelled2 {
+    return Intl.message(
+      'Cancelled',
+      name: 'cancelled2',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

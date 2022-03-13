@@ -524,7 +524,17 @@
     "copyFinished": "Link Copied Successfully",
     "chooseYourRateFromFiveStar": "Choose your rate from five stars",
     "comment": "Comment",
-    "rateCommentReview": "What we can to improve"
+    "rateCommentReview": "What we can to improve",
+    "phoneNumberThatShowsForCaptain": "Public phone number",
+    "eg": "eg",
+    "extraCaptain": "Extra captain",
+    "captainPackageExtra": "Captains Extra Offer",
+    "pending": "Pending",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "cancelled2": "Cancelled"
+
+
 
 
 

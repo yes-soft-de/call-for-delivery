@@ -273,7 +273,7 @@
     "deliverPrice": "التوصيل",
     "waitingDescription": "بانتظار قبول الطلب",
     "captainInStoreDescription": "الكابتن يقوم بتجهيز طلبك",
-    "deliveringDescription": "الكابتن في طريقه إليك",
+    "deliveringDescription": "الكابتن في طريقه إلى الزبون",
     "captainAcceptOrderDescription": "الكابتن في طريقه إلى المتجر",
     "orderDeliveredDescription": "تم توصيل الطلب",
     "orderStatusDescription": "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية",
@@ -518,12 +518,21 @@
     "packageExtend": "تمديد اضطراري للاشتراك",
     "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى",
     "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد",
-    "notices": "التنبيهات",
+    "notices": "التحديثات",
     "copy": "نسخ",
     "copyFinished": "تم النسخ بنجاح",
     "chooseYourRateFromFiveStar": "اختر التقييم المناسب من خمس نجوم",
-    "comment": "تقييمك",
-    "rateCommentReview": "ملاحظاتك وانطباعاتك وما نحتاجه للتحسين"
+    "comment": "تعليقك",
+    "rateCommentReview": "ملاحظاتك وانطباعاتك وما نحتاجه للتحسين",
+    "phoneNumberThatShowsForCaptain": "الذي سيظهر للكابتن",
+    "eg": "مثال",
+    "extraCaptain": "كابتن إضافي",
+    "captainPackageExtra": "عروض الكباتن الإضافية",
+    "pending": "قيد الانتظار",
+    "ongoing": "جارية",
+    "completed": "منتهية",
+    "cancelled2": "ملغاة"
+
 
 
 

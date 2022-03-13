@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
+        "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "الطلب تم إلغاءه من جهة العميل"),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
@@ -119,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+        "captainPackageExtra":
+            MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
@@ -174,10 +177,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
-        "comment": MessageLookupByLibrary.simpleMessage("تقييمك"),
+        "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
+        "completed": MessageLookupByLibrary.simpleMessage("منتهية"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
@@ -226,7 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
+            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى الزبون"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
@@ -242,6 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "بعد اتمامك المهمة ستكافئ جهودك بالمال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "eg": MessageLookupByLibrary.simpleMessage("مثال"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
@@ -271,6 +276,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "expirationData":
             MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
+        "extraCaptain": MessageLookupByLibrary.simpleMessage("كابتن إضافي"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "favoriteCategories":
@@ -412,13 +418,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
-        "notices": MessageLookupByLibrary.simpleMessage("التنبيهات"),
+        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
@@ -499,6 +506,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
+        "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
         "pendingOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات قيد الانتظار"),
         "personalData":
@@ -508,6 +516,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "phoneNumberLong": MessageLookupByLibrary.simpleMessage(
             "رقم الهاتف غير صالح بسبب تعديه ل٩ محارف"),
+        "phoneNumberThatShowsForCaptain":
+            MessageLookupByLibrary.simpleMessage("الذي سيظهر للكابتن"),
         "phoneNumbertooShort":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),

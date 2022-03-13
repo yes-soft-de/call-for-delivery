@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
+        "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "The order has been cancelled by the client"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
@@ -121,6 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain is in the way"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
+        "captainPackageExtra":
+            MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
@@ -179,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -245,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "After you doing your job your effort will be rewarded by earning money"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "eg": MessageLookupByLibrary.simpleMessage("eg"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddressIsRequired":
@@ -275,6 +280,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "expirationData":
             MessageLookupByLibrary.simpleMessage("Expiration date"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
+        "extraCaptain": MessageLookupByLibrary.simpleMessage("Extra captain"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
@@ -425,6 +431,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
@@ -506,6 +513,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
+        "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "pendingOrders": MessageLookupByLibrary.simpleMessage("Pending order"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phoneIsRequired":
@@ -513,6 +521,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
         "phoneNumberLong": MessageLookupByLibrary.simpleMessage(
             "Phone number invalid format , cause is more than 9"),
+        "phoneNumberThatShowsForCaptain":
+            MessageLookupByLibrary.simpleMessage("Public phone number"),
         "phoneNumbertooShort":
             MessageLookupByLibrary.simpleMessage("Phone number is too short"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
