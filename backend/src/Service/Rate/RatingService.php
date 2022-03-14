@@ -11,8 +11,8 @@ use App\Response\Rate\RatingResponse;
 
 class RatingService
 {
-    private $autoMapping;
-    private $ratingManager;
+    private AutoMapping $autoMapping;
+    private RatingManager $ratingManager;
 
     public function __construct(AutoMapping $autoMapping, RatingManager $ratingManager)
     {
