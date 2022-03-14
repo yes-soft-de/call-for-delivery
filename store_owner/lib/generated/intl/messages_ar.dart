@@ -708,6 +708,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
+        "subscribedToOfferSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم الاشتراك بباقة كابتن إضافية بنجاح"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
         "subscriptionStatus":

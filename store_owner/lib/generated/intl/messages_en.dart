@@ -712,6 +712,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
+        "subscribedToOfferSuccess": MessageLookupByLibrary.simpleMessage(
+            "You subscribed with captain offer with a success"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription date"),
         "subscriptionStatus":

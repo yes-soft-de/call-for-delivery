@@ -5409,6 +5409,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You subscribed with captain offer with a success`
+  String get subscribedToOfferSuccess {
+    return Intl.message(
+      'You subscribed with captain offer with a success',
+      name: 'subscribedToOfferSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

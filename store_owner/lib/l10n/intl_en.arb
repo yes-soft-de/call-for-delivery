@@ -537,7 +537,9 @@
     "km": "Km",
     "distance": "Distance",
     "unavailable": "Unavailable",
-    "calculating": "Calculating"
+    "calculating": "Calculating",
+    "subscribedToOfferSuccess": "You subscribed with captain offer with a success"
+
 
 
 
