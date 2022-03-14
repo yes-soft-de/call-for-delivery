@@ -18,7 +18,7 @@ class UploadFileHelperService
         return $this->params;
     }
 
-    public function getImageParams($imageURL): ?array
+    public function getImageParams(string|null $imageURL): ?array
     {
         if(! $imageURL) {
             return $imageURL;
