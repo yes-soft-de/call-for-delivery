@@ -92,6 +92,14 @@ class SubscriptionManager
        
     }
 
+    public function isSubscriptionForReady(int $storeOwnerId): ?array
+    {
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
+
+       return $this->subscriptionDetailsManager->getSubscriptionCurrentActive($storeOwner);
+       
+    }
+
     public function getSubscriptionForNextTime(int $storeOwner): ?array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwner);

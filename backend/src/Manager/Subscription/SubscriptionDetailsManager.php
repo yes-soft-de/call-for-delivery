@@ -100,6 +100,11 @@ class SubscriptionDetailsManager
     {   
         return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
     }
+
+    public function getSubscriptionCurrentActive($storeOwner): ?array
+    {   
+        return $this->subscribeDetailsRepository->getSubscriptionCurrentActive($storeOwner);
+    }
     
     public function updateHasExtra(SubscriptionEntity $subscribeEntity, bool $hasExtra): ?SubscriptionDetailsEntity
     {     

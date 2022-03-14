@@ -97,7 +97,12 @@ class SubscriptionCaptainOfferController extends BaseController
         }
          
         $result = $this->subscriptionCaptainOfferService->createSubscriptionCaptainOffer($request);
-
+       
+        if (isset($result->subscriptionState)) {
+      
+            return $this->response($result, self::ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER);
+        }
+       
         return $this->response($result, self::CREATE);
     }
 }

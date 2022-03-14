@@ -41,6 +41,8 @@ final class SubscriptionConstant
     const CAN_CREATE_ORDER = true;
 
     const CAN_NOT_CREATE_ORDER = false;
+
+    const CAN_NOT_CREATE_CAPTAIN_OFFER = false;
    
     const IS_HAS_EXTRA_TRUE = true;
    
@@ -59,4 +61,6 @@ final class SubscriptionConstant
     const CAN_SUBSCRIPTION_EXTRA_TRUE = true;
     
     const CAN_SUBSCRIPTION_EXTRA_FALSE = false;
+
+    const SUBSCRIPTION_FOUND = "subscription found";
 }

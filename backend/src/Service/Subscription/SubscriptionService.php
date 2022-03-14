@@ -254,7 +254,7 @@ class SubscriptionService
                 //Is there subscription captain offer and active?
                 if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
                    
-                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
+                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars, $countOrders);
                 }
 
                 $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
@@ -415,7 +415,7 @@ class SubscriptionService
          return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
     }
     
-    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, $remainingCars): int
+    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, $remainingCars, $countOrders): int
     {       
         if($subscription) {
            
@@ -427,6 +427,7 @@ class SubscriptionService
             if($endDate < $dateNow) {
 
                 $remainingCars = $remainingCars - $subscription['subscriptionCaptainOfferCarCount'];
+                // $remainingCars = $subscription['remainingCars'] - $subscription['subscriptionCaptainOfferCarCount'];
             
                 $this->subscriptionCaptainOfferService->updateState($subscription['subscriptionCaptainOfferId'],  SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
 
