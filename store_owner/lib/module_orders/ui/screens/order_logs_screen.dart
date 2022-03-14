@@ -212,7 +212,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               height: 40,
               cursorColor: Theme.of(context).colorScheme.primary,
               items: [
-                FilterItem(label: S.current.pending,),
+                FilterItem(
+                  label: S.current.pending,
+                ),
                 FilterItem(label: S.current.ongoing),
                 FilterItem(label: S.current.completed),
                 FilterItem(label: S.current.cancelled2),
