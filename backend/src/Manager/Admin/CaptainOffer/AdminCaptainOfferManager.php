@@ -3,7 +3,7 @@
 namespace App\Manager\Admin\CaptainOffer;
 
 use App\AutoMapping;
-use App\Constant\CaptainOffer\CaptainOfferConstant;
+use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 use App\Entity\CaptainOfferEntity;
 use App\Repository\CaptainOfferEntityRepository;
 use App\Request\Admin\CaptainOffer\CaptainOfferCreateRequest;
