@@ -410,7 +410,8 @@ class SubscriptionService
 
         if($storeOwnerProfileResult) {
             if($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED ||
-                $storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED) {
+                $storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED ||
+             $storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
                 // then we can update completeAccountStatus to subscriptionCreated
 
                 $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateRequest();
