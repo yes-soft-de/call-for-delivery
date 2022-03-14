@@ -220,5 +220,6 @@ class Urls {
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
   static const CAPTAIN_OFFERS = DOMAIN + '/v1/captainoffer/captainoffers';
+  static const CREATE_CAPTAIN_OFFERS = DOMAIN + '/v1/subscription/subscriptioncaptainoffer/create';
 
 }

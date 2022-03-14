@@ -195,6 +195,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
+        "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),

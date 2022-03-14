@@ -537,7 +537,8 @@
     "km": "كم",
     "unavailable": "غير معروفة",
     "calculating": "جاري الحساب",
-    "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح"
+    "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح",
+    "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"
 
 
 

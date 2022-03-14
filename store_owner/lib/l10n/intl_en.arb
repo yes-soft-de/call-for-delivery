@@ -538,7 +538,9 @@
     "distance": "Distance",
     "unavailable": "Unavailable",
     "calculating": "Calculating",
-    "subscribedToOfferSuccess": "You subscribed with captain offer with a success"
+    "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
+    "confirmationCaptainOffers": "Are sure about subscribe with this offer"
+
 
 
 

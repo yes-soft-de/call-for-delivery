@@ -196,6 +196,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
+            "Are sure about subscribe with this offer"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),

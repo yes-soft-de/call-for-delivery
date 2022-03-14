@@ -5419,6 +5419,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Are sure about subscribe with this offer`
+  String get confirmationCaptainOffers {
+    return Intl.message(
+      'Are sure about subscribe with this offer',
+      name: 'confirmationCaptainOffers',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
