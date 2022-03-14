@@ -232,7 +232,7 @@ class AuthService {
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
         // account didn't subscript yet
-        case '9158':
+        case '9161':
           _prefsHelper.setUserCompetedProfile(
               SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
           break;
@@ -245,7 +245,7 @@ class AuthService {
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
         // account not filled
-        case '9161':
+        case '9158':
           _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
         default:
