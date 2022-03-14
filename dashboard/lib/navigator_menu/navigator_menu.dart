@@ -1,5 +1,6 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
@@ -88,7 +89,15 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
-
+            // captain
+            customExpansionTile(
+                title: S.current.captains,
+                icon: FontAwesomeIcons.car,
+                children: [
+                  customListTile(getIt<CaptainsModule>().captainOffersScreen,
+                      S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
+                ],
+                page: widget.currentPage),
             customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
                 FontAwesomeIcons.stickyNote),
             customExpansionTile(

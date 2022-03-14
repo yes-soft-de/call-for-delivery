@@ -4949,6 +4949,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Captains offer`
+  String get captainsOffer {
+    return Intl.message(
+      'Captains offer',
+      name: 'captainsOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add offer`
+  String get addOffer {
+    return Intl.message(
+      'Add offer',
+      name: 'addOffer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

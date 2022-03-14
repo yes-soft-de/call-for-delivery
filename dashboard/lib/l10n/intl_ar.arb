@@ -498,5 +498,8 @@
     "captains": "الكباتن",
     "notice": "التنبيهات",
     "companyFinance": "المعلومات المالية",
-    "contactInfo": "معلومات الإتصال"
+    "contactInfo": "معلومات الإتصال",
+    "captainsOffer": "عروض الكباتن",
+    "addOffer": "إضافة عرض"
+
 }

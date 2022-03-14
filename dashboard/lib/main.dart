@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_branches/branches_module.dart';
+import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatefulWidget {
   final CompanyModule _companyModule;
   final BranchesModule _branchesModule;
   final NoticeModule _noticeModule;
+  final CaptainsModule _captainsModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -107,7 +109,8 @@ class MyApp extends StatefulWidget {
       this._categoriesModule,
       this._companyModule,
       this._branchesModule,
-      this._noticeModule
+      this._noticeModule,
+      this._captainsModule
       );
 
   @override
