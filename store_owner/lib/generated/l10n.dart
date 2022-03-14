@@ -5359,6 +5359,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Invalid map link`
+  String get invalidMapLink {
+    return Intl.message(
+      'Invalid map link',
+      name: 'invalidMapLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Km`
+  String get km {
+    return Intl.message(
+      'Km',
+      name: 'km',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance`
+  String get distance {
+    return Intl.message(
+      'Distance',
+      name: 'distance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unavailable`
+  String get unavailable {
+    return Intl.message(
+      'Unavailable',
+      name: 'unavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calculating`
+  String get calculating {
+    return Intl.message(
+      'Calculating',
+      name: 'calculating',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

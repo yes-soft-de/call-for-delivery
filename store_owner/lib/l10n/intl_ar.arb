@@ -531,7 +531,12 @@
     "pending": "قيد الانتظار",
     "ongoing": "جارية",
     "completed": "منتهية",
-    "cancelled2": "ملغاة"
+    "cancelled2": "ملغاة",
+    "invalidMapLink": "وجهة غير صالحة",
+    "distance": "المسافة",
+    "km": "كم",
+    "unavailable": "غير معروفة",
+    "calculating": "جاري الحساب"
 
 
 

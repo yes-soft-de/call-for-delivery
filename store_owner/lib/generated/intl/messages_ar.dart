@@ -93,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
+        "calculating": MessageLookupByLibrary.simpleMessage("جاري الحساب"),
         "camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
@@ -238,6 +239,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
+        "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
@@ -333,12 +335,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidCode": MessageLookupByLibrary.simpleMessage("رمز التحقق خطأ"),
         "invalidCredentials": MessageLookupByLibrary.simpleMessage(
             "هناك خطأ في كلمة السر أو اسم المستخدم"),
+        "invalidMapLink":
+            MessageLookupByLibrary.simpleMessage("وجهة غير صالحة"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("تعويض المسافات المقطوعة"),
+        "km": MessageLookupByLibrary.simpleMessage("كم"),
         "lanchDescribtion": MessageLookupByLibrary.simpleMessage(
             "إذا لديك غرض لتوصيله لمكان بعيد عنك لاتقلق افتح تطبيقنا"),
         "lanchDescribtionCaptain": MessageLookupByLibrary.simpleMessage(
@@ -744,6 +749,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
+        "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),

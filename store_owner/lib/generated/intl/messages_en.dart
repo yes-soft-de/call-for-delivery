@@ -95,6 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -241,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
+        "distance": MessageLookupByLibrary.simpleMessage("Distance"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
@@ -341,12 +343,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidCode": MessageLookupByLibrary.simpleMessage("Invalid Code"),
         "invalidCredentials":
             MessageLookupByLibrary.simpleMessage("Wrong username or password"),
+        "invalidMapLink":
+            MessageLookupByLibrary.simpleMessage("Invalid map link"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("Invalid number"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("Kilometer Bonus"),
+        "km": MessageLookupByLibrary.simpleMessage("Km"),
         "lanchDescribtion": MessageLookupByLibrary.simpleMessage(
             "If you have somthing to deliver far from you dont wory just open our app"),
         "lanchDescribtionCaptain": MessageLookupByLibrary.simpleMessage(
@@ -748,6 +753,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
+        "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),

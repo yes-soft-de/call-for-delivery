@@ -532,7 +532,17 @@
     "pending": "Pending",
     "ongoing": "Ongoing",
     "completed": "Completed",
-    "cancelled2": "Cancelled"
+    "cancelled2": "Cancelled",
+    "invalidMapLink": "Invalid map link",
+    "km": "Km",
+    "distance": "Distance",
+    "unavailable": "Unavailable",
+    "calculating": "Calculating"
+
+
+
+
+
 
 
 
