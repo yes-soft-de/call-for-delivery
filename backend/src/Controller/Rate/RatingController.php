@@ -36,9 +36,9 @@ class RatingController extends BaseController
     }
 
     /**
-     * store: Create rating.
-     * @Route("ratingbystore", name="createRatingByStore", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
+     * Create rating.
+     * @Route("ratingbystore", name="createRating", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @return JsonResponse
      *

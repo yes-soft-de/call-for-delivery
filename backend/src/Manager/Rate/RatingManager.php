@@ -12,10 +12,10 @@ use App\Manager\User\UserManager;
 
 class RatingManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $ratingRepository;
-    private $userManager;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private RateEntityRepository $ratingRepository;
+    private UserManager $userManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, RateEntityRepository $ratingRepository, UserManager $userManager)
     {
