@@ -3,10 +3,12 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Repository\SubscriptionEntityRepository;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateIsFutureRequest;
@@ -238,5 +240,15 @@ class SubscriptionManager
         $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
        
         return SubscriptionConstant::UPDATE_STATE;
+    }
+    
+    public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    {
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
 }

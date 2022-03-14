@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Admin\AdminRegisterRequest;
-use App\Request\User\UserRegisterRequest;
 use App\Service\Admin\AdminService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

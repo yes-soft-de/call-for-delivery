@@ -5,8 +5,10 @@ namespace App\Manager\StoreOwnerBranch;
 use App\AutoMapping;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Repository\StoreOwnerBranchEntityRepository;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Admin\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
@@ -159,5 +161,15 @@ class StoreOwnerBranchManager
     public function getActiveBranchesByStoreOwnerIdForAdmin(int $storeOwnerId): ?array
     {
         return $this->storeOwnerBranchEntityRepository->getActiveBranchesByStoreOwnerId($storeOwnerId);
+    }
+
+    public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    {
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
 }
