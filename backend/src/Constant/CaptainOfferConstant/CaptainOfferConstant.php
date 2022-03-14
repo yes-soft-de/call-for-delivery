@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constant\CaptainOffer;
+namespace App\Constant\CaptainOfferConstant;
 
 class CaptainOfferConstant
 {
