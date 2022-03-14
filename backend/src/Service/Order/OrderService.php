@@ -12,10 +12,9 @@ use App\Response\Order\OrdersResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
-use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class OrderService
 {
@@ -23,18 +22,15 @@ class OrderService
     private OrderManager $orderManager;
     private SubscriptionService $subscriptionService;
     private NotificationLocalService $notificationLocalService;
-    private string $params;
     private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, ParameterBagInterface $params,
-                                UploadFileHelperService $uploadFileHelperService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService)
     {
-       $this->params = $params->get('upload_base_url') . '/';
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
        $this->subscriptionService = $subscriptionService;
        $this->notificationLocalService = $notificationLocalService;
-        $this->uploadFileHelperService = $uploadFileHelperService;
+       $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     /**
@@ -52,10 +48,10 @@ class OrderService
 
         $order = $this->orderManager->createOrder($request);
         if($order) {
-
-         $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
-
-         $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+        
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
+ 
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -87,23 +83,15 @@ class OrderService
         $order = $this->orderManager->getSpecificOrderForStore($id);
         if($order) {
             
-            $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
+            $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
 
             // following statement is a temporary one
             $order['captainUserId'] = $id;
             //This is for testing, it will be completed after building the captain's entity
             $order['roomId'] = "12345678912456789";
         }
-        return $this->autoMapping->map("array", OrdersResponse::class, $order);
-    }
-    
-    public function getImageParams($imageURL, $image, $baseURL): array
-    {
-        $item['imageURL'] = $imageURL;
-        $item['image'] = $image;
-        $item['baseURL'] = $baseURL;
 
-        return $item;
+        return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
 
     public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array

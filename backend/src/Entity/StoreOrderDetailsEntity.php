@@ -25,9 +25,6 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'text')]
     private $detail;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $images;
-
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'storeOrderDetailsEntities')]
     #[ORM\JoinColumn(nullable: false)]
     private $branch;
@@ -35,6 +32,9 @@ class StoreOrderDetailsEntity
     #[ORM\OneToOne(targetEntity: orderEntity::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
+
+    #[ORM\OneToOne(targetEntity: ImageEntity::class, cascade: ['persist', 'remove'])]
+    private $images;
 
     public function getId(): ?int
     {
@@ -89,18 +89,6 @@ class StoreOrderDetailsEntity
         return $this;
     }
 
-    public function getImages(): ?string
-    {
-        return $this->images;
-    }
-
-    public function setImages(?string $images): self
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
     public function getBranch(): ?StoreOwnerBranchEntity
     {
         return $this->branch;
@@ -121,6 +109,18 @@ class StoreOrderDetailsEntity
     public function setOrderId(orderEntity $orderId): self
     {
         $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    public function getImages(): ?ImageEntity
+    {
+        return $this->images;
+    }
+
+    public function setImages(?ImageEntity $images): self
+    {
+        $this->images = $images;
 
         return $this;
     }
