@@ -40,6 +40,10 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
     widget._stateManager.extendPackage(this);
   }
 
+  void subscribedToCaptainOffer(int id) {
+    widget._stateManager.subscribeToCaptainOffer(this, id);
+  }
+
   @override
   void initState() {
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
@@ -49,11 +53,13 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
       }
     });
     getBalance();
+    widget._stateManager.getCaptainOffers(this);
     _globalStreamSubscription =
         getIt<GlobalStateManager>().stateStream.listen((event) {
       getBalance();
     });
-    widget._stateManager.captainOffersStream.listen((event) {
+    _captainsOffersStreamSubscription =
+        widget._stateManager.captainOffersStream.listen((event) {
       snapshot = event;
       if (mounted) {
         setState(() {});
@@ -78,6 +84,7 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   void dispose() {
     _streamSubscription.cancel();
     _globalStreamSubscription.cancel();
+    _captainsOffersStreamSubscription.cancel();
     super.dispose();
   }
 }

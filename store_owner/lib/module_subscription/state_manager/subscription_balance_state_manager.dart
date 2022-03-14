@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
+import 'package:c4d/module_subscription/model/captain_offers_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
@@ -18,7 +19,7 @@ import 'package:rxdart/rxdart.dart';
 
 @injectable
 class SubscriptionBalanceStateManager {
-  final SubscriptionService _initAccountService;
+  final SubscriptionService _subscriptionService;
   final ProfileService _profileService;
   final AuthService _authService;
   final ImageUploadService _uploadService;
@@ -33,14 +34,14 @@ class SubscriptionBalanceStateManager {
       _captainOffersSubject.stream;
 
   SubscriptionBalanceStateManager(
-    this._initAccountService,
+    this._subscriptionService,
     this._profileService,
     this._authService,
     this._uploadService,
   );
   void getBalance(SubscriptionBalanceScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
-    _initAccountService.getSubscriptionBalance().then((value) {
+    _subscriptionService.getSubscriptionBalance().then((value) {
       if (value.hasError) {
         if (S.current.notSubscription != value.error) {
           _stateSubject.add(ErrorState(screenState, onPressed: () {
@@ -67,7 +68,7 @@ class SubscriptionBalanceStateManager {
   void subscribePackage(
       SubscriptionBalanceScreenState screenState, int packageId) {
     _stateSubject.add(LoadingState(screenState));
-    _initAccountService.subscribePackage(packageId).then((value) {
+    _subscriptionService.subscribePackage(packageId).then((value) {
       if (value.hasError) {
         getBalance(screenState);
         CustomFlushBarHelper.createError(
@@ -85,7 +86,7 @@ class SubscriptionBalanceStateManager {
 
   void extendPackage(SubscriptionBalanceScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
-    _initAccountService.extendPackage().then((value) {
+    _subscriptionService.extendPackage().then((value) {
       if (value.hasError) {
         getBalance(screenState);
         CustomFlushBarHelper.createError(
@@ -104,17 +105,37 @@ class SubscriptionBalanceStateManager {
 
   void getCaptainOffers(SubscriptionBalanceScreenState screenState) {
     _captainOffersSubject.add(AsyncSnapshot.waiting());
-    _initAccountService.getPackages().then((value) {
+    _subscriptionService.getCaptainsOffers().then((value) {
       if (value.hasError) {
         _captainOffersSubject.add(AsyncSnapshot.waiting());
       } else if (value.isEmpty) {
         _captainOffersSubject.add(AsyncSnapshot.nothing());
       } else {
-        // ProductsByCategoriesModel model = value as ProductsByCategoriesModel;
-        // _captainOffersSubject
-        //     .add(AsyncSnapshot.withData(ConnectionState.done, model.data));
+        CaptainsOffersModel model = value as CaptainsOffersModel;
+        _captainOffersSubject
+            .add(AsyncSnapshot.withData(ConnectionState.done, model.data));
       }
     });
   }
-  
+
+  void subscribeToCaptainOffer(
+      SubscriptionBalanceScreenState screenState, int offerID) {
+    _stateSubject.add(LoadingState(screenState));
+    _subscriptionService.subscribeToCaptainOffer(offerID).then((value) {
+      if (value.hasError) {
+        getBalance(screenState);
+        getCaptainOffers(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getBalance(screenState);
+        getCaptainOffers(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.subscribedToOfferSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
 }

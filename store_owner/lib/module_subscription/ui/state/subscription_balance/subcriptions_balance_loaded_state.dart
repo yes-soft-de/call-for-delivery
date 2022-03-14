@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/balance_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_subscription/model/captain_offers_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
@@ -70,31 +71,10 @@ class SubscriptionBalanceLoadedState extends States {
                                 label: S.current.renewNewPlan,
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  if (balanceStatusEnum ==
-                                          BalanceStatus.ACTIVE ||
-                                      balance.status ==
-                                          BalanceStatus.CARS_FINISHED) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return CustomAlertDialog(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).pushNamed(
-                                                    SubscriptionsRoutes
-                                                        .INIT_SUBSCRIPTIONS_SCREEN,
-                                                    arguments: S.current
-                                                        .renewSubscription);
-                                              },
-                                              content: S.current
-                                                  .renewedNoteYourSubStillActive);
-                                        });
-                                  } else {
-                                    Navigator.of(context).pushNamed(
-                                        SubscriptionsRoutes
-                                            .INIT_SUBSCRIPTIONS_SCREEN,
-                                        arguments: S.current.renewSubscription);
-                                  }
+                                  Navigator.of(context).pushNamed(
+                                      SubscriptionsRoutes
+                                          .INIT_SUBSCRIPTIONS_SCREEN,
+                                      arguments: S.current.renewSubscription);
                                 },
                               ),
                               Divider(
@@ -108,7 +88,8 @@ class SubscriptionBalanceLoadedState extends States {
                                 label: S.current.renewOldPlan,
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  screenState.renewSubscription(balance.packageID);
+                                  screenState
+                                      .renewSubscription(balance.packageID);
                                 },
                               ),
                             ],
@@ -435,13 +416,30 @@ class SubscriptionBalanceLoadedState extends States {
 
   List<Widget> getCaptains(BuildContext context) {
     List<Widget> widgets = [];
-    widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CaptainOfferCard(
-          captainNumber: '5',
-          price: '25',
-          title: 'Title',
-        )));
+    List<CaptainsOffersModel> offers = screenState.snapshot.data ?? [];
+    offers.forEach((element) {
+      widgets.add(Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CaptainOfferCard(
+            captainNumber: element.carCount.toString(),
+            price: element.cost.toStringAsFixed(1),
+            title: '',
+            expired: element.expired.toString(),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CustomAlertDialog(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          screenState.subscribedToCaptainOffer(element.id);
+                        },
+                        content: S.current.confirmationCaptainOffers);
+                  });
+            },
+          )));
+    });
+
     return widgets;
   }
 }

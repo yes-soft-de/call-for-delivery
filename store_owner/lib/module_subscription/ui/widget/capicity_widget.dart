@@ -14,8 +14,7 @@ class CapacityBar extends StatelessWidget {
       required this.empty,
       required this.remainingCount,
       required this.totalCount,
-      required this.icon
-      })
+      required this.icon})
       : super(key: key);
 
   @override

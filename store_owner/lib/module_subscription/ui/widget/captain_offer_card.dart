@@ -7,13 +7,15 @@ class CaptainOfferCard extends StatelessWidget {
   final String captainNumber;
   final String price;
   final String title;
+  final String expired;
   final Function()? onPressed;
   const CaptainOfferCard(
       {Key? key,
       required this.captainNumber,
       required this.price,
       required this.title,
-      this.onPressed})
+      this.onPressed,
+      required this.expired})
       : super(key: key);
 
   @override
@@ -31,22 +33,29 @@ class CaptainOfferCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.button,
+          Visibility(
+            visible: false,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.button,
+              ),
             ),
           ),
           // divider
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: DottedLine(
-              dashColor: Theme.of(context).backgroundColor,
-              lineThickness: 2.5,
-              dashRadius: 25,
+          Visibility(
+            visible: false,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DottedLine(
+                dashColor: Theme.of(context).backgroundColor,
+                lineThickness: 2.5,
+                dashRadius: 25,
+              ),
             ),
           ),
+          SizedBox(height: 16,),
           Flex(
             direction: Axis.horizontal,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,6 +86,46 @@ class CaptainOfferCard extends StatelessWidget {
               ),
             ],
           ),
+          // expired
+          Padding(
+            padding:
+                const EdgeInsets.only(right: 32.0, left: 32, top: 8, bottom: 8),
+            child: DottedLine(
+              dashColor: Theme.of(context).backgroundColor,
+              lineThickness: 2.5,
+              dashRadius: 25,
+              dashLength: 4,
+            ),
+          ),
+          Flex(
+            direction: Axis.horizontal,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).backgroundColor),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FaIcon(Icons.date_range_rounded,
+                      color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              SizedBox(
+                width: 105,
+                child: Text(
+                expired +' ' + S.current.day + ' ' + S.current.validation,
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
+            ],
+          ),
+
           // cost
           Padding(
             padding:
