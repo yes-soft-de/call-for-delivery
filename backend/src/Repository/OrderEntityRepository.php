@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
@@ -97,20 +98,31 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if ($request->getState()) {
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :stateOnGoing');
+            $query->setParameter('stateOnGoing', OrderStateConstant::ORDER_STATE_ONGOING);
+
+            $query->orWhere('orderEntity.state = :stateInStore');
+            $query->setParameter('stateInStore', OrderStateConstant::ORDER_STATE_IN_STORE);
+
+            $query->orWhere('orderEntity.state = :stateOnWayToPickOrder');
+            $query->setParameter('stateOnWayToPickOrder', OrderStateConstant::ORDER_STATE_ON_WAY);
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
             $query->andWhere('orderEntity.state = :state');
             $query->setParameter('state', $request->getState());
         }
 
-        if ($request->getFromDate() !== null && $request->getToDate() === null) {
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
             $query->setParameter('createdAt', $request->getFromDate());
 
-        } elseif ($request->getFromDate() === null && $request->getToDate() !== null) {
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt <= :createdAt');
             $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
 
-        } elseif ($request->getFromDate() !== null && $request->getToDate() !== null) {
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt >= :fromDate');
             $query->setParameter('fromDate', $request->getFromDate());
 
