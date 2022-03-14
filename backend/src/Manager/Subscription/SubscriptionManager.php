@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
@@ -90,6 +91,14 @@ class SubscriptionManager
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 
        return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
+       
+    }
+
+    public function isSubscriptionForReady(int $storeOwnerId): ?array
+    {
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
+
+       return $this->subscriptionDetailsManager->getSubscriptionCurrentActive($storeOwner);
        
     }
 
@@ -199,6 +208,40 @@ class SubscriptionManager
         return $this->packageManager->getPackageActiveById($packageId);
     }
 
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
+    {
+        // $subscribeEntity = $this->subscribeRepository->find($id);
+
+        // if ($subscribeEntity) {
+          
+            return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
+        // }
+
+        // return SubscriptionConstant::ERROR;
+    }
+
+    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): string
+    { 
+        //TODO shortcut two queries in one query
+        $subscribeCurrent = $this->subscriptionDetailsManager->getSubscriptionCurrent($subscriptionCaptainOfferEntity->getStoreOwner()->getId());
+              
+        $subscribeEntity = $this->subscribeRepository->find($subscribeCurrent->getLastSubscription()->getId());
+
+        if (! $subscribeEntity) {
+
+            return SubscriptionConstant::ERROR;
+        }
+
+        $subscribeEntity->setSubscriptionCaptainOffer($subscriptionCaptainOfferEntity);
+    
+        $this->entityManager->flush();
+       
+        $remainingCars = $subscribeCurrent->getRemainingCars() + $subscriptionCaptainOfferEntity->getCarCount();
+        $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
+       
+        return SubscriptionConstant::UPDATE_STATE;
+    }
+    
     public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);

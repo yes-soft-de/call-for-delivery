@@ -10,7 +10,6 @@ use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionDetailsManager
 {
@@ -101,6 +100,11 @@ class SubscriptionDetailsManager
     {   
         return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwner]);
     }
+
+    public function getSubscriptionCurrentActive($storeOwner): ?array
+    {   
+        return $this->subscribeDetailsRepository->getSubscriptionCurrentActive($storeOwner);
+    }
     
     public function updateHasExtra(SubscriptionEntity $subscribeEntity, bool $hasExtra): ?SubscriptionDetailsEntity
     {     
@@ -117,4 +121,16 @@ class SubscriptionDetailsManager
  
         return $subscriptionDetailsEntity;
     }
+    
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
+    {   
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
+
+        $subscriptionDetailsEntity->setRemainingCars($remainingCars);
+             
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
+
 }

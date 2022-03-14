@@ -15,17 +15,21 @@ use App\Response\Subscription\CanCreateOrderResponse;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
+use App\Service\Subscription\SubscriptionCaptainOfferService;
 
 class SubscriptionService
 {
     private AutoMapping $autoMapping;
     private SubscriptionManager $subscriptionManager;
+    private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
+        $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -73,11 +77,11 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
-           $countOrders = $this->getCountOngoingOrders($subscription['id']);
+        //    $countOrders = $this->getCountOngoingOrders($subscription['id']);
           
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
-           $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
+        //    $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
 
            if($subscription['hasExtra'] === true) {
 
@@ -128,13 +132,14 @@ class SubscriptionService
     public function checkValidityOfSubscription(int $storeOwnerId): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-      
+
         //check and update RemainingTime
         $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
-        
+       
         $remainingCars = $this->checkRemainingCars($subscription);
        
-       if($subscription) {
+        if($subscription) {
+
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
                 return SubscriptionConstant::SUBSCRIBE_INACTIVE;
@@ -146,7 +151,7 @@ class SubscriptionService
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
     
                 return SubscriptionConstant::CARS_FINISHED;
-            }  
+            } 
 
             //orders are finished
             if($subscription['remainingOrders'] <= 0) {
@@ -226,7 +231,7 @@ class SubscriptionService
                 return SubscriptionConstant::DATE_FINISHED;
             }
             
-            return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+            return SubscriptionConstant::SUBSCRIPTION_OK;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -247,12 +252,27 @@ class SubscriptionService
         if($subscription) {
             $countOrders = $this->getCountOngoingOrders($subscription['id']);
 
-           if($subscription['remainingCars'] - $countOrders <= 0 ) {
+           if($subscription['remainingCars'] >= 0 ) {
+           
+                $remainingCars =  $subscription['packageCarCount'] - $countOrders;
+                
+                //Is there subscription captain offer and active?
+                if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
+                   
+                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars, $countOrders);
+                }
 
-                return SubscriptionConstant::CARS_FINISHED;
+                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+
+                if($currentSubscription->getRemainingCars() <= 0 ) {
+                
+                    return SubscriptionConstant::CARS_FINISHED;
+                }
+            
+                return SubscriptionConstant::SUBSCRIPTION_OK;
            }
 
-           return SubscriptionConstant::SUBSCRIPTION_OK;
+          return SubscriptionConstant::CARS_FINISHED;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -398,6 +418,33 @@ class SubscriptionService
         }
         
          return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
+    }
+    
+    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, $remainingCars, $countOrders): int
+    {       
+        if($subscription) {
+           
+            $dateNow = new \DateTime('now');
+            $endSubscriptionCaptainOffer = $subscription['subscriptionCaptainOfferExpired'].'day';
+
+            $endDate =  new \DateTime($subscription['subscriptionCaptainOfferStartDate']->format('Y-m-d h:i:s') . $endSubscriptionCaptainOffer);
+
+            if($endDate < $dateNow) {
+
+                $remainingCars = $remainingCars - $subscription['subscriptionCaptainOfferCarCount'];
+                // $remainingCars = $subscription['remainingCars'] - $subscription['subscriptionCaptainOfferCarCount'];
+            
+                $this->subscriptionCaptainOfferService->updateState($subscription['subscriptionCaptainOfferId'],  SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
+
+                return $remainingCars;
+            }
+
+            $remainingCars = $remainingCars + $subscription['subscriptionCaptainOfferCarCount'];
+
+            return $remainingCars;
+        }
+
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
     }
 
     /**

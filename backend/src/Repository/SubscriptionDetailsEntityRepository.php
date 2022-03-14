@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\SubscriptionDetailsEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Constant\Subscription\SubscriptionConstant;
 
 /**
  * @method SubscriptionDetailsEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,19 @@ class SubscriptionDetailsEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionDetailsEntity::class);
     }
 
-    // /**
-    //  * @return SubscriptionDetailsEntity[] Returns an array of SubscriptionDetailsEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getSubscriptionCurrentActive($storeOwner): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('subscriptionDetailsEntity')
 
-    /*
-    public function findOneBySomeField($value): ?SubscriptionDetailsEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select ('subscriptionDetailsEntity.id')
+         
+            ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
+            ->andWhere('subscriptionDetailsEntity.status = :status')
+
+            ->setParameter('storeOwner', $storeOwner)
+            ->setParameter('status', SubscriptionConstant::SUBSCRIBE_ACTIVE)
+
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

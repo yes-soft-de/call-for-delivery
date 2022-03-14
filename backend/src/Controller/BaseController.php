@@ -70,6 +70,9 @@ class BaseController extends AbstractController
     const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
     // package
     const PACKAGE_NOT_EXIST = ["package not exist", "9351"];
+    // package
+    const CAPTAIN_OFFER_NOT_EXIST = ["captain offer not exist", "9451"];
+    const ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER = ["error","9453"];
     // notification
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
 
