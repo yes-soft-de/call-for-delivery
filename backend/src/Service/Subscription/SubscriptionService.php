@@ -13,17 +13,21 @@ use App\Response\Subscription\CanCreateOrderResponse;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
+use App\Service\Subscription\SubscriptionCaptainOfferService;
 
 class SubscriptionService
 {
     private AutoMapping $autoMapping;
     private SubscriptionManager $subscriptionManager;
+    private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
+        $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -123,13 +127,14 @@ class SubscriptionService
     public function checkValidityOfSubscription(int $storeOwnerId): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-      
+
         //check and update RemainingTime
         $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
-        
+       
         $remainingCars = $this->checkRemainingCars($subscription);
        
-       if($subscription) {
+        if($subscription) {
+
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
                 return SubscriptionConstant::SUBSCRIBE_INACTIVE;
@@ -244,7 +249,13 @@ class SubscriptionService
 
            if($subscription['remainingCars'] >= 0 ) {
            
-                $remainingCars = $subscription['packageCarCount'] - $countOrders;
+                $remainingCars =  $subscription['packageCarCount'] - $countOrders;
+                
+                //Is there subscription captain offer and active?
+                if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
+                   
+                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
+                }
 
                 $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
 
@@ -402,6 +413,32 @@ class SubscriptionService
         }
         
          return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
+    }
+    
+    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, $remainingCars): int
+    {       
+        if($subscription) {
+           
+            $dateNow = new \DateTime('now');
+            $endSubscriptionCaptainOffer = $subscription['subscriptionCaptainOfferExpired'].'day';
+
+            $endDate =  new \DateTime($subscription['subscriptionCaptainOfferStartDate']->format('Y-m-d h:i:s') . $endSubscriptionCaptainOffer);
+
+            if($endDate < $dateNow) {
+
+                $remainingCars = $remainingCars - $subscription['subscriptionCaptainOfferCarCount'];
+            
+                $this->subscriptionCaptainOfferService->updateState($subscription['subscriptionCaptainOfferId'],  SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
+
+                return $remainingCars;
+            }
+
+            $remainingCars = $remainingCars + $subscription['subscriptionCaptainOfferCarCount'];
+
+            return $remainingCars;
+        }
+
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
     }
 }
  

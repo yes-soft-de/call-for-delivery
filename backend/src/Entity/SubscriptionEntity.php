@@ -34,7 +34,7 @@ class SubscriptionEntity
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'subscriptionEntities')]
     private $storeOwner;
 
-    #[ORM\OneToOne(inversedBy: 'subscriptionEntity', targetEntity: SubscriptionCaptainOfferEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: SubscriptionCaptainOfferEntity::class, inversedBy: 'subscriptionEntitie')]
     private $subscriptionCaptainOffer;
 
     public function getId(): ?int

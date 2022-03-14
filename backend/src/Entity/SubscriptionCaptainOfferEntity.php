@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\SubscriptionCaptainOfferEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: SubscriptionCaptainOfferEntityRepository::class)]
 class SubscriptionCaptainOfferEntity
@@ -21,15 +24,28 @@ class SubscriptionCaptainOfferEntity
 
     #[ORM\Column(type: 'integer')]
     private $expired;
-
+   
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $startDate;
-
+   
+    #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    #[ORM\OneToOne(mappedBy: 'subscriptionCaptainOffer', targetEntity: SubscriptionEntity::class, cascade: ['persist', 'remove'])]
-    private $subscriptionEntity;
+    #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'subscriptionCaptainOffer')]
+    private $storeOwner;
+
+    #[ORM\ManyToOne(targetEntity: CaptainOfferEntity::class, inversedBy: 'subscriptionCaptainOffer')]
+    private $captainOffer;
+
+    #[ORM\OneToMany(mappedBy: 'subscriptionCaptainOffer', targetEntity: SubscriptionEntity::class)]
+    private $subscriptionEntitie;
+
+    public function __construct()
+    {
+        $this->subscriptionEntitie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -96,24 +112,56 @@ class SubscriptionCaptainOfferEntity
         return $this;
     }
 
-    public function getSubscriptionEntity(): ?SubscriptionEntity
+    public function getStoreOwner(): ?StoreOwnerProfileEntity
     {
-        return $this->subscriptionEntity;
+        return $this->storeOwner;
     }
 
-    public function setSubscriptionEntity(?SubscriptionEntity $subscriptionEntity): self
+    public function setStoreOwner(?StoreOwnerProfileEntity $storeOwner): self
     {
-        // unset the owning side of the relation if necessary
-        if ($subscriptionEntity === null && $this->subscriptionEntity !== null) {
-            $this->subscriptionEntity->setSubscriptionCaptainOffer(null);
+        $this->storeOwner = $storeOwner;
+
+        return $this;
+    }
+
+    public function getCaptainOffer(): ?CaptainOfferEntity
+    {
+        return $this->captainOffer;
+    }
+
+    public function setCaptainOffer(?CaptainOfferEntity $captainOffer): self
+    {
+        $this->captainOffer = $captainOffer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubscriptionEntity[]
+     */
+    public function getSubscriptionEntitie(): Collection
+    {
+        return $this->subscriptionEntitie;
+    }
+
+    public function addSubscriptionEntitie(SubscriptionEntity $subscriptionEntitie): self
+    {
+        if (!$this->subscriptionEntitie->contains($subscriptionEntitie)) {
+            $this->subscriptionEntitie[] = $subscriptionEntitie;
+            $subscriptionEntitie->setSubscriptionCaptainOffer($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($subscriptionEntity !== null && $subscriptionEntity->getSubscriptionCaptainOffer() !== $this) {
-            $subscriptionEntity->setSubscriptionCaptainOffer($this);
-        }
+        return $this;
+    }
 
-        $this->subscriptionEntity = $subscriptionEntity;
+    public function removeSubscriptionEntitie(SubscriptionEntity $subscriptionEntitie): self
+    {
+        if ($this->subscriptionEntitie->removeElement($subscriptionEntitie)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionEntitie->getSubscriptionCaptainOffer() === $this) {
+                $subscriptionEntitie->setSubscriptionCaptainOffer(null);
+            }
+        }
 
         return $this;
     }

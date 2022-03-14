@@ -5,6 +5,7 @@ namespace App\Manager\Subscription;
 use App\AutoMapping;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
@@ -207,5 +208,27 @@ class SubscriptionManager
         // }
 
         // return SubscriptionConstant::ERROR;
+    }
+
+    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): string
+    { 
+        //TODO shortcut two queries in one query
+        $subscribeCurrent = $this->subscriptionDetailsManager->getSubscriptionCurrent($subscriptionCaptainOfferEntity->getStoreOwner()->getId());
+              
+        $subscribeEntity = $this->subscribeRepository->find($subscribeCurrent->getLastSubscription()->getId());
+
+        if (! $subscribeEntity) {
+
+            return SubscriptionConstant::ERROR;
+        }
+
+        $subscribeEntity->setSubscriptionCaptainOffer($subscriptionCaptainOfferEntity);
+    
+        $this->entityManager->flush();
+       
+        $remainingCars = $subscribeCurrent->getRemainingCars() + $subscriptionCaptainOfferEntity->getCarCount();
+        $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
+       
+        return SubscriptionConstant::UPDATE_STATE;
     }
 }

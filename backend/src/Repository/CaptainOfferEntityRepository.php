@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\CaptainOfferEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Constant\CaptainOffer\CaptainOfferConstant;
 
 /**
  * @method CaptainOfferEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,18 @@ class CaptainOfferEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, CaptainOfferEntity::class);
     }
 
-    // /**
-    //  * @return CaptainOfferEntity[] Returns an array of CaptainOfferEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCaptainOffers(): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('captainOfferEntity')
 
-    /*
-    public function findOneBySomeField($value): ?CaptainOfferEntity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('captainOfferEntity.status = :status')
+
+            ->setParameter('status', CaptainOfferConstant::STATUS_ACTIVE)
+            
+            ->orderBy('captainOfferEntity.id', 'DESC')
+            
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+            ->getResult();
     }
-    */
 }

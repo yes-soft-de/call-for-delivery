@@ -10,7 +10,6 @@ use App\Request\Subscription\SubscriptionDetailsCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Constant\Subscription\SubscriptionConstant;
 
 class SubscriptionDetailsManager
 {
@@ -123,11 +122,9 @@ class SubscriptionDetailsManager
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
 
         $subscriptionDetailsEntity->setRemainingCars($remainingCars);
-        // dd($subscriptionDetailsEntity);
-        // $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
-       
+             
         $this->entityManager->flush();
- 
+
         return $subscriptionDetailsEntity;
     }
 
