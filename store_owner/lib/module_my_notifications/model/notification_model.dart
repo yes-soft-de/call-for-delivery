@@ -6,7 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/response/my_notification_response.dart';
 
 class NotificationModel extends DataModel {
-  String orderNumber = '-1';
+  String? orderNumber;
   String body = S.current.orderDetails;
   String title = S.current.orderNumber;
   String date = '';

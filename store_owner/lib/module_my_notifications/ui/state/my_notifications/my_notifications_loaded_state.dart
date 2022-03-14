@@ -286,7 +286,10 @@ class MyNotificationsLoadedState extends States {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        element.body,
+                        element.body +
+                            (element.orderNumber != null
+                                ? ', (${S.current.orderNumber} ${element.orderNumber})'
+                                : ''),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
