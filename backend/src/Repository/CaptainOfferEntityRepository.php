@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\CaptainOfferEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Constant\CaptainOffer\CaptainOfferConstant;
+use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 
 /**
  * @method CaptainOfferEntity|null find($id, $lockMode = null, $lockVersion = null)

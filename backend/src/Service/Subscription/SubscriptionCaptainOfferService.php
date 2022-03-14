@@ -3,7 +3,6 @@
 namespace App\Service\Subscription;
 
 use App\AutoMapping;
-use App\Constant\CaptainOffer\CaptainOfferConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Manager\Subscription\SubscriptionCaptainOfferManager;

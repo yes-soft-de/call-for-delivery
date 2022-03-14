@@ -30,7 +30,6 @@ class CaptainOfferController extends BaseController
      * store:Get Captain Offers.
      * @Route("captainoffers", name="getCaptainOffers", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Offer")
