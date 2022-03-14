@@ -328,7 +328,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       if (orderInfo.destinationCoordinate != null) {
                         url = LauncherLinkHelper.getMapsLink(
                             orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.latitude ?? 0);
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
                       } else if (orderInfo.destinationLink != null) {
                         url = orderInfo.destinationLink ?? '';
                       }
