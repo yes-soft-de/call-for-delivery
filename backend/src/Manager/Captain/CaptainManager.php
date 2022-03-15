@@ -149,4 +149,9 @@ class CaptainManager
 
         return true;
     }
+
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
+    {
+        return $this->captainEntityRepository->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
+    }
 }

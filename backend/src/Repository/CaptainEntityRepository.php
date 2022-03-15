@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,5 +60,21 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
+    {
+        $query = $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity');
+
+        if($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
+            $query->andWhere('captainEntity.status = :captainProfileStatus');
+            $query->setParameter('captainProfileStatus', $captainProfileStatus);
+        }
+
+        $query->orderBy('captainEntity.id', 'DESC');
+
+        return $query->getQuery()->getResult();
     }
 }
