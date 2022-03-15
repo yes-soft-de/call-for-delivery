@@ -602,8 +602,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("Please Complete the Form"),
         "pleaseDownloadmandob_moshtarayat_captain":
-            MessageLookupByLibrary.simpleMessage(
-                "Please Download c4d"),
+            MessageLookupByLibrary.simpleMessage("Please Download c4d"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("invalid character"),
         "pleaseEnterValidPhoneNumber":
@@ -905,8 +904,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "welcomeToOurApp":
             MessageLookupByLibrary.simpleMessage("WELCOME TO TWASLNA APP"),
         "welcomeTomandob_moshtarayat_captain":
-            MessageLookupByLibrary.simpleMessage(
-                "Welcome to c4d"),
+            MessageLookupByLibrary.simpleMessage("Welcome to c4d"),
         "whatsapp": MessageLookupByLibrary.simpleMessage("Whatsapp"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("Captain"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("Client"),

@@ -7,8 +7,8 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../main.dart' as _i81;
-import '../module_about/about_module.dart' as _i85;
+import '../main.dart' as _i86;
+import '../module_about/about_module.dart' as _i84;
 import '../module_about/hive/about_hive_helper.dart' as _i3;
 import '../module_about/manager/about_manager.dart' as _i39;
 import '../module_about/repository/about_repository.dart' as _i22;
@@ -59,7 +59,7 @@ import '../module_notifications/service/fire_notification_service/fire_notificat
 import '../module_notifications/service/local_notification_service/local_notification_service.dart'
     as _i8;
 import '../module_orders/manager/orders_manager/orders_manager.dart' as _i32;
-import '../module_orders/orders_module.dart' as _i82;
+import '../module_orders/orders_module.dart' as _i81;
 import '../module_orders/repository/order_repository/order_repository.dart'
     as _i31;
 import '../module_orders/service/orders/orders.service.dart' as _i33;
@@ -78,13 +78,13 @@ import '../module_orders/ui/screens/order_status/order_status_screen.dart'
 import '../module_orders/ui/screens/terms/terms.dart' as _i75;
 import '../module_orders/ui/screens/update/update.dart' as _i61;
 import '../module_plan/manager/captain_balance_manager.dart' as _i41;
-import '../module_plan/plan_module.dart' as _i86;
+import '../module_plan/plan_module.dart' as _i85;
 import '../module_plan/repository/package_balance_repository.dart' as _i34;
 import '../module_plan/service/plan_service.dart' as _i54;
 import '../module_plan/state_manager/plan_screen_state_manager.dart' as _i73;
-import '../module_plan/ui/screen/plan_screen.dart' as _i83;
+import '../module_plan/ui/screen/plan_screen.dart' as _i82;
 import '../module_profile/manager/profile/profile.manager.dart' as _i55;
-import '../module_profile/module_profile.dart' as _i84;
+import '../module_profile/module_profile.dart' as _i83;
 import '../module_profile/repository/profile/profile.repository.dart' as _i35;
 import '../module_profile/service/profile/profile.service.dart' as _i56;
 import '../module_profile/state_manager/activity/activity_state_manager.dart'
@@ -281,7 +281,21 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i79.EditProfileScreen(get<_i68.EditProfileStateManager>()));
   gh.factory<_i80.InitAccountModule>(
       () => _i80.InitAccountModule(get<_i69.InitAccountScreen>()));
-  gh.factory<_i81.MyApp>(() => _i81.MyApp(
+  gh.factory<_i81.OrdersModule>(() => _i81.OrdersModule(
+      get<_i72.OrderStatusScreen>(),
+      get<_i66.CaptainOrdersScreen>(),
+      get<_i61.UpdateScreen>(),
+      get<_i75.TermsScreen>(),
+      get<_i71.OrderLogsScreen>()));
+  gh.factory<_i82.PlanScreen>(
+      () => _i82.PlanScreen(get<_i73.PlanScreenStateManager>()));
+  gh.factory<_i83.ProfileModule>(() => _i83.ProfileModule(
+      get<_i77.ActivityScreen>(),
+      get<_i79.EditProfileScreen>(),
+      get<_i70.OrderInfoScreen>()));
+  gh.factory<_i84.AboutModule>(() => _i84.AboutModule(get<_i76.AboutScreen>()));
+  gh.factory<_i85.PlanModule>(() => _i85.PlanModule(get<_i82.PlanScreen>()));
+  gh.factory<_i86.MyApp>(() => _i86.MyApp(
       get<_i18.AppThemeDataService>(),
       get<_i10.LocalizationService>(),
       get<_i45.FireNotificationService>(),
@@ -289,21 +303,12 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i59.SplashModule>(),
       get<_i64.AuthorizationModule>(),
       get<_i78.ChatModule>(),
-      get<_i74.SettingsModule>()));
-  gh.factory<_i82.OrdersModule>(() => _i82.OrdersModule(
-      get<_i72.OrderStatusScreen>(),
-      get<_i66.CaptainOrdersScreen>(),
-      get<_i61.UpdateScreen>(),
-      get<_i75.TermsScreen>(),
-      get<_i71.OrderLogsScreen>()));
-  gh.factory<_i83.PlanScreen>(
-      () => _i83.PlanScreen(get<_i73.PlanScreenStateManager>()));
-  gh.factory<_i84.ProfileModule>(() => _i84.ProfileModule(
-      get<_i77.ActivityScreen>(),
-      get<_i79.EditProfileScreen>(),
-      get<_i70.OrderInfoScreen>()));
-  gh.factory<_i85.AboutModule>(() => _i85.AboutModule(get<_i76.AboutScreen>()));
-  gh.factory<_i86.PlanModule>(() => _i86.PlanModule(get<_i83.PlanScreen>()));
+      get<_i74.SettingsModule>(),
+      get<_i84.AboutModule>(),
+      get<_i80.InitAccountModule>(),
+      get<_i81.OrdersModule>(),
+      get<_i85.PlanModule>(),
+      get<_i83.ProfileModule>()));
   gh.singleton<_i87.GlobalStateManager>(_i87.GlobalStateManager());
   return get;
 }
