@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تنبيه"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
+        "addOfferSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم إضافة العرض بنجاح"),
         "addPackage": MessageLookupByLibrary.simpleMessage("إضافة باقة"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة الباقة بنجاح"),
@@ -57,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
+        "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -635,6 +638,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
+        "storesActive": MessageLookupByLibrary.simpleMessage("المتاجر الفعالة"),
         "storesInActive":
             MessageLookupByLibrary.simpleMessage("المتاجر الغير متاحة"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),
@@ -683,6 +687,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateOfferSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تعديل العرض بنجاح"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":

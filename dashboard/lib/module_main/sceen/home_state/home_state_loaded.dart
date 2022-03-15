@@ -43,18 +43,7 @@ class HomeLoadedState extends States {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
-              widgetTile(model?.countOrdersInToday.toString() ?? '',
-                  S.current.countTodayOrder),
-              Padding(
-                padding: const EdgeInsets.only(right: 32, left: 32),
-                child: Divider(
-                  thickness: 2.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
-                ),
-              ),
-              widgetTile(model?.countCompletedOrders.toString() ?? '',
-                  S.current.countCompletedOrders),
-              widgetTile(model?.countOngoingOrders.toString() ?? '',
+              widgetTile(model?.ongoingOrdersCount.toString() ?? '',
                   S.current.countOngoingOrders),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
@@ -63,10 +52,19 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).primaryColor.withOpacity(0.3),
                 ),
               ),
+              widgetTile(model?.inactiveStoresCount.toString() ?? '',
+                  S.current.storesInActive),
+              widgetTile(model?.activeStoresCount.toString() ?? '',
+                  S.current.storesActive),
+              Padding(
+                padding: const EdgeInsets.only(right: 32, left: 32),
+                child: Divider(
+                  thickness: 2.5,
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                ),
+              ),
               widgetTile(
-                  model?.countStores.toString() ?? '', S.current.countStores),
-              widgetTile(model?.countCaptains.toString() ?? '',
-                  S.current.countCaptains),
+                  model?.allOrdersCount.toString() ?? '', S.current.allOrdersCount),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(

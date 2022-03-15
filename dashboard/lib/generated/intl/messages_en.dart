@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
+        "addOfferSuccessfully":
+            MessageLookupByLibrary.simpleMessage("offer added successfully"),
         "addPackage": MessageLookupByLibrary.simpleMessage("Add package"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
@@ -57,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -640,6 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),
+        "storesActive": MessageLookupByLibrary.simpleMessage("Stores Active"),
         "storesInActive":
             MessageLookupByLibrary.simpleMessage(" Inactive Stores"),
         "storesList": MessageLookupByLibrary.simpleMessage("Stores List"),
@@ -689,6 +693,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateOfferSuccessfully":
+            MessageLookupByLibrary.simpleMessage("offer updated successfully"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
         "updateOrderSuccess":

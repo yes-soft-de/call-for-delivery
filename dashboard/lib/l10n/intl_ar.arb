@@ -500,6 +500,12 @@
     "companyFinance": "المعلومات المالية",
     "contactInfo": "معلومات الإتصال",
     "captainsOffer": "عروض الكباتن",
-    "addOffer": "إضافة عرض"
+    "addOffer": "إضافة عرض",
+    "updateOfferSuccessfully": "تم تعديل العرض بنجاح",
+    "addOfferSuccessfully": "تم إضافة العرض بنجاح",
+
+    "storesActive": "المتاجر الفعالة",
+    "allOrdersCount": "عدد الطلبات"
+
 
 }

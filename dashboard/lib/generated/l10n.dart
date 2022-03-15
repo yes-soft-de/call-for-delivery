@@ -4969,6 +4969,46 @@ class S {
       args: [],
     );
   }
+
+  /// `offer updated successfully`
+  String get updateOfferSuccessfully {
+    return Intl.message(
+      'offer updated successfully',
+      name: 'updateOfferSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `offer added successfully`
+  String get addOfferSuccessfully {
+    return Intl.message(
+      'offer added successfully',
+      name: 'addOfferSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stores Active`
+  String get storesActive {
+    return Intl.message(
+      'Stores Active',
+      name: 'storesActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders count`
+  String get allOrdersCount {
+    return Intl.message(
+      'Orders count',
+      name: 'allOrdersCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
