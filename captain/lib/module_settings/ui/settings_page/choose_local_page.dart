@@ -60,7 +60,7 @@ class _ChooseLocalScreenState extends State<ChooseLocalScreen> {
             padding: const EdgeInsets.all(25.0),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(25),
                 //rgb(236,239,241)
                 color: const Color.fromRGBO(236, 239, 241, 1),
               ),
@@ -106,17 +106,19 @@ class _ChooseLocalScreenState extends State<ChooseLocalScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(25)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     S.of(context).next,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button?.color),
                   ),
                 ),
                 onPressed: () {
-                   widget._localizationService.setLanguage(myLocale.languageCode);
+                  widget._localizationService
+                      .setLanguage(myLocale.languageCode);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       SplashRoutes.SPLASH_SCREEN, (route) => false);
                 },
