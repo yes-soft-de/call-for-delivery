@@ -1,14 +1,13 @@
 import 'dart:async';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
 import 'package:c4d/module_auth/request/forget_password_request/verify_new_password_request.dart';
 import 'package:c4d/module_auth/state_manager/forget_state_manager/forget_password_state_manager.dart';
 import 'package:c4d/module_auth/ui/states/forget_password_state/forget_password_code_sent.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
@@ -32,9 +31,12 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
     if (mounted) setState(() {});
   }
 
+  late bool canPop;
   @override
   void initState() {
     super.initState();
+    canPop = Navigator.of(context).canPop();
+
     loadingSnapshot = const AsyncSnapshot.nothing();
     _currentStates = ForgotStatePhoneCodeSent(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -66,8 +68,8 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomMandoobAppBar.appBar(context,
-            title: S.of(context).forgotPass, canGoBack: true),
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.of(context).forgotPass, canGoBack: canPop),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
               ? _currentStates.getUI(context)

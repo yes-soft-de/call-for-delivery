@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -33,6 +34,14 @@ class AuthPrefsHelper {
 
   void clearUserCreated() {
     box.delete('created');
+  }
+
+  void setUserCompetedProfile(String status) {
+    box.put('account status', status);
+  }
+
+  String getAccountStatusPhase() {
+    return box.get('account status') ?? OrdersRoutes.CAPTAIN_ORDERS_SCREEN;
   }
 
   bool isSignedIn() {

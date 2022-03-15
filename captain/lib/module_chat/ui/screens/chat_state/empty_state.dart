@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -41,7 +40,7 @@ class EmptyChatPage extends StatelessWidget {
       },
       child: Scaffold(
           appBar:
-              CustomMandoobAppBar.appBar(context, title: S.current.chatRoom),
+              CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
           body: Stack(
             children: [
               Column(

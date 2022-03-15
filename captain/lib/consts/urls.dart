@@ -186,4 +186,6 @@ class Urls {
       BASE_API + '/createstorecategorytranslation';
   static const CREATE_NEW_TRANS_PRODUCT_CATEGORY =
       BASE_API + '/createstoreproductcategorytranslation';
+  static const ACCOUNT_STATUS =
+      DOMAIN + '/v1/account/profilecompleteaccountstatus';
 }
