@@ -82,7 +82,7 @@ class OrderManager
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
 
-        return $this->orderRepository->filterStoreOrders($request, $storeOwner->getId());
+        return $this->orderRepository->filterStoreOrders($request, $storeOwner);
     }
 
     public function updateOrderStateBySuperAdmin(OrderStateUpdateBySuperAdminRequest $request): string|OrderEntity

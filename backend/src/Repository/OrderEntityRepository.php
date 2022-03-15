@@ -77,12 +77,15 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function filterStoreOrders(OrderFilterRequest $request, int $storeOwner): ?array
+    public function filterStoreOrders(OrderFilterRequest $request, $storeOwner): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.captainId ', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
                 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+
+            ->andWhere('orderEntity.storeOwner = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwner)
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -96,20 +99,12 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'storeOrderDetails.branch = storeOwnerBranch.id')
 
-            ->andWhere('orderEntity.storeOwner = :storeOwner')
-            ->setParameter('storeOwner', $storeOwner)
-
             ->orderBy('orderEntity.id', 'DESC');
 
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            $query->andWhere('orderEntity.state = :stateOnGoing');
-            $query->setParameter('stateOnGoing', OrderStateConstant::ORDER_STATE_ONGOING);
+            $query->andWhere('orderEntity.state IN (:statesArray)');
+            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
 
-            $query->orWhere('orderEntity.state = :stateInStore');
-            $query->setParameter('stateInStore', OrderStateConstant::ORDER_STATE_IN_STORE);
-
-            $query->orWhere('orderEntity.state = :stateOnWayToPickOrder');
-            $query->setParameter('stateOnWayToPickOrder', OrderStateConstant::ORDER_STATE_ON_WAY);
         }
 
         if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
@@ -132,7 +127,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->andWhere('orderEntity.createdAt <= :toDate');
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
-
+        //dd($query);
         return $query->getQuery()->getResult();
     }
 }
