@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/ui/screen/captains_offer_screen.dart';
 import 'package:c4d/module_captain/ui/widget/captain_offer_form.dart';
 import 'package:c4d/module_captain/ui/widget/offer_card.dart';
@@ -33,6 +34,7 @@ class CaptainOffersLoadedState extends States {
       return ErrorStateWidget(
         onRefresh: () {
           screenState.getCaptainOffer();
+          screenState.canAddCategories = true;
         },
         error: error,
       );
@@ -79,29 +81,13 @@ class CaptainOffersLoadedState extends States {
                 },);
               });
         },
+        onEnable: (status){
+          screenState.enableCaptainOffer(EnableOfferRequest(id: element.id,status: status));
+        },
         ),
       );
     }
 
-    if (model != null) {
-      widgets.insert(
-          0,
-          Padding(
-            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
-            child: CustomDeliverySearch(
-              hintText: S.current.search,
-              onChanged: (s) {
-                if (s == '' || s.isEmpty) {
-                  search = null;
-                  screenState.refresh();
-                } else {
-                  search = s;
-                  screenState.refresh();
-                }
-              },
-            ),
-          ));
-    }
     widgets.add(SizedBox(
       height: 50,
     ));

@@ -1,6 +1,7 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -44,6 +45,21 @@ class CaptainsService {
       CaptainOfferRequest request) async {
     ActionResponse? actionResponse =
     await _manager.updateCaptainOffer(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> enableCaptainOffer(
+      EnableOfferRequest request) async {
+    ActionResponse? actionResponse =
+    await _manager.enableCaptainOffer(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);

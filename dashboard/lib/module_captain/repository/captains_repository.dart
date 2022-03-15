@@ -1,4 +1,5 @@
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -49,10 +50,10 @@ class CaptainsRepository {
 
 
 
-  Future<ActionResponse?> enableCaptainOffer(CaptainOfferRequest request) async {
+  Future<ActionResponse?> enableCaptainOffer(EnableOfferRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        Urls.ACTIVE_PACKAGE, request.toJson(),
+        Urls.ACTIVE_CAPTAIN_OFFERS, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

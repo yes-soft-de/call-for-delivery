@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/captains_offer_screen.dart';
 import 'package:c4d/module_captain/ui/state/offers/captaines_offer_loaded_state.dart';
@@ -51,7 +52,7 @@ class CaptainOfferStateManager {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.saveSuccess)
+            message: S.current.addOfferSuccessfully)
           ..show(screenState.context);
       }}
       );
@@ -70,7 +71,27 @@ class CaptainOfferStateManager {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.categoryUpdatedSuccessfully)
+            message: S.current.updateOfferSuccessfully)
+          ..show(screenState.context);
+      }
+    });
+  }
+
+
+  void enableCaptainOffer(
+      CaptainOffersScreenState screenState, EnableOfferRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _service.enableCaptainOffer(request).then((value) {
+      if (value.hasError) {
+        getCaptainOffer(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '')
+          ..show(screenState.context);
+      } else {
+        getCaptainOffer(screenState);
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.updateOfferSuccessfully)
           ..show(screenState.context);
       }
     });

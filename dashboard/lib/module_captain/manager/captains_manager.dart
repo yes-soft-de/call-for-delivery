@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +22,10 @@ class CaptainsManager {
   Future<ActionResponse?> updateCaptainOffer(
       CaptainOfferRequest request) =>
       _repository.updateCaptainOffer(request);
+
+  Future<ActionResponse?> enableCaptainOffer(
+      EnableOfferRequest request) =>
+      _repository.enableCaptainOffer(request);
 
 
 
