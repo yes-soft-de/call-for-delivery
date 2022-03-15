@@ -1,0 +1,12 @@
+App\Entity\PackageCategoryEntity:
+  first_category:
+    name: الباقات المتزامنة A
+    description: تصنيف الباقات المتزامنة من النوع A
+
+  second_category:
+    name: الباقات المتزامنة B
+    description: تصنيف الباقات المتزامنة من النوع B
+
+  third_category:
+    name: الباقات المتزامنة C
+    description: تصنيف الباقات المتزامنة من النوع C
