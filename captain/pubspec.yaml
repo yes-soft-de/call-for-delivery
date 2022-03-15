@@ -166,7 +166,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
   fonts:
+    - family: Dubai
+      fonts:
+        - asset: assets/fonts/Dubai-Regular.woff
+        - asset: assets/fonts/Dubai-Bold.woff
+
     - family: Custom_icon
       fonts:
         - asset: assets/fonts/Custom_icon.ttf
