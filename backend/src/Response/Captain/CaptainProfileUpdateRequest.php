@@ -39,22 +39,6 @@ class CaptainProfileUpdateRequest
     /**
      * @return mixed
      */
-    public function getStoreOwnerName()
-    {
-        return $this->storeOwnerName;
-    }
-
-    /**
-     * @param mixed $storeOwnerName
-     */
-    public function setStoreOwnerName($storeOwnerName): void
-    {
-        $this->storeOwnerName = $storeOwnerName;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getImage()
     {
         return $this->image;
@@ -66,27 +50,6 @@ class CaptainProfileUpdateRequest
     public function setImage($image): void
     {
         $this->image = $image;
-    }
-
-
-    /**
-     * Get the value of storeCategoryId
-     */
-    public function getStoreCategoryId()
-    {
-        return $this->storeCategoryId;
-    }
-
-    /**
-     * Set the value of storeCategoryId
-     *
-     * @return  self
-     */
-    public function setStoreCategoryId($storeCategoryId)
-    {
-        $this->storeCategoryId = $storeCategoryId;
-
-        return $this;
     }
 
     /**
