@@ -59,7 +59,6 @@ class AdminCaptainController extends BaseController
      *                  @OA\Property(type="object", property="location"),
      *                  @OA\Property(type="string", property="age"),
      *                  @OA\Property(type="string", property="car"),
-     *                  @OA\Property(type="string", property="city"),
      *                  @OA\Property(type="number", property="salary"),
      *                  @OA\Property(type="string", property="status"),
      *                  @OA\Property(type="number", property="bounce"),
@@ -82,6 +81,59 @@ class AdminCaptainController extends BaseController
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): JsonResponse
     {
         $response = $this->adminCaptainService->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * admin: Get captain profiles by id.
+     * @Route("captainprofilebyid/{captainProfileId}", name="getCaptainProfileByIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $captainProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captain profile which corresponding with the passed id",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="captainName"),
+     *              @OA\Property(type="object", property="location"),
+     *              @OA\Property(type="string", property="age"),
+     *              @OA\Property(type="string", property="car"),
+     *              @OA\Property(type="number", property="salary"),
+     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="number", property="bounce"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="string", property="bankName"),
+     *              @OA\Property(type="string", property="bankAccountNumber"),
+     *              @OA\Property(type="string", property="stcPay"),
+     *              @OA\Property(type="string", property="images"),
+     *              @OA\Property(type="boolean", property="isOnline"),
+     *              @OA\Property(type="string", property="mechanicLicense"),
+     *              @OA\Property(type="string", property="identity"),
+     *              @OA\Property(type="string", property="roomId")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): JsonResponse
+    {
+        $response = $this->adminCaptainService->getCaptainProfileByIdForAdmin($captainProfileId);
 
         return $this->response($response, self::FETCH);
     }

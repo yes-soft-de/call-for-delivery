@@ -20,11 +20,6 @@ class CaptainProfileGetForAdminResponse
     public $location = [];
 
     /**
-     * @var string|null
-     */
-    public $city;
-
-    /**
      * @var int|null
      */
     public $age;

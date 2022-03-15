@@ -17,4 +17,9 @@ class AdminCaptainManager
     {
         return $this->captainManager->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
     }
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
+    {
+        return $this->captainManager->getCaptainProfileByIdForAdmin($captainProfileId);
+    }
 }

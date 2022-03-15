@@ -29,4 +29,17 @@ class AdminCaptainService
 
         return $response;
     }
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?CaptainProfileGetForAdminResponse
+    {
+        $captainProfile = $this->adminCaptainManager->getCaptainProfileByIdForAdmin($captainProfileId);
+
+        if ($captainProfile) {
+            if($captainProfile['roomId']) {
+                $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();
+            }
+        }
+
+        return $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
+    }
 }

@@ -66,7 +66,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
-                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity');
+                'captainEntity.status', 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity');
 
         if($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
             $query->andWhere('captainEntity.status = :captainProfileStatus');
@@ -76,5 +76,27 @@ class CaptainEntityRepository extends ServiceEntityRepository
         $query->orderBy('captainEntity.id', 'DESC');
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity',
+                'captainEntity.status', 'chatRoomEntity.roomId')
+
+            ->leftJoin(
+                ChatRoomEntity::class,
+                'chatRoomEntity',
+                Join::WITH,
+                'chatRoomEntity.userId = captainEntity.captainId')
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->orderBy('captainEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

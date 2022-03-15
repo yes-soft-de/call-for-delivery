@@ -154,4 +154,9 @@ class CaptainManager
     {
         return $this->captainEntityRepository->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
     }
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
+    {
+        return $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+    }
 }
