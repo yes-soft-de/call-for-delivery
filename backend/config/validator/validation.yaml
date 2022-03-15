@@ -175,9 +175,14 @@ App\Request\Admin\CaptainOffer\CaptainOfferUpdateRequest:
             - NotBlank: ~
         carCount:
             - NotBlank: ~
-        status:
-            - NotBlank: ~
         expired:
             - NotBlank: ~
         price:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainOffer\CaptainOfferStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
             - NotBlank: ~

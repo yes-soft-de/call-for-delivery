@@ -47,7 +47,7 @@ class AdminCaptainOfferService
 
         foreach ($captainOffers as $captainOffer) {
 
-            $response[] = $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
+            $response[] = $this->autoMapping->map("array", CaptainOfferCreateResponse::class, $captainOffer);
         }
 
         return $response;
@@ -57,6 +57,18 @@ class AdminCaptainOfferService
     {
         $captainOffer = $this->adminCaptainOfferManager->getCaptainOfferByAdmin($id);
 
+        return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
+    }
+    
+    public function updateCaptainOfferStatusByAdmin($request): string|CaptainOfferCreateResponse
+    {
+        $captainOffer = $this->adminCaptainOfferManager->updateCaptainOfferStatusByAdmin($request);
+
+        if($captainOffer === CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST) {
+            return CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST;
+
+        }
+        
         return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
     }
 }

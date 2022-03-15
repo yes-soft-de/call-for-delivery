@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
+use App\Request\Admin\CaptainOffer\CaptainOfferStatusUpdateRequest;
 
 /**
  * admin :Create Captain Offer.
@@ -122,7 +123,6 @@ class AdminCaptainOfferController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
      *          @OA\Property(type="integer", property="carCount"),
-     *          @OA\Property(type="string", property="status"),
      *          @OA\Property(type="integer", property="expired"),
      *          @OA\Property(type="number", property="price"),
      *      )
@@ -251,5 +251,72 @@ class AdminCaptainOfferController extends BaseController
         $result = $this->adminCaptainOfferService->getCaptainOfferByAdmin($id);
         
         return $this->response($result, self::FETCH);
+    }
+
+    
+    /**
+     * admin:Update Captain Offer Status By Admin.
+     * @Route("updatecaptainofferstatusbyadmin", name="updateCaptainOfferStatusByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Offer")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="captain offer status request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="status"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captain offer",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *            @OA\Property(type="integer", property="carCount"),
+     *            @OA\Property(type="string", property="status"),
+     *           @OA\Property(type="integer", property="expired"),
+     *           @OA\Property(type="number", property="price"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainOfferStatusByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, CaptainOfferStatusUpdateRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainOfferService->updateCaptainOfferStatusByAdmin($request);
+
+        if($result === CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST) {
+
+            return $this->response($result, self::CAPTAIN_OFFER_NOT_EXIST);
+        }
+        
+        return $this->response($result, self::UPDATE);
     }
 }
