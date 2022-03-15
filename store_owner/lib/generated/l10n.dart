@@ -4600,11 +4600,21 @@ class S {
     );
   }
 
-  /// `Whatsapp with us`
+  /// `Whatsapp`
   String get whatsapp {
     return Intl.message(
-      'Whatsapp with us',
+      'Whatsapp',
       name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whatsapp support`
+  String get whatsappSupport {
+    return Intl.message(
+      'Whatsapp support',
+      name: 'whatsappSupport',
       desc: '',
       args: [],
     );
@@ -5425,6 +5435,26 @@ class S {
     return Intl.message(
       'Are sure about subscribe with this offer',
       name: 'confirmationCaptainOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Info`
+  String get companyInfo {
+    return Intl.message(
+      'Company Info',
+      name: 'companyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fax`
+  String get fax {
+    return Intl.message(
+      'Fax',
+      name: 'fax',
       desc: '',
       args: [],
     );

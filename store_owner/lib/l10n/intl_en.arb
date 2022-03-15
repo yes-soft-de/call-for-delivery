@@ -457,7 +457,8 @@
     "updateProfile": "Update profile",
     "employeeSize": "Employee count",
     "profileUpdatedSuccessfully": "Profile has been updated successfully",
-    "whatsapp": "Whatsapp with us",
+    "whatsapp": "Whatsapp",
+    "whatsappSupport": "Whatsapp support",
     "confirmDeletionBranch": "Confirm deletion of this branch",
     "deleteBranchSuccess": "Branch deleted successfully",
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
@@ -539,7 +540,11 @@
     "unavailable": "Unavailable",
     "calculating": "Calculating",
     "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
-    "confirmationCaptainOffers": "Are sure about subscribe with this offer"
+    "confirmationCaptainOffers": "Are sure about subscribe with this offer",
+    "companyInfo": "Company Info",
+    "fax": "Fax"
+
+
 
 
 

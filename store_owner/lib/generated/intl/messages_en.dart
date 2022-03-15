@@ -182,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "companyInfo": MessageLookupByLibrary.simpleMessage("Company Info"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "completedOrders":
@@ -293,6 +294,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Categories"),
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
+        "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
@@ -813,7 +815,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("WELCOME TO TWASLNA APP"),
         "welcomeTomandob_moshtarayat": MessageLookupByLibrary.simpleMessage(
             "Welcome to mandob_moshtarayat"),
-        "whatsapp": MessageLookupByLibrary.simpleMessage("Whatsapp with us"),
+        "whatsapp": MessageLookupByLibrary.simpleMessage("Whatsapp"),
+        "whatsappSupport":
+            MessageLookupByLibrary.simpleMessage("Whatsapp support"),
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("Captain"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("Client"),
         "whatsappWithStoreOwner":

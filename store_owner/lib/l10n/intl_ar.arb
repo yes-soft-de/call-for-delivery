@@ -456,7 +456,8 @@
     "updateProfile": "تحديث الملف الشخصي",
     "employeeSize": "حجم المنشأة",
     "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
-    "whatsapp": "دعم مباشر واتساب",
+    "whatsappSuppor": "دعم مباشر واتساب",
+    "whatsapp": "واتساب",
     "confirmDeletionBranch": "هل أنت متأكد من رغبتك في حذف الفرع",
     "deleteBranchSuccess": "تم حذف الفرع بنجاح",
     "saveBranchAlert": "في حال واجهت صعوبة في تحديد مكان الفرع بدقة الرجاء التواصل مع الإدارة",
@@ -538,7 +539,10 @@
     "unavailable": "غير معروفة",
     "calculating": "جاري الحساب",
     "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح",
-    "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"
+    "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض",
+    "companyInfo": "معلومات الشركة",
+    "fax": "فاكس"
+
 
 
 
