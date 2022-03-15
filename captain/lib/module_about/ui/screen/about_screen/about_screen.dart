@@ -1,3 +1,4 @@
+import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_about/state_manager/about_screen_state_manager.dart';
@@ -17,7 +18,9 @@ class AboutScreen extends StatefulWidget {
 
 class AboutScreenState extends State<AboutScreen> {
   void moveToRegister() {
-    Navigator.of(context).pushNamed(AuthorizationRoutes.REGISTER_SCREEN);
+    AboutHiveHelper().setWelcome();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        AuthorizationRoutes.REGISTER_SCREEN, (route) => false);
   }
 
   void refresh() {

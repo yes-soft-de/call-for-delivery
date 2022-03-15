@@ -1,3 +1,4 @@
+import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -213,9 +214,11 @@ class AboutStatePageCaptain extends AboutState {
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context)
-                              .pushNamed(AuthorizationRoutes.REGISTER_SCREEN)
+                              .pushNamedAndRemoveUntil(
+                                  AuthorizationRoutes.REGISTER_SCREEN,
+                                  (route) => false)
                               .whenComplete(() => pageController.jumpToPage(0));
-                          ;
+                          AboutHiveHelper().setWelcome();
                         },
                         child: Text(
                           '${S.of(context).skip}',
@@ -236,6 +239,7 @@ class AboutStatePageCaptain extends AboutState {
                       Navigator.of(context)
                           .pushNamed(AuthorizationRoutes.REGISTER_SCREEN)
                           .whenComplete(() => pageController.jumpToPage(0));
+                      AboutHiveHelper().setWelcome();
                     } else {
                       pageController.animateToPage(currentPage + 1,
                           duration: Duration(milliseconds: 750),
