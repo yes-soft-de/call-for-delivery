@@ -16,6 +16,7 @@ class Urls {
   static const String BASE_API_NOTICE_ADMIN = DOMAIN + VERSION_ADMIN + '/notification';
   static const String BASE_API_CHAT_ROM = DOMAIN + VERSION + '/chatroom';
 
+  static const String BASE_API_CAPTAIN_OFFER_ADMIN = DOMAIN + VERSION_ADMIN + '/captainoffer';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -78,6 +79,9 @@ class Urls {
   /*-------------------chatroom--------------*/
   static const GET_CHAT_ROOMS = BASE_API_CHAT_ROM+ '/chatroomswithstores';
 
-
+  /*-------------------captainsOffer--------------*/
+  static const GET_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/captainoffers';
+  static const CREATE_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/create';
+  static const UPDATE_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/update';
 
 }

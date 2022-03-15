@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تنبيه"),
+        "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
         "addPackage": MessageLookupByLibrary.simpleMessage("إضافة باقة"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة الباقة بنجاح"),
@@ -104,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),
+        "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),

@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been added successfully"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
+        "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
         "addPackage": MessageLookupByLibrary.simpleMessage("Add package"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
@@ -104,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
+        "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
