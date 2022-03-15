@@ -43,6 +43,8 @@ class BaseController extends AbstractController
     // error captain
     const ERROR_CAPTAIN_INACTIVE = ["error captain inactive","9100"];
     const CAPTAIN_PROFILE_NOT_EXIST = ["captain profile not exist!", "9101"];
+    const CAPTAIN_PROFILE_CREATED = ["captain profile created!", "9103"];
+    const CAPTAIN_PROFILE_COMPLETED = ["captain profile created!", "9102"];
     //error store
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];
     const INCORRECT_ENTERED_DATA = ["incorrect entered date!", "9152"];
