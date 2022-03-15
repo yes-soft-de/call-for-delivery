@@ -8,6 +8,7 @@ use App\Entity\CaptainOfferEntity;
 use App\Repository\CaptainOfferEntityRepository;
 use App\Request\Admin\CaptainOffer\CaptainOfferCreateRequest;
 use App\Request\Admin\CaptainOffer\CaptainOfferUpdateRequest;
+use App\Request\Admin\CaptainOffer\CaptainOfferStatusUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCaptainOfferManager
@@ -57,5 +58,21 @@ class AdminCaptainOfferManager
     public function getCaptainOfferByAdmin($id): ?CaptainOfferEntity
     {
         return $this->captainOfferEntityRepository->find($id);
+    }
+
+    public function updateCaptainOfferStatusByAdmin(CaptainOfferStatusUpdateRequest $request): string|CaptainOfferEntity
+    {
+        $entity = $this->captainOfferEntityRepository->find($request->getId());
+
+        if (! $entity) {
+         
+           return CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST;
+        }
+         
+        $entity = $this->autoMapping->mapToObject(CaptainOfferStatusUpdateRequest::class, CaptainOfferEntity::class, $request, $entity);
+
+        $this->entityManager->flush();
+
+        return $entity;
     }
 }

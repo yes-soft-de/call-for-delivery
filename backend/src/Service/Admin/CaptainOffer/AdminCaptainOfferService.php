@@ -59,4 +59,16 @@ class AdminCaptainOfferService
 
         return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
     }
+    
+    public function updateCaptainOfferStatusByAdmin($request): string|CaptainOfferCreateResponse
+    {
+        $captainOffer = $this->adminCaptainOfferManager->updateCaptainOfferStatusByAdmin($request);
+
+        if($captainOffer === CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST) {
+            return CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST;
+
+        }
+        
+        return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
+    }
 }

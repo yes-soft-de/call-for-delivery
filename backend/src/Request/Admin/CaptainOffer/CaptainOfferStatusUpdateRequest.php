@@ -2,12 +2,10 @@
 
 namespace App\Request\Admin\CaptainOffer;
 
-class CaptainOfferUpdateRequest
+class CaptainOfferStatusUpdateRequest
 {
     private int $id;
-    private int $carCount;
-    private string $expired;
-    private string $price;
+    private string $status;
 
     /**
      * Get the value of id
