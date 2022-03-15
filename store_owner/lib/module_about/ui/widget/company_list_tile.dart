@@ -39,7 +39,11 @@ class CompanyListTile extends StatelessWidget {
             )),
         child: Material(
           color: Colors.transparent,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           child: ListTile(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
             onTap: onTap,
             leading: Container(
               decoration: BoxDecoration(
