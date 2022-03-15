@@ -56,7 +56,7 @@ class AuthService {
           loginResult.statusCode ?? '0'));
     }
     RegisterResponse? response =
-        await _authManager.userTypeCheck('ROLE_OWNER', loginResult.token ?? '');
+        await _authManager.userTypeCheck('ROLE_CAPTAIN', loginResult.token ?? '');
     if (response?.statusCode != '201') {
       await logout();
       _authSubject.addError(
@@ -231,12 +231,12 @@ class AuthService {
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
         // account created
-        case '9160':
+        case '9102':
           _prefsHelper
               .setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           break;
         // account not filled
-        case '9158':
+        case '9103':
           _prefsHelper
               .setUserCompetedProfile(InitAccountRoutes.INIT_ACCOUNT_SCREEN);
           break;
