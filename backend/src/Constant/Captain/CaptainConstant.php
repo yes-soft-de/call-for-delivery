@@ -21,4 +21,6 @@ final class CaptainConstant
     const COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED = "branchCreated";
 
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
+
+    const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
 }

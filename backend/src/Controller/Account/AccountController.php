@@ -3,6 +3,7 @@
 namespace App\Controller\Account;
 
 use App\AutoMapping;
+use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\User\UserRoleConstant;
@@ -104,8 +105,22 @@ class AccountController extends BaseController
                 return $this->response($response, self::FETCH);
             }
 
-        } else {
-            return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+        } elseif ($this->isGranted('ROLE_CAPTAIN')) {
+            $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::CAPTAIN_USER_TYPE);
+
+            if ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                return $this->response($response, self::CAPTAIN_PROFILE_CREATED);
+
+            } elseif ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+                return $this->response($response, self::CAPTAIN_PROFILE_COMPLETED);
+
+            } elseif ($response->completeAccountStatus === null) {
+                $response->completeAccountStatus = CaptainConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+                return $this->response($response, self::FETCH);
+
+            } else {
+                return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+            }
         }
     }
 
@@ -180,6 +195,16 @@ class AccountController extends BaseController
             $response = $this->accountService->updateCompleteAccountStatus($request, UserRoleConstant::STORE_OWNER_USER_TYPE);
 
             if($response === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+                return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
+
+            } else {
+                return $this->response($response, self::UPDATE);
+            }
+
+        } elseif ($this->isGranted('ROLE_CAPTAIN')) {
+            $response = $this->accountService->updateCompleteAccountStatus($request, UserRoleConstant::CAPTAIN_USER_TYPE);
+
+            if($response === CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
                 return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
 
             } else {

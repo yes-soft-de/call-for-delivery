@@ -117,109 +117,36 @@ class CaptainManager
         return $this->captainEntityRepository->getCaptainByCaptainId($userId);
     }
 
-    /**
-     * @param $id
-     * @return StoreOwnerProfileEntity|null
-     */
-    public function getStoreOwnerProfile($id): ?StoreOwnerProfileEntity
-    {
-        return $this->storeOwnerProfileEntityRepository->find($id);
-    }
-
-    /**
-     * @param $storeOwnerId
-     * @return StoreOwnerProfileEntity|null
-     */
-    public function getStoreOwnerProfileByStoreId($storeOwnerId): ?StoreOwnerProfileEntity
-    {
-        return $this->storeOwnerProfileEntityRepository->findOneBy(["storeOwnerId"=>$storeOwnerId]);
-    }
-
-    public function getStoreOwnerProfileByStoreOwnerId($storeOwnerId): ?StoreOwnerProfileEntity
-    {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
-    }
-
     public function getCompleteAccountStatusOfCaptainProfile($storeOwnerId): ?array
     {
         return $this->captainEntityRepository->getCompleteAccountStatusByCaptainId($storeOwnerId);
     }
 
-    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    public function captainProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): CaptainEntity|string
     {
         if(! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
-            return StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+            return CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
 
         } else {
-            $storeOwnerProfile = $this->storeOwnerProfileEntityRepository->getUserProfile($request->getUserId());
+            $captainProfile = $this->captainEntityRepository->getUserProfile($request->getUserId());
 
-            if ($storeOwnerProfile) {
-                $storeOwnerProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateRequest::class, StoreOwnerProfileEntity::class, $request, $storeOwnerProfile);
+            if ($captainProfile) {
+                $captainProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateRequest::class, CaptainEntity::class, $request, $captainProfile);
 
                 $this->entityManager->flush();
 
-                return $storeOwnerProfile;
+                return $captainProfile;
             }
         }
     }
 
     public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
     {
-        if ($completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
-            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+        if ($completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
+            $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED && $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
             return false;
         }
 
         return true;
-    }
-
-    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
-    {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
-    }
-
-    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
-    {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
-    }
-
-    public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
-    {
-        return $this->storeOwnerProfileEntityRepository->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
-    }
-
-    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
-    {
-        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
-
-        if(! $storeOwnerProfileEntity) {
-            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
-        }
-
-        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileStatusUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
-         $request, $storeOwnerProfileEntity);
-
-        $this->entityManager->flush();
-
-        return $storeOwnerProfileEntity;
-    }
-
-    public function updateStoreOwnerProfileByAdmin(StoreOwnerProfileUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
-    {
-        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
-
-        if(! $storeOwnerProfileEntity) {
-            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
-        }
-
-        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
-            $request, $storeOwnerProfileEntity);
-
-        $storeOwnerProfileEntity->setOpeningTime($request->getOpeningTime());
-        $storeOwnerProfileEntity->setClosingTime($request->getClosingTime());
-
-        $this->entityManager->flush();
-
-        return $storeOwnerProfileEntity;
     }
 }
