@@ -1,14 +1,16 @@
 import 'dart:io';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_init/request/create_captain_profile/create_captain_profile_request.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/faded_button_bar.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+
+import '../../widget/init_field/init_field.dart';
 
 class InitAccountCaptainInitProfile extends States {
   Uri? captainImage;
@@ -22,6 +24,7 @@ class InitAccountCaptainInitProfile extends States {
   final _bankNameController = TextEditingController();
   final _bankAccountNumberController = TextEditingController();
   final _stcPayController = TextEditingController();
+  final _countryCodeController = TextEditingController();
 
   InitAccountCaptainInitProfile(this.screen) : super(screen);
 
@@ -34,6 +37,7 @@ class InitAccountCaptainInitProfile extends States {
     _bankNameController.text = request.bankName ?? '';
     _bankAccountNumberController.text = request.bankAccountNumber ?? '';
     _stcPayController.text = request.stcPay ?? '';
+    
     captainImage = this.captainImage;
     driverLicence = this.driverLicence;
     mechanicLicence = this.mechanicLicence;
@@ -51,6 +55,7 @@ class InitAccountCaptainInitProfile extends States {
           children: [
             CustomListView.custom(
               children: [
+                // captain image
                 MediaQuery.of(context).viewInsets.bottom != 0
                     ? Container()
                     : Padding(
@@ -90,58 +95,96 @@ class InitAccountCaptainInitProfile extends States {
                           fontWeight: FontWeight.bold)),
                 ),
                 // phone
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).phoneNumber}'),
-                    )),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _phoneController,
-                    hintText: '0500000000',
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.phone),
-                    numbers: true,
-                    phone: true,
+                  padding: const EdgeInsets.only(left: 80, right: 80, top: 32),
+                  child: Text(
+                    S.of(context).phoneNumber +
+                        ' ' +
+                        '(${S.current.phoneNumberThatShowsForCaptain})',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 26.0, right: 16.0, left: 16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.phone,
+                            color: Theme.of(context).disabledColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomLoginFormField(
+                        controller: _phoneController,
+                        hintText: '5xxxxxxxxx',
+                        phone: true,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 28.0),
+                      child: SizedBox(
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomLoginFormField(
+                            contentPadding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
+                            controller: _countryCodeController,
+                            phone: true,
+                            phoneHint: false,
+                            maxLength: 3,
+                            halfField: true,
+                            hintText: S.current.countryCode,
+                            sufIcon: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 8.0, left: 8.0),
+                              child: Container(
+                                width: 30,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                                child: Center(
+                                  child: Text(
+                                    '+',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .button
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 // age
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).age}'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _ageController,
-                    hintText: S.current.age,
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.date_range_rounded),
-                    numbers: true,
-                  ),
+                InitField(
+                  controller: _ageController,
+                  icon: Icons.calendar_month_rounded,
+                  hint: S.current.eg + ' : ' + '36',
+                  title: S.current.age,
+                  number: true,
                 ),
                 // car
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).car}'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _carController,
-                    hintText: S.current.car,
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.local_taxi_rounded),
-                  ),
-                ),
-                Container(
-                  height: 24,
+                InitField(
+                  controller: _carController,
+                  icon: Icons.local_taxi_rounded,
+                  hint: S.current.eg + ' : ' + 'Kia Rio',
+                  title: S.current.car,
+                  last: true,
                 ),
                 // Identity
                 Padding(
@@ -189,57 +232,29 @@ class InitAccountCaptainInitProfile extends States {
                   height: 24,
                 ),
                 // Bank name
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).bankName}'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _bankNameController,
-                    hintText: S.current.bankName,
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.monetization_on_rounded),
-                  ),
+                InitField(
+                  controller: _bankNameController,
+                  icon: Icons.account_balance_rounded,
+                  hint: S.current.eg + ' : ' + S.current.bankNameHint,
+                  title: S.current.bankName,
                 ),
                 // Bank Account Number
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).bankAccountNumber}'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _bankAccountNumberController,
-                    hintText: '0000000000',
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.password_rounded),
-                    numbers: true,
-                  ),
+                InitField(
+                  controller: _bankAccountNumberController,
+                  icon: Icons.password_rounded,
+                  hint: S.current.eg + ' : ' + '3123235145313',
+                  title: S.current.bankAccountNumber,
                 ),
                 // Stc Pay
-                Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-                      child: Text('${S.of(context).stcPayCode}'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: CustomFormField(
-                    controller: _stcPayController,
-                    hintText: 'XXXXXXXX',
-                    contentPadding: EdgeInsets.only(top: 15),
-                    preIcon: Icon(Icons.credit_card_rounded),
-                    last: true,
-                  ),
+                InitField(
+                  controller: _stcPayController,
+                  icon: Icons.credit_card_rounded,
+                  hint: S.current.eg + ' : ' + '059796748',
+                  title: S.current.stcPayCode,
+                  last:true
                 ),
                 Container(
-                  height: 100,
+                  height: 75,
                 ),
               ],
             ),
@@ -263,7 +278,8 @@ class InitAccountCaptainInitProfile extends States {
                                 driving: driverLicence,
                                 mechanic: mechanicLicence,
                                 idImage: identity,
-                                phone: _phoneController.text,
+                                phone: _countryCodeController.text +
+                                    _phoneController.text,
                                 bankAccountNumber:
                                     _bankAccountNumberController.text,
                                 bankName: _bankNameController.text,
