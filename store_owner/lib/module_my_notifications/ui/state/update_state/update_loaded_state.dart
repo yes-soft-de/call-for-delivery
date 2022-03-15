@@ -160,11 +160,11 @@ class UpdatesLoadedState extends States {
       children.add(Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: InkWell(
-          onLongPress: () {
-            screenState.markerMode = true;
-            element.marked = true;
-            screenState.refresh();
-          },
+          // onLongPress: () {
+          //   screenState.markerMode = true;
+          //   element.marked = true;
+          //   screenState.refresh();
+          // },
           onTap: () {
             showDialog(
                 context: context,

@@ -2,10 +2,12 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/manager/subscription_manager.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
+import 'package:c4d/module_subscription/model/captain_offers_model.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
 import 'package:c4d/module_subscription/model/packages_categories_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
+import 'package:c4d/module_subscription/response/captain_offers_response/captain_offers_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -62,6 +64,19 @@ class SubscriptionService {
     return SubscriptionBalanceModel.withData(response);
   }
 
+  Future<DataModel> getCaptainsOffers() async {
+    CaptainOffersResponse? response = await _manager.getCaptainsOffers();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainsOffersModel.withData(response);
+  }
+
   Future<DataModel> subscribePackage(int packageId) async {
     ActionResponse? response = await _manager.subscribePackage(packageId);
     if (response == null) {
@@ -75,6 +90,17 @@ class SubscriptionService {
 
   Future<DataModel> renewPackage(int packageId) async {
     ActionResponse? response = await _manager.renewPackage(packageId);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> subscribeToCaptainOffer(int offerID) async {
+    ActionResponse? response = await _manager.subscribeToCaptainOffer(offerID);
     if (response == null) {
       return DataModel.withError(S.current.networkError);
     } else if (response.statusCode != '201') {

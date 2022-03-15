@@ -22,7 +22,7 @@ class FireStoreHelper {
           .doc('new_action')
           .collection('action_history')
           .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
-              Duration(minutes: 1));
+              Duration(seconds: 30));
     } catch (e) {
       return;
     }

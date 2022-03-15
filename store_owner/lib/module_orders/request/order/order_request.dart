@@ -32,7 +32,9 @@ class CreateOrderRequest {
     data['recipientName'] = this.recipientName;
     data['recipientPhone'] = this.recipientPhone;
     data['deliveryDate'] = this.date;
-    data['image'] = this.image;
+    if (this.image != null) {
+      data['images'] = this.image;
+    }
     data['orderCost'] = this.orderCost;
     data['detail'] = this.detail ?? '';
 

@@ -21,8 +21,9 @@ class SubscriptionBalanceScreen extends StatefulWidget {
 class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   late StreamSubscription _streamSubscription;
   late StreamSubscription _globalStreamSubscription;
+  late StreamSubscription _captainsOffersStreamSubscription;
   late States currentState;
-
+  late AsyncSnapshot snapshot = const AsyncSnapshot.nothing();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void refresh() {
@@ -39,6 +40,10 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
     widget._stateManager.extendPackage(this);
   }
 
+  void subscribedToCaptainOffer(int id) {
+    widget._stateManager.subscribeToCaptainOffer(this, id);
+  }
+
   @override
   void initState() {
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
@@ -48,9 +53,17 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
       }
     });
     getBalance();
+    widget._stateManager.getCaptainOffers(this);
     _globalStreamSubscription =
         getIt<GlobalStateManager>().stateStream.listen((event) {
       getBalance();
+    });
+    _captainsOffersStreamSubscription =
+        widget._stateManager.captainOffersStream.listen((event) {
+      snapshot = event;
+      if (mounted) {
+        setState(() {});
+      }
     });
     super.initState();
   }
@@ -71,6 +84,7 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
   void dispose() {
     _streamSubscription.cancel();
     _globalStreamSubscription.cancel();
+    _captainsOffersStreamSubscription.cancel();
     super.dispose();
   }
 }

@@ -4600,11 +4600,21 @@ class S {
     );
   }
 
-  /// `Whatsapp with us`
+  /// `Whatsapp`
   String get whatsapp {
     return Intl.message(
-      'Whatsapp with us',
+      'Whatsapp',
       name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whatsapp support`
+  String get whatsappSupport {
+    return Intl.message(
+      'Whatsapp support',
+      name: 'whatsappSupport',
       desc: '',
       args: [],
     );
@@ -5275,6 +5285,176 @@ class S {
     return Intl.message(
       'What we can to improve',
       name: 'rateCommentReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Public phone number`
+  String get phoneNumberThatShowsForCaptain {
+    return Intl.message(
+      'Public phone number',
+      name: 'phoneNumberThatShowsForCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `eg`
+  String get eg {
+    return Intl.message(
+      'eg',
+      name: 'eg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra captain`
+  String get extraCaptain {
+    return Intl.message(
+      'Extra captain',
+      name: 'extraCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains Extra Offer`
+  String get captainPackageExtra {
+    return Intl.message(
+      'Captains Extra Offer',
+      name: 'captainPackageExtra',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing`
+  String get ongoing {
+    return Intl.message(
+      'Ongoing',
+      name: 'ongoing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message(
+      'Completed',
+      name: 'completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get cancelled2 {
+    return Intl.message(
+      'Cancelled',
+      name: 'cancelled2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid map link`
+  String get invalidMapLink {
+    return Intl.message(
+      'Invalid map link',
+      name: 'invalidMapLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Km`
+  String get km {
+    return Intl.message(
+      'Km',
+      name: 'km',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance`
+  String get distance {
+    return Intl.message(
+      'Distance',
+      name: 'distance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unavailable`
+  String get unavailable {
+    return Intl.message(
+      'Unavailable',
+      name: 'unavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calculating`
+  String get calculating {
+    return Intl.message(
+      'Calculating',
+      name: 'calculating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You subscribed with captain offer with a success`
+  String get subscribedToOfferSuccess {
+    return Intl.message(
+      'You subscribed with captain offer with a success',
+      name: 'subscribedToOfferSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about subscribe with this offer`
+  String get confirmationCaptainOffers {
+    return Intl.message(
+      'Are sure about subscribe with this offer',
+      name: 'confirmationCaptainOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Info`
+  String get companyInfo {
+    return Intl.message(
+      'Company Info',
+      name: 'companyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fax`
+  String get fax {
+    return Intl.message(
+      'Fax',
+      name: 'fax',
       desc: '',
       args: [],
     );

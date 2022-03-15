@@ -54,10 +54,12 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.ratingCaptain(request).then((value) {
       if (value.hasError) {
+        getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
+        getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.captainRated)
             .show(screenState.context);

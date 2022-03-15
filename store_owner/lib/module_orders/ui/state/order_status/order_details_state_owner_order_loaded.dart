@@ -2,6 +2,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
@@ -11,6 +13,8 @@ import 'package:c4d/utils/components/rating_form.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -24,7 +28,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState);
+  ) : super(screenState) {
+    if (orderInfo.destinationCoordinate != null) {
+      distance = S.current.calculating;
+      screenState.refresh();
+      DeepLinksService.getDistance(LatLng(
+              orderInfo.destinationCoordinate?.latitude ?? 0,
+              orderInfo.destinationCoordinate?.longitude ?? 0))
+          .then((value) {
+        distance = value.toStringAsFixed(1);
+        screenState.refresh();
+      });
+    }
+  }
+  String? distance;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -103,19 +120,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.amberAccent.withOpacity(0.5),
+                      color: Colors.amber.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 10,
                       offset: Offset(-0.2, 0)),
                 ],
                 gradient: LinearGradient(
                   colors: [
-                    Colors.amberAccent.withOpacity(0.85),
-                    Colors.amberAccent.withOpacity(0.85),
-                    Colors.amberAccent.withOpacity(0.9),
-                    Colors.amberAccent.withOpacity(0.93),
-                    Colors.amberAccent.withOpacity(0.95),
-                    Colors.amberAccent,
+                    Colors.amber.withOpacity(0.85),
+                    Colors.amber.withOpacity(0.85),
+                    Colors.amber.withOpacity(0.9),
+                    Colors.amber.withOpacity(0.93),
+                    Colors.amber.withOpacity(0.95),
+                    Colors.amber,
                   ],
                 ),
                 borderRadius: BorderRadius.circular(25),
@@ -291,6 +308,45 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       leading: Icon(Icons.phone),
                       title: Text(S.current.recipientPhoneNumber),
                       subtitle: Text(orderInfo.customerPhone),
+                      trailing: Icon(Icons.arrow_forward),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.location_pin),
+                      title: Text(S.current.locationOfCustomer),
+                      subtitle: distance != null
+                          ? Text(
+                              S.current.distance + ' $distance ' + S.current.km)
+                          : Text(S.current.distance + ' ' + S.current.unknown),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),

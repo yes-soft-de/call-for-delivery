@@ -139,7 +139,7 @@ class InitAccountStateProfileLoaded extends States {
                 icon: Icons.storefront_outlined,
                 controller: _nameController,
                 title: S.current.storeName,
-                hint: S.current.store,
+                hint: S.current.eg + ' : ' + S.current.store,
                 onChanged: () {
                   screenState.refresh();
                 },
@@ -154,7 +154,9 @@ class InitAccountStateProfileLoaded extends States {
               Padding(
                 padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
                 child: Text(
-                  S.of(context).phoneNumber,
+                  S.of(context).phoneNumber +
+                      ' ' +
+                      '(${S.current.phoneNumberThatShowsForCaptain})',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -371,14 +373,14 @@ class InitAccountStateProfileLoaded extends States {
                 icon: Icons.location_city_rounded,
                 controller: _cityController,
                 title: S.current.city,
-                hint: S.current.cityHint,
+                hint: S.current.eg + ' : ' + S.current.cityHint,
               ),
               // bankName
               InitField(
                 icon: Icons.account_balance_rounded,
                 controller: _bankNameController,
                 title: S.current.bankName,
-                hint: S.current.bankNameHint,
+                hint: S.current.eg + ' : ' + S.current.bankNameHint,
               ),
               // bankNumber
               InitField(
@@ -386,7 +388,7 @@ class InitAccountStateProfileLoaded extends States {
                 controller: _bankNumberController,
                 title: S.current.bankAccountNumber,
                 last: true,
-                hint: 'xxxxxxxxxxxxxx',
+                hint: S.current.eg + ' : ' + 'xxxxxxxxxxxxxx',
               ),
               //size
               Padding(
