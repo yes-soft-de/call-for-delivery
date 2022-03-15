@@ -49,7 +49,7 @@ class AdminCaptainOfferManager
         return $entity;
     }
 
-    public function getCaptainOffersByAdmin(): ?array
+    public function getCaptainOffersByAdmin(): array
     {
         return $this->captainOfferEntityRepository->findAll();
     }

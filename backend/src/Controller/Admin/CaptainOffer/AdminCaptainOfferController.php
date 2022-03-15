@@ -168,13 +168,12 @@ class AdminCaptainOfferController extends BaseController
         }
         
         return $this->response($result, self::UPDATE);
-        }
+    }
 
     /**
      * admin:Get Captain Offers By Admin.
-     * @Route("captainoffers", name="getCaptainOffersByAdmin", methods={"GET"})
+     * @Route("captainoffers", name="getAllCaptainOffersByAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Offer")
@@ -185,7 +184,6 @@ class AdminCaptainOfferController extends BaseController
      *      description="token to be passed as a header",
      *      required=true
      * )
-     *
      *
      * @OA\Response(
      *      response=200,
@@ -216,9 +214,9 @@ class AdminCaptainOfferController extends BaseController
 
     /**
      * admin:Get Captain Offer By Admin.
-     * @Route("captainoffer/{id}", name="getCaptainOfferByAdmin", methods={"GET"})
+     * @Route("captainoffer/{id}", name="getCaptainOfferByIdForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Offer")
@@ -229,7 +227,6 @@ class AdminCaptainOfferController extends BaseController
      *      description="token to be passed as a header",
      *      required=true
      * )
-     *
      *
      * @OA\Response(
      *      response=200,
@@ -249,7 +246,7 @@ class AdminCaptainOfferController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getCaptainOfferByAdmin($id): JsonResponse
+    public function getCaptainOfferByAdmin(int $id): JsonResponse
     {
         $result = $this->adminCaptainOfferService->getCaptainOfferByAdmin($id);
         

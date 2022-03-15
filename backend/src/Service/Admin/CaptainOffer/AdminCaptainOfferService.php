@@ -39,7 +39,7 @@ class AdminCaptainOfferService
         return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
     }
 
-    public function getCaptainOffersByAdmin(): ?array
+    public function getCaptainOffersByAdmin(): array
     {
         $response = [];
 
