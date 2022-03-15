@@ -47,7 +47,7 @@ class AdminCaptainOfferService
 
         foreach ($captainOffers as $captainOffer) {
 
-            $response[] = $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
+            $response[] = $this->autoMapping->map("array", CaptainOfferCreateResponse::class, $captainOffer);
         }
 
         return $response;

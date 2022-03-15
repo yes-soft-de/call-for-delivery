@@ -34,4 +34,16 @@ class CaptainOfferEntityRepository extends ServiceEntityRepository
 
             ->getResult();
     }
+
+    public function getCaptainOffersForAdmin(): ?array
+    {
+        return $this->createQueryBuilder('captainOfferEntity')
+            ->select('captainOfferEntity.id', 'captainOfferEntity.carCount', 'captainOfferEntity.status' ,'captainOfferEntity.expired', 'captainOfferEntity.price')
+            
+            ->orderBy('captainOfferEntity.id', 'DESC')
+            
+            ->getQuery()
+
+            ->getResult();
+    }
 }
