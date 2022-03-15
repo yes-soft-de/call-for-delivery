@@ -1,6 +1,11 @@
 // ignore_for_file: unused_field
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/module_about/about_module.dart';
+import 'package:c4d/module_init/init_account_module.dart';
+import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_plan/plan_module.dart';
+import 'package:c4d/module_profile/module_profile.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/effect/scroll_behavior.dart';
@@ -82,16 +87,27 @@ class MyApp extends StatefulWidget {
   final AuthorizationModule _authorizationModule;
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
+  final AboutModule _aboutModule;
+  final InitAccountModule _initAccountModule;
+  final ProfileModule _profileModule;
+  final OrdersModule _ordersModule;
+  final PlanModule _planModule;
+  
   MyApp(
-      this._themeDataService,
-      this._localizationService,
-      this._fireNotificationService,
-      this._localNotificationService,
-      this._splashModule,
-      this._authorizationModule,
-      this._chatModule,
-      this._settingsModule,
-      );
+    this._themeDataService,
+    this._localizationService,
+    this._fireNotificationService,
+    this._localNotificationService,
+    this._splashModule,
+    this._authorizationModule,
+    this._chatModule,
+    this._settingsModule,
+    this._aboutModule,
+    this._initAccountModule,
+    this._ordersModule,
+    this._planModule,
+    this._profileModule,
+  );
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
