@@ -41,15 +41,15 @@ class CaptainManager
             $userRegister = $this->userManager->createUser($request, ChatRoomConstant::ADMIN_CAPTAIN);
 
             if ($userRegister) {
-             
+
                 return $this->createProfile($request, $userRegister);
             }
 
             return UserReturnResultConstant::USER_IS_NOT_CREATED_RESULT;
-        } 
-        
+        }
+
         return $this->createProfileWithUserFound($user, $request);
-        
+
     }
 
     public function createProfile(UserRegisterRequest $request, $userRegister): mixed
@@ -150,6 +150,16 @@ class CaptainManager
         }
 
         return true;
+    }
+
+    public function captainIsActive($captainId): ?array
+    {
+        return $this->captainEntityRepository->captainIsActive($captainId);
+    }
+
+    public function getCaptainProfileByUserId($captainId): ?CaptainEntity
+    {
+        return $this->captainEntityRepository->findOneBy(["captainId" => $captainId]);
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
