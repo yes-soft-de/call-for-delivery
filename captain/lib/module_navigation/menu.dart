@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
-import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state_loading.dart';
 import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state_orders_loaded.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';

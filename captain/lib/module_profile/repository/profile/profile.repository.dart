@@ -5,7 +5,6 @@ import 'package:c4d/module_init/response/create_profile_response/create_profile_
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/response/terms/terms_respons.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
-import 'package:c4d/module_profile/response/get_records_response.dart';
 import 'package:c4d/module_profile/response/profile_response.dart';
 
 @injectable
@@ -44,18 +43,6 @@ class ProfileRepository {
     return CreateCaptainProfileResponse.fromJson(response);
   }
 
-  Future<List<ActivityRecord>?> getUserActivityLog() async {
-    await _authService.refreshToken();
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-      Urls.LOG_API,
-      headers: {'Authorization': 'Bearer $token'},
-    );
-
-    if (response == null) return null;
-
-    return GetRecordsResponse.fromJson(response).data;
-  }
 
   Future<List<Terms>?> getTerms() async {
     var token = await _authService.getToken();
