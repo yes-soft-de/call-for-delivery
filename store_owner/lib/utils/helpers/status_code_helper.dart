@@ -43,6 +43,8 @@ class StatusCodeHelper {
         return S.current.alreadyExtended;
       case '9351':
         return S.current.packageNotFoundRenew;
+      case '9454':
+        return S.current.youSubscribedWithOffer;
       case '-1':
         return S.current.dataDecodeError;
       default:

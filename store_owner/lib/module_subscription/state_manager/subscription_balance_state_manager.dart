@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
@@ -12,6 +13,7 @@ import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/s
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subcriptions_balance_loaded_state.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subscription_balance_error.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -71,12 +73,14 @@ class SubscriptionBalanceStateManager {
     _subscriptionService.subscribePackage(packageId).then((value) {
       if (value.hasError) {
         getBalance(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
         getBalance(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.successRenew)
             .show(screenState.context);
@@ -89,12 +93,14 @@ class SubscriptionBalanceStateManager {
     _subscriptionService.extendPackage().then((value) {
       if (value.hasError) {
         getBalance(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
         getBalance(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.packageExtendedSuccessfully)
@@ -125,6 +131,7 @@ class SubscriptionBalanceStateManager {
       if (value.hasError) {
         getBalance(screenState);
         getCaptainOffers(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
@@ -132,8 +139,10 @@ class SubscriptionBalanceStateManager {
       } else {
         getBalance(screenState);
         getCaptainOffers(screenState);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.subscribedToOfferSuccess)
+                title: S.current.warnning,
+                message: S.current.subscribedToOfferSuccess)
             .show(screenState.context);
       }
     });

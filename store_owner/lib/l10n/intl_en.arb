@@ -542,7 +542,9 @@
     "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
     "confirmationCaptainOffers": "Are sure about subscribe with this offer",
     "companyInfo": "Company Info",
-    "fax": "Fax"
+    "fax": "Fax",
+    "youSubscribedWithOffer": "You already subscribed with captain offer , You can subscribe again when your subscription expired"
+
 
 
 

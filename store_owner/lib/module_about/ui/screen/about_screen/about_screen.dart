@@ -1,12 +1,12 @@
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/state_manager/about_screen_state_manager.dart';
 import 'package:c4d/module_about/ui/states/about/about_state.dart';
 import 'package:c4d/module_about/ui/states/about/about_state_page_owner.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class AboutScreen extends StatefulWidget {
   final AboutScreenStateManager _stateManager;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   AboutScreen(this._stateManager);
 
@@ -15,6 +15,7 @@ class AboutScreen extends StatefulWidget {
 }
 
 class AboutScreenState extends State<AboutScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   AboutState? _currentState;
   int currentPage = 0;
   @override
@@ -34,8 +35,7 @@ class AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: widget._scaffoldKey, body: _currentState?.getUI(context));
+    return Scaffold(key: _scaffoldKey, body: _currentState?.getUI(context));
   }
 
   void refresh() {
