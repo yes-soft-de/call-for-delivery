@@ -4,6 +4,7 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Manager\Subscription\SubscriptionCaptainOfferManager;
 use App\Request\Subscription\SubscriptionCaptainOfferCreateRequest;
@@ -23,9 +24,9 @@ class SubscriptionCaptainOfferService
 
     public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): SubscriptionCaptainOfferCreateResponse|SubscriptionIsReadyResponse 
     {
-        $canCreateSubscriptionCaptainOffer = $this->isSubscriptionForReady($request->getStoreOwner()); 
+        $canCreateSubscriptionCaptainOffer = $this->isThereSubscription($request->getStoreOwner()); 
      
-        if($canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+        if($canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND || $canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION) {
       
             return  $canCreateSubscriptionCaptainOffer;
         }
@@ -40,19 +41,23 @@ class SubscriptionCaptainOfferService
         return $this->subscriptionCaptainOfferManager->updateState($id, $status);
     }
 
-    public function isSubscriptionForReady(int $storeOwnerId): SubscriptionIsReadyResponse
+    public function isThereSubscription(int $storeOwnerId): SubscriptionIsReadyResponse
     {
-        $subscribeId = $this->subscriptionCaptainOfferManager->isSubscriptionForReady($storeOwnerId);
-        if(!$subscribeId ) {
-         
-            $subscribeId['subscriptionState'] = SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        $subscribe = $this->subscriptionCaptainOfferManager->isThereSubscription($storeOwnerId);
+        if(!$subscribe ) {
+
+            $subscribe['subscriptionState'] = SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
          }
 
         else {
-
-            $subscribeId['subscriptionState'] = SubscriptionConstant::SUBSCRIPTION_FOUND;
+            
+            $subscriptionCaptainOffer = $this->subscriptionCaptainOfferManager->subscriptionCaptainOfferBySubscribeId($subscribe['lastSubscription']);
+            if($subscriptionCaptainOffer['status'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE){
+                
+                $subscribe['subscriptionState'] = SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION;
+            }
         }
         
-         return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribeId);
+         return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribe);
     }
 }
