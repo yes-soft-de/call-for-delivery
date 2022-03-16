@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_init/request/create_captain_profile/create_captain_profile_request.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
@@ -9,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/faded_button_bar.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:the_country_number/the_country_number.dart';
 
+import '../../widget/get_image_path.dart';
 import '../../widget/init_field/init_field.dart';
 
 class InitAccountCaptainInitProfile extends States {
@@ -18,6 +22,7 @@ class InitAccountCaptainInitProfile extends States {
   Uri? mechanicLicence;
   Uri? identity;
   final InitAccountScreenState screen;
+  final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _carController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -26,22 +31,15 @@ class InitAccountCaptainInitProfile extends States {
   final _stcPayController = TextEditingController();
   final _countryCodeController = TextEditingController();
 
-  InitAccountCaptainInitProfile(this.screen) : super(screen);
-
-  InitAccountCaptainInitProfile.withData(
-      this.screen, CreateCaptainProfileRequest request)
-      : super(screen) {
-    _ageController.text = request.age?.toString() ?? '';
-    _carController.text = request.car ?? '';
-    _phoneController.text = request.phone ?? '';
-    _bankNameController.text = request.bankName ?? '';
-    _bankAccountNumberController.text = request.bankAccountNumber ?? '';
-    _stcPayController.text = request.stcPay ?? '';
-    
-    captainImage = this.captainImage;
-    driverLicence = this.driverLicence;
-    mechanicLicence = this.mechanicLicence;
-    identity = this.identity;
+  InitAccountCaptainInitProfile(this.screen) : super(screen) {
+    var number = getIt<AuthService>().username;
+    if (number.isNotEmpty) {
+      final sNumber =
+          TheCountryNumber().parseNumber(internationalNumber: '+' + number);
+      _countryCodeController.text = sNumber.dialCode.substring(1);
+      _phoneController.text = sNumber.number;
+      screen.refresh();
+    }
   }
 
   final GlobalKey<FormState> _initKey = GlobalKey<FormState>();
@@ -62,7 +60,7 @@ class InitAccountCaptainInitProfile extends States {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            ImagePicker()
+                            ImagePicker.platform
                                 .getImage(source: ImageSource.gallery)
                                 .then((value) {
                               if (value != null) {
@@ -80,7 +78,7 @@ class InitAccountCaptainInitProfile extends States {
                               ),
                               child: Stack(
                                 children: [
-                                  Positioned.fill(
+                                  const Positioned.fill(
                                       child: Icon(Icons.person,
                                           size: 45, color: Colors.white)),
                                   _getCaptainImageFG(),
@@ -93,6 +91,13 @@ class InitAccountCaptainInitProfile extends States {
                       style: TextStyle(
                           color: Theme.of(context).disabledColor,
                           fontWeight: FontWeight.bold)),
+                ),
+                // name
+                InitField(
+                  controller: _nameController,
+                  icon: Icons.person,
+                  hint: S.current.eg + ' : ' + S.current.nameHint,
+                  title: S.current.captainName,
                 ),
                 // phone
                 Padding(
@@ -199,7 +204,13 @@ class InitAccountCaptainInitProfile extends States {
                     ),
                   ),
                 ),
-                _getIdentity(context),
+                GetImagePath(
+                  callBack: (uri) {
+                    identity = uri;
+                    screen.refresh();
+                  },
+                  imagePath: identity,
+                ),
                 // Driver Licence
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -213,8 +224,13 @@ class InitAccountCaptainInitProfile extends States {
                     ),
                   ),
                 ),
-                _getDriverLicenceFG(context),
-                // Mechanic Licence
+                GetImagePath(
+                  callBack: (uri) {
+                    driverLicence = uri;
+                    screen.refresh();
+                  },
+                  imagePath: driverLicence,
+                ), // Mechanic Licence
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -227,7 +243,13 @@ class InitAccountCaptainInitProfile extends States {
                     ),
                   ),
                 ),
-                _getMechanicLicenceFG(context),
+                GetImagePath(
+                  callBack: (uri) {
+                    mechanicLicence = uri;
+                    screen.refresh();
+                  },
+                  imagePath: mechanicLicence,
+                ),
                 Container(
                   height: 24,
                 ),
@@ -247,13 +269,12 @@ class InitAccountCaptainInitProfile extends States {
                 ),
                 // Stc Pay
                 InitField(
-                  controller: _stcPayController,
-                  icon: Icons.credit_card_rounded,
-                  hint: S.current.eg + ' : ' + '059796748',
-                  title: S.current.stcPayCode,
-                  last:true
-                ),
-                Container(
+                    controller: _stcPayController,
+                    icon: Icons.credit_card_rounded,
+                    hint: S.current.eg + ' : ' + '059796748',
+                    title: S.current.stcPayCode,
+                    last: true),
+                const SizedBox(
                   height: 75,
                 ),
               ],
@@ -272,6 +293,7 @@ class InitAccountCaptainInitProfile extends States {
                           mechanicLicence != null) {
                         screen.submitProfile(
                             CreateCaptainProfileRequest.withUriImages(
+                                name: _nameController.text.trim(),
                                 age: int.parse(_ageController.text),
                                 car: _carController.text,
                                 captainImage: captainImage,
@@ -321,209 +343,6 @@ class InitAccountCaptainInitProfile extends States {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _getDriverLicenceFG(BuildContext context) {
-    if (driverLicence != null) {
-      return Padding(
-        padding:
-            const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-        child: Container(
-          height: 150,
-          child: GestureDetector(
-            onTap: () {
-              ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-                if (value != null) {
-                  driverLicence = Uri(path: value.path);
-                  screen.refresh();
-                }
-              });
-            },
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: FileImage(File(driverLicence!.path)),
-                            fit: BoxFit.cover)),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-    return Padding(
-      padding:
-          const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-      child: GestureDetector(
-        onTap: () {
-          ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-            if (value != null) {
-              driverLicence = Uri(path: value.path);
-              screen.refresh();
-            }
-          });
-        },
-        child: Container(
-          height: 150,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? Colors.grey[900]
-                          : Color.fromRGBO(236, 239, 241, 1),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Icon(
-                    Icons.camera,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _getMechanicLicenceFG(BuildContext context) {
-    if (mechanicLicence != null) {
-      return Padding(
-        padding:
-            const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-        child: Container(
-          height: 150,
-          child: GestureDetector(
-            onTap: () {
-              ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-                if (value != null) {
-                  mechanicLicence = Uri(path: value.path);
-                  screen.refresh();
-                }
-              });
-            },
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: FileImage(File(mechanicLicence!.path)),
-                            fit: BoxFit.cover)),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-    return Padding(
-      padding:
-          const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-      child: GestureDetector(
-        onTap: () {
-          ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-            if (value != null) {
-              mechanicLicence = Uri(path: value.path);
-              screen.refresh();
-            }
-          });
-        },
-        child: Container(
-          height: 150,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Icon(
-                    Icons.camera,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _getIdentity(BuildContext context) {
-    if (identity != null) {
-      return Padding(
-        padding:
-            const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-        child: Container(
-          height: 150,
-          child: GestureDetector(
-            onTap: () {
-              ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-                if (value != null) {
-                  identity = Uri(path: value.path);
-                  screen.refresh();
-                }
-              });
-            },
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: FileImage(File(identity!.path)),
-                            fit: BoxFit.cover)),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-    return Padding(
-      padding:
-          const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8.0),
-      child: GestureDetector(
-        onTap: () {
-          ImagePicker().getImage(source: ImageSource.gallery).then((value) {
-            if (value != null) {
-              identity = Uri(path: value.path);
-              screen.refresh();
-            }
-          });
-        },
-        child: Container(
-          height: 150,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Icon(
-                    Icons.camera,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );

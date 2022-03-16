@@ -52,7 +52,7 @@ class InitAccountStateManager {
         _initAccountService.createCaptainProfile(request).then((value) {
           if (value.hasError) {
             _stateSubject.add(
-                InitAccountCaptainInitProfile.withData(screenState, request));
+                InitAccountCaptainInitProfile(screenState));
             screenState.showMessage(value.error, false);
           } else {
             _stateSubject.add(InitAccountStateProfileCreated(screenState));
@@ -60,7 +60,7 @@ class InitAccountStateManager {
         });
       } else {
         _stateSubject
-            .add(InitAccountCaptainInitProfile.withData(screenState, request));
+            .add(InitAccountCaptainInitProfile(screenState));
         screenState.showMessage(S.current.errorUploadingImages, false);
       }
     });
