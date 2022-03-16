@@ -16,15 +16,15 @@ class CompanyInfoScreen extends StatefulWidget {
 }
 
 class CompanyInfoScreenState extends State<CompanyInfoScreen> {
- late States currentState ;
+  late States currentState;
   @override
   void initState() {
     currentState = LoadingState(this);
+    widget._stateManager.getCompanyInfo(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
-      if (mounted){
-        setState(() {
-        });
+      if (mounted) {
+        setState(() {});
       }
     });
     super.initState();
@@ -33,8 +33,7 @@ class CompanyInfoScreenState extends State<CompanyInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.companyInfo),
-      body: currentState.getUI(context)
-      );
+        appBar: CustomC4dAppBar.appBar(context, title: S.current.companyInfo),
+        body: currentState.getUI(context));
   }
 }
