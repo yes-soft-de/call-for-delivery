@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/state_manager/captain_offer_state_manager.dart';
 import 'package:c4d/module_captain/ui/widget/captain_offer_form.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,9 @@ class CaptainOffersScreenState extends State<CaptainOffersScreen> {
   void updateCaptainOffer(CaptainOfferRequest request) {
     widget._stateManager.updateCaptainOffer(this, request);
   }
-
+  void enableCaptainOffer(EnableOfferRequest request) {
+    widget._stateManager.enableCaptainOffer(this, request);
+  }
 //  void deleteCategories(String id) {
 //    widget._stateManager.deleteCategories(this, id);
 //  }

@@ -3,13 +3,15 @@ import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 
 class  CaptainOfferCard extends StatelessWidget {
   final CaptainsOffersModel model;
   final VoidCallback onEdit;
+  final Function onEnable;
   CaptainOfferCard(
       {required this.model,
-        required this.onEdit});
+        required this.onEdit,required this.onEnable});
 
   @override
   Widget build(BuildContext context) {
@@ -17,23 +19,14 @@ class  CaptainOfferCard extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-       color: Theme.of(context).backgroundColor,
+       color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 16.0, left: 16, top: 16, bottom: 16),
-                child: DottedLine(
-                  dashColor: Theme.of(context).backgroundColor,
-                  lineThickness: 2.5,
-                  dashRadius: 25,
-                ),
-              ),
               // package info
-              Row(children: [
-                Column(children: [
+              Column(children: [
+                Row(children: [
                   // car count
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -68,8 +61,22 @@ class  CaptainOfferCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Expanded(
+                    child: ListTileSwitch(
+                        switchActiveColor: Colors.green.shade900,
+                        switchInactiveColor: Colors.red.shade900,
+                        value:model.status == 'active',
+                        onChanged: (v) {
+                          if(v){
+                            onEnable('active');
+                          }else{
+                            onEnable('inactive');
+                          }
+
+                        }),
+                  ),
                 ],),
-                Column(children: [
+                Row(children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Flex(
@@ -127,6 +134,30 @@ class  CaptainOfferCard extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  SizedBox(width: 15,),
+                  InkWell(
+                    onTap: onEdit,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Theme.of(context).primaryColorLight),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FaIcon(Icons.edit,
+                                  color:Theme.of(context).colorScheme.primary),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],),

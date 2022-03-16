@@ -116,7 +116,7 @@ class _CategoryFormState extends State<CaptainOfferForm> {
               Navigator.pop(context);
               widget.onSave(CaptainOfferRequest(
                   id: id,
-                 price:int.parse(_costController.text) ,
+                 price:double.parse(_costController.text) ,
                   carCount: int.parse(_carCountController.text),
                 status: status,expired: int.parse(_expirdCountController.text)));
             } else {

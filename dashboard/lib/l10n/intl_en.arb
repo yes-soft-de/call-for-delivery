@@ -504,7 +504,11 @@
     "companyFinance": "Company finance",
     "contactInfo": "Contact info",
     "captainsOffer": "Captains offer",
-    "addOffer": "Add offer"
+    "addOffer": "Add offer",
+    "updateOfferSuccessfully": "offer updated successfully",
+    "addOfferSuccessfully": "offer added successfully",
+    "storesActive": "Stores Active",
+    "allOrdersCount": "Orders count"
 
 
 
