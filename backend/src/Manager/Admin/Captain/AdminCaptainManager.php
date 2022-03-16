@@ -2,7 +2,9 @@
 
 namespace App\Manager\Admin\Captain;
 
+use App\Entity\CaptainEntity;
 use App\Manager\Captain\CaptainManager;
+use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 
 class AdminCaptainManager
 {
@@ -21,5 +23,10 @@ class AdminCaptainManager
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
         return $this->captainManager->getCaptainProfileByIdForAdmin($captainProfileId);
+    }
+
+    public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity
+    {
+        return $this->captainManager->updateCaptainProfileStatusByAdmin($request);
     }
 }

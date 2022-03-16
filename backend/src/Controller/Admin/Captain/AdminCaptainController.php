@@ -3,12 +3,17 @@
 namespace App\Controller\Admin\Captain;
 
 use App\AutoMapping;
+use App\Constant\Captain\CaptainConstant;
 use App\Controller\BaseController;
+use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Service\Admin\Captain\AdminCaptainService;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -136,5 +141,94 @@ class AdminCaptainController extends BaseController
         $response = $this->adminCaptainService->getCaptainProfileByIdForAdmin($captainProfileId);
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * admin: Update status of the captain profile.
+     * @Route("captainprofilestatus", name="updateCaptainProfileStatusByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update Captain Profile Status",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="status")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the captain's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="captainName"),
+     *              @OA\Property(type="object", property="location"),
+     *              @OA\Property(type="string", property="age"),
+     *              @OA\Property(type="string", property="car"),
+     *              @OA\Property(type="number", property="salary"),
+     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="number", property="bounce"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="string", property="bankName"),
+     *              @OA\Property(type="string", property="bankAccountNumber"),
+     *              @OA\Property(type="string", property="stcPay"),
+     *              @OA\Property(type="string", property="images"),
+     *              @OA\Property(type="boolean", property="isOnline"),
+     *              @OA\Property(type="string", property="mechanicLicense"),
+     *              @OA\Property(type="string", property="identity"),
+     *              @OA\Property(type="string", property="roomId")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns that captain profile not exists",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9101"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="captain profile not exist!")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainProfileStatusByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainProfileStatusUpdateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if(\count($violations) > 0)
+        {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminCaptainService->updateCaptainProfileStatusByAdmin($request);
+
+        if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return $this->response($response, self::CAPTAIN_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }

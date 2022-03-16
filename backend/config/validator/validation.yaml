@@ -186,3 +186,10 @@ App\Request\Admin\CaptainOffer\CaptainOfferStatusUpdateRequest:
             - NotBlank: ~
         status:
             - NotBlank: ~
+
+App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
