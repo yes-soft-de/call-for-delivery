@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\SubscriptionCaptainOfferEntity;
+use App\Entity\SubscriptionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method SubscriptionCaptainOfferEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,19 @@ class SubscriptionCaptainOfferEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionCaptainOfferEntity::class);
     }
 
-    // /**
-    //  * @return SubscriptionCaptainOfferEntity[] Returns an array of SubscriptionCaptainOfferEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function subscriptionCaptainOfferBySubscribeId(int $subscribeId): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('subscriptionCaptainOfferEntity')
 
-    /*
-    public function findOneBySomeField($value): ?SubscriptionCaptainOfferEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.status')
+         
+            ->leftJoin(SubscriptionEntity::class, 'subscriptionEntity', Join::WITH, 'subscriptionEntity.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+
+            ->andWhere('subscriptionEntity.id = :subscribeId')
+
+            ->setParameter('subscribeId', $subscribeId)
+
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

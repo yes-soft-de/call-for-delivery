@@ -94,7 +94,7 @@ class SubscriptionManager
        
     }
 
-    public function isSubscriptionForReady(int $storeOwnerId): ?array
+    public function isThereSubscription(int $storeOwnerId): ?array
     {
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 

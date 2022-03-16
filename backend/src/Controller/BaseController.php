@@ -75,6 +75,7 @@ class BaseController extends AbstractController
     // package
     const CAPTAIN_OFFER_NOT_EXIST = ["captain offer not exist", "9451"];
     const ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER = ["error","9453"];
+    const ERROR_YOU_HAVE_SUBSCRIPTION_ = ["you have subscription with captain offer","9454"];
     // notification
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
 
