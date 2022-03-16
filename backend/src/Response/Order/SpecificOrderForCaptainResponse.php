@@ -2,7 +2,7 @@
 
 namespace App\Response\Order;
 
-class OrdersResponse
+class SpecificOrderForCaptainResponse
 {
     public $id;
 
@@ -35,10 +35,10 @@ class OrdersResponse
     public $branchName;
 
     public $images;
-
-    public $captainUserId;
+  
+    public $storeOwnerName;
+  
+    public $phone;
     
     public $roomId;
-
-    public $captainName;
 }

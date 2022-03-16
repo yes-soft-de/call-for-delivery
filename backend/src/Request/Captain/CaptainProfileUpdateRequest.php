@@ -12,8 +12,6 @@ class CaptainProfileUpdateRequest
 
     private array $location = [];
 
-    private string $city;
-
     private int $age;
 
     private string $car;

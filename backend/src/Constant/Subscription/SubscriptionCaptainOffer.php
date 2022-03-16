@@ -11,4 +11,6 @@ final class SubscriptionCaptainOffer
     const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = "inactive";
    
     const SUBSCRIBE_CAPTAIN_OFFER_FINISHED = "subscription captain offer finished";
+
+    const SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION = "You have subscription to the Captain offers.";
 }

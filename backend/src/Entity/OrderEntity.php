@@ -23,9 +23,6 @@ class OrderEntity
 
     #[ORM\Column(type: 'float', nullable: true)]
     private $orderCost;
-//this will related with captain entity when create captain Entity
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $captainId;
 
     #[ORM\Column(type: 'integer')]
     private $orderType;
@@ -51,6 +48,9 @@ class OrderEntity
 
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderChatRoomEntity::class)]
     private $orderChatRoomEntities;
+
+    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'orderEntity')]
+    private $captainId;
 
     public function __construct()
     {
@@ -94,18 +94,6 @@ class OrderEntity
     public function setOrderCost(?float $orderCost): self
     {
         $this->orderCost = $orderCost;
-
-        return $this;
-    }
-
-    public function getCaptainId(): ?int
-    {
-        return $this->captainId;
-    }
-
-    public function setCaptainId(?int $captainId): self
-    {
-        $this->captainId = $captainId;
 
         return $this;
     }
@@ -220,6 +208,18 @@ class OrderEntity
                 $orderChatRoomEntity->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCaptainId(): ?CaptainEntity
+    {
+        return $this->captainId;
+    }
+
+    public function setCaptainId(?CaptainEntity $captainId): self
+    {
+        $this->captainId = $captainId;
 
         return $this;
     }

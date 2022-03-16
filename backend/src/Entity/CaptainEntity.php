@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CaptainEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CaptainEntityRepository::class)]
@@ -66,6 +68,14 @@ class CaptainEntity
     
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $completeAccountStatus;
+
+    #[ORM\OneToMany(mappedBy: 'captainId', targetEntity: OrderEntity::class)]
+    private $orderEntity;
+
+    public function __construct()
+    {
+        $this->orderEntity = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -284,6 +294,36 @@ class CaptainEntity
     public function setCompleteAccountStatus(?string $completeAccountStatus): self
     {
         $this->completeAccountStatus = $completeAccountStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderEntity[]
+     */
+    public function getOrderEntity(): Collection
+    {
+        return $this->orderEntity;
+    }
+
+    public function addOrderEntity(OrderEntity $orderEntity): self
+    {
+        if (!$this->orderEntity->contains($orderEntity)) {
+            $this->orderEntity[] = $orderEntity;
+            $orderEntity->setCaptainId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderEntity(OrderEntity $orderEntity): self
+    {
+        if ($this->orderEntity->removeElement($orderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderEntity->getCaptainId() === $this) {
+                $orderEntity->setCaptainId(null);
+            }
+        }
 
         return $this;
     }

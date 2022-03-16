@@ -64,8 +64,13 @@ class SubscriptionCaptainOfferManager
         return $subscriptionCaptainOfferEntity;
     }
 
-    public function isSubscriptionForReady($storeOwnerId)
+    public function isThereSubscription($storeOwnerId): ?array
     {
-       return  $this->subscriptionManager->isSubscriptionForReady($storeOwnerId);
+       return  $this->subscriptionManager->isThereSubscription($storeOwnerId);
+    }
+
+    public function subscriptionCaptainOfferBySubscribeId(int $subscribeId): ?array
+    {
+       return  $this->subscriptionCaptainOfferEntityRepository->subscriptionCaptainOfferBySubscribeId($subscribeId);
     }
 }

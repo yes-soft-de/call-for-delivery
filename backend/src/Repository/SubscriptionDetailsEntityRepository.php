@@ -23,8 +23,10 @@ class SubscriptionDetailsEntityRepository extends ServiceEntityRepository
     public function getSubscriptionCurrentActive($storeOwner): ?array
     {
         return $this->createQueryBuilder('subscriptionDetailsEntity')
+     
+            ->select('IDENTITY( subscriptionDetailsEntity.lastSubscription) as lastSubscription')
 
-            ->select ('subscriptionDetailsEntity.id')
+            ->addSelect('subscriptionDetailsEntity.id')
          
             ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
             ->andWhere('subscriptionDetailsEntity.status = :status')

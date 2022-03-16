@@ -16,6 +16,9 @@ use App\Request\Subscription\SubscriptionCaptainOfferCreateRequest;
 use Symfony\Component\HttpFoundation\Response;
 use stdClass;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
+
 /**
  * fetched Captain Offer.
  * @Route("v1/subscription/subscriptioncaptainoffer/")
@@ -99,8 +102,14 @@ class SubscriptionCaptainOfferController extends BaseController
         $result = $this->subscriptionCaptainOfferService->createSubscriptionCaptainOffer($request);
        
         if (isset($result->subscriptionState)) {
-      
-            return $this->response($result, self::ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER);
+            if($result->subscriptionState === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND){
+
+                return $this->response($result, self::ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER);
+            }
+            if($result->subscriptionState === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION){
+
+                return $this->response($result, self::ERROR_YOU_HAVE_SUBSCRIPTION_);
+            }
         }
        
         return $this->response($result, self::CREATE);
