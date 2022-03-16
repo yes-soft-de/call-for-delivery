@@ -1,5 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_about/ui/screen/company_info/company_info_screen.dart';
+import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -199,10 +199,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             child: CustomNavTile(
                 icon: Icons.info,
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return CompanyInfoScreen(model: widget.company!);
-                  }));
+                  Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY);
                 },
                 title: S.current.companyInfo),
           )
