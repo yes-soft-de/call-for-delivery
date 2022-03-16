@@ -9,12 +9,16 @@ use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
+use App\Response\Order\OrderClosestResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
+use App\Service\Captain\CaptainService;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Constant\Captain\CaptainConstant;
+use App\Response\Captain\CaptainStatusResponse;
 
 class OrderService
 {
@@ -23,14 +27,16 @@ class OrderService
     private SubscriptionService $subscriptionService;
     private NotificationLocalService $notificationLocalService;
     private UploadFileHelperService $uploadFileHelperService;
+    private CaptainService $captainService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
        $this->subscriptionService = $subscriptionService;
        $this->notificationLocalService = $notificationLocalService;
        $this->uploadFileHelperService = $uploadFileHelperService;
+       $this->captainService = $captainService;
     }
 
     /**
@@ -105,5 +111,25 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function closestOrders($userId): array|CaptainStatusResponse
+    {
+       $captain = $this->captainService->captainIsActive($userId);
+       if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
+
+            return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
+        }
+
+        $response = [];
+
+        $orders = $this->orderManager->closestOrders();
+
+        foreach ($orders as $order) {
+
+            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
+        }
+
+       return $response;
     }
 }

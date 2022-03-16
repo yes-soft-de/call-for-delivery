@@ -100,4 +100,9 @@ class OrderManager
             return $orderEntity;
         }
     }
+
+    public function closestOrders(): ?array
+    {
+        return $this->orderRepository->closestOrders();
+    }
 }

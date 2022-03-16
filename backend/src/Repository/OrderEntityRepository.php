@@ -130,4 +130,18 @@ class OrderEntityRepository extends ServiceEntityRepository
         //dd($query);
         return $query->getQuery()->getResult();
     }
+
+    public function closestOrders(): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+           
+            ->andWhere('orderEntity.state = :pending ')
+
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
