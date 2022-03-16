@@ -1,3 +1,5 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
@@ -7,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
-import 'package:c4d/module_orders/model/order/accept_order.dart';
 import 'package:c4d/module_orders/model/order/action_state_model.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/order/order_logs.dart';
@@ -18,8 +19,6 @@ import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
-import 'package:c4d/module_orders/response/orders/accept_order_response.dart';
-import 'package:c4d/module_orders/response/orders/order_response.dart';
 import 'package:c4d/module_orders/response/orders_logs_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
@@ -58,48 +57,57 @@ class OrdersService {
   Future<OrderDetailsModel> getOrderDetails(int orderId) async {
     OrderDetailsResponse? _ordersResponse =
         await _ordersManager.getOrderDetails(orderId);
-    if (_ordersResponse == null)
+    if (_ordersResponse == null) {
       return OrderDetailsModel.Error(S.current.networkError);
-    if (_ordersResponse.statusCode != '200')
+    }
+    if (_ordersResponse.statusCode != '200') {
       return OrderDetailsModel.Error(
           StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    }
     if (_ordersResponse.data == null) return OrderDetailsModel.Empty();
     LatLng? myLocation = await DeepLinksService.defaultLocation();
     return OrderDetailsModel.Data(_ordersResponse, myLocation);
   }
 
-  Future<OrderModel> getNearbyOrders() async {
+  Future<DataModel> getNearbyOrders() async {
     OrdersResponse? response = await _ordersManager.getNearbyOrders();
     if (response == null) {
-      return OrderModel.error(S.current.networkError);
+      return DataModel.withError(S.current.networkError);
     }
     String code = response.statusCode.toString();
-    if (code != '200')
-      return OrderModel.error(StatusCodeHelper.getStatusCodeMessages(code));
-    if (response.data == null) return OrderModel.empty();
+    if (code != '200') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(code));
+    }
+    if (response.data == null) return DataModel.empty();
     LatLng? myLocation = await DeepLinksService.defaultLocation();
-    return OrderModel.withData(response.data ?? [], myLocation);
+    return OrderModel.withData(response);
   }
 
   Future<ActionStateModel> updateOrder(UpdateOrderRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateOrder(request);
-    if (actionResponse == null)
+    if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
-    if (actionResponse.statusCode != '204')
+    }
+    if (actionResponse.statusCode != '204') {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     await insertWatcher();
     return ActionStateModel.empty();
   }
-   Future<ActionStateModel> updateStoreOrderStatus(UpdateStoreOrderStatusRequest request) async {
+
+  Future<ActionStateModel> updateStoreOrderStatus(
+      UpdateStoreOrderStatusRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateStoreOrderStatus(request);
-    if (actionResponse == null)
+    if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
-    if (actionResponse.statusCode != '204')
+    }
+    if (actionResponse.statusCode != '204') {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     await insertWatcher();
     return ActionStateModel.empty();
   }
@@ -107,11 +115,13 @@ class OrdersService {
   Future<ActionStateModel> updateOrderBill(OrderInvoiceRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateBill(request);
-    if (actionResponse == null)
+    if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
-    if (actionResponse.statusCode != '204')
+    }
+    if (actionResponse.statusCode != '204') {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     await insertWatcher();
     return ActionStateModel.empty();
   }
@@ -120,11 +130,13 @@ class OrdersService {
       BilledCalculatedRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.billedForCompany(request);
-    if (actionResponse == null)
+    if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
-    if (actionResponse.statusCode != '204')
+    }
+    if (actionResponse.statusCode != '204') {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     await insertWatcher();
     return ActionStateModel.empty();
   }
@@ -150,17 +162,17 @@ class OrdersService {
     }
   }
 
-  Future<AcceptOrderModel> getCaptainOrders() async {
-    AcceptOrderResponse? response = await _ordersManager.getCaptainOrders();
+  Future<DataModel> getCaptainOrders() async {
+    OrdersResponse? response = await _ordersManager.getCaptainOrders();
     if (response == null) {
-      return AcceptOrderModel.error(S.current.networkError);
+      return DataModel.withError(S.current.networkError);
     }
     String code = response.statusCode.toString();
-    if (response.statusCode != '200')
-      return AcceptOrderModel.error(
-          StatusCodeHelper.getStatusCodeMessages(code));
-    if (response.data == null) return AcceptOrderModel.empty();
-    return AcceptOrderModel.withData(response);
+    if (response.statusCode != '200') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(code));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
   }
 
   Future<OrderLogsModel> getOrdersLogs() async {

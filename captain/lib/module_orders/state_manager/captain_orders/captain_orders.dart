@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_orders/model/order/accept_order.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -52,14 +55,14 @@ class CaptainOrdersListStateManager {
     Future.wait([
       _ordersService.getCaptainOrders(),
       _ordersService.getNearbyOrders(),
-    ]).then((List value) {
+    ]).then((List<DataModel> value) {
       if (value[0].hasError && value[1].hasError) {
         _stateSubject.add(ErrorState(screenState,
             onPressed: () {
               getMyOrders(screenState);
             },
             title: S.current.home,
-            errors: [value[0].error, value[1].error],
+            errors: [value[0].error!, value[1].error!],
             tapApp: () {
               screenState.advancedController.showDrawer();
             },

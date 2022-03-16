@@ -1,10 +1,11 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/response/orders/accept_order_response.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 
-class AcceptOrderModel {
+class AcceptOrderModel extends DataModel {
   late int id;
   late String orderNumber;
   late DateTime deliveryDate;
@@ -14,6 +15,8 @@ class AcceptOrderModel {
   LatLng? _currentLocation;
   late int orderType;
   late OrderStatusEnum state;
+  String? error;
+  bool? empty;
   AcceptOrderModel(
       {required this.id,
       this.storeName,
@@ -22,17 +25,12 @@ class AcceptOrderModel {
       this.storeId,
       this.details,
       required this.orderType,
-      required this.state});
+      required this.state,
+      this.empty,
+      this.error
+      });
 
-  String? _error;
-  bool _empty = false;
   final List<AcceptOrderModel> _models = [];
-
-  AcceptOrderModel.error(this._error);
-
-  AcceptOrderModel.empty() {
-    _empty = true;
-  }
 
   AcceptOrderModel.withData(AcceptOrderResponse response,
       [LatLng? initLocation]) {
@@ -52,16 +50,9 @@ class AcceptOrderModel {
       ));
     }
   }
-
-  bool get hasError => _error != null;
-
-  bool get empty => _empty;
-
   bool get hasData => _models.isNotEmpty;
 
   List<AcceptOrderModel> get data => _models;
-
-  String get error => _error ?? '';
 
   LatLng? get currentLocation => _currentLocation;
 }

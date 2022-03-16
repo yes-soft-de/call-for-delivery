@@ -1,6 +1,5 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
@@ -14,14 +13,14 @@ import 'package:c4d/utils/components/progresive_image.dart';
 class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
   final ProfileModel profileModel;
-  MenuScreen(this.screenState, this.profileModel);
+  const MenuScreen(this.screenState, this.profileModel);
 
   @override
   Widget build(BuildContext context) {
     return ListTileTheme(
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        child: Container(
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -59,22 +58,22 @@ class MenuScreen extends StatelessWidget {
                   Navigator.of(context)
                       .pushNamed(ProfileRoutes.EDIT_ACTIVITY_SCREEN);
                 },
-                leading: Icon(Icons.account_circle_rounded),
-                title: Text('${S.of(context).profile}'),
+                leading: const Icon(Icons.account_circle_rounded),
+                title: Text(S.of(context).profile),
               ),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE);
                 },
-                leading: Icon(Icons.account_balance_rounded),
-                title: Text('${S.of(context).myBalance}'),
+                leading: const Icon(Icons.account_balance_rounded),
+                title: Text(S.of(context).myBalance),
               ),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pushNamed(OrdersRoutes.ORDER_LOGS);
                 },
-                leading: Icon(Icons.history),
-                title: Text('${S.of(context).orderLog}'),
+                leading: const Icon(Icons.history),
+                title: Text(S.of(context).orderLog),
               ),
               ListTile(
                 onTap: () {
@@ -86,24 +85,24 @@ class MenuScreen extends StatelessWidget {
                   }
                   Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
                 },
-                leading: Icon(Icons.settings),
-                title: Text('${S.of(context).settings}'),
+                leading: const Icon(Icons.settings),
+                title: Text(S.of(context).settings),
               ),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pushNamed(SettingRoutes.TERMS);
                 },
-                leading: Icon(Icons.supervised_user_circle),
-                title: Text('${S.of(context).termsOfService}'),
+                leading: const Icon(Icons.supervised_user_circle),
+                title: Text(S.of(context).termsOfService),
               ),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pushNamed(SettingRoutes.PRIVECY);
                 },
-                leading: Icon(Icons.privacy_tip),
-                title: Text('${S.of(context).privacyPolicy}'),
+                leading: const Icon(Icons.privacy_tip),
+                title: Text(S.of(context).privacyPolicy),
               ),
-              Spacer(),
+              const Spacer(),
               DefaultTextStyle(
                 style: TextStyle(
                     fontSize: 12,
@@ -113,7 +112,7 @@ class MenuScreen extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(
                     vertical: 16.0,
                   ),
-                  child: Text('Yes Soft | Mandoob Captain'),
+                  child: const Text('Yes Soft | C4D Captain'),
                 ),
               ),
             ],

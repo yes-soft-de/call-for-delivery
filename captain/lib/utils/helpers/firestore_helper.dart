@@ -6,7 +6,7 @@ class FireStoreHelper {
   Stream? onInsertChangeWatcher() {
     try {
       return FirebaseFirestore.instance
-          .collection('twaslna_action')
+          .collection('c4d_actions')
           .doc('new_action')
           .collection('action_history')
           .snapshots();
@@ -18,7 +18,7 @@ class FireStoreHelper {
   Future<void> insertWatcher() async {
     try {
       await FirebaseFirestore.instance
-          .collection('twaslna_action')
+          .collection('c4d_actions')
           .doc('new_action')
           .collection('action_history')
           .add({'date': DateTime.now().toUtc().toIso8601String()});

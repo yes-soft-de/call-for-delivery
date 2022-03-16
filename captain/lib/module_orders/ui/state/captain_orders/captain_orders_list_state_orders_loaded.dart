@@ -1,4 +1,6 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:simple_moment/simple_moment.dart';
@@ -14,8 +16,8 @@ import 'package:c4d/utils/components/error_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class CaptainOrdersListStateOrdersLoaded extends States {
-  final AcceptOrderModel myOrders;
-  final OrderModel nearbyOrders;
+  final DataModel myOrders;
+  final DataModel nearbyOrders;
   final CaptainOrdersScreenState screenState;
   CaptainOrdersListStateOrdersLoaded(
       this.screenState, this.myOrders, this.nearbyOrders)
@@ -53,8 +55,8 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     return SnakeNavigationBar.color(
       behaviour: SnakeBarBehaviour.pinned,
       snakeShape: SnakeShape.indicator,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: const Radius.circular(10))),
       snakeViewColor: Theme.of(context).primaryColor,
       selectedItemColor: SnakeShape.indicator == SnakeShape.indicator
           ? Theme.of(context).primaryColor
@@ -69,15 +71,15 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       onTap: (index) {
         screenState.currentPage = index;
         screenState.ordersPageController.animateToPage(screenState.currentPage,
-            duration: Duration(milliseconds: 750), curve: Curves.linear);
+            duration: const Duration(milliseconds: 750), curve: Curves.linear);
       },
       items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: '${S.of(context).currentOrders}'),
+            icon: const Icon(Icons.directions_car),
+            label: S.of(context).currentOrders),
         BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: '${S.of(context).nearbyOrders}'),
+            icon: const Icon(Icons.map_outlined),
+            label: S.of(context).nearbyOrders),
       ],
     );
   }
@@ -91,7 +93,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           screenState.getMyOrders();
         },
       );
-    } else if (myOrders.empty) {
+    } else if (myOrders.isEmpty) {
       return EmptyStateWidget(
         empty: S.current.homeDataEmpty,
         onRefresh: () {
@@ -99,15 +101,16 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         },
       );
     } else {
-      myOrders.data.forEach((element) {
+      var acceptedOrders = myOrders as OrderModel;
+      acceptedOrders.data.forEach((element) {
         uiList.add(OrderCard(
-          orderId: element.orderNumber,
-          orderStatus: element.state,
-          orderDate: timeago.format(element.deliveryDate,
-              locale: Localizations.localeOf(context).languageCode),
-          orderType: element.orderType,
-          acceptedOrder: true,
-        ));
+        createdDate: element.createdDate,
+        deliveryDate: element.deliveryDate,
+        note: element.note,
+        orderCost: element.orderCost.toStringAsFixed(1),
+        orderNumber: element.id.toString(),
+        orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+      ));
       });
       uiList.add(Container(
         height: 75,
@@ -129,7 +132,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         },
       );
     }
-    if (nearbyOrders.empty) {
+    if (nearbyOrders.isEmpty) {
       return EmptyStateWidget(
         empty: S.current.homeDataEmpty,
         onRefresh: () {
@@ -137,22 +140,20 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         },
       );
     }
-    List<OrderModel> orders =
-        sortLocations(nearbyOrders.data, nearbyOrders.currentLocation);
+    var ordersData = nearbyOrders as OrderModel;
+    // List<OrderModel> orders =
+    //     sortLocations(ordersData.data, ordersData.currentLocation);
     var now = DateTime.now();
     var moment = Moment.now();
     var uiList = <Widget>[];
-    orders.forEach((element) {
-      var orderDate = now.isBefore(element.deliveryDate)
-          ? moment.from(element.deliveryDate)
-          : timeago.format(element.deliveryDate);
+    ordersData.data.forEach((element) {
       uiList.add(OrderCard(
-        orderId: element.orderNumber,
-        orderDestination: element.storeDistance,
-        orderDate: orderDate.toString(),
-        orderType: element.orderType,
-        storeName: element.storeName,
-        branchName: element.branchName,
+        createdDate: element.createdDate,
+        deliveryDate: element.deliveryDate,
+        note: element.note,
+        orderCost: element.orderCost.toStringAsFixed(1),
+        orderNumber: element.id.toString(),
+        orderStatus: StatusHelper.getOrderStatusMessages(element.state),
       ));
     });
     uiList.add(Container(
@@ -165,21 +166,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         });
   }
 
-  List<OrderModel> sortLocations(List<OrderModel> order, var currentLocation) {
-    if (currentLocation == null) {
-      return order;
-    }
-    var sorted = order;
-    sorted.sort((a, b) {
-      try {
-        double first = a.storeDistance ?? 0;
-        double second = b.storeDistance ?? 0;
-        return first.compareTo(second);
-      } catch (e) {
-        print(e.toString());
-        return 1;
-      }
-    });
-    return sorted;
-  }
+  // List<OrderModel> sortLocations(List<OrderModel> order, var currentLocation) {
+  //   if (currentLocation == null) {
+  //     return order;
+  //   }
+  //   var sorted = order;
+  //   sorted.sort((a, b) {
+  //     try {
+  //       double first = a.storeDistance ?? 0;
+  //       double second = b.storeDistance ?? 0;
+  //       return first.compareTo(second);
+  //     } catch (e) {
+  //       print(e.toString());
+  //       return 1;
+  //     }
+  //   });
+  //   return sorted;
+  // }
 }

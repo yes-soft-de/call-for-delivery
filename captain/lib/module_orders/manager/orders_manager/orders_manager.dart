@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/billed_calculated.dart';
@@ -8,7 +9,6 @@ import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
 import 'package:c4d/module_orders/response/orders/accept_order_response.dart';
-import 'package:c4d/module_orders/response/orders/order_response.dart';
 import 'package:c4d/module_orders/response/orders_logs_response.dart';
 
 @injectable
@@ -26,7 +26,7 @@ class OrdersManager {
 
   Future<OrdersLogsResponse?> getOrdersLogs() => _repository.getOrdersLogs();
 
-  Future<AcceptOrderResponse?> getCaptainOrders() =>
+  Future<OrdersResponse?> getCaptainOrders() =>
       _repository.getCaptainOrders();
 
   Future<CompanyInfoResponse?> getCompanyInfo() => _repository.getCompanyInfo();
