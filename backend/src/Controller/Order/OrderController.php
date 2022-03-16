@@ -354,4 +354,49 @@ class OrderController extends BaseController
         
         return $this->response($response, self::FETCH);
     }
+    
+    /**
+     * captain: Get the orders received by the captain.
+     * @Route("acceptedorder", name="getAcceptedOrderByCaptainId", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return captain orders.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  ),
+     *            )
+     *       )
+     *  )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function acceptedOrderByCaptainId(): JsonResponse
+    {
+        $result = $this->orderService->acceptedOrderByCaptainId($this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
 }

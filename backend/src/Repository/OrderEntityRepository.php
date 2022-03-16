@@ -144,4 +144,20 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function acceptedOrderByCaptainId($captainId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+           
+            ->andWhere('orderEntity.state != :delivered')
+            ->andWhere('orderEntity.captainId = :captainId')
+
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -132,4 +132,18 @@ class OrderService
 
        return $response;
     }
+    
+    public function acceptedOrderByCaptainId($captainId): ?array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->acceptedOrderByCaptainId($captainId);
+
+        foreach ($orders as $order) {
+            
+            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
+        }
+
+        return $response;
+    }
 }

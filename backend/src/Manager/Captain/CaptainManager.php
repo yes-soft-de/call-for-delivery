@@ -154,4 +154,9 @@ class CaptainManager
     {
         return $this->captainEntityRepository->captainIsActive($captainId);
     }
+    
+    public function getCaptainProfileByUserId($captainId): ?CaptainEntity
+    {
+        return $this->captainEntityRepository->findOneBy(["captainId" => $captainId]);
+    }
 }
