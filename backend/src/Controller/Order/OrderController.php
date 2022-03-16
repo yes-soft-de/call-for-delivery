@@ -401,7 +401,7 @@ class OrderController extends BaseController
     }
     
     /** captain: Get order details.
-     * @Route("orderdetails/{id}", name="getSpecificOrderForCaptain", methods={"GET"})
+     * @Route("captainorder/{id}", name="getSpecificOrderForCaptain", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
      *
