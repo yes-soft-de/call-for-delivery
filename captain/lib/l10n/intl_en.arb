@@ -599,7 +599,8 @@
     "unavailable": "Unavailable",
     "calculating": "Calculating",
     "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
-    "confirmationCaptainOffers": "Are sure about subscribe with this offer"
+    "confirmationCaptainOffers": "Are sure about subscribe with this offer",
+    "captainName": "Captain Name"
 
 
 

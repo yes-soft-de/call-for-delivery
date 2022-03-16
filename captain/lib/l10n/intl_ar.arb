@@ -600,7 +600,8 @@
     "unavailable": "غير معروفة",
     "calculating": "جاري الحساب",
     "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح",
-    "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"
+    "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض",
+    "captainName": "اسم الكابتن"
 
 
 

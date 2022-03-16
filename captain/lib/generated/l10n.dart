@@ -6019,6 +6019,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Name`
+  String get captainName {
+    return Intl.message(
+      'Captain Name',
+      name: 'captainName',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

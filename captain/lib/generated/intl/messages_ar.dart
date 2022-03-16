@@ -126,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في المحل"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
+        "captainName": MessageLookupByLibrary.simpleMessage("اسم الكابتن"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainPackageExtra":
@@ -584,7 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneNumberLong": MessageLookupByLibrary.simpleMessage(
             "رقم الهاتف غير صالح بسبب تعديه ل٩ محارف"),
         "phoneNumberThatShowsForCaptain":
-            MessageLookupByLibrary.simpleMessage("الذي سيظهر للكابتن"),
+            MessageLookupByLibrary.simpleMessage("الذي سيظهر للمتجر"),
         "phoneNumbertooShort":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
