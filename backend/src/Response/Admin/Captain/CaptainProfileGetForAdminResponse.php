@@ -4,6 +4,8 @@ namespace App\Response\Admin\Captain;
 
 class CaptainProfileGetForAdminResponse
 {
+    public int $id;
+
     public int $captainId;
 
     /**
