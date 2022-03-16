@@ -12,8 +12,6 @@ class CaptainProfileResponse
 
     public null|array $location = [];
 
-    public null|string $city;
-
     public null|int $age;
 
     public null|string $car;
