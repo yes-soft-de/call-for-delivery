@@ -21,7 +21,7 @@ class LoginStateSuccess extends LoginState {
           onPressed: () {
             //screen.moveToNext(inited);
           },
-          child: Text(S.of(context).welcomeTomandob_moshtarayat),
+          child: Text(S.of(context).welcomeToOurApp),
         )
       ],
     );

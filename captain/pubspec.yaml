@@ -113,6 +113,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   cross_file: ^0.3.2
   image_network: ^2.3.0
+  the_country_number: ^0.9.2+7
 
 
 dev_dependencies:
@@ -130,6 +131,7 @@ dev_dependencies:
   # Feature Descovery
   feature_discovery: ^0.14.0
   lehttp_overrides: ^1.0.2
+  flutter_lints: ^1.0.4
 
 flutter_icons:
   android: "launcher_icon"
@@ -166,7 +168,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
   fonts:
+    - family: Dubai
+      fonts:
+        - asset: assets/fonts/Dubai-Regular.woff
+        - asset: assets/fonts/Dubai-Bold.woff
+
     - family: Custom_icon
       fonts:
         - asset: assets/fonts/Custom_icon.ttf

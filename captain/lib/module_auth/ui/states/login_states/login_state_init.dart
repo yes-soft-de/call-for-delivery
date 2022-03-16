@@ -1,4 +1,3 @@
-import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
@@ -13,6 +12,7 @@ import 'package:c4d/utils/images/images.dart';
 
 class LoginStateInit extends LoginState {
   LoginStateInit(LoginScreenState screen, {String? error}) : super(screen) {
+    countryController.text = '966';
     if (error != null) {
       CustomFlushBarHelper.createError(
               title: S.current.warnning, message: error)
@@ -20,6 +20,7 @@ class LoginStateInit extends LoginState {
     }
   }
   TextEditingController usernameController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
   @override
@@ -32,78 +33,127 @@ class LoginStateInit extends LoginState {
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             children: [
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0, top: 16),
-                      child: Image.asset(
-                        ImageAsset.LOGO,
-                        width: 150,
-                        height: 150,
-                      ),
-                    )
-                  : Container(),
+              Visibility(
+                  visible: MediaQuery.of(context).viewInsets.bottom == 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 32.0, top: 16),
+                    child: Image.asset(
+                      ImageAsset.LOGO,
+                      width: 150,
+                      height: 150,
+                    ),
+                  )),
+              // phone number
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
                 child: Text(
                   S.of(context).phoneNumber,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.phone),
-                  ),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                      sufIcon: const Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: Text(CountryCode.COUNTRY_CODE_KSA),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16, bottom: 26.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
                       ),
-                      controller: usernameController,
-                      phone: true,
-                      contentPadding:
-                          const EdgeInsets.only(top: 15, right: 8.0, left: 8.0),
-                      hintText: '5xxxxxxxx'),
-                ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.phone,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomLoginFormField(
+                        controller: usernameController,
+                        phone: true,
+                        hintText: '5xxxxxxxx'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 28.0),
+                    child: SizedBox(
+                      width: 125,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomLoginFormField(
+                          halfField: true,
+                          contentPadding:
+                              EdgeInsets.only(left: 8.0, right: 8.0),
+                          controller: countryController,
+                          numbers: true,
+                          phoneHint: false,
+                          maxLength: 3,
+                          hintText: S.current.countryCode,
+                          sufIcon: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 4.0, left: 4.0),
+                            child: Container(
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor),
+                              child: Center(
+                                child: Text(
+                                  '+',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .button
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              // password
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 85, right: 85, top: 8),
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Text(
                   S.of(context).password,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.lock,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.lock),
+                  Expanded(
+                    child: CustomLoginFormField(
+                      last: true,
+                      controller: passwordController,
+                      password: true,
+                      hintText: S.of(context).password,
+                    ),
                   ),
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                    last: true,
-                    controller: passwordController,
-                    password: true,
-                    contentPadding: const EdgeInsets.fromLTRB(16, 13, 16, 0),
-                    hintText: S.of(context).password,
-                  ),
-                ),
+                  SizedBox(
+                    width: 8.0,
+                  )
+                ],
               ),
               Container(
                 height: 16,
@@ -120,7 +170,8 @@ class LoginStateInit extends LoginState {
                                 onPressed: () {
                                   Navigator.pop(context);
                                   screen.restPass(ResetPassRequest(
-                                      userID: usernameController.text));
+                                      userID: countryController.text +
+                                          usernameController.text));
                                 });
                           });
                     } else {
@@ -142,22 +193,26 @@ class LoginStateInit extends LoginState {
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: AuthButtons(
-                firstButtonTitle: S.of(context).login,
-                secondButtonTitle: S.of(context).register,
-                loading: screen.loadingSnapshot.connectionState ==
-                    ConnectionState.waiting,
-                secondButtonTab: () => Navigator.of(context)
-                    .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN,
-                        arguments: screen.args),
-                firstButtonTab: () {
-                  if (_loginKey.currentState!.validate()) {
-                    screen.loginClient(
-                        usernameController.text, passwordController.text);
-                  }
-                }),
+          Visibility(
+            visible: MediaQuery.of(context).viewInsets.bottom == 0,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: AuthButtons(
+                  firstButtonTitle: S.of(context).login,
+                  secondButtonTitle: S.of(context).register,
+                  loading: screen.loadingSnapshot.connectionState ==
+                      ConnectionState.waiting,
+                  secondButtonTab: () => Navigator.of(context)
+                      .pushReplacementNamed(AuthorizationRoutes.REGISTER_SCREEN,
+                          arguments: screen.args),
+                  firstButtonTab: () {
+                    if (_loginKey.currentState!.validate()) {
+                      screen.loginClient(
+                          countryController.text + usernameController.text,
+                          passwordController.text);
+                    }
+                  }),
+            ),
           ),
         ],
       ),

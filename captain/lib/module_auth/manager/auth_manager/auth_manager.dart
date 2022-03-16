@@ -1,3 +1,4 @@
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/repository/auth/auth_repository.dart';
 import 'package:c4d/module_auth/request/forget_password_request/reset_password_request.dart';
@@ -39,4 +40,6 @@ class AuthManager {
   Future<RegisterResponse?> verifyResetPassCodeRequest(
           VerifyResetPassCodeRequest request) =>
       _authRepository.verifyResetPassCodeRequest(request);
+
+  Future<ActionResponse?> accountStatus() => _authRepository.accountStatus();
 }

@@ -190,7 +190,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
           }
         },
         child: Scaffold(
-            appBar: CustomMandoobAppBar.appBar(context,
+            appBar: CustomC4dAppBar.appBar(context,
                 title: S.current.chatRoom, onTap: () {
               int remove = 0;
               if (newMessagesWidgetExist()) {

@@ -14,7 +14,7 @@ class VerifyCodeRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userID'] = CountryCode.COUNTRY_CODE_KSA + userID;
+    data['userID'] = userID;
     if (code != null) {
       data['code'] = code;
     }

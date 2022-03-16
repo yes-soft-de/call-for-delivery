@@ -7,6 +7,9 @@ import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
+import 'package:c4d/module_init/init_routes.dart';
+import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -106,11 +109,27 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                     height: 50,
                     child: ElevatedButton(
                         onPressed: () {
-                          screen.verifyClient(VerifyCodeRequest(
-                              userID: getIt<AuthService>().username,
-                              code: codeController.text,
-                              password:
-                                  getIt<AuthPrefsHelper>().getPassword()));
+                          try {
+                            getIt<AuthService>()
+                                .loginApi(
+                                    getIt<AuthService>().username,
+                                    getIt<AuthPrefsHelper>().getPassword() ??
+                                        '')
+                                .then((value) {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  InitAccountRoutes.INIT_ACCOUNT_SCREEN, (route) => false);
+                            });
+                          } catch (e) {
+                            getIt<AuthService>().logout();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                SplashRoutes.SPLASH_SCREEN, (route) => false);
+                          }
+
+                          // screen.verifyClient(VerifyCodeRequest(
+                          //     userID: getIt<AuthService>().username,
+                          //     code: codeController.text,
+                          //     password:
+                          //         getIt<AuthPrefsHelper>().getPassword()));
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
