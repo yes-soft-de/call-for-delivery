@@ -8,6 +8,8 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\CaptainEntity;
 use App\Repository\CaptainEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
+use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Request\Captain\CaptainProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -149,14 +151,50 @@ class CaptainManager
 
         return true;
     }
-    
-    public function captainIsActive($captainId): ?array
+
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
     {
-        return $this->captainEntityRepository->captainIsActive($captainId);
+        return $this->captainEntityRepository->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
     }
-    
-    public function getCaptainProfileByUserId($captainId): ?CaptainEntity
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
-        return $this->captainEntityRepository->findOneBy(["captainId" => $captainId]);
+        return $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+    }
+
+    public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity
+    {
+        $captainProfileEntity = $this->captainEntityRepository->find($request->getId());
+
+        if (! $captainProfileEntity) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileStatusUpdateByAdminRequest::class, CaptainEntity::class,
+            $request, $captainProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $captainProfileEntity;
+    }
+
+    public function updateCaptainProfileByAdmin(CaptainProfileUpdateByAdminRequest $request): string|CaptainEntity
+    {
+        $captainProfileEntity = $this->captainEntityRepository->find($request->getId());
+
+        if (! $captainProfileEntity) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileUpdateByAdminRequest::class, CaptainEntity::class,
+            $request, $captainProfileEntity);
+
+        if ($captainProfileEntity->getCompleteAccountStatus() === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+            $captainProfileEntity->setCompleteAccountStatus(CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED);
+        }
+
+        $this->entityManager->flush();
+
+        return $captainProfileEntity;
     }
 }

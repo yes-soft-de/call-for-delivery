@@ -23,4 +23,6 @@ final class CaptainConstant
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 
     const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
+
+    const CAPTAIN_PROFILE_NOT_EXIST = "captainProfileNotExist";
 }

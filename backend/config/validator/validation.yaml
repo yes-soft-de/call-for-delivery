@@ -187,18 +187,16 @@ App\Request\Admin\CaptainOffer\CaptainOfferStatusUpdateRequest:
         status:
             - NotBlank: ~
 
-App\Request\User\UserRegisterRequest:
+App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest:
     properties:
-        userId:
+        id:
             - NotBlank: ~
-        password:
+        status:
             - NotBlank: ~
 
-App\Request\Captain\CaptainProfileUpdateRequest:
+App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest:
     properties:
+        id:
+            - NotBlank: ~
         captainName:
-            - NotBlank: ~
-        bankName:
-            - NotBlank: ~
-        phone:
             - NotBlank: ~
