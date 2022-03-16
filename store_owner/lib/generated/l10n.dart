@@ -5459,6 +5459,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You already subscribed with captain offer , You can subscribe again when your subscription expired`
+  String get youSubscribedWithOffer {
+    return Intl.message(
+      'You already subscribed with captain offer , You can subscribe again when your subscription expired',
+      name: 'youSubscribedWithOffer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

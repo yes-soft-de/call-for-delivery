@@ -829,6 +829,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
+            "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
         "yourRequestSent":
