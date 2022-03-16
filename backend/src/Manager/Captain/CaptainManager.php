@@ -149,4 +149,14 @@ class CaptainManager
 
         return true;
     }
+    
+    public function captainIsActive($captainId): ?array
+    {
+        return $this->captainEntityRepository->captainIsActive($captainId);
+    }
+    
+    public function getCaptainProfileByUserId($captainId): ?CaptainEntity
+    {
+        return $this->captainEntityRepository->findOneBy(["captainId" => $captainId]);
+    }
 }

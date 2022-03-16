@@ -60,4 +60,18 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function captainIsActive($captainId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+
+            ->select('captainEntity.status')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use App\Constant\Captain\CaptainConstant;
 
 /**
  * Create and fetch order.
@@ -289,6 +290,172 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderFilterRequest::class, (object)$data);
 
         $result = $this->orderService->filterStoreOrders($request, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * captain: Get pending orders for captain.
+     * @Route("closestorders",   name="GetPendingOrdersForCaptain", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN") 
+     * @return JsonResponse
+     * *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return pending orders.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  ),
+     *            )
+     *       )
+     *  )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return captain inactive.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9100"),
+     *          @OA\Property(type="string", property="msg", description="error captain inactive Successfully."),
+     *          @OA\Property(type="object", property="Data"),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function closestOrders(): JsonResponse
+    {
+        $response = $this->orderService->closestOrders($this->getUserId());
+        if (isset($response->status)) {
+         
+            return $this->response($response, self::ERROR_CAPTAIN_INACTIVE);
+        }
+        
+        return $this->response($response, self::FETCH);
+    }
+    
+    /**
+     * captain: Get the orders received by the captain.
+     * @Route("acceptedorder", name="getAcceptedOrderByCaptainId", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return captain orders.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  ),
+     *            )
+     *       )
+     *  )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function acceptedOrderByCaptainId(): JsonResponse
+    {
+        $result = $this->orderService->acceptedOrderByCaptainId($this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
+    
+    /** captain: Get order details.
+     * @Route("captainorder/{id}", name="getSpecificOrderForCaptain", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="integer", property="storeOrderDetailsId"),
+     *                  @OA\Property(type="object", property="destination"),
+     *                  @OA\Property(type="string", property="recipientPhone"),
+     *                  @OA\Property(type="string", property="detail"),
+     *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
+     *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="string", property="phone"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="object", property="images",
+     *                          @OA\Property(type="string", property="imageURL"),
+     *                          @OA\Property(type="string", property="image"),
+     *                          @OA\Property(type="string", property="baseURL"),
+     *                      ),
+     *              ),
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificOrderForCaptain($id): JsonResponse
+    {
+        $result = $this->orderService->getSpecificOrderForCaptain($id);
 
         return $this->response($result, self::FETCH);
     }

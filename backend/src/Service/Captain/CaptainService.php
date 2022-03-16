@@ -9,6 +9,7 @@ use App\Entity\CaptainEntity;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Captain\CaptainProfileUpdateRequest;
 use App\Response\Captain\CaptainProfileResponse;
+use App\Response\Captain\CaptainStatusResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
@@ -67,4 +68,12 @@ class CaptainService
     {
         return $this->captainManager->captainProfileCompleteAccountStatusUpdate($request);
     }
+ 
+    public function captainIsActive($captainId): ?CaptainStatusResponse
+    {
+        $captainStatus = $this->captainManager->captainIsActive($captainId);
+
+        return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
+     }
+
 }

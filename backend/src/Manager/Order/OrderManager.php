@@ -14,6 +14,7 @@ use App\Request\Order\OrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Order\StoreOrderDetailsManager;
+use App\Manager\Captain\CaptainManager;
 use DateTime;
 
 class OrderManager
@@ -23,15 +24,16 @@ class OrderManager
    private OrderEntityRepository $orderRepository;
    private StoreOwnerProfileManager $storeOwnerProfileManager;
    private StoreOrderDetailsManager $storeOrderDetailsManager;
+   private CaptainManager $captainManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
       $this->orderRepository = $orderRepository;
       $this->storeOwnerProfileManager = $storeOwnerProfileManager;
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
-
+      $this->captainManager = $captainManager;
     }
     
     /**
@@ -99,5 +101,22 @@ class OrderManager
 
             return $orderEntity;
         }
+    }
+
+    public function closestOrders(): ?array
+    {
+        return $this->orderRepository->closestOrders();
+    }
+    
+    public function acceptedOrderByCaptainId($userId): ?array
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId());
+    }
+    
+    public function getSpecificOrderForCaptain($id): ?array
+    {
+        return $this->orderRepository->getSpecificOrderForCaptain($id);
     }
 }
