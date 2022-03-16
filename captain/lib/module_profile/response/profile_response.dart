@@ -52,7 +52,7 @@ class ProfileResponseModel {
   String? imageURL;
   String? baseURL;
   String? phone;
-  String? isOnline;
+  bool? isOnline;
   String? bankName;
   String? bankAccountNumber;
   String? stcPay;
@@ -98,9 +98,9 @@ class ProfileResponseModel {
     location = json['location'];
     age = json['age'];
     car = json['car'];
-    drivingLicence = json['drivingLicence'] != null
-        ? ProductImage.fromJson(json['drivingLicence'])
-        : null;
+    // drivingLicence = json['drivingLicence'] != null
+    //     ? ProductImage.fromJson(json['drivingLicence'])
+    //     : null;
     drivingLicenceURL = json['drivingLicenceURL'];
     salary = json['salary'];
     status = json['status'];
@@ -115,9 +115,9 @@ class ProfileResponseModel {
     bounce = json['bounce'];
     totalBounce = json['totalBounce'];
     roomID = json['roomID'];
-    image = json['image'] != null
-        ? ProductImage.fromJson(json['image'])
-        : null;
+    // image = json['image'] != null
+    //     ? ProductImage.fromJson(json['image'])
+    //     : null;
     imageURL = json['imageURL'];
     baseURL = json['baseURL'];
     phone = json['phone'];
@@ -127,12 +127,12 @@ class ProfileResponseModel {
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
     newMessageStatus = json['newMessageStatus'];
-    mechanicLicense = json['mechanicLicense'] != null
-        ? ProductImage.fromJson(json['mechanicLicense'])
-        : null;
-    identity = json['identity'] != null
-        ? ProductImage.fromJson(json['identity'])
-        : null;
+    // mechanicLicense = json['mechanicLicense'] != null
+    //     ? ProductImage.fromJson(json['mechanicLicense'])
+    //     : null;
+    // identity = json['identity'] != null
+    //     ? ProductImage.fromJson(json['identity'])
+    //     : null;
   }
 
   Map<String, dynamic> toJson() {

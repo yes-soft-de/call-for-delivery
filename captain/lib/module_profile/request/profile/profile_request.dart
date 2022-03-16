@@ -12,7 +12,7 @@ class ProfileRequest {
   String? bankName;
   String? drivingLicence;
   String? state;
-  String? isOnline;
+  bool? isOnline;
   String? mechanicLicense;
   String? identity;
   bool? canGoBack;
@@ -30,7 +30,7 @@ class ProfileRequest {
       this.bankName,
       this.bankAccountNumber,
       this.state = 'active',
-      this.isOnline = 'active',
+      this.isOnline = true,
       this.identity,
       this.mechanicLicense,
       required this.canGoBack});

@@ -34,7 +34,7 @@ class ProfileRepository {
       ProfileRequest profileRequest) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-      Urls.CAPTAIN_PROFILE_API,
+      Urls.CREATE_CAPTAIN_PROFILE,
       profileRequest.toJSON(),
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );

@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -81,7 +82,7 @@ class MenuScreen extends StatelessWidget {
                   if (screenState.currentState
                       is CaptainOrdersListStateOrdersLoaded) {
                     screenState.currentState =
-                        CaptainOrdersListStateLoading(screenState);
+                        LoadingState(screenState);
                     screenState.getMyOrders();
                   }
                   Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);

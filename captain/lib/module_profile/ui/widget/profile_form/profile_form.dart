@@ -61,7 +61,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
           widget.profileRequest?.bankAccountNumber ?? '';
       _bankNameController.text = widget.profileRequest?.bankName ?? '';
       _carController.text = widget.profileRequest?.car ?? '';
-      captainState = widget.profileRequest?.isOnline;
+      captainState = widget.profileRequest?.isOnline == true ? 'active' : 'inactive';
       _ageController.text = widget.profileRequest?.age ?? '';
     }
   }
@@ -137,7 +137,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     stcPay: _stcPayController.text,
                     bankNumber: _bankAccountNumberController.text,
                     bankName: _bankNameController.text,
-                    isOnline: captainState);
+                    isOnline: captainState == 'active' ? true : false);
                 if (S.current.identity == imageType) {
                   profile?.identity = value.path;
                   widget.onImageUpload(profile!, 'identity', value.path);
@@ -216,7 +216,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 mechanicLicense: widget.profileRequest?.mechanicLicense,
                 drivingLicence: widget.profileRequest?.drivingLicence,
                 identity: widget.profileRequest?.identity,
-                isOnline: captainState);
+                isOnline: captainState == 'active' ? true : false);
             widget.onProfileSaved(profile);
           } else {
             CustomFlushBarHelper.createError(
@@ -249,7 +249,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                               widget.profileRequest?.mechanicLicense,
                           drivingLicence: widget.profileRequest?.drivingLicence,
                           identity: widget.profileRequest?.identity,
-                          isOnline: captainState);
+                          isOnline: captainState == 'active' ? true : false);
                       widget.onImageUpload(profile!, null, null);
                     }
                   });

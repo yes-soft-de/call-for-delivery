@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:injectable/injectable.dart';
@@ -6,22 +8,20 @@ import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_navigation/menu.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
-import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state.dart';
-import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state_loading.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 
 @injectable
 class CaptainOrdersScreen extends StatefulWidget {
   final CaptainOrdersListStateManager _stateManager;
 
-  CaptainOrdersScreen(this._stateManager);
+  const CaptainOrdersScreen(this._stateManager);
 
   @override
   State<StatefulWidget> createState() => CaptainOrdersScreenState();
 }
 
 class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
-  CaptainOrdersListState? currentState;
+  States? currentState;
   ProfileModel? _currentProfile;
   CompanyInfoResponse? _companyInfo;
   int currentPage = 0;
@@ -62,7 +62,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
-    currentState = CaptainOrdersListStateLoading(this);
+    currentState = LoadingState(this);
     widget._stateManager.getProfile(this);
     //widget._stateManager.companyInfo();
     widget._stateManager.getMyOrders(this);

@@ -145,7 +145,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             iconData: Icons.credit_card_rounded),
                         customListTile(
                             title: S.of(context).myStatus,
-                            subTitle: widget.request.isOnline,
+                            subTitle: widget.request.isOnline == true ? 'active' : 'inactive',
                             iconData: Icons.wifi_rounded),
                       ]),
                 ),

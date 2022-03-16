@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:simple_moment/simple_moment.dart';
@@ -10,15 +11,14 @@ import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
-import 'captain_orders_list_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class CaptainOrdersListStateOrdersLoaded extends CaptainOrdersListState {
+class CaptainOrdersListStateOrdersLoaded extends States {
   final AcceptOrderModel myOrders;
   final OrderModel nearbyOrders;
-
+  final CaptainOrdersScreenState screenState;
   CaptainOrdersListStateOrdersLoaded(
-      CaptainOrdersScreenState screenState, this.myOrders, this.nearbyOrders)
+      this.screenState, this.myOrders, this.nearbyOrders)
       : super(screenState);
 
   @override
@@ -32,8 +32,8 @@ class CaptainOrdersListStateOrdersLoaded extends CaptainOrdersListState {
         children: [
           PageView(
             controller: screenState.ordersPageController,
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             onPageChanged: (pos) {
               screenState.currentPage = pos;
               screenState.refresh();
