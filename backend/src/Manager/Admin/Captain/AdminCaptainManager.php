@@ -5,6 +5,7 @@ namespace App\Manager\Admin\Captain;
 use App\Entity\CaptainEntity;
 use App\Manager\Captain\CaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 
 class AdminCaptainManager
 {
@@ -28,5 +29,10 @@ class AdminCaptainManager
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity
     {
         return $this->captainManager->updateCaptainProfileStatusByAdmin($request);
+    }
+
+    public function updateCaptainProfileByAdmin(CaptainProfileUpdateByAdminRequest $request): string|CaptainEntity
+    {
+        return $this->captainManager->updateCaptainProfileByAdmin($request);
     }
 }

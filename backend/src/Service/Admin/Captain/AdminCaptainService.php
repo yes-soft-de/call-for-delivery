@@ -7,6 +7,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 
 class AdminCaptainService
@@ -49,6 +50,18 @@ class AdminCaptainService
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainProfileGetForAdminResponse
     {
         $captainProfile = $this->adminCaptainManager->updateCaptainProfileStatusByAdmin($request);
+
+        if ($captainProfile === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+
+        } else {
+            return $this->autoMapping->map(CaptainEntity::class, CaptainProfileGetForAdminResponse::class, $captainProfile);
+        }
+    }
+
+    public function updateCaptainProfileByAdmin(CaptainProfileUpdateByAdminRequest $request): string|CaptainProfileGetForAdminResponse
+    {
+        $captainProfile = $this->adminCaptainManager->updateCaptainProfileByAdmin($request);
 
         if ($captainProfile === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
