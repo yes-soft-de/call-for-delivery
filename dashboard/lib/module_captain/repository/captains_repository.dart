@@ -1,6 +1,10 @@
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
+import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_profile_response.dart';
+import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -47,9 +51,6 @@ class CaptainsRepository {
     return ActionResponse.fromJson(response);
   }
 
-
-
-
   Future<ActionResponse?> enableCaptainOffer(EnableOfferRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
@@ -61,6 +62,47 @@ class CaptainsRepository {
 
 
 
+  Future<CaptainResponse?> getInActiveCaptain() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS +'inactive',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainResponse.fromJson(response);
+  }
 
+  Future<CaptainResponse?> getCaptains() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS+'active',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainResponse.fromJson(response);
+  }
+
+  Future<CaptainProfileResponse?> getCaptainProfile(int captainId) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_PROFILE + '$captainId',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainProfileResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> enableCaptain(EnableCaptainRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.ACTIVATE_CAPTAIN, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateCaptain(UpdateCaptainRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.UPDATE_CAPTAIN, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 
 }

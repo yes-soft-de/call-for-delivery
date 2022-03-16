@@ -1,8 +1,14 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
+import 'package:c4d/module_captain/model/inActiveModel.dart';
+import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
+import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
+import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_profile_response.dart';
+import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -69,5 +75,78 @@ class CaptainsService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> updateCaptain(
+      UpdateCaptainRequest request) async {
+    ActionResponse? actionResponse =
+    await _manager.updateCaptain(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> enableCaptain(
+      EnableCaptainRequest request) async {
+    ActionResponse? actionResponse =
+    await _manager.enableCaptain(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+
+  Future<DataModel> getCaptains() async {
+    CaptainResponse? _ordersResponse =
+    await _manager.getCaptains();
+    if (_ordersResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_ordersResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    }
+    if (_ordersResponse.data == null) return DataModel.empty();
+    return InActiveModel.withData(_ordersResponse.data!);
+  }
+
+  Future<DataModel> getInActiveCaptains() async {
+    CaptainResponse? _ordersResponse =
+    await _manager.getInActiveCaptain();
+    if (_ordersResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_ordersResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    }
+    if (_ordersResponse.data == null) return DataModel.empty();
+    return InActiveModel.withData(_ordersResponse.data!);
+  }
+
+  Future<DataModel> getCaptainProfile(int id) async {
+    CaptainProfileResponse? _storeResponse =
+    await _manager.getCaptainProfile(id);
+    if (_storeResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_storeResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_storeResponse.statusCode));
+    }
+    if (_storeResponse.data == null) return DataModel.empty();
+    return ProfileModel.withData(_storeResponse.data!);
   }
 }

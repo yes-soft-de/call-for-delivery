@@ -94,6 +94,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captains,
                 icon: FontAwesomeIcons.car,
                 children: [
+                  customListTile(getIt<CaptainsModule>().captainsScreen,
+                      S.current.captains, FontAwesomeIcons.solidListAlt, true),
+                  customListTile(
+                      getIt<CaptainsModule>().inActiveCaptains,
+                      S.current.inActiveCaptains,
+                      FontAwesomeIcons.solidAddressCard,
+                      true),
                   customListTile(getIt<CaptainsModule>().captainOffersScreen,
                       S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
                 ],

@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
+        "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "branchManagement":
@@ -87,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("captain headed to store"),
         "captainAcceptedOrder":
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
+        "captainActivated": MessageLookupByLibrary.simpleMessage(
+            "Captain Activated Successfully"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
@@ -107,6 +110,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
+        "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
+        "captainStateInactive":
+            MessageLookupByLibrary.simpleMessage("InActive"),
+        "captainStatus": MessageLookupByLibrary.simpleMessage("Account Status"),
+        "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Captain updated successfully"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
@@ -185,9 +194,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "countOngoingOrders":
             MessageLookupByLibrary.simpleMessage("Ongoing Orders"),
+        "countOrdersDelivered":
+            MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
+        "createDate": MessageLookupByLibrary.simpleMessage("Create Date"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":
@@ -303,6 +315,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
+        "identity": MessageLookupByLibrary.simpleMessage("Identity"),
+        "inActiveCaptains":
+            MessageLookupByLibrary.simpleMessage("Inactive Captains"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
@@ -339,6 +354,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account has been logged successfully"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
+        "mechanichLicence":
+            MessageLookupByLibrary.simpleMessage("Mechanich Licence"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
         "middleName": MessageLookupByLibrary.simpleMessage("Middle name"),
@@ -566,6 +583,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "sOrder": MessageLookupByLibrary.simpleMessage("order"),
+        "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
@@ -581,6 +600,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchF": MessageLookupByLibrary.simpleMessage("Search for"),
         "searchFor":
             MessageLookupByLibrary.simpleMessage("Search for store , product"),
+        "searchForCaptain":
+            MessageLookupByLibrary.simpleMessage("Search for captain"),
         "searchForNotifications":
             MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
@@ -617,6 +638,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
+        "status": MessageLookupByLibrary.simpleMessage("Online Status"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),
         "statusCodeCreated": MessageLookupByLibrary.simpleMessage(
