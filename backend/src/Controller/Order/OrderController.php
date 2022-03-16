@@ -399,4 +399,64 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+    
+    /** captain: Get order details.
+     * @Route("orderdetails/{id}", name="getSpecificOrderForCaptain", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="integer", property="storeOrderDetailsId"),
+     *                  @OA\Property(type="object", property="destination"),
+     *                  @OA\Property(type="string", property="recipientPhone"),
+     *                  @OA\Property(type="string", property="detail"),
+     *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
+     *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="string", property="phone"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="object", property="images",
+     *                          @OA\Property(type="string", property="imageURL"),
+     *                          @OA\Property(type="string", property="image"),
+     *                          @OA\Property(type="string", property="baseURL"),
+     *                      ),
+     *              ),
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificOrderForCaptain($id): JsonResponse
+    {
+        $result = $this->orderService->getSpecificOrderForCaptain($id);
+
+        return $this->response($result, self::FETCH);
+    }
 }

@@ -19,6 +19,7 @@ use App\Service\Captain\CaptainService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Constant\Captain\CaptainConstant;
 use App\Response\Captain\CaptainStatusResponse;
+use App\Response\Order\SpecificOrderForCaptainResponse;
 
 class OrderService
 {
@@ -146,4 +147,19 @@ class OrderService
 
         return $response;
     }
+
+    public function getSpecificOrderForCaptain(int $id): ?SpecificOrderForCaptainResponse
+    {
+        $order = $this->orderManager->getSpecificOrderForCaptain($id);
+        if($order) {
+            
+            $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
+
+            //TODO change this
+            $order['roomId'] = "12345678912456789";
+        }
+
+        return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
+    }
+
 }
