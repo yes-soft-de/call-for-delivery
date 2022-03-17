@@ -607,7 +607,9 @@
     "acceptOrderHint": "You can accept this order to deliver",
     "iArrivedAtTheStoreHint": "If you are arrived to the store",
     "iGotThePackageHint": "Ready to deliver the package",
-    "iFinishedDeliveringHint": "I delivered the package with a success"
+    "iFinishedDeliveringHint": "I delivered the package with a success",
+    "branchLocation": "Branch location"
+
 
 
 

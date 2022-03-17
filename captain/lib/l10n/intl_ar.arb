@@ -608,7 +608,8 @@
     "acceptOrderHint": "بإمكانك قبول الطلب لتوصيله",
     "iArrivedAtTheStoreHint": "لإعلان وصولك للمتجر",
     "iGotThePackageHint": "الطلبية جاهزة للتوصيل",
-    "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح"
+    "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح",
+    "branchLocation": "موقع الفرع"
 
 
 
