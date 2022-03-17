@@ -1,5 +1,3 @@
-import 'package:c4d/module_orders/response/order_details_response/product_image.dart';
-import 'package:c4d/utils/logger/logger.dart';
 
 class ProfileResponse {
   String? statusCode;
@@ -38,7 +36,7 @@ class ProfileResponseModel {
   dynamic location;
   int? age;
   String? car;
-  ProductImage? drivingLicence;
+  Images? drivingLicence;
   String? drivingLicenceURL;
   num? salary;
   String? status;
@@ -48,7 +46,7 @@ class ProfileResponseModel {
   num? bounce;
   dynamic totalBounce;
   String? roomID;
-  ProductImage? image;
+  Images? image;
   String? imageURL;
   String? baseURL;
   String? phone;
@@ -58,8 +56,8 @@ class ProfileResponseModel {
   String? stcPay;
   dynamic vacationStatus;
   dynamic newMessageStatus;
-  ProductImage? mechanicLicense;
-  ProductImage? identity;
+  Images? mechanicLicense;
+  Images? identity;
 
   ProfileResponseModel(
       {this.id,
@@ -155,8 +153,7 @@ class ProfileResponseModel {
     //   map['rating'] = rating?.toJson();
     // }
     map['state'] = state;
-    if (bounce != null) {
-    }
+    if (bounce != null) {}
     map['totalBounce'] = totalBounce;
     map['roomID'] = roomID;
     map['image'] = image;
@@ -248,5 +245,17 @@ class CountOrdersDeliverd {
     var map = <String, dynamic>{};
     map['countOrdersDelivered'] = countOrdersDelivered;
     return map;
+  }
+}
+
+class Images {
+  String? image;
+  String? imageUrl;
+  String? baseUrl;
+
+  Images.fromJson(dynamic json) {
+    image = json['images'];
+    imageUrl = json['imageUrl'];
+    baseUrl = json['baseUrl'];
   }
 }
