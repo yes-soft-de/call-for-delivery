@@ -24,7 +24,10 @@ class OrderDetailsModel extends DataModel {
   late String? roomID;
   String? image;
   int? captainID;
-
+  late String storeName;
+  late String storePhone;
+  late LatLng? branchCoordinate;
+  late String? branchLink;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -41,7 +44,11 @@ class OrderDetailsModel extends DataModel {
       required this.roomID,
       required this.deliveryDate,
       required this.image,
-      required this.captainID});
+      required this.captainID,
+      required this.storeName,
+      required this.branchCoordinate,
+      required this.storePhone,
+      required this.branchLink});
 
   late OrderDetailsModel _orders;
 
@@ -82,6 +89,13 @@ class OrderDetailsModel extends DataModel {
       state: StatusHelper.getStatusEnum(element?.state),
       id: element?.id ?? -1,
       captainID: element?.captainId?.toInt(),
+      branchCoordinate:
+          element?.location?.lat != null && element?.location?.lon != null
+              ? LatLng(element?.location?.lat ?? 0, element?.location?.lon ?? 0)
+              : null,
+      storeName: element?.storeOwnerName ?? S.current.unknown,
+      storePhone: element?.phone ?? '',
+      branchLink: element?.location?.link,
     );
   }
 

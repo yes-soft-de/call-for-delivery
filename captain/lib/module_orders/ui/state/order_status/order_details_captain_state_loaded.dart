@@ -41,12 +41,29 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               orderInfo.destinationCoordinate?.longitude ?? 0))
           .then((value) {
         distance = value.toStringAsFixed(1);
+        distance = S.current.distance + ' $distance ' + S.current.km;
+        screenState.refresh();
+        return;
+      });
+    }
+    if (orderInfo.branchCoordinate != null) {
+      distanceBranch = S.current.calculating;
+      screenState.refresh();
+      DeepLinksService.getDistance(LatLng(
+              orderInfo.branchCoordinate?.latitude ?? 0,
+              orderInfo.branchCoordinate?.longitude ?? 0))
+          .then((value) {
+        distanceBranch = value.toStringAsFixed(1);
+        distanceBranch =
+            S.current.distance + ' $distanceBranch ' + S.current.km;
         screenState.refresh();
         return;
       });
     }
   }
   String? distance;
+  String? distanceBranch;
+
   int currentIndex = 0;
   @override
   Widget getUI(BuildContext context) {
@@ -271,8 +288,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       leading: const Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
                       subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
+                          ? Text(distance ?? '')
                           : Text(S.current.distance + ' ' + S.current.unknown),
                       trailing: const Icon(Icons.arrow_forward),
                     ),
@@ -293,8 +309,60 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
+                  title: Text(S.current.store),
+                  subtitle: Text(orderInfo.storeName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.store_rounded,
+                  ),
                   title: Text(S.current.branch),
                   subtitle: Text(orderInfo.branchName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    leading: const Icon(
+                      Icons.location_on_rounded,
+                    ),
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.branchCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.branchCoordinate?.latitude ?? 0,
+                            orderInfo.branchCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                    title: Text(S.current.branchLocation),
+                    subtitle: distanceBranch != null
+                        ? Text(distanceBranch ?? '')
+                        : Text(S.current.distance + ' ' + S.current.unknown),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -660,7 +728,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       return OrderButton(
           backgroundColor: StatusHelper.getOrderStatusColor(orderInfo.state),
           icon: OrderProgressionHelper.getButtonIcon(orderInfo.state),
-          subtitle: OrderProgressionHelper.getNextStageHintMessage(orderInfo.state,context),
+          subtitle: OrderProgressionHelper.getNextStageHintMessage(
+              orderInfo.state, context),
           onTap: () {},
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,
