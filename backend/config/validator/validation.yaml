@@ -200,3 +200,10 @@ App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest:
             - NotBlank: ~
         captainName:
             - NotBlank: ~
+
+App\Request\Order\OrderUpdateByCaptainRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        state:
+            - NotBlank: ~
