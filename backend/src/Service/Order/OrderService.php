@@ -166,7 +166,11 @@ class OrderService
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderUpdateByCaptainResponse
     {
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
-  
+        if($order) {
+            //create Notification Local for store
+            $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId()); 
+        }
+     
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
     }
 }

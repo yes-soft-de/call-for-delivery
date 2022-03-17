@@ -28,7 +28,7 @@ final class NotificationConstant
 
     const STATE_PICKED = "الكابتن إلتقط الطلب من المتجر";
 
-    const STATE_ONGOING = "الكابتن في طريقه إليك";
+    const STATE_ONGOING = "الكابتن في طريقه لتسليم الطلب";
 
     const STATE_DELIVERED = "تم تسليم الطلب";
 

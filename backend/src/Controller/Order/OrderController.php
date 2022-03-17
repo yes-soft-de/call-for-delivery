@@ -462,7 +462,7 @@ class OrderController extends BaseController
     }
     
     /**
-     * captain: To accept the order AND change order state.
+     * captain: To accept the order AND change order state and update kilometer.
      * @Route("orderupdatestate", name="orderUpdateState", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
@@ -500,17 +500,6 @@ class OrderController extends BaseController
      *      )
      * )
      *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return Error.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9205"),
-     *          @OA\Property(type="string", property="msg", description="error Error."),
-     *      )
-     * )
-     *
      * @Security(name="Bearer")
      */
     public function orderUpdateStateByCaptain(Request $request): JsonResponse
@@ -526,7 +515,7 @@ class OrderController extends BaseController
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
          }
-         
+
         $response = $this->orderService->orderUpdateStateByCaptain($request);
 
         return $this->response( $response, self::UPDATE);
