@@ -19,9 +19,9 @@ class CaptainProfileGetForAdminResponse
     public $images;
 
     /**
-     * @var array
+     * @var array|null
      */
-    public $location = [];
+    public $location;
 
     /**
      * @var int|null
