@@ -507,6 +507,8 @@ class OrderController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateByCaptainRequest::class, (object) $data);
+       
+        $request->setCaptainId($this->getUserId());
      
         $violations = $this->validator->validate($request);
        

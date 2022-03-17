@@ -129,6 +129,10 @@ class OrderManager
             return $orderEntity;
         }
         
+        $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
+       
+        $request->setCaptainId($captainId);
+       
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $this->entityManager->flush();
