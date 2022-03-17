@@ -10,6 +10,8 @@ class OrderUpdateByCaptainRequest
 
     private int|null $kilometer;
 
+    private $captainId;
+
     /**
      * Get the value of id
      */ 
@@ -26,6 +28,26 @@ class OrderUpdateByCaptainRequest
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of captainId
+     */ 
+    public function getCaptainId()
+    {
+        return $this->captainId;
+    }
+
+    /**
+     * Set the value of captainId
+     *
+     * @return  self
+     */ 
+    public function setCaptainId($captainId)
+    {
+        $this->captainId = $captainId;
 
         return $this;
     }
