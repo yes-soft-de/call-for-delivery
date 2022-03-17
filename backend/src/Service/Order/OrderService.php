@@ -163,16 +163,10 @@ class OrderService
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
     }
 
-     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request)
+     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderUpdateByCaptainResponse
     {
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
-      
-        if($order === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
-            // return $this->autoMapping->map("array", OrderUpdateByCaptainResponse::class, $order);
-        } 
   
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
     }
-
 }

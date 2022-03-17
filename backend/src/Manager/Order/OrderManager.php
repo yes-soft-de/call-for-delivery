@@ -121,20 +121,18 @@ class OrderManager
         return $this->orderRepository->getSpecificOrderForCaptain($id);
     }
 
-    public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): string|OrderEntity
+    public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
         if(! $orderEntity) {
-            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
-        }
-        
-        else {
-            $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
-
-            $this->entityManager->flush();
-
             return $orderEntity;
         }
+        
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }

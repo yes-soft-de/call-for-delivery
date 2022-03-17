@@ -8,7 +8,7 @@ class OrderUpdateByCaptainRequest
 
     private string $state;
 
-    private float|null $kilometer;
+    private int|null $kilometer;
 
     /**
      * Get the value of id

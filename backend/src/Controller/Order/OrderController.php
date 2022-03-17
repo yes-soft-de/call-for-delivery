@@ -417,7 +417,6 @@ class OrderController extends BaseController
      *      required=true
      * )
      *
-     *
      * @OA\Response(
      *      response=200,
      *      description="Returns order",
@@ -468,7 +467,7 @@ class OrderController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
-     * *
+     *
      * @OA\Tag(name="Order")
      *
      * @OA\Parameter(
@@ -496,7 +495,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state"),
-     *              @OA\Property(type="number", property="kilometer"),
+     *              @OA\Property(type="integer", property="kilometer"),
      *              )
      *      )
      * )
@@ -519,12 +518,16 @@ class OrderController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateByCaptainRequest::class, (object) $data);
-
-        $response = $this->orderService->orderUpdateStateByCaptain($request);
+     
+        $violations = $this->validator->validate($request);
        
-        if($response == OrderResultConstant::ORDER_NOT_FOUND_RESULT){
-            return $this->response("errorMsg", self::ERROR_ORDER_NOT_FOUND);  
-          }
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
+         
+        $response = $this->orderService->orderUpdateStateByCaptain($request);
 
         return $this->response( $response, self::UPDATE);
     }
