@@ -10,7 +10,6 @@ import 'package:c4d/module_orders/request/update_store_order_status_request.dart
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
-import 'package:c4d/module_orders/response/orders/accept_order_response.dart';
 import 'package:c4d/module_orders/response/orders_logs_response.dart';
 
 @injectable

@@ -30,8 +30,8 @@ class Urls {
   static const ORDER_STATUS_API = BASE_API + '/v1/order/captainorder/';
   static const NEARBY_ORDERS_API = BASE_API + '/v1/order/closestorders';
   static const CAPTAIN_ACCEPTED_ORDERS_API = BASE_API + '/v1/order/acceptedorder';
-  static const ACCEPT_ORDER_API = BASE_API + '/acceptedOrder';
-  static const CAPTAIN_ORDER_UPDATE_API = BASE_API + '/orderUpdateState';
+  static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
+  static const CAPTAIN_ORDER_UPDATE_API = BASE_API + '/v1/order/orderupdatestate';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
   static const UPDATES_API = BASE_API + '/updateall';

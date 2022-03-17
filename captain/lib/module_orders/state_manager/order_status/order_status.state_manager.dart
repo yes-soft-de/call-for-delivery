@@ -27,16 +27,18 @@ class OrderStatusStateManager {
 
   void getOrderDetails(int orderId, OrderStatusScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
-
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);
-        }, title: '', error: value.error, hasAppbar: false));
+        }, title: S.current.orderDetails, error: value.error, hasAppbar: true));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);
-        }, emptyMessage: '', title: ''));
+        },
+            hasAppbar: true,
+            emptyMessage: S.current.homeDataEmpty,
+            title: S.current.orderDetails));
       } else {
         value as OrderDetailsModel;
         _stateSubject
@@ -50,12 +52,16 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
-        screenState.goBack(value.error);
-      } else {
-        CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.updateOrderSuccess)
-          .show(screenState.context);
         getOrderDetails(request.id ?? -1, screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error)
+            .show(screenState.context);
+      } else {
+        getOrderDetails(request.id ?? -1, screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
       }
     });
   }
@@ -139,12 +145,13 @@ class OrderStatusStateManager {
     await _imageUploadService.uploadImage(image).then((uploadedImageLink) {
       if (uploadedImageLink == null) {
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: S.current.saveInvoiceFailed)
-          .show(screenState.context);
+                title: S.current.warnning, message: S.current.saveInvoiceFailed)
+            .show(screenState.context);
       } else {
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.saveInvoiceSuccess)
-          .show(screenState.context);
+                title: S.current.warnning,
+                message: S.current.saveInvoiceSuccess)
+            .show(screenState.context);
         screenState.saveBill(uploadedImageLink, totalPrice, isBilled, storeID);
       }
     });

@@ -1,5 +1,9 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
@@ -86,43 +90,25 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
 
   void requestOrderProgress(OrderDetailsModel currentOrder, int index,
       {String? distance, String? storeID}) {
-    //   showDialog(
-    //       context: context,
-    //       builder: (_) {
-    //         return CustomAlertDialog(
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //               if (currentOrder.order.state == OrderStatusEnum.IN_STORE &&
-    //                   invoiceRequest != null) {
-    //                 print(storeID);
-    //                 invoiceRequest?.storeID = storeID;
-    //                 widget.stateManager.updateInvoice(
-    //                   invoiceRequest!,
-    //                   this,
-    //                   orderRequest: UpdateOrderRequest(
-    //                     id: int.tryParse(orderId ?? '-1'),
-    //                     state: StatusHelper.getStatusString(
-    //                         OrderStatusEnum.values[index + 1]),
-    //                     orderCost: currentOrder.order.deliveryCost,
-    //                     distance: distance,
-    //                   ),
-    //                 );
-    //               } else {
-    //                 widget.stateManager.updateOrder(
-    //                     UpdateOrderRequest(
-    //                       id: int.tryParse(orderId ?? '-1'),
-    //                       state: StatusHelper.getStatusString(
-    //                           OrderStatusEnum.values[index + 1]),
-    //                       orderCost: currentOrder.order.deliveryCost,
-    //                       distance: distance,
-    //                     ),
-    //                     this);
-    //               }
-    //             },
-    //             content: S.of(context).confirmUpdateOrderStatus);
-    //       });
-    // }
+    showDialog(
+        context: context,
+        builder: (_) {
+          return CustomAlertDialog(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.stateManager.updateOrder(
+                    UpdateOrderRequest(
+                      id: int.tryParse(orderId ?? '-1'),
+                      state: StatusHelper.getStatusString(
+                          OrderStatusEnum.values[index + 1]),
+                      distance: distance,
+                    ),
+                    this);
+              },
+              content: S.of(context).confirmUpdateOrderStatus);
+        });
   }
+
   void requestStoreOrderProgress(
       UpdateStoreOrderStatusRequest request, int index) {
     //   showDialog(

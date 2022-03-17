@@ -730,7 +730,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           icon: OrderProgressionHelper.getButtonIcon(orderInfo.state),
           subtitle: OrderProgressionHelper.getNextStageHintMessage(
               orderInfo.state, context),
-          onTap: () {},
+          onTap: () {
+            screenState.requestOrderProgress(
+                orderInfo, StatusHelper.getOrderStatusIndex(orderInfo.state));
+          },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,
             context,
