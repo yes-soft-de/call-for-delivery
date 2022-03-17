@@ -17,11 +17,11 @@ class NotificationFromAdminService
         $this->notificationFromAdminManager = $notificationFromAdminManager;
     }
 
-    public function getAllNotificationsFromAdminForStore($userId, $appType): ?array
+    public function getAllNotificationsFromAdmin($userId, $appType): ?array
     {
         $response = [];
 
-        $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdminForStore($userId, $appType);
+        $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdmin($userId, $appType);
      
         foreach($notifications as $notification) {
 
