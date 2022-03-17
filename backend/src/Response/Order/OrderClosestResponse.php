@@ -19,4 +19,8 @@ class OrderClosestResponse
     public $deliveryDate;
    
     public $createdAt;
+
+    public $location;
+  
+    public $branchName;
 }
