@@ -18,8 +18,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
-use App\Constant\Captain\CaptainConstant;
-use App\Constant\Order\OrderResultConstant;
 use App\Constant\Main\MainErrorConstant;
 
 /**
@@ -123,7 +121,6 @@ class OrderController extends BaseController
      * store:Get store orders
      * @Route("storeorders", name="getStoreOrders", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -170,12 +167,12 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /**
      * store:Get specific order for store
      * @Route("storeorder/{id}", name="getSpecificOrderForStore", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
+     * @param $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
