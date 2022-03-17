@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\Main\MainErrorConstant;
 
 /**
  * Create and fetch order.
@@ -337,8 +338,7 @@ class OrderController extends BaseController
      *      description="Return captain inactive.",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", description="9100"),
-     *          @OA\Property(type="string", property="msg", description="error captain inactive Successfully."),
-     *          @OA\Property(type="object", property="Data"),
+     *          @OA\Property(type="string", property="msg", description="error captain inactive Error."),
      *      )
      * )
      *
@@ -349,7 +349,7 @@ class OrderController extends BaseController
         $response = $this->orderService->closestOrders($this->getUserId());
         if (isset($response->status)) {
          
-            return $this->response($response, self::ERROR_CAPTAIN_INACTIVE);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
         }
         
         return $this->response($response, self::FETCH);
