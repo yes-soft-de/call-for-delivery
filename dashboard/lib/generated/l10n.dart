@@ -5009,6 +5009,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Inactive Captains`
+  String get inActiveCaptains {
+    return Intl.message(
+      'Inactive Captains',
+      name: 'inActiveCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salary`
+  String get salary {
+    return Intl.message(
+      'Salary',
+      name: 'salary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Status`
+  String get captainStatus {
+    return Intl.message(
+      'Account Status',
+      name: 'captainStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Online Status`
+  String get status {
+    return Intl.message(
+      'Online Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Activated Successfully`
+  String get captainActivated {
+    return Intl.message(
+      'Captain Activated Successfully',
+      name: 'captainActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get captainStateActive {
+    return Intl.message(
+      'Active',
+      name: 'captainStateActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `InActive`
+  String get captainStateInactive {
+    return Intl.message(
+      'InActive',
+      name: 'captainStateInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for captain`
+  String get searchForCaptain {
+    return Intl.message(
+      'Search for captain',
+      name: 'searchForCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mechanich Licence`
+  String get mechanichLicence {
+    return Intl.message(
+      'Mechanich Licence',
+      name: 'mechanichLicence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Identity`
+  String get identity {
+    return Intl.message(
+      'Identity',
+      name: 'identity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Orders Delivered`
+  String get countOrdersDelivered {
+    return Intl.message(
+      'Count Orders Delivered',
+      name: 'countOrdersDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Date`
+  String get createDate {
+    return Intl.message(
+      'Create Date',
+      name: 'createDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order`
+  String get sOrder {
+    return Intl.message(
+      'order',
+      name: 'sOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain updated successfully`
+  String get captainUpdatedSuccessfully {
+    return Intl.message(
+      'Captain updated successfully',
+      name: 'captainUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce`
+  String get bounce {
+    return Intl.message(
+      'Bounce',
+      name: 'bounce',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

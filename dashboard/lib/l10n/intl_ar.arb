@@ -505,7 +505,20 @@
     "addOfferSuccessfully": "تم إضافة العرض بنجاح",
 
     "storesActive": "المتاجر الفعالة",
-    "allOrdersCount": "عدد الطلبات"
-
-
+    "allOrdersCount": "عدد الطلبات",
+    "inActiveCaptains": "الكباتن الغير مفعلين",
+    "salary": "الراتب",
+    "captainStatus": "حساب الكابتن",
+    "status": "الحالة",
+    "captainActivated": "تم تفعيل الكابتن بنجاح",
+    "captainStateActive": "فعال",
+    "captainStateInactive": "غير فعال",
+    "searchForCaptain": "أبحث عن كابتن",
+    "mechanichLicence": "رخصة السير",
+    "identity": "الهوية",
+    "countOrdersDelivered": "عدد الطلبات المنجزة",
+    "createDate": "تاريخ الإنشاء",
+    "sOrder": "طلب",
+    "captainUpdatedSuccessfully": "تم تحديث الكابتن بنجاح",
+    "bounce": "مكافأة"
 }

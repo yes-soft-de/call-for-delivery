@@ -18,6 +18,7 @@ class Urls {
 
   static const String BASE_API_CAPTAIN_OFFER_ADMIN = DOMAIN + VERSION_ADMIN + '/captainoffer';
   static const String BASE_API_REPORT_ADMIN = DOMAIN + VERSION_ADMIN + '/report';
+  static const String BASE_API_CAPTAIN = DOMAIN + VERSION_ADMIN + '/captain';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -85,5 +86,11 @@ class Urls {
   static const CREATE_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/create';
   static const UPDATE_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/update';
   static const ACTIVE_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/updatecaptainofferstatusbyadmin';
+
+  /*------------------------CAPTAINS------------------------*/
+  static const GET_CAPTAINS = BASE_API_CAPTAIN + '/captainsprofilesbystatus/';
+  static const GET_CAPTAIN_PROFILE = BASE_API_CAPTAIN + '/captainprofilebyid/';
+  static const ACTIVATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofilestatus';
+  static const UPDATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofile';
 
 }

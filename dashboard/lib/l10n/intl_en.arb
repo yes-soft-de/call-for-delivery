@@ -508,8 +508,21 @@
     "updateOfferSuccessfully": "offer updated successfully",
     "addOfferSuccessfully": "offer added successfully",
     "storesActive": "Stores Active",
-    "allOrdersCount": "Orders count"
+    "allOrdersCount": "Orders count",
 
-
-
+    "inActiveCaptains": "Inactive Captains",
+    "salary": "Salary",
+    "captainStatus": "Account Status",
+    "status": "Online Status",
+    "captainActivated": "Captain Activated Successfully",
+    "captainStateActive": "Active",
+    "captainStateInactive": "InActive",
+    "searchForCaptain": "Search for captain",
+    "mechanichLicence": "Mechanich Licence",
+    "identity": "Identity",
+    "countOrdersDelivered": "Count Orders Delivered",
+    "createDate": "Create Date",
+    "sOrder": "order",
+    "captainUpdatedSuccessfully": "Captain updated successfully",
+    "bounce": "Bounce"
 }
