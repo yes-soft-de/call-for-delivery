@@ -9,16 +9,19 @@ use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class AdminCaptainService
 {
     private AutoMapping $autoMapping;
     private AdminCaptainManager $adminCaptainManager;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainManager = $adminCaptainManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -28,6 +31,8 @@ class AdminCaptainService
         $captainsProfiles = $this->adminCaptainManager->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
 
         foreach ($captainsProfiles as $captainProfile) {
+            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
+
             $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
 
@@ -39,6 +44,8 @@ class AdminCaptainService
         $captainProfile = $this->adminCaptainManager->getCaptainProfileByIdForAdmin($captainProfileId);
 
         if ($captainProfile) {
+            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
+
             if($captainProfile['roomId']) {
                 $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();
             }

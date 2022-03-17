@@ -13,7 +13,9 @@ class CaptainProfileGetForAdminResponse
      */
     public $captainName;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var array|null
+     */
     public $images;
 
     /**
