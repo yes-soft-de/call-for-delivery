@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -103,14 +104,24 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     } else {
       var acceptedOrders = myOrders as OrderModel;
       acceptedOrders.data.forEach((element) {
-        uiList.add(OrderCard(
-        createdDate: element.createdDate,
-        deliveryDate: element.deliveryDate,
-        note: element.note,
-        orderCost: element.orderCost.toStringAsFixed(1),
-        orderNumber: element.id.toString(),
-        orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-      ));
+        uiList.add(Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id.toString());
+            },
+            child: OrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost.toStringAsFixed(1),
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+            ),
+          ),
+        ));
       });
       uiList.add(Container(
         height: 75,
@@ -147,13 +158,23 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     var moment = Moment.now();
     var uiList = <Widget>[];
     ordersData.data.forEach((element) {
-      uiList.add(OrderCard(
-        createdDate: element.createdDate,
-        deliveryDate: element.deliveryDate,
-        note: element.note,
-        orderCost: element.orderCost.toStringAsFixed(1),
-        orderNumber: element.id.toString(),
-        orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+      uiList.add(Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(25),
+          onTap: () {
+            Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
+                arguments: element.id.toString());
+          },
+          child: OrderCard(
+            createdDate: element.createdDate,
+            deliveryDate: element.deliveryDate,
+            note: element.note,
+            orderCost: element.orderCost.toStringAsFixed(1),
+            orderNumber: element.id.toString(),
+            orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+          ),
+        ),
       ));
     });
     uiList.add(Container(

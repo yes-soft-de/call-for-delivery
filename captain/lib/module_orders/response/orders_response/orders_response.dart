@@ -10,9 +10,9 @@ class OrdersResponse {
   factory OrdersResponse.fromJson(Map<String, dynamic> json) => OrdersResponse(
         statusCode: json['status_code'] as String?,
         msg: json['msg'] as String?,
-        data: (json['Data'] as List<dynamic>?)
+        data:json['Data'] is List ? (json['Data'] as List<dynamic>?)
             ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
-            .toList(),
+            .toList() : null,
       );
 
   Map<String, dynamic> toJson() => {

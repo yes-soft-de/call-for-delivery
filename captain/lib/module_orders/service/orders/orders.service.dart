@@ -54,19 +54,19 @@ class OrdersService {
   }
 
 //////////////////////////////////////////////////////////////////////
-  Future<OrderDetailsModel> getOrderDetails(int orderId) async {
+  Future<DataModel> getOrderDetails(int orderId) async {
     OrderDetailsResponse? _ordersResponse =
         await _ordersManager.getOrderDetails(orderId);
     if (_ordersResponse == null) {
-      return OrderDetailsModel.Error(S.current.networkError);
+      return DataModel.withError(S.current.networkError);
     }
     if (_ordersResponse.statusCode != '200') {
-      return OrderDetailsModel.Error(
+      return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
     }
-    if (_ordersResponse.data == null) return OrderDetailsModel.Empty();
+    if (_ordersResponse.data == null) return DataModel.empty();
     LatLng? myLocation = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.Data(_ordersResponse, myLocation);
+    return OrderDetailsModel.withData(_ordersResponse);
   }
 
   Future<DataModel> getNearbyOrders() async {

@@ -46,8 +46,25 @@ class OrderProgressionHelper {
     }
   }
 
+  static IconData getButtonIcon(OrderStatusEnum status) {
+    switch (status) {
+      case OrderStatusEnum.WAITING:
+        return Icons.start_rounded;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return Icons.storefront;
+      case OrderStatusEnum.IN_STORE:
+        return Icons.delivery_dining_rounded;
+      case OrderStatusEnum.DELIVERING:
+        return Icons.check;
+      case OrderStatusEnum.FINISHED:
+        return Icons.check;
+      default:
+        return Icons.check;
+    }
+  }
+
   static String getNextStageHelper(
-      OrderStatusEnum status, bool isOnline, BuildContext context) {
+      OrderStatusEnum status, BuildContext context) {
     switch (status) {
       case OrderStatusEnum.WAITING:
         return S.of(context).acceptOrder;
@@ -65,6 +82,26 @@ class OrderProgressionHelper {
         return S.of(context).iFinishedDelivering;
       default:
         return S.of(context).orderIsInUndefinedState;
+    }
+  }
+
+  static String getNextStageHintMessage(
+      OrderStatusEnum status, BuildContext context) {
+    switch (status) {
+      case OrderStatusEnum.WAITING:
+        return S.of(context).acceptOrderHint;
+      case OrderStatusEnum.GOT_CAPTAIN:
+        return S.of(context).iArrivedAtTheStoreHint;
+      case OrderStatusEnum.IN_STORE:
+        return S.of(context).iGotThePackageHint;
+
+      case OrderStatusEnum.DELIVERING:
+        return S.of(context).iFinishedDeliveringHint;
+
+      case OrderStatusEnum.FINISHED:
+        return S.of(context).iFinishedDeliveringHint;
+      default:
+        return S.of(context).unknown;
     }
   }
 
