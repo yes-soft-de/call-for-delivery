@@ -388,7 +388,7 @@
     "makeBill": "Upload Bill",
     "pleaseProvideStoreBill": "Please provide the bill of the order",
     "receiptPoint": "Receipt Location",
-    "destinationPoint": "Destination Location",
+    "destinationPoint": "Destination",
     "expectedOrderBill": "Expected Order Bill",
     "receipt": "Receipt",
     "saveInvoiceFailed": "Saving invoice process has been failed",
@@ -600,7 +600,15 @@
     "calculating": "Calculating",
     "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
     "confirmationCaptainOffers": "Are sure about subscribe with this offer",
-    "captainName": "Captain Name"
+    "captainName": "Captain Name",
+    "controlPanel": "Control Panel",
+    "location": "Location",
+    "customer": "Customer",
+    "acceptOrderHint": "You can accept this order to deliver",
+    "iArrivedAtTheStoreHint": "If you are arrived to the store",
+    "iGotThePackageHint": "Ready to deliver the package",
+    "iFinishedDeliveringHint": "I delivered the package with a success"
+
 
 
 

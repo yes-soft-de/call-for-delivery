@@ -3910,10 +3910,10 @@ class S {
     );
   }
 
-  /// `Destination Location`
+  /// `Destination`
   String get destinationPoint {
     return Intl.message(
-      'Destination Location',
+      'Destination',
       name: 'destinationPoint',
       desc: '',
       args: [],
@@ -6025,6 +6025,76 @@ class S {
     return Intl.message(
       'Captain Name',
       name: 'captainName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Control Panel`
+  String get controlPanel {
+    return Intl.message(
+      'Control Panel',
+      name: 'controlPanel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get location {
+    return Intl.message(
+      'Location',
+      name: 'location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer`
+  String get customer {
+    return Intl.message(
+      'Customer',
+      name: 'customer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can accept this order to deliver`
+  String get acceptOrderHint {
+    return Intl.message(
+      'You can accept this order to deliver',
+      name: 'acceptOrderHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you are arrived to the store`
+  String get iArrivedAtTheStoreHint {
+    return Intl.message(
+      'If you are arrived to the store',
+      name: 'iArrivedAtTheStoreHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ready to deliver the package`
+  String get iGotThePackageHint {
+    return Intl.message(
+      'Ready to deliver the package',
+      name: 'iGotThePackageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I delivered the package with a success`
+  String get iFinishedDeliveringHint {
+    return Intl.message(
+      'I delivered the package with a success',
+      name: 'iFinishedDeliveringHint',
       desc: '',
       args: [],
     );

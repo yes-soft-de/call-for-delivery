@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "You can accept your mission to deliver package"),
+        "acceptOrderHint": MessageLookupByLibrary.simpleMessage(
+            "You can accept this order to deliver"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountActivated":
             MessageLookupByLibrary.simpleMessage("Account activated"),
@@ -223,6 +225,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -239,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
@@ -265,8 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
-        "destinationPoint":
-            MessageLookupByLibrary.simpleMessage("Destination Location"),
+        "destinationPoint": MessageLookupByLibrary.simpleMessage("Destination"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
@@ -357,11 +360,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "iAm": MessageLookupByLibrary.simpleMessage("I am"),
         "iArrivedAtTheStore":
             MessageLookupByLibrary.simpleMessage("I Arrived at the Store"),
+        "iArrivedAtTheStoreHint": MessageLookupByLibrary.simpleMessage(
+            "If you are arrived to the store"),
         "iFinishedDelivering":
             MessageLookupByLibrary.simpleMessage("I Finished Delivering"),
+        "iFinishedDeliveringHint": MessageLookupByLibrary.simpleMessage(
+            "I delivered the package with a success"),
         "iGotTheCash": MessageLookupByLibrary.simpleMessage("I Got the Cash"),
         "iGotThePackage":
             MessageLookupByLibrary.simpleMessage("I Got the Package"),
+        "iGotThePackageHint": MessageLookupByLibrary.simpleMessage(
+            "Ready to deliver the package"),
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
@@ -409,6 +418,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
+        "location": MessageLookupByLibrary.simpleMessage("Location"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),

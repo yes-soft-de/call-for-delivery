@@ -601,7 +601,15 @@
     "calculating": "جاري الحساب",
     "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح",
     "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض",
-    "captainName": "اسم الكابتن"
+    "captainName": "اسم الكابتن",
+    "controlPanel": "لوحة التحكم",
+    "location": "الموقع",
+    "customer": "الزبون",
+    "acceptOrderHint": "بإمكانك قبول الطلب لتوصيله",
+    "iArrivedAtTheStoreHint": "لإعلان وصولك للمتجر",
+    "iGotThePackageHint": "الطلبية جاهزة للتوصيل",
+    "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح"
+
 
 
 
