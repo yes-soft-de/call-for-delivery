@@ -171,6 +171,24 @@ class BaseController extends AbstractController
 
     public function response($result, $status) :jsonResponse
     {
+        if($result === "errorMsg")
+        {
+            $encoders = [new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+
+            $this->serializer = new Serializer($normalizers, $encoders);
+            $result = $this->serializer->serialize($result, "json", [
+                'enable_max_depth' => true]);
+            $response = new jsonResponse(["status_code" => $status[1],
+                    "msg" => $status[0] . " " . "Error.",
+                ]
+                , Response::HTTP_OK);
+            $response->headers->set('Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Methods', 'PUT');
+            return $response;
+        }
+        
         if($result!=null)
         {
             $encoders = [new JsonEncoder()];
@@ -199,7 +217,7 @@ class BaseController extends AbstractController
             $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->headers->set('Access-Control-Allow-Methods', 'PUT');
             return $response;
-        }
+        }      
         else
         {
             $response = new JsonResponse(["status_code"=>"200",

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Service\Order\OrderService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\Order\OrderResultConstant;
 
 /**
  * Create and fetch order.
@@ -458,5 +460,72 @@ class OrderController extends BaseController
         $result = $this->orderService->getSpecificOrderForCaptain($id);
 
         return $this->response($result, self::FETCH);
+    }
+    
+    /**
+     * captain: To accept the order AND change order state.
+     * @Route("orderupdatestate", name="orderUpdateState", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     * *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="To accept the order AND change state",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="orderNumber"),
+     *              @OA\Property(type="string", property="state", description="on way to pick order or in store or picked or ongoing or delivered"),
+     *              @OA\Property(type="number", property="kilometer"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="state"),
+     *              @OA\Property(type="number", property="kilometer"),
+     *              )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return Error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9205"),
+     *          @OA\Property(type="string", property="msg", description="error Error."),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function orderUpdateStateByCaptain(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateByCaptainRequest::class, (object) $data);
+
+        $response = $this->orderService->orderUpdateStateByCaptain($request);
+       
+        if($response == OrderResultConstant::ORDER_NOT_FOUND_RESULT){
+            return $this->response("errorMsg", self::ERROR_ORDER_NOT_FOUND);  
+          }
+
+        return $this->response( $response, self::UPDATE);
     }
 }

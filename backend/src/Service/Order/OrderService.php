@@ -7,9 +7,11 @@ use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Order\OrderClosestResponse;
+use App\Response\Order\OrderUpdateByCaptainResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -20,6 +22,7 @@ use App\Service\FileUpload\UploadFileHelperService;
 use App\Constant\Captain\CaptainConstant;
 use App\Response\Captain\CaptainStatusResponse;
 use App\Response\Order\SpecificOrderForCaptainResponse;
+use App\Constant\Order\OrderResultConstant;
 
 class OrderService
 {
@@ -158,6 +161,18 @@ class OrderService
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
+    }
+
+     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request)
+    {
+        $order = $this->orderManager->orderUpdateStateByCaptain($request);
+      
+        if($order === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+            // return $this->autoMapping->map("array", OrderUpdateByCaptainResponse::class, $order);
+        } 
+  
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
     }
 
 }

@@ -11,6 +11,7 @@ use App\Repository\OrderEntityRepository;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\OrderUpdateByCaptainRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Order\StoreOrderDetailsManager;
@@ -118,5 +119,22 @@ class OrderManager
     public function getSpecificOrderForCaptain($id): ?array
     {
         return $this->orderRepository->getSpecificOrderForCaptain($id);
+    }
+
+    public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): string|OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+        
+        else {
+            $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
+
+            $this->entityManager->flush();
+
+            return $orderEntity;
+        }
     }
 }
