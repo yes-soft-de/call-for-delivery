@@ -71,7 +71,7 @@ void main() async {
       // Your App Here
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
-      new Logger().error(
+       Logger().error(
           'Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });
