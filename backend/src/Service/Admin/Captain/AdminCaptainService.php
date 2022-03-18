@@ -33,6 +33,12 @@ class AdminCaptainService
         foreach ($captainsProfiles as $captainProfile) {
             $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
 
+            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+
+            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
+
+            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
+
             $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
 
@@ -45,6 +51,12 @@ class AdminCaptainService
 
         if ($captainProfile) {
             $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
+
+            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+
+            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
+
+            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
 
             if($captainProfile['roomId']) {
                 $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();

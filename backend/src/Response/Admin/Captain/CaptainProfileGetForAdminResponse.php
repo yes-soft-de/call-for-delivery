@@ -70,10 +70,19 @@ class CaptainProfileGetForAdminResponse
      */
     public $stcPay;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var string|null
+     */
     public $mechanicLicense;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var string|null
+     */
+    public $drivingLicence;
+
+    /**
+     * @var string|null
+     */
     public $identity;
 
     /**
