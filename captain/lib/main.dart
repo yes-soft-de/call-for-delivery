@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
 import 'package:c4d/module_init/init_account_module.dart';
+import 'package:c4d/module_my_notifications/my_notifications_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_plan/plan_module.dart';
 import 'package:c4d/module_profile/module_profile.dart';
@@ -71,7 +72,7 @@ void main() async {
       // Your App Here
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
-       Logger().error(
+      Logger().error(
           'Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });
@@ -92,7 +93,8 @@ class MyApp extends StatefulWidget {
   final ProfileModule _profileModule;
   final OrdersModule _ordersModule;
   final PlanModule _planModule;
-  
+  final MyNotificationsModule _myNotificationsModule;
+
   MyApp(
     this._themeDataService,
     this._localizationService,
@@ -107,6 +109,7 @@ class MyApp extends StatefulWidget {
     this._ordersModule,
     this._planModule,
     this._profileModule,
+    this._myNotificationsModule
   );
 
   @override
