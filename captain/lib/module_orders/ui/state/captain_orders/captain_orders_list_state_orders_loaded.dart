@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/accept_order.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
 import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
@@ -27,61 +26,19 @@ class CaptainOrdersListStateOrdersLoaded extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).home, icon: Icons.sort_rounded, onTap: () {
-        screenState.advancedController.showDrawer();
-      }),
-      body: Stack(
+      body: PageView(
+        controller: screenState.ordersPageController,
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        onPageChanged: (pos) {
+          screenState.currentPage = pos;
+          screenState.refresh();
+        },
         children: [
-          PageView(
-            controller: screenState.ordersPageController,
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            onPageChanged: (pos) {
-              screenState.currentPage = pos;
-              screenState.refresh();
-            },
-            children: [
-              getMyOrdersList(context),
-              getNearbyOrdersList(context),
-            ],
-          ),
-          Align(alignment: Alignment.bottomCenter, child: _Footer(context))
+          getMyOrdersList(context),
+          getNearbyOrdersList(context),
         ],
       ),
-    );
-  }
-
-  Widget _Footer(BuildContext context) {
-    return SnakeNavigationBar.color(
-      behaviour: SnakeBarBehaviour.pinned,
-      snakeShape: SnakeShape.indicator,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: const Radius.circular(10))),
-      snakeViewColor: Theme.of(context).primaryColor,
-      selectedItemColor: SnakeShape.indicator == SnakeShape.indicator
-          ? Theme.of(context).primaryColor
-          : null,
-      unselectedItemColor: Theme.of(context).disabledColor,
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? Colors.black
-          : Colors.white,
-      showUnselectedLabels: true,
-      showSelectedLabels: true,
-      currentIndex: screenState.currentPage,
-      onTap: (index) {
-        screenState.currentPage = index;
-        screenState.ordersPageController.animateToPage(screenState.currentPage,
-            duration: const Duration(milliseconds: 750), curve: Curves.linear);
-      },
-      items: [
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.directions_car),
-            label: S.of(context).currentOrders),
-        BottomNavigationBarItem(
-            icon: const Icon(Icons.map_outlined),
-            label: S.of(context).nearbyOrders),
-      ],
     );
   }
 
@@ -152,27 +109,34 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       );
     }
     var ordersData = nearbyOrders as OrderModel;
-    // List<OrderModel> orders =
-    //     sortLocations(ordersData.data, ordersData.currentLocation);
     var now = DateTime.now();
     var moment = Moment.now();
     var uiList = <Widget>[];
     ordersData.data.forEach((element) {
-      uiList.add(Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(25),
-          onTap: () {
-            Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
-                arguments: element.id.toString());
-          },
-          child: OrderCard(
-            createdDate: element.createdDate,
-            deliveryDate: element.deliveryDate,
-            note: element.note,
-            orderCost: element.orderCost.toStringAsFixed(1),
-            orderNumber: element.id.toString(),
-            orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+      uiList.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id.toString());
+            },
+            child: NearbyOrdersCard(
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost.toStringAsFixed(1),
+              orderNumber: element.id.toString(),
+              branchName: element.branchName,
+              distance: S.current.unknown == element.distance
+                  ? element.distance
+                  : S.current.distance +
+                      ' ' +
+                      element.distance +
+                      ' ' +
+                      S.current.km,
+            ),
           ),
         ),
       ));
@@ -186,22 +150,4 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           return screenState.refreshOrders();
         });
   }
-
-  // List<OrderModel> sortLocations(List<OrderModel> order, var currentLocation) {
-  //   if (currentLocation == null) {
-  //     return order;
-  //   }
-  //   var sorted = order;
-  //   sorted.sort((a, b) {
-  //     try {
-  //       double first = a.storeDistance ?? 0;
-  //       double second = b.storeDistance ?? 0;
-  //       return first.compareTo(second);
-  //     } catch (e) {
-  //       print(e.toString());
-  //       return 1;
-  //     }
-  //   });
-  //   return sorted;
-  // }
 }

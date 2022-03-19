@@ -48,8 +48,11 @@ class CaptainOrdersListStateManager {
     });
   }
 
-  void getMyOrders(CaptainOrdersScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+  void getMyOrders(CaptainOrdersScreenState screenState,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     Future.wait([
       _ordersService.getCaptainOrders(),
       _ordersService.getNearbyOrders(),
@@ -59,8 +62,9 @@ class CaptainOrdersListStateManager {
             onPressed: () {
               getMyOrders(screenState);
             },
-            title: S.current.home,
+            title: '',
             errors: [value[0].error!, value[1].error!],
+            hasAppbar: false,
             tapApp: () {
               screenState.advancedController.showDrawer();
             },
@@ -68,35 +72,7 @@ class CaptainOrdersListStateManager {
       } else {
         _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
             screenState, value[0], value[1]));
-        initListening(screenState);
       }
-    });
-  }
-
-  void initListening(CaptainOrdersScreenState screenState) {
-    newActionSubscription =
-        _ordersService.onInsertChangeWatcher().listen((event) {
-      getProfile(screenState);
-      Future.wait([
-        _ordersService.getCaptainOrders(),
-        _ordersService.getNearbyOrders(),
-      ]).then((List value) {
-        if (value[0].hasError && value[1].hasError) {
-          _stateSubject.add(ErrorState(screenState,
-              onPressed: () {
-                getMyOrders(screenState);
-              },
-              title: S.current.home,
-              errors: [value[0].error, value[1].error],
-              tapApp: () {
-                screenState.advancedController.showDrawer();
-              },
-              icon: Icons.sort_rounded));
-        } else {
-          _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
-              screenState, value[0], value[1]));
-        }
-      });
     });
   }
 
