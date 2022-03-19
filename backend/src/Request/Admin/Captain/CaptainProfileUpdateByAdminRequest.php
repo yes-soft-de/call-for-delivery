@@ -67,6 +67,11 @@ class CaptainProfileUpdateByAdminRequest
      */
     private $identity;
 
+    /**
+     * @var string|null
+     */
+    private $drivingLicence;
+
     public function getId(): int
     {
         return $this->id;
