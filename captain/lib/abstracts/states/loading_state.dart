@@ -5,11 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingState extends States {
-  LoadingState(State<StatefulWidget> screenState) : super(screenState);
+  final bool picture;
+  LoadingState(State<StatefulWidget> screenState, {this.picture = false})
+      : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return Center(
-      child: LottieBuilder.asset(LottieAsset.LOADING_BOX),
+    if (picture) {
+      return Center(
+        child: LottieBuilder.asset(LottieAsset.LOADING_BOX),
+      );
+    }
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

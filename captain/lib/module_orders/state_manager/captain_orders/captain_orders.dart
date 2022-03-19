@@ -51,7 +51,7 @@ class CaptainOrdersListStateManager {
   void getMyOrders(CaptainOrdersScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      _stateSubject.add(LoadingState(screenState,picture: true));
     }
     Future.wait([
       _ordersService.getCaptainOrders(),

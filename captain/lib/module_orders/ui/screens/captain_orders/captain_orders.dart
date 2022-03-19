@@ -67,7 +67,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
-    currentState = LoadingState(this);
+    currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
     //widget._stateManager.companyInfo();
     widget._stateManager.getMyOrders(this);
@@ -132,17 +132,15 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                     duration: const Duration(milliseconds: 750),
                     curve: Curves.linear);
               },
-              items:  [
+              items: [
                 BottomNavigationBarItem(
-                  icon: const Icon(
-                    Icons.directions_car,
-                  ),
-                  label: S.current.myOrders
-                ),
+                    icon: const Icon(
+                      Icons.directions_car,
+                    ),
+                    label: S.current.myOrders),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.map_outlined),
-                  label: S.current.nearbyOrders
-                ),
+                    icon: const Icon(Icons.map_outlined),
+                    label: S.current.nearbyOrders),
               ],
             ),
           ),
