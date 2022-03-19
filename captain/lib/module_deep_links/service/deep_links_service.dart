@@ -45,9 +45,9 @@ class DeepLinksService {
     return myPos;
   }
 
-  static Future<double> getDistance(LatLng headed) async {
+  static Future<double?> getDistance(LatLng headed) async {
     var currentLocation = await defaultLocation();
-    if (currentLocation == null) return 0.0;
+    if (currentLocation == null) return null;
     var straightDistance =
         const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
     return straightDistance;
