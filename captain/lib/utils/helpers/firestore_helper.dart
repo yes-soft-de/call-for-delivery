@@ -21,7 +21,7 @@ class FireStoreHelper {
           .collection('c4d_actions')
           .doc('new_action')
           .collection('action_history')
-          .add({'date': DateTime.now().toUtc().toIso8601String()});
+          .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(const Duration(seconds: 60));
     } catch (e) {
       return;
     }

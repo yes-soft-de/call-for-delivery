@@ -1,3 +1,4 @@
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_init/model/profile_post_state.dart';
@@ -40,7 +41,7 @@ class ProfileService {
       return ProfilePostState.error(StatusCodeHelper.getStatusCodeMessages(
           clientOrderResponse.statusCode));
     }
-    await _ordersService.insertWatcher();
+    await FireStoreHelper().insertWatcher();
     return ProfilePostState.empty();
   }
 
