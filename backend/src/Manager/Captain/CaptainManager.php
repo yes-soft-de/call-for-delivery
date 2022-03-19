@@ -63,8 +63,8 @@ class CaptainManager
 
         if (! $captainProfile) {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainEntity::class, $request);
-          //TODO change to CAPTAIN_INACTIVE
-            $captainProfile->setStatus(CaptainConstant::CAPTAIN_ACTIVE);
+          
+            $captainProfile->setStatus(CaptainConstant::CAPTAIN_INACTIVE);
             $captainProfile->setCaptainId($userRegister->getId());
             $captainProfile->setCaptainName(0);
             $captainProfile->setIsOnline(CaptainConstant::CAPTAIN_ONLINE_TRUE);
@@ -84,8 +84,7 @@ class CaptainManager
         if (! $captainProfile) {
             $captainProfile = $this->autoMapping->map(UserRegisterRequest::class, CaptainEntity::class, $request);
 
-            //TODO change to CAPTAIN_INACTIVE
-            $captainProfile->setStatus(CaptainConstant::CAPTAIN_ACTIVE);
+            $captainProfile->setStatus(CaptainConstant::CAPTAIN_INACTIVE);
             $captainProfile->setCaptainId($user['id']);
             $captainProfile->setCaptainName(0);
             $captainProfile->setIsOnline(CaptainConstant::CAPTAIN_ONLINE_TRUE);
