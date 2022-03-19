@@ -125,7 +125,7 @@ class _FilterBarState extends State<FilterBar> {
   Widget build(BuildContext context) {
     return AnimatedPadding(
       duration: animationDuration,
-      padding: padding ?? EdgeInsets.only(right: 8, left: 8.0),
+      padding: padding ?? const EdgeInsets.only(right: 8, left: 8.0),
       child: AnimatedContainer(
         height: widget.height ?? 75,
         duration: animationDuration,
@@ -144,7 +144,7 @@ class _FilterBarState extends State<FilterBar> {
                 },
                 left: initialOffset?.dx ?? 0,
                 duration:
-                    firstUse ? Duration(milliseconds: 1) : animationDuration,
+                    firstUse ? const Duration(milliseconds: 1) : animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
                   height: itemSize.isEmpty
@@ -188,8 +188,10 @@ class _FilterBarState extends State<FilterBar> {
           child: GestureDetector(
               key: _keys[element.index],
               onTap: () {
-                widget.currentIndex = element.index;
+                if (widget.currentIndex != element.index) {
                 end = false;
+                }
+                widget.currentIndex = element.index;
                 firstUse = false;
                 try {
                   RenderBox render = _keys[element.index]
