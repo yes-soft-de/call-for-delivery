@@ -15,6 +15,9 @@ use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\User\UserManager;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Manager\Image\ImageManager;
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
 
 class CaptainManager
 {
@@ -22,13 +25,15 @@ class CaptainManager
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
     private CaptainEntityRepository $captainEntityRepository;
+    private ImageManager $imageManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, CaptainEntityRepository $captainEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, CaptainEntityRepository $captainEntityRepository, ImageManager $imageManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
         $this->captainEntityRepository = $captainEntityRepository;
+        $this->imageManager = $imageManager;
     }
 
     public function captainRegister(UserRegisterRequest $request): mixed
@@ -110,13 +115,51 @@ class CaptainManager
 
             $this->entityManager->flush();
 
+            //save images
+            if ($request->getImages()) {
+                $this->imageManager->createImage($request->getImages(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+            }
+            if ($request->getDrivingLicence()) {
+                $this->imageManager->createImage($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
+            }
+            if ($request->getMechanicLicense()) {
+                $this->imageManager->createImage($request->getMechanicLicense(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
+            }
+            if ($request->getIdentity()) {
+                $this->imageManager->createImage($request->getIdentity(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
+            }
+           
             return $item;
         }
     }
 
     public function getCaptainProfile($userId): ?array
     {
-        return $this->captainEntityRepository->getCaptainByCaptainId($userId);
+        $captainProfile = $this->captainEntityRepository->getCaptainByCaptainId($userId);
+
+        if($captainProfile) {
+          $images = $this->imageManager->getImagesByItemIdAndEntityType( $captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
+          foreach ($images as $image) {
+
+              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
+                $captainProfile['images'] = $image->getImagePath();
+              }
+
+              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
+                $captainProfile['drivingLicence'] = $image->getImagePath();
+              }
+
+              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE) {
+                $captainProfile['mechanicLicense'] = $image->getImagePath();
+              }
+
+              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE) {
+                $captainProfile['identity'] = $image->getImagePath();
+              }
+           }
+        }
+
+        return  $captainProfile;
     }
 
     public function getCompleteAccountStatusOfCaptainProfile($storeOwnerId): ?array
@@ -207,4 +250,6 @@ class CaptainManager
 
         return $captainProfileEntity;
     }
+
+    
 }

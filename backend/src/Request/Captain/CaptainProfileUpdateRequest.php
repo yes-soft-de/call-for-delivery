@@ -8,7 +8,7 @@ class CaptainProfileUpdateRequest
 
     private string $captainName;
 
-    private $images;
+    private string $images;
 
     private array $location = [];
 
@@ -30,24 +30,23 @@ class CaptainProfileUpdateRequest
 
     private string $stcPay;
    
-    private $mechanicLicense;
+    private string $mechanicLicense;
     
-    private $identity;
+    private string $identity;
+
+    private string $drivingLicence;
 
     /**
      * @return mixed
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 
-    /**
-     * @param mixed $image
-     */
-    public function setImage($image): void
+    public function setImages($images): void
     {
-        $this->image = $image;
+        $this->images = $images;
     }
 
     /**
@@ -86,6 +85,66 @@ class CaptainProfileUpdateRequest
     public function setCaptainId($captainId)
     {
         $this->captainId = $captainId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of drivingLicence
+     */ 
+    public function getDrivingLicence()
+    {
+        return $this->drivingLicence;
+    }
+
+    /**
+     * Set the value of drivingLicence
+     *
+     * @return  self
+     */ 
+    public function setDrivingLicence($drivingLicence)
+    {
+        $this->drivingLicence = $drivingLicence;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of identity
+     */ 
+    public function getIdentity()
+    {
+        return $this->identity;
+    }
+
+    /**
+     * Set the value of identity
+     *
+     * @return  self
+     */ 
+    public function setIdentity($identity)
+    {
+        $this->identity = $identity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of mechanicLicense
+     */ 
+    public function getMechanicLicense()
+    {
+        return $this->mechanicLicense;
+    }
+
+    /**
+     * Set the value of mechanicLicense
+     *
+     * @return  self
+     */ 
+    public function setMechanicLicense($mechanicLicense)
+    {
+        $this->mechanicLicense = $mechanicLicense;
 
         return $this;
     }

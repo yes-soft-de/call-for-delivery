@@ -35,4 +35,22 @@ class ImageManager
     {
         return $this->imageEntityRepository->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
     }
+
+    public function createImage(string $image, string $id, int $entity, int $usedAs): ?ImageEntity
+    {
+        $request = new ImageCreateRequest();
+           
+        $request->setImagePath($image);
+        $request->setEntityType( $entity);
+        $request->setUsedAs($usedAs);
+        $request->setItemId($id);
+    
+        return $this->create($request);
+    }
+    
+    public function getImagesByItemIdAndEntityType(int $itemId, int $entityType): ?array
+    {
+        return $this->imageEntityRepository->getImagesByItemIdAndEntityType($itemId, $entityType);
+    }
+
 }

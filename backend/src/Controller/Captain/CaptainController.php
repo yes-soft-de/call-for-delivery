@@ -205,6 +205,10 @@ class CaptainController extends BaseController
      *              @OA\Property(type="string", property="bankName"),
      *              @OA\Property(type="string", property="bankAccountNumber"),
      *              @OA\Property(type="string", property="stcPay"),
+     *              @OA\Property(type="object", property="images"),
+     *              @OA\Property(type="object", property="mechanicLicense"),
+     *              @OA\Property(type="object", property="drivingLicence"),
+     *              @OA\Property(type="object", property="identity"),
      *         )
      *      )
      * )

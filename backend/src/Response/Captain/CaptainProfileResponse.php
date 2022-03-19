@@ -36,5 +36,7 @@ class CaptainProfileResponse
     
     public $identity;
 
+    public $drivingLicence;
+
     public string $roomId;
 }
