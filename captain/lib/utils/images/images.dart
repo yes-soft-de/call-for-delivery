@@ -37,4 +37,5 @@ class SvgAsset {
 class LottieAsset {
   static const ROOT = 'assets/animations/';
   static const LOADING_CART = ROOT + 'cart_loading.json';
+  static const LOADING_BOX = ROOT + 'loading.json';
 }
