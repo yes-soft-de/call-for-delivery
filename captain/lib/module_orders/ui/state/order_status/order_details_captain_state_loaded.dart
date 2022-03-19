@@ -8,9 +8,11 @@ import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/communication_card/communication_card.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
+import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -32,39 +34,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsCaptainOrderLoadedState(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState) {
-    if (orderInfo.destinationCoordinate != null) {
-      distance = S.current.calculating;
-      screenState.refresh();
-      DeepLinksService.getDistance(LatLng(
-              orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0))
-          .then((value) {
-        distance = value.toStringAsFixed(1);
-        distance = S.current.distance + ' $distance ' + S.current.km;
-        screenState.refresh();
-        return;
-      });
-    }
-    if (orderInfo.branchCoordinate != null) {
-      distanceBranch = S.current.calculating;
-      screenState.refresh();
-      DeepLinksService.getDistance(LatLng(
-              orderInfo.branchCoordinate?.latitude ?? 0,
-              orderInfo.branchCoordinate?.longitude ?? 0))
-          .then((value) {
-        distanceBranch = value.toStringAsFixed(1);
-        distanceBranch =
-            S.current.distance + ' $distanceBranch ' + S.current.km;
-        screenState.refresh();
-        return;
-      });
-    }
-  }
-  String? distance;
-  String? distanceBranch;
-
-  int currentIndex = 0;
+  ) : super(screenState);
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -145,7 +115,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     cursorRadius: BorderRadius.circular(25),
                     animationDuration: const Duration(milliseconds: 350),
                     backgroundColor: Theme.of(context).backgroundColor,
-                    currentIndex: currentIndex,
+                    currentIndex: screenState.currentIndex,
                     borderRadius: BorderRadius.circular(25),
                     floating: true,
                     height: 40,
@@ -155,7 +125,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       FilterItem(label: S.current.orderDetails),
                     ],
                     onItemSelected: (index) {
-                      currentIndex = index;
+                      screenState.currentIndex = index;
                       screenState.refresh();
                     },
                     selectedContent: Theme.of(context).textTheme.button!.color!,
@@ -163,12 +133,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         Theme.of(context).textTheme.headline6!.color!,
                   ),
                   AnimatedSwitcher(
+                    key: ObjectKey(orderInfo),
                     duration: const Duration(milliseconds: 450),
                     reverseDuration: const Duration(milliseconds: 450),
-                    child: currentIndex == 1
-                        ? SizedBox(key: UniqueKey(), child: details(context))
+                    child: screenState.currentIndex == 1
+                        ? SizedBox(
+                          key: UniqueKey(),
+                          child: details(context))
                         : SizedBox(
-                            key: UniqueKey(),
+                            
                             child: control(context),
                           ),
                   ),
@@ -287,9 +260,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     child: ListTile(
                       leading: const Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: distance != null
-                          ? Text(distance ?? '')
-                          : Text(S.current.distance + ' ' + S.current.unknown),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(
+                              S.current.destination + ' ' + S.current.unknown),
                       trailing: const Icon(Icons.arrow_forward),
                     ),
                   ),
@@ -359,9 +333,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       });
                     },
                     title: Text(S.current.branchLocation),
-                    subtitle: distanceBranch != null
-                        ? Text(distanceBranch ?? '')
-                        : Text(S.current.distance + ' ' + S.current.unknown),
+                    subtitle: orderInfo.branchDistance != null
+                        ? Text(orderInfo.branchDistance ?? '')
+                        : Text(S.current.destination + ' ' + S.current.unknown),
+                    trailing: const Icon(Icons.arrow_forward_rounded),
                   ),
                 ),
                 Padding(
@@ -481,38 +456,6 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               },
             ),
           ),
-          // whatsapp
-          Row(
-            children: [
-              Expanded(
-                child: OrderButton(
-                  backgroundColor: Colors.green[600]!,
-                  icon: Icons.whatsapp,
-                  subtitle: S.current.whatsappWithStoreOwner,
-                  title: S.current.whatsapp,
-                  onTap: null,
-                  short: true,
-                ),
-              ),
-              Expanded(
-                child: OrderButton(
-                  backgroundColor: Colors.green[600]!,
-                  icon: Icons.whatsapp,
-                  subtitle: S.current.whatsappWithClient,
-                  title: S.current.whatsapp,
-                  short: true,
-                  onTap: () {
-                    var url = 'https://wa.me/${orderInfo.customerPhone}';
-                    canLaunch(url).then((value) {
-                      if (value) {
-                        launch(url);
-                      }
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
           // location
           Row(
             children: [
@@ -522,7 +465,23 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   icon: Icons.location_on_rounded,
                   subtitle: S.current.storeLocation,
                   title: S.current.location,
-                  onTap: null,
+                  onTap: () {
+                    String url = '';
+                    if (orderInfo.branchCoordinate != null) {
+                      url = LauncherLinkHelper.getMapsLink(
+                          orderInfo.branchCoordinate?.latitude ?? 0,
+                          orderInfo.branchCoordinate?.longitude ?? 0);
+                    } else if (orderInfo.destinationLink != null) {
+                      url = orderInfo.destinationLink ?? '';
+                    }
+                    canLaunch(url).then((value) {
+                      if (value) {
+                        launch(url);
+                      } else {
+                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                      }
+                    });
+                  },
                   short: true,
                 ),
               ),
@@ -547,6 +506,45 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         launch(url);
                       } else {
                         Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                      }
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          // whatsapp
+          Row(
+            children: [
+              Expanded(
+                child: OrderButton(
+                  backgroundColor: Colors.green[600]!,
+                  icon: Icons.whatsapp,
+                  subtitle: S.current.whatsappWithStoreOwner,
+                  title: S.current.whatsapp,
+                  onTap: () {
+                    var url = 'https://wa.me/${orderInfo.storePhone}';
+                    canLaunch(url).then((value) {
+                      if (value) {
+                        launch(url);
+                      }
+                    });
+                  },
+                  short: true,
+                ),
+              ),
+              Expanded(
+                child: OrderButton(
+                  backgroundColor: Colors.green[600]!,
+                  icon: Icons.whatsapp,
+                  subtitle: S.current.whatsappWithClient,
+                  title: S.current.whatsapp,
+                  short: true,
+                  onTap: () {
+                    var url = 'https://wa.me/${orderInfo.customerPhone}';
+                    canLaunch(url).then((value) {
+                      if (value) {
+                        launch(url);
                       }
                     });
                   },
@@ -653,77 +651,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       return const SizedBox();
     } else if (orderInfo.state == OrderStatusEnum.DELIVERING) {
       return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: SizedBox(
-            height: 72,
-            width: MediaQuery.of(context).size.width,
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextField(
-                          controller: TextEditingController(),
-                          decoration: InputDecoration(
-                            hintText:
-                                '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
-                            prefixIcon: const Icon(Icons.add_road),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(16),
-                          ),
-                          onEditingComplete: () =>
-                              FocusScope.of(context).unfocus(),
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[0-9+.]')),
-                          ]),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.green[700],
-                    ),
-                    child: IconButton(
-                        padding: EdgeInsets.zero,
-                        splashRadius: 20,
-                        icon: const Icon(
-                          Icons.check,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          // if (distanceCalculator.text.isNotEmpty) {
-                          //  provideDistance(distanceCalculator.text);
-                          // } else {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message:
-                                      S.of(context).pleaseProvideTheDistance)
-                              .show(context);
-                          // }
-                        }),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+          padding: const EdgeInsets.all(8.0),
+          child: ProvideDistance(
+            callBack: (distance) {
+              screenState.requestOrderProgress(
+                  orderInfo, StatusHelper.getOrderStatusIndex(orderInfo.state),
+                  distance: distance);
+            },
+            controller: _distanceCalculator,
+          ));
     } else {
       return OrderButton(
           backgroundColor: StatusHelper.getOrderStatusColor(orderInfo.state),

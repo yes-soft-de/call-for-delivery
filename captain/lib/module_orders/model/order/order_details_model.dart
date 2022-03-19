@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -28,6 +30,8 @@ class OrderDetailsModel extends DataModel {
   late String storePhone;
   late LatLng? branchCoordinate;
   late String? branchLink;
+  String? distance;
+  String? branchDistance;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -48,7 +52,9 @@ class OrderDetailsModel extends DataModel {
       required this.storeName,
       required this.branchCoordinate,
       required this.storePhone,
-      required this.branchLink});
+      required this.branchLink,
+      required this.distance,
+      required this.branchDistance});
 
   late OrderDetailsModel _orders;
 
@@ -67,7 +73,6 @@ class OrderDetailsModel extends DataModel {
         ' 📅 ' +
         DateFormat.yMMMEd()
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
-    //
     _orders = OrderDetailsModel(
       image: element?.image?.image,
       branchName: element?.branchName ?? S.current.unknown,
@@ -96,7 +101,42 @@ class OrderDetailsModel extends DataModel {
       storeName: element?.storeOwnerName ?? S.current.unknown,
       storePhone: element?.phone ?? '',
       branchLink: element?.location?.link,
+      branchDistance: null,
+      distance: null,
     );
+    _distance(_orders).then((value) {
+      _orders.distance = value;
+    });
+    _branchDistance(_orders).then((value) {
+      _orders.branchDistance = value;
+    });
+  }
+  Future<String?> _distance(OrderDetailsModel orderInfo) async {
+    String? distance;
+    if (orderInfo.destinationCoordinate != null) {
+      var value = await DeepLinksService.getDistance(LatLng(
+          orderInfo.destinationCoordinate?.latitude ?? 0,
+          orderInfo.destinationCoordinate?.longitude ?? 0));
+      if (value == null) return null;
+      distance = value.toStringAsFixed(1);
+      distance = S.current.distance + ' $distance ' + S.current.km;
+      return distance;
+    }
+    return null;
+  }
+
+  Future<String?> _branchDistance(OrderDetailsModel orderInfo) async {
+    if (orderInfo.branchCoordinate != null) {
+      String? branchDistance;
+      var value = await DeepLinksService.getDistance(LatLng(
+          orderInfo.branchCoordinate?.latitude ?? 0,
+          orderInfo.branchCoordinate?.longitude ?? 0));
+      if (value == null) return null;
+      branchDistance = value.toStringAsFixed(1);
+      branchDistance = S.current.distance + ' $branchDistance ' + S.current.km;
+      return branchDistance;
+    }
+    return null;
   }
 
   OrderDetailsModel get data => _orders;

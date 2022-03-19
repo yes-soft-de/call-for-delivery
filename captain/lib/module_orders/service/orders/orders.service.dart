@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
@@ -93,7 +94,8 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await insertWatcher();
+    await FireStoreHelper().insertWatcher();
+
     return ActionStateModel.empty();
   }
 
@@ -108,7 +110,8 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await insertWatcher();
+    await FireStoreHelper().insertWatcher();
+
     return ActionStateModel.empty();
   }
 
@@ -122,7 +125,8 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await insertWatcher();
+    await FireStoreHelper().insertWatcher();
+
     return ActionStateModel.empty();
   }
 
@@ -137,29 +141,8 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await insertWatcher();
+    await FireStoreHelper().insertWatcher();
     return ActionStateModel.empty();
-  }
-
-  Stream onInsertChangeWatcher() {
-    return FirebaseFirestore.instance
-        .collection('c4d_actions')
-        .doc('new_action')
-        .collection('action_history')
-        .snapshots();
-  }
-
-  Future<void> insertWatcher() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('c4d_actions')
-          .doc('new_action')
-          .collection('action_history')
-          .add({'date': DateTime.now().toUtc().toIso8601String()});
-    } catch (e) {
-      Logger().error('FireStore on action', e.toString(), StackTrace.current);
-      return;
-    }
   }
 
   Future<DataModel> getCaptainOrders() async {

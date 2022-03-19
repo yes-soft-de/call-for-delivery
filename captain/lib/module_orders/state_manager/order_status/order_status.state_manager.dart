@@ -25,8 +25,11 @@ class OrderStatusStateManager {
 
   OrderStatusStateManager(this._ordersService, this._imageUploadService);
 
-  void getOrderDetails(int orderId, OrderStatusScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+  void getOrderDetails(int orderId, OrderStatusScreenState screenState,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
@@ -153,17 +156,6 @@ class OrderStatusStateManager {
                 message: S.current.saveInvoiceSuccess)
             .show(screenState.context);
         screenState.saveBill(uploadedImageLink, totalPrice, isBilled, storeID);
-      }
-    });
-  }
-
-  void sendOrderReportState(
-      var orderId, bool answer, OrderStatusScreenState screenState) {
-    _ordersService.sendOrderReportState(orderId, answer).then((value) {
-      if (value != null) {
-        screenState.sendState(true);
-      } else {
-        screenState.sendState(false);
       }
     });
   }

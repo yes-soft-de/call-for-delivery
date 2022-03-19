@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,34 +43,21 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         setState(() {});
       }
     });
+    FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
+      widget.stateManager
+          .getOrderDetails(int.tryParse(orderId!) ?? -1, this, false);
+    });
     super.initState();
   }
 
-  void sendOrderReportState(var orderId, bool answar) {
-    widget.stateManager.sendOrderReportState(orderId, answar, this);
-  }
-
-  void sendState(bool success) {
-    if (success) {
-      CustomFlushBarHelper.createSuccess(
-        title: S.of(context).warnning,
-        message: S.of(context).sendToRecordSuccess,
-      )..show(context);
-    } else {
-      CustomFlushBarHelper.createError(
-        title: S.of(context).warnning,
-        message: S.of(context).sendToRecordFaild,
-      )..show(context);
-    }
-  }
-
+  int currentIndex = 0;
   void goBack(String error) {
     Navigator.of(context).pushNamedAndRemoveUntil(
         OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);
     CustomFlushBarHelper.createError(
       title: S.of(context).warnning,
       message: error,
-    )..show(context);
+    ).show(context);
   }
 
   void saveBill(String image, double price, bool? isBilled, String? storeID) {
@@ -83,7 +71,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   void refresh() {
-    if (this.mounted) {
+    if (mounted) {
       setState(() {});
     }
   }
@@ -180,7 +168,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           barrierDismissible: false,
           builder: (context) {
             return TweenAnimationBuilder(
-              duration: Duration(milliseconds: 375),
+              duration: const Duration(milliseconds: 375),
               tween: Tween<double>(begin: 0, end: 1),
               curve: Curves.linear,
               builder: (context, double val, child) {
