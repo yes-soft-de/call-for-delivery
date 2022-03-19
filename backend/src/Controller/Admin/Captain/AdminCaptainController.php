@@ -300,6 +300,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="boolean", property="isOnline"),
      *          @OA\Property(type="string", property="mechanicLicense"),
+     *          @OA\Property(type="string", property="drivingLicence"),
      *          @OA\Property(type="string", property="identity")
      *      )
      * )
@@ -327,6 +328,7 @@ class AdminCaptainController extends BaseController
      *              @OA\Property(type="boolean", property="isOnline"),
      *              @OA\Property(type="string", property="mechanicLicense"),
      *              @OA\Property(type="string", property="identity"),
+     *              @OA\Property(type="string", property="drivingLicence"),
      *              @OA\Property(type="string", property="roomId")
      *          )
      *      )
