@@ -212,7 +212,31 @@ class CaptainManager
 
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
-        return $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+        $captainProfile = $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+       
+        if($captainProfile) {
+            $images = $this->imageManager->getImagesByItemIdAndEntityType( $captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
+            foreach ($images as $image) {
+  
+                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
+                  $captainProfile['images'] = $image->getImagePath();
+                }
+  
+                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
+                  $captainProfile['drivingLicence'] = $image->getImagePath();
+                }
+  
+                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE) {
+                  $captainProfile['mechanicLicense'] = $image->getImagePath();
+                }
+  
+                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE) {
+                  $captainProfile['identity'] = $image->getImagePath();
+                }
+             }
+          }
+          
+          return $captainProfile;
     }
 
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity

@@ -54,16 +54,17 @@ class CaptainService
     {
         $item = $this->captainManager->getCaptainProfile($userId);
 
-        if($item['roomId']) {
-          
-            $item['roomId'] = $item['roomId']->toBase32();
+        if($item) {
+            if($item['roomId']) {
+            
+                $item['roomId'] = $item['roomId']->toBase32();
+            }
+
+            $item['images'] = $this->uploadFileHelperService->getImageParams($item['images']);
+            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
+            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
+            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
         }
-
-        $item['images'] = $this->uploadFileHelperService->getImageParams($item['images']);
-        $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
-        $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
-        $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
-
         return $this->autoMapping->map('array', CaptainProfileResponse::class, $item);
     }
 

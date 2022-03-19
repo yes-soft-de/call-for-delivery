@@ -26,8 +26,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainEntity')
 
-            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
-                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay')
             ->addSelect('chatRoomEntity.roomId')
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = captainEntity.captainId')
@@ -79,8 +79,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
     {
         $query = $this->createQueryBuilder('captainEntity')
-            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
-                'captainEntity.status', 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity');
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.status', 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay');
 
         if($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
             $query->andWhere('captainEntity.status = :captainProfileStatus');
@@ -95,8 +95,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
         return $this->createQueryBuilder('captainEntity')
-            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.images', 'captainEntity.age', 'captainEntity.car', 'captainEntity.drivingLicence', 'captainEntity.salary',
-                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.mechanicLicense', 'captainEntity.identity',
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
                 'captainEntity.status', 'chatRoomEntity.roomId')
 
             ->leftJoin(
