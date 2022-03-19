@@ -29,9 +29,11 @@ class Urls {
   static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captainisactive';
   static const ORDER_STATUS_API = BASE_API + '/v1/order/captainorder/';
   static const NEARBY_ORDERS_API = BASE_API + '/v1/order/closestorders';
-  static const CAPTAIN_ACCEPTED_ORDERS_API = BASE_API + '/v1/order/acceptedorder';
+  static const CAPTAIN_ACCEPTED_ORDERS_API =
+      BASE_API + '/v1/order/acceptedorder';
   static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
-  static const CAPTAIN_ORDER_UPDATE_API = BASE_API + '/v1/order/orderupdatestate';
+  static const CAPTAIN_ORDER_UPDATE_API =
+      BASE_API + '/v1/order/orderupdatestate';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
   static const UPDATES_API = BASE_API + '/updateall';
@@ -185,4 +187,14 @@ class Urls {
       BASE_API + '/createstoreproductcategorytranslation';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
+  static const GET_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationsLocal';
+  static const GET_UPDATES =
+      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforstore';
+  static const DELETE_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationLocal';
+  static const GET_SUBSCRIPTION_BALANCE =
+      DOMAIN + '/v1/subscription/packagebalance';
+  static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
+  static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
 }
