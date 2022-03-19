@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\CaptainEntity;
 use App\Entity\ChatRoomEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -38,4 +39,25 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
 
             ->getResult();
      }
+
+    public function getChatRoomsWithCaptains(): ?array
+    {
+        return $this->createQueryBuilder('chatRoom')
+
+            ->select('chatRoom.roomId')
+            ->addSelect('captainEntity.id as captainProfileId, captainEntity.captainName')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'chatRoom.userId = captainEntity.captainId'
+            )
+
+            ->andWhere('chatRoom.usedAs = :usedAs')
+            ->setParameter('usedAs', ChatRoomConstant::ADMIN_CAPTAIN)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
