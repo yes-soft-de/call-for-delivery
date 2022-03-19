@@ -190,11 +190,13 @@ class Urls {
   static const GET_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationsLocal';
   static const GET_UPDATES =
-      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforstore';
+      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforcaptain';
   static const DELETE_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationLocal';
   static const GET_SUBSCRIPTION_BALANCE =
       DOMAIN + '/v1/subscription/packagebalance';
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
+  static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterorders';
+
 }

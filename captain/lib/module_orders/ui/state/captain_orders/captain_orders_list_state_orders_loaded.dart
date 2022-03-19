@@ -70,12 +70,12 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   arguments: element.id.toString());
             },
             child: OrderCard(
-              createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
               note: element.note,
               orderCost: element.orderCost.toStringAsFixed(1),
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              destination: element.distance,
             ),
           ),
         ));

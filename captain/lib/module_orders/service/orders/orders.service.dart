@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,6 +56,18 @@ class OrdersService {
   }
 
 //////////////////////////////////////////////////////////////////////
+
+  Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
+    OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
   Future<DataModel> getOrderDetails(int orderId) async {
     OrderDetailsResponse? _ordersResponse =
         await _ordersManager.getOrderDetails(orderId);

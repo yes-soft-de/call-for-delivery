@@ -6,16 +6,17 @@ class OrderCard extends StatelessWidget {
   final String orderNumber;
   final String orderStatus;
   final String deliveryDate;
-  final String createdDate;
   final String orderCost;
   final String note;
+  final String destination;
   OrderCard(
       {required this.orderNumber,
       required this.orderStatus,
-      required this.createdDate,
       required this.deliveryDate,
       required this.orderCost,
-      required this.note});
+      required this.note,
+      required this.destination
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class OrderCard extends StatelessWidget {
                   verticalTile(context,
                       title: S.current.deliverDate, subtitle: deliveryDate),
                   verticalTile(context,
-                      title: S.current.createdDate, subtitle: createdDate),
+                      title: S.current.destination, subtitle: destination),
                 ],
               ),
               // divider
@@ -145,8 +146,7 @@ class NearbyOrdersCard extends StatelessWidget {
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
-      required this.branchName
-      });
+      required this.branchName});
 
   @override
   Widget build(BuildContext context) {

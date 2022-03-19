@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -108,6 +109,12 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
               colorIcon: currentState is ErrorState
                   ? Theme.of(context).colorScheme.error
                   : null,
+              actions: [
+                CustomC4dAppBar.actionIcon(context, onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+                }, icon: Icons.notifications_rounded)
+              ],
               title: S.of(context).home,
               icon: Icons.sort_rounded, onTap: () {
             advancedController.showDrawer();

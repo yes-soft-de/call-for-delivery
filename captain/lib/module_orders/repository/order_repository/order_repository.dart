@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -73,6 +74,17 @@ class OrderRepository {
     );
     if (response == null) return null;
     return response['Data']['status'] ?? '';
+  }
+
+  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_CAPTAIN_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
   }
 
   Future<OrderActionResponse?> updateOrderState(

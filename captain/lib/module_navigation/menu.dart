@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -19,7 +20,8 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTileTheme(
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -77,10 +79,16 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.of(context).pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
+                },
+                leading: const Icon(Icons.notifications_active_rounded),
+                title: Text(S.of(context).notices),
+              ),
+              ListTile(
+                onTap: () {
                   if (screenState.currentState
                       is CaptainOrdersListStateOrdersLoaded) {
-                    screenState.currentState =
-                        LoadingState(screenState);
+                    screenState.currentState = LoadingState(screenState);
                     screenState.getMyOrders();
                   }
                   Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);

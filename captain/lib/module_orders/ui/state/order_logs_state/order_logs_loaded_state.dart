@@ -1,93 +1,54 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/order_logs.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
-import 'package:c4d/module_orders/ui/state/order_logs_state/order_logs_state.dart';
-import 'package:c4d/module_orders/ui/widgets/order_log/log_card.dart';
-import 'package:c4d/utils/helpers/translating.dart';
-import 'package:c4d/utils/images/images.dart';
-import 'package:c4d/utils/text_style/text_style.dart';
+import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
+import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:flutter/material.dart';
 
-class OrderLogsLoadedState extends OrderLogsState {
+class OrderLogsLoadedState extends States {
   OrderLogsScreenState screenState;
-  List<OrderLogsModel> orders;
+  List<OrderModel> orders;
   OrderLogsLoadedState(this.screenState, this.orders) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-            width: double.maxFinite,
-            height: MediaQuery.of(context).size.height,
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Image.asset(
-                  ImageAsset.DELIVERY_MOTOR,
-                  fit: BoxFit.cover,
-                  height: 525,
-                  width: 2500,
-                  alignment: Alignment.bottomRight,
-                ))),
-        Container(
-          color: Theme.of(context).cardColor.withOpacity(0.90),
-          child: RefreshIndicator(
-            onRefresh: () {
-              return screenState.getOrders();
+    return CustomListView.custom(children: getOrders());
+  }
+
+  List<Widget> getOrders() {
+    var context = screenState.context;
+    List<Widget> widgets = [];
+    orders.forEach((element) {
+      widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
             },
-            child: ListView(
-              physics: BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10.0,
-                    left: 10,
-                  ),
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.sortAmountDown,
-                      color: Theme.of(context).primaryColor,
-                      size: 18,
-                    ),
-                    title: Text(
-                      S.of(context).sortByEarlier,
-                      style: StyleText.categoryStyle,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    children: getOrders(orders),
-                  ),
-                ),
-                SizedBox(
-                  height: 75,
-                ),
-              ],
+            child: OrderCard(
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              deliveryDate: element.deliveryDate,
+              orderCost:
+                  element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
+              note: element.note,
+              destination: element.distance,
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  List<Widget> getOrders(List<OrderLogsModel> orders) {
-    if (orders.isEmpty) return [];
-    List<OrderLogsCard> ordersCard = [];
-    orders.forEach((element) {
-      ordersCard.add(OrderLogsCard(
-        orderId: element.orderNumber,
-        orderStatus: element.state,
-        orderDate: element.orderDate,
-        completeTime: Trans.localString(
-            element.completeTime.toString(), screenState.context),
       ));
     });
-    return ordersCard;
+    widgets.add(SizedBox(
+      height: 75,
+    ));
+    return widgets;
   }
 }
