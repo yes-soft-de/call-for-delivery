@@ -267,6 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+        "destination": MessageLookupByLibrary.simpleMessage("Destination"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
@@ -329,8 +330,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
-        "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
-            "Finish Order, Provide distance in KM"),
+        "finishOrderProvideDistanceInKm":
+            MessageLookupByLibrary.simpleMessage("Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":

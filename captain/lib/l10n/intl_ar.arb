@@ -157,7 +157,7 @@
     "ourPackages": "باقاتنا",
     "notifications": "الاشعارات",
     "pleaseProvideTheDistance": "الرجاء توفير المسافة المقطوعة",
-    "finishOrderProvideDistanceInKm": "انهاء الطلب، المسافة المقطوعة",
+    "finishOrderProvideDistanceInKm": "المسافة المقطوعة",
     "myStatus": "حالتي",
     "directSupport": "دعم مباشر",
     "myOrders": "طلباتي",
@@ -609,7 +609,8 @@
     "iArrivedAtTheStoreHint": "لإعلان وصولك للمتجر",
     "iGotThePackageHint": "الطلبية جاهزة للتوصيل",
     "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح",
-    "branchLocation": "موقع الفرع"
+    "branchLocation": "موقع الفرع",
+    "destination": "المسافة"
 
 
 

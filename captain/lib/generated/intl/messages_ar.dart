@@ -262,6 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه للعميل"),
+        "destination": MessageLookupByLibrary.simpleMessage("المسافة"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
@@ -322,8 +323,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
-        "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
-            "انهاء الطلب، المسافة المقطوعة"),
+        "finishOrderProvideDistanceInKm":
+            MessageLookupByLibrary.simpleMessage("المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),

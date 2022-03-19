@@ -1630,10 +1630,10 @@ class S {
     );
   }
 
-  /// `Finish Order, Provide distance in KM`
+  /// `Provide distance in KM`
   String get finishOrderProvideDistanceInKm {
     return Intl.message(
-      'Finish Order, Provide distance in KM',
+      'Provide distance in KM',
       name: 'finishOrderProvideDistanceInKm',
       desc: '',
       args: [],
@@ -6105,6 +6105,16 @@ class S {
     return Intl.message(
       'Branch location',
       name: 'branchLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Destination`
+  String get destination {
+    return Intl.message(
+      'Destination',
+      name: 'destination',
       desc: '',
       args: [],
     );

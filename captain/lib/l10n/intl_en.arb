@@ -158,7 +158,7 @@
     "ourPackages": "Our Packages",
     "notifications": "Notifications",
     "pleaseProvideTheDistance": "Please Provide the distance",
-    "finishOrderProvideDistanceInKm": "Finish Order, Provide distance in KM",
+    "finishOrderProvideDistanceInKm": "Provide distance in KM",
     "myStatus": "My Status",
     "directSupport": "Direct Support",
     "myOrders": "My Orders",
@@ -608,7 +608,9 @@
     "iArrivedAtTheStoreHint": "If you are arrived to the store",
     "iGotThePackageHint": "Ready to deliver the package",
     "iFinishedDeliveringHint": "I delivered the package with a success",
-    "branchLocation": "Branch location"
+    "branchLocation": "Branch location",
+    "destination": "Destination"
+
 
 
 
