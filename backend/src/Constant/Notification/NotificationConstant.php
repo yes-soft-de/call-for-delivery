@@ -41,4 +41,14 @@ final class NotificationConstant
     const CANCEL_ORDER_ERROR_TIME = "لا يمكن حذف الطلب, لقد تجاوزت الوقت المسموح به للحذف.";
 
     const CANCEL_ORDER_ERROR_ACCEPTED = "لا يمكن حذف الطلب, الكابتن استلم الطلب.";
+//for captain
+    const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
+
+    const STATE_IN_STORE_CAPTAIN = "أنت في المتجر";
+
+    const STATE_PICKED_CAPTAIN = "لقد إلتقطت الطلب";
+
+    const STATE_ONGOING_CAPTAIN = "أنت في طريقك لتسليم الطلب";
+
+    const STATE_DELIVERED_CAPTAIN = "لقد سلمت الطلب ,شكرا لك";
 }
