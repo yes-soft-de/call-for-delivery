@@ -68,11 +68,7 @@ class ChatRoomService
         foreach($chatRooms as $chatRoom) {
             $chatRoom['roomId'] = $chatRoom['roomId']->toBase32();
 
-            $chatRoom['images'] = $this->imageService->getImagesByItemIdAndEntityTypeAndImageAim($chatRoom['captainProfileId'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
-
-            foreach ($chatRoom['images'] as $image){
-                $chatRoom['images'] = $image->image;
-            }
+            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams($chatRoom['imagePath']);
 
             $response[] = $this->autoMapping->map("array", ChatRoomCaptainResponse::class, $chatRoom);
         }
