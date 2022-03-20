@@ -39,6 +39,10 @@ class AdminCaptainService
 
             $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
 
+            if (empty($captainProfile['location'])) {
+                $captainProfile['location'] = null;
+            }
+
             $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
 
@@ -60,6 +64,10 @@ class AdminCaptainService
 
             if($captainProfile['roomId']) {
                 $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();
+            }
+
+            if (empty($captainProfile['location'])) {
+                $captainProfile['location'] = null;
             }
         }
 

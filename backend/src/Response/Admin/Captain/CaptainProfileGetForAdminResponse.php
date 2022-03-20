@@ -71,17 +71,17 @@ class CaptainProfileGetForAdminResponse
     public $stcPay;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     public $mechanicLicense;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     public $drivingLicence;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     public $identity;
 
