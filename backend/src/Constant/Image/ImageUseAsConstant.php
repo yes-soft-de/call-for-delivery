@@ -2,7 +2,7 @@
 
 namespace App\Constant\Image;
 
-class ImageUseAsConstant
+final class ImageUseAsConstant
 {
     const IMAGE_USE_AS_PROFILE_IMAGE = 0;
 
