@@ -101,7 +101,7 @@ class StatusHelper {
       case OrderStatusEnum.IN_STORE:
         return Colors.blue;
       case OrderStatusEnum.DELIVERING:
-        return Colors.indigo;
+        return Colors.indigoAccent;
       case OrderStatusEnum.GOT_CAPTAIN:
         return Colors.purple;
       case OrderStatusEnum.FINISHED:
@@ -125,6 +125,23 @@ class StatusHelper {
         return 4;
       default:
         return 0;
+    }
+  }
+
+  static OrderStatusEnum getOrderStatusByIndex(int index) {
+    switch (index) {
+      case 0:
+        return OrderStatusEnum.WAITING;
+      case 1:
+        return OrderStatusEnum.GOT_CAPTAIN;
+      case 2:
+        return OrderStatusEnum.IN_STORE;
+      case 3:
+        return OrderStatusEnum.DELIVERING;
+      case 4:
+        return OrderStatusEnum.FINISHED;
+      default:
+        return OrderStatusEnum.WAITING;
     }
   }
 

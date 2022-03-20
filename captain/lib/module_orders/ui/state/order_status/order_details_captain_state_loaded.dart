@@ -137,11 +137,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     duration: const Duration(milliseconds: 450),
                     reverseDuration: const Duration(milliseconds: 450),
                     child: screenState.currentIndex == 1
-                        ? SizedBox(
-                          key: UniqueKey(),
-                          child: details(context))
+                        ? SizedBox(key: UniqueKey(), child: details(context))
                         : SizedBox(
-                            
                             child: control(context),
                           ),
                   ),
@@ -262,8 +259,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       title: Text(S.current.locationOfCustomer),
                       subtitle: orderInfo.distance != null
                           ? Text(orderInfo.distance ?? '')
-                          : Text(
-                              S.current.destination + ' ' + S.current.unknown),
+                          : Text(S.current.destination +
+                              ' ' +
+                              S.current.destinationUnavailable),
                       trailing: const Icon(Icons.arrow_forward),
                     ),
                   ),
@@ -335,7 +333,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     title: Text(S.current.branchLocation),
                     subtitle: orderInfo.branchDistance != null
                         ? Text(orderInfo.branchDistance ?? '')
-                        : Text(S.current.destination + ' ' + S.current.unknown),
+                        : Text(S.current.destination +
+                            ' ' +
+                            S.current.destinationUnavailable),
                     trailing: const Icon(Icons.arrow_forward_rounded),
                   ),
                 ),
@@ -573,7 +573,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         StatusHelper.getOrderStatusIndex(
                             OrderStatusEnum.GOT_CAPTAIN)
                     ? Theme.of(screenState.context).disabledColor
-                    : Theme.of(screenState.context).primaryColor,
+                    : StatusHelper.getOrderStatusColor(orderInfo.state),
               ),
             ),
           ),
@@ -594,7 +594,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         StatusHelper.getOrderStatusIndex(
                             OrderStatusEnum.IN_STORE)
                     ? Theme.of(screenState.context).disabledColor
-                    : Theme.of(screenState.context).primaryColor,
+                    : StatusHelper.getOrderStatusColor(orderInfo.state),
               ),
             ),
           ),
@@ -614,7 +614,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         StatusHelper.getOrderStatusIndex(
                             OrderStatusEnum.DELIVERING)
                     ? Theme.of(screenState.context).disabledColor
-                    : Theme.of(screenState.context).primaryColor,
+                    : StatusHelper.getOrderStatusColor(orderInfo.state),
               ),
             ),
           ),
@@ -635,7 +635,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         StatusHelper.getOrderStatusIndex(
                             OrderStatusEnum.FINISHED)
                     ? Theme.of(screenState.context).disabledColor
-                    : Theme.of(screenState.context).primaryColor,
+                    : StatusHelper.getOrderStatusColor(orderInfo.state),
               ),
             ),
           ),
@@ -650,16 +650,38 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     if (orderInfo.state == OrderStatusEnum.FINISHED) {
       return const SizedBox();
     } else if (orderInfo.state == OrderStatusEnum.DELIVERING) {
-      return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ProvideDistance(
-            callBack: (distance) {
-              screenState.requestOrderProgress(
-                  orderInfo, StatusHelper.getOrderStatusIndex(orderInfo.state),
-                  distance: distance);
-            },
-            controller: _distanceCalculator,
-          ));
+      return Column(
+        children: [
+          Container(
+            decoration:  BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.amber
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                title: Text(S.current.warnning,style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold
+                )),
+                subtitle: Text(S.current.finishingOrderMessage,style: const TextStyle(
+                  color: Colors.white
+                ),),
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ProvideDistance(
+                callBack: (distance) {
+                  screenState.requestOrderProgress(orderInfo,
+                      StatusHelper.getOrderStatusIndex(orderInfo.state),
+                      distance: distance);
+                },
+                controller: _distanceCalculator,
+              ))
+        ],
+      );
     } else {
       return OrderButton(
           backgroundColor: StatusHelper.getOrderStatusColor(orderInfo.state),

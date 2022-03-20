@@ -15,8 +15,7 @@ class OrderCard extends StatelessWidget {
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
-      required this.destination
-      });
+      required this.destination});
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +72,8 @@ class OrderCard extends StatelessWidget {
               // divider
               divider(context),
               // order date & create date
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  verticalTile(context,
-                      title: S.current.deliverDate, subtitle: deliveryDate),
-                  verticalTile(context,
-                      title: S.current.destination, subtitle: destination),
-                ],
-              ),
+              horizontalTile(context,
+                  title: S.current.deliverDate, subtitle: deliveryDate),
               // divider
               divider(context),
               // order cost
@@ -119,6 +111,31 @@ class OrderCard extends StatelessWidget {
                 .button
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
+    );
+  }
+
+  Widget horizontalTile(context,
+      {required String title, required String subtitle}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).backgroundColor),
+          ),
+          
+          Text(subtitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .button
+                  ?.copyWith(fontWeight: FontWeight.normal)),
+        ],
+      ),
     );
   }
 

@@ -57,7 +57,8 @@ class OrderModel extends DataModel {
           location: element.location != null
               ? LatLng(element.location?.lat, element.location?.lon)
               : null,
-          distance: S.current.unknown));
+          distance:
+              S.current.distance+ ' ' + S.current.destinationUnavailable));
     });
     _orders = _sortOrder(_orders);
   }

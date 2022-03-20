@@ -55,16 +55,16 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
-        getOrderDetails(request.id ?? -1, screenState);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error)
             .show(screenState.context);
+        getOrderDetails(request.id ?? -1, screenState,false);
       } else {
-        getOrderDetails(request.id ?? -1, screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderSuccess)
             .show(screenState.context);
+        getOrderDetails(request.id ?? -1, screenState,false);
       }
     });
   }

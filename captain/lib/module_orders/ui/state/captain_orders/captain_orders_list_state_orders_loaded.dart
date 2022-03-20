@@ -75,7 +75,13 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               orderCost: element.orderCost.toStringAsFixed(1),
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              destination: element.distance,
+              destination: S.current.destinationUnavailable == element.distance
+                  ? element.distance
+                  : S.current.distance +
+                      ' ' +
+                      element.distance +
+                      ' ' +
+                      S.current.km,
             ),
           ),
         ));
@@ -129,7 +135,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               orderCost: element.orderCost.toStringAsFixed(1),
               orderNumber: element.id.toString(),
               branchName: element.branchName,
-              distance: S.current.unknown == element.distance
+              distance: S.current.destinationUnavailable == element.distance
                   ? element.distance
                   : S.current.distance +
                       ' ' +

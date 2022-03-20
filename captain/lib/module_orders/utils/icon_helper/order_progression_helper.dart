@@ -10,7 +10,7 @@ class OrderProgressionHelper {
     switch (status) {
       case OrderStatusEnum.WAITING:
         return SvgPicture.asset(
-          SvgAsset.SEARCHING_SVG,
+          SvgAsset.WAITING_SVG,
           height: height,
         );
       case OrderStatusEnum.GOT_CAPTAIN:
@@ -25,7 +25,7 @@ class OrderProgressionHelper {
         );
       case OrderStatusEnum.DELIVERING:
         return SvgPicture.asset(
-          SvgAsset.ACCEPT_ORDER,
+          SvgAsset.DELIVER_TO_CLIENT,
           height: height,
         );
       case OrderStatusEnum.GOT_CASH:

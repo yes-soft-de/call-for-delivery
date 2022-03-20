@@ -22,7 +22,7 @@ class Data {
   String? branchName;
   Images? image;
   String? roomId;
-  num? captainId;
+  String? captainId;
   String? storeOwnerName;
   Destination? location;
   String? phone;
@@ -76,7 +76,7 @@ class Data {
       storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
       branchName: json['branchName'] as String?,
       roomId: json['roomId'] as String?,
-      captainId: json['captainUserId'] as num?,
+      captainId: json['captainUserId']?.toString() ,
       phone: json['phone'] as String?,
       storeOwnerName: json['storeOwnerName'] as String?,
       location: json['location'] == null

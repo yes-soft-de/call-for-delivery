@@ -93,7 +93,7 @@ class OrderDetailsModel extends DataModel {
       roomID: element?.roomId,
       state: StatusHelper.getStatusEnum(element?.state),
       id: element?.id ?? -1,
-      captainID: element?.captainId?.toInt(),
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
       branchCoordinate:
           element?.location?.lat != null && element?.location?.lon != null
               ? LatLng(element?.location?.lat ?? 0, element?.location?.lon ?? 0)
