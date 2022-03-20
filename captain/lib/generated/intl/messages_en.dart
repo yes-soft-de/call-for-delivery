@@ -273,6 +273,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
         "destinationPoint": MessageLookupByLibrary.simpleMessage("Destination"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("Unavailable"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),

@@ -269,6 +269,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اكتب عنوان وجهة الطلب"),
         "destinationPoint":
             MessageLookupByLibrary.simpleMessage("موقع التسليم"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("غير متوفرة"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),

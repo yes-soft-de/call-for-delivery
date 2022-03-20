@@ -610,7 +610,8 @@
     "iGotThePackageHint": "الطلبية جاهزة للتوصيل",
     "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح",
     "branchLocation": "موقع الفرع",
-    "destination": "المسافة"
+    "destination": "المسافة",
+    "destinationUnavailable": "غير متوفرة"
 
 
 

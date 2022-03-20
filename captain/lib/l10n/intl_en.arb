@@ -609,7 +609,8 @@
     "iGotThePackageHint": "Ready to deliver the package",
     "iFinishedDeliveringHint": "I delivered the package with a success",
     "branchLocation": "Branch location",
-    "destination": "Destination"
+    "destination": "Destination",
+    "destinationUnavailable": "Unavailable"
 
 
 
