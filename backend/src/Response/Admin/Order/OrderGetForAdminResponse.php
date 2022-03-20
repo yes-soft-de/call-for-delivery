@@ -39,7 +39,10 @@ class OrderGetForAdminResponse
      */
     public $kilometer;
 
-    public int $storeOrderDetailsId;
+    /**
+     * @var int|null
+     */
+    public $storeOrderDetailsId;
 
     /**
      * @var array|null
