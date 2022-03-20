@@ -219,51 +219,7 @@ class PackageCard extends StatelessWidget {
                   dashLength: 4,
                 ),
               ),
-              // cost
-              Flex(
-                direction: Axis.horizontal,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Theme.of(context).backgroundColor),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FaIcon(FontAwesomeIcons.coins,
-                          color: active
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).disabledColor),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  SizedBox(
-                    width: 105,
-                    child: Text(
-                      '${package.cost} ${S.current.sar}',
-                      style: TextStyle(
-                        color: active
-                            ? Theme.of(context).textTheme.button?.color
-                            : null,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               // expiration
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 32.0, left: 32, top: 8, bottom: 8),
-                child: DottedLine(
-                  dashColor: Theme.of(context).backgroundColor,
-                  lineThickness: 2.5,
-                  dashRadius: 25,
-                  dashLength: 4,
-                ),
-              ),
               Flex(
                 direction: Axis.horizontal,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -292,6 +248,50 @@ class PackageCard extends StatelessWidget {
                           S.current.day +
                           ' ' +
                           S.current.validation,
+                      style: TextStyle(
+                        color: active
+                            ? Theme.of(context).textTheme.button?.color
+                            : null,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // cost
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 32.0, left: 32, top: 8, bottom: 8),
+                child: DottedLine(
+                  dashColor: Theme.of(context).backgroundColor,
+                  lineThickness: 2.5,
+                  dashRadius: 25,
+                  dashLength: 4,
+                ),
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Theme.of(context).backgroundColor),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FaIcon(FontAwesomeIcons.coins,
+                          color: active
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).disabledColor),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  SizedBox(
+                    width: 105,
+                    child: Text(
+                      '${package.cost} ${S.current.sar}',
                       style: TextStyle(
                         color: active
                             ? Theme.of(context).textTheme.button?.color

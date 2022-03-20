@@ -72,7 +72,7 @@ class _CopyMapLinkScreenState extends State<CopyMapLinkScreen> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(shape: StadiumBorder()),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    SystemNavigator.pop();
                   },
                   child: Text(S.current.close)),
             ],

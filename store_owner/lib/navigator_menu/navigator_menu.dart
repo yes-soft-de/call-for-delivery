@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -87,6 +88,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ? BorderRadius.horizontal(left: Radius.circular(25))
                 : BorderRadius.horizontal(right: Radius.circular(25))),
         child: CustomListView.custom(children: [
+          // personal info
           drawerHeader,
           CustomNavTile(
               icon: Icons.person,
@@ -107,6 +109,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
+          // my work info
           CustomNavTile(
               icon: Icons.subscriptions_rounded,
               onTap: () {
@@ -134,6 +137,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
+          // support
           CustomNavTile(
               icon: Icons.notifications_active_rounded,
               onTap: () {
@@ -175,6 +179,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
+          // settings
           CustomNavTile(
               icon: Icons.settings_rounded,
               onTap: () {
@@ -188,7 +193,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           CustomNavTile(
               icon: Icons.verified_user_rounded,
               onTap: () {},
-              title: S.current.termsOfService)
+              title: S.current.termsOfService),
+          Visibility(
+            visible: widget.company != null,
+            child: CustomNavTile(
+                icon: Icons.info,
+                onTap: () {
+                  Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY);
+                },
+                title: S.current.companyInfo),
+          )
         ]));
   }
 }

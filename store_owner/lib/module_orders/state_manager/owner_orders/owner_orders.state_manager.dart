@@ -93,6 +93,12 @@ class OwnerOrdersStateManager {
   }
 
   Future<void> initDrawerData() async {
+    await getProfile();
+    await getCompanyInfo();
+    await getMakeOrderAbility();
+  }
+
+  Future<void> getProfile() async {
     // profile
     var profile = await _profileService.getProfile();
     if (profile.hasError) {
@@ -104,6 +110,23 @@ class OwnerOrdersStateManager {
       profile as ProfileModel;
       _profileSubject.add(profile.data);
     }
+  }
+
+  Future<void> getCompanyInfo() async {
+    // company info
+    var company = await _ordersService.getCompanyInfo();
+    if (company.hasError) {
+      Fluttertoast.showToast(
+        msg: company.error ?? S.current.errorHappened,
+        backgroundColor: Colors.red,
+      );
+    } else {
+      company as CompanyInfoModel;
+      _companySubject.add(company.data);
+    }
+  }
+
+  Future<void> getMakeOrderAbility() async {
     // can make order
     var status = await getIt<SubscriptionService>().getMakingOrderAbility();
     if (status.hasError) {
@@ -117,18 +140,6 @@ class OwnerOrdersStateManager {
     } else {
       status as CanMakeOrderModel;
       _subscriptionStatus.add(status.data);
-    }
-
-    // company info
-    var company = await _ordersService.getCompanyInfo();
-    if (company.hasError) {
-      Fluttertoast.showToast(
-        msg: company.error ?? S.current.errorHappened,
-        backgroundColor: Colors.red,
-      );
-    } else {
-      company as CompanyInfoModel;
-      _companySubject.add(company.data);
     }
   }
 

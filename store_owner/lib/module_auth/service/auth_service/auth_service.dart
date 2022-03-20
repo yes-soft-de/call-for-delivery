@@ -231,18 +231,22 @@ class AuthService {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
-        // profile not filled
-        case '9158':
-          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
-          break;
         // account didn't subscript yet
-        case '9159':
+        case '9161':
           _prefsHelper.setUserCompetedProfile(
               SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
           break;
         // account didn't created any branch
-        case '9160':
+        case '9159':
           _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
+          break;
+        // account created
+        case '9160':
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+        // account not filled
+        case '9158':
+          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);

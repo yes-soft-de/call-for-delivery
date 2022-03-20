@@ -457,7 +457,8 @@
     "updateProfile": "Update profile",
     "employeeSize": "Employee count",
     "profileUpdatedSuccessfully": "Profile has been updated successfully",
-    "whatsapp": "Whatsapp with us",
+    "whatsapp": "Whatsapp",
+    "whatsappSupport": "Whatsapp support",
     "confirmDeletionBranch": "Confirm deletion of this branch",
     "deleteBranchSuccess": "Branch deleted successfully",
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
@@ -524,7 +525,37 @@
     "copyFinished": "Link Copied Successfully",
     "chooseYourRateFromFiveStar": "Choose your rate from five stars",
     "comment": "Comment",
-    "rateCommentReview": "What we can to improve"
+    "rateCommentReview": "What we can to improve",
+    "phoneNumberThatShowsForCaptain": "Public phone number",
+    "eg": "eg",
+    "extraCaptain": "Extra captain",
+    "captainPackageExtra": "Captains Extra Offer",
+    "pending": "Pending",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "cancelled2": "Cancelled",
+    "invalidMapLink": "Invalid map link",
+    "km": "Km",
+    "distance": "Distance",
+    "unavailable": "Unavailable",
+    "calculating": "Calculating",
+    "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
+    "confirmationCaptainOffers": "Are sure about subscribe with this offer",
+    "companyInfo": "Company Info",
+    "fax": "Fax",
+    "youSubscribedWithOffer": "You already subscribed with captain offer , You can subscribe again when your subscription expired"
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

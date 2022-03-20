@@ -37,6 +37,8 @@ class AppThemeDataService {
           useMaterial3: true,
           primarySwatch: Colors.indigo,
           focusColor: PrimaryColor,
+          textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(primary: Colors.white70)),
           checkboxTheme: CheckboxThemeData(
             checkColor:
                 MaterialStateProperty.resolveWith((Set<MaterialState> states) {

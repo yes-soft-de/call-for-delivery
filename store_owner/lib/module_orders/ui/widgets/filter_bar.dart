@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FilterBar extends StatefulWidget {
   /// current index of the selected item
-  final int currentIndex;
+  int currentIndex;
 
   /// return the new index of selected item
   final Function(int) onItemSelected;
@@ -65,8 +65,6 @@ class FilterBar extends StatefulWidget {
 }
 
 class _FilterBarState extends State<FilterBar> {
-  late int currentIndex;
-  late List<FilterItem> items;
   late Duration animationDuration;
   BorderRadius? cursorRadius;
   late bool floating;
@@ -79,10 +77,14 @@ class _FilterBarState extends State<FilterBar> {
   late bool firstUse;
   late double off;
   bool end = true;
+  String? myLocalChanges;
   @override
   void initState() {
-    currentIndex = widget.currentIndex;
-    items = widget.items;
+    _reset();
+    super.initState();
+  }
+
+  void _reset() {
     animationDuration = widget.animationDuration;
     cursorRadius = widget.cursorRadius;
     floating = widget.floating;
@@ -96,8 +98,9 @@ class _FilterBarState extends State<FilterBar> {
             itemSize.add(element.currentContext?.size ?? Size(0, 0));
           });
         }
-        RenderBox render =
-            _keys[currentIndex].currentContext?.findRenderObject() as RenderBox;
+        RenderBox render = _keys[widget.currentIndex]
+            .currentContext
+            ?.findRenderObject() as RenderBox;
         initialOffset = render.localToGlobal(Offset.fromDirection(1, -16));
         if (initialOffset != null) {
           initialOffset = Offset(initialOffset!.dx, initialOffset!.dx);
@@ -107,7 +110,15 @@ class _FilterBarState extends State<FilterBar> {
         print(e);
       }
     });
-    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(FilterBar oldWidget) {
+    if (myLocalChanges != Localizations.localeOf(context).languageCode) {
+      myLocalChanges = Localizations.localeOf(context).languageCode;
+      _reset();
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -136,8 +147,12 @@ class _FilterBarState extends State<FilterBar> {
                     firstUse ? Duration(milliseconds: 1) : animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
-                  height: itemSize.isEmpty ? 10 : itemSize[currentIndex].height,
-                  width: itemSize.isEmpty ? 10 : itemSize[currentIndex].width,
+                  height: itemSize.isEmpty
+                      ? 10
+                      : itemSize[widget.currentIndex].height,
+                  width: itemSize.isEmpty
+                      ? 10
+                      : itemSize[widget.currentIndex].width,
                   decoration: BoxDecoration(
                     color: widget.cursorColor,
                     gradient: LinearGradient(colors: [
@@ -166,14 +181,14 @@ class _FilterBarState extends State<FilterBar> {
 
   List<Widget> getItemWidget() {
     List<Widget> barItems = [];
-    for (var element in items) {
+    for (var element in widget.items) {
       _keys.add(GlobalKey(debugLabel: element.label));
       barItems.add(
         Expanded(
           child: GestureDetector(
               key: _keys[element.index],
               onTap: () {
-                currentIndex = element.index;
+                widget.currentIndex = element.index;
                 end = false;
                 firstUse = false;
                 try {
@@ -189,7 +204,7 @@ class _FilterBarState extends State<FilterBar> {
                 } catch (e) {
                   print(e);
                 }
-                widget.onItemSelected(currentIndex);
+                widget.onItemSelected(widget.currentIndex);
                 setState(() {});
               },
               child: Center(
@@ -198,7 +213,7 @@ class _FilterBarState extends State<FilterBar> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: currentIndex == element.index && end
+                    color: widget.currentIndex == element.index && end
                         ? widget.selectedContent
                         : widget.unselectedContent,
                   ),
