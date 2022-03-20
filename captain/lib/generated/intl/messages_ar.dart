@@ -110,17 +110,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "الطلب تم إلغاءه من جهة العميل"),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
         "captainAcceptOrderDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى المتجر"),
+            MessageLookupByLibrary.simpleMessage("أنا في طريقي إلى المتجر"),
         "captainAcceptedOrder":
-            MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
+            MessageLookupByLibrary.simpleMessage("تم قبول الطلب"),
         "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
             "حساب الكابتن غير مفعل الرجاء انتظار الإدارة لتفعيل الحساب"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على المال"),
-        "captainInStore":
-            MessageLookupByLibrary.simpleMessage("الكابتن في المتجر"),
+        "captainInStore": MessageLookupByLibrary.simpleMessage("وصلت المتجر"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("المتجر يقوم بتجهيز الطلب"),
         "captainIsDelivering":
@@ -261,7 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
-            MessageLookupByLibrary.simpleMessage("الكابتن في طريقه للعميل"),
+            MessageLookupByLibrary.simpleMessage("جار توصيل الطلبية للعميل"),
         "destination": MessageLookupByLibrary.simpleMessage("المسافة"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -330,6 +329,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
+        "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"),
         "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":
@@ -898,6 +899,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":
             MessageLookupByLibrary.simpleMessage("بانتظار قبول الطلب"),
+        "waitingToAccept":
+            MessageLookupByLibrary.simpleMessage("باننتظار قبولك الطلب"),
         "warnning": MessageLookupByLibrary.simpleMessage("ملاحظة هامة"),
         "weDeliver":
             MessageLookupByLibrary.simpleMessage("نوصل الطلب بدلا عنك"),

@@ -134,8 +134,8 @@
     "termsOfService": "Terms of Service",
     "created": "Created",
     "unknown": "Unknown",
-    "captainAcceptedOrder": "Captain Accepted Order",
-    "captainInStore": "Captain in Store",
+    "captainAcceptedOrder": "Order Accepted",
+    "captainInStore": "I'm in Store",
     "captainStartedDelivery": "Captain Started Delivery",
     "captainGotCash": "Captain Got Cash",
     "orderIsFinished": "Order is finished",
@@ -268,8 +268,8 @@
     "deliverPrice": "deliver price",
     "waitingDescription": "waiting for a captain to accept this order",
     "captainInStoreDescription": "captain packing your order",
-    "deliveringDescription": "captain on his way to you",
-    "captainAcceptOrderDescription": "captain headed to store",
+    "deliveringDescription": "On My way to client",
+    "captainAcceptOrderDescription": "I'm heading to store",
     "orderDeliveredDescription": "your order has delivered",
     "orderStatusDescription": "You can know your order status in this interface",
     "destinationAddress": "Destination Address",
@@ -610,7 +610,11 @@
     "iFinishedDeliveringHint": "I delivered the package with a success",
     "branchLocation": "Branch location",
     "destination": "Destination",
-    "destinationUnavailable": "Unavailable"
+    "destinationUnavailable": "Unavailable",
+    "waitingToAccept": "Waiting you to accept this order",
+    "finishingOrderMessage": "Please provide us with distance you reached out with this order To finish the order"
+
+
 
 
 

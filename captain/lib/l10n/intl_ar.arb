@@ -133,8 +133,8 @@
     "termsOfService": "شروط الاستخدام",
     "created": "تم الانشاء",
     "unknown": "غير معروف",
-    "captainAcceptedOrder": "قبل الكابتن الطلب",
-    "captainInStore": "الكابتن في المتجر",
+    "captainAcceptedOrder": "تم قبول الطلب",
+    "captainInStore": "وصلت المتجر",
     "captainStartedDelivery": "بدأ الكابتن التوصيل",
     "captainGotCash": "حصل الكابتن على الكاش",
     "orderIsFinished": "تم انهاء الطلب",
@@ -266,8 +266,8 @@
     "deliverPrice": "التوصيل",
     "waitingDescription": "بانتظار قبول الطلب",
     "captainInStoreDescription": "المتجر يقوم بتجهيز الطلب",
-    "deliveringDescription": "الكابتن في طريقه للعميل",
-    "captainAcceptOrderDescription": "الكابتن في طريقه إلى المتجر",
+    "deliveringDescription": "جار توصيل الطلبية للعميل",
+    "captainAcceptOrderDescription": "أنا في طريقي إلى المتجر",
     "orderDeliveredDescription": "تم توصيل الطلب",
     "orderStatusDescription": "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية",
     "destinationAddress": "التوصيل إلى",
@@ -611,7 +611,9 @@
     "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح",
     "branchLocation": "موقع الفرع",
     "destination": "المسافة",
-    "destinationUnavailable": "غير متوفرة"
+    "destinationUnavailable": "غير متوفرة",
+    "waitingToAccept": "باننتظار قبولك الطلب",
+    "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"
 
 
 

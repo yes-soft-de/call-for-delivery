@@ -1390,20 +1390,20 @@ class S {
     );
   }
 
-  /// `Captain Accepted Order`
+  /// `Order Accepted`
   String get captainAcceptedOrder {
     return Intl.message(
-      'Captain Accepted Order',
+      'Order Accepted',
       name: 'captainAcceptedOrder',
       desc: '',
       args: [],
     );
   }
 
-  /// `Captain in Store`
+  /// `I'm in Store`
   String get captainInStore {
     return Intl.message(
-      'Captain in Store',
+      'I\'m in Store',
       name: 'captainInStore',
       desc: '',
       args: [],
@@ -2710,20 +2710,20 @@ class S {
     );
   }
 
-  /// `captain on his way to you`
+  /// `On My way to client`
   String get deliveringDescription {
     return Intl.message(
-      'captain on his way to you',
+      'On My way to client',
       name: 'deliveringDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `captain headed to store`
+  /// `I'm heading to store`
   String get captainAcceptOrderDescription {
     return Intl.message(
-      'captain headed to store',
+      'I\'m heading to store',
       name: 'captainAcceptOrderDescription',
       desc: '',
       args: [],
@@ -6125,6 +6125,26 @@ class S {
     return Intl.message(
       'Unavailable',
       name: 'destinationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting you to accept this order`
+  String get waitingToAccept {
+    return Intl.message(
+      'Waiting you to accept this order',
+      name: 'waitingToAccept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide us with distance you reached out with this order To finish the order`
+  String get finishingOrderMessage {
+    return Intl.message(
+      'Please provide us with distance you reached out with this order To finish the order',
+      name: 'finishingOrderMessage',
       desc: '',
       args: [],
     );

@@ -113,17 +113,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "The order has been cancelled by the client"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
-            MessageLookupByLibrary.simpleMessage("captain headed to store"),
+            MessageLookupByLibrary.simpleMessage("I\'m heading to store"),
         "captainAcceptedOrder":
-            MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
+            MessageLookupByLibrary.simpleMessage("Order Accepted"),
         "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
             "Captain Account In Active , Please wait the administration to activate your account"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("Captain got the cash"),
-        "captainInStore":
-            MessageLookupByLibrary.simpleMessage("Captain in Store"),
+        "captainInStore": MessageLookupByLibrary.simpleMessage("I\'m in Store"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("captain packing your order"),
         "captainIsDelivering":
@@ -266,7 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
-            MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+            MessageLookupByLibrary.simpleMessage("On My way to client"),
         "destination": MessageLookupByLibrary.simpleMessage("Destination"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -338,6 +337,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
+            "Please provide us with distance you reached out with this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
@@ -904,6 +905,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(
             "waiting for a captain to accept this order"),
+        "waitingToAccept": MessageLookupByLibrary.simpleMessage(
+            "Waiting you to accept this order"),
         "warnning": MessageLookupByLibrary.simpleMessage("Important Note"),
         "weDeliver": MessageLookupByLibrary.simpleMessage("We Deliver"),
         "weDeliverDescribtion": MessageLookupByLibrary.simpleMessage(
