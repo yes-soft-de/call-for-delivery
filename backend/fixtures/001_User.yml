@@ -1,0 +1,24 @@
+App\Entity\UserEntity:
+  super_admin_user:
+    __construct: false
+    userId: superadmin
+    roles: ['ROLE_SUPER_ADMIN']
+    password: super123admin
+
+  admin_user_one:
+    __construct: false
+    userId: 966555321555
+    roles: ['ROLE_ADMIN']
+    password: 123456
+
+  admin_user_two:
+    __construct: false
+    userId: 966555456555
+    roles: ['ROLE_ADMIN']
+    password: 123456
+
+  admin_user_three:
+    __construct: false
+    userId: 966555789555
+    roles: ['ROLE_ADMIN']
+    password: 123456

@@ -1,10 +1,10 @@
 App\Entity\PackageEntity:
   package_A_1:
     name: الباقة المتزامنة A1
-    cost: 10
-    carCount: 3
+    cost: 35
+    carCount: 4
     city: جدة
-    orderCount: 3
+    orderCount: 4
     status: active
     note: تتيح لك الطلب طول فترة دوام المؤسسة/الشركة
     expired: 5
@@ -12,10 +12,10 @@ App\Entity\PackageEntity:
 
   package_A_2:
     name: الباقة المتزامنة A2
-    cost: 15
-    carCount: 5
+    cost: 30
+    carCount: 4
     city: جدة
-    orderCount: 5
+    orderCount: 4
     status: active
     note: تتيح لك الطلب طول فترة دوام المؤسسة/الشركة
     expired: 10
@@ -23,10 +23,10 @@ App\Entity\PackageEntity:
 
   package_A_3:
     name: الباقة المتزامنة A3
-    cost: 15
-    carCount: 5
+    cost: 25
+    carCount: 4
     city: جدة
-    orderCount: 5
+    orderCount: 4
     status: active
     note: تتيح لك الطلب طول فترة دوام المؤسسة/الشركة
     expired: 15
@@ -45,10 +45,10 @@ App\Entity\PackageEntity:
 
   package_B_2:
     name: الباقة المتزامنة B2
-    cost: 25
-    carCount: 10
+    cost: 10
+    carCount: 2
     city: جدة
-    orderCount: 10
+    orderCount: 2
     status: active
     note: تتيح لك الطلب طول فترة دوام المؤسسة/الشركة
     expired: 15
@@ -56,11 +56,11 @@ App\Entity\PackageEntity:
 
   package_C_1:
     name: الباقة المتزامنة C1
-    cost: 30
-    carCount: 15
+    cost: 5
+    carCount: 1
     city: جدة
-    orderCount: 15
+    orderCount: 1
     status: active
     note: تتيح لك الطلب طول فترة دوام المؤسسة/الشركة
-    expired: 30
+    expired: 10
     packageCategory: '@third_category'
