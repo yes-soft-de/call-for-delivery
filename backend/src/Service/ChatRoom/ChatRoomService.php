@@ -3,8 +3,6 @@
 namespace App\Service\ChatRoom;
 
 use App\AutoMapping;
-use App\Constant\Image\ImageEntityTypeConstant;
-use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\ChatRoomEntity;
 use App\Manager\ChatRoom\ChatRoomManager;
 use App\Response\ChatRoom\ChatRoomCaptainResponse;
@@ -20,16 +18,13 @@ class ChatRoomService
     private ChatRoomManager $chatRoomManager;
     private string $params;
     private UploadFileHelperService $uploadFileHelperService;
-    private ImageService $imageService;
 
-    public function __construct(AutoMapping $autoMapping, ChatRoomManager $chatRoomManager, ParameterBagInterface $params, UploadFileHelperService $uploadFileHelperService,
-                                ImageService $imageService)
+    public function __construct(AutoMapping $autoMapping, ChatRoomManager $chatRoomManager, ParameterBagInterface $params, UploadFileHelperService $uploadFileHelperService)
     {
         $this->params = $params->get('upload_base_url') . '/';
         $this->autoMapping = $autoMapping;
         $this->chatRoomManager = $chatRoomManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
-        $this->imageService = $imageService;
     }
 
     public function getChatRoom(int $userId): ?ChatRoomResponse
@@ -68,7 +63,8 @@ class ChatRoomService
         foreach($chatRooms as $chatRoom) {
             $chatRoom['roomId'] = $chatRoom['roomId']->toBase32();
 
-            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams($chatRoom['imagePath']);
+            // we use following image link until captains' images are linked with Image entity successfully
+            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
 
             $response[] = $this->autoMapping->map("array", ChatRoomCaptainResponse::class, $chatRoom);
         }
