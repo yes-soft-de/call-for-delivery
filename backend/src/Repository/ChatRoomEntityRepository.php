@@ -2,7 +2,11 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\CaptainEntity;
 use App\Entity\ChatRoomEntity;
+use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,4 +42,35 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
 
             ->getResult();
      }
+
+    public function getChatRoomsWithCaptains(): ?array
+    {
+        return $this->createQueryBuilder('chatRoom')
+            ->select('chatRoom.roomId', 'captainEntity.id as captainProfileId, captainEntity.captainName', 'imageEntity.imagePath')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'chatRoom.userId = captainEntity.captainId'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id')
+
+            ->andWhere('imageEntity.entityType = :entityType')
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->andWhere('imageEntity.usedAs = :usedAsImage')
+            ->setParameter('usedAsImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->andWhere('chatRoom.usedAs = :usedAsChat')
+            ->setParameter('usedAsChat', ChatRoomConstant::ADMIN_CAPTAIN)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
