@@ -21,7 +21,7 @@ class OrderChatRoomsStoreResponse
     public $usedAs;
 
     /**
-     * @var string|null $images
+     * @var array|null $images
      */
     public $images;
 
@@ -34,5 +34,4 @@ class OrderChatRoomsStoreResponse
      * @var int|null $orderId
      */
     public $orderId;
-    
 }
