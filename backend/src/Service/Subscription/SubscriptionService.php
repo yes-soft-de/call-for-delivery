@@ -77,12 +77,9 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
-        //    $countOrders = $this->getCountOngoingOrders($subscription['id']);
           
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
-        //    $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
-
            if($subscription['hasExtra'] === true) {
 
             $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
@@ -259,7 +256,7 @@ class SubscriptionService
                 //Is there subscription captain offer and active?
                 if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
                    
-                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars, $countOrders);
+                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
                 }
 
                 $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
@@ -420,8 +417,8 @@ class SubscriptionService
          return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
     }
     
-    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, $remainingCars, $countOrders): int
-    {       
+    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, int $remainingCars): int
+    {    
         if($subscription) {
            
             $dateNow = new \DateTime('now');
@@ -431,8 +428,7 @@ class SubscriptionService
 
             if($endDate < $dateNow) {
 
-                $remainingCars = $remainingCars - $subscription['subscriptionCaptainOfferCarCount'];
-                // $remainingCars = $subscription['remainingCars'] - $subscription['subscriptionCaptainOfferCarCount'];
+                $remainingCars = $subscription['remainingCars'] - $subscription['subscriptionCaptainOfferCarCount'];
             
                 $this->subscriptionCaptainOfferService->updateState($subscription['subscriptionCaptainOfferId'],  SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
 

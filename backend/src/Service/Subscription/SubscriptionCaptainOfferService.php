@@ -52,10 +52,12 @@ class SubscriptionCaptainOfferService
         else {
             
             $subscriptionCaptainOffer = $this->subscriptionCaptainOfferManager->subscriptionCaptainOfferBySubscribeId($subscribe['lastSubscription']);
-            if($subscriptionCaptainOffer['status'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE){
+            if($subscriptionCaptainOffer) {
+                if($subscriptionCaptainOffer['status'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE){
                 
-                $subscribe['subscriptionState'] = SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION;
-            }
+                    $subscribe['subscriptionState'] = SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION;
+                }
+            } 
         }
         
          return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribe);
