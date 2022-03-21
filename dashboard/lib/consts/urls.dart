@@ -20,6 +20,8 @@ class Urls {
   static const String BASE_API_REPORT_ADMIN = DOMAIN + VERSION_ADMIN + '/report';
   static const String BASE_API_CAPTAIN = DOMAIN + VERSION_ADMIN + '/captain';
 
+  static const String BASE_API_ORDER = DOMAIN + VERSION_ADMIN + '/order';
+
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -54,6 +56,9 @@ class Urls {
   static const ACTIVATE_STORE = BASE_API_STORE + '/storeownerprofilestatus';
   static const UPDATE_STORE_INFO = BASE_API_STORE + '/storeownerprofilebyadmin';
 
+  static const FILTER_OWNER_ORDERS_API = BASE_API_ORDER + '/filterordersbyadmin';
+  static const GET_ORDERS_DETAILS = BASE_API_ORDER + '/orderbyidforadmin/';
+
   /*------------------Package Category's ----------------*/
   static const GET_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/categories';
   static const CREATE_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/category';
@@ -79,7 +84,8 @@ class Urls {
   static const CREATE_NOTICE = BASE_API_NOTICE_ADMIN+ '/notificationtoapp';
 
   /*-------------------chatroom--------------*/
-  static const GET_CHAT_ROOMS = BASE_API_CHAT_ROM+ '/chatroomswithstores';
+  static const GET_CHAT_ROOMS_STORES = BASE_API_CHAT_ROM+ '/chatroomswithstores';
+  static const GET_CHAT_ROOMS_CAPTAINS = BASE_API_CHAT_ROM + '/chatroomswithcaptains';
 
   /*-------------------captainsOffer--------------*/
   static const GET_CAPTAIN_OFFERS = BASE_API_CAPTAIN_OFFER_ADMIN + '/captainoffers';
