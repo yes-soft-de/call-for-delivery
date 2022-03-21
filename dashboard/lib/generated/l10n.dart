@@ -5159,6 +5159,156 @@ class S {
       args: [],
     );
   }
+
+  /// `From date`
+  String get firstDate {
+    return Intl.message(
+      'From date',
+      name: 'firstDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To date`
+  String get endDate {
+    return Intl.message(
+      'To date',
+      name: 'endDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing`
+  String get ongoing {
+    return Intl.message(
+      'Ongoing',
+      name: 'ongoing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message(
+      'Completed',
+      name: 'completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get cancelled2 {
+    return Intl.message(
+      'Cancelled',
+      name: 'cancelled2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery date`
+  String get deliverDate {
+    return Intl.message(
+      'Delivery date',
+      name: 'deliverDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created date`
+  String get createdDate {
+    return Intl.message(
+      'Created date',
+      name: 'createdDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get details {
+    return Intl.message(
+      'Details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calculating`
+  String get calculating {
+    return Intl.message(
+      'Calculating',
+      name: 'calculating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance`
+  String get distance {
+    return Intl.message(
+      'Distance',
+      name: 'distance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid map link`
+  String get invalidMapLink {
+    return Intl.message(
+      'Invalid map link',
+      name: 'invalidMapLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Image`
+  String get orderImage {
+    return Intl.message(
+      'Order Image',
+      name: 'orderImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order cost contains delivery tax`
+  String get orderCostWithDeliveryCost {
+    return Intl.message(
+      'Order cost contains delivery tax',
+      name: 'orderCostWithDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Km`
+  String get km {
+    return Intl.message(
+      'Km',
+      name: 'km',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
