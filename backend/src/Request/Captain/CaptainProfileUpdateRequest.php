@@ -8,7 +8,7 @@ class CaptainProfileUpdateRequest
 
     private string $captainName;
 
-    private string $images;
+    private string $image;
 
     private array $location = [];
 
@@ -39,14 +39,14 @@ class CaptainProfileUpdateRequest
     /**
      * @return mixed
      */
-    public function getImages()
+    public function getImage()
     {
-        return $this->images;
+        return $this->image;
     }
 
-    public function setImages($images): void
+    public function setImage($image): void
     {
-        $this->images = $images;
+        $this->image = $image;
     }
 
     /**

@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
+use App\Entity\ImageEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\ChatRoomEntity;
 use Doctrine\ORM\Query\Expr\Join;
+use App\Constant\Image\ImageEntityTypeConstant;
 
 /**
  * @method CaptainEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,16 +31,21 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay')
             ->addSelect('chatRoomEntity.roomId')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = captainEntity.captainId')
+            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id')
             
             ->andWhere('captainEntity.captainId = :id')
+            ->andWhere('imageEntity.entityType = :entityType ')
+
             ->setParameter('id', $id)
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
             
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
-    
+
     public function getUserProfile($captainId): mixed
     {
         return $this->createQueryBuilder('captainEntity')
@@ -98,19 +105,24 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
                 'captainEntity.status', 'chatRoomEntity.roomId')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
 
             ->leftJoin(
                 ChatRoomEntity::class,
                 'chatRoomEntity',
                 Join::WITH,
                 'chatRoomEntity.userId = captainEntity.captainId')
+            
+            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id')
 
             ->andWhere('captainEntity.id = :captainProfileId')
-            ->setParameter('captainProfileId', $captainProfileId)
+            ->andWhere('imageEntity.entityType = :entityType ')
 
-            ->orderBy('captainEntity.id', 'DESC')
+            ->setParameter('captainProfileId', $captainProfileId)
+           
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
 
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 }

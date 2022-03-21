@@ -8,7 +8,7 @@ class CaptainProfileResponse
 
     public null|string $captainName;
 
-    public $images;
+    public  null|array $images;
 
     public null|array $location = [];
 
@@ -32,11 +32,11 @@ class CaptainProfileResponse
 
     public null|string $stcPay;
    
-    public $mechanicLicense;
+    public null|array $mechanicLicense;
     
-    public $identity;
+    public  null|array $identity;
 
-    public $drivingLicence;
+    public  null|array $drivingLicence;
 
     public string $roomId;
 }

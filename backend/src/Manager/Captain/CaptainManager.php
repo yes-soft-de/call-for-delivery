@@ -115,8 +115,8 @@ class CaptainManager
             $this->entityManager->flush();
 
             //save images
-            if ($request->getImages()) {
-                $this->imageManager->createImage($request->getImages(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+            if ($request->getImage()) {
+                $this->imageManager->createImage($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
             }
             if ($request->getDrivingLicence()) {
                 $this->imageManager->createImage($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
@@ -132,33 +132,15 @@ class CaptainManager
         }
     }
 
-    public function getCaptainProfile($userId): ?array
+    public function getCaptainProfile(int $userId): ?array
     {
-        $captainProfile = $this->captainEntityRepository->getCaptainByCaptainId($userId);
+        $items = $this->captainEntityRepository->getCaptainByCaptainId($userId);
 
-        if($captainProfile) {
-          $images = $this->imageManager->getImagesByItemIdAndEntityType( $captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
-          foreach ($images as $image) {
-
-              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
-                $captainProfile['images'] = $image->getImagePath();
-              }
-
-              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
-                $captainProfile['drivingLicence'] = $image->getImagePath();
-              }
-
-              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE) {
-                $captainProfile['mechanicLicense'] = $image->getImagePath();
-              }
-
-              if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE) {
-                $captainProfile['identity'] = $image->getImagePath();
-              }
-           }
+        if($items) {
+            $profile = $this->getCaptainProfileAndImages($items);
         }
 
-        return  $captainProfile;
+        return  $profile;
     }
 
     public function getCompleteAccountStatusOfCaptainProfile($storeOwnerId): ?array
@@ -212,30 +194,12 @@ class CaptainManager
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
         $captainProfile = $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
-       
+        
         if($captainProfile) {
-            $images = $this->imageManager->getImagesByItemIdAndEntityType( $captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
-            foreach ($images as $image) {
-  
-                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
-                  $captainProfile['images'] = $image->getImagePath();
-                }
-  
-                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
-                  $captainProfile['drivingLicence'] = $image->getImagePath();
-                }
-  
-                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE) {
-                  $captainProfile['mechanicLicense'] = $image->getImagePath();
-                }
-  
-                if($image->getUsedAs() === ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE) {
-                  $captainProfile['identity'] = $image->getImagePath();
-                }
-             }
-          }
-          
-          return $captainProfile;
+            $profile = $this->getCaptainProfileAndImages($captainProfile);
+        }
+
+        return  $profile;
     }
 
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity
@@ -274,5 +238,44 @@ class CaptainManager
         return $captainProfileEntity;
     }
 
-    
+    //items = captain profile with images
+    public function getCaptainProfileAndImages(array $items) : ?array
+    {
+        $profile = [];
+
+        foreach ($items as $captainProfile) {
+         
+            $profile['captainId'] = $captainProfile['captainId'];
+            $profile['captainName'] = $captainProfile['captainName'];
+            $profile['location'] = $captainProfile['location'];
+            $profile['age'] = $captainProfile['age'];
+            $profile['car'] = $captainProfile['car'];
+            $profile['salary'] = $captainProfile['salary'];
+            $profile['bounce'] = $captainProfile['bounce'];
+            $profile['phone'] = $captainProfile['phone'];
+            $profile['isOnline'] = $captainProfile['isOnline'];
+            $profile['bankName'] = $captainProfile['bankName'];
+            $profile['bankAccountNumber'] = $captainProfile['bankAccountNumber'];
+            $profile['stcPay'] = $captainProfile['stcPay'];
+            $profile['roomId'] = $captainProfile['roomId'];
+
+            if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
+              $profile['image'] = $captainProfile['imagePath'];
+            }
+
+            if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
+              $profile['drivingLicence'] = $captainProfile['imagePath'];
+            }
+
+            if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE) {
+              $profile['mechanicLicense'] = $captainProfile['imagePath'];
+            }
+
+            if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE) {
+              $profile['identity'] = $captainProfile['imagePath'];
+            }
+         }
+
+         return $profile;
+    }    
 }
