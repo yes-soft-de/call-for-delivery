@@ -96,21 +96,20 @@ class MyApp extends StatefulWidget {
   final MyNotificationsModule _myNotificationsModule;
 
   MyApp(
-    this._themeDataService,
-    this._localizationService,
-    this._fireNotificationService,
-    this._localNotificationService,
-    this._splashModule,
-    this._authorizationModule,
-    this._chatModule,
-    this._settingsModule,
-    this._aboutModule,
-    this._initAccountModule,
-    this._ordersModule,
-    this._planModule,
-    this._profileModule,
-    this._myNotificationsModule
-  );
+      this._themeDataService,
+      this._localizationService,
+      this._fireNotificationService,
+      this._localNotificationService,
+      this._splashModule,
+      this._authorizationModule,
+      this._chatModule,
+      this._settingsModule,
+      this._aboutModule,
+      this._initAccountModule,
+      this._ordersModule,
+      this._planModule,
+      this._profileModule,
+      this._myNotificationsModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
@@ -172,7 +171,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         locale: Locale.fromSubtags(
           languageCode: lang,
         ),
-        localizationsDelegates: [
+        localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
