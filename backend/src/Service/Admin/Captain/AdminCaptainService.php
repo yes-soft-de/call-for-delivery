@@ -7,9 +7,12 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
+use App\Entity\ImageEntity;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
+use App\Request\Image\ImageCreateRequest;
+use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
@@ -99,7 +102,94 @@ class AdminCaptainService
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
 
         } else {
+            // update captain images
+            $this->updateCaptainImagesByAdmin($request);
+
             return $this->autoMapping->map(CaptainEntity::class, CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
+    }
+
+    public function updateCaptainImagesByAdmin(CaptainProfileUpdateByAdminRequest $request)
+    {
+        if ($request->getImages()) {
+            // Check, if there previous image, then update it. Otherwise, create a new one
+            $profileImage = $this->imageService->getImageByItemIdAndEntityTypeAndImageAim($request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+
+            if (! $profileImage) {
+                // No previous image was found, then create a new one
+                $this->createCaptainImage($request->getImages(), $request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+
+            } else {
+                // There is already an image, then update it
+                $this->updateCaptainImage($request->getImages(), $profileImage);
+            }
+        }
+
+        if ($request->getDrivingLicence()) {
+            // Check, if there previous image, then update it. Otherwise, create a new one
+            $driverLicenceImage = $this->imageService->getImageByItemIdAndEntityTypeAndImageAim($request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
+
+            if (! $driverLicenceImage) {
+                // No previous image was found, then create a new one
+                $this->createCaptainImage($request->getDrivingLicence(), $request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
+
+            } else {
+                // There is already an image, then update it
+                $this->updateCaptainImage($request->getImages(), $driverLicenceImage);
+            }
+        }
+
+        if ($request->getIdentity()) {
+            // Check, if there previous image, then update it. Otherwise, create a new one
+            $identityImage = $this->imageService->getImageByItemIdAndEntityTypeAndImageAim($request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
+
+            if (! $identityImage) {
+                // No previous image was found, then create a new one
+                $this->createCaptainImage($request->getIdentity(), $request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
+
+            } else {
+                // There is already an image, then update it
+                $this->updateCaptainImage($request->getImages(), $identityImage);
+            }
+        }
+
+        if ($request->getMechanicLicense()) {
+            // Check, if there previous image, then update it. Otherwise, create a new one
+            $mechanicalLicenceImage = $this->imageService->getImageByItemIdAndEntityTypeAndImageAim($request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
+
+            if (! $mechanicalLicenceImage) {
+                // No previous image was found, then create a new one
+                $this->createCaptainImage($request->getMechanicLicense(), $request->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
+
+            } else {
+                // There is already an image, then update it
+                $this->updateCaptainImage($request->getImages(), $mechanicalLicenceImage);
+            }
+        }
+    }
+
+    public function createCaptainImage(string $imagePath, int $itemId, int $entityType, int $usedAs)
+    {
+        $imageCreateRequest = new ImageCreateRequest();
+
+        $imageCreateRequest->setImagePath($imagePath);
+        $imageCreateRequest->setItemId($itemId);
+        $imageCreateRequest->setEntityType($entityType);
+        $imageCreateRequest->setUsedAs($usedAs);
+
+        $this->imageService->create($imageCreateRequest);
+    }
+
+    public function updateCaptainImage(string $newImagePath, ImageEntity $existedImageEntity)
+    {
+        $imageUpdateRequest = new ImageUpdateRequest();
+
+        $imageUpdateRequest->setId($existedImageEntity->getId());
+        $imageUpdateRequest->setItemId($existedImageEntity->getItemId());
+        $imageUpdateRequest->setEntityType($existedImageEntity->getEntityType());
+        $imageUpdateRequest->setUsedAs($existedImageEntity->getUsedAs());
+        $imageUpdateRequest->setImagePath($newImagePath);
+
+        $this->imageService->update($imageUpdateRequest);
     }
 }
