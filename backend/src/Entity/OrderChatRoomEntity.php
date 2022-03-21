@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderChatRoomEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderChatRoomEntityRepository::class)]
 //this class use chatRoom between captain and store
@@ -16,11 +17,9 @@ class OrderChatRoomEntity
     private $id;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private $captainId;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
     private $usedAs;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
@@ -30,21 +29,13 @@ class OrderChatRoomEntity
     #[ORM\Column(type: 'uuid', unique: true)]
     private $roomId;
 
+    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'orderChatRoomEntity')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $captain;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCaptainId(): ?int
-    {
-        return $this->captainId;
-    }
-
-    public function setCaptainId(?int $captainId): self
-    {
-        $this->captainId = $captainId;
-
-        return $this;
     }
 
     public function getUsedAs(): ?int
@@ -91,6 +82,18 @@ class OrderChatRoomEntity
     public function setRoomId($roomId): self
     {
         $this->roomId = $roomId;
+
+        return $this;
+    }
+
+    public function getCaptain(): ?CaptainEntity
+    {
+        return $this->captain;
+    }
+
+    public function setCaptain(?CaptainEntity $captain): self
+    {
+        $this->captain = $captain;
 
         return $this;
     }

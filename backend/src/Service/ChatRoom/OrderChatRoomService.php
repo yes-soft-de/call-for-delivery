@@ -5,8 +5,11 @@ namespace App\Service\ChatRoom;
 use App\AutoMapping;
 use App\Manager\ChatRoom\OrderChatRoomManager;
 use App\Response\ChatRoom\OrderChatRoomsStoreResponse;
+use App\Response\ChatRoom\OrderChatRoomStoreCreateResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Request\ChatRoom\OrderChatRoomRequest;
+use App\Entity\OrderChatRoomEntity;
 
 class OrderChatRoomService
 {
@@ -37,6 +40,16 @@ class OrderChatRoomService
           
             $response[] = $this->autoMapping->map("array", OrderChatRoomsStoreResponse::class, $orderChatRoom);
         }
+        
+        return $response;
+    }
+
+    public function createNewOrderChatRoom(OrderChatRoomRequest $request): ?OrderChatRoomStoreCreateResponse
+    {
+        $orderChatRoom = $this->orderChatRoomManager->createNewOrderChatRoom($request);
+   
+        $response = $this->autoMapping->map(OrderChatRoomEntity::class, OrderChatRoomStoreCreateResponse::class, $orderChatRoom);
+        $response->roomId = $orderChatRoom->getRoomId()->toBase32();
         
         return $response;
     }
