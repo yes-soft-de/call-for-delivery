@@ -2,16 +2,14 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
 import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
@@ -24,22 +22,31 @@ class CaptainOrdersListStateOrdersLoaded extends States {
   CaptainOrdersListStateOrdersLoaded(
       this.screenState, this.myOrders, this.nearbyOrders)
       : super(screenState);
-
+  final TextEditingController searchNearby = TextEditingController();
+  final TextEditingController searchAccepted = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: screenState.ordersPageController,
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        onPageChanged: (pos) {
-          screenState.currentPage = pos;
-          screenState.refresh();
-        },
-        children: [
-          getMyOrdersList(context),
-          getNearbyOrdersList(context),
-        ],
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: PageView(
+          controller: screenState.ordersPageController,
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          onPageChanged: (pos) {
+            screenState.currentPage = pos;
+            screenState.refresh();
+          },
+          children: [
+            getMyOrdersList(context),
+            getNearbyOrdersList(context),
+          ],
+        ),
       ),
     );
   }
@@ -61,8 +68,20 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         },
       );
     } else {
+      uiList.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomFormField(
+            numbers: true,
+            hintText: S.current.searchForOrder,
+            preIcon: const Icon(Icons.search_rounded),
+            controller: searchAccepted),
+      ));
       var acceptedOrders = myOrders as OrderModel;
-      acceptedOrders.data.forEach((element) {
+      for (var element in acceptedOrders.data) {
+        if (searchAccepted.text != '' &&
+            element.id.toString().contains(searchAccepted.text) == false) {
+          continue;
+        }
         uiList.add(Material(
           color: Colors.transparent,
           child: InkWell(
@@ -89,7 +108,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             ),
           ),
         ));
-      });
+      }
       uiList.add(Container(
         height: 75,
       ));
@@ -119,9 +138,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       );
     }
     var ordersData = nearbyOrders as OrderModel;
-    var data = _sortOrder(ordersData.data);
     var uiList = <Widget>[];
-    data.forEach((element) {
+    uiList.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CustomFormField(
+          numbers: true,
+          hintText: S.current.searchForOrder,
+          preIcon: const Icon(Icons.search_rounded),
+          controller: searchNearby),
+    ));
+    var data = _sortOrder(ordersData.data);
+    for (var element in data) {
+      if (searchNearby.text != '' &&
+          element.id.toString().contains(searchNearby.text) == false) {
+        continue;
+      }
       uiList.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -150,7 +181,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           ),
         ),
       ));
-    });
+    }
     uiList.add(Container(
       height: 75,
     ));
