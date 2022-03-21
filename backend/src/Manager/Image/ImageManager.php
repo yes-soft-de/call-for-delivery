@@ -36,6 +36,11 @@ class ImageManager
         return $this->imageEntityRepository->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
     }
 
+    public function getOneImageByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?ImageEntity
+    {
+        return $this->imageEntityRepository->getOneImageByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
+    }
+
     public function createImage(string $image, string $id, int $entity, int $usedAs): ?ImageEntity
     {
         $request = new ImageCreateRequest();
