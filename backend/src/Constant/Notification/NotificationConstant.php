@@ -53,4 +53,8 @@ final class NotificationConstant
     const STATE_ONGOING_CAPTAIN = "أنت في طريقك لتسليم الطلب";
 
     const STATE_DELIVERED_CAPTAIN = "لقد سلمت الطلب ,شكرا لك";
+    
+    const STORE = "store";
+    
+    const CAPTAIN = "captain";
 }

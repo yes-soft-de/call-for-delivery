@@ -105,21 +105,25 @@ class NotificationLocalService
         return $state;
     }
     
-    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, $userType): NotificationLocalResponse
+    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainUserId = null): NotificationLocalResponse
     {       
-        if ($userType === "store") {
+        if ($userType === NotificationConstant::STORE) {
             $text = $this->getOrderStateForStore($state);
+            $message = [
+                "text" => $text,
+                "orderId"=> $orderId,
+                "captainUserId"=> $captainUserId
+            ];
         }
-        if ($userType === "captain") {
+
+        if ($userType === NotificationConstant::CAPTAIN) {
             $text = $this->getOrderStateForCaptain($state);
-        }
-       
-       
-        $message = [
-            "text" => $text,
-            "orderId"=> $orderId
-        ];
-      
+            $message = [
+                "text" => $text,
+                "orderId"=> $orderId
+            ];
+        } 
+
         $request = $this->createNotificationLocalCreateRequest($userId, $title, $message);
        
         $notificationLocal = $this->notificationLocalManager->createNotificationLocal($request);
