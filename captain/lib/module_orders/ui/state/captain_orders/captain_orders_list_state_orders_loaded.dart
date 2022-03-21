@@ -1,9 +1,11 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -70,6 +72,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   arguments: element.id.toString());
             },
             child: OrderCard(
+              background: StatusHelper.getOrderStatusColor(element.state),
               deliveryDate: element.deliveryDate,
               note: element.note,
               orderCost: element.orderCost.toStringAsFixed(1),
@@ -82,6 +85,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                       element.distance +
                       ' ' +
                       S.current.km,
+              credit: element.paymentMethod != 'cash',
             ),
           ),
         ));
@@ -115,10 +119,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       );
     }
     var ordersData = nearbyOrders as OrderModel;
-    var now = DateTime.now();
-    var moment = Moment.now();
+    var data = _sortOrder(ordersData.data);
     var uiList = <Widget>[];
-    ordersData.data.forEach((element) {
+    data.forEach((element) {
       uiList.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -136,12 +139,13 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               orderNumber: element.id.toString(),
               branchName: element.branchName,
               distance: S.current.destinationUnavailable == element.distance
-                  ? element.distance
+                  ? S.current.destination + ' ' + element.distance
                   : S.current.distance +
                       ' ' +
                       element.distance +
                       ' ' +
                       S.current.km,
+              credit: element.paymentMethod != 'cash',
             ),
           ),
         ),
@@ -150,10 +154,46 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     uiList.add(Container(
       height: 75,
     ));
+    screenState.refresh();
     return RefreshIndicator(
         child: CustomListView.custom(children: uiList),
         onRefresh: () {
           return screenState.refreshOrders();
         });
+  }
+
+  List<OrderModel> _sortOrder(List<OrderModel> orders) {
+    if (orders.isEmpty) {
+      return [];
+    } else {
+      List<OrderModel> sorted = orders;
+      DeepLinksService.defaultLocation().then((myPos) {
+        if (myPos != null) {
+          Distance distance = const Distance();
+          sorted.sort((a, b) {
+            try {
+              var pos1 = a.location as LatLng;
+              var pos2 = b.location as LatLng;
+              var straightDistance1 =
+                  distance.as(LengthUnit.Kilometer, pos1, myPos);
+              var straightDistance2 =
+                  distance.as(LengthUnit.Kilometer, pos2, myPos);
+              a.distance = straightDistance1.toStringAsFixed(1);
+              b.distance = straightDistance2.toStringAsFixed(1);
+              return straightDistance1.compareTo(straightDistance2);
+            } catch (e) {
+              return 1;
+            }
+          });
+          screenState.refresh();
+          return;
+        } else {
+          screenState.refresh();
+          return;
+        }
+      });
+      screenState.refresh();
+      return sorted;
+    }
   }
 }
