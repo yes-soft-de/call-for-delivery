@@ -45,7 +45,7 @@ class ProfileModel extends DataModel {
   ProfileModel.withData(Data data) : super.withData() {
     _models = ProfileModel(
       id: data.id ?? -1,
-        image: data.image,
+        image: data.image?.image,
         name: data.captainName,
         phone: data.phone,
         stcPay: data.stcPay,
@@ -53,9 +53,9 @@ class ProfileModel extends DataModel {
         bankNumber: data.bankAccountNumber,
         car: data.car,
         age: data.age,
-        mechanicLicense: data.mechanicLicense,
-        drivingLicence: data.drivingLicence,
-        identity: data.identity,
+        mechanicLicense: data.mechanicLicense?.image,
+        drivingLicence: data.drivingLicence?.image,
+        identity: data.identity?.image,
         isOnline: data.isOnline,
         status: data.status,
         salary: data.salary,

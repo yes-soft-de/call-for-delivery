@@ -127,10 +127,10 @@ class CaptainProfileLoadedState extends States {
                             onChanged: (v) {
                               if (v) {
                                 model?.status = 'active';
-                                screenState.enableCaptain(EnableCaptainRequest(id: model!.id,status:'active'));
+                                screenState.enableCaptain('active');
                               } else {
                                 model?.status = 'inactive';
-                                screenState.enableCaptain(EnableCaptainRequest(id: model!.id ,status:'inactive' ));
+                                screenState.enableCaptain('inactive');
                               }
                             }),
                       ),

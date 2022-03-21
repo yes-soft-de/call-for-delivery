@@ -3,6 +3,7 @@ import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
@@ -104,5 +105,11 @@ class CaptainsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
+  Future<CaptainNeedSupportResponse?> getCaptainSupport() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_CAPTAINS,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainNeedSupportResponse.fromJson(response);
+  }
 }

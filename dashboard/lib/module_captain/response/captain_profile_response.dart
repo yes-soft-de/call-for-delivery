@@ -1,3 +1,4 @@
+import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/utils/logger/logger.dart';
 
 class CaptainProfileResponse {
@@ -36,24 +37,21 @@ class Data {
   Location? location;
   int? age;
   String? car;
-  String? drivingLicence;
-  String? drivingLicenceURL;
+  ImageUrl? drivingLicence;
   dynamic? salary;
   String? status;
   String? rating;
   dynamic? bounce;
   dynamic? roomID;
-  String? image;
-  String? imageURL;
-  String? baseURL;
+  ImageUrl? image;
   String? phone;
   bool? isOnline;
   String? bankName;
   String? bankAccountNumber;
   String? stcPay;
   dynamic? vacationStatus;
-  String? mechanicLicense;
-  String? identity;
+  ImageUrl? mechanicLicense;
+  ImageUrl? identity;
   CreateDate? createDate;
 
   Data(
@@ -64,15 +62,12 @@ class Data {
       this.age,
       this.car,
       this.drivingLicence,
-      this.drivingLicenceURL,
       this.salary,
       this.status,
       this.rating,
       this.bounce,
       this.roomID,
       this.image,
-      this.imageURL,
-      this.baseURL,
       this.phone,
       this.isOnline,
       this.bankName,
@@ -87,28 +82,24 @@ class Data {
     id = json['id'];
     captainID = json['captainId'];
     captainName = json['captainName'];
-    location = null;
-//        json['location'] != null ? Location.fromJson(json['location']) : null;
+    location =json['location'] != null ? Location.fromJson(json['location']) : null;
     age = json['age'];
     car = json['car'];
-    drivingLicence = json['drivingLicence'];
-    drivingLicenceURL = json['drivingLicenceURL'];
+    drivingLicence =json['drivingLicence'] != null ? ImageUrl.fromJson(json['drivingLicence']) :null;
     salary = json['salary'];
     status = json['status'];
     rating = json['rating'];
     bounce = json['bounce'];
     roomID = json['roomId'];
-    image = json['image'];
-    imageURL = json['imageURL'];
-    baseURL = json['baseURL'];
+    image =json['images'] != null ? ImageUrl.fromJson(json['images']) :null;
     phone = json['phone'];
     isOnline = json['isOnline'];
     bankName = json['bankName'];
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
-    mechanicLicense = json['mechanicLicense'];
-    identity = json['identity'];
+    mechanicLicense =json['mechanicLicense'] != null ? ImageUrl.fromJson(json['mechanicLicense']) :null;
+    identity =json['identity'] != null ? ImageUrl.fromJson(json['identity']) :null;
     createDate = json['createDate'] != null
         ? CreateDate.fromJson(json['createDate'])
         : null;
@@ -125,14 +116,11 @@ class Data {
     map['age'] = age;
     map['car'] = car;
     map['drivingLicence'] = drivingLicence;
-    map['drivingLicenceURL'] = drivingLicenceURL;
     map['salary'] = salary;
     map['status'] = status;
     map['bounce'] = bounce;
     map['roomID'] = roomID;
     map['image'] = image;
-    map['imageURL'] = imageURL;
-    map['baseURL'] = baseURL;
     map['phone'] = phone;
     map['isOnline'] = isOnline;
     map['bankName'] = bankName;
