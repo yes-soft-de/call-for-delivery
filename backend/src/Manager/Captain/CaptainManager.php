@@ -195,13 +195,13 @@ class CaptainManager
 
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
-        $captainProfile = $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+        return $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
         
-        if($captainProfile) {
-            $profile = $this->getCaptainProfileAndImages($captainProfile);
-        }
-
-        return  $profile;
+//        if($captainProfile) {
+//            $profile = $this->getCaptainProfileAndImages($captainProfile);
+//        }
+//
+//        return  $profile;
     }
 
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity

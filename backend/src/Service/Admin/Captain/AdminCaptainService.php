@@ -59,13 +59,13 @@ class AdminCaptainService
         $captainProfile = $this->adminCaptainManager->getCaptainProfileByIdForAdmin($captainProfileId);
 
         if ($captainProfile) {
-            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['profileImage ']);
+            $captainProfile['images'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfileId, ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
 
-            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+            $captainProfile['drivingLicence'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfileId, ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
 
-            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
+            $captainProfile['mechanicLicense'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfileId, ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
 
-            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
+            $captainProfile['identity'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfileId, ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
 
             if($captainProfile['roomId']) {
                 $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();
