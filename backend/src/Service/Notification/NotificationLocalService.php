@@ -107,7 +107,7 @@ class NotificationLocalService
     
     public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainUserId = null): NotificationLocalResponse
     {       
-        if ($userType === "store") {
+        if ($userType === NotificationConstant::STORE) {
             $text = $this->getOrderStateForStore($state);
             $message = [
                 "text" => $text,
@@ -115,8 +115,8 @@ class NotificationLocalService
                 "captainUserId"=> $captainUserId
             ];
         }
-        
-        if ($userType === "captain") {
+
+        if ($userType === NotificationConstant::CAPTAIN) {
             $text = $this->getOrderStateForCaptain($state);
             $message = [
                 "text" => $text,
