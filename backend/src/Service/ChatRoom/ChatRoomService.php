@@ -5,8 +5,11 @@ namespace App\Service\ChatRoom;
 use App\AutoMapping;
 use App\Entity\ChatRoomEntity;
 use App\Manager\ChatRoom\ChatRoomManager;
+use App\Response\ChatRoom\ChatRoomCaptainResponse;
 use App\Response\ChatRoom\ChatRoomResponse;
 use App\Response\ChatRoom\ChatRoomsStoreResponse;
+use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\Image\ImageService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ChatRoomService
@@ -14,12 +17,14 @@ class ChatRoomService
     private AutoMapping $autoMapping;
     private ChatRoomManager $chatRoomManager;
     private string $params;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, ChatRoomManager $chatRoomManager, ParameterBagInterface $params)
+    public function __construct(AutoMapping $autoMapping, ChatRoomManager $chatRoomManager, ParameterBagInterface $params, UploadFileHelperService $uploadFileHelperService)
     {
         $this->params = $params->get('upload_base_url') . '/';
         $this->autoMapping = $autoMapping;
         $this->chatRoomManager = $chatRoomManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function getChatRoom(int $userId): ?ChatRoomResponse
@@ -44,6 +49,24 @@ class ChatRoomService
             $chatRoom['images'] = $this->getImageParams($chatRoom['images'], $this->params.$chatRoom['images'], $this->params);
          
             $response[] = $this->autoMapping->map("array", ChatRoomsStoreResponse::class, $chatRoom);
+        }
+
+        return $response;
+    }
+
+    public function getChatRoomsWithCaptains(): array
+    {
+        $response = [];
+
+        $chatRooms = $this->chatRoomManager->getChatRoomsWithCaptains();
+
+        foreach($chatRooms as $chatRoom) {
+            $chatRoom['roomId'] = $chatRoom['roomId']->toBase32();
+
+            // we use following image link until captains' images are linked with Image entity successfully
+            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+
+            $response[] = $this->autoMapping->map("array", ChatRoomCaptainResponse::class, $chatRoom);
         }
 
         return $response;

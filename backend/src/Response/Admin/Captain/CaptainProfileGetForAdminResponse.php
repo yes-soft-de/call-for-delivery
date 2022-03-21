@@ -13,13 +13,15 @@ class CaptainProfileGetForAdminResponse
      */
     public $captainName;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var array|null
+     */
     public $images;
 
     /**
-     * @var array
+     * @var array|null
      */
-    public $location = [];
+    public $location;
 
     /**
      * @var int|null
@@ -68,10 +70,19 @@ class CaptainProfileGetForAdminResponse
      */
     public $stcPay;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var array|null
+     */
     public $mechanicLicense;
 
-    // did not added type hint annotation just until set images scenario
+    /**
+     * @var array|null
+     */
+    public $drivingLicence;
+
+    /**
+     * @var array|null
+     */
     public $identity;
 
     /**

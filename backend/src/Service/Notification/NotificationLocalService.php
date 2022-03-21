@@ -84,7 +84,7 @@ class NotificationLocalService
         return $this->notificationLocalManager->deleteLocalNotification($id);
     }
 
-    public function getOrderState($state): string
+    public function getOrderStateForStore($state): string
     {
         if ($state == OrderStateConstant::ORDER_STATE_ON_WAY){
             $state = NotificationConstant::STATE_ON_WAY_PICK_ORDER;
@@ -105,15 +105,25 @@ class NotificationLocalService
         return $state;
     }
     
-    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null): NotificationLocalResponse
+    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainUserId = null): NotificationLocalResponse
     {       
-        $text = $this->getOrderState($state);
-       
-        $message = [
-            "text" => $text,
-            "orderId"=> $orderId
-        ];
-        
+        if ($userType === NotificationConstant::STORE) {
+            $text = $this->getOrderStateForStore($state);
+            $message = [
+                "text" => $text,
+                "orderId"=> $orderId,
+                "captainUserId"=> $captainUserId
+            ];
+        }
+
+        if ($userType === NotificationConstant::CAPTAIN) {
+            $text = $this->getOrderStateForCaptain($state);
+            $message = [
+                "text" => $text,
+                "orderId"=> $orderId
+            ];
+        } 
+
         $request = $this->createNotificationLocalCreateRequest($userId, $title, $message);
        
         $notificationLocal = $this->notificationLocalManager->createNotificationLocal($request);
@@ -130,5 +140,26 @@ class NotificationLocalService
         $request->setMessage($message);
         
         return $request;
+    }
+
+    public function getOrderStateForCaptain($state): string
+    {
+        if ($state == OrderStateConstant::ORDER_STATE_ON_WAY){
+            $state = NotificationConstant::STATE_ON_WAY_PICK_ORDER_CAPTAIN;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationConstant::STATE_IN_STORE_CAPTAIN;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationConstant::STATE_PICKED_CAPTAIN;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationConstant::STATE_ONGOING_CAPTAIN;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationConstant::STATE_DELIVERED_CAPTAIN;
+        }
+        
+        return $state;
     }
 }

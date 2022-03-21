@@ -72,10 +72,27 @@ class AdminCaptainController extends BaseController
      *                  @OA\Property(type="string", property="bankName"),
      *                  @OA\Property(type="string", property="bankAccountNumber"),
      *                  @OA\Property(type="string", property="stcPay"),
-     *                  @OA\Property(type="string", property="images"),
+     *                  @OA\Property(type="object", property="images",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  ),
      *                  @OA\Property(type="boolean", property="isOnline"),
-     *                  @OA\Property(type="string", property="mechanicLicense"),
-     *                  @OA\Property(type="string", property="identity"),
+     *                  @OA\Property(type="object", property="mechanicLicense",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  ),
+     *                  @OA\Property(type="object", property="identity",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  ),
+     *                  @OA\Property(type="object", property="drivingLicence",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  ),
      *                  @OA\Property(type="string", property="roomId")
      *              )
      *          )
@@ -126,11 +143,27 @@ class AdminCaptainController extends BaseController
      *              @OA\Property(type="string", property="bankName"),
      *              @OA\Property(type="string", property="bankAccountNumber"),
      *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="object", property="images"),
+     *              @OA\Property(type="object", property="images",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL")
+     *              ),
      *              @OA\Property(type="boolean", property="isOnline"),
-     *              @OA\Property(type="object", property="mechanicLicense"),
-     *              @OA\Property(type="object", property="identity"),
-     *              @OA\Property(type="object", property="drivingLicence"),
+     *              @OA\Property(type="object", property="mechanicLicense",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL")
+     *              ),
+     *              @OA\Property(type="object", property="identity",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL")
+     *              ),
+     *              @OA\Property(type="object", property="drivingLicence",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL")
+     *              ),
      *              @OA\Property(type="string", property="roomId")
      *          )
      *      )
@@ -267,6 +300,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="boolean", property="isOnline"),
      *          @OA\Property(type="string", property="mechanicLicense"),
+     *          @OA\Property(type="string", property="drivingLicence"),
      *          @OA\Property(type="string", property="identity")
      *      )
      * )
@@ -294,6 +328,7 @@ class AdminCaptainController extends BaseController
      *              @OA\Property(type="boolean", property="isOnline"),
      *              @OA\Property(type="string", property="mechanicLicense"),
      *              @OA\Property(type="string", property="identity"),
+     *              @OA\Property(type="string", property="drivingLicence"),
      *              @OA\Property(type="string", property="roomId")
      *          )
      *      )

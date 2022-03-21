@@ -10,6 +10,7 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
+use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Order\OrderFilterRequest;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -131,7 +132,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->andWhere('orderEntity.createdAt <= :toDate');
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
-        //dd($query);
+
         return $query->getQuery()->getResult();
     }
 
@@ -197,5 +198,67 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             
             ->getOneOrNullResult();
+    }
+
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId')
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.id = storeOrderDetails.images')
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getStoreOwnerProfileId()) {
+            $query->andWhere('orderEntity.storeOwner = :storeOwner');
+            $query->setParameter('storeOwner', $request->getStoreOwnerProfileId());
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+        }
+
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state IN (:statesArray)');
+            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+        }
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

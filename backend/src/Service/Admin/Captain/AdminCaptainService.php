@@ -31,7 +31,18 @@ class AdminCaptainService
         $captainsProfiles = $this->adminCaptainManager->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
 
         foreach ($captainsProfiles as $captainProfile) {
-            
+            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
+
+            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+
+            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
+
+            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
+
+            if (empty($captainProfile['location'])) {
+                $captainProfile['location'] = null;
+            }
+
             $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
 
@@ -43,14 +54,21 @@ class AdminCaptainService
         $captainProfile = $this->adminCaptainManager->getCaptainProfileByIdForAdmin($captainProfileId);
 
         if ($captainProfile) {
+            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
+
+            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+
+            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
+
+            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
+
             if($captainProfile['roomId']) {
                 $captainProfile['roomId'] = $captainProfile['roomId']->toBase32();
             }
-            
-            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['images']);
-            $captainProfile['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($captainProfile['mechanicLicense']);
-            $captainProfile['identity'] = $this->uploadFileHelperService->getImageParams($captainProfile['identity']);
-            $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
+
+            if (empty($captainProfile['location'])) {
+                $captainProfile['location'] = null;
+            }
         }
 
         return $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);

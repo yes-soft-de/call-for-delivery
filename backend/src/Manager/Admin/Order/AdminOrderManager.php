@@ -3,6 +3,7 @@
 namespace App\Manager\Admin\Order;
 
 use App\Repository\OrderEntityRepository;
+use App\Request\Admin\Order\OrderFilterByAdminRequest;
 
 class AdminOrderManager
 {
@@ -21,5 +22,10 @@ class AdminOrderManager
     public function getAllOrdersCountForAdmin(): int
     {
         return count($this->orderEntityRepository->findAll());
+    }
+
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterStoreOrdersByAdmin($request);
     }
 }
