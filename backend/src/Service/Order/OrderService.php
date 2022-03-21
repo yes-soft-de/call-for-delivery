@@ -155,9 +155,10 @@ class OrderService
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
-
-            //TODO change this
-            $order['roomId'] = "12345678912456789";
+            
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+            }
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
