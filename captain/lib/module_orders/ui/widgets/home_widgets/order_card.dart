@@ -1,5 +1,4 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/ui/widgets/home_widgets/icon_info_button.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
@@ -9,56 +8,38 @@ class OrderCard extends StatelessWidget {
   final String orderCost;
   final String note;
   final String destination;
+  final bool credit;
+  final Color? background;
   OrderCard(
       {required this.orderNumber,
       required this.orderStatus,
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
-      required this.destination});
+      required this.destination,
+      required this.credit,
+      this.background});
 
   @override
   Widget build(BuildContext context) {
+    var color = background ?? Theme.of(context).colorScheme.primary;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.85),
-              Theme.of(context).colorScheme.primary.withOpacity(0.85),
-              Theme.of(context).colorScheme.primary.withOpacity(0.9),
-              Theme.of(context).colorScheme.primary.withOpacity(0.93),
-              Theme.of(context).colorScheme.primary.withOpacity(0.95),
-              Theme.of(context).colorScheme.primary,
+              color.withOpacity(0.85),
+              color.withOpacity(0.85),
+              color.withOpacity(0.9),
+              color.withOpacity(0.93),
+              color.withOpacity(0.95),
+              color,
             ])),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-              InfoButtonOrder(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text(S.current.note),
-                          content: Container(child: Text(note)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          actionsAlignment: MainAxisAlignment.center,
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(S.current.close)),
-                          ],
-                        );
-                      });
-                },
-              ),
               // order number & order status
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -80,8 +61,14 @@ class OrderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  verticalTile(context,
-                      title: S.current.cost, subtitle: orderCost),
+                  Visibility(
+                    visible: credit,
+                    child: verticalTile(context,
+                        title: S.current.cost, subtitle: S.current.paid),
+                    replacement: verticalTile(context,
+                        title: S.current.cost,
+                        subtitle: orderCost + ' ' + S.current.sar),
+                  ),
                   Icon(
                     Icons.arrow_circle_left_outlined,
                     color: Theme.of(context).backgroundColor,
@@ -128,7 +115,6 @@ class OrderCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).backgroundColor),
           ),
-          
           Text(subtitle,
               style: Theme.of(context)
                   .textTheme
@@ -142,7 +128,8 @@ class OrderCard extends StatelessWidget {
   Widget divider(context) {
     Color dividerColor = Theme.of(context).backgroundColor;
     return Divider(
-      thickness: 2,
+      height: 8,
+      thickness: 1.5,
       indent: 16,
       endIndent: 16,
       color: dividerColor,
@@ -157,13 +144,15 @@ class NearbyOrdersCard extends StatelessWidget {
   final String distance;
   final String note;
   final String branchName;
+  final bool credit;
   const NearbyOrdersCard(
       {required this.orderNumber,
       required this.distance,
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
-      required this.branchName});
+      required this.branchName,
+      required this.credit});
 
   @override
   Widget build(BuildContext context) {
@@ -182,29 +171,6 @@ class NearbyOrdersCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            InfoButtonOrder(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text(S.current.note),
-                        content: Container(child: Text(note)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        actionsAlignment: MainAxisAlignment.center,
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(S.current.close)),
-                        ],
-                      );
-                    });
-              },
-            ),
             // order number & order status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -233,8 +199,14 @@ class NearbyOrdersCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                verticalTile(context,
-                    title: S.current.cost, subtitle: orderCost),
+                Visibility(
+                  visible: credit,
+                  child: verticalTile(context,
+                      title: S.current.cost, subtitle: S.current.paid),
+                  replacement: verticalTile(context,
+                      title: S.current.cost,
+                      subtitle: orderCost + ' ' + S.current.sar),
+                ),
                 Icon(
                   Icons.arrow_circle_left_outlined,
                   color: Theme.of(context).backgroundColor,
@@ -269,7 +241,8 @@ class NearbyOrdersCard extends StatelessWidget {
   Widget divider(context) {
     Color dividerColor = Theme.of(context).backgroundColor;
     return Divider(
-      thickness: 2,
+      height: 8,
+      thickness: 1.5,
       indent: 16,
       endIndent: 16,
       color: dividerColor,

@@ -41,12 +41,14 @@ class OrderLogsLoadedState extends States {
                   element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
               note: element.note,
               destination: element.distance,
+              credit: element.paymentMethod != 'cash',
+              background: StatusHelper.getOrderStatusColor(element.state),
             ),
           ),
         ),
       ));
     });
-    widgets.add(SizedBox(
+    widgets.add(const SizedBox(
       height: 75,
     ));
     return widgets;
