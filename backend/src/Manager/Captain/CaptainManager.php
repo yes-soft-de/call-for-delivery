@@ -134,6 +134,8 @@ class CaptainManager
 
     public function getCaptainProfile(int $userId): ?array
     {
+        $profile = [];
+
         $items = $this->captainEntityRepository->getCaptainByCaptainId($userId);
 
         if($items) {

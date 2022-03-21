@@ -50,9 +50,8 @@ class CaptainService
         return $this->autoMapping->map(CaptainEntity::class, CaptainProfileResponse::class, $item);
     }
 
-    public function getCaptainProfile($userId)
+    public function getCaptainProfile($userId): CaptainProfileResponse
     {
-       
         $item = $this->captainManager->getCaptainProfile($userId);
 
         if($item) {
@@ -61,10 +60,15 @@ class CaptainService
                 $item['roomId'] = $item['roomId']->toBase32();
             }
 
-            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
-            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
-            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
-            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
+//            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
+//            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
+//            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
+//            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
+
+            $item['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['identity'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
         }
 
         return $this->autoMapping->map('array', CaptainProfileResponse::class, $item);
