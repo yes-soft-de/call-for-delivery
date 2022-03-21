@@ -61,7 +61,7 @@ class CaptainService
                 $item['roomId'] = $item['roomId']->toBase32();
             }
 
-            $item['images'] = $this->uploadFileHelperService->getImageParams($item['image']);
+            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
             $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
             $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
             $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);

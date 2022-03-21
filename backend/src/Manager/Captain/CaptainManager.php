@@ -243,24 +243,24 @@ class CaptainManager
     {
         $profile = [];
 
+        $profile['captainId'] = $items[0]['captainId'];
+        $profile['captainName'] = $items[0]['captainName'];
+        $profile['location'] = $items[0]['location'];
+        $profile['age'] = $items[0]['age'];
+        $profile['car'] = $items[0]['car'];
+        $profile['salary'] = $items[0]['salary'];
+        $profile['bounce'] = $items[0]['bounce'];
+        $profile['phone'] = $items[0]['phone'];
+        $profile['isOnline'] = $items[0]['isOnline'];
+        $profile['bankName'] = $items[0]['bankName'];
+        $profile['bankAccountNumber'] = $items[0]['bankAccountNumber'];
+        $profile['stcPay'] = $items[0]['stcPay'];
+        $profile['roomId'] = $items[0]['roomId'];
+       
         foreach ($items as $captainProfile) {
-         
-            $profile['captainId'] = $captainProfile['captainId'];
-            $profile['captainName'] = $captainProfile['captainName'];
-            $profile['location'] = $captainProfile['location'];
-            $profile['age'] = $captainProfile['age'];
-            $profile['car'] = $captainProfile['car'];
-            $profile['salary'] = $captainProfile['salary'];
-            $profile['bounce'] = $captainProfile['bounce'];
-            $profile['phone'] = $captainProfile['phone'];
-            $profile['isOnline'] = $captainProfile['isOnline'];
-            $profile['bankName'] = $captainProfile['bankName'];
-            $profile['bankAccountNumber'] = $captainProfile['bankAccountNumber'];
-            $profile['stcPay'] = $captainProfile['stcPay'];
-            $profile['roomId'] = $captainProfile['roomId'];
 
             if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
-              $profile['image'] = $captainProfile['imagePath'];
+              $profile['profileImage '] = $captainProfile['imagePath'];
             }
 
             if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {

@@ -54,7 +54,7 @@ class AdminCaptainService
         $captainProfile = $this->adminCaptainManager->getCaptainProfileByIdForAdmin($captainProfileId);
 
         if ($captainProfile) {
-            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['image']);
+            $captainProfile['images'] = $this->uploadFileHelperService->getImageParams($captainProfile['profileImage ']);
 
             $captainProfile['drivingLicence'] = $this->uploadFileHelperService->getImageParams($captainProfile['drivingLicence']);
 
