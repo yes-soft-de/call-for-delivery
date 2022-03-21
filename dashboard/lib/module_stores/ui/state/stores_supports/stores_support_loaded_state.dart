@@ -60,7 +60,6 @@ class StoresNeedSupportLoadedState extends States {
               arguments: ChatArgument(
                 roomID: element.roomID,
                 userType: 'store',
-                guest:  false ,
                 userID: int.parse(element.id)),
               );
         },

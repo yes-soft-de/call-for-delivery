@@ -12,6 +12,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StoresInActiveLoadedState extends States {
   final StoresInActiveScreenState screenState;

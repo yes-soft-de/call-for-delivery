@@ -1,4 +1,7 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
+import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -34,4 +37,9 @@ class StoreManager {
 
   Future<StoreNeedSupportResponse?> getStoreSupport() =>
       _storesRepository.getStoreSupport();
+
+  Future<OrdersResponse?> getStoreOrdersFilter(FilterOrderRequest request) =>
+      _storesRepository.getStoreOrdersFilter(request);
+  Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
+      _storesRepository.getOrderDetails(orderId);
 }

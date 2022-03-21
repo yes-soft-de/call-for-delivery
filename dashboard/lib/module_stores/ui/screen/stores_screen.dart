@@ -1,3 +1,5 @@
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -6,8 +8,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/state_manager/stores_state_manager.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_loading_state.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 
 @injectable
@@ -21,12 +21,12 @@ class StoresScreen extends StatefulWidget {
 }
 
 class StoresScreenState extends State<StoresScreen> {
-  late StoresState currentState;
+  late States currentState;
   bool canAddCategories = true;
 
   @override
   void initState() {
-    currentState = StoresLoadingState(this);
+    currentState = LoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
