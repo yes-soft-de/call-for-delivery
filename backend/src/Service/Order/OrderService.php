@@ -23,6 +23,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Response\Captain\CaptainStatusResponse;
 use App\Response\Order\SpecificOrderForCaptainResponse;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\ChatRoom\ChatRoomConstant;
 
 class OrderService
 {
@@ -128,6 +129,14 @@ class OrderService
         $orders = $this->orderManager->closestOrders();
 
         foreach ($orders as $order) {
+           
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+            }
+            else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+            }
 
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
@@ -155,9 +164,13 @@ class OrderService
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
-            
+                      
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+            }
+            else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
             }
         }
 
@@ -175,5 +188,15 @@ class OrderService
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
+    }
+
+    public function getUsedAs($usedAs): string
+     {   
+        if($usedAs === ChatRoomConstant::CAPTAIN_STORE_ENQUIRE) {
+
+           return ChatRoomConstant::CHAT_ENQUIRE_USE;
+        }
+        
+        return ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
     }
 }

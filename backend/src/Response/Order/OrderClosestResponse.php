@@ -23,4 +23,8 @@ class OrderClosestResponse
     public $location;
   
     public $branchName;
+
+    public string|null $usedAs;
+
+    public string|null $roomId;
 }
