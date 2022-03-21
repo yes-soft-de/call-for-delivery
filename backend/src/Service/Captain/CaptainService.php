@@ -14,16 +14,19 @@ use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\Captain\CaptainManager;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class CaptainService
 {
     private AutoMapping $autoMapping;
     private CaptainManager $captainManager;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager)
+    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService)
     {
         $this->autoMapping = $autoMapping;
         $this->captainManager = $captainManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function captainRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -49,11 +52,19 @@ class CaptainService
 
     public function getCaptainProfile($userId)
     {
+       
         $item = $this->captainManager->getCaptainProfile($userId);
 
-        if($item['roomId']) {
-          
-            $item['roomId'] = $item['roomId']->toBase32();
+        if($item) {
+            if($item['roomId']) {
+            
+                $item['roomId'] = $item['roomId']->toBase32();
+            }
+
+            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
+            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
+            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
+            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
         }
 
         return $this->autoMapping->map('array', CaptainProfileResponse::class, $item);
@@ -75,5 +86,4 @@ class CaptainService
 
         return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
      }
-
 }

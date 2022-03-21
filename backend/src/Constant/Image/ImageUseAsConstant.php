@@ -11,4 +11,6 @@ final class ImageUseAsConstant
     const IMAGE_USE_AS_DRIVE_LICENSE_IMAGE = 2;
 
     const IMAGE_USE_AS_ORDER_IMAGE = 3;
+
+    const IMAGE_USE_AS_IDENTITY_IMAGE = 4;
 }

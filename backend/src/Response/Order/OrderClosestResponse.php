@@ -23,4 +23,6 @@ class OrderClosestResponse
     public $location;
   
     public $branchName;
+
+    public $storeOwnerName;
 }
