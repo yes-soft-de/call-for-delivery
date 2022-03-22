@@ -4,6 +4,7 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
@@ -517,6 +518,70 @@ class OrderController extends BaseController
          }
 
         $response = $this->orderService->orderUpdateStateByCaptain($request);
+
+        return $this->response( $response, self::UPDATE);
+    }
+
+    /**
+     * captain: filter orders accepted by captain.
+     * @Route("filterordersbycaptain", name="filterOrdersByCaptain", methods={"POST"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="To accept the order AND change state",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="string", property="state"),
+     *              @OA\Property(type="string", property="fromDate"),
+     *              @OA\Property(type="string", property="toDate")
+     *         )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return orders that meet the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="location"),
+     *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="string", property="state")
+     *               )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterOrdersByCaptain(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterByCaptainRequest::class, (object) $data);
+
+        $request->setCaptainId($this->getUserId());
+
+        $response = $this->orderService->filterOrdersByCaptain($request);
 
         return $this->response( $response, self::UPDATE);
     }
