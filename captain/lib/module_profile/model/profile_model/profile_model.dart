@@ -14,6 +14,7 @@ class ProfileModel {
   int? age;
   bool? isOnline;
   num? averageRating;
+  String? roomID;
   ProfileModel(
       {this.image,
       this.name,
@@ -27,7 +28,8 @@ class ProfileModel {
       this.mechanicLicense,
       this.age,
       this.isOnline,
-      this.averageRating
+      this.averageRating,
+      this.roomID
       });
 
   String? _error;
@@ -51,7 +53,8 @@ class ProfileModel {
         drivingLicence: data.drivingLicence?.imageUrl,
         identity: data.identity?.imageUrl,
         isOnline: data.isOnline,
-        averageRating: data.rate ?? 0 
+        averageRating: data.rate ?? 0,
+        roomID: data.roomID
         );
   }
   bool get hasError => _error != null;
