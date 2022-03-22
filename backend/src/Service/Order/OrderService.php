@@ -5,9 +5,11 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
+use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\FilterOrdersByCaptainResponse;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Order\OrderClosestResponse;
@@ -212,5 +214,18 @@ class OrderService
     public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
     {     
         return $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order); 
+    }
+
+    public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterOrdersByCaptain($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map('array', FilterOrdersByCaptainResponse::class, $order);
+        }
+
+        return $response;
     }
 }
