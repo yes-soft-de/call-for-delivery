@@ -207,8 +207,3 @@ App\Request\Order\OrderChatRoomRequest:
     properties:
         orderId:
             - NotBlank: ~
-
-App\Request\Admin\Package\PackageCategoryCreateByAdminRequest:
-    properties:
-        name:
-            - NotBlank: ~
