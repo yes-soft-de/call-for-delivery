@@ -24,6 +24,7 @@ class OrderChatRoomController extends BaseController
 {
     private OrderChatRoomService $orderChatRoomService;
     private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
 
     public function __construct(SerializerInterface $serializer, OrderChatRoomService $orderChatRoomService, AutoMapping $autoMapping, ValidatorInterface $validator)
     {

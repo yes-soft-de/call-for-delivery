@@ -398,10 +398,11 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /** captain: Get order details.
      * @Route("captainorder/{id}", name="getSpecificOrderForCaptain", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
+     * @param int $id
      * @return JsonResponse
      *
      *
@@ -451,7 +452,7 @@ class OrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getSpecificOrderForCaptain($id): JsonResponse
+    public function getSpecificOrderForCaptain(int $id): JsonResponse
     {
         $result = $this->orderService->getSpecificOrderForCaptain($id);
 
