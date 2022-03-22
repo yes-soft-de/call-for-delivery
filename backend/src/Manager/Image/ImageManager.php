@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\ImageEntity;
 use App\Repository\ImageEntityRepository;
 use App\Request\Image\ImageCreateRequest;
+use App\Request\Image\ImageUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ImageManager
@@ -57,5 +58,33 @@ class ImageManager
     {
         return $this->imageEntityRepository->getImagesByItemIdAndEntityType($itemId, $entityType);
     }
+    
+    public function createImageOrUpdate(string $image, string $id, int $entity, int $usedAs): ?ImageEntity
+    {       
+       $imageEntity = $this->imageEntityRepository->findOneBy(["entityType" => $entity , "usedAs" => $usedAs, "itemId" => $id]);
 
+       if(! $imageEntity) {
+            $request = new ImageCreateRequest();
+            
+            $request->setImagePath($image);
+            $request->setEntityType( $entity);
+            $request->setUsedAs($usedAs);
+            $request->setItemId($id);
+          
+            return $this->create($request);
+       }
+    
+       return  $this->updateImage($image, $imageEntity);
+    }
+
+    public function updateImage(string $image, ImageEntity $imageEntity): ?ImageEntity
+    {
+        if($imageEntity) {
+            $imageEntity->setImagePath($image);
+        }
+
+        $this->entityManager->flush();    
+
+        return $imageEntity;
+    }
 }
