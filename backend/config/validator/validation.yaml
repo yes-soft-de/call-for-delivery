@@ -207,3 +207,8 @@ App\Request\Order\OrderUpdateByCaptainRequest:
             - NotBlank: ~
         state:
             - NotBlank: ~
+
+App\Request\Order\OrderChatRoomRequest:
+    properties:
+        orderId:
+            - NotBlank: ~

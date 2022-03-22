@@ -9,4 +9,6 @@ final class ImageEntityTypeConstant
     const ENTITY_TYPE_STORE_OWNER_PROFILE = 1;
 
     const ENTITY_TYPE_CAPTAIN_PROFILE = 2;
+
+    const IMAGE_NULL = null;
 }
