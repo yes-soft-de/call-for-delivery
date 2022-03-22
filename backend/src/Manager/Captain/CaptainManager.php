@@ -262,6 +262,7 @@ class CaptainManager
         $profile['bankAccountNumber'] = $items[0]['bankAccountNumber'];
         $profile['stcPay'] = $items[0]['stcPay'];
         $profile['roomId'] = $items[0]['roomId'];
+        $profile['status'] = $items[0]['status'];
                
         foreach ($items as $captainProfile) {
 
