@@ -6,7 +6,9 @@ use App\AutoMapping;
 use App\Constant\Package\PackageCategoryConstant;
 use App\Entity\PackageCategoryEntity;
 use App\Manager\Admin\Package\AdminPackageCategoryManager;
+use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
 use App\Response\Admin\Package\PackageAndCategoryForAdminGetResponse;
+use App\Response\Admin\Package\PackageCategoryCreateByAdminResponse;
 use App\Response\Admin\Package\PackageCategoryGetResponse;
 
 class AdminPackageCategoryService
@@ -20,6 +22,13 @@ class AdminPackageCategoryService
         $this->autoMapping = $autoMapping;
         $this->adminPackageCategoryManager = $adminPackageCategoryManager;
         $this->adminPackageService = $adminPackageService;
+    }
+
+    public function createPackageCategoryByAdmin(PackageCategoryCreateByAdminRequest $request): PackageCategoryCreateByAdminResponse
+    {
+        $packageCategoryResult = $this->adminPackageCategoryManager->createPackageCategoryByAdmin($request);
+
+        return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryCreateByAdminResponse::class, $packageCategoryResult);
     }
 
     public function updatePackageCategory($request): string|PackageCategoryGetResponse

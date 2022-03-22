@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Package\PackageCategoryConstant;
 use App\Entity\PackageCategoryEntity;
 use App\Repository\PackageCategoryEntityRepository;
+use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
 use App\Request\Admin\Package\PackageCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -20,6 +21,16 @@ class AdminPackageCategoryManager
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->packageCategoryEntityRepository = $packageCategoryEntityRepository;
+    }
+
+    public function createPackageCategoryByAdmin(PackageCategoryCreateByAdminRequest $request): PackageCategoryEntity
+    {
+        $packageCategoryEntity = $this->autoMapping->map(PackageCategoryCreateByAdminRequest::class, PackageCategoryEntity::class, $request);
+
+        $this->entityManager->persist($packageCategoryEntity);
+        $this->entityManager->flush();
+
+        return $packageCategoryEntity;
     }
 
     public function updatePackageCategory(PackageCategoryUpdateRequest $request): string|PackageCategoryEntity
