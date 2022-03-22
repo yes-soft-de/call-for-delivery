@@ -10,26 +10,30 @@ class OwnerOrderCard extends StatelessWidget {
   final String createdDate;
   final String orderCost;
   final String note;
+  final Color? background;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
       required this.createdDate,
       required this.deliveryDate,
       required this.orderCost,
-      required this.note});
+      required this.note,
+      this.background});
 
   @override
   Widget build(BuildContext context) {
+    var color = background ?? Theme.of(context).colorScheme.primary;
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.9),
-            Theme.of(context).colorScheme.primary.withOpacity(0.93),
-            Theme.of(context).colorScheme.primary.withOpacity(0.95),
-            Theme.of(context).colorScheme.primary,
+            color.withOpacity(0.85),
+            color.withOpacity(0.85),
+            color.withOpacity(0.9),
+            color.withOpacity(0.93),
+            color.withOpacity(0.95),
+            color,
           ])),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
