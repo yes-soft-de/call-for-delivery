@@ -1,5 +1,3 @@
-
-
 class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
@@ -26,19 +24,23 @@ class Urls {
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
   static const NOTIFICATIONNEWCHAT_ANYN_API =
       BASE_API + '/notificationnewchatanonymous';
-  static const CREATE_CAPTAIN_PROFILE = BASE_API + '/v1/captain/captainprofilupdate';
+  static const CREATE_CAPTAIN_PROFILE =
+      BASE_API + '/v1/captain/captainprofilupdate';
   static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captainisactive';
-  static const ORDER_STATUS_API = BASE_API + '/orderDetails/';
-  static const NEARBY_ORDERS_API = BASE_API + '/closestOrders';
-  static const CAPTAIN_ACCEPTED_ORDERS_API = BASE_API + '/getAcceptedOrder';
-  static const ACCEPT_ORDER_API = BASE_API + '/acceptedOrder';
-  static const CAPTAIN_ORDER_UPDATE_API = BASE_API + '/orderUpdateState';
+  static const ORDER_STATUS_API = BASE_API + '/v1/order/captainorder/';
+  static const NEARBY_ORDERS_API = BASE_API + '/v1/order/closestorders';
+  static const CAPTAIN_ACCEPTED_ORDERS_API =
+      BASE_API + '/v1/order/acceptedorder';
+  static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
+  static const CAPTAIN_ORDER_UPDATE_API =
+      BASE_API + '/v1/order/orderupdatestate';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
   static const UPDATES_API = BASE_API + '/updateall';
   static const ORDER_BY_ID = BASE_API + '/orderStatus/';
   static const SEND_TO_RECORD = BASE_API + '/record';
-  static const CAPTAIN_PROFILE_API = BASE_API + '/captainprofile';
+  static const CAPTAIN_PROFILE_API =
+      BASE_API + '/v1/captain/captainprofilebyid';
   static const TERMS_CAPTAIN = BASE_API + '/termscaptain';
   static const LOG_API = BASE_API + '/getRecords';
   static const CAPTAIN_BALANCE_ACCOUNT =
@@ -185,4 +187,16 @@ class Urls {
       BASE_API + '/createstoreproductcategorytranslation';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
+  static const GET_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationsLocal';
+  static const GET_UPDATES =
+      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforcaptain';
+  static const DELETE_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationLocal';
+  static const GET_SUBSCRIPTION_BALANCE =
+      DOMAIN + '/v1/subscription/packagebalance';
+  static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
+  static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
+  static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterorders';
+
 }

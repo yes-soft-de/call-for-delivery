@@ -12,7 +12,7 @@ class ProfileModel {
   String? identity;
   String? mechanicLicense;
   int? age;
-  String? isOnline;
+  bool? isOnline;
   ProfileModel(
       {this.image,
       this.name,

@@ -35,7 +35,7 @@ class CaptainOrdersListStateError extends CaptainOrdersListState {
       appBar: CustomC4dAppBar.appBar(context,
           title: S.of(context).home, icon: Icons.sort_rounded, onTap: () {
         screenState.advancedController.showDrawer();
-      }, buttonBackground: Colors.red),
+      }, colorIcon: Theme.of(context).colorScheme.error),
       body: ErrorStateWidget(
         onRefresh: () {
           screenState.getMyOrders();

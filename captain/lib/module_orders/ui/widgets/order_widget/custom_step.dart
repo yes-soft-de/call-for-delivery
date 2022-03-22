@@ -5,15 +5,16 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 class CustomStep extends StatelessWidget {
   final OrderStatusEnum status;
   final int currentIndex;
-  CustomStep({required this.status, required this.currentIndex});
+  const CustomStep({required this.status, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
+    var currentStatus = StatusHelper.getOrderStatusByIndex(currentIndex);
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: currentIndex >= StatusHelper.getOrderStatusIndex(status)
-            ? Theme.of(context).primaryColor
+            ? StatusHelper.getOrderStatusColor(currentStatus)
             : Theme.of(context).disabledColor,
       ),
       child: Padding(
@@ -23,7 +24,7 @@ class CustomStep extends StatelessWidget {
                 : 14),
         child: Text(
           '${StatusHelper.getOrderStatusIndex(status) + 1}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
           ),

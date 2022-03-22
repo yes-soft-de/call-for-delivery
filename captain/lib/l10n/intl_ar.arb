@@ -133,8 +133,8 @@
     "termsOfService": "شروط الاستخدام",
     "created": "تم الانشاء",
     "unknown": "غير معروف",
-    "captainAcceptedOrder": "قبل الكابتن الطلب",
-    "captainInStore": "الكابتن في المتجر",
+    "captainAcceptedOrder": "تم قبول الطلب",
+    "captainInStore": "وصلت المتجر",
     "captainStartedDelivery": "بدأ الكابتن التوصيل",
     "captainGotCash": "حصل الكابتن على الكاش",
     "orderIsFinished": "تم انهاء الطلب",
@@ -157,7 +157,7 @@
     "ourPackages": "باقاتنا",
     "notifications": "الاشعارات",
     "pleaseProvideTheDistance": "الرجاء توفير المسافة المقطوعة",
-    "finishOrderProvideDistanceInKm": "انهاء الطلب، المسافة المقطوعة",
+    "finishOrderProvideDistanceInKm": "المسافة المقطوعة",
     "myStatus": "حالتي",
     "directSupport": "دعم مباشر",
     "myOrders": "طلباتي",
@@ -266,8 +266,8 @@
     "deliverPrice": "التوصيل",
     "waitingDescription": "بانتظار قبول الطلب",
     "captainInStoreDescription": "المتجر يقوم بتجهيز الطلب",
-    "deliveringDescription": "الكابتن في طريقه للعميل",
-    "captainAcceptOrderDescription": "الكابتن في طريقه إلى المتجر",
+    "deliveringDescription": "جار توصيل الطلبية للعميل",
+    "captainAcceptOrderDescription": "أنا في طريقي إلى المتجر",
     "orderDeliveredDescription": "تم توصيل الطلب",
     "orderStatusDescription": "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية",
     "destinationAddress": "التوصيل إلى",
@@ -601,7 +601,20 @@
     "calculating": "جاري الحساب",
     "subscribedToOfferSuccess": "تم الاشتراك بباقة كابتن إضافية بنجاح",
     "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض",
-    "captainName": "اسم الكابتن"
+    "captainName": "اسم الكابتن",
+    "controlPanel": "لوحة التحكم",
+    "location": "الموقع",
+    "customer": "الزبون",
+    "acceptOrderHint": "بإمكانك قبول الطلب لتوصيله",
+    "iArrivedAtTheStoreHint": "لإعلان وصولك للمتجر",
+    "iGotThePackageHint": "الطلبية جاهزة للتوصيل",
+    "iFinishedDeliveringHint": "تم تسليم الطلبية بنجاح",
+    "branchLocation": "موقع الفرع",
+    "destination": "المسافة",
+    "destinationUnavailable": "غير متوفرة",
+    "waitingToAccept": "باننتظار قبولك الطلب",
+    "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"
+
 
 
 

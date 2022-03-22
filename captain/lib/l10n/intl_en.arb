@@ -134,8 +134,8 @@
     "termsOfService": "Terms of Service",
     "created": "Created",
     "unknown": "Unknown",
-    "captainAcceptedOrder": "Captain Accepted Order",
-    "captainInStore": "Captain in Store",
+    "captainAcceptedOrder": "Order Accepted",
+    "captainInStore": "I'm in Store",
     "captainStartedDelivery": "Captain Started Delivery",
     "captainGotCash": "Captain Got Cash",
     "orderIsFinished": "Order is finished",
@@ -158,7 +158,7 @@
     "ourPackages": "Our Packages",
     "notifications": "Notifications",
     "pleaseProvideTheDistance": "Please Provide the distance",
-    "finishOrderProvideDistanceInKm": "Finish Order, Provide distance in KM",
+    "finishOrderProvideDistanceInKm": "Provide distance in KM",
     "myStatus": "My Status",
     "directSupport": "Direct Support",
     "myOrders": "My Orders",
@@ -268,8 +268,8 @@
     "deliverPrice": "deliver price",
     "waitingDescription": "waiting for a captain to accept this order",
     "captainInStoreDescription": "captain packing your order",
-    "deliveringDescription": "captain on his way to you",
-    "captainAcceptOrderDescription": "captain headed to store",
+    "deliveringDescription": "On My way to client",
+    "captainAcceptOrderDescription": "I'm heading to store",
     "orderDeliveredDescription": "your order has delivered",
     "orderStatusDescription": "You can know your order status in this interface",
     "destinationAddress": "Destination Address",
@@ -388,7 +388,7 @@
     "makeBill": "Upload Bill",
     "pleaseProvideStoreBill": "Please provide the bill of the order",
     "receiptPoint": "Receipt Location",
-    "destinationPoint": "Destination Location",
+    "destinationPoint": "Destination",
     "expectedOrderBill": "Expected Order Bill",
     "receipt": "Receipt",
     "saveInvoiceFailed": "Saving invoice process has been failed",
@@ -600,7 +600,24 @@
     "calculating": "Calculating",
     "subscribedToOfferSuccess": "You subscribed with captain offer with a success",
     "confirmationCaptainOffers": "Are sure about subscribe with this offer",
-    "captainName": "Captain Name"
+    "captainName": "Captain Name",
+    "controlPanel": "Control Panel",
+    "location": "Location",
+    "customer": "Customer",
+    "acceptOrderHint": "You can accept this order to deliver",
+    "iArrivedAtTheStoreHint": "If you are arrived to the store",
+    "iGotThePackageHint": "Ready to deliver the package",
+    "iFinishedDeliveringHint": "I delivered the package with a success",
+    "branchLocation": "Branch location",
+    "destination": "Destination",
+    "destinationUnavailable": "Unavailable",
+    "waitingToAccept": "Waiting you to accept this order",
+    "finishingOrderMessage": "Please provide us with distance you reached out with this order To finish the order"
+
+
+
+
+
 
 
 

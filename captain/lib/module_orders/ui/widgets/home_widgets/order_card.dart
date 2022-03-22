@@ -1,187 +1,278 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/module_orders/ui/widgets/home_widgets/icon_info_button.dart';
+import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  final String orderId;
-  final OrderStatusEnum? orderStatus;
-  final String orderDate;
-  final double? orderDestination;
-  final int? orderType;
-  final String? storeName;
-  final String? branchName;
-  final bool acceptedOrder;
+  final String orderNumber;
+  final String orderStatus;
+  final String deliveryDate;
+  final String orderCost;
+  final String note;
+  final String destination;
   OrderCard(
-      {required this.orderId,
-      this.orderStatus,
-      required this.orderDate,
-      this.orderDestination,
-      required this.orderType,
-      this.branchName,
-      this.storeName,
-      this.acceptedOrder = false});
+      {required this.orderNumber,
+      required this.orderStatus,
+      required this.deliveryDate,
+      required this.orderCost,
+      required this.note,
+      required this.destination});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, OrdersRoutes.ORDER_STATUS_SCREEN,
-              arguments: orderId);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).backgroundColor.withOpacity(0.7),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Flex(
-              direction: Axis.vertical,
-              children: [
-                // order number and order date
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        Text(S.of(context).orderNumber,
-                            style: TextStyle(fontSize: 14)),
-                        Container(
-                          height: 4,
-                        ),
-                        Text(
-                          '$orderId',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).disabledColor),
-                        ),
-                      ],
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        Text(S.of(context).orderDate,
-                            style: TextStyle(fontSize: 14)),
-                        Container(
-                          height: 4,
-                        ),
-                        Text(
-                          orderDate,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).disabledColor),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                // divider
-                orderType != null
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                        child: Divider(
-                          color: Colors.grey[400]?.withOpacity(0.3),
-                          thickness: 2,
-                        ),
-                      )
-                    : Container(),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Text(
-                      S.of(context).orderType,
-                      style: TextStyle(),
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    Text(
-                      getOrderType(orderType ?? 0),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).disabledColor),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                  child: Divider(
-                    color: Colors.grey[400]?.withOpacity(0.3),
-                    thickness: 2,
-                  ),
-                ),
-                orderStatus != null && acceptedOrder
-                    ? Flex(
-                        direction: Axis.horizontal,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(S.of(context).orderStatus,
-                              style: TextStyle(fontSize: 14)),
-                          Padding(
-                            padding:
-                                Localizations.localeOf(context).languageCode ==
-                                        'ar'
-                                    ? EdgeInsets.only(left: 20.0)
-                                    : EdgeInsets.only(right: 20.0),
-                            child: Text(
-                              StatusHelper.getOrderStatusMessages(orderStatus),
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).disabledColor),
-                            ),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary.withOpacity(0.85),
+              Theme.of(context).colorScheme.primary.withOpacity(0.85),
+              Theme.of(context).colorScheme.primary.withOpacity(0.9),
+              Theme.of(context).colorScheme.primary.withOpacity(0.93),
+              Theme.of(context).colorScheme.primary.withOpacity(0.95),
+              Theme.of(context).colorScheme.primary,
+            ])),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              InfoButtonOrder(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(S.current.note),
+                          content: Container(child: Text(note)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          FaIcon(
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? FontAwesomeIcons.arrowCircleLeft
-                                : FontAwesomeIcons.arrowCircleRight,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ],
-                      )
-                    : Flex(
-                        direction: Axis.horizontal,
-                        children: [
-                          Spacer(
-                            flex: 2,
-                          ),
-                          FaIcon(
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? FontAwesomeIcons.arrowCircleLeft
-                                : FontAwesomeIcons.arrowCircleRight,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ],
-                      ),
-              ],
-            ),
+                          actionsAlignment: MainAxisAlignment.center,
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.close)),
+                          ],
+                        );
+                      });
+                },
+              ),
+              // order number & order status
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  verticalTile(context,
+                      title: S.current.orderNumber, subtitle: orderNumber),
+                  verticalTile(context,
+                      title: S.current.orderStatus, subtitle: orderStatus),
+                ],
+              ),
+              // divider
+              divider(context),
+              // order date & create date
+              horizontalTile(context,
+                  title: S.current.deliverDate, subtitle: deliveryDate),
+              // divider
+              divider(context),
+              // order cost
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  verticalTile(context,
+                      title: S.current.cost, subtitle: orderCost),
+                  Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: Theme.of(context).backgroundColor,
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  String getOrderType(int orderType) {
-    switch (orderType) {
-      case 1:
-        return S.current.products;
-      case 2:
-        return S.current.privateOrder;
-      case 3:
-        return S.current.deliverForMe;
-      default:
-        return S.current.unknown;
-    }
+  Widget verticalTile(context,
+      {required String title, required String subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).backgroundColor),
+        ),
+        Text(subtitle,
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(fontWeight: FontWeight.normal)),
+      ],
+    );
+  }
+
+  Widget horizontalTile(context,
+      {required String title, required String subtitle}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).backgroundColor),
+          ),
+          
+          Text(subtitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .button
+                  ?.copyWith(fontWeight: FontWeight.normal)),
+        ],
+      ),
+    );
+  }
+
+  Widget divider(context) {
+    Color dividerColor = Theme.of(context).backgroundColor;
+    return Divider(
+      thickness: 2,
+      indent: 16,
+      endIndent: 16,
+      color: dividerColor,
+    );
+  }
+}
+
+class NearbyOrdersCard extends StatelessWidget {
+  final String orderNumber;
+  final String deliveryDate;
+  final String orderCost;
+  final String distance;
+  final String note;
+  final String branchName;
+  const NearbyOrdersCard(
+      {required this.orderNumber,
+      required this.distance,
+      required this.deliveryDate,
+      required this.orderCost,
+      required this.note,
+      required this.branchName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).colorScheme.primary.withOpacity(0.85),
+            Theme.of(context).colorScheme.primary.withOpacity(0.85),
+            Theme.of(context).colorScheme.primary.withOpacity(0.9),
+            Theme.of(context).colorScheme.primary.withOpacity(0.93),
+            Theme.of(context).colorScheme.primary.withOpacity(0.95),
+            Theme.of(context).colorScheme.primary,
+          ])),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            InfoButtonOrder(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(S.current.note),
+                        content: Container(child: Text(note)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        actionsAlignment: MainAxisAlignment.center,
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(S.current.close)),
+                        ],
+                      );
+                    });
+              },
+            ),
+            // order number & order status
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.orderNumber, subtitle: orderNumber),
+                verticalTile(context,
+                    title: S.current.branch, subtitle: branchName),
+              ],
+            ),
+            // divider
+            divider(context),
+            // order date & create date
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.deliverDate, subtitle: deliveryDate),
+                verticalTile(context,
+                    title: S.current.destination, subtitle: distance),
+              ],
+            ),
+            // divider
+            divider(context),
+            // order cost
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.cost, subtitle: orderCost),
+                Icon(
+                  Icons.arrow_circle_left_outlined,
+                  color: Theme.of(context).backgroundColor,
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget verticalTile(context,
+      {required String title, required String subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).backgroundColor),
+        ),
+        Text(subtitle,
+            style: Theme.of(context)
+                .textTheme
+                .button
+                ?.copyWith(fontWeight: FontWeight.normal)),
+      ],
+    );
+  }
+
+  Widget divider(context) {
+    Color dividerColor = Theme.of(context).backgroundColor;
+    return Divider(
+      thickness: 2,
+      indent: 16,
+      endIndent: 16,
+      color: dividerColor,
+    );
   }
 }

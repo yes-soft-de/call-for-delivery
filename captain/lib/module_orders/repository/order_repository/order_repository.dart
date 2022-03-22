@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
@@ -9,8 +11,6 @@ import 'package:c4d/module_orders/request/update_store_order_status_request.dart
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
-import 'package:c4d/module_orders/response/orders/accept_order_response.dart';
-import 'package:c4d/module_orders/response/orders/order_response.dart';
 import 'package:c4d/module_orders/response/orders_logs_response.dart';
 
 @injectable
@@ -36,7 +36,7 @@ class OrderRepository {
     return OrdersResponse.fromJson(response);
   }
 
-  Future<AcceptOrderResponse?> getCaptainOrders() async {
+  Future<OrdersResponse?> getCaptainOrders() async {
     var token = await _authService.getToken();
 
     dynamic response = await _apiClient.get(
@@ -44,7 +44,7 @@ class OrderRepository {
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
-    return AcceptOrderResponse.fromJson(response);
+    return OrdersResponse.fromJson(response);
   }
 
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) async {
@@ -74,6 +74,17 @@ class OrderRepository {
     );
     if (response == null) return null;
     return response['Data']['status'] ?? '';
+  }
+
+  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_CAPTAIN_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
   }
 
   Future<OrderActionResponse?> updateOrderState(

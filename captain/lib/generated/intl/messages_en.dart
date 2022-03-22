@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "You can accept your mission to deliver package"),
+        "acceptOrderHint": MessageLookupByLibrary.simpleMessage(
+            "You can accept this order to deliver"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountActivated":
             MessageLookupByLibrary.simpleMessage("Account activated"),
@@ -97,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
+        "branchLocation":
+            MessageLookupByLibrary.simpleMessage("Branch location"),
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
@@ -109,17 +113,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "The order has been cancelled by the client"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
-            MessageLookupByLibrary.simpleMessage("captain headed to store"),
+            MessageLookupByLibrary.simpleMessage("I\'m heading to store"),
         "captainAcceptedOrder":
-            MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
+            MessageLookupByLibrary.simpleMessage("Order Accepted"),
         "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
             "Captain Account In Active , Please wait the administration to activate your account"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("Captain got the cash"),
-        "captainInStore":
-            MessageLookupByLibrary.simpleMessage("Captain in Store"),
+        "captainInStore": MessageLookupByLibrary.simpleMessage("I\'m in Store"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("captain packing your order"),
         "captainIsDelivering":
@@ -223,6 +226,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -239,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
@@ -260,13 +265,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
-            MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+            MessageLookupByLibrary.simpleMessage("On My way to client"),
+        "destination": MessageLookupByLibrary.simpleMessage("Destination"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
-        "destinationPoint":
-            MessageLookupByLibrary.simpleMessage("Destination Location"),
+        "destinationPoint": MessageLookupByLibrary.simpleMessage("Destination"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("Unavailable"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
@@ -324,12 +331,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
-        "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
-            "Finish Order, Provide distance in KM"),
+        "finishOrderProvideDistanceInKm":
+            MessageLookupByLibrary.simpleMessage("Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
+            "Please provide us with distance you reached out with this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
@@ -357,11 +366,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "iAm": MessageLookupByLibrary.simpleMessage("I am"),
         "iArrivedAtTheStore":
             MessageLookupByLibrary.simpleMessage("I Arrived at the Store"),
+        "iArrivedAtTheStoreHint": MessageLookupByLibrary.simpleMessage(
+            "If you are arrived to the store"),
         "iFinishedDelivering":
             MessageLookupByLibrary.simpleMessage("I Finished Delivering"),
+        "iFinishedDeliveringHint": MessageLookupByLibrary.simpleMessage(
+            "I delivered the package with a success"),
         "iGotTheCash": MessageLookupByLibrary.simpleMessage("I Got the Cash"),
         "iGotThePackage":
             MessageLookupByLibrary.simpleMessage("I Got the Package"),
+        "iGotThePackageHint": MessageLookupByLibrary.simpleMessage(
+            "Ready to deliver the package"),
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
@@ -409,6 +424,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
+        "location": MessageLookupByLibrary.simpleMessage("Location"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
@@ -889,6 +905,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(
             "waiting for a captain to accept this order"),
+        "waitingToAccept": MessageLookupByLibrary.simpleMessage(
+            "Waiting you to accept this order"),
         "warnning": MessageLookupByLibrary.simpleMessage("Important Note"),
         "weDeliver": MessageLookupByLibrary.simpleMessage("We Deliver"),
         "weDeliverDescribtion": MessageLookupByLibrary.simpleMessage(

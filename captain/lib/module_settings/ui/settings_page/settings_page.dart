@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class SettingsScreen extends StatefulWidget {
   final AppThemeDataService _themeDataService;
   final FireNotificationService _notificationService;
 
-  SettingsScreen(
+  const SettingsScreen(
     this._authService,
     this._localizationService,
     this._themeDataService,
@@ -36,16 +35,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).settings, icon: Icons.menu, onTap: () {
-        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }),
+      appBar: CustomC4dAppBar.appBar(context, title: S.of(context).settings),
       body: FixedContainer(
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
           child: ListView(
             physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                const BouncingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
             children: [
               Container(
                 height: 16,
@@ -53,22 +49,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).backgroundColor,
                 ),
                 child: Flex(
                   direction: Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     ListTileSwitch(
                       value: Theme.of(context).brightness == Brightness.dark,
                       leading: Icon(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Icons.nightlight_round_rounded
-                              : Icons.wb_sunny,
-                          color: Colors.white),
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Icons.nightlight_round_rounded
+                            : Icons.wb_sunny,
+                      ),
                       onChanged: (mode) {
                         widget._themeDataService.switchDarkMode(mode);
                       },
@@ -78,37 +74,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Theme.of(context).scaffoldBackgroundColor,
                       title: Text(
                         S.of(context).darkMode,
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.language, color: Colors.white),
+                      leading: const Icon(Icons.language),
                       title: Text(
                         S.of(context).language,
-                        style: TextStyle(color: Colors.white),
                       ),
                       trailing: DropdownButton(
-                          dropdownColor: Theme.of(context).primaryColor,
                           value: Localizations.localeOf(context).languageCode,
-                          style: TextStyle(color: Colors.white),
                           underline: Container(),
-                          icon: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.arrow_drop_down_rounded,
-                                color: Colors.white),
+                          icon: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child:  Icon(
+                              Icons.arrow_drop_down_rounded,
+                            ),
                           ),
-                          items: [
-                            DropdownMenuItem(
-                              child: Text(
+                          items: const [
+                             DropdownMenuItem(
+                              child:  Text(
                                 'العربية',
                                 style: TextStyle(),
                               ),
                               value: 'ar',
                             ),
-                            DropdownMenuItem(
-                              child: Text(
+                             DropdownMenuItem(
+                              child:  Text(
                                 'English',
-                                style: TextStyle(),
+                                style:  TextStyle(),
                               ),
                               value: 'en',
                             ),
@@ -119,16 +112,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }),
                     ),
                     ListTile(
-                      leading: Icon(Icons.person_rounded, color: Colors.white),
+                      leading: const Icon(Icons.person_rounded),
                       title: Text(
                         S.of(context).signOut,
-                        style: TextStyle(color: Colors.white),
                       ),
-                      trailing: Padding(
-                        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-                        child: Icon(
+                      trailing: const Padding(
+                        padding: EdgeInsets.only(right: 10.0, left: 10.0),
+                        child:  Icon(
                           Icons.logout_rounded,
-                          color: Colors.white,
                         ),
                       ),
                       onTap: () {
@@ -140,7 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                   ],
