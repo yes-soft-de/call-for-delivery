@@ -29,7 +29,7 @@ class ChatRoomController extends BaseController
      * store and captain :fetch chat room for user
      * @Route("chatroom", name="getChatRoom", methods={"GET"})
      * @return JsonResponse
-     *
+     * @IsGranted("ROLE_USER")
      * @OA\Tag(name="Chat Room")
      *
      * @OA\Parameter(
