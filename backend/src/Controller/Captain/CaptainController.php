@@ -438,7 +438,6 @@ class CaptainController extends BaseController
      * @OA\RequestBody(
      *      description="Update field isOnline",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="id"),
      *          @OA\Property(type="boolean", property="isOnline")
      *      )
      * )
@@ -475,14 +474,6 @@ class CaptainController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, CaptainProfileIsOnlineUpdateByCaptainRequest::class, (object)$data);
         $request->setCaptainId($this->getUserId());
-       
-        $violations = $this->validator->validate($request);
-        if(\count($violations) > 0)
-        {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
 
         $response = $this->captainProfileService->updateIsOnline($request);
 
