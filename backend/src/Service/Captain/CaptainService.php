@@ -16,6 +16,8 @@ use App\Response\User\UserRegisterResponse;
 use App\Manager\Captain\CaptainManager;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Rate\RatingService;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
+use App\Response\Captain\CaptainIsOnlineResponse;
 
 class CaptainService
 {
@@ -89,5 +91,12 @@ class CaptainService
         $captainStatus = $this->captainManager->captainIsActive($captainId);
 
         return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
+     }
+ 
+    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): ?CaptainIsOnlineResponse 
+    {
+        $captainStatus = $this->captainManager->updateIsOnline($request);
+
+        return $this->autoMapping->map(CaptainEntity::class,CaptainIsOnlineResponse::class, $captainStatus);
      }
 }

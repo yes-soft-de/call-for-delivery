@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Request\Captain\CaptainProfileUpdateRequest;
+use App\Constant\Main\MainErrorConstant;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 /**
  * @Route("v1/captain/")
@@ -418,9 +420,9 @@ class CaptainController extends BaseController
     }
 
     /**
-     * captain: Update isOnline .
+     * captain: Update field isOnline .
      * @Route("captainprofileupdateisonline", name="updateIsOnline", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -434,22 +436,22 @@ class CaptainController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="Update Captain Profile Status",
+     *      description="Update field isOnline",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="string", property="isOnline")
+     *          @OA\Property(type="boolean", property="isOnline")
      *      )
      * )
      *
      * @OA\Response(
      *      response=204,
-     *      description="Returns the captain's profile",
+     *      description="Returns online field",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="isOnline"),
+     *              @OA\Property(type="boolean", property="isOnline"),
      *          )
      *      )
      * )
@@ -467,12 +469,13 @@ class CaptainController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function updateCaptainProfileStatusByAdmin(Request $request): JsonResponse
+    public function updateIsOnline(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, CaptainProfileStatusUpdateByAdminRequest::class, (object)$data);
-
+        $request = $this->autoMapping->map(stdClass::class, CaptainProfileIsOnlineUpdateByCaptainRequest::class, (object)$data);
+        $request->setCaptainId($this->getUserId());
+       
         $violations = $this->validator->validate($request);
         if(\count($violations) > 0)
         {
@@ -481,7 +484,7 @@ class CaptainController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->adminCaptainService->updateCaptainProfileStatusByAdmin($request);
+        $response = $this->captainProfileService->updateIsOnline($request);
 
         if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);

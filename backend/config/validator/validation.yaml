@@ -212,3 +212,8 @@ App\Request\Order\OrderChatRoomRequest:
     properties:
         orderId:
             - NotBlank: ~
+
+App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest:
+    properties:
+        isOnline:
+            - NotBlank: ~

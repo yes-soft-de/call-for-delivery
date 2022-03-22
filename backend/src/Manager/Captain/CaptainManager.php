@@ -18,6 +18,7 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Manager\Image\ImageManager;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 class CaptainManager
 {
@@ -299,4 +300,20 @@ class CaptainManager
         
         return $profile;
     }    
+    
+    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): string|CaptainEntity
+    {
+        $captainProfileEntity = $this->captainEntityRepository->findOneBy(["captainId" => $request->getCaptainId()]);
+
+        if (! $captainProfileEntity) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileIsOnlineUpdateByCaptainRequest::class, CaptainEntity::class,
+            $request, $captainProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $captainProfileEntity;
+    }
 }
