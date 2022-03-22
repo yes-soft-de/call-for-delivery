@@ -14,16 +14,19 @@ use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\Captain\CaptainManager;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class CaptainService
 {
     private AutoMapping $autoMapping;
     private CaptainManager $captainManager;
+    private UploadFileHelperService $uploadFileHelperService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager)
+    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService)
     {
         $this->autoMapping = $autoMapping;
         $this->captainManager = $captainManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function captainRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -47,13 +50,25 @@ class CaptainService
         return $this->autoMapping->map(CaptainEntity::class, CaptainProfileResponse::class, $item);
     }
 
-    public function getCaptainProfile($userId)
+    public function getCaptainProfile($userId): CaptainProfileResponse
     {
         $item = $this->captainManager->getCaptainProfile($userId);
 
-        if($item['roomId']) {
-          
-            $item['roomId'] = $item['roomId']->toBase32();
+        if($item) {
+            if($item['roomId']) {
+            
+                $item['roomId'] = $item['roomId']->toBase32();
+            }
+
+//            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
+//            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
+//            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
+//            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
+
+            $item['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['identity'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
         }
 
         return $this->autoMapping->map('array', CaptainProfileResponse::class, $item);
@@ -75,5 +90,4 @@ class CaptainService
 
         return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
      }
-
 }

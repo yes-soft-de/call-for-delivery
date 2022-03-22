@@ -21,9 +21,6 @@ class CaptainEntity
     #[ORM\Column(type: 'string', length: 255)]
     private $captainName;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $images;
-
     #[ORM\Column(type: 'json', nullable: true)]
     private $location = [];
 
@@ -32,9 +29,6 @@ class CaptainEntity
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $car;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $drivingLicence;
 
     #[ORM\Column(type: 'float', nullable: true)]
     private $salary;
@@ -60,12 +54,6 @@ class CaptainEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $stcPay;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $mechanicLicense;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $identity;
-    
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $completeAccountStatus;
 
@@ -110,18 +98,6 @@ class CaptainEntity
         return $this;
     }
 
-    public function getImages(): ?string
-    {
-        return $this->images;
-    }
-
-    public function setImages(?string $images): self
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
     public function getLocation(): ?array
     {
         return $this->location;
@@ -154,18 +130,6 @@ class CaptainEntity
     public function setCar(?string $car): self
     {
         $this->car = $car;
-
-        return $this;
-    }
-
-    public function getDrivingLicence(): ?string
-    {
-        return $this->drivingLicence;
-    }
-
-    public function setDrivingLicence(?string $drivingLicence): self
-    {
-        $this->drivingLicence = $drivingLicence;
 
         return $this;
     }
@@ -262,30 +226,6 @@ class CaptainEntity
     public function setStcPay(?string $stcPay): self
     {
         $this->stcPay = $stcPay;
-
-        return $this;
-    }
-
-    public function getMechanicLicense(): ?string
-    {
-        return $this->mechanicLicense;
-    }
-
-    public function setMechanicLicense(?string $mechanicLicense): self
-    {
-        $this->mechanicLicense = $mechanicLicense;
-
-        return $this;
-    }
-
-    public function getIdentity(): ?string
-    {
-        return $this->identity;
-    }
-
-    public function setIdentity(?string $identity): self
-    {
-        $this->identity = $identity;
 
         return $this;
     }

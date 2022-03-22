@@ -48,4 +48,16 @@ class ImageService implements ImageServiceInterface
 
         return $response;
     }
+
+    public function getOneImageByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?array
+    {
+        $imageEntityResult = $this->imageManager->getOneImageByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
+
+        if (! $imageEntityResult) {
+            return null;
+
+        } else {
+            return $this->uploadFileHelperService->getImageParams($imageEntityResult->getImagePath());
+        }
+    }
 }

@@ -37,4 +37,39 @@ class ImageEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getOneImageByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?ImageEntity
+    {
+        return $this->createQueryBuilder('image')
+
+            ->andWhere('image.itemId = :itemId')
+            ->setParameter('itemId', $itemId)
+
+            ->andWhere('image.entityType = :entityType')
+            ->setParameter('entityType', $entityType)
+
+            ->andWhere('image.usedAs = :usedAs')
+            ->setParameter('usedAs', $usedAs)
+
+            ->orderBy('image.id', 'DESC')
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getImagesByItemIdAndEntityType(int $itemId, int $entityType): ?array
+    {
+        return $this->createQueryBuilder('image')
+
+            ->andWhere('image.itemId = :itemId')
+            ->setParameter('itemId', $itemId)
+
+            ->andWhere('image.entityType = :entityType')
+            ->setParameter('entityType', $entityType)
+
+            ->orderBy('image.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

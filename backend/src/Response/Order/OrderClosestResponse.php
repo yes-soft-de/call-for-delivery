@@ -27,4 +27,6 @@ class OrderClosestResponse
     public string|null $usedAs;
 
     public string|null $roomId;
+
+    public string $storeOwnerName;
 }
