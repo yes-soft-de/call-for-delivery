@@ -24,6 +24,9 @@ use App\Response\Captain\CaptainStatusResponse;
 use App\Response\Order\SpecificOrderForCaptainResponse;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Service\ChatRoom\OrderChatRoomService;
+use App\Constant\Order\OrderStateConstant;
+use App\Entity\OrderChatRoomEntity ;
 
 class OrderService
 {
@@ -33,8 +36,9 @@ class OrderService
     private NotificationLocalService $notificationLocalService;
     private UploadFileHelperService $uploadFileHelperService;
     private CaptainService $captainService;
+    private OrderChatRoomService $orderChatRoomService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -42,6 +46,7 @@ class OrderService
        $this->notificationLocalService = $notificationLocalService;
        $this->uploadFileHelperService = $uploadFileHelperService;
        $this->captainService = $captainService;
+       $this->orderChatRoomService = $orderChatRoomService;
     }
 
     /**
@@ -181,6 +186,10 @@ class OrderService
     {
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
         if($order) {
+            if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                $this->createOrderChatRoomOrUpdateCurrent($order);
+            }
+
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getCaptainId()); 
             //create Notification Local for captain
@@ -198,5 +207,10 @@ class OrderService
         }
         
         return ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+    }
+    
+    public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
+    {     
+        return $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order); 
     }
 }

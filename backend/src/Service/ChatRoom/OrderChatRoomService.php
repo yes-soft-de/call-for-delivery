@@ -10,6 +10,7 @@ use App\Service\FileUpload\UploadFileHelperService;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Request\ChatRoom\OrderChatRoomRequest;
 use App\Entity\OrderChatRoomEntity;
+use App\Entity\OrderEntity;
 
 class OrderChatRoomService
 {
@@ -46,11 +47,18 @@ class OrderChatRoomService
 
     public function createNewOrderChatRoom(OrderChatRoomRequest $request): ?OrderChatRoomStoreCreateResponse
     {
+        $request->setUsedAs(ChatRoomConstant::CAPTAIN_STORE_ENQUIRE);
+        
         $orderChatRoom = $this->orderChatRoomManager->createNewOrderChatRoom($request);
-   
+
         $response = $this->autoMapping->map(OrderChatRoomEntity::class, OrderChatRoomStoreCreateResponse::class, $orderChatRoom);
         $response->roomId = $orderChatRoom->getRoomId()->toBase32();
         
         return $response;
+    }
+
+    public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
+    {
+        return $this->orderChatRoomManager->createOrderChatRoomOrUpdateCurrent($order);
     }
 }

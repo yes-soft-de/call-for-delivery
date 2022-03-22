@@ -4,6 +4,7 @@ namespace App\Manager\ChatRoom;
 
 use App\AutoMapping;
 use App\Entity\OrderChatRoomEntity;
+use App\Entity\OrderEntity;
 use App\Repository\OrderChatRoomEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Uid\Uuid;
@@ -36,18 +37,61 @@ class OrderChatRoomManager
 
     public function createNewOrderChatRoom(OrderChatRoomRequest $request): ?OrderChatRoomEntity
     {
-        $uuid = Uuid::v4();
+        $captain = $this->captainManager->getCaptainProfileByUserId($request->getUserId());
 
-        $chatRoom = $this->autoMapping->map(OrderChatRoomRequest::class, OrderChatRoomEntity::class, $request);
+        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $request->getOrderId(), "captain" => $captain]);
+      
+        if(! $orderChatRoom) {
+           return $this->create($request, $captain);
+        }
+       
+        return $orderChatRoom;
+    }
 
-        $chatRoom->setCaptain($this->captainManager->getCaptainProfileByUserId($request->getUserId()));
-        $chatRoom->setOrderId($this->orderManager->getOrderById($request->getOrderId()));
-        $chatRoom->setRoomId($uuid);
-        $chatRoom->setUsedAs(ChatRoomConstant::CAPTAIN_STORE_ENQUIRE);
+    public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
+    {
+        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $order->getId(), "captain" => $order->getCaptainId()]);
+       
+        if (! $orderChatRoom) {
+           return  $this->createOrderChatRoomBetWeenCaptainAndStore($order);
+        }
 
-        $this->entityManager->persist($chatRoom);
+        return $this->updateUsedAs($orderChatRoom);
+    }
+
+    public function updateUsedAs(OrderChatRoomEntity $orderChatRoom): ?OrderChatRoomEntity
+    {
+        $orderChatRoom = $orderChatRoom->setUsedAs(ChatRoomConstant::CAPTAIN_STORE);
+       
         $this->entityManager->flush();
 
-        return $chatRoom;
+        return $orderChatRoom;
+    }
+
+    public function createOrderChatRoomBetWeenCaptainAndStore(OrderEntity $order): ?OrderChatRoomEntity
+    {
+       $request = new OrderChatRoomRequest();
+      
+       $request->setOrderId($order->getId());
+       $request->setUsedAs(ChatRoomConstant::CAPTAIN_STORE);
+       $request->setUserId($order->getCaptainId()->getCaptainId());
+
+       return $this->create($request);
+    }
+
+    public function create(OrderChatRoomRequest $request): ?OrderChatRoomEntity
+    {
+        $uuid = Uuid::v4();
+
+        $orderChatRoom = $this->autoMapping->map(OrderChatRoomRequest::class, OrderChatRoomEntity::class, $request);
+    
+        $orderChatRoom->setCaptain($this->captainManager->getCaptainProfileByUserId($request->getUserId()));
+        $orderChatRoom->setOrderId($this->orderManager->getOrderById($request->getOrderId()));
+        $orderChatRoom->setRoomId($uuid);
+    
+        $this->entityManager->persist($orderChatRoom);
+        $this->entityManager->flush();    
+
+        return $orderChatRoom;
     }
 }
