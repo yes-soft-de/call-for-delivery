@@ -9,6 +9,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Repository\OrderEntityRepository;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
+use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
@@ -138,5 +139,10 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+
+    public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array
+    {
+        return $this->orderRepository->filterOrdersByCaptain($request);
     }
 }
