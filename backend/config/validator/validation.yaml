@@ -208,11 +208,6 @@ App\Request\Order\OrderChatRoomRequest:
         orderId:
             - NotBlank: ~
 
-App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest:
-    properties:
-        isOnline:
-            - NotBlank: ~
-
 App\Request\Admin\Package\PackageCategoryCreateByAdminRequest:
     properties:
         name:
