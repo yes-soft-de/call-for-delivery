@@ -323,7 +323,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _nameController,
                 hintText: S.current.nameHint,
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.person),
               ),
             ),
@@ -333,7 +332,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _phoneController,
                 hintText: '050000000',
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.phone),
                 phone: true,
                 numbers: true,
@@ -345,7 +343,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _ageController,
                 hintText: S.current.age,
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.date_range_rounded),
                 numbers: true,
               ),
@@ -356,7 +353,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _carController,
                 hintText: S.current.car,
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.local_taxi_rounded),
               ),
             ),
@@ -366,7 +362,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankNameController,
                 hintText: S.current.bankName,
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.monetization_on_rounded),
               ),
             ),
@@ -376,7 +371,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankAccountNumberController,
                 hintText: '123456789',
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.password_rounded),
                 numbers: true,
               ),
@@ -387,7 +381,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _stcPayController,
                 hintText: 'XXXXXXXX',
-                contentPadding: EdgeInsets.only(top: 15),
                 preIcon: Icon(Icons.credit_card_rounded),
                 last: true,
               ),
