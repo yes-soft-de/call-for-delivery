@@ -239,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
             MessageLookupByLibrary.simpleMessage("اكتب عنوان وجهة الطلب"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("المسافة غير متوفرة"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
@@ -433,6 +435,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
+        "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "هذا العرض لم يعد متاح بعد الآن للتجديد"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
@@ -456,8 +460,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
-        "orderIsFinished":
-            MessageLookupByLibrary.simpleMessage("تم انهاء الطلب"),
+        "orderIsFinished": MessageLookupByLibrary.simpleMessage(
+            "طلباتك المخصصة لهذا الشهر انتهت"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
@@ -490,7 +494,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تمديد الاشتراك بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
-            "هذا الباقة لم تعد متاحة بعد الآن للتجديد"),
+            "هذه الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),

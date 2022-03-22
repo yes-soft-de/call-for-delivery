@@ -1420,10 +1420,10 @@ class S {
     );
   }
 
-  /// `Order is finished`
+  /// `Your monthly orders finished`
   String get orderIsFinished {
     return Intl.message(
-      'Order is finished',
+      'Your monthly orders finished',
       name: 'orderIsFinished',
       desc: '',
       args: [],
@@ -5465,6 +5465,26 @@ class S {
     return Intl.message(
       'You already subscribed with captain offer , You can subscribe again when your subscription expired',
       name: 'youSubscribedWithOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Destination unavailable`
+  String get destinationUnavailable {
+    return Intl.message(
+      'Destination unavailable',
+      name: 'destinationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This offer not available to renew any more`
+  String get offerNotFoundRenew {
+    return Intl.message(
+      'This offer not available to renew any more',
+      name: 'offerNotFoundRenew',
       desc: '',
       args: [],
     );

@@ -242,6 +242,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("Destination unavailable"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
@@ -439,6 +441,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
+        "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "This offer not available to renew any more"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
@@ -462,8 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
-        "orderIsFinished":
-            MessageLookupByLibrary.simpleMessage("Order is finished"),
+        "orderIsFinished": MessageLookupByLibrary.simpleMessage(
+            "Your monthly orders finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
