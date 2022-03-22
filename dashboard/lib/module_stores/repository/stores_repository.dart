@@ -1,5 +1,8 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
-import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
+import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
+ import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -108,9 +111,30 @@ class StoresRepository {
   }
   Future<StoreNeedSupportResponse?> getStoreSupport() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS,
+    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_STORES,
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoreNeedSupportResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getStoreOrdersFilter(FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_OWNER_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrderDetailsResponse?> getOrderDetails(int orderId) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.GET_ORDERS_DETAILS + '$orderId',
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    if (response == null) return null;
+    return OrderDetailsResponse.fromJson(response);
   }
 }

@@ -37,8 +37,8 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     widget._stateManager.getCaptainProfile(this, captainId);
   }
 
-  void enableCaptain(EnableCaptainRequest request) {
-    widget._stateManager.acceptCaptainProfile(this, captainId, request);
+  void enableCaptain(String status ) {
+    widget._stateManager.acceptCaptainProfile(this, captainId, EnableCaptainRequest(id: captainId,status:status));
   }
   void updateCaptainProfile(UpdateCaptainRequest request) {
     widget._stateManager.updateCaptainProfile(this , request);

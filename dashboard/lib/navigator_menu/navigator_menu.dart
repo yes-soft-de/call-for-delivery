@@ -38,7 +38,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            child: Image.asset(ImageAsset.DELIVERY),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.asset(ImageAsset.DELIVERY)),
           ),
           SizedBox(
             height: 16,
@@ -87,6 +89,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.packages,
                       FontAwesomeIcons.wolfPackBattalion,
                       true),
+                  customListTile(getIt<CaptainsModule>().captainOffersScreen,
+                      S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
                 ],
                 page: widget.currentPage),
             // captain
@@ -101,8 +105,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.inActiveCaptains,
                       FontAwesomeIcons.solidAddressCard,
                       true),
-                  customListTile(getIt<CaptainsModule>().captainOffersScreen,
-                      S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
                 ],
                 page: widget.currentPage),
             customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
@@ -113,6 +115,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 children: [
                   customListTile(getIt<StoresModule>().supportScreen,
                       S.current.stores,  Icons.storefront_rounded, true),
+                  customListTile(getIt<CaptainsModule>().supportScreen,
+                      S.current.captains,  FontAwesomeIcons.car, true),
                 ],
                 page: widget.currentPage),
             customExpansionTile(

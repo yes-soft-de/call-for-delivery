@@ -15,7 +15,7 @@ class StackedForm extends StatelessWidget {
         child,
         Align(
             alignment: Alignment.bottomCenter,
-            child: FadedButtonBar(onPressed: onTap, text: label)),
+            child: FadedButtonBar(onPressed: onTap, text: label,)),
       ],
     );
   }

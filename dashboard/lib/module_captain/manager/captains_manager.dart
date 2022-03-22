@@ -4,6 +4,7 @@ import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
@@ -45,4 +46,7 @@ class CaptainsManager {
 
   Future<ActionResponse?> updateCaptain(UpdateCaptainRequest request) =>
       _repository.updateCaptain(request);
+
+  Future<CaptainNeedSupportResponse?> getCaptainSupport() =>
+      _repository.getCaptainSupport();
 }

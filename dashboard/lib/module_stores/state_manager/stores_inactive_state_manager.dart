@@ -1,4 +1,5 @@
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/ui/state/stores_lists/stores_inactive_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -8,7 +9,6 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
-import 'package:c4d/module_stores/ui/state/stores_inactive/stores_inactive_state_loaded.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 

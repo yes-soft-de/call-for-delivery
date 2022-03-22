@@ -7,6 +7,8 @@ import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 
+import 'ui/screen/order/order_details_screen.dart';
+import 'ui/screen/order/order_logs_screen.dart';
 import 'ui/screen/stores_needs_support_screen.dart';
 
 @injectable
@@ -16,8 +18,10 @@ class StoresModule extends YesModule {
   final StoresInActiveScreen storesInActiveScreen;
   final StoreBalanceScreen storeBalanceScreen;
   final StoresNeedsSupportScreen supportScreen;
+  final OrderDetailsScreen _orderStatus;
+  final OrderLogsScreen _logsScreen;
   StoresModule(this.storesScreen, this._storeInfoScreen,
-      this.storesInActiveScreen, this.storeBalanceScreen, this.supportScreen) {
+      this.storesInActiveScreen, this.storeBalanceScreen, this.supportScreen, this._orderStatus, this._logsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -27,6 +31,8 @@ class StoresModule extends YesModule {
       StoresRoutes.STORES_INACTIVE: (context) => storesInActiveScreen,
       StoresRoutes.STORE_BALANCE: (context) => storeBalanceScreen,
       StoresRoutes.STORE_SUPPORT: (context) => supportScreen,
+      StoresRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
+      StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
     };
   }
 }

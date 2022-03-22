@@ -1,4 +1,5 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
+import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
@@ -7,6 +8,7 @@ import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
@@ -148,5 +150,18 @@ class CaptainsService {
     }
     if (_storeResponse.data == null) return DataModel.empty();
     return ProfileModel.withData(_storeResponse.data!);
+  }
+  Future<DataModel> getCaptainSupport() async {
+    CaptainNeedSupportResponse? _clients =
+    await _manager.getCaptainSupport();
+    if (_clients == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_clients.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_clients.statusCode));
+    }
+    if (_clients.data == null) return DataModel.empty();
+    return CaptainNeedSupportModel.withData(_clients.data!);
   }
 }

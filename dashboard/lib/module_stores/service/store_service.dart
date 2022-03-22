@@ -1,6 +1,11 @@
+import 'package:c4d/module_stores/model/order/order_details_model.dart';
+import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
-import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
+import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
+ import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -111,5 +116,27 @@ class StoresService {
     }
     if (_clients.data == null) return DataModel.empty();
     return StoresNeedSupportModel.withData(_clients.data!);
+  }
+
+  Future<DataModel> getStoreOrdersFilter(FilterOrderRequest request) async {
+    OrdersResponse? response = await _storeManager.getStoreOrdersFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+  Future<DataModel> getOrderDetails(int orderId) async {
+    OrderDetailsResponse? response =
+    await _storeManager.getOrderDetails(orderId);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderDetailsModel.withData(response);
   }
 }

@@ -43,7 +43,7 @@ class Data {
   Location? location;
   String? age;
   String? car;
-  String? drivingLicence;
+  ImageUrl? drivingLicence;
   num? salary;
   String? status;
   dynamic state;
@@ -56,8 +56,8 @@ class Data {
   String? bankName;
   String? bankAccountNumber;
   String? stcPay;
-  String? mechanicLicense;
-  String? identity;
+  ImageUrl? mechanicLicense;
+  ImageUrl? identity;
 
   Data(
       {this.id,
@@ -87,12 +87,12 @@ class Data {
     id = json['id'];
     captainID = json['captainId'];
     captainName = json['captainName'];
-    image = json['image'] != null ? ImageUrl.fromJson(json['image']) : null;
-    location = null;
-//        json['location'] != null ? Location.fromJson(json['location']) : null;
+    image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
     age = json['age']?.toString();
     car = json['car'];
-    drivingLicence = json['drivingLicence'];
+    drivingLicence =json['drivingLicence'] != null ? ImageUrl.fromJson(json['drivingLicence']) :null;
     salary = json['salary'];
     status = json['status'];
     state = json['state'];
@@ -105,8 +105,8 @@ class Data {
     bankName = json['bankName'];
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
-    mechanicLicense = json['mechanicLicense'];
-    identity = json['identity'];
+    mechanicLicense = json['mechanicLicense'] != null ?ImageUrl.fromJson(json['mechanicLicense']) : null;
+    identity = json['identity'] != null ?ImageUrl.fromJson(json['identity']) : null;
   }
 
   Map<String, dynamic> toJson() {

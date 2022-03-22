@@ -1,9 +1,7 @@
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:flutter/material.dart';
-import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_loaded_state.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/stacked_form.dart';

@@ -496,7 +496,7 @@
     "title": "عنوان",
     "sendTo": "إرسال إلى",
     "captains": "الكباتن",
-    "notice": "التنبيهات",
+    "notice": "التحديثات",
     "companyFinance": "المعلومات المالية",
     "contactInfo": "معلومات الإتصال",
     "captainsOffer": "عروض الكباتن",
@@ -520,5 +520,21 @@
     "createDate": "تاريخ الإنشاء",
     "sOrder": "طلب",
     "captainUpdatedSuccessfully": "تم تحديث الكابتن بنجاح",
-    "bounce": "مكافأة"
+    "bounce": "مكافأة",
+
+    "firstDate": "من تاريخ",
+    "endDate": "إلى تاريخ",
+    "pending": "قيد الانتظار",
+    "ongoing": "جارية",
+    "completed": "منتهية",
+    "cancelled2": "ملغاة",
+    "deliverDate": "تاريخ التوصيل",
+    "createdDate": "تاريخ الإنشاء",
+    "details": "تفاصيل",
+    "calculating": "جاري الحساب",
+    "invalidMapLink": "وجهة غير صالحة",
+    "distance": "المسافة",
+    "orderImage": "صورة الطلب",
+    "orderCostWithDeliveryCost": "سعر الطلب شامل تكلفة التوصيل",
+    "km": "كم"
 }

@@ -152,7 +152,7 @@ class CompanyLoadedState extends States {
                 CustomFormField(
                   controller: bankController,
                   hintText: S.current.bankName,
-                  numbers: true,
+
                 ),
                 // stc
                 Padding(
@@ -167,6 +167,7 @@ class CompanyLoadedState extends States {
                 CustomFormField(
                   controller: stcController,
                   hintText: S.current.stcPayCode,
+                  numbers: true,
                 ),
                 // email
                 Padding(

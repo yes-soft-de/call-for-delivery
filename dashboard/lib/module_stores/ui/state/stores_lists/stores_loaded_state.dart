@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_state.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -13,8 +13,9 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StoresLoadedState extends StoresState {
+class StoresLoadedState extends States {
   final StoresScreenState screenState;
   final String? error;
   final bool empty;
@@ -112,6 +113,29 @@ class StoresLoadedState extends StoresState {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: getTile(element.storeOwnerName),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,arguments: element.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(screenState.context)
+                            .backgroundColor
+                            .withOpacity(0.2),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.business_center,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 InkWell(

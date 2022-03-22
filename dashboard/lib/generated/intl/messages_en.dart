@@ -79,8 +79,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
+        "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "The order has been cancelled by the client"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
@@ -176,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Company profile updated successfully"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -205,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createNewReport":
             MessageLookupByLibrary.simpleMessage("Create new Report"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
+        "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
@@ -222,6 +226,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
+        "deliverDate": MessageLookupByLibrary.simpleMessage("Delivery date"),
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
@@ -232,8 +237,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
+        "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
+        "distance": MessageLookupByLibrary.simpleMessage("Distance"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
@@ -245,6 +252,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
+        "endDate": MessageLookupByLibrary.simpleMessage("To date"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -282,6 +290,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
@@ -329,6 +338,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidCode": MessageLookupByLibrary.simpleMessage("Invalid Code"),
         "invalidCredentials":
             MessageLookupByLibrary.simpleMessage("Wrong username or password"),
+        "invalidMapLink":
+            MessageLookupByLibrary.simpleMessage("Invalid map link"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("Invalid number"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
@@ -339,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("bonus on max limit"),
         "kilometerLimtMin":
             MessageLookupByLibrary.simpleMessage("bonus on min limit"),
+        "km": MessageLookupByLibrary.simpleMessage("Km"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
@@ -407,11 +419,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "notice": MessageLookupByLibrary.simpleMessage("Notice"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
+            "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
             "Order Created, Return to Orders"),
@@ -421,6 +436,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+        "orderImage": MessageLookupByLibrary.simpleMessage("Order Image"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
@@ -481,6 +497,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
+        "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phone2": MessageLookupByLibrary.simpleMessage("Phone 2"),
         "phoneIsRequired":

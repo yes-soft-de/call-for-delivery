@@ -136,7 +136,6 @@ class  CaptainOfferCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 15,),
                   InkWell(
                     onTap: onEdit,
                     child: Padding(

@@ -1,3 +1,6 @@
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_stores/ui/state/stores_lists/stores_loaded_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -6,9 +9,6 @@ import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_loaded_state.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_loading_state.dart';
-import 'package:c4d/module_stores/ui/state/store_categories/stores_state.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
@@ -18,15 +18,15 @@ class StoresStateManager {
 
   final AuthService _authService;
   final ImageUploadService _uploadService;
-  final PublishSubject<StoresState> _stateSubject = PublishSubject();
+  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<StoresState> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => _stateSubject.stream;
 
   StoresStateManager(this._storesService, this._authService,
       this._uploadService);
 
   void getStores(StoresScreenState screenState) {
-    _stateSubject.add(StoresLoadingState(screenState));
+    _stateSubject.add(LoadingState(screenState));
     _storesService.getStores().then((value) {
       if (value.hasError) {
         _stateSubject
@@ -72,7 +72,7 @@ class StoresStateManager {
 
   void updateStore(StoresScreenState screenState, UpdateStoreRequest request) {
     if (request.image?.contains('/original-image/') == true) {
-      _stateSubject.add(StoresLoadingState(screenState));
+      _stateSubject.add(LoadingState(screenState));
       _storesService.updateStore(request).then((value) {
         if (value.hasError) {
           getStores(screenState);
@@ -88,7 +88,7 @@ class StoresStateManager {
         }
       });
     } else {
-      _stateSubject.add(StoresLoadingState(screenState));
+      _stateSubject.add(LoadingState(screenState));
       _uploadService.uploadImage(request.image).then((value) {
         if (value == null && request.image != null && request.image != '') {
           getStores(screenState);

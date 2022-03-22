@@ -4,4 +4,7 @@ class StoresRoutes {
   static const STORES_INACTIVE = '/stores_inactive';
   static const STORE_BALANCE = '/stores_balance';
   static const STORE_SUPPORT = '/stores_support';
+  static const ORDER_STATUS_SCREEN = '/order_status';
+  static const LOGS_ORDERS_SCREEN = '/logs_orders';
+
 }

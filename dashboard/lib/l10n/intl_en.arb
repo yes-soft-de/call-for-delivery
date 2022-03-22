@@ -500,7 +500,7 @@
     "title": "title",
     "sendTo": "Send to",
     "captains": "Captains",
-    "notice": "Notice",
+    "notice": "Updates",
     "companyFinance": "Company finance",
     "contactInfo": "Contact info",
     "captainsOffer": "Captains offer",
@@ -524,5 +524,22 @@
     "createDate": "Create Date",
     "sOrder": "order",
     "captainUpdatedSuccessfully": "Captain updated successfully",
-    "bounce": "Bounce"
+    "bounce": "Bounce",
+
+    "firstDate": "From date",
+    "endDate": "To date",
+    "pending": "Pending",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "cancelled2": "Cancelled",
+    "deliverDate": "Delivery date",
+    "createdDate": "Created date",
+    "details": "Details",
+
+    "calculating": "Calculating",
+    "distance": "Distance",
+    "invalidMapLink": "Invalid map link",
+    "orderImage": "Order Image",
+    "orderCostWithDeliveryCost": "Order cost contains delivery tax",
+    "km": "Km"
 }
