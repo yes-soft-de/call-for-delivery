@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Request\Captain\CaptainProfileUpdateRequest;
+use App\Constant\Main\MainErrorConstant;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 /**
  * @Route("v1/captain/")
@@ -415,5 +417,79 @@ class CaptainController extends BaseController
         $response = $this->storeOwnerProfileService->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * captain: Update field isOnline .
+     * @Route("captainprofileupdateisonline", name="updateIsOnline", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update field isOnline",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="boolean", property="isOnline")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns online field",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="boolean", property="isOnline"),
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns that captain profile not exists",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9101"),
+     *          @OA\Property(type="string", property="msg", description="captain profile not exist! Error."),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateIsOnline(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainProfileIsOnlineUpdateByCaptainRequest::class, (object)$data);
+        $request->setCaptainId($this->getUserId());
+       
+        $violations = $this->validator->validate($request);
+        if(\count($violations) > 0)
+        {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->captainProfileService->updateIsOnline($request);
+
+        if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }
