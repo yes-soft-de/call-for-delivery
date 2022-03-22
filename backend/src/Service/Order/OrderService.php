@@ -3,6 +3,8 @@
 namespace App\Service\Order;
 
 use App\AutoMapping;
+use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\OrderFilterByCaptainRequest;
@@ -17,6 +19,7 @@ use App\Response\Order\OrderUpdateByCaptainResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Captain\CaptainService;
@@ -34,8 +37,9 @@ class OrderService
     private NotificationLocalService $notificationLocalService;
     private UploadFileHelperService $uploadFileHelperService;
     private CaptainService $captainService;
+    private OrderChatRoomService $orderChatRoomService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -43,6 +47,7 @@ class OrderService
        $this->notificationLocalService = $notificationLocalService;
        $this->uploadFileHelperService = $uploadFileHelperService;
        $this->captainService = $captainService;
+       $this->orderChatRoomService = $orderChatRoomService;
     }
 
     /**
@@ -176,6 +181,21 @@ class OrderService
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
+    }
+
+    public function getUsedAs($usedAs): string
+    {
+        if($usedAs === ChatRoomConstant::CAPTAIN_STORE_ENQUIRE) {
+
+            return ChatRoomConstant::CHAT_ENQUIRE_USE;
+        }
+
+        return ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+    }
+
+    public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
+    {
+        return $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
     }
 
     public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array

@@ -141,6 +141,11 @@ class OrderManager
         return $orderEntity;
     }
 
+    public function getOrderById($id): ?OrderEntity
+    {
+        return $this->orderRepository->find($id);
+    }
+
     public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array
     {
         $captainProfile = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
