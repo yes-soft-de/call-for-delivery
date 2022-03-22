@@ -43,9 +43,6 @@ class OrderStatusStateManager {
         value as OrderDetailsModel;
         _stateSubject
             .add(OrderDetailsStateOwnerOrderLoaded(screenState, value.data));
-        if (loading) {
-          watcher(screenState, id);
-        }
       }
     });
   }
@@ -67,9 +64,5 @@ class OrderStatusStateManager {
     });
   }
 
-  void watcher(OrderDetailsScreenState screenState, int id) {
-    FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      getOrder(screenState, id, false);
-    });
-  }
+
 }

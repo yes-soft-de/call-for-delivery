@@ -22,7 +22,7 @@ class Data {
   String? branchName;
   Images? image;
   String? roomId;
-  num? captainId;
+  String? captainId;
 
   Data(
       {this.id,
@@ -70,7 +70,7 @@ class Data {
       storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
       branchName: json['branchName'] as String?,
       roomId: json['roomId'] as String?,
-      captainId: json['captainUserId'] as num?);
+      captainId: json['captainUserId']?.toString());
 
   Map<String, dynamic> toJson() => {
         'id': id,

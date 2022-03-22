@@ -28,20 +28,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState) {
-    if (orderInfo.destinationCoordinate != null) {
-      distance = S.current.calculating;
-      screenState.refresh();
-      DeepLinksService.getDistance(LatLng(
-              orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0))
-          .then((value) {
-        distance = value.toStringAsFixed(1);
-        screenState.refresh();
-      });
-    }
-  }
-  String? distance;
+  ) : super(screenState);
+  
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -343,10 +331,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     child: ListTile(
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
-                          : Text(S.current.distance + ' ' + S.current.unknown),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(S.current.destinationUnavailable),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),

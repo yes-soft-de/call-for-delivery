@@ -99,47 +99,59 @@ class OwnerOrdersStateManager {
   }
 
   Future<void> getProfile() async {
-    // profile
-    var profile = await _profileService.getProfile();
-    if (profile.hasError) {
-      Fluttertoast.showToast(
-        msg: profile.error ?? S.current.errorHappened,
-        backgroundColor: Colors.red,
-      );
-    } else {
-      profile as ProfileModel;
-      _profileSubject.add(profile.data);
+    try {
+      // profile
+      var profile = await _profileService.getProfile();
+      if (profile.hasError) {
+        Fluttertoast.showToast(
+          msg: profile.error ?? S.current.errorHappened,
+          backgroundColor: Colors.red,
+        );
+      } else {
+        profile as ProfileModel;
+        _profileSubject.add(profile.data);
+      }
+    } catch (e) {
+      return;
     }
   }
 
   Future<void> getCompanyInfo() async {
-    // company info
-    var company = await _ordersService.getCompanyInfo();
-    if (company.hasError) {
-      Fluttertoast.showToast(
-        msg: company.error ?? S.current.errorHappened,
-        backgroundColor: Colors.red,
-      );
-    } else {
-      company as CompanyInfoModel;
-      _companySubject.add(company.data);
+    try {
+      // company info
+      var company = await _ordersService.getCompanyInfo();
+      if (company.hasError) {
+        Fluttertoast.showToast(
+          msg: company.error ?? S.current.errorHappened,
+          backgroundColor: Colors.red,
+        );
+      } else {
+        company as CompanyInfoModel;
+        _companySubject.add(company.data);
+      }
+    } catch (e) {
+      return;
     }
   }
 
   Future<void> getMakeOrderAbility() async {
-    // can make order
-    var status = await getIt<SubscriptionService>().getMakingOrderAbility();
-    if (status.hasError) {
-      Fluttertoast.showToast(
-        msg: status.error ?? S.current.errorHappened,
-        backgroundColor: Colors.red,
-      );
-      _subscriptionStatus.add(CanMakeOrderModel(
-          canCreateOrder: false,
-          status: status.error ?? S.current.errorHappened));
-    } else {
-      status as CanMakeOrderModel;
-      _subscriptionStatus.add(status.data);
+    try {
+      // can make order
+      var status = await getIt<SubscriptionService>().getMakingOrderAbility();
+      if (status.hasError) {
+        Fluttertoast.showToast(
+          msg: status.error ?? S.current.errorHappened,
+          backgroundColor: Colors.red,
+        );
+        _subscriptionStatus.add(CanMakeOrderModel(
+            canCreateOrder: false,
+            status: status.error ?? S.current.errorHappened));
+      } else {
+        status as CanMakeOrderModel;
+        _subscriptionStatus.add(status.data);
+      }
+    } catch (e) {
+      return;
     }
   }
 
