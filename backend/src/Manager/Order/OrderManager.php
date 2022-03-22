@@ -143,6 +143,15 @@ class OrderManager
 
     public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array
     {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
+
+        if (! $captainProfile) {
+            $request->setCaptainId(0);
+
+        } else {
+            $request->setCaptainId($captainProfile->getId());
+        }
+
         return $this->orderRepository->filterOrdersByCaptain($request);
     }
 }
