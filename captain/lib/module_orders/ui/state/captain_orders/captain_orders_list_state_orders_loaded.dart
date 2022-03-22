@@ -21,9 +21,12 @@ class CaptainOrdersListStateOrdersLoaded extends States {
   final CaptainOrdersScreenState screenState;
   CaptainOrdersListStateOrdersLoaded(
       this.screenState, this.myOrders, this.nearbyOrders)
-      : super(screenState);
+      : super(screenState) {
+    sortedList = false;
+  }
   final TextEditingController searchNearby = TextEditingController();
   final TextEditingController searchAccepted = TextEditingController();
+  bool sortedList = false;
   @override
   Widget getUI(BuildContext context) {
     return GestureDetector(
@@ -185,7 +188,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     uiList.add(Container(
       height: 75,
     ));
-    screenState.refresh();
     return RefreshIndicator(
         child: CustomListView.custom(children: uiList),
         onRefresh: () {
@@ -216,14 +218,16 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               return 1;
             }
           });
-          screenState.refresh();
+          if (sortedList == false) {
+            sortedList = true;
+            screenState.refresh();
+          }
           return;
         } else {
-          screenState.refresh();
           return;
         }
       });
-      screenState.refresh();
+
       return sorted;
     }
   }
