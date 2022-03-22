@@ -116,7 +116,7 @@ class OrderManager
         return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId());
     }
     
-    public function getSpecificOrderForCaptain($id): ?array
+    public function getSpecificOrderForCaptain(int $id): ?array
     {
         return $this->orderRepository->getSpecificOrderForCaptain($id);
     }
