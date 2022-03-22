@@ -23,6 +23,10 @@ use App\Constant\Captain\CaptainConstant;
 use App\Response\Captain\CaptainStatusResponse;
 use App\Response\Order\SpecificOrderForCaptainResponse;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Service\ChatRoom\OrderChatRoomService;
+use App\Constant\Order\OrderStateConstant;
+use App\Entity\OrderChatRoomEntity ;
 
 class OrderService
 {
@@ -32,8 +36,9 @@ class OrderService
     private NotificationLocalService $notificationLocalService;
     private UploadFileHelperService $uploadFileHelperService;
     private CaptainService $captainService;
+    private OrderChatRoomService $orderChatRoomService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -41,6 +46,7 @@ class OrderService
        $this->notificationLocalService = $notificationLocalService;
        $this->uploadFileHelperService = $uploadFileHelperService;
        $this->captainService = $captainService;
+       $this->orderChatRoomService = $orderChatRoomService;
     }
 
     /**
@@ -128,6 +134,14 @@ class OrderService
         $orders = $this->orderManager->closestOrders();
 
         foreach ($orders as $order) {
+           
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+            }
+            else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+            }
 
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
@@ -155,9 +169,14 @@ class OrderService
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
-
-            //TODO change this
-            $order['roomId'] = "12345678912456789";
+                      
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+            }
+            else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+            }
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
@@ -167,6 +186,10 @@ class OrderService
     {
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
         if($order) {
+            if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                $this->createOrderChatRoomOrUpdateCurrent($order);
+            }
+
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getCaptainId()); 
             //create Notification Local for captain
@@ -174,5 +197,20 @@ class OrderService
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
+    }
+
+    public function getUsedAs($usedAs): string
+     {   
+        if($usedAs === ChatRoomConstant::CAPTAIN_STORE_ENQUIRE) {
+
+           return ChatRoomConstant::CHAT_ENQUIRE_USE;
+        }
+        
+        return ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+    }
+    
+    public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
+    {     
+        return $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order); 
     }
 }

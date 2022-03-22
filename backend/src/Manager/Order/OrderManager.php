@@ -139,4 +139,10 @@ class OrderManager
 
         return $orderEntity;
     }
+
+    public function getOrderById($id): ?OrderEntity
+    {
+        return $this->orderRepository->find($id);
+    }
+
 }
