@@ -38,4 +38,9 @@ class RatingManager
 
         return $entity;
     }
+
+    public function getAverageRating(int $rated): ?float
+    {
+       return $this->ratingRepository->getAverageRating($rated);
+    }
 }
