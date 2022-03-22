@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Constant\Main\MainErrorConstant;
 
 /**
  * @Route("v1/admin/captain/")
@@ -237,8 +238,7 @@ class AdminCaptainController extends BaseController
      *      description="Returns that captain profile not exists",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="9101"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="string", property="Data", example="captain profile not exist!")
+     *          @OA\Property(type="string", property="msg", description="captain profile not exist! Error."),
      *      )
      * )
      *
@@ -261,7 +261,7 @@ class AdminCaptainController extends BaseController
         $response = $this->adminCaptainService->updateCaptainProfileStatusByAdmin($request);
 
         if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
-            return $this->response($response, self::CAPTAIN_PROFILE_NOT_EXIST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);
