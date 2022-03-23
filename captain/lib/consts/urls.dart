@@ -26,7 +26,8 @@ class Urls {
       BASE_API + '/notificationnewchatanonymous';
   static const CREATE_CAPTAIN_PROFILE =
       BASE_API + '/v1/captain/captainprofilupdate';
-  static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captainisactive';
+  static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captain';
+  static const CHANGE_CAPTAIN_PROFILE_STATUS_API = BASE_API + '/v1/captain/captainprofileupdateisonline';
   static const ORDER_STATUS_API = BASE_API + '/v1/order/captainorder/';
   static const NEARBY_ORDERS_API = BASE_API + '/v1/order/closestorders';
   static const CAPTAIN_ACCEPTED_ORDERS_API =
@@ -197,6 +198,5 @@ class Urls {
       DOMAIN + '/v1/subscription/packagebalance';
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
-  static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterorders';
-
+  static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterordersbycaptain';
 }
