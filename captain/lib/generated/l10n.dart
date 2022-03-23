@@ -6159,6 +6159,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Profile status updated successfully`
+  String get profileStatusUpdatedSuccessfully {
+    return Intl.message(
+      'Profile status updated successfully',
+      name: 'profileStatusUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

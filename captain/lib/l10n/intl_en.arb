@@ -613,7 +613,9 @@
     "destinationUnavailable": "Unavailable",
     "waitingToAccept": "Waiting you to accept this order",
     "finishingOrderMessage": "Please provide us with distance you reached out with this order To finish the order",
-    "paid": "Paid"
+    "paid": "Paid",
+    "profileStatusUpdatedSuccessfully": "Profile status updated successfully"
+
 
 
 

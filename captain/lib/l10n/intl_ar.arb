@@ -614,7 +614,8 @@
     "destinationUnavailable": "غير متوفرة",
     "waitingToAccept": "باننتظار قبولك الطلب",
     "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب",
-    "paid": "مدفوعة"
+    "paid": "مدفوعة",
+    "profileStatusUpdatedSuccessfully": "تم تحديث حالة الكابتن بنجاح"
 
 
 

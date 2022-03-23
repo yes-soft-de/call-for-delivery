@@ -665,6 +665,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد بيانات شخصية متوفرة بعد"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم جلب بياناتك الشخصية بنجاح"),
+        "profileStatusUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث حالة الكابتن بنجاح"),
         "profileUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
