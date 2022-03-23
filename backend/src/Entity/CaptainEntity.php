@@ -60,9 +60,13 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captainId', targetEntity: OrderEntity::class)]
     private $orderEntity;
 
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: OrderChatRoomEntity::class)]
+    private $orderChatRoomEntity;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
+        $this->orderChatRoomEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +266,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($orderEntity->getCaptainId() === $this) {
                 $orderEntity->setCaptainId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderChatRoomEntity[]
+     */
+    public function getOrderChatRoomEntity(): Collection
+    {
+        return $this->orderChatRoomEntity;
+    }
+
+    public function addOrderChatRoomEntity(OrderChatRoomEntity $orderChatRoomEntity): self
+    {
+        if (!$this->orderChatRoomEntity->contains($orderChatRoomEntity)) {
+            $this->orderChatRoomEntity[] = $orderChatRoomEntity;
+            $orderChatRoomEntity->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderChatRoomEntity(OrderChatRoomEntity $orderChatRoomEntity): self
+    {
+        if ($this->orderChatRoomEntity->removeElement($orderChatRoomEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderChatRoomEntity->getCaptain() === $this) {
+                $orderChatRoomEntity->setCaptain(null);
             }
         }
 

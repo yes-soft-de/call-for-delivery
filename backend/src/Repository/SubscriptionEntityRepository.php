@@ -132,4 +132,32 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+
+    public function getSubscriptionCurrentByOrderId($orderId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
+             'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
+             'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
+            ->addSelect('subscriptionCaptainOfferEntity.startDate as subscriptionCaptainOfferStartDate', 'subscriptionCaptainOfferEntity.expired as subscriptionCaptainOfferExpired', 'subscriptionCaptainOfferEntity.carCount as subscriptionCaptainOfferCarCount', 'subscriptionCaptainOfferEntity.status as subscriptionCaptainOfferCarStatus')
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'subscription.storeOwner = orderEntity.storeOwner')
+
+            ->andWhere('orderEntity.id = :orderId')
+            
+            ->setParameter('orderId', $orderId)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
 }

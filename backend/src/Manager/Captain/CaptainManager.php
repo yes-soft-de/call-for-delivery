@@ -18,6 +18,7 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Manager\Image\ImageManager;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 class CaptainManager
 {
@@ -116,16 +117,19 @@ class CaptainManager
 
             //save images
             if ($request->getImage()) {
-                $this->imageManager->createImage($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+                $this->imageManager->createImageOrUpdate($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
             }
+
             if ($request->getDrivingLicence()) {
-                $this->imageManager->createImage($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
+                $this->imageManager->createImageOrUpdate($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
             }
+
             if ($request->getMechanicLicense()) {
-                $this->imageManager->createImage($request->getMechanicLicense(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
+                $this->imageManager->createImageOrUpdate($request->getMechanicLicense(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
             }
+            
             if ($request->getIdentity()) {
-                $this->imageManager->createImage($request->getIdentity(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
+                $this->imageManager->createImageOrUpdate($request->getIdentity(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
             }
            
             return $item;
@@ -195,13 +199,13 @@ class CaptainManager
 
     public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?array
     {
-        return $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
+        $captainProfile = $this->captainEntityRepository->getCaptainProfileByIdForAdmin($captainProfileId);
         
-//        if($captainProfile) {
-//            $profile = $this->getCaptainProfileAndImages($captainProfile);
-//        }
-//
-//        return  $profile;
+       if($captainProfile) {
+           $profile = $this->getCaptainProfileAndImages($captainProfile);
+       }
+
+       return  $profile;
     }
 
     public function updateCaptainProfileStatusByAdmin(CaptainProfileStatusUpdateByAdminRequest $request): string|CaptainEntity
@@ -258,11 +262,12 @@ class CaptainManager
         $profile['bankAccountNumber'] = $items[0]['bankAccountNumber'];
         $profile['stcPay'] = $items[0]['stcPay'];
         $profile['roomId'] = $items[0]['roomId'];
-       
+        $profile['status'] = $items[0]['status'];
+               
         foreach ($items as $captainProfile) {
 
             if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE) {
-              $profile['profileImage '] = $captainProfile['imagePath'];
+              $profile['profileImage'] = $captainProfile['imagePath'];
             }
 
             if($captainProfile['usedAs'] === ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE) {
@@ -277,7 +282,39 @@ class CaptainManager
               $profile['identity'] = $captainProfile['imagePath'];
             }
          }
+       
+        if(! isset($profile['profileImage'])) {
+            $profile['profileImage'] = ImageEntityTypeConstant::IMAGE_NULL;
+        }
+       
+        if(! isset($profile['drivingLicence'])) {
+            $profile['drivingLicence'] = ImageEntityTypeConstant::IMAGE_NULL;
+        }
 
-         return $profile;
+        if(! isset($profile['mechanicLicense'])) {
+            $profile['mechanicLicense'] = ImageEntityTypeConstant::IMAGE_NULL;
+        }
+        
+        if(! isset($profile['identity'])) {
+            $profile['identity'] = ImageEntityTypeConstant::IMAGE_NULL;
+        }
+        
+        return $profile;
     }    
+    
+    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): string|CaptainEntity
+    {
+        $captainProfileEntity = $this->captainEntityRepository->findOneBy(["captainId" => $request->getCaptainId()]);
+
+        if (! $captainProfileEntity) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileIsOnlineUpdateByCaptainRequest::class, CaptainEntity::class,
+            $request, $captainProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $captainProfileEntity;
+    }
 }

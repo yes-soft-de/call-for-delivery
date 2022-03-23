@@ -13,4 +13,8 @@ final class ChatRoomConstant
     const CAPTAIN_STORE = 4;
 
     const CAPTAIN_ENQUIRE= "استفسار";
+
+    const CHAT_ENQUIRE_USE = "used chat enquire";
+
+    const CHAT_ENQUIRE_NOT_USE = "not used chat enquire";
 }

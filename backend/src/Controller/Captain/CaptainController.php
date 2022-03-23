@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Request\Captain\CaptainProfileUpdateRequest;
+use App\Constant\Main\MainErrorConstant;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 /**
  * @Route("v1/captain/")
@@ -223,71 +225,8 @@ class CaptainController extends BaseController
     }
 
     /**
-     * store: Get complete account status of captain profile.
-     * @Route("captainprofilecompleteaccountstatus", name="getCompleteAccountStatusOfCaptainProfile", methods={"GET"})
-     * @IsGranted("ROLE_CAPTAIN")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Store Owner Profile")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the completeAccountStatus of store owner's profile",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
-     *      )
-     *   )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Returns the completeAccountStatus of store owner's profile",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9158 | 9159 | 9160"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
-     *      )
-     *   )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getCompleteAccountStatusOfCaptainProfile(): JsonResponse
-    {
-        $response = $this->captainProfileService->getCompleteAccountStatusOfCaptainProfile($this->getUserId());
-
-        if($response->completeAccountStatus) {
-            if($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
-                return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
-
-            } elseif ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
-                return $this->response($response, self::STORE_OWNER_SUBSCRIPTION_CREATED);
-
-            } elseif ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
-                return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
-
-            }
-        }
-
-        return $this->response($response, self::FETCH);
-    }
-
-    /**
-     * store: Update complete account status of the captain profile.
-     * @Route("captainprofilecompleteaccountstatus", name="updateCompleteAccountStatusOfCaptainProfile", methods={"PUT"})
+     * captain: Update field isOnline .
+     * @Route("captainprofileupdateisonline", name="updateIsOnline", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -302,20 +241,21 @@ class CaptainController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="Update Store Owner Profile",
+     *      description="Update field isOnline",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="completeAccountStatus")
+     *          @OA\Property(type="boolean", property="isOnline")
      *      )
      * )
      *
      * @OA\Response(
      *      response=204,
-     *      description="Returns the captain's profile",
+     *      description="Returns online field",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="boolean", property="isOnline"),
      *          )
      *      )
      * )
@@ -324,96 +264,28 @@ class CaptainController extends BaseController
      *
      * @OA\Response(
      *      response="default",
-     *      description="Returns the captain's profile",
+     *      description="Returns that captain profile not exists",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9221"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="string", property="completeAccountStatus")
-     *          )
+     *          @OA\Property(type="string", property="status_code", example="9101"),
+     *          @OA\Property(type="string", property="msg", description="captain profile not exist! Error."),
      *      )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function updateCompleteAccountStatusOfCaptainProfile(Request $request): JsonResponse
+    public function updateIsOnline(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, StoreOwnerCompleteAccountStatusUpdateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, CaptainProfileIsOnlineUpdateByCaptainRequest::class, (object)$data);
+        $request->setCaptainId($this->getUserId());
 
-        $request->setStoreOwnerId($this->getUserId());
+        $response = $this->captainProfileService->updateIsOnline($request);
 
-        $violations = $this->validator->validate($request);
-        if(\count($violations) > 0)
-        {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $response = $this->storeOwnerProfileService->storeOwnerProfileCompleteAccountStatusUpdate($request);
-
-        if($response === CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
-            return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
+        if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);
-    }
-
-    /**
-     * admin: Get captain profiles by status.
-     * @Route("captainssprofilesbystatusforadmin/{captainProfileStatus}", name="getCaptainsByStatusForAdmin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param $captainProfileStatus
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Captain Profile")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns captain profiles which corresponding with the passed status",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="storeOwnerId"),
-     *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="object", property="images",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="roomID"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="storeCategoryId"),
-     *              @OA\Property(type="string", property="employeeCount"),
-     *              @OA\Property(type="object", property="openingTime"),
-     *              @OA\Property(type="object", property="closingTime"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="string", property="commission"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *      )
-     *   )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus): JsonResponse
-    {
-        $response = $this->storeOwnerProfileService->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
-
-        return $this->response($response, self::FETCH);
     }
 }

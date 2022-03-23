@@ -43,4 +43,6 @@ class SpecificOrderForCaptainResponse
     public $roomId;
     
     public $location;
+
+    public string $usedAs;
 }

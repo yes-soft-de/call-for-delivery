@@ -28,7 +28,7 @@ class RatingManager
     public function createRating(RatingCreateRequest $request): ?RateEntity
     {
         $request->setRater($this->userManager->getUser($request->getRater()));
-        $request->setRated($this->userManager->getUser($request->getRated()));
+        $request->setRated($this->userManager->getUserByCaptainProfileId($request->getRated()));
 
         $entity = $this->autoMapping->map(RatingCreateRequest::class, RateEntity::class, $request);
        
@@ -37,5 +37,10 @@ class RatingManager
         $this->entityManager->flush();
 
         return $entity;
+    }
+
+    public function getAverageRating(int $rated): ?float
+    {
+       return $this->ratingRepository->getAverageRating($rated);
     }
 }

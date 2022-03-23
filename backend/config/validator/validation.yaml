@@ -86,11 +86,6 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
         id:
             - NotBlank: ~
 
-App\Request\Admin\Package\PackageCategoryCreateRequest:
-    properties:
-        name:
-            - NotBlank: ~
-
 App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
@@ -206,4 +201,14 @@ App\Request\Order\OrderUpdateByCaptainRequest:
         id:
             - NotBlank: ~
         state:
+            - NotBlank: ~
+
+App\Request\Order\OrderChatRoomRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+
+App\Request\Admin\Package\PackageCategoryCreateByAdminRequest:
+    properties:
+        name:
             - NotBlank: ~

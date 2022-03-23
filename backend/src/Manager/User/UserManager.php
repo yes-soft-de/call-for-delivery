@@ -184,5 +184,9 @@ class UserManager
     {
         return $this->userRepository->find($id);
     }
-
+    
+    public function getUserByCaptainProfileId($captainProfileId): ?UserEntity
+    {
+        return $this->userRepository->getUserByCaptainProfileId($captainProfileId);
+    }
 }

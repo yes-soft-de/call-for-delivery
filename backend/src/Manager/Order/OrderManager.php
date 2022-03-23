@@ -9,6 +9,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Repository\OrderEntityRepository;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
+use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
@@ -104,9 +105,11 @@ class OrderManager
         }
     }
 
-    public function closestOrders(): ?array
+    public function closestOrders(int $userId): ?array
     {
-        return $this->orderRepository->closestOrders();
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->closestOrders($captainId->getId());
     }
     
     public function acceptedOrderByCaptainId($userId): ?array
@@ -116,9 +119,11 @@ class OrderManager
         return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId());
     }
     
-    public function getSpecificOrderForCaptain($id): ?array
+    public function getSpecificOrderForCaptain(int $id, int $userId): ?array
     {
-        return $this->orderRepository->getSpecificOrderForCaptain($id);
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->getSpecificOrderForCaptain($id, $captainId->getId());
     }
 
     public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
@@ -138,5 +143,24 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+
+    public function getOrderById($id): ?OrderEntity
+    {
+        return $this->orderRepository->find($id);
+    }
+
+    public function filterOrdersByCaptain(OrderFilterByCaptainRequest $request): ?array
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
+
+        if (! $captainProfile) {
+            $request->setCaptainId(0);
+
+        } else {
+            $request->setCaptainId($captainProfile->getId());
+        }
+
+        return $this->orderRepository->filterOrdersByCaptain($request);
     }
 }

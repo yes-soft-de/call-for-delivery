@@ -15,18 +15,23 @@ use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\Captain\CaptainManager;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\Rate\RatingService;
+use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
+use App\Response\Captain\CaptainIsOnlineResponse;
 
 class CaptainService
 {
     private AutoMapping $autoMapping;
     private CaptainManager $captainManager;
     private UploadFileHelperService $uploadFileHelperService;
+    private RatingService $ratingService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService, RatingService $ratingService)
     {
         $this->autoMapping = $autoMapping;
         $this->captainManager = $captainManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
+        $this->ratingService = $ratingService;
     }
 
     public function captainRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -60,15 +65,12 @@ class CaptainService
                 $item['roomId'] = $item['roomId']->toBase32();
             }
 
-//            $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage ']);
-//            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
-//            $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
-//            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
+           $item['images'] = $this->uploadFileHelperService->getImageParams($item['profileImage']);
+           $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams($item['mechanicLicense']);
+           $item['identity'] = $this->uploadFileHelperService->getImageParams($item['identity']);
+           $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams($item['drivingLicence']);
 
-            $item['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
-            $item['mechanicLicense'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
-            $item['identity'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
-            $item['drivingLicence'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+           $item['averageRating'] = $this->ratingService->getAverageRating($userId);
         }
 
         return $this->autoMapping->map('array', CaptainProfileResponse::class, $item);
@@ -89,5 +91,12 @@ class CaptainService
         $captainStatus = $this->captainManager->captainIsActive($captainId);
 
         return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
+     }
+ 
+    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): ?CaptainIsOnlineResponse 
+    {
+        $captainStatus = $this->captainManager->updateIsOnline($request);
+
+        return $this->autoMapping->map(CaptainEntity::class,CaptainIsOnlineResponse::class, $captainStatus);
      }
 }

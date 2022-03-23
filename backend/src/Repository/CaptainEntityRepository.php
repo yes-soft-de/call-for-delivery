@@ -29,15 +29,14 @@ class CaptainEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainEntity')
 
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
-                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay')
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.status')
             ->addSelect('chatRoomEntity.roomId')
             ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = captainEntity.captainId')
-            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id')
+            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType')
             
             ->andWhere('captainEntity.captainId = :id')
-            ->andWhere('imageEntity.entityType = :entityType ')
 
             ->setParameter('id', $id)
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
@@ -105,7 +104,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
                 'captainEntity.status', 'chatRoomEntity.roomId')
-//            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+           ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
 
             ->leftJoin(
                 ChatRoomEntity::class,
@@ -113,16 +112,15 @@ class CaptainEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'chatRoomEntity.userId = captainEntity.captainId')
             
-//            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id')
+           ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType')
 
             ->andWhere('captainEntity.id = :captainProfileId')
-//            ->andWhere('imageEntity.entityType = :entityType ')
 
             ->setParameter('captainProfileId', $captainProfileId)
            
-//            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+           ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
 
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 }

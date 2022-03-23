@@ -38,5 +38,7 @@ class CaptainProfileResponse
 
     public  null|array $drivingLicence;
 
-    public string $roomId;
+    public null|string $roomId;
+
+    public null|float $averageRating;
 }
