@@ -175,7 +175,7 @@ class OrdersService {
     if (_ordersResponse == null) {
       return OrderLogsModel.Error(S.current.networkError);
     }
-    if (_ordersResponse.statusCode != '200') {
+    if (_ordersResponse.statusCode != '200' && _ordersResponse.statusCode != '204') {
       return OrderLogsModel.Error(
           StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
     }
