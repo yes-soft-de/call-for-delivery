@@ -53,7 +53,7 @@ class CompanyInfoStateManager {
       } else {
         value as CompanyInfoModel;
         _stateSubject
-            .add(CompanyInfoLoadedState(screenState,company:value.data));
+            .add(CompanyInfoLoadedState(screenState, company: value.data));
       }
     });
   }
