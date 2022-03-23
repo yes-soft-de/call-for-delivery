@@ -133,7 +133,7 @@ class OrderService
 
         $response = [];
 
-        $orders = $this->orderManager->closestOrders();
+        $orders = $this->orderManager->closestOrders($userId);
 
         foreach ($orders as $order) {
            
@@ -165,9 +165,9 @@ class OrderService
         return $response;
     }
 
-    public function getSpecificOrderForCaptain(int $id): ?SpecificOrderForCaptainResponse
+    public function getSpecificOrderForCaptain(int $id, int $userId): ?SpecificOrderForCaptainResponse
     {
-        $order = $this->orderManager->getSpecificOrderForCaptain($id);
+        $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
