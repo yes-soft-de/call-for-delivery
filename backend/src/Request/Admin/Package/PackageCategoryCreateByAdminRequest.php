@@ -2,7 +2,7 @@
 
 namespace App\Request\Admin\Package;
 
-class PackageCategoryCreateRequest
+class PackageCategoryCreateByAdminRequest
 {
     private string $name;
 

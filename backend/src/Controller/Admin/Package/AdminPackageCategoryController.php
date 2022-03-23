@@ -5,7 +5,7 @@ namespace App\Controller\Admin\Package;
 use App\AutoMapping;
 use App\Constant\Package\PackageCategoryConstant;
 use App\Controller\BaseController;
-use App\Request\Admin\Package\PackageCategoryCreateRequest;
+use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
 use App\Request\Admin\Package\PackageCategoryUpdateRequest;
 use App\Service\Admin\Package\AdminPackageCategoryService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -38,8 +38,7 @@ class AdminPackageCategoryController extends BaseController
     }
 
     /**
-     * admin:Create new package category by admin
-     * @Route("category", name="createPackageCategoryByAdmin", methods={"POST"})
+     * @Route("packagecategory", name="createPackageCategoryByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -54,16 +53,16 @@ class AdminPackageCategoryController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="new package category create request",
+     *      description="new package category create by admin request",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="name"),
-     *          @OA\Property(type="string", property="description"),
+     *          @OA\Property(type="string", property="description")
      *      )
      * )
      *
      * @OA\Response(
-     *      response=200,
-     *      description="Returns new package category info",
+     *      response=201,
+     *      description="Returns the new created package category info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -77,11 +76,11 @@ class AdminPackageCategoryController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function createPackageCategoryByAdmin(Request $request): JsonResponse
+    public function createPackageCategory(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, PackageCategoryCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(\stdClass::class, PackageCategoryCreateByAdminRequest::class, (object) $data);
 
         $violations = $this->validator->validate($request);
 
@@ -89,12 +88,11 @@ class AdminPackageCategoryController extends BaseController
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
-
-        } else {
-            $result = $this->adminPackageCategoryService->createPackageCategory($request);
-
-            return $this->response($result, self::CREATE);
         }
+
+        $result = $this->adminPackageCategoryService->createPackageCategoryByAdmin($request);
+
+        return $this->response($result, self::CREATE);
     }
 
     /**

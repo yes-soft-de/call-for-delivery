@@ -86,11 +86,6 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
         id:
             - NotBlank: ~
 
-App\Request\Admin\Package\PackageCategoryCreateRequest:
-    properties:
-        name:
-            - NotBlank: ~
-
 App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
