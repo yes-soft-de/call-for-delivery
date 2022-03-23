@@ -455,7 +455,7 @@ class OrderController extends BaseController
      */
     public function getSpecificOrderForCaptain(int $id): JsonResponse
     {
-        $result = $this->orderService->getSpecificOrderForCaptain($id);
+        $result = $this->orderService->getSpecificOrderForCaptain($id, $this->getUserId());
 
         return $this->response($result, self::FETCH);
     }
