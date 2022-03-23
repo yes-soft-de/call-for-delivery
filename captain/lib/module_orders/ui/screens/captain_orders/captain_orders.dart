@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -70,7 +72,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     super.initState();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
-    //widget._stateManager.companyInfo();
     widget._stateManager.getMyOrders(this);
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       widget._stateManager.getMyOrders(this, false);
@@ -108,12 +109,20 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
           appBar: CustomC4dAppBar.appBar(context,
               colorIcon: currentState is ErrorState
                   ? Theme.of(context).colorScheme.error
-                  : null,
+                  : (currentPage == 1
+                      ? null
+                      : StatusHelper.getOrderStatusColor(
+                          OrderStatusEnum.GOT_CAPTAIN)),
               actions: [
                 CustomC4dAppBar.actionIcon(context, onTap: () {
                   Navigator.of(context)
                       .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
-                }, icon: Icons.notifications_rounded)
+                },
+                    icon: Icons.notifications_rounded,
+                    colorIcon: currentPage == 1
+                        ? null
+                        : StatusHelper.getOrderStatusColor(
+                            OrderStatusEnum.GOT_CAPTAIN))
               ],
               title: S.of(context).home,
               icon: Icons.sort_rounded, onTap: () {
@@ -124,7 +133,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
             child: SnakeNavigationBar.color(
               behaviour: SnakeBarBehaviour.pinned,
               snakeShape: SnakeShape.rectangle,
-              snakeViewColor: Theme.of(context).colorScheme.primary,
+              snakeViewColor: currentPage == 1
+                  ? Theme.of(context).colorScheme.primary
+                  : StatusHelper.getOrderStatusColor(
+                      OrderStatusEnum.GOT_CAPTAIN),
               selectedItemColor: Colors.white,
               unselectedItemColor: Theme.of(context).disabledColor,
               backgroundColor: Theme.of(context).brightness == Brightness.dark

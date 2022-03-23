@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -18,6 +17,7 @@ class OrderModel extends DataModel {
   late String branchName;
   LatLng? location;
   late String distance;
+  late String paymentMethod;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -27,9 +27,10 @@ class OrderModel extends DataModel {
       required this.createdDate,
       required this.id,
       required this.location,
-      required this.distance});
-  List<OrderModel> _orders = [];
-  OrderModel.withData(OrdersResponse response) {
+      required this.distance,
+      required this.paymentMethod});
+   List<OrderModel> _orders = [];
+   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
     data?.forEach((element) {
       // date formatter
@@ -57,41 +58,10 @@ class OrderModel extends DataModel {
           location: element.location != null
               ? LatLng(element.location?.lat, element.location?.lon)
               : null,
-          distance:
-              S.current.distance+ ' ' + S.current.destinationUnavailable));
+          distance: S.current.destinationUnavailable,
+          paymentMethod: element.payment ?? 'cash'));
     });
-    _orders = _sortOrder(_orders);
-  }
-  List<OrderModel> _sortOrder(List<OrderModel> orders) {
-    if (orders.isEmpty) {
-      return [];
-    } else {
-      List<OrderModel> sorted = orders;
-      DeepLinksService.defaultLocation().then((myPos) {
-        if (myPos != null) {
-          Distance distance = const Distance();
-          sorted.sort((a, b) {
-            try {
-              var pos1 = a.location as LatLng;
-              var pos2 = b.location as LatLng;
-              var straightDistance1 =
-                  distance.as(LengthUnit.Kilometer, pos1, myPos);
-              var straightDistance2 =
-                  distance.as(LengthUnit.Kilometer, pos2, myPos);
-              a.distance = straightDistance1.toStringAsFixed(1);
-              b.distance = straightDistance2.toStringAsFixed(1);
-              return straightDistance1.compareTo(straightDistance2);
-            } catch (e) {
-              return 1;
-            }
-          });
-          return;
-        } else {
-          return;
-        }
-      });
-      return sorted;
-    }
+
   }
 
   List<OrderModel> get data => _orders;

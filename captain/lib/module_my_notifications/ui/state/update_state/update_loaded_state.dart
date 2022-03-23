@@ -17,8 +17,8 @@ class UpdatesLoadedState extends States {
   List<UpdateModel> model;
   UpdatesLoadedState(this.screenState, this.model) : super(screenState);
   bool markAll = false;
-  bool sorted = false;
-  String listTile = S.current.sortByEarlier;
+  bool sorted = true;
+  String listTile = S.current.sortedByLatest;
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -85,7 +85,7 @@ class UpdatesLoadedState extends States {
           },
           child: ListView(
             physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
               Visibility(
                 visible: screenState.markerMode == false,
@@ -139,10 +139,10 @@ class UpdatesLoadedState extends States {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: ListView(
                     shrinkWrap: true,
-                    physics: ScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     children: getNotification(context)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 75,
               ),
             ],

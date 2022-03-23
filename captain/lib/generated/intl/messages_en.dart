@@ -576,6 +576,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Package not available to renew any more"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
+        "paid": MessageLookupByLibrary.simpleMessage("Paid"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":

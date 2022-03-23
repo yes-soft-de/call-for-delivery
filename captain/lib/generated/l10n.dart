@@ -6149,6 +6149,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Paid`
+  String get paid {
+    return Intl.message(
+      'Paid',
+      name: 'paid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

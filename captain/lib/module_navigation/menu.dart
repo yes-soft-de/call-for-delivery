@@ -10,6 +10,7 @@ import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 
 class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
@@ -19,39 +20,37 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTileTheme(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
+        child: Column(
+      children: [
+        Expanded(
+          child: ListView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             children: [
-              Container(
-                height: 24,
-              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: 125,
-                  height: 125,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CustomNetworkImage(
-                      background: Theme.of(context).scaffoldBackgroundColor,
-                      imageSource: profileModel.image ??
-                          'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png',
-                      width: double.maxFinite,
-                      height: double.maxFinite,
+                child: Center(
+                  child: Container(
+                    width: 125,
+                    height: 125,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CustomNetworkImage(
+                        background: Theme.of(context).scaffoldBackgroundColor,
+                        imageSource: profileModel.image ??
+                            'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png',
+                        width: double.maxFinite,
+                        height: double.maxFinite,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Text(profileModel.name ?? S.current.username),
+              Center(child: Text(profileModel.name ?? S.current.username)),
               Container(
                 height: 32,
               ),
@@ -63,12 +62,19 @@ class MenuScreen extends StatelessWidget {
                 leading: const Icon(Icons.account_circle_rounded),
                 title: Text(S.of(context).profile),
               ),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE);
+              ListTileSwitch(
+                value: profileModel.isOnline ?? false,
+                leading: const Icon(Icons.wifi_rounded),
+                onChanged: (mode) {
+                  profileModel.isOnline = mode;
+                  screenState.refresh();
                 },
-                leading: const Icon(Icons.account_balance_rounded),
-                title: Text(S.of(context).myBalance),
+                visualDensity: VisualDensity.comfortable,
+                switchType: SwitchType.cupertino,
+                switchActiveColor: Theme.of(context).colorScheme.primary,
+                title: Text(
+                  S.of(context).myStatus,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -79,7 +85,8 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
+                  Navigator.of(context)
+                      .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
                 },
                 leading: const Icon(Icons.notifications_active_rounded),
                 title: Text(S.of(context).notices),
@@ -110,23 +117,29 @@ class MenuScreen extends StatelessWidget {
                 leading: const Icon(Icons.privacy_tip),
                 title: Text(S.of(context).privacyPolicy),
               ),
-              const Spacer(),
-              DefaultTextStyle(
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).disabledColor,
-                    fontWeight: FontWeight.w500),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 16.0,
-                  ),
-                  child: const Text('Yes Soft | C4D Captain'),
-                ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE);
+                },
+                leading: const Icon(Icons.account_balance_rounded),
+                title: Text(S.of(context).myBalance),
               ),
             ],
           ),
         ),
-      ),
-    );
+        DefaultTextStyle(
+          style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(context).disabledColor,
+              fontWeight: FontWeight.w500),
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 16.0,
+            ),
+            child: const Text('Yes Soft | C4D Captain'),
+          ),
+        ),
+      ],
+    ));
   }
 }

@@ -568,6 +568,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هذا الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
+        "paid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":

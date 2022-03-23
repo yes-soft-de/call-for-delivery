@@ -214,19 +214,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               height: 40,
               cursorColor: Theme.of(context).colorScheme.primary,
               items: [
-                FilterItem(
-                  label: S.current.pending,
-                ),
                 FilterItem(label: S.current.ongoing),
                 FilterItem(label: S.current.completed),
                 FilterItem(label: S.current.cancelled2),
               ],
               onItemSelected: (index) {
                 if (index == 0) {
-                  ordersFilter.state = 'pending';
-                } else if (index == 1) {
                   ordersFilter.state = 'ongoing';
-                } else if (index == 3) {
+                } else if (index == 2) {
                   ordersFilter.state = 'cancelled';
                 } else {
                   ordersFilter.state = 'delivered';
