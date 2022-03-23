@@ -5,6 +5,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
@@ -147,6 +148,15 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                   .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
             },
                 icon: Icons.notifications_rounded,
+                colorIcon: currentIndex == 0
+                    ? null
+                    : StatusHelper.getOrderStatusColor(
+                        OrderStatusEnum.IN_STORE)),
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context)
+                  .pushNamed(ChatRoutes.roomChatList);
+            },
+                icon: Icons.chat_rounded,
                 colorIcon: currentIndex == 0
                     ? null
                     : StatusHelper.getOrderStatusColor(
