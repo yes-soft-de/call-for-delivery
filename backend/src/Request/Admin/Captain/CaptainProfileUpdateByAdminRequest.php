@@ -76,4 +76,36 @@ class CaptainProfileUpdateByAdminRequest
     {
         return $this->id;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getImages(): ?string
+    {
+        return $this->images;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMechanicLicense(): ?string
+    {
+        return $this->mechanicLicense;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdentity(): ?string
+    {
+        return $this->identity;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDrivingLicence(): ?string
+    {
+        return $this->drivingLicence;
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Request\Image;
 class ImageUpdateRequest
 {
     private int $id;
-    
+
     private string $imagePath;
 
     private int $entityType;
@@ -36,7 +36,7 @@ class ImageUpdateRequest
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -46,7 +46,7 @@ class ImageUpdateRequest
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;

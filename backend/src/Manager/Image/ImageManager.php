@@ -3,6 +3,7 @@
 namespace App\Manager\Image;
 
 use App\AutoMapping;
+use App\Constant\Image\ImageResultConstant;
 use App\Entity\ImageEntity;
 use App\Repository\ImageEntityRepository;
 use App\Request\Image\ImageCreateRequest;
@@ -30,6 +31,22 @@ class ImageManager
         $this->entityManager->flush();
 
         return $imageEntity;
+    }
+
+    public function update(ImageUpdateRequest $request): string|ImageEntity
+    {
+        $imageEntity = $this->imageEntityRepository->find($request->getId());
+
+        if (! $imageEntity) {
+            return ImageResultConstant::IMAGE_WAS_NOT_FOUND;
+
+        } else {
+            $imageEntity = $this->autoMapping->mapToObject(ImageUpdateRequest::class, ImageEntity::class, $request, $imageEntity);
+
+            $this->entityManager->flush();
+
+            return $imageEntity;
+        }
     }
 
     public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): ?array
