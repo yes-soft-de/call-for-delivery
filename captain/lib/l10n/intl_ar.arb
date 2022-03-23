@@ -615,7 +615,11 @@
     "waitingToAccept": "باننتظار قبولك الطلب",
     "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب",
     "paid": "مدفوعة",
-    "profileStatusUpdatedSuccessfully": "تم تحديث حالة الكابتن بنجاح"
+    "profileStatusUpdatedSuccessfully": "تم تحديث حالة الكابتن بنجاح",
+    "canConnect": "استفسار عن الطلب",
+    "canConnectHint": "عن طريق إنشاء زر محادثة مع المتجر",
+    "storeCarsFinished": "لا يمكنك قبول طلبات لهذا المتجر بعد الآن ، لانتهاء السيارات المخصصة له",
+    "chatRoomCreated": "تم إنشاء غرفة المحادثة"
 
 
 

@@ -106,6 +106,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
+        "canConnect":
+            MessageLookupByLibrary.simpleMessage("Enquiry about order"),
+        "canConnectHint": MessageLookupByLibrary.simpleMessage(
+            "By create chat room between you and store owner"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -159,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
+        "chatRoomCreated": MessageLookupByLibrary.simpleMessage(
+            "Chat room created successfully"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("Chat With Captain"),
         "chatWithClient":
@@ -809,6 +815,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
+        "storeCarsFinished": MessageLookupByLibrary.simpleMessage(
+            "You can\'t accept orders for this store any more , because It consumes all cars"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("Store location"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(

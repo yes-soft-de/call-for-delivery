@@ -6169,6 +6169,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Enquiry about order`
+  String get canConnect {
+    return Intl.message(
+      'Enquiry about order',
+      name: 'canConnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By create chat room between you and store owner`
+  String get canConnectHint {
+    return Intl.message(
+      'By create chat room between you and store owner',
+      name: 'canConnectHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't accept orders for this store any more , because It consumes all cars`
+  String get storeCarsFinished {
+    return Intl.message(
+      'You can\'t accept orders for this store any more , because It consumes all cars',
+      name: 'storeCarsFinished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat room created successfully`
+  String get chatRoomCreated {
+    return Intl.message(
+      'Chat room created successfully',
+      name: 'chatRoomCreated',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
