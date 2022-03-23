@@ -1,3 +1,4 @@
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_init/response/create_profile_response/create_profile_response.dart';
 import 'package:c4d/module_orders/response/terms/terms_respons.dart';
@@ -19,6 +20,8 @@ class ProfileManager {
 
   Future<ProfileResponse?> getCaptainProfile() =>
       _repository.getCaptainProfile();
+  Future<ActionResponse?> changeProfileStatus(bool isOnline) =>
+      _repository.changeCaptainStatus(isOnline);
 
   Future<List<Terms>?> getTerms() => _repository.getTerms();
 }

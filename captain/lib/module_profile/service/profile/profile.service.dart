@@ -1,4 +1,6 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_init/model/profile_post_state.dart';
@@ -43,6 +45,19 @@ class ProfileService {
     }
     await FireStoreHelper().insertWatcher();
     return ProfilePostState.empty();
+  }
+
+  Future<DataModel> changeProfileStatus(bool isOnline) async {
+    ActionResponse? clientOrderResponse =
+        await _manager.changeProfileStatus(isOnline);
+    if (clientOrderResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (clientOrderResponse.statusCode != '204') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          clientOrderResponse.statusCode));
+    }
+    return DataModel.empty();
   }
 
   Future<List<Terms>?> getTerms() async {

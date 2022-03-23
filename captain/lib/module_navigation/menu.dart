@@ -110,6 +110,7 @@ class MenuScreen extends StatelessWidget {
                 onChanged: (mode) {
                   profileModel.isOnline = mode;
                   screenState.refresh();
+                  screenState.changeStatus(mode);
                 },
                 visualDensity: VisualDensity.comfortable,
                 switchType: SwitchType.cupertino,

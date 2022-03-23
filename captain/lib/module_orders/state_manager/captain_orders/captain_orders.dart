@@ -3,7 +3,10 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -51,7 +54,7 @@ class CaptainOrdersListStateManager {
   void getMyOrders(CaptainOrdersScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState,picture: true));
+      _stateSubject.add(LoadingState(screenState, picture: true));
     }
     Future.wait([
       _ordersService.getCaptainOrders(),
@@ -78,5 +81,17 @@ class CaptainOrdersListStateManager {
 
   void companyInfo() {
     _ordersService.getCompanyInfo().then((info) => _companySubject.add(info!));
+  }
+
+  void updateProfileStatus(
+      CaptainOrdersScreenState screenState, bool isOnline) {
+    _profileService.changeProfileStatus(isOnline).then((value) {
+      if (value.hasError) {
+        Fluttertoast.showToast(msg: value.error ?? S.current.errorHappened);
+      } else {
+        Fluttertoast.showToast(msg: S.current.profileStatusUpdatedSuccessfully);
+        getIt<GlobalStateManager>().update();
+      }
+    });
   }
 }

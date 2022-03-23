@@ -1,3 +1,4 @@
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
@@ -43,6 +44,18 @@ class ProfileRepository {
     return CreateCaptainProfileResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> changeCaptainStatus(bool status) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.CHANGE_CAPTAIN_PROFILE_STATUS_API,
+      {'isOnline': status ? '1': '0'},
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
 
   Future<List<Terms>?> getTerms() async {
     var token = await _authService.getToken();
