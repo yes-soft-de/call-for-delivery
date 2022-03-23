@@ -102,9 +102,10 @@ class OrderService
         if($order) {
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
- 
-            //This is for testing, it will be completed after building the captain's entity
-            $order['roomId'] = "12345678912456789";
+            
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+            }
         }
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
