@@ -545,7 +545,10 @@
     "fax": "Fax",
     "youSubscribedWithOffer": "You already subscribed with captain offer , You can subscribe again when your subscription expired",
     "destinationUnavailable": "Destination unavailable",
-    "offerNotFoundRenew": "This offer not available to renew any more"
+    "offerNotFoundRenew": "This offer not available to renew any more",
+    "enquiryAboutOrder": "Enquiry about order number",
+    "enquiries": "Orders Enquiries"
+
 
 
 

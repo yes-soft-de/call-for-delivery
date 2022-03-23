@@ -544,7 +544,10 @@
     "fax": "فاكس",
     "youSubscribedWithOffer": "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك",
     "destinationUnavailable": "المسافة غير متوفرة",
-    "offerNotFoundRenew": "هذا العرض لم يعد متاح بعد الآن للتجديد"
+    "offerNotFoundRenew": "هذا العرض لم يعد متاح بعد الآن للتجديد",
+    "enquiryAboutOrder": "استفسار بخصوص الطلب رقم",
+    "enquiries": "استفسارات الطلبات"
+
 
 
 

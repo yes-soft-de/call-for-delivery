@@ -5489,6 +5489,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Enquiry about order number`
+  String get enquiryAboutOrder {
+    return Intl.message(
+      'Enquiry about order number',
+      name: 'enquiryAboutOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Enquiries`
+  String get enquiries {
+    return Intl.message(
+      'Orders Enquiries',
+      name: 'enquiries',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

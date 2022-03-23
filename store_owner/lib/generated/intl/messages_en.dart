@@ -266,6 +266,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "There is no packages in this category"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "enquiries": MessageLookupByLibrary.simpleMessage("Orders Enquiries"),
+        "enquiryAboutOrder":
+            MessageLookupByLibrary.simpleMessage("Enquiry about order number"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":

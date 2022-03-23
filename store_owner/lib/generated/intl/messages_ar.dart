@@ -263,6 +263,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "enquiries": MessageLookupByLibrary.simpleMessage("استفسارات الطلبات"),
+        "enquiryAboutOrder":
+            MessageLookupByLibrary.simpleMessage("استفسار بخصوص الطلب رقم"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
