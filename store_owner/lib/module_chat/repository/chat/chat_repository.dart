@@ -1,3 +1,4 @@
+import 'package:c4d/module_chat/response/order_chat_rooms_response/order_chat_rooms_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
@@ -51,6 +52,14 @@ class ChatRepository {
         );
       }
     }
+  }
+
+  Future<OrderChatRoomsResponse?> getOrderChatRooms() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_API,
+        headers: {'Authorization': 'Bearer ${token}'});
+    if (response == null) return null;
+    return OrderChatRoomsResponse.fromJson(response);
   }
 
   // Future<void> needSupport() async {
