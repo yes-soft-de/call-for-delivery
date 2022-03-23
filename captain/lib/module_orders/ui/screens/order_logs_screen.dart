@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -42,7 +43,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     super.initState();
     currentState = LoadingState(this);
     ordersFilter = FilterOrderRequest(
-        state: 'pending',
+        state: 'ongoing',
         fromDate:
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());
@@ -79,7 +80,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         .toIso8601String();
                 ordersFilter.toDate = DateTime.now().toIso8601String();
                 currentIndex = 0;
-                ordersFilter.state = 'pending';
+                ordersFilter.state = 'ongoing';
                 getOrders();
               }, icon: Icons.restart_alt_rounded)
             ]),
@@ -212,7 +213,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               borderRadius: BorderRadius.circular(25),
               floating: true,
               height: 40,
-              cursorColor: Theme.of(context).colorScheme.primary,
+              cursorColor: StatusHelper.getOrderStatusColor(
+                  StatusHelper.getStatusEnum(ordersFilter.state)),
               items: [
                 FilterItem(label: S.current.ongoing),
                 FilterItem(label: S.current.completed),
