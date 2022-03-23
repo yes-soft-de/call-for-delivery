@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +45,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         setState(() {});
       }
     });
-    FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
+    getIt<GlobalStateManager>().stateStream.listen((event) {
       widget.stateManager
-          .getOrderDetails(int.tryParse(orderId!) ?? -1, this, false);
+          .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this,false);
     });
     super.initState();
   }

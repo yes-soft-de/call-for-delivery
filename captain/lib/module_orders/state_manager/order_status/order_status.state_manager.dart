@@ -3,8 +3,11 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -58,13 +61,14 @@ class OrderStatusStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error)
             .show(screenState.context);
-        getOrderDetails(request.id ?? -1, screenState,false);
+        getIt<GlobalStateManager>().update();
+
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderSuccess)
             .show(screenState.context);
-        getOrderDetails(request.id ?? -1, screenState,false);
+        getIt<GlobalStateManager>().update();
       }
     });
   }

@@ -108,7 +108,6 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     await FireStoreHelper().insertWatcher();
-
     return ActionStateModel.empty();
   }
 
