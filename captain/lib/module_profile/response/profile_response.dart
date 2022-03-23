@@ -1,4 +1,3 @@
-
 class ProfileResponse {
   String? statusCode;
   String? msg;
@@ -58,6 +57,7 @@ class ProfileResponseModel {
   dynamic newMessageStatus;
   Images? mechanicLicense;
   Images? identity;
+  num? rate;
 
   ProfileResponseModel(
       {this.id,
@@ -87,7 +87,8 @@ class ProfileResponseModel {
       this.vacationStatus,
       this.newMessageStatus,
       this.mechanicLicense,
-      this.identity});
+      this.identity,
+      this.rate});
 
   ProfileResponseModel.fromJson(dynamic json) {
     id = json['id'];
@@ -96,9 +97,9 @@ class ProfileResponseModel {
     location = json['location'];
     age = json['age'];
     car = json['car'];
-    // drivingLicence = json['drivingLicence'] != null
-    //     ? ProductImage.fromJson(json['drivingLicence'])
-    //     : null;
+    drivingLicence = json['drivingLicence'] != null
+        ? Images.fromJson(json['drivingLicence'])
+        : null;
     drivingLicenceURL = json['drivingLicenceURL'];
     salary = json['salary'];
     status = json['status'];
@@ -112,10 +113,8 @@ class ProfileResponseModel {
     state = json['state'];
     bounce = json['bounce'];
     totalBounce = json['totalBounce'];
-    roomID = json['roomID'];
-    // image = json['image'] != null
-    //     ? ProductImage.fromJson(json['image'])
-    //     : null;
+    roomID = json['roomId'];
+    image = json['images'] != null ? Images.fromJson(json['images']) : null;
     imageURL = json['imageURL'];
     baseURL = json['baseURL'];
     phone = json['phone'];
@@ -125,12 +124,12 @@ class ProfileResponseModel {
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
     newMessageStatus = json['newMessageStatus'];
-    // mechanicLicense = json['mechanicLicense'] != null
-    //     ? ProductImage.fromJson(json['mechanicLicense'])
-    //     : null;
-    // identity = json['identity'] != null
-    //     ? ProductImage.fromJson(json['identity'])
-    //     : null;
+    rate = json['averageRating'];
+    mechanicLicense = json['mechanicLicense'] != null
+        ? Images.fromJson(json['mechanicLicense'])
+        : null;
+    identity =
+        json['identity'] != null ? Images.fromJson(json['identity']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -254,8 +253,8 @@ class Images {
   String? baseUrl;
 
   Images.fromJson(dynamic json) {
-    image = json['images'];
-    imageUrl = json['imageUrl'];
-    baseUrl = json['baseUrl'];
+    image = json['image'];
+    imageUrl = json['imageURL'];
+    baseUrl = json['baseURL'];
   }
 }

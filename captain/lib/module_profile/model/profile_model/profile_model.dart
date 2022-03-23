@@ -13,6 +13,7 @@ class ProfileModel {
   String? mechanicLicense;
   int? age;
   bool? isOnline;
+  num? averageRating;
   ProfileModel(
       {this.image,
       this.name,
@@ -25,7 +26,9 @@ class ProfileModel {
       this.identity,
       this.mechanicLicense,
       this.age,
-      this.isOnline});
+      this.isOnline,
+      this.averageRating
+      });
 
   String? _error;
   bool _empty = false;
@@ -47,7 +50,9 @@ class ProfileModel {
         mechanicLicense: data.mechanicLicense?.imageUrl,
         drivingLicence: data.drivingLicence?.imageUrl,
         identity: data.identity?.imageUrl,
-        isOnline: data.isOnline);
+        isOnline: data.isOnline,
+        averageRating: data.rate ?? 0 
+        );
   }
   bool get hasError => _error != null;
   bool get empty => _empty;

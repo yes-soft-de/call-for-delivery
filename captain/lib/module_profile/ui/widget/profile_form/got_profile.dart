@@ -1,3 +1,4 @@
+import 'package:c4d/module_profile/ui/widget/image_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -97,7 +98,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.request.name ?? S.current.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -145,8 +146,29 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             iconData: Icons.credit_card_rounded),
                         customListTile(
                             title: S.of(context).myStatus,
-                            subTitle: widget.request.isOnline == true ? 'active' : 'inactive',
+                            subTitle: widget.request.isOnline == true
+                                ? 'active'
+                                : 'inactive',
                             iconData: Icons.wifi_rounded),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Flex(
+                            direction: Axis.vertical,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ImageTile(
+                                  title: S.current.identity,
+                                  image: widget.request.identity ?? ''),
+                              ImageTile(
+                                  title: S.current.mechanichLicence,
+                                  image:
+                                      widget.request.mechanicLicense ?? ''),
+                              ImageTile(
+                                  title: S.current.driverLicence,
+                                  image: widget.request.drivingLicence ?? ''),
+                            ],
+                          ),
+                        ),
                       ]),
                 ),
               ),

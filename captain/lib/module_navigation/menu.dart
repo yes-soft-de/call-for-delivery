@@ -31,22 +31,60 @@ class MenuScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Center(
                   child: Container(
-                    width: 125,
-                    height: 125,
+                    width: 150,
+                    height: 150,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CustomNetworkImage(
-                        background: Theme.of(context).scaffoldBackgroundColor,
-                        imageSource: profileModel.image ??
-                            'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png',
-                        width: double.maxFinite,
-                        height: double.maxFinite,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(25),
+                        child: Stack(
+                          children: [
+                            CustomNetworkImage(
+                              background:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              imageSource: profileModel.image ??
+                                  'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png',
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Align(
+                                alignment: AlignmentDirectional.bottomStart,
+                                child: Container(
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star_rounded,
+                                          color: Colors.amber,
+                                        ),
+                                        const SizedBox(width: 4,),
+                                        Text(
+                                          profileModel.averageRating
+                                                  ?.toStringAsFixed(1) ??
+                                              '0',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
                   ),
                 ),
               ),
