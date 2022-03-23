@@ -1,13 +1,12 @@
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
-import 'package:c4d/module_orders/request/billed_calculated.dart';
-import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
-import 'package:c4d/module_orders/request/update_store_order_status_request.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
@@ -64,16 +63,18 @@ class OrderRepository {
     if (response == null) return null;
     return OrdersLogsResponse.fromJson(response);
   }
-  /////////////////////////////////////////////////////
 
-  Future<String?> getCaptainStatus() async {
+  /////////////////////////////////////////////////////
+  Future<EnquiryResponse?> createChatRoom(int orderId) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-      Urls.CAPTAIN_ACTIVE_STATUS_API,
+    dynamic response = await _apiClient.post(
+      Urls.CREATE_CHATROOM_BEFORE_ACCEPT,
+      {'orderId': orderId},
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );
     if (response == null) return null;
-    return response['Data']['status'] ?? '';
+
+    return EnquiryResponse.fromJson(response);
   }
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) async {
@@ -100,45 +101,6 @@ class OrderRepository {
     return OrderActionResponse.fromJson(response);
   }
 
-  Future<OrderActionResponse?> updateStoreOrderState(
-      UpdateStoreOrderStatusRequest request) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
-      '',
-      request.toJson(),
-      headers: {'Authorization': 'Bearer ' + token.toString()},
-    );
-    if (response == null) return null;
-
-    return OrderActionResponse.fromJson(response);
-  }
-
-  Future<OrderActionResponse?> updateOrderBill(
-      OrderInvoiceRequest request) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
-      '${Urls.ORDER_UPDATE_BILL_API}',
-      request.toJson(),
-      headers: {'Authorization': 'Bearer ' + token.toString()},
-    );
-    if (response == null) return null;
-
-    return OrderActionResponse.fromJson(response);
-  }
-
-  Future<OrderActionResponse?> billedForCompany(
-      BilledCalculatedRequest request) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
-      '',
-      request.toJson(),
-      headers: {'Authorization': 'Bearer ' + token.toString()},
-    );
-    if (response == null) return null;
-
-    return OrderActionResponse.fromJson(response);
-  }
-
   Future<CompanyInfoResponse?> getCompanyInfo() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get('${Urls.COMPANYINFO_API}',
@@ -146,26 +108,5 @@ class OrderRepository {
 
     if (response == null) return null;
     return CompanyInfoResponse.fromJson(response);
-  }
-
-  Future<List?> getUpdates() async {
-    dynamic response = await _apiClient.get('${Urls.UPDATES_API}');
-
-    if (response == null) return null;
-    return response['Data'];
-  }
-
-  Future<Map?> getOrder(int orderId) async {
-    dynamic response = await _apiClient.get('${Urls.ORDER_BY_ID}$orderId');
-
-    if (response == null) return null;
-    return response['Data'];
-  }
-
-  Future sendToRecord(var orderId, bool answer) async {
-    dynamic response =
-        await _apiClient.post('${Urls.SEND_TO_RECORD}/$orderId/$answer', {});
-    if (response == null) return null;
-    return response;
   }
 }

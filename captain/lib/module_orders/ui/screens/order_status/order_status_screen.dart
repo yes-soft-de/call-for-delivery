@@ -47,7 +47,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       widget.stateManager
-          .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this,false);
+          .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this, false);
     });
     super.initState();
   }
@@ -60,6 +60,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       title: S.of(context).warnning,
       message: error,
     ).show(context);
+  }
+
+  void createChatRoom(int orderId) {
+    widget.stateManager.createChatRoom(this, orderId);
   }
 
   void saveBill(String image, double price, bool? isBilled, String? storeID) {

@@ -199,4 +199,6 @@ class Urls {
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
   static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterordersbycaptain';
+  static const CREATE_CHATROOM_BEFORE_ACCEPT = DOMAIN + '/v1/orderchatroom/createneworderchatroom';
+
 }
