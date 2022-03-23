@@ -60,7 +60,7 @@ class OrdersService {
   Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
     OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '200') {
+    if (response.statusCode != '200' && response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
