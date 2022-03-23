@@ -251,4 +251,9 @@ class SubscriptionManager
     {
         return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
+
+    public function getSubscriptionCurrentByOrderId($orderId): ?array
+    {
+        return $this->subscribeRepository->getSubscriptionCurrentByOrderId($orderId);
+    }
 }
