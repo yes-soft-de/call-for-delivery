@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Main\MainErrorConstant;
+use App\Constant\Subscription\SubscriptionConstant;
 
 /**
  * Create and fetch order.
@@ -499,6 +500,17 @@ class OrderController extends BaseController
      *      )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9306"),
+     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error."),
+     *      )
+     * )
+     * 
      * @Security(name="Bearer")
      */
     public function orderUpdateStateByCaptain(Request $request): JsonResponse
@@ -519,7 +531,11 @@ class OrderController extends BaseController
 
         $response = $this->orderService->orderUpdateStateByCaptain($request);
 
-        return $this->response( $response, self::UPDATE);
+        if($response === SubscriptionConstant::CARS_FINISHED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
+        }
+      
+        return $this->response($response, self::UPDATE);
     }
 
     /**

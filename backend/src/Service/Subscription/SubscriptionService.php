@@ -466,5 +466,12 @@ class SubscriptionService
             }
         }
     }
+
+    public function checkRemainingCarsByOrderId(int $orderId): string
+    {
+      $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
+
+      return $this->checkRemainingCars($subscription);
+    }
 }
  

@@ -65,6 +65,7 @@ class BaseController extends AbstractController
     const YOU_HAVE_SUBSCRIBED = ["You have subscribed", "9303"];
     const SUBSCRIBE_THEN_NEXT = ["Please subscribe first, then create a subscription for later", "9304"];
     const NOT_POSSIBLE = ["This subscription was previously extended, cannot be extended again", "9305"];
+    const CAN_NOT_ACCEPTED_ORDER = ["The cars remaining is finished", "9306"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];

@@ -184,9 +184,18 @@ class OrderService
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
     }
 
-     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderUpdateByCaptainResponse
+     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
     {
+        if($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId()); 
+     
+            if($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
+                return  $canAcceptOrder;
+            }
+        }
+
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
+        
         if($order) {
             if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
                 $this->createOrderChatRoomOrUpdateCurrent($order);
