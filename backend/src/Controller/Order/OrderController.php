@@ -622,7 +622,7 @@ class OrderController extends BaseController
      * @OA\RequestBody (
      *        description="Order Update Captain Order Cost",
      *        @OA\JsonContent(
-     *              @OA\Property(type="integer", property="orderId"),
+     *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="number", property="captainOrderCost"),
      *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *         ),
