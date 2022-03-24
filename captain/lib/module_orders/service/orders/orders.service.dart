@@ -1,14 +1,14 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
-import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
@@ -21,6 +21,7 @@ import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/response/order_status/order_action_response.dart';
 import 'package:c4d/module_orders/response/orders_logs_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:translator/translator.dart';
 
 @injectable
 class OrdersService {
@@ -52,7 +53,9 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
     }
     if (_ordersResponse.data == null) return DataModel.empty();
-    LatLng? myLocation = await DeepLinksService.defaultLocation();
+    if (_ordersResponse.data?.note != null) {
+      _ordersResponse.data?.note = await translateService(_ordersResponse.data!.note!);
+    }
     return OrderDetailsModel.withData(_ordersResponse);
   }
 
@@ -132,5 +135,24 @@ class OrdersService {
     CompanyInfoResponse? response = await _ordersManager.getCompanyInfo();
     if (response == null) return null;
     return response;
+  }
+
+  Future<String> translateService(String word) async {
+    var reg = RegExp(
+        r'[\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufc3f]|[\ufe70-\ufefc]');
+    if (reg.hasMatch(word) &&
+        getIt<LocalizationService>().getLanguage() == 'ar') {
+      return word;
+    }
+    final translator = GoogleTranslator();
+    var translation = await translator.translate(word,
+        to: getIt<LocalizationService>().getLanguage());
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    print('source ${translation.source} translated to ${translation.text}');
+    print(
+        'source ${translation.sourceLanguage} target ${translation.targetLanguage}');
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+
+    return translation.text;
   }
 }
