@@ -36,12 +36,10 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
           
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = orderChatRoomEntity.orderId')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = :userId')
-            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
-            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id')
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderChatRoomEntity.captain')
+            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType')
          
-            ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id ')
-            ->andWhere('imageEntity.entityType = :entityType ')
-            ->andWhere('imageEntity.usedAs = :usedAs ')
+            ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id')
          
             ->setParameter('userId', $userId)
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
