@@ -1,6 +1,7 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,14 @@ class StatusCodeHelper {
         return S.current.statusCodeBadRequest;
       case '401':
         getIt<AuthService>().logout().then((value) {
-          Navigator.of(GlobalVariable.navState.currentContext!)
-              .pushNamedAndRemoveUntil(
-                  SplashRoutes.SPLASH_SCREEN, (route) => false);
+          if (ModalRoute.of(GlobalVariable.navState.currentContext!)
+                  ?.settings
+                  .name !=
+              AuthorizationRoutes.LOGIN_SCREEN) {
+            Navigator.of(GlobalVariable.navState.currentContext!)
+                .pushNamedAndRemoveUntil(
+                    SplashRoutes.SPLASH_SCREEN, (route) => false);
+          }
         });
         return S.current.statusCodeUnauthorized;
       case '404':
@@ -45,6 +51,8 @@ class StatusCodeHelper {
         return S.current.packageNotFoundRenew;
       case '9454':
         return S.current.youSubscribedWithOffer;
+      case '9453':
+        return S.current.offerNotFoundRenew;
       case '-1':
         return S.current.dataDecodeError;
       default:

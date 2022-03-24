@@ -137,7 +137,7 @@
     "captainInStore": "Captain in Store",
     "captainStartedDelivery": "Captain Started Delivery",
     "captainGotCash": "Captain Got Cash",
-    "orderIsFinished": "Order is finished",
+    "orderIsFinished": "Your monthly orders finished",
     "orderIsCreated": "Order is created",
     "activityLog": "Activity Log",
     "saveSuccess": "Save Success",
@@ -543,7 +543,14 @@
     "confirmationCaptainOffers": "Are sure about subscribe with this offer",
     "companyInfo": "Company Info",
     "fax": "Fax",
-    "youSubscribedWithOffer": "You already subscribed with captain offer , You can subscribe again when your subscription expired"
+    "youSubscribedWithOffer": "You already subscribed with captain offer , You can subscribe again when your subscription expired",
+    "destinationUnavailable": "Destination unavailable",
+    "offerNotFoundRenew": "This offer not available to renew any more",
+    "enquiryAboutOrder": "Enquiry about order number",
+    "enquiries": "Orders Enquiries"
+
+
+
 
 
 

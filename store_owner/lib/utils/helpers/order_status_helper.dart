@@ -101,7 +101,7 @@ class StatusHelper {
       case OrderStatusEnum.IN_STORE:
         return Colors.blue;
       case OrderStatusEnum.DELIVERING:
-        return Colors.indigo;
+        return Colors.indigoAccent;
       case OrderStatusEnum.GOT_CAPTAIN:
         return Colors.purple;
       case OrderStatusEnum.FINISHED:

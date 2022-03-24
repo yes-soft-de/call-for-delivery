@@ -3,7 +3,6 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
@@ -14,7 +13,6 @@ import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -28,20 +26,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState) {
-    if (orderInfo.destinationCoordinate != null) {
-      distance = S.current.calculating;
-      screenState.refresh();
-      DeepLinksService.getDistance(LatLng(
-              orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0))
-          .then((value) {
-        distance = value.toStringAsFixed(1);
-        screenState.refresh();
-      });
-    }
-  }
-  String? distance;
+  ) : super(screenState);
+
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -233,7 +219,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails),
+          title: Text(S.current.orderDetails + ' #${orderInfo.id}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -343,10 +329,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     child: ListTile(
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
-                          : Text(S.current.distance + ' ' + S.current.unknown),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(S.current.destinationUnavailable),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),

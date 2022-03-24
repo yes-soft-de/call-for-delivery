@@ -1,12 +1,13 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 class OrderDetailsModel extends DataModel {
   late int id;
@@ -31,6 +32,7 @@ class OrderDetailsModel extends DataModel {
 
   /// to confirm that captain is really in store
   late bool? showConfirm;
+  String? distance;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -49,7 +51,8 @@ class OrderDetailsModel extends DataModel {
       required this.showConfirm,
       required this.deliveryDate,
       required this.image,
-      required this.captainID});
+      required this.captainID,
+      required this.distance});
 
   late OrderDetailsModel _orders;
 
@@ -94,7 +97,11 @@ class OrderDetailsModel extends DataModel {
         roomID: element?.roomId,
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1,
-        captainID: element?.captainId?.toInt());
+        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+        distance: null);
+    _distance(_orders).then((value) {
+      _orders.distance = value;
+    });
   }
   bool _canRemove(DateTime date) {
     bool canRemove = true;
@@ -102,6 +109,20 @@ class OrderDetailsModel extends DataModel {
       canRemove = false;
     }
     return canRemove;
+  }
+
+  Future<String?> _distance(OrderDetailsModel orderInfo) async {
+    String? distance;
+    if (orderInfo.destinationCoordinate != null) {
+      var value = await DeepLinksService.getDistance(LatLng(
+          orderInfo.destinationCoordinate?.latitude ?? 0,
+          orderInfo.destinationCoordinate?.longitude ?? 0));
+      if (value == null) return null;
+      distance = value.toStringAsFixed(1);
+      distance = S.current.distance + ' $distance ' + S.current.km;
+      return distance;
+    }
+    return null;
   }
 
   OrderDetailsModel get data => _orders;
