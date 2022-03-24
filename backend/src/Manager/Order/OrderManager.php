@@ -18,6 +18,7 @@ use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Order\StoreOrderDetailsManager;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
+use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 
 class OrderManager
 {
@@ -162,5 +163,22 @@ class OrderManager
         }
 
         return $this->orderRepository->filterOrdersByCaptain($request);
+    }
+    
+    public function orderUpdateCaptainOrderCost(OrderUpdateCaptainOrderCostRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $request->setCaptainId($orderEntity->getCaptainId());
+       
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateCaptainOrderCostRequest::class, OrderEntity::class, $request, $orderEntity);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }
