@@ -696,6 +696,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     state: StatusHelper.getStatusString(
                         OrderStatusEnum.values[index + 1]),
                     distance: distance,
+                    orderCost: double.tryParse(payment ?? 'n')
                   ));
                 },
                 controller: _distanceCalculator,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AlertContainer extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final Color? background;
   const AlertContainer({
     Key? key,
@@ -20,11 +20,14 @@ class AlertContainer extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           title: Text(title,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold)),
-          subtitle: Text(
-            subtitle,
-            style: const TextStyle(color: Colors.white),
+              style:  TextStyle(
+                  color: Colors.white, fontWeight: subtitle != null ? FontWeight.bold : null)),
+          subtitle: Visibility(
+            visible: subtitle != null,
+            child: Text(
+              subtitle ?? '',
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),

@@ -67,8 +67,8 @@ class ProvideDistance extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  if (controller.text.isNotEmpty) {
-                    callBack(controller.text, controller2.text);
+                  if (controller.text.isNotEmpty ) {
+                    callBack(controller.text, controller2.text.trim() == '' ? null :controller2.text.trim());
                   } else {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,

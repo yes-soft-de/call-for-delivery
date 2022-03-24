@@ -17,6 +17,9 @@ class UpdateOrderRequest {
     if (distance != null) {
       data['kilometer'] = double.tryParse(this.distance ?? '0');
     }
+    if (orderCost != null) {
+      data['orderCost'] = orderCost;
+    }
     return data;
   }
 }
