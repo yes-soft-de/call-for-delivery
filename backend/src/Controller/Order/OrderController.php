@@ -21,6 +21,7 @@ use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 
 /**
  * Create and fetch order.
@@ -600,5 +601,68 @@ class OrderController extends BaseController
         $response = $this->orderService->filterOrdersByCaptain($request);
 
         return $this->response( $response, self::UPDATE);
+    }
+    
+    /**
+     * captain: Order Update Captain Order Cost.
+     * @Route("orderupdatecaptainordercost", name="orderUpdateCaptainOrderCost", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Order Update Captain Order Cost",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
+     *              @OA\Property(type="string", property="attention"),
+     *              )
+     *       )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function orderUpdateCaptainOrderCost(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateCaptainOrderCostRequest::class, (object) $data);
+       
+        $request->setCaptainId($this->getUserId());
+     
+        $violations = $this->validator->validate($request);
+       
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
+
+        $response = $this->orderService->orderUpdateCaptainOrderCost($request);
+      
+        return $this->response($response, self::UPDATE);
     }
 }

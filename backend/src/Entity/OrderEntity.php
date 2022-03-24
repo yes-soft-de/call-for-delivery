@@ -30,6 +30,9 @@ class OrderEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $noteCaptainOrderCost;
+
     #[ORM\Column(type: 'datetime')]
     private $deliveryDate;
 
@@ -41,6 +44,9 @@ class OrderEntity
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $kilometer;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $captainOrderCost;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'orderEntities')]
     #[ORM\JoinColumn(nullable: false)]
@@ -98,6 +104,18 @@ class OrderEntity
         return $this;
     }
 
+    public function getCaptainOrderCost(): ?float
+    {
+        return $this->captainOrderCost;
+    }
+
+    public function setCaptainOrderCost(?float $captainOrderCost): self
+    {
+        $this->captainOrderCost = $captainOrderCost;
+
+        return $this;
+    }
+
     public function getOrderType(): ?int
     {
         return $this->orderType;
@@ -118,6 +136,18 @@ class OrderEntity
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getNoteCaptainOrderCost(): ?string
+    {
+        return $this->noteCaptainOrderCost;
+    }
+
+    public function setNoteCaptainOrderCost(?string $noteCaptainOrderCost): self
+    {
+        $this->noteCaptainOrderCost = $noteCaptainOrderCost;
 
         return $this;
     }

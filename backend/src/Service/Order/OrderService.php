@@ -29,6 +29,9 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderChatRoomEntity ;
+use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
+use App\Response\Order\OrderUpdateCaptainOrderCostResponse;
+use App\Constant\Order\OrderAttentionConstant;
 
 class OrderService
 {
@@ -234,6 +237,23 @@ class OrderService
 
         foreach ($orders as $order) {
             $response[] = $this->autoMapping->map('array', FilterOrdersByCaptainResponse::class, $order);
+        }
+
+        return $response;
+    }
+    
+    public function orderUpdateCaptainOrderCost(OrderUpdateCaptainOrderCostRequest $request): ?OrderUpdateCaptainOrderCostResponse
+    {
+        $order = $this->orderManager->orderUpdateCaptainOrderCost($request);
+
+        $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainOrderCostResponse::class, $order);
+        
+        if($order) {
+            $response->attention = OrderAttentionConstant::ATTENTION;
+
+            if($order->getOrderCost() !== $order->getCaptainOrderCost()) {
+                $response->attention = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
+            }
         }
 
         return $response;
