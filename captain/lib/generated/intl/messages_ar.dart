@@ -200,6 +200,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
+        "collectedPayment":
+            MessageLookupByLibrary.simpleMessage("المبلغ المقبوض"),
+        "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
+            "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه"),
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
@@ -336,6 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"),
+        "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب"),
         "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":

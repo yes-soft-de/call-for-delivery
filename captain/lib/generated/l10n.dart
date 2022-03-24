@@ -6209,6 +6209,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Collected Payment`
+  String get collectedPayment {
+    return Intl.message(
+      'Collected Payment',
+      name: 'collectedPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collected payment not match with bill that you should receive`
+  String get collectedPaymentNotMatch {
+    return Intl.message(
+      'Collected payment not match with bill that you should receive',
+      name: 'collectedPaymentNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide us with distance you reached out and collected payment with this order To finish the order`
+  String get finishingOrderMessageWithPayment {
+    return Intl.message(
+      'Please provide us with distance you reached out and collected payment with this order To finish the order',
+      name: 'finishingOrderMessageWithPayment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -206,6 +206,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
+        "collectedPayment":
+            MessageLookupByLibrary.simpleMessage("Collected Payment"),
+        "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
+            "Collected payment not match with bill that you should receive"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
@@ -345,6 +349,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finish Order"),
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "Please provide us with distance you reached out with this order To finish the order"),
+        "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
+            "Please provide us with distance you reached out and collected payment with this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
