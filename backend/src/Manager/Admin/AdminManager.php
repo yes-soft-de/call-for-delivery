@@ -3,11 +3,13 @@
 namespace App\Manager\Admin;
 
 use App\AutoMapping;
+use App\Constant\Admin\AdminProfileStatusConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\UserEntity;
 use App\Repository\AdminProfileEntityRepository;
 use App\Request\Admin\AdminProfileCreateRequest;
+use App\Request\Admin\AdminProfileUpdateRequest;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Manager\User\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -83,5 +85,28 @@ class AdminManager
         $this->entityManager->flush();
 
         return $adminProfileEntity;
+    }
+
+    public function getAdminProfileWithImageByAdminUserId(int $adminUserId): ?array
+    {
+        return $this->adminProfileEntityRepository->getAdminProfileWithImageByAdminUserId($adminUserId);
+    }
+
+    public function updateAdminProfile(AdminProfileUpdateRequest $request): AdminProfileEntity
+    {
+        $adminProfileEntity = $this->adminProfileEntityRepository->find($request->getAdminUserId());
+
+        if (! $adminProfileEntity) {
+            $adminProfileEntity = $this->autoMapping->map(AdminProfileUpdateRequest::class, AdminProfileCreateRequest::class, $request);
+
+            return $this->createProfile($adminProfileEntity);
+
+        } else {
+            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileUpdateRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
+
+            $this->entityManager->flush();
+
+            return $adminProfileEntity;
+        }
     }
 }
