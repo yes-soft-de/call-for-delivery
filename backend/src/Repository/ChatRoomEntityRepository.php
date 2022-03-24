@@ -47,7 +47,8 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('chatRoom')
             ->select('chatRoom.roomId', 'captainEntity.id as captainProfileId, captainEntity.captainName')
-
+            ->addSelect('imageEntity.imagePath')
+        
             ->leftJoin(
                 CaptainEntity::class,
                 'captainEntity',
@@ -55,24 +56,17 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
                 'chatRoom.userId = captainEntity.captainId'
             )
 
-            // Following commented block will be activated when captains' images are linked with Image entity successfully
+           ->leftJoin(
+               ImageEntity::class,
+               'imageEntity',
+               Join::WITH,
+               'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAsImage and imageEntity.entityType = :entityType')
 
-//            ->leftJoin(
-//                ImageEntity::class,
-//                'imageEntity',
-//                Join::WITH,
-//                'imageEntity.itemId = captainEntity.id')
-//
-//            ->andWhere('imageEntity.entityType = :entityType')
-//            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
-//
-//            ->andWhere('imageEntity.usedAs = :usedAsImage')
-//            ->setParameter('usedAsImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+           ->andWhere('chatRoom.usedAs = :usedAsChat')
 
-                // End commented block
-
-            ->andWhere('chatRoom.usedAs = :usedAsChat')
-            ->setParameter('usedAsChat', ChatRoomConstant::ADMIN_CAPTAIN)
+           ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+           ->setParameter('usedAsImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+           ->setParameter('usedAsChat', ChatRoomConstant::ADMIN_CAPTAIN)
 
             ->getQuery()
             ->getResult();

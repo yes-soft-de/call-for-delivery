@@ -44,7 +44,9 @@ class AdminNotificationToUsersEntityRepository extends ServiceEntityRepository
            
             ->setParameter('userId', $userId)
             ->setParameter('appType', [$appType, NotificationConstant::APP_TYPE_ALL])
-
+            
+            ->orderBy('adminNotification.id', 'DESC')
+            
             ->getQuery()
 
             ->getResult();

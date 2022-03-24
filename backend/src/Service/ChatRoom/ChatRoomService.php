@@ -59,12 +59,11 @@ class ChatRoomService
         $response = [];
 
         $chatRooms = $this->chatRoomManager->getChatRoomsWithCaptains();
-
+        
         foreach($chatRooms as $chatRoom) {
             $chatRoom['roomId'] = $chatRoom['roomId']->toBase32();
 
-            // we use following image link until captains' images are linked with Image entity successfully
-            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams("image/original-image/2022-02-20_09-14-59/613ttygjhfl-ac-sx466-6213ca191a3ef.jpg");
+            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams($chatRoom['imagePath']);
 
             $response[] = $this->autoMapping->map("array", ChatRoomCaptainResponse::class, $chatRoom);
         }

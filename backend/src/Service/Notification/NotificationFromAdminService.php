@@ -25,7 +25,6 @@ class NotificationFromAdminService
      
         foreach($notifications as $notification) {
 
-
             $response[] = $this->autoMapping->map("array", NotificationFromAdminResponse::class, $notification);
         }
 
