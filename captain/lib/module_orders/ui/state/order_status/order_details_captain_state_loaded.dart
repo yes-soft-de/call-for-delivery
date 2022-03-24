@@ -4,6 +4,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
@@ -32,6 +33,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState);
+  bool speaking = false;
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -386,6 +388,17 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                   title: Text(S.current.orderDetails),
                   subtitle: Text(orderInfo.note),
+                  trailing: Material(
+                    color: Colors.transparent,
+                    child: IconButton(
+                      onPressed: () async {
+                        screenState.speak(orderInfo.note);
+
+                        screenState.refresh();
+                      },
+                      icon: const Icon(Icons.record_voice_over_rounded),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -664,7 +677,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       return Column(
         children: [
           AlertContainer(
-            subtitle:orderInfo.payment == 'cash' ? S.current.finishingOrderMessageWithPayment : S.current.finishingOrderMessage,
+            subtitle: orderInfo.payment == 'cash'
+                ? S.current.finishingOrderMessageWithPayment
+                : S.current.finishingOrderMessage,
             title: S.current.warnning,
           ),
           Padding(
@@ -675,9 +690,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 },
                 payment: orderInfo.payment == 'cash',
                 callBack: (distance, payment) {
-                  screenState.requestOrderProgress(orderInfo,
-                      StatusHelper.getOrderStatusIndex(orderInfo.state),
-                      distance: distance);
+                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+                  screenState.requestOrderProgress(UpdateOrderRequest(
+                    id: int.tryParse(screenState.orderId ?? '-1'),
+                    state: StatusHelper.getStatusString(
+                        OrderStatusEnum.values[index + 1]),
+                    distance: distance,
+                  ));
                 },
                 controller: _distanceCalculator,
                 controller2: _paymentController,
@@ -688,8 +707,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             child: ScalingWidget(
               child: AlertContainer(
                 background: Theme.of(context).colorScheme.error,
-                subtitle: S.current.collectedPaymentNotMatch,
-                title: S.current.warnning,
+                title: S.current.collectedPaymentNotMatch,
+                subtitle: null,
               ),
             ),
           ),
@@ -702,8 +721,12 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           subtitle: OrderProgressionHelper.getNextStageHintMessage(
               orderInfo.state, context),
           onTap: () {
-            screenState.requestOrderProgress(
-                orderInfo, StatusHelper.getOrderStatusIndex(orderInfo.state));
+            var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+            screenState.requestOrderProgress(UpdateOrderRequest(
+              id: int.tryParse(screenState.orderId ?? '-1'),
+              state: StatusHelper.getStatusString(
+                  OrderStatusEnum.values[index + 1]),
+            ));
           },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,
