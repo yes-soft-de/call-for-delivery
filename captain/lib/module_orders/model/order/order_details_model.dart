@@ -32,6 +32,7 @@ class OrderDetailsModel extends DataModel {
   late String? branchLink;
   String? distance;
   String? branchDistance;
+  late bool usedAs;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -54,7 +55,8 @@ class OrderDetailsModel extends DataModel {
       required this.storePhone,
       required this.branchLink,
       required this.distance,
-      required this.branchDistance});
+      required this.branchDistance,
+      required this.usedAs});
 
   late OrderDetailsModel _orders;
 
@@ -103,6 +105,7 @@ class OrderDetailsModel extends DataModel {
       branchLink: element?.location?.link,
       branchDistance: null,
       distance: null,
+      usedAs: element?.usedAs == 'not used chat enquire' ? false : true,
     );
     _distance(_orders).then((value) {
       _orders.distance = value;

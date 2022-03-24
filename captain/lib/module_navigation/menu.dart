@@ -1,4 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -68,7 +70,9 @@ class MenuScreen extends StatelessWidget {
                                           Icons.star_rounded,
                                           color: Colors.amber,
                                         ),
-                                        const SizedBox(width: 4,),
+                                        const SizedBox(
+                                          width: 4,
+                                        ),
                                         Text(
                                           profileModel.averageRating
                                                   ?.toStringAsFixed(1) ??
@@ -106,6 +110,7 @@ class MenuScreen extends StatelessWidget {
                 onChanged: (mode) {
                   profileModel.isOnline = mode;
                   screenState.refresh();
+                  screenState.changeStatus(mode);
                 },
                 visualDensity: VisualDensity.comfortable,
                 switchType: SwitchType.cupertino,
@@ -140,6 +145,19 @@ class MenuScreen extends StatelessWidget {
                 },
                 leading: const Icon(Icons.settings),
                 title: Text(S.of(context).settings),
+              ),
+              Visibility(
+                visible: profileModel.roomID != null,
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                        arguments: ChatArgument(
+                            roomID: profileModel.roomID ?? '',
+                            userType: 'Admin'));
+                  },
+                  leading: const Icon(Icons.support_agent_rounded),
+                  title: Text(S.of(context).directSupport),
+                ),
               ),
               ListTile(
                 onTap: () {

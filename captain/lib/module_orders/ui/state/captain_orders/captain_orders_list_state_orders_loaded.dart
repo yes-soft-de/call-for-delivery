@@ -74,6 +74,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       uiList.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomFormField(
+            onChanged: (s) {
+              screenState.refresh();
+            },
             numbers: true,
             hintText: S.current.searchForOrder,
             preIcon: const Icon(Icons.search_rounded),
@@ -145,6 +148,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     uiList.add(Padding(
       padding: const EdgeInsets.all(8.0),
       child: CustomFormField(
+          onChanged: (s) {
+            screenState.refresh();
+          },
           numbers: true,
           hintText: S.current.searchForOrder,
           preIcon: const Icon(Icons.search_rounded),

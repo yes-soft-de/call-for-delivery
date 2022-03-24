@@ -163,7 +163,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails),
+          title: Text(S.current.orderDetails + ' #${orderInfo.id}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -443,6 +443,20 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           _getNextStageCard(context),
           // chat
           Visibility(
+            visible: orderInfo.usedAs == false &&
+                OrderStatusEnum.WAITING == orderInfo.state,
+            child: OrderButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              icon: Icons.contact_support_rounded,
+              subtitle: S.current.canConnectHint,
+              title: S.current.canConnect,
+              onTap: () {
+                screenState.createChatRoom(orderInfo.id);
+              },
+            ),
+          ),
+          // chat
+          Visibility(
             visible: orderInfo.roomID != null,
             child: OrderButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
@@ -653,20 +667,18 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       return Column(
         children: [
           Container(
-            decoration:  BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.amber
-            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25), color: Colors.amber),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListTile(
-                title: Text(S.current.warnning,style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold
-                )),
-                subtitle: Text(S.current.finishingOrderMessage,style: const TextStyle(
-                  color: Colors.white
-                ),),
+                title: Text(S.current.warnning,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                subtitle: Text(
+                  S.current.finishingOrderMessage,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),

@@ -613,7 +613,15 @@
     "destinationUnavailable": "Unavailable",
     "waitingToAccept": "Waiting you to accept this order",
     "finishingOrderMessage": "Please provide us with distance you reached out with this order To finish the order",
-    "paid": "Paid"
+    "paid": "Paid",
+    "profileStatusUpdatedSuccessfully": "Profile status updated successfully",
+    "canConnect": "Enquiry about order",
+    "canConnectHint": "By create chat room between you and store owner",
+    "storeCarsFinished": "You can't accept orders for this store any more , because It consumes all cars",
+    "chatRoomCreated": "Chat room created successfully"
+
+
+
 
 
 

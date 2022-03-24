@@ -103,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "calculating": MessageLookupByLibrary.simpleMessage("جاري الحساب"),
         "camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
+        "canConnect": MessageLookupByLibrary.simpleMessage("استفسار عن الطلب"),
+        "canConnectHint": MessageLookupByLibrary.simpleMessage(
+            "عن طريق إنشاء زر محادثة مع المتجر"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
         "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
@@ -155,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
+        "chatRoomCreated":
+            MessageLookupByLibrary.simpleMessage("تم إنشاء غرفة المحادثة"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("التحدث مع الكابتن"),
         "chatWithClient":
@@ -665,6 +670,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد بيانات شخصية متوفرة بعد"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم جلب بياناتك الشخصية بنجاح"),
+        "profileStatusUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث حالة الكابتن بنجاح"),
         "profileUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
@@ -798,6 +805,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
+        "storeCarsFinished": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك قبول طلبات لهذا المتجر بعد الآن ، لانتهاء السيارات المخصصة له"),
         "storeLocation": MessageLookupByLibrary.simpleMessage("موقع المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(

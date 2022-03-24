@@ -3,9 +3,11 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +69,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     });
   }
 
+  void changeStatus(bool isOnline) {
+    widget._stateManager.updateProfileStatus(this, isOnline);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +81,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     widget._stateManager.getMyOrders(this);
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       widget._stateManager.getMyOrders(this, false);
+    });
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      widget._stateManager.getProfile(this);
     });
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;

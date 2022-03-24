@@ -35,6 +35,8 @@ class StatusCodeHelper {
         return S.current.accountAlreadyExist;
       case '9100':
         return S.current.captainAccountInActive;
+      case '9306':
+        return S.current.storeCarsFinished;
       case '-1':
         return S.current.dataDecodeError;
       default:
