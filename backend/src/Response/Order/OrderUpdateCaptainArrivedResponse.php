@@ -6,5 +6,5 @@ class OrderUpdateCaptainArrivedResponse
 {
     public int $id;
 
-    public float $isCaptainArrived;
+    public bool $isCaptainArrived;
 }
