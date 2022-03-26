@@ -39,9 +39,9 @@ class SubscriptionService
         
             return $isPackageReady;
         }
+        
+        $activateExistingSubscription = $this->checkSubscription($request->getStoreOwner());
 
-        $this->checkSubscription($request->getStoreOwner());
-       
         $isFuture = $this->getIsFutureState($request->getStoreOwner());
 
         $request->setIsFuture($isFuture);
@@ -52,8 +52,18 @@ class SubscriptionService
 
         //--check and update completeAccountStatus for the store owner profile
         $this->checkCompleteAccountStatusOfStoreOwnerProfile($request->getStoreOwner()->getStoreOwnerId());
+          
+        if ($activateExistingSubscription ===  SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+        
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        }
 
-        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        if($subscription) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+        
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        }
     }
 
     public function getIsFutureState(int $storeOwner): int
@@ -472,6 +482,17 @@ class SubscriptionService
       $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
 
       return $this->checkRemainingCars($subscription);
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription(int $storeOwnerId): string
+    {
+      $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
+
+      if($captainOfferId) {
+        return $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+      }
+       
+      return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
     }
 }
  
