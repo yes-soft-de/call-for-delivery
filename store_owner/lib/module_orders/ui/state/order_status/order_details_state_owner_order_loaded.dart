@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -26,7 +27,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState);
+  ) : super(screenState) {
+    if (orderInfo.showConfirm == true &&
+        orderInfo.state == OrderStatusEnum.IN_STORE) {
+      showOwnerAlertConfirm(screenState.context);
+    }
+  }
 
   @override
   Widget getUI(BuildContext context) {
@@ -541,5 +547,63 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
       CustomStep(status: OrderStatusEnum.FINISHED, currentIndex: currentIndex),
     ];
     return steps;
+  }
+
+  bool redo = false;
+  void showFlush(context, answer) {
+    late Flushbar flushbar;
+    flushbar = Flushbar(
+      borderRadius: BorderRadius.circular(25),
+      onStatusChanged: (status) {
+        if (FlushbarStatus.DISMISSED == status && !redo) {
+          screenState.sendOrderReportState(orderInfo.id, answer);
+        }
+      },
+      duration: Duration(seconds: 5),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      title: S.current.warnning,
+      message: S.current.sendingReport,
+      icon: Icon(
+        Icons.warning,
+        size: 28.0,
+        color: Colors.white,
+      ),
+      mainButton: TextButton(
+          onPressed: () {
+            redo = true;
+            screenState.refresh();
+            flushbar.dismiss();
+            screenState.changeStateToLoaded(orderInfo);
+          },
+          child: Text(S.of(context).redo)),
+    )..show(context);
+  }
+
+  void showOwnerAlertConfirm(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(S.current.warnning),
+            content: Container(
+              child: Text(S.of(context).confirmingCaptainLocation),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showFlush(context, true);
+                  },
+                  child: Text(S.of(context).yes)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showFlush(context, false);
+                  },
+                  child: Text(S.of(context).no))
+            ],
+          );
+        });
   }
 }
