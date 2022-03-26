@@ -19,6 +19,7 @@ use App\Manager\Order\StoreOrderDetailsManager;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
+use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 
 class OrderManager
 {
@@ -177,6 +178,23 @@ class OrderManager
        
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateCaptainOrderCostRequest::class, OrderEntity::class, $request, $orderEntity);
 
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+    
+    public function updateCaptainArrived(OrderUpdateCaptainArrivedRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateCaptainArrivedRequest::class, OrderEntity::class, $request, $orderEntity);
+        
+        $orderEntity->setDateCaptainArrived(new DateTime());
+        
         $this->entityManager->flush();
 
         return $orderEntity;

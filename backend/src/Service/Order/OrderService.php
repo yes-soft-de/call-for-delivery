@@ -32,6 +32,8 @@ use App\Entity\OrderChatRoomEntity ;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Response\Order\OrderUpdateCaptainOrderCostResponse;
 use App\Constant\Order\OrderAttentionConstant;
+use App\Request\Order\OrderUpdateCaptainArrivedRequest;
+use App\Response\Order\OrderUpdateCaptainArrivedResponse;
 
 class OrderService
 {
@@ -257,5 +259,12 @@ class OrderService
         }
 
         return $response;
+    }
+    
+    public function updateCaptainArrived(OrderUpdateCaptainArrivedRequest $request): ?OrderUpdateCaptainArrivedResponse
+    {
+        $order = $this->orderManager->updateCaptainArrived($request);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 }

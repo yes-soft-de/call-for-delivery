@@ -219,3 +219,8 @@ App\Request\Order\OrderUpdateCaptainOrderCostRequest:
             - NotBlank: ~
         captainOrderCost:
             - NotBlank: ~
+
+App\Request\Order\OrderUpdateCaptainArrivedRequest:
+    properties:
+        id:
+            - NotBlank: ~
