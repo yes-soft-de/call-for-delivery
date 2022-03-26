@@ -45,4 +45,6 @@ class SpecificOrderForCaptainResponse
     public $location;
 
     public string $usedAs;
+
+    public float|null $rating;
 }
