@@ -265,8 +265,6 @@ class OrderService
     {
         $order = $this->orderManager->updateCaptainArrived($request);
 
-        $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
-        
-        return $response;
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 }

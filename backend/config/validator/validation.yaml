@@ -224,5 +224,3 @@ App\Request\Order\OrderUpdateCaptainArrivedRequest:
     properties:
         id:
             - NotBlank: ~
-        isCaptainArrived:
-            - NotBlank: ~
