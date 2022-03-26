@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Admin\AdminProfileUpdateRequest;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Service\Admin\AdminService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -96,118 +95,5 @@ class AdminController extends BaseController
         }
 
         return $this->response($response, self::CREATE);
-    }
-
-    /**
-     * Get admin profile for signed-in admin.
-     * @Route("adminprofile", name="getAdminProfileBySignedInAdmin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Admin")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the admin's profile",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="name"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="object", property="updatedAt"),
-     *                  @OA\Property(type="object", property="image",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  )
-     *          )
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getAdminProfileByAdminUserId(): JsonResponse
-    {
-        $response = $this->adminService->getAdminProfileByAdminUserId($this->getUserId());
-
-        return $this->response($response, self::FETCH);
-    }
-
-    /**
-     * Update admin profile by signed-in admin
-     * @Route("adminprofile", name="updateAdminProfileBySignedInAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Admin")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="Create new admin",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="name"),
-     *          @OA\Property(type="string", property="phone"),
-     *          @OA\Property(type="string", property="image")
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns the new admin's role and the creation date",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="name"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="object", property="updatedAt"),
-     *              @OA\Property(type="object", property="image",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              )
-     *          )
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function updateAdminProfile(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, AdminProfileUpdateRequest::class, (object)$data);
-
-        $request->setAdminUserId($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $response = $this->adminService->updateAdminProfile($request);
-
-        return $this->response($response, self::UPDATE);
     }
 }
