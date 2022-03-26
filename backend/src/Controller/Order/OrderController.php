@@ -389,6 +389,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="orderType"),
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="number", property="rating"),
      *                  ),
      *            )
      *       )
@@ -448,6 +449,8 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="image"),
      *                          @OA\Property(type="string", property="baseURL"),
      *                      ),
+     *                  @OA\Property(type="number", property="rating"),
+     * 
      *              ),
      *          )
      *       )

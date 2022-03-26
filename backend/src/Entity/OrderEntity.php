@@ -63,10 +63,14 @@ class OrderEntity
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $dateCaptainArrived;
+    
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: RateEntity::class)]
+    private $rateEntity;
 
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
+        $this->rateEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,6 +272,23 @@ class OrderEntity
     public function setIsCaptainArrived(?bool $isCaptainArrived): self
     {
         $this->isCaptainArrived = $isCaptainArrived;
+        return $this;
+    }
+    
+    /**
+     * @return Collection|RateEntity[]
+     */
+    public function getRateEntity(): Collection
+    {
+        return $this->rateEntity;
+    }
+
+    public function addRateEntity(RateEntity $rateEntity): self
+    {
+        if (!$this->rateEntity->contains($rateEntity)) {
+            $this->rateEntity[] = $rateEntity;
+            $rateEntity->setOrderId($this);
+        }
 
         return $this;
     }
@@ -280,6 +301,17 @@ class OrderEntity
     public function setDateCaptainArrived(?\DateTimeInterface $dateCaptainArrived): self
     {
         $this->dateCaptainArrived = $dateCaptainArrived;
+       
+        return $this;
+    }
+    public function removeRateEntity(RateEntity $rateEntity): self
+    {
+        if ($this->rateEntity->removeElement($rateEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($rateEntity->getOrderId() === $this) {
+                $rateEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }
