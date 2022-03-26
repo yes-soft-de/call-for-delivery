@@ -32,6 +32,12 @@ class RatingManager
     {
         $request->setRater($this->userManager->getUser($request->getRater()));
         $request->setRated($this->userManager->getUserByCaptainProfileId($request->getRated()));
+        
+        $rateEntity = $this->ratingRepository->findOneBy(['orderId' => $request->getOrderId(), 'rated' => $request->getRated(), 'rater' => $request->getRater()]);
+       
+        if($rateEntity) {
+           return $this->updateRating($rateEntity, $request->getRating(), $request->getComment());
+        }
 
         $entity = $this->autoMapping->map(RatingCreateRequest::class, RateEntity::class, $request);
         $entity->setOrderId($this->orderManager->getOrderById($request->getOrderId()));
@@ -46,5 +52,15 @@ class RatingManager
     public function getAverageRating(int $rated): ?float
     {
        return $this->ratingRepository->getAverageRating($rated);
+    }
+
+    public function updateRating(RateEntity $rateEntity, int $rating, string $comment): ?RateEntity
+    {
+        $rateEntity->setRating($rating);
+        $rateEntity->setComment($comment);
+        
+        $this->entityManager->flush();
+
+        return $rateEntity;
     }
 }
