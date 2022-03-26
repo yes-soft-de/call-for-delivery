@@ -249,7 +249,10 @@ class MyNotificationsLoadedState extends States {
                                   screenState.rateCaptain(RatingRequest(
                                       comment: controller.text,
                                       rating: rate,
-                                      rated: element.captainID));
+                                      rated: element.captainID,
+                                      orderId: int.tryParse(
+                                              element.orderNumber ?? '') ??
+                                          -1));
                                 },
                                 message: S.current.rateCaptainMessage,
                                 title: S.current.rateCaptain,

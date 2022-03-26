@@ -147,7 +147,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                               screenState.rateCaptain(RatingRequest(
                                   rated: orderInfo.captainID,
                                   rating: rate,
-                                  comment: controller.text));
+                                  comment: controller.text,
+                                  orderId: orderInfo.id));
                             },
                             title: S.current.rateCaptain,
                             controller: controller,
