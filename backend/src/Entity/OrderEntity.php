@@ -58,9 +58,13 @@ class OrderEntity
     #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'orderEntity')]
     private $captainId;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: RateEntity::class)]
+    private $rateEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
+        $this->rateEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,6 +254,36 @@ class OrderEntity
     public function setCaptainId(?CaptainEntity $captainId): self
     {
         $this->captainId = $captainId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RateEntity[]
+     */
+    public function getRateEntity(): Collection
+    {
+        return $this->rateEntity;
+    }
+
+    public function addRateEntity(RateEntity $rateEntity): self
+    {
+        if (!$this->rateEntity->contains($rateEntity)) {
+            $this->rateEntity[] = $rateEntity;
+            $rateEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRateEntity(RateEntity $rateEntity): self
+    {
+        if ($this->rateEntity->removeElement($rateEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($rateEntity->getOrderId() === $this) {
+                $rateEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }
