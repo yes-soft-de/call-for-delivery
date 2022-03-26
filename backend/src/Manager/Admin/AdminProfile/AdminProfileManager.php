@@ -3,6 +3,7 @@
 namespace App\Manager\Admin\AdminProfile;
 
 use App\AutoMapping;
+use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
@@ -12,6 +13,7 @@ use App\Manager\Image\ImageManager;
 use App\Manager\User\UserManager;
 use App\Repository\AdminProfileEntityRepository;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
+use App\Request\Admin\AdminProfile\AdminProfileStateUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminProfileManager
@@ -93,5 +95,21 @@ class AdminProfileManager
     public function getAdminProfileByAdminUserId(int $adminUserId): ?AdminProfileEntity
     {
         return $this->adminProfileEntityRepository->getAdminProfileByUserId($adminUserId);
+    }
+
+    public function updateAdminProfileState(AdminProfileStateUpdateRequest $request): string|AdminProfileEntity
+    {
+        $adminProfileEntity = $this->adminProfileEntityRepository->find($request->getId());
+
+        if (! $adminProfileEntity) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+
+        } else {
+            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileStateUpdateRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
+
+            $this->entityManager->flush();
+
+            return $adminProfileEntity;
+        }
     }
 }
