@@ -185,6 +185,13 @@ class AdminProfileController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="object", property="user",
+     *                  @OA\Property(type="string", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              ),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="object", property="createdAt"),
@@ -269,6 +276,13 @@ class AdminProfileController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="object", property="user",
+     *                  @OA\Property(type="string", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              ),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="object", property="createdAt"),

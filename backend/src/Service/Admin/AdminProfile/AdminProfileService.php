@@ -5,6 +5,7 @@ namespace App\Service\Admin\AdminProfile;
 use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Entity\AdminProfileEntity;
+use App\Entity\UserEntity;
 use App\Manager\Admin\AdminProfile\AdminProfileManager;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStateUpdateRequest;
@@ -63,6 +64,8 @@ class AdminProfileService
 
             $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $adminProfileResult);
 
+            $response->user = $this->getSpecificUserFields($response->user);
+
             if ($response->image) {
                 $response->image = $this->uploadFileHelperService->getImageParams($response->image->getImagePath());
             }
@@ -83,11 +86,24 @@ class AdminProfileService
 
             $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $adminProfileResult);
 
+            $response->user = $this->getSpecificUserFields($response->user);
+
             if ($response->image) {
                 $response->image = $this->uploadFileHelperService->getImageParams($response->image->getImagePath());
             }
 
             return $response;
         }
+    }
+
+    public function getSpecificUserFields(UserEntity $userEntity): array
+    {
+        $response = [];
+
+        $response['id'] = $userEntity->getId();
+        $response['userId'] = $userEntity->getUserId();
+        $response['roles'] = $userEntity->getRoles();
+
+        return $response;
     }
 }
