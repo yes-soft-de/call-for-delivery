@@ -103,6 +103,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
             ),
           ),
+          Visibility(
+              visible: orderInfo.rating != null,
+              child: OrderButton(
+                title: S.current.rating,
+                subtitle:
+                    S.current.currentRating + ' ' + (orderInfo.rating ?? ''),
+                icon: Icons.star_rate_rounded,
+                backgroundColor: Colors.amber,
+              )),
           // with order type we can get order widgets
           Visibility(
               replacement: details(context),
@@ -692,12 +701,11 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 callBack: (distance, payment) {
                   var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
                   screenState.requestOrderProgress(UpdateOrderRequest(
-                    id: int.tryParse(screenState.orderId ?? '-1'),
-                    state: StatusHelper.getStatusString(
-                        OrderStatusEnum.values[index + 1]),
-                    distance: distance,
-                    orderCost: double.tryParse(payment ?? 'n')
-                  ));
+                      id: int.tryParse(screenState.orderId ?? '-1'),
+                      state: StatusHelper.getStatusString(
+                          OrderStatusEnum.values[index + 1]),
+                      distance: distance,
+                      orderCost: double.tryParse(payment ?? 'n')));
                 },
                 controller: _distanceCalculator,
                 controller2: _paymentController,
