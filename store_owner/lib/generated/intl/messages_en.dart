@@ -199,6 +199,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "Are sure about subscribe with this offer"),
+        "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
+            "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
@@ -423,6 +425,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "No Image , Please provide one"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -618,6 +621,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
+        "redo": MessageLookupByLibrary.simpleMessage("Redo"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registerHint":
@@ -678,6 +682,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
+        "sendingReport": MessageLookupByLibrary.simpleMessage(
+            "Sending report within 5 seconds"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
@@ -834,6 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("Work time"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

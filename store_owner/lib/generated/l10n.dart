@@ -5509,6 +5509,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Sending report within 5 seconds`
+  String get sendingReport {
+    return Intl.message(
+      'Sending report within 5 seconds',
+      name: 'sendingReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm with yes and no if captain reach you`
+  String get confirmingCaptainLocation {
+    return Intl.message(
+      'Confirm with yes and no if captain reach you',
+      name: 'confirmingCaptainLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Redo`
+  String get redo {
+    return Intl.message(
+      'Redo',
+      name: 'redo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
