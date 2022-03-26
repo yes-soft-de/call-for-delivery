@@ -94,7 +94,7 @@ class OwnerOrderCard extends StatelessWidget {
                     title: S.current.cost, subtitle: orderCost),
                 Icon(
                   Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).textTheme.button?.color,
                 )
               ],
             ),
@@ -112,7 +112,7 @@ class OwnerOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
@@ -124,7 +124,7 @@ class OwnerOrderCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).backgroundColor;
+    Color dividerColor = Theme.of(context).textTheme.button!.color!;
     return Divider(
       thickness: 2,
       indent: 16,
