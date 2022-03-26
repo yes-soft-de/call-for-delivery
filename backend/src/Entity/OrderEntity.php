@@ -58,6 +58,12 @@ class OrderEntity
     #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'orderEntity')]
     private $captainId;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isCaptainArrived;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $dateCaptainArrived;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -250,6 +256,30 @@ class OrderEntity
     public function setCaptainId(?CaptainEntity $captainId): self
     {
         $this->captainId = $captainId;
+
+        return $this;
+    }
+
+    public function getIsCaptainArrived(): ?bool
+    {
+        return $this->isCaptainArrived;
+    }
+
+    public function setIsCaptainArrived(?bool $isCaptainArrived): self
+    {
+        $this->isCaptainArrived = $isCaptainArrived;
+
+        return $this;
+    }
+
+    public function getDateCaptainArrived(): ?\DateTimeInterface
+    {
+        return $this->dateCaptainArrived;
+    }
+
+    public function setDateCaptainArrived(?\DateTimeInterface $dateCaptainArrived): self
+    {
+        $this->dateCaptainArrived = $dateCaptainArrived;
 
         return $this;
     }
