@@ -29,4 +29,6 @@ class OrderClosestResponse
     public string|null $roomId;
 
     public string $storeOwnerName;
+
+    public float|null $rating;
 }
