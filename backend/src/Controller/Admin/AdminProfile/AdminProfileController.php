@@ -4,6 +4,7 @@ namespace App\Controller\Admin\AdminProfile;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfileUpdateRequest;
 use App\Service\Admin\AdminProfile\AdminProfileService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -65,7 +66,8 @@ class AdminProfileController extends BaseController
      *                      @OA\Property(type="string", property="imageURL"),
      *                      @OA\Property(type="string", property="image"),
      *                      @OA\Property(type="string", property="baseURL")
-     *                  )
+     *                  ),
+     *                  @OA\Property(type="boolean", property="state")
      *          )
      *      )
      * )
@@ -100,7 +102,7 @@ class AdminProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="phone"),
-     *          @OA\Property(type="string", property="image")
+     *          @OA\Property(type="string", property="imagePath")
      *      )
      * )
      *
@@ -120,7 +122,8 @@ class AdminProfileController extends BaseController
      *                  @OA\Property(type="string", property="imageURL"),
      *                  @OA\Property(type="string", property="image"),
      *                  @OA\Property(type="string", property="baseURL")
-     *              )
+     *              ),
+     *              @OA\Property(type="boolean", property="state")
      *          )
      *      )
      * )
@@ -131,9 +134,9 @@ class AdminProfileController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, AdminProfileUpdateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, AdminProfileRequest::class, (object)$data);
 
-        $request->setAdminUserId($this->getUserId());
+        $request->setUser($this->getUserId());
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {

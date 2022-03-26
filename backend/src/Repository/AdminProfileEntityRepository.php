@@ -2,12 +2,9 @@
 
 namespace App\Repository;
 
-use App\Constant\Image\ImageEntityTypeConstant;
-use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
-use App\Entity\ImageEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,35 +20,23 @@ class AdminProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, AdminProfileEntity::class);
     }
 
-    public function getAdminProfileByAdminUserId(int $adminUserId): ?AdminProfileEntity
+    public function getAdminProfileByAdminUserId(UserEntity $userEntity): ?AdminProfileEntity
     {
         return $this->createQueryBuilder('profile')
 
-            ->andWhere('profile.adminUserId = :adminUserId')
-            ->setParameter('adminUserId', $adminUserId)
+            ->andWhere('profile.user = :userEntity')
+            ->setParameter('userEntity', $userEntity)
 
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getAdminProfileWithImageByAdminUserId(int $adminUserId): ?array
+    public function getAdminProfileByUserId(int $userId): ?AdminProfileEntity
     {
-        return $this->createQueryBuilder('adminProfile')
-            ->select('adminProfile.id', 'adminProfile.name', 'adminProfile.phone', 'adminProfile.createdAt', 'adminProfile.updatedAt')
-            ->addSelect('imageEntity.imagePath')
+        return $this->createQueryBuilder('profile')
 
-            ->andWhere('adminProfile.adminUserId = :adminUserId')
-            ->setParameter('adminUserId', $adminUserId)
-
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.itemId = adminProfile.id AND imageEntity.entityType = :adminEntityType AND imageEntity.usedAs = :adminImageProfile'
-            )
-
-            ->setParameter('adminEntityType', ImageEntityTypeConstant::ENTITY_TYPE_ADMIN_PROFILE)
-            ->setParameter('adminImageProfile', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            ->andWhere('profile.user = :userId')
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             ->getOneOrNullResult();

@@ -21,7 +21,7 @@ class AdminManager
 
     public function adminRegister(AdminRegisterRequest $request): UserEntity|string
     {
-        $user = $this->userManager->getUserByUserId($request->getUserId());
+        $user = $this->userManager->getUser($request->getUserId());
 
         if (! $user) {
             if(! $request->getRoles()) {
@@ -31,7 +31,7 @@ class AdminManager
             $userRegister = $this->userManager->createAdmin($request);
 
             if($userRegister){
-                $this->adminProfileManager->createAdminProfileRegisteredAdmin($request, $userRegister->getId());
+                $this->adminProfileManager->createAdminProfileRegisteredAdmin($userRegister);
 
                 return $userRegister;
             }
@@ -40,7 +40,7 @@ class AdminManager
             }
         }
         else {
-            $this->adminProfileManager->createAdminProfileRegisteredAdmin($request, $user['id']);
+            $this->adminProfileManager->createAdminProfileRegisteredAdmin($user);
 
             return UserReturnResultConstant::USER_IS_FOUND_RESULT;
         }

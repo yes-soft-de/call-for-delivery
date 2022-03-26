@@ -220,9 +220,9 @@ App\Request\Order\OrderUpdateCaptainOrderCostRequest:
         captainOrderCost:
             - NotBlank: ~
 
-App\Request\Admin\AdminProfileUpdateRequest:
+App\Request\Admin\AdminProfile\AdminProfileRequest:
     properties:
-        adminUserId:
+        user:
             - NotBlank: ~
         name:
             - NotBlank: ~

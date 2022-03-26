@@ -34,6 +34,9 @@ class ImageEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\OneToOne(mappedBy: 'image', targetEntity: AdminProfileEntity::class, cascade: ['persist', 'remove'])]
+    private $adminProfileEntity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,28 @@ class ImageEntity
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getAdminProfileEntity(): ?AdminProfileEntity
+    {
+        return $this->adminProfileEntity;
+    }
+
+    public function setAdminProfileEntity(?AdminProfileEntity $adminProfileEntity): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($adminProfileEntity === null && $this->adminProfileEntity !== null) {
+            $this->adminProfileEntity->setImage(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($adminProfileEntity !== null && $adminProfileEntity->getImage() !== $this) {
+            $adminProfileEntity->setImage($this);
+        }
+
+        $this->adminProfileEntity = $adminProfileEntity;
 
         return $this;
     }

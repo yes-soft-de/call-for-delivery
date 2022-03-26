@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\Admin;
+namespace App\Response\Admin\AdminProfile;
 
-class AdminProfileGetResponse
+class AdminProfileUpdateResponse
 {
     /**
      * @var int|null
@@ -28,8 +28,6 @@ class AdminProfileGetResponse
      * @var array|null
      */
     public $updatedAt;
-
-    public $image;
 
     /**
      * @var bool|null
