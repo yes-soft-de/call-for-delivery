@@ -61,10 +61,14 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: RateEntity::class)]
     private $rateEntity;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderLogsEntity::class)]
+    private $OrderLogsEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
         $this->rateEntity = new ArrayCollection();
+        $this->OrderLogsEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,6 +286,36 @@ class OrderEntity
             // set the owning side to null (unless already changed)
             if ($rateEntity->getOrderId() === $this) {
                 $rateEntity->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLogsEntity[]
+     */
+    public function getOrderLogsEntity(): Collection
+    {
+        return $this->OrderLogsEntity;
+    }
+
+    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if (!$this->OrderLogsEntity->contains($orderLogsEntity)) {
+            $this->OrderLogsEntity[] = $orderLogsEntity;
+            $orderLogsEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if ($this->OrderLogsEntity->removeElement($orderLogsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogsEntity->getOrderId() === $this) {
+                $orderLogsEntity->setOrderId(null);
             }
         }
 
