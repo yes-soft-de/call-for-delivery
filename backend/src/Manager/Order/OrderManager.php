@@ -19,6 +19,7 @@ use App\Manager\Order\StoreOrderDetailsManager;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
+use App\Manager\OrderLogs\OrderLogsManager;
 
 class OrderManager
 {
@@ -28,8 +29,9 @@ class OrderManager
    private StoreOwnerProfileManager $storeOwnerProfileManager;
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
+   private OrderLogsManager $orderLogsManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, OrderLogsManager $orderLogsManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -37,6 +39,7 @@ class OrderManager
       $this->storeOwnerProfileManager = $storeOwnerProfileManager;
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
+      $this->orderLogsManager = $orderLogsManager;
     }
     
     /**
@@ -59,6 +62,7 @@ class OrderManager
        $this->entityManager->flush();
 
        $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $request);
+       $this->orderLogsManager->createOrderLogs($orderEntity, $request->getStoreOwner());
 
        return $orderEntity;
     }
@@ -142,6 +146,8 @@ class OrderManager
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $this->entityManager->flush();
+     
+        $this->orderLogsManager->createOrderLogs($orderEntity, $orderEntity->getStoreOwner(), $orderEntity->getCaptainId());
 
         return $orderEntity;
     }

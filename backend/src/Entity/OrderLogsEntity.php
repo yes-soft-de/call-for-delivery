@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderLogsEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderLogsEntityRepository::class)]
 class OrderLogsEntity
@@ -22,6 +23,10 @@ class OrderLogsEntity
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'OrderLogsEntity')]
     private $storeOwnerProfile;
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -60,6 +65,18 @@ class OrderLogsEntity
     public function setStoreOwnerProfile(?StoreOwnerProfileEntity $storeOwnerProfile): self
     {
         $this->storeOwnerProfile = $storeOwnerProfile;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
