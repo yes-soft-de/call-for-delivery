@@ -26,6 +26,9 @@ class RateEntity
     #[ORM\ManyToOne(targetEntity: userEntity::class, inversedBy: 'rateEntities')]
     private $rated;
 
+    #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'rateEntity')]
+    private $orderId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class RateEntity
     public function setRated(?userEntity $rated): self
     {
         $this->rated = $rated;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?OrderEntity
+    {
+        return $this->orderId;
+    }
+
+    public function setOrderId(?OrderEntity $orderId): self
+    {
+        $this->orderId = $orderId;
 
         return $this;
     }
