@@ -6239,6 +6239,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Your current rating by this store is`
+  String get currentRating {
+    return Intl.message(
+      'Your current rating by this store is',
+      name: 'currentRating',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

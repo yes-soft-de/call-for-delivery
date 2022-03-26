@@ -246,6 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
+        "currentRating": MessageLookupByLibrary.simpleMessage("المتجر قيمك ب"),
         "customer": MessageLookupByLibrary.simpleMessage("الزبون"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(

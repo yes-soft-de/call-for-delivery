@@ -253,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "currentRating": MessageLookupByLibrary.simpleMessage(
+            "Your current rating by this store is"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":

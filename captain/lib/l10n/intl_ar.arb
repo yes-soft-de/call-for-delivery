@@ -622,7 +622,8 @@
     "chatRoomCreated": "تم إنشاء غرفة المحادثة",
     "collectedPayment": "المبلغ المقبوض",
     "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
-    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب"
+    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
+    "currentRating": "المتجر قيمك ب"
 
 
 
