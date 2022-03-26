@@ -8,6 +8,7 @@ use App\Entity\AdminProfileEntity;
 use App\Manager\Admin\AdminProfile\AdminProfileManager;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStateUpdateRequest;
+use App\Request\Admin\AdminProfile\AdminProfileUpdateBySuperAdminRequest;
 use App\Response\Admin\AdminProfile\AdminProfileGetForSuperAdminResponse;
 use App\Response\Admin\AdminProfile\AdminProfileUpdateResponse;
 use App\Response\Admin\AdminProfileGetResponse;
@@ -50,9 +51,29 @@ class AdminProfileService
         return $this->autoMapping->map(AdminProfileEntity::class, AdminProfileUpdateResponse::class, $adminProfile);
     }
 
-    public function updateAdminProfileState(AdminProfileStateUpdateRequest $request)
+    public function updateAdminProfileState(AdminProfileStateUpdateRequest $request): string|AdminProfileGetForSuperAdminResponse
     {
         $adminProfileResult = $this->adminProfileManager->updateAdminProfileState($request);
+
+        if ($adminProfileResult === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+
+        } else {
+            $response = [];
+
+            $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $adminProfileResult);
+
+            if ($response->image) {
+                $response->image = $this->uploadFileHelperService->getImageParams($response->image->getImagePath());
+            }
+
+            return $response;
+        }
+    }
+
+    public function updateAdminProfileBySuperAdmin(AdminProfileUpdateBySuperAdminRequest $request): string|AdminProfileGetForSuperAdminResponse
+    {
+        $adminProfileResult = $this->adminProfileManager->updateAdminProfileBySuperAdmin($request);
 
         if ($adminProfileResult === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
             return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;

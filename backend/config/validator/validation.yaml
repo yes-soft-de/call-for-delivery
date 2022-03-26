@@ -231,3 +231,10 @@ App\Request\Admin\AdminProfile\AdminProfileStateUpdateRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Admin\AdminProfile\AdminProfileUpdateBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
