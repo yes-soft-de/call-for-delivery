@@ -21,11 +21,11 @@ class AdminManager
 
     public function adminRegister(AdminRegisterRequest $request): UserEntity|string
     {
-        $user = $this->userManager->getUser($request->getUserId());
+        $user = $this->userManager->getUserEntityByUserId($request->getUserId());
 
         if (! $user) {
             if(! $request->getRoles()) {
-                $request->setRoles(["ROLE_ADMIN"]);
+                $request->setRoles(["ROLE_ADMIN", "ROLE_SUPER_USER"]);
             }
 
             $userRegister = $this->userManager->createAdmin($request);
