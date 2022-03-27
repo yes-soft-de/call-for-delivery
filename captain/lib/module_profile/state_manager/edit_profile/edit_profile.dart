@@ -1,3 +1,5 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -63,6 +65,7 @@ class EditProfileStateManager {
             backToProfile: request.canGoBack ?? false));
         screenState.showMessage(value.error, false);
       } else {
+        getIt<GlobalStateManager>().update();
         getProfile(screenState, true);
       }
     });
