@@ -315,7 +315,9 @@ class SubscriptionService
   
           $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
         }
-      
+
+        $item['percentageOfOrdersConsumed'] = ($packageBalance->remainingOrders * $packageBalance->packageOrderCount) / 100 ;
+        
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
       }
 
