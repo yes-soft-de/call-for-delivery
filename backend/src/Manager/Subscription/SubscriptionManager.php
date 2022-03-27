@@ -7,6 +7,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
+use App\Entity\SubscriptionHistoryEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
@@ -255,5 +256,10 @@ class SubscriptionManager
     public function getSubscriptionCurrentByOrderId($orderId): ?array
     {
         return $this->subscribeRepository->getSubscriptionCurrentByOrderId($orderId);
+    }
+
+    public function getSubscriptionHistoryByStoreOwner(StoreOwnerProfileEntity $storeOwnerProfileEntity): ?SubscriptionHistoryEntity
+    {
+        return $this->subscriptionHistoryManager->getSubscriptionHistoryByStoreOwner($storeOwnerProfileEntity);
     }
 }
