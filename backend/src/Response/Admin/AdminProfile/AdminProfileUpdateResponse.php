@@ -32,5 +32,5 @@ class AdminProfileUpdateResponse
     /**
      * @var bool|null
      */
-    public $state;
+    public $status;
 }

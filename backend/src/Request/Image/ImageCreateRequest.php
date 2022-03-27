@@ -2,6 +2,8 @@
 
 namespace App\Request\Image;
 
+use App\Entity\AdminProfileEntity;
+
 class ImageCreateRequest
 {
     private string $imagePath;
@@ -11,6 +13,11 @@ class ImageCreateRequest
     private int $usedAs;
 
     private int $itemId;
+
+    /**
+     * @var AdminProfileEntity|null
+     */
+    private $adminProfile;
 
     public function setImagePath(string $imagePath): void
     {
@@ -30,5 +37,10 @@ class ImageCreateRequest
     public function setItemId(int $itemId): void
     {
         $this->itemId = $itemId;
+    }
+
+    public function setAdminProfile(?AdminProfileEntity $adminProfile): void
+    {
+        $this->adminProfile = $adminProfile;
     }
 }

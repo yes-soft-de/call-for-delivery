@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdminProfileEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -28,15 +30,20 @@ class AdminProfileEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    #[ORM\OneToOne(inversedBy: 'adminProfileEntity', targetEntity: ImageEntity::class, cascade: ['persist', 'remove'])]
-    private $image;
-
     #[ORM\Column(type: 'boolean')]
-    private $state = false;
+    private $status = false;
 
     #[ORM\OneToOne(targetEntity: UserEntity::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+    #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: ImageEntity::class)]
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,26 +98,14 @@ class AdminProfileEntity
         return $this;
     }
 
-    public function getImage(): ?ImageEntity
+    public function getStatus(): ?bool
     {
-        return $this->image;
+        return $this->status;
     }
 
-    public function setImage(?ImageEntity $image): self
+    public function setStatus(bool $status): self
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getState(): ?bool
-    {
-        return $this->state;
-    }
-
-    public function setState(bool $state): self
-    {
-        $this->state = $state;
+        $this->status = $status;
 
         return $this;
     }
@@ -123,6 +118,36 @@ class AdminProfileEntity
     public function setUser(UserEntity $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ImageEntity[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ImageEntity $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAdminProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ImageEntity $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAdminProfile() === $this) {
+                $image->setAdminProfile(null);
+            }
+        }
 
         return $this;
     }

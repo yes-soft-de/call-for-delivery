@@ -2,11 +2,11 @@
 
 namespace App\Request\Admin\AdminProfile;
 
-class AdminProfileStateUpdateRequest
+class AdminProfileStatusUpdateRequest
 {
     private int $id;
 
-    private bool $state;
+    private bool $status;
 
     public function getId(): int
     {

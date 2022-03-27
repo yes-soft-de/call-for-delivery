@@ -227,7 +227,7 @@ App\Request\Order\OrderUpdateCaptainArrivedRequest:
 
 App\Request\Admin\AdminProfile\AdminProfileRequest:
     properties:
-        user:
+        id:
             - NotBlank: ~
         name:
             - NotBlank: ~

@@ -3,7 +3,10 @@
 namespace App\Manager\Image;
 
 use App\AutoMapping;
+use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageResultConstant;
+use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\AdminProfileEntity;
 use App\Entity\ImageEntity;
 use App\Repository\ImageEntityRepository;
 use App\Request\Image\ImageCreateRequest;
@@ -92,6 +95,32 @@ class ImageManager
        }
     
        return  $this->updateImage($image, $imageEntity);
+    }
+
+    public function createOrUpdateAdminProfileImages(array $images, AdminProfileEntity $adminProfileEntity): array
+    {
+        $response = [];
+
+        foreach ($images as $image) {
+            $imageEntity = $this->imageEntityRepository->findOneBy(["adminProfile" => $adminProfileEntity->getId()]);
+
+            if(! $imageEntity) {
+                $request = new ImageCreateRequest();
+
+                $request->setImagePath($image['image']);
+                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ADMIN_PROFILE);
+                $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+                $request->setItemId($adminProfileEntity->getId());
+                $request->setAdminProfile($adminProfileEntity);
+
+                $response[] = $this->create($request);
+
+            } else {
+                $response[] = $this->updateImage($image['image'], $imageEntity);
+            }
+        }
+
+        return $response;
     }
 
     public function updateImage(string $image, ImageEntity $imageEntity): ?ImageEntity

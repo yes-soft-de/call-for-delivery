@@ -4,17 +4,13 @@ namespace App\Manager\Admin\AdminProfile;
 
 use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
-use App\Constant\Image\ImageEntityTypeConstant;
-use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
-use App\Entity\ImageEntity;
 use App\Entity\UserEntity;
 use App\Manager\Image\ImageManager;
 use App\Manager\User\UserManager;
 use App\Repository\AdminProfileEntityRepository;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
-use App\Request\Admin\AdminProfile\AdminProfileStateUpdateRequest;
-use App\Request\Admin\AdminProfile\AdminProfileUpdateBySuperAdminRequest;
+use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminProfileManager
@@ -51,7 +47,7 @@ class AdminProfileManager
         return $adminProfileEntity;
     }
 
-    public function createProfile(AdminProfileRequest $request)
+    public function createProfile(AdminProfileRequest $request): AdminProfileEntity
     {
         $adminProfileEntity = $this->autoMapping->map(AdminProfileRequest::class, AdminProfileEntity::class, $request);
 
@@ -61,24 +57,19 @@ class AdminProfileManager
         return $adminProfileEntity;
     }
 
-    public function updateAdminProfile(AdminProfileRequest $request): AdminProfileEntity
+    public function updateAdminProfile(AdminProfileRequest $request): string|AdminProfileEntity
     {
-        $adminProfileEntity = $this->adminProfileEntityRepository->getAdminProfileByUserId($request->getUser());
+        $adminProfileEntity = $this->adminProfileEntityRepository->find($request->getId());
 
         if (! $adminProfileEntity) {
-            return $this->createProfile($request);
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
 
         } else {
-            if ($request->getImagePath()) {
-                $adminProfileImageEntity = $this->handleAdminProfileImage($request->getImagePath(), $adminProfileEntity->getId());
+            if (! empty($request->getImages())) {
+                $images = $this->handleAdminProfileImages($request->getImages(), $adminProfileEntity);
 
-                $request->setImage($adminProfileImageEntity);
-
-            } else {
-                $request->setImage($adminProfileEntity->getImage());
+                $request->setImages($images);
             }
-
-            $request->setUser($this->userManager->getUser($request->getUser()));
 
             $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
 
@@ -88,9 +79,9 @@ class AdminProfileManager
         }
     }
 
-    public function handleAdminProfileImage(string $imagePath, int $itemId): ImageEntity
+    public function handleAdminProfileImages(array $images, AdminProfileEntity $adminProfileEntity): array
     {
-        return $this->imageManager->createImageOrUpdate($imagePath, $itemId, ImageEntityTypeConstant::ENTITY_TYPE_ADMIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+        return $this->imageManager->createOrUpdateAdminProfileImages($images, $adminProfileEntity);
     }
 
     public function getAdminProfileByAdminUserId(int $adminUserId): ?AdminProfileEntity
@@ -98,7 +89,7 @@ class AdminProfileManager
         return $this->adminProfileEntityRepository->getAdminProfileByUserId($adminUserId);
     }
 
-    public function updateAdminProfileState(AdminProfileStateUpdateRequest $request): string|AdminProfileEntity
+    public function updateAdminProfileStatus(AdminProfileStatusUpdateRequest $request): string|AdminProfileEntity
     {
         $adminProfileEntity = $this->adminProfileEntityRepository->find($request->getId());
 
@@ -106,7 +97,7 @@ class AdminProfileManager
             return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
 
         } else {
-            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileStateUpdateRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
+            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileStatusUpdateRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
 
             $this->entityManager->flush();
 
@@ -114,7 +105,7 @@ class AdminProfileManager
         }
     }
 
-    public function updateAdminProfileBySuperAdmin(AdminProfileUpdateBySuperAdminRequest $request): string|AdminProfileEntity
+    public function updateAdminProfileBySuperAdmin(AdminProfileRequest $request): string|AdminProfileEntity
     {
         $adminProfileEntity = $this->adminProfileEntityRepository->find($request->getId());
 
@@ -122,17 +113,15 @@ class AdminProfileManager
             return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
 
         } else {
-            if ($request->getImagePath()) {
-                $adminProfileImageEntity = $this->handleAdminProfileImage($request->getImagePath(), $adminProfileEntity->getId());
+            $request->setUser($adminProfileEntity->getUser());
 
-                $request->setImage($adminProfileImageEntity);
+            if (! empty($request->getImages())) {
+                $images = $this->handleAdminProfileImages($request->getImages(), $adminProfileEntity);
 
-            } else {
-                $request->setImage($adminProfileEntity->getImage());
+                $request->setImages($images);
             }
 
-            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileUpdateBySuperAdminRequest::class, AdminProfileEntity::class,
-                $request, $adminProfileEntity);
+            $adminProfileEntity = $this->autoMapping->mapToObject(AdminProfileRequest::class, AdminProfileEntity::class, $request, $adminProfileEntity);
 
             $this->entityManager->flush();
 

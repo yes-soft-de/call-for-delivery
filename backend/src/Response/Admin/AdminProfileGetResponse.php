@@ -29,10 +29,13 @@ class AdminProfileGetResponse
      */
     public $updatedAt;
 
-    public $image;
+    /**
+     * @var array|null
+     */
+    public $images;
 
     /**
      * @var bool|null
      */
-    public $state;
+    public $status;
 }

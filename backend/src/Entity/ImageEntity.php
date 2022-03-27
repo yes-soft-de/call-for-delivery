@@ -34,8 +34,8 @@ class ImageEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    #[ORM\OneToOne(mappedBy: 'image', targetEntity: AdminProfileEntity::class, cascade: ['persist', 'remove'])]
-    private $adminProfileEntity;
+    #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'images')]
+    private $adminProfile;
 
     public function getId(): ?int
     {
@@ -114,24 +114,14 @@ class ImageEntity
         return $this;
     }
 
-    public function getAdminProfileEntity(): ?AdminProfileEntity
+    public function getAdminProfile(): ?AdminProfileEntity
     {
-        return $this->adminProfileEntity;
+        return $this->adminProfile;
     }
 
-    public function setAdminProfileEntity(?AdminProfileEntity $adminProfileEntity): self
+    public function setAdminProfile(?AdminProfileEntity $adminProfile): self
     {
-        // unset the owning side of the relation if necessary
-        if ($adminProfileEntity === null && $this->adminProfileEntity !== null) {
-            $this->adminProfileEntity->setImage(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($adminProfileEntity !== null && $adminProfileEntity->getImage() !== $this) {
-            $adminProfileEntity->setImage($this);
-        }
-
-        $this->adminProfileEntity = $adminProfileEntity;
+        $this->adminProfile = $adminProfile;
 
         return $this;
     }

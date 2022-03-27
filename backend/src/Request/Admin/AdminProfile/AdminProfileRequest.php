@@ -2,11 +2,12 @@
 
 namespace App\Request\Admin\AdminProfile;
 
-use App\Entity\ImageEntity;
 use App\Entity\UserEntity;
 
 class AdminProfileRequest
 {
+    private int $id;
+
     /**
      * @var UserEntity|int
      */
@@ -20,14 +21,14 @@ class AdminProfileRequest
     private $phone;
 
     /**
-     * @var string|null
+     * @var array|null
      */
-    private $imagePath;
+    private $images;
 
-    /**
-     * @var ImageEntity|null
-     */
-    private $image;
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @param UserEntity|int $user
@@ -42,35 +43,23 @@ class AdminProfileRequest
         return $this->user;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @param string|null $phone
-     */
     public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImagePath(): ?string
+    public function getImages(): ?array
     {
-        return $this->imagePath;
+        return $this->images;
     }
 
-    /**
-     * @param ImageEntity|null $image
-     */
-    public function setImage(?ImageEntity $image): void
+    public function setImages(?array $images): void
     {
-        $this->image = $image;
+        $this->images = $images;
     }
 }

@@ -30,5 +30,5 @@ class AdminProfileGetForSuperAdminResponse
      */
     public $image;
 
-    public bool $state;
+    public bool $status;
 }
