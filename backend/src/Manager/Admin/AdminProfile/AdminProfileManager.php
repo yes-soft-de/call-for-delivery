@@ -7,7 +7,6 @@ use App\Constant\Admin\AdminProfileConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\UserEntity;
 use App\Manager\Image\ImageManager;
-use App\Manager\User\UserManager;
 use App\Repository\AdminProfileEntityRepository;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
@@ -18,16 +17,13 @@ class AdminProfileManager
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
     private ImageManager $imageManager;
-    private UserManager $userManager;
     private AdminProfileEntityRepository $adminProfileEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, ImageManager $imageManager, UserManager $userManager,
-                                AdminProfileEntityRepository $adminProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, ImageManager $imageManager, AdminProfileEntityRepository $adminProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->imageManager = $imageManager;
-        $this->userManager = $userManager;
         $this->adminProfileEntityRepository = $adminProfileEntityRepository;
     }
 
