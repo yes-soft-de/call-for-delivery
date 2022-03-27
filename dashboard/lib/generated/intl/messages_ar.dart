@@ -47,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
-        "addNote": MessageLookupByLibrary.simpleMessage("إضافة تنبيه"),
+        "addNote": MessageLookupByLibrary.simpleMessage("إضافة تحديث"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
         "addOfferSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة العرض بنجاح"),
@@ -413,7 +413,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
-        "notice": MessageLookupByLibrary.simpleMessage("التنبيهات"),
+        "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
