@@ -38,7 +38,7 @@ class FlutterTextToSpeech {
       await flutterTts.setLanguage(currentLang);
     }
 
-    await flutterTts.setSpeechRate(0.8);
+    await flutterTts.setSpeechRate(0.5);
 
     await flutterTts.setVolume(1.0);
 
