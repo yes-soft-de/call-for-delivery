@@ -19,6 +19,7 @@ use App\Manager\Order\StoreOrderDetailsManager;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
+use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 
 class OrderManager
 {
@@ -117,14 +118,14 @@ class OrderManager
     {
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
 
-        return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId());
+        return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId(), $userId);
     }
     
     public function getSpecificOrderForCaptain(int $id, int $userId): ?array
     {
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
 
-        return $this->orderRepository->getSpecificOrderForCaptain($id, $captainId->getId());
+        return $this->orderRepository->getSpecificOrderForCaptain($id, $captainId->getId(), $userId);
     }
 
     public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
@@ -138,7 +139,15 @@ class OrderManager
         $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
        
         $request->setCaptainId($captainId);
-       
+
+        if(! $request->getCaptainOrderCost()) {
+            $request->setCaptainOrderCost($orderEntity->getCaptainOrderCost());
+        }
+
+        if(! $request->getNoteCaptainOrderCost()) {
+            $request->setNoteCaptainOrderCost($orderEntity->getNoteCaptainOrderCost());
+        }
+        
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $this->entityManager->flush();
@@ -177,6 +186,23 @@ class OrderManager
        
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateCaptainOrderCostRequest::class, OrderEntity::class, $request, $orderEntity);
 
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+    
+    public function updateCaptainArrived(OrderUpdateCaptainArrivedRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateCaptainArrivedRequest::class, OrderEntity::class, $request, $orderEntity);
+        
+        $orderEntity->setDateCaptainArrived(new DateTime());
+        
         $this->entityManager->flush();
 
         return $orderEntity;

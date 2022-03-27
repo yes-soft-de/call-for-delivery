@@ -9,4 +9,8 @@ class OrderUpdateByCaptainResponse
     public string $state;
 
     public int|null $kilometer;
+
+    public float|null $captainOrderCost;
+
+    public string|null $noteCaptainOrderCost;
 }

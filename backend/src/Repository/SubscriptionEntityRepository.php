@@ -15,6 +15,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -156,6 +157,27 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             
             ->setParameter('orderId', $orderId)
 
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOffer(int $storeOwner): ?SubscriptionEntity
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->andWhere('subscriptionCaptainOfferEntity.storeOwner = :storeOwner')
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->andWhere('subscriptionCaptainOfferEntity.status = :status')
+            ->setParameter('status', SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE)
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+           
+            ->orderBy('subscriptionCaptainOfferEntity.id', 'DESC')
+           
+            ->setMaxResults(1)
+           
             ->getQuery()
 
             ->getOneOrNullResult();

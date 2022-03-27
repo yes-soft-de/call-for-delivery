@@ -22,6 +22,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
+use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 
 /**
  * Create and fetch order.
@@ -210,6 +211,9 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
      *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="boolean", property="isCaptainArrived"),
+     *                  @OA\Property(type="object", property="dateCaptainArrived"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -388,6 +392,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="orderType"),
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="number", property="rating"),
      *                  ),
      *            )
      *       )
@@ -447,6 +452,9 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="image"),
      *                          @OA\Property(type="string", property="baseURL"),
      *                      ),
+     *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="string", property="branchPhone"),
+     * 
      *              ),
      *          )
      *       )
@@ -484,6 +492,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="orderNumber"),
      *              @OA\Property(type="string", property="state", description="on way to pick order or in store or picked or ongoing or delivered"),
      *              @OA\Property(type="number", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *         ),
      *      ),
      *
@@ -497,6 +507,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state"),
      *              @OA\Property(type="integer", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *              )
      *      )
      * )
@@ -662,6 +674,64 @@ class OrderController extends BaseController
          }
 
         $response = $this->orderService->orderUpdateCaptainOrderCost($request);
+      
+        return $this->response($response, self::UPDATE);
+    }
+    
+    /**
+     * store: update Captain Arrived.
+     * @Route("orderupdatecaptainarrived", name="updateCaptainArrived", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Order Update Captain isCaptainArrived",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="number", property="isCaptainArrived"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return Captain Arrived.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="boolean", property="isCaptainArrived"),
+     *              )
+     *       )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainArrived(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateCaptainArrivedRequest::class, (object) $data);
+            
+        $violations = $this->validator->validate($request);
+       
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
+
+        $response = $this->orderService->updateCaptainArrived($request);
       
         return $this->response($response, self::UPDATE);
     }

@@ -244,6 +244,7 @@ class SubscriptionController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *                @OA\Property(type="string", property="canCreateOrder"),
      *                @OA\Property(type="string", property="subscriptionStatus"),
+     *                @OA\Property(type="number", property="percentageOfOrdersConsumed"),
      *        )
      *     )
      * )

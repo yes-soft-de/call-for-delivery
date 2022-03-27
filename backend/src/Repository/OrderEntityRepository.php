@@ -17,7 +17,7 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
-
+use App\Entity\RateEntity;
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method OrderEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -60,10 +60,10 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('IDENTITY (orderEntity.captainId) as captainUserId')
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
-            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId')
             ->addSelect('imageEntity.imagePath')
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
@@ -160,23 +160,27 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
     
-    public function acceptedOrderByCaptainId($captainId): ?array
+    public function acceptedOrderByCaptainId($captainId, int $userId): ?array
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
             'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('rateEntity.rating')
            
+            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
+
             ->andWhere('orderEntity.state != :delivered')
             ->andWhere('orderEntity.captainId = :captainId')
 
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('captainId', $captainId)
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             ->getResult();
     }
 
-    public function getSpecificOrderForCaptain(int $id, int $captainId): ?array
+    public function getSpecificOrderForCaptain(int $id, int $captainId, int $userId): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
 
@@ -184,21 +188,24 @@ class OrderEntityRepository extends ServiceEntityRepository
              'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
-            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
             ->addSelect('imageEntity.imagePath')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
+            ->addSelect('rateEntity.rating')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = :captainId')
             ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.id = storeOrderDetails.images')
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = orderEntity.storeOwner')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = :id and rateEntity.rated = :userId')
             
             ->andWhere('orderEntity.id = :id')
 
             ->setParameter('id', $id)
             ->setParameter('captainId', $captainId)
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             

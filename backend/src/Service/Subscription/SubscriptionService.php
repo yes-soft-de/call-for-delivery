@@ -40,9 +40,9 @@ class SubscriptionService
         
             return $isPackageReady;
         }
+        
+        $activateExistingSubscription = $this->checkSubscription($request->getStoreOwner());
 
-        $this->checkSubscription($request->getStoreOwner());
-       
         $isFuture = $this->getIsFutureState($request->getStoreOwner());
 
         $request->setIsFuture($isFuture);
@@ -52,11 +52,23 @@ class SubscriptionService
         $subscription = $this->subscriptionManager->createSubscription($request);
 
         //--check and update completeAccountStatus for the store owner profile
+
         if ($subscription) {
             $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
         }
 
-        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        if ($activateExistingSubscription ===  SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+
+        }
+
+        if($subscription) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+        
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        }
     }
 
     public function getIsFutureState(int $storeOwner): int
@@ -295,7 +307,7 @@ class SubscriptionService
     public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse
     {
       $packageBalance = $this->packageBalance($storeOwnerId);
-      
+ 
       if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
 
         $item['subscriptionStatus'] = $packageBalance->status;
@@ -308,7 +320,9 @@ class SubscriptionService
   
           $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
         }
-      
+        
+        $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
+        
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
       }
 
@@ -480,6 +494,36 @@ class SubscriptionService
       $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
 
       return $this->checkRemainingCars($subscription);
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription(int $storeOwnerId): string
+    {
+      $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
+
+      if($captainOfferId) {
+        return $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+      }
+       
+      return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
+    }
+
+    public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
+    {
+        if($remainingOrders <= (20 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
+        }
+        
+        if($remainingOrders <= (50 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
+        }
+        
+        if($remainingOrders <= (80 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
+        }
+        
+        if($remainingOrders === (100 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_100_PERCENT ;
+        }
     }
 }
  

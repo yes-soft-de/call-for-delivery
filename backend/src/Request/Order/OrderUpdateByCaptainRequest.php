@@ -12,6 +12,10 @@ class OrderUpdateByCaptainRequest
 
     private $captainId;
 
+    private $captainOrderCost;
+    
+    private $noteCaptainOrderCost;
+
     /**
      * Get the value of id
      */ 
@@ -68,6 +72,46 @@ class OrderUpdateByCaptainRequest
     public function setState($state)
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of captainOrderCost
+     */ 
+    public function getCaptainOrderCost()
+    {
+        return $this->captainOrderCost;
+    }
+
+    /**
+     * Set the value of captainOrderCost
+     *
+     * @return  self
+     */ 
+    public function setCaptainOrderCost($captainOrderCost)
+    {
+        $this->captainOrderCost = $captainOrderCost;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of noteCaptainOrderCost
+     */ 
+    public function getNoteCaptainOrderCost()
+    {
+        return $this->noteCaptainOrderCost;
+    }
+
+    /**
+     * Set the value of noteCaptainOrderCost
+     *
+     * @return  self
+     */ 
+    public function setNoteCaptainOrderCost($noteCaptainOrderCost)
+    {
+        $this->noteCaptainOrderCost = $noteCaptainOrderCost;
 
         return $this;
     }

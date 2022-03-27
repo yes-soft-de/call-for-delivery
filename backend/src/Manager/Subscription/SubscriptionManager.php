@@ -211,14 +211,7 @@ class SubscriptionManager
 
     public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
     {
-        // $subscribeEntity = $this->subscribeRepository->find($id);
-
-        // if ($subscribeEntity) {
-          
-            return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
-        // }
-
-        // return SubscriptionConstant::ERROR;
+        return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
 
     public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): string
@@ -239,7 +232,7 @@ class SubscriptionManager
        
         $remainingCars = $subscribeCurrent->getRemainingCars() + $subscriptionCaptainOfferEntity->getCarCount();
         $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
-       
+    
         return SubscriptionConstant::UPDATE_STATE;
     }
     
@@ -261,5 +254,10 @@ class SubscriptionManager
     public function getSubscriptionHistoryByStoreOwner(StoreOwnerProfileEntity $storeOwnerProfileEntity): ?SubscriptionHistoryEntity
     {
         return $this->subscriptionHistoryManager->getSubscriptionHistoryByStoreOwner($storeOwnerProfileEntity);
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOffer($storeOwnerId): ?SubscriptionEntity
+    {
+        return $this->subscribeRepository->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
     }
 }

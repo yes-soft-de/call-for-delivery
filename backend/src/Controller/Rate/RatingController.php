@@ -58,6 +58,7 @@ class RatingController extends BaseController
      *          @OA\Property(type="integer", property="rated"),
      *          @OA\Property(type="integer", property="rating"),
      *          @OA\Property(type="string", property="comment"),
+     *          @OA\Property(type="integer", property="orderId"),
      *      )
      * )
      *
