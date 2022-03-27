@@ -3,24 +3,21 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
-import 'package:c4d/module_orders/ui/widgets/communication_card/communication_card.dart';
+import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/effect/scaling.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -30,11 +27,13 @@ import 'package:url_launcher/url_launcher.dart';
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
   final _distanceCalculator = TextEditingController();
+  final _paymentController = TextEditingController();
   final OrderStatusScreenState screenState;
   OrderDetailsCaptainOrderLoadedState(
     this.screenState,
     this.orderInfo,
   ) : super(screenState);
+  bool speaking = false;
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -104,6 +103,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
             ),
           ),
+          Visibility(
+              visible: orderInfo.rating != null,
+              child: OrderButton(
+                title: S.current.rating,
+                subtitle:
+                    S.current.currentRating + ' ' + (orderInfo.rating ?? ''),
+                icon: Icons.star_rate_rounded,
+                backgroundColor: Colors.amber,
+              )),
           // with order type we can get order widgets
           Visibility(
               replacement: details(context),
@@ -389,6 +397,17 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                   title: Text(S.current.orderDetails),
                   subtitle: Text(orderInfo.note),
+                  trailing: Material(
+                    color: Colors.transparent,
+                    child: IconButton(
+                      onPressed: () async {
+                        screenState.speak(orderInfo.note);
+
+                        screenState.refresh();
+                      },
+                      icon: const Icon(Icons.record_voice_over_rounded),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -666,32 +685,42 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     } else if (orderInfo.state == OrderStatusEnum.DELIVERING) {
       return Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25), color: Colors.amber),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                title: Text(S.current.warnning,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-                subtitle: Text(
-                  S.current.finishingOrderMessage,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+          AlertContainer(
+            subtitle: orderInfo.payment == 'cash'
+                ? S.current.finishingOrderMessageWithPayment
+                : S.current.finishingOrderMessage,
+            title: S.current.warnning,
           ),
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ProvideDistance(
-                callBack: (distance) {
-                  screenState.requestOrderProgress(orderInfo,
-                      StatusHelper.getOrderStatusIndex(orderInfo.state),
-                      distance: distance);
+                onChanged: () {
+                  screenState.refresh();
+                },
+                payment: orderInfo.payment == 'cash',
+                callBack: (distance, payment) {
+                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+                  screenState.requestOrderProgress(UpdateOrderRequest(
+                      id: int.tryParse(screenState.orderId ?? '-1'),
+                      state: StatusHelper.getStatusString(
+                          OrderStatusEnum.values[index + 1]),
+                      distance: distance,
+                      orderCost: double.tryParse(payment ?? 'n')));
                 },
                 controller: _distanceCalculator,
-              ))
+                controller2: _paymentController,
+              )),
+          Visibility(
+            visible: _paymentController.text != '' &&
+                orderInfo.orderCost != num.tryParse(_paymentController.text),
+            child: ScalingWidget(
+              child: AlertContainer(
+                background: Theme.of(context).colorScheme.error,
+                title: S.current.collectedPaymentNotMatch,
+                subtitle: null,
+              ),
+            ),
+          ),
         ],
       );
     } else {
@@ -701,8 +730,12 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           subtitle: OrderProgressionHelper.getNextStageHintMessage(
               orderInfo.state, context),
           onTap: () {
-            screenState.requestOrderProgress(
-                orderInfo, StatusHelper.getOrderStatusIndex(orderInfo.state));
+            var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+            screenState.requestOrderProgress(UpdateOrderRequest(
+              id: int.tryParse(screenState.orderId ?? '-1'),
+              state: StatusHelper.getStatusString(
+                  OrderStatusEnum.values[index + 1]),
+            ));
           },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,

@@ -33,6 +33,7 @@ class OrderDetailsModel extends DataModel {
   String? distance;
   String? branchDistance;
   late bool usedAs;
+  String? rating;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -56,7 +57,8 @@ class OrderDetailsModel extends DataModel {
       required this.branchLink,
       required this.distance,
       required this.branchDistance,
-      required this.usedAs});
+      required this.usedAs,
+      required this.rating});
 
   late OrderDetailsModel _orders;
 
@@ -76,6 +78,7 @@ class OrderDetailsModel extends DataModel {
         DateFormat.yMMMEd()
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     _orders = OrderDetailsModel(
+      rating: element?.rating,
       image: element?.image?.image,
       branchName: element?.branchName ?? S.current.unknown,
       createdDate: create,

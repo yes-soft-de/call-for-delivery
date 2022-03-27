@@ -618,7 +618,15 @@
     "canConnect": "Enquiry about order",
     "canConnectHint": "By create chat room between you and store owner",
     "storeCarsFinished": "You can't accept orders for this store any more , because It consumes all cars",
-    "chatRoomCreated": "Chat room created successfully"
+    "chatRoomCreated": "Chat room created successfully",
+    "collectedPayment": "Collected Payment",
+    "collectedPaymentNotMatch": "Collected payment not match with bill that you should receive",
+    "finishingOrderMessageWithPayment": "Please provide us with distance you reached out and collected payment with this order To finish the order",
+    "currentRating": "Your current rating by this store is"
+
+
+
+
 
 
 

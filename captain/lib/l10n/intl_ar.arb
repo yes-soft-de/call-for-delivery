@@ -619,7 +619,12 @@
     "canConnect": "استفسار عن الطلب",
     "canConnectHint": "عن طريق إنشاء زر محادثة مع المتجر",
     "storeCarsFinished": "لا يمكنك قبول طلبات لهذا المتجر بعد الآن ، لانتهاء السيارات المخصصة له",
-    "chatRoomCreated": "تم إنشاء غرفة المحادثة"
+    "chatRoomCreated": "تم إنشاء غرفة المحادثة",
+    "collectedPayment": "المبلغ المقبوض",
+    "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
+    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
+    "currentRating": "المتجر قيمك ب"
+
 
 
 
