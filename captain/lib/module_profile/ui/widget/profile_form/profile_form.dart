@@ -1,3 +1,4 @@
+import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:c4d/consts/urls.dart';
@@ -11,6 +12,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:the_country_number/the_country_number.dart';
 
 class ProfileFormWidget extends StatefulWidget {
   final Function(ProfileModel) onProfileSaved;
@@ -30,6 +32,7 @@ class ProfileFormWidget extends StatefulWidget {
 class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _countryCodeController = TextEditingController();
   final _carController = TextEditingController();
   final _stcPayController = TextEditingController();
   final _bankAccountNumberController = TextEditingController();
@@ -37,7 +40,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   final _ageController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  String countryCode = '+966';
   String imageAvatar = '';
   String? captainState;
 
@@ -45,15 +47,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   void initState() {
     super.initState();
     if (widget.profileRequest == null) {
+      _countryCodeController.text = '966';
     } else {
       _nameController.text = widget.profileRequest?.name ?? '';
       imageAvatar = widget.profileRequest?.name ?? '';
       if (widget.profileRequest?.phone != null) {
-        countryCode = widget.profileRequest!.phone!.contains('+')
-            ? widget.profileRequest!.phone!.substring(0, 4)
-            : '+966';
-        _phoneController.text =
-            widget.profileRequest!.phone!.replaceFirst(countryCode, '0');
+        try {
+          final sNumber = TheCountryNumber().parseNumber(
+              internationalNumber: '+' + widget.profileRequest!.phone!);
+          print(sNumber);
+          print(sNumber.dialCode);
+
+          _countryCodeController.text = sNumber.dialCode.substring(1);
+          _phoneController.text = sNumber.number;
+        } catch (e) {}
+        setState(() {});
       }
 
       _stcPayController.text = widget.profileRequest?.stcPay ?? '';
@@ -61,7 +69,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
           widget.profileRequest?.bankAccountNumber ?? '';
       _bankNameController.text = widget.profileRequest?.bankName ?? '';
       _carController.text = widget.profileRequest?.car ?? '';
-      captainState = widget.profileRequest?.isOnline == true ? 'active' : 'inactive';
+      captainState =
+          widget.profileRequest?.isOnline == true ? 'active' : 'inactive';
       _ageController.text = widget.profileRequest?.age ?? '';
     }
   }
@@ -86,9 +95,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Theme.of(context).primaryColor),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: const Icon(
                 Icons.add_a_photo_rounded,
                 color: Colors.white,
               ),
@@ -116,7 +125,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: Center(
                   child: Text(
                 imageType,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ))),
         ),
         GestureDetector(
@@ -161,8 +170,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     borderRadius: BorderRadius.circular(10),
                     child: FadeInImage.assetNetwork(
                       placeholder: ImageAsset.PLACEHOLDER,
-                      image: '${image}'.contains('http')
-                          ? '${image}'
+                      image: image.contains('http')
+                          ? image
                           : '${Urls.IMAGES_ROOT}${image}',
                       fit: BoxFit.cover,
                       height: 150,
@@ -200,14 +209,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     message: S.current.chooseYourState)
                 .show(context);
           } else if (_formKey.currentState!.validate()) {
-            String phone = _phoneController.text;
-            if (phone[0] == '0') {
-              phone = phone.substring(1);
-            }
             var profile = ProfileModel(
                 image: widget.profileRequest?.image,
                 name: _nameController.text,
-                phone: countryCode + phone,
+                phone: _countryCodeController.text + _phoneController.text,
                 stcPay: _stcPayController.text,
                 bankName: _bankNameController.text,
                 bankNumber: _bankAccountNumberController.text,
@@ -270,8 +275,10 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                         ),
                         child: Center(
                             child: Text(
-                          '${imageAvatar.isNotEmpty ? imageAvatar[0].toUpperCase() : '?'}',
-                          style: TextStyle(
+                          imageAvatar.isNotEmpty
+                              ? imageAvatar[0].toUpperCase()
+                              : '?',
+                          style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 50),
@@ -303,9 +310,9 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Theme.of(context).primaryColor),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: const Icon(
                                   Icons.add_a_photo_rounded,
                                   color: Colors.white,
                                 ),
@@ -323,19 +330,65 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _nameController,
                 hintText: S.current.nameHint,
-                preIcon: Icon(Icons.person),
+                preIcon: const Icon(Icons.person),
               ),
             ),
             titleField(S.of(context).phoneNumber),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: CustomFormField(
-                controller: _phoneController,
-                hintText: '050000000',
-                preIcon: Icon(Icons.phone),
-                phone: true,
-                numbers: true,
-              ),
+            // phone
+            Row(
+              children: [
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: CustomLoginFormField(
+                    preIcon: Icon(
+                      Icons.phone,
+                      color: Theme.of(context).disabledColor,
+                    ),
+                    controller: _phoneController,
+                    hintText: '5xxxxxxxxx',
+                    phone: true,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 28.0),
+                  child: SizedBox(
+                    width: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomLoginFormField(
+                        contentPadding:
+                            const EdgeInsets.only(left: 8.0, right: 8.0),
+                        controller: _countryCodeController,
+                        phone: true,
+                        phoneHint: false,
+                        maxLength: 3,
+                        halfField: true,
+                        hintText: S.current.countryCode,
+                        sufIcon: Padding(
+                          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: Container(
+                            width: 30,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context).primaryColor),
+                            child: Center(
+                              child: Text(
+                                '+',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             titleField(S.of(context).age),
             Padding(
@@ -343,7 +396,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _ageController,
                 hintText: S.current.age,
-                preIcon: Icon(Icons.date_range_rounded),
+                preIcon: const Icon(Icons.date_range_rounded),
                 numbers: true,
               ),
             ),
@@ -353,7 +406,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _carController,
                 hintText: S.current.car,
-                preIcon: Icon(Icons.local_taxi_rounded),
+                preIcon: const Icon(Icons.local_taxi_rounded),
               ),
             ),
             titleField(S.of(context).bankName),
@@ -362,7 +415,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankNameController,
                 hintText: S.current.bankName,
-                preIcon: Icon(Icons.monetization_on_rounded),
+                preIcon: const Icon(Icons.monetization_on_rounded),
               ),
             ),
             titleField(S.of(context).bankAccountNumber),
@@ -371,7 +424,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankAccountNumberController,
                 hintText: '123456789',
-                preIcon: Icon(Icons.password_rounded),
+                preIcon: const Icon(Icons.password_rounded),
                 numbers: true,
               ),
             ),
@@ -381,7 +434,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _stcPayController,
                 hintText: 'XXXXXXXX',
-                preIcon: Icon(Icons.credit_card_rounded),
+                preIcon: const Icon(Icons.credit_card_rounded),
                 last: true,
               ),
             ),

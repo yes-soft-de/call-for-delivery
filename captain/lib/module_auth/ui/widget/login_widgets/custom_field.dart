@@ -67,10 +67,15 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
           ),
           child: Row(
             children: [
+              Visibility(
+                  visible: widget.preIcon != null,
+                  child: SizedBox(
+                    width: 45,
+                    child: widget.preIcon ?? const SizedBox())),
               Expanded(
                 child: Padding(
                   padding:
-                      !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+                      !clean ? const EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
                   child: SizedBox(
                     height: widget.height,
                     child: TextFormField(
@@ -161,7 +166,6 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                         border: InputBorder.none,
                         counterText: '',
                         hintText: widget.hintText,
-                        prefixIcon: widget.preIcon,
                         enabledBorder: InputBorder.none,
                         contentPadding: widget.contentPadding,
                         focusedBorder: InputBorder.none,
