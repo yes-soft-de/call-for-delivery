@@ -488,6 +488,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="orderNumber"),
      *              @OA\Property(type="string", property="state", description="on way to pick order or in store or picked or ongoing or delivered"),
      *              @OA\Property(type="number", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *         ),
      *      ),
      *
@@ -501,6 +503,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state"),
      *              @OA\Property(type="integer", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *              )
      *      )
      * )
