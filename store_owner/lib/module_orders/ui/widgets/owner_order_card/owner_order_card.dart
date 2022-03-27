@@ -10,26 +10,30 @@ class OwnerOrderCard extends StatelessWidget {
   final String createdDate;
   final String orderCost;
   final String note;
+  final Color? background;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
       required this.createdDate,
       required this.deliveryDate,
       required this.orderCost,
-      required this.note});
+      required this.note,
+      this.background});
 
   @override
   Widget build(BuildContext context) {
+    var color = background ?? Theme.of(context).colorScheme.primary;
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.9),
-            Theme.of(context).colorScheme.primary.withOpacity(0.93),
-            Theme.of(context).colorScheme.primary.withOpacity(0.95),
-            Theme.of(context).colorScheme.primary,
+            color.withOpacity(0.85),
+            color.withOpacity(0.85),
+            color.withOpacity(0.9),
+            color.withOpacity(0.93),
+            color.withOpacity(0.95),
+            color,
           ])),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -90,7 +94,7 @@ class OwnerOrderCard extends StatelessWidget {
                     title: S.current.cost, subtitle: orderCost),
                 Icon(
                   Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).textTheme.button?.color,
                 )
               ],
             ),
@@ -108,7 +112,7 @@ class OwnerOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
@@ -120,7 +124,7 @@ class OwnerOrderCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).backgroundColor;
+    Color dividerColor = Theme.of(context).textTheme.button!.color!;
     return Divider(
       thickness: 2,
       indent: 16,

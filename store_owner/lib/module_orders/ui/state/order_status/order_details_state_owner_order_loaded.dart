@@ -1,9 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
@@ -14,7 +14,6 @@ import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -29,19 +28,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
-    if (orderInfo.destinationCoordinate != null) {
-      distance = S.current.calculating;
-      screenState.refresh();
-      DeepLinksService.getDistance(LatLng(
-              orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0))
-          .then((value) {
-        distance = value.toStringAsFixed(1);
-        screenState.refresh();
-      });
+    if (orderInfo.showConfirm == true &&
+        orderInfo.state == OrderStatusEnum.IN_STORE) {
+      showOwnerAlertConfirm(screenState.context);
     }
   }
-  String? distance;
+
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -155,7 +147,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                               screenState.rateCaptain(RatingRequest(
                                   rated: orderInfo.captainID,
                                   rating: rate,
-                                  comment: controller.text));
+                                  comment: controller.text,
+                                  orderId: orderInfo.id));
                             },
                             title: S.current.rateCaptain,
                             controller: controller,
@@ -233,7 +226,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails),
+          title: Text(S.current.orderDetails + ' #${orderInfo.id}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -343,10 +336,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     child: ListTile(
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
-                          : Text(S.current.distance + ' ' + S.current.unknown),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(S.current.destinationUnavailable),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),
@@ -556,5 +548,63 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
       CustomStep(status: OrderStatusEnum.FINISHED, currentIndex: currentIndex),
     ];
     return steps;
+  }
+
+  bool redo = false;
+  void showFlush(context, answer) {
+    late Flushbar flushbar;
+    flushbar = Flushbar(
+      borderRadius: BorderRadius.circular(25),
+      onStatusChanged: (status) {
+        if (FlushbarStatus.DISMISSED == status && !redo) {
+          screenState.sendOrderReportState(orderInfo.id, answer);
+        }
+      },
+      duration: Duration(seconds: 5),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      title: S.current.warnning,
+      message: S.current.sendingReport,
+      icon: Icon(
+        Icons.warning,
+        size: 28.0,
+        color: Colors.white,
+      ),
+      mainButton: TextButton(
+          onPressed: () {
+            redo = true;
+            screenState.refresh();
+            flushbar.dismiss();
+            screenState.changeStateToLoaded(orderInfo);
+          },
+          child: Text(S.of(context).redo)),
+    )..show(context);
+  }
+
+  void showOwnerAlertConfirm(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(S.current.warnning),
+            content: Container(
+              child: Text(S.of(context).confirmingCaptainLocation),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showFlush(context, true);
+                  },
+                  child: Text(S.of(context).yes)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showFlush(context, false);
+                  },
+                  child: Text(S.of(context).no))
+            ],
+          );
+        });
   }
 }

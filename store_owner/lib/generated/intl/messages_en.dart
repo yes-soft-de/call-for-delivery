@@ -199,6 +199,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "Are sure about subscribe with this offer"),
+        "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
+            "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
@@ -242,6 +244,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
+        "destinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("Destination unavailable"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
@@ -264,6 +268,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "There is no packages in this category"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "enquiries": MessageLookupByLibrary.simpleMessage("Orders Enquiries"),
+        "enquiryAboutOrder":
+            MessageLookupByLibrary.simpleMessage("Enquiry about order number"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -418,6 +425,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "No Image , Please provide one"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -439,6 +447,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
+        "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
+            "This offer not available to renew any more"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
@@ -462,8 +472,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
-        "orderIsFinished":
-            MessageLookupByLibrary.simpleMessage("Order is finished"),
+        "orderIsFinished": MessageLookupByLibrary.simpleMessage(
+            "Your monthly orders finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
@@ -611,6 +621,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
+        "redo": MessageLookupByLibrary.simpleMessage("Redo"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registerHint":
@@ -671,6 +682,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
+        "sendingReport": MessageLookupByLibrary.simpleMessage(
+            "Sending report within 5 seconds"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
@@ -827,6 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("Work time"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

@@ -137,7 +137,7 @@
     "captainInStore": "الكابتن في المتجر",
     "captainStartedDelivery": "بدأ الكابتن التوصيل",
     "captainGotCash": "حصل الكابتن على الكاش",
-    "orderIsFinished": "تم انهاء الطلب",
+    "orderIsFinished": "طلباتك المخصصة لهذا الشهر انتهت",
     "orderIsCreated": "تم الانشاء",
     "activityLog": "سجل الاستخدام",
     "saveSuccess": "تم بنجاح",
@@ -518,7 +518,7 @@
     "packageExtendedSuccessfully": "تم تمديد الاشتراك بنجاح",
     "packageExtend": "تمديد اضطراري للاشتراك",
     "alreadyExtended": "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى",
-    "packageNotFoundRenew": "هذا الباقة لم تعد متاحة بعد الآن للتجديد",
+    "packageNotFoundRenew": "هذه الباقة لم تعد متاحة بعد الآن للتجديد",
     "notices": "التحديثات",
     "copy": "نسخ",
     "copyFinished": "تم النسخ بنجاح",
@@ -542,7 +542,19 @@
     "confirmationCaptainOffers": "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض",
     "companyInfo": "معلومات الشركة",
     "fax": "فاكس",
-    "youSubscribedWithOffer": "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك"
+    "youSubscribedWithOffer": "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك",
+    "destinationUnavailable": "المسافة غير متوفرة",
+    "offerNotFoundRenew": "هذا العرض لم يعد متاح بعد الآن للتجديد",
+    "enquiryAboutOrder": "استفسار بخصوص الطلب رقم",
+    "enquiries": "استفسارات الطلبات",
+    "sendingReport": "سيتم إرسال التقرير بعد 5 ثواني الرجاء الانتظار أو التراجع عن خيارك",
+    "yes": "نعم",
+    "no": "لا",
+    "confirmingCaptainLocation": "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا",
+    "redo": "تراجع"
+
+
+
 
 
 

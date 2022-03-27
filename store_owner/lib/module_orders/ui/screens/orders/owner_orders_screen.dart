@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
@@ -16,10 +18,13 @@ import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -133,12 +138,30 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.orders, icon: Icons.sort, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }, actions: [
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context)
-              .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
-        }, icon: Icons.notifications_rounded)
-      ]),
+      },
+          colorIcon: currentIndex == 0
+              ? null
+              : StatusHelper.getOrderStatusColor(OrderStatusEnum.IN_STORE),
+          actions: [
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context)
+                  .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+            },
+                icon: Icons.notifications_rounded,
+                colorIcon: currentIndex == 0
+                    ? null
+                    : StatusHelper.getOrderStatusColor(
+                        OrderStatusEnum.IN_STORE)),
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context)
+                  .pushNamed(ChatRoutes.roomChatList);
+            },
+                icon: Icons.chat_rounded,
+                colorIcon: currentIndex == 0
+                    ? null
+                    : StatusHelper.getOrderStatusColor(
+                        OrderStatusEnum.IN_STORE))
+          ]),
       drawer: NavigatorMenu(
         profileModel: currentProfile,
         company: _companyInfo,
@@ -157,18 +180,27 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         ),
         child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
+                primary: currentIndex == 0
+                    ? null
+                    : StatusHelper.getOrderStatusColor(
+                        OrderStatusEnum.IN_STORE),
                 shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            )),
+                  borderRadius: BorderRadius.circular(25),
+                )),
             onPressed: status != null
                 ? () {
                     if (status?.canCreateOrder == true) {
                       Navigator.of(context)
                           .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
                     } else {
+                      Navigator.of(context)
+                          .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
                       CustomFlushBarHelper.createError(
-                          title: S.current.warnning,
-                          message: status?.status ?? '');
+                              title: S.current.warnning,
+                              message:
+                                  SubscriptionsStatusHelper.getStatusMessage(
+                                      status?.status))
+                          .show(context);
                     }
                   }
                 : null,
@@ -182,6 +214,30 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       ),
       body: Column(
         children: [
+          Visibility(
+              visible: status?.canCreateOrder == false,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).colorScheme.error),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      title: Text(
+                        S.current.warnning,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      subtitle: Text(
+                          SubscriptionsStatusHelper.getStatusMessage(
+                            status?.status,
+                          ),
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ),
+              )),
           SizedBox(
             height: 16,
           ),
@@ -193,7 +249,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             borderRadius: BorderRadius.circular(25),
             floating: true,
             height: 40,
-            cursorColor: Theme.of(context).colorScheme.primary,
+            cursorColor: currentIndex == 0
+                ? Theme.of(context).colorScheme.primary
+                : StatusHelper.getOrderStatusColor(OrderStatusEnum.IN_STORE),
             items: [
               FilterItem(label: S.current.pendingOrders),
               FilterItem(label: S.current.onGoingOrder),

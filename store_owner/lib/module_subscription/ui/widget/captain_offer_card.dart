@@ -55,7 +55,9 @@ class CaptainOfferCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Flex(
             direction: Axis.horizontal,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,7 +120,7 @@ class CaptainOfferCard extends StatelessWidget {
               SizedBox(
                 width: 105,
                 child: Text(
-                expired +' ' + S.current.day + ' ' + S.current.validation,
+                  expired + ' ' + S.current.day + ' ' + S.current.validation,
                   style: TextStyle(
                       color: Theme.of(context).textTheme.button?.color),
                 ),

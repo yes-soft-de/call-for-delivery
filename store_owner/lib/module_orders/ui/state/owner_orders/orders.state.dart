@@ -40,6 +40,9 @@ class OrdersListStateOrdersLoaded extends States {
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
+              background: screenState.currentIndex == 0
+                  ? null
+                  : StatusHelper.getOrderStatusColor(element.state),
               orderCost:
                   element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
               note: element.note,

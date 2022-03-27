@@ -3,8 +3,10 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -34,6 +36,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       if (mounted) {
         setState(() {});
       }
+    });
+    FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
+      widget._stateManager.getOrder(this, orderId, false);
     });
     super.initState();
   }
@@ -92,7 +97,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   void getOrderDetails(var orderId) {}
 
-  void changeStateToLoaded(OrderModel order) {
+  void changeStateToLoaded(OrderDetailsModel order) {
     if (mounted) {
       setState(() {});
     }

@@ -7,8 +7,8 @@ class Data {
   String? stc;
   String? email;
   int? kilometers;
-  int? maxKilometerBonus;
-  int? minKilometerBonus;
+  num? maxKilometerBonus;
+  num? minKilometerBonus;
 
   Data({
     this.phone,
@@ -32,8 +32,8 @@ class Data {
         stc: json['stc'] as String?,
         email: json['email'] as String?,
         kilometers: json['kilometers'] as int?,
-        maxKilometerBonus: json['maxKilometerBonus'] as int?,
-        minKilometerBonus: json['minKilometerBonus'] as int?,
+        maxKilometerBonus: json['maxKilometerBonus'] as num?,
+        minKilometerBonus: json['minKilometerBonus'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

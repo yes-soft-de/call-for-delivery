@@ -1420,10 +1420,10 @@ class S {
     );
   }
 
-  /// `Order is finished`
+  /// `Your monthly orders finished`
   String get orderIsFinished {
     return Intl.message(
-      'Order is finished',
+      'Your monthly orders finished',
       name: 'orderIsFinished',
       desc: '',
       args: [],
@@ -5465,6 +5465,96 @@ class S {
     return Intl.message(
       'You already subscribed with captain offer , You can subscribe again when your subscription expired',
       name: 'youSubscribedWithOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Destination unavailable`
+  String get destinationUnavailable {
+    return Intl.message(
+      'Destination unavailable',
+      name: 'destinationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This offer not available to renew any more`
+  String get offerNotFoundRenew {
+    return Intl.message(
+      'This offer not available to renew any more',
+      name: 'offerNotFoundRenew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enquiry about order number`
+  String get enquiryAboutOrder {
+    return Intl.message(
+      'Enquiry about order number',
+      name: 'enquiryAboutOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders Enquiries`
+  String get enquiries {
+    return Intl.message(
+      'Orders Enquiries',
+      name: 'enquiries',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sending report within 5 seconds`
+  String get sendingReport {
+    return Intl.message(
+      'Sending report within 5 seconds',
+      name: 'sendingReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm with yes and no if captain reach you`
+  String get confirmingCaptainLocation {
+    return Intl.message(
+      'Confirm with yes and no if captain reach you',
+      name: 'confirmingCaptainLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Redo`
+  String get redo {
+    return Intl.message(
+      'Redo',
+      name: 'redo',
       desc: '',
       args: [],
     );

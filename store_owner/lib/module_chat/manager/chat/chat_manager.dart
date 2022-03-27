@@ -1,3 +1,4 @@
+import 'package:c4d/module_chat/response/order_chat_rooms_response/order_chat_rooms_response.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_chat/model/chat/chat_model.dart';
@@ -21,6 +22,8 @@ class ChatManager {
   void sendNotification(ChatArgument chatArgument) {
     _chatRepository.sendNotification(chatArgument);
   }
+
+  Future<OrderChatRoomsResponse?> getOrderChatRooms() => _chatRepository.getOrderChatRooms();
 
   void needSupport() {
     //  _chatRepository.needSupport();
