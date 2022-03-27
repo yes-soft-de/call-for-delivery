@@ -6,4 +6,6 @@ class CanCreateOrderResponse
 {
     public $canCreateOrder;
     public $subscriptionStatus;
+  
+    public string|null $percentageOfOrdersConsumed;
 }
