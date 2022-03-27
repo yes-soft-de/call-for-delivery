@@ -38,7 +38,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       }
     });
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      widget._stateManager.getOrder(this, orderId, false);
+      if (mounted) {
+        widget._stateManager.getOrder(this, orderId, false);
+      }
     });
     super.initState();
   }
