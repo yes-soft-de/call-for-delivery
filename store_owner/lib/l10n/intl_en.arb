@@ -547,7 +547,13 @@
     "destinationUnavailable": "Destination unavailable",
     "offerNotFoundRenew": "This offer not available to renew any more",
     "enquiryAboutOrder": "Enquiry about order number",
-    "enquiries": "Orders Enquiries"
+    "enquiries": "Orders Enquiries",
+    "sendingReport": "Sending report within 5 seconds",
+    "yes": "Yes",
+    "no": "No",
+    "confirmingCaptainLocation": "Confirm with yes and no if captain reach you",
+    "redo": "Redo"
+
 
 
 

@@ -546,7 +546,12 @@
     "destinationUnavailable": "المسافة غير متوفرة",
     "offerNotFoundRenew": "هذا العرض لم يعد متاح بعد الآن للتجديد",
     "enquiryAboutOrder": "استفسار بخصوص الطلب رقم",
-    "enquiries": "استفسارات الطلبات"
+    "enquiries": "استفسارات الطلبات",
+    "sendingReport": "سيتم إرسال التقرير بعد 5 ثواني الرجاء الانتظار أو التراجع عن خيارك",
+    "yes": "نعم",
+    "no": "لا",
+    "confirmingCaptainLocation": "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا",
+    "redo": "تراجع"
 
 
 

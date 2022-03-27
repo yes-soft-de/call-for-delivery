@@ -198,6 +198,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
+        "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
+            "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
@@ -417,6 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
+        "no": MessageLookupByLibrary.simpleMessage("لا"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "لا يوجد صورة ، الرجاء اختيار صورة لإرفاقها مع الطلب"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -611,6 +614,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
+        "redo": MessageLookupByLibrary.simpleMessage("تراجع"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),
         "registerHint":
@@ -671,6 +675,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
+        "sendingReport": MessageLookupByLibrary.simpleMessage(
+            "سيتم إرسال التقرير بعد 5 ثواني الرجاء الانتظار أو التراجع عن خيارك"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
@@ -832,6 +838,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("ساعات الدوام"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
+        "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
