@@ -47,4 +47,6 @@ class SpecificOrderForCaptainResponse
     public string $usedAs;
 
     public float|null $rating;
+
+    public string|null $branchPhone;
 }

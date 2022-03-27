@@ -33,6 +33,9 @@ class StoreOwnerBranchEntity
     #[ORM\OneToMany(mappedBy: 'branch', targetEntity: StoreOrderDetailsEntity::class)]
     private $storeOrderDetailsEntities;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $branchPhone;
+
     public function __construct()
     {
         $this->storeOrderDetailsEntities = new ArrayCollection();
@@ -129,6 +132,18 @@ class StoreOwnerBranchEntity
                 $storeOrderDetailsEntity->setBranch(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBranchPhone(): ?string
+    {
+        return $this->branchPhone;
+    }
+
+    public function setBranchPhone(?string $branchPhone): self
+    {
+        $this->branchPhone = $branchPhone;
 
         return $this;
     }

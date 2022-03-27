@@ -213,6 +213,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="roomId"),
      *                  @OA\Property(type="boolean", property="isCaptainArrived"),
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -452,6 +453,7 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="baseURL"),
      *                      ),
      *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      * 
      *              ),
      *          )
