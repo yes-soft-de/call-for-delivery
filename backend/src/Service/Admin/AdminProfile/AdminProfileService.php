@@ -9,6 +9,7 @@ use App\Entity\UserEntity;
 use App\Manager\Admin\AdminProfile\AdminProfileManager;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
+use App\Request\Admin\AdminProfile\FilterAdminProfilesRequest;
 use App\Response\Admin\AdminProfile\AdminProfileGetForSuperAdminResponse;
 use App\Response\Admin\AdminProfile\AdminProfileUpdateResponse;
 use App\Response\Admin\AdminProfileGetResponse;
@@ -36,18 +37,7 @@ class AdminProfileService
         if ($adminProfile) {
             $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetResponse::class, $adminProfile);
 
-            if (! empty($response->images->toArray())) {
-                $response2 = [];
-
-                foreach ($response->images->toArray() as $imageEntity) {
-                    $response2[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
-                }
-
-                $response->images = $response2;
-
-            } else {
-                $response->images = null;
-            }
+            $response->images = $this->customizeAdminProfileImages($response->images->ToArray());
         }
 
         return $response;
@@ -96,6 +86,41 @@ class AdminProfileService
 
         } else {
             return $this->autoMapping->map(AdminProfileEntity::class, AdminProfileUpdateResponse::class, $adminProfileResult);
+        }
+    }
+
+    public function filterAdminProfiles(FilterAdminProfilesRequest $request): array
+    {
+        $response = [];
+
+        $adminProfiles = $this->adminProfileManager->filterAdminProfiles($request);
+
+        if (! empty($adminProfiles)) {
+            foreach ($adminProfiles as $key => $value) {
+                $response[] = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $value);
+
+                $response[$key]->user = $this->getSpecificUserFields($response[$key]->user);
+
+                $response[$key]->images = $this->customizeAdminProfileImages($response[$key]->images->toArray());
+            }
+        }
+
+        return $response;
+    }
+
+    public function customizeAdminProfileImages(array $imageEntitiesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imageEntitiesArray)) {
+            foreach ($imageEntitiesArray as $imageEntity) {
+                $response[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+            }
+
+            return $response;
+
+        } else {
+            return null;
         }
     }
 

@@ -28,7 +28,7 @@ class AdminProfileGetForSuperAdminResponse
     /**
      * @var array|null
      */
-    public $image;
+    public $images;
 
     public bool $status;
 }

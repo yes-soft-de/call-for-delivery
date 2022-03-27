@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\AdminProfileEntity;
 use App\Entity\UserEntity;
+use App\Request\Admin\AdminProfile\FilterAdminProfilesRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,5 +41,24 @@ class AdminProfileEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function filterAdminProfiles(FilterAdminProfilesRequest $request): array
+    {
+        $query = $this->createQueryBuilder('adminProfile')
+
+            ->orderBy('adminProfile.id', 'DESC');
+
+        if ($request->getName() != null || $request->getName() != "") {
+            $query->andWhere('adminProfile.name LIKE :name');
+            $query->setParameter('name', '%'.$request->getName().'%');
+        }
+
+        if ($request->getPhone() != null || $request->getPhone() != "") {
+            $query->andWhere('adminProfile.phone LIKE :phone');
+            $query->setParameter('phone', '%'.$request->getPhone().'%');
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

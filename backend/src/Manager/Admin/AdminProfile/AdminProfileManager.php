@@ -10,6 +10,7 @@ use App\Manager\Image\ImageManager;
 use App\Repository\AdminProfileEntityRepository;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
+use App\Request\Admin\AdminProfile\FilterAdminProfilesRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminProfileManager
@@ -123,5 +124,10 @@ class AdminProfileManager
 
             return $adminProfileEntity;
         }
+    }
+
+    public function filterAdminProfiles(FilterAdminProfilesRequest $request): array
+    {
+        return $this->adminProfileEntityRepository->filterAdminProfiles($request);
     }
 }
