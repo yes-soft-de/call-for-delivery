@@ -211,6 +211,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
      *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -450,6 +451,7 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="baseURL"),
      *                      ),
      *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      * 
      *              ),
      *          )

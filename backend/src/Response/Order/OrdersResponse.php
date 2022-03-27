@@ -41,4 +41,6 @@ class OrdersResponse
     public $roomId;
 
     public $captainName;
+
+    public string|null $branchPhone;
 }

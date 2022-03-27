@@ -63,6 +63,7 @@ class StoreOwnerBranchController extends BaseController
      *              ),
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="city"),
+     *          @OA\Property(type="string", property="branchPhone"),
      *      )
      * )
      *
@@ -81,6 +82,7 @@ class StoreOwnerBranchController extends BaseController
      *            @OA\Property(type="string", property="name"),
      *            @OA\Property(type="boolean", property="isActive"),
      *            @OA\Property(type="string", property="city"),
+     *            @OA\Property(type="string", property="branchPhone"),
      *      )
      *   )
      * )
@@ -205,6 +207,7 @@ class StoreOwnerBranchController extends BaseController
      *              ),
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="city"),
+     *          @OA\Property(type="string", property="branchPhone"),
      *      )
      * )
      *
@@ -223,6 +226,7 @@ class StoreOwnerBranchController extends BaseController
      *            @OA\Property(type="string", property="name"),
      *            @OA\Property(type="boolean", property="isActive"),
      *            @OA\Property(type="string", property="city"),
+     *            @OA\Property(type="string", property="branchPhone"),
      *      )
      *   )
      * )
@@ -361,6 +365,7 @@ class StoreOwnerBranchController extends BaseController
      *                @OA\Property(type="string", property="name"),
      *                @OA\Property(type="boolean", property="isActive"),
      *                @OA\Property(type="string", property="city"),
+     *                @OA\Property(type="string", property="branchPhone"),
      *              ),
      *           )
      *      )
@@ -398,6 +403,7 @@ class StoreOwnerBranchController extends BaseController
      *                @OA\Property(type="string", property="name"),
      *                @OA\Property(type="boolean", property="isActive"),
      *                @OA\Property(type="string", property="city"),
+     *                @OA\Property(type="string", property="branchPhone"),
      *           )
      *      )
      *  )
