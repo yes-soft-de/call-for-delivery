@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -9,10 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class OrderStatusScreen extends StatefulWidget {
@@ -31,17 +31,31 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   bool makeInvoice = false;
   bool deliverOnMe = false;
   late FlutterTts flutterTts;
+  StreamSubscription? stateSub;
+  StreamSubscription? globalStateSub;
+  late TextEditingController distanceCalculator;
+  late TextEditingController paymentController;
+  @override
+  void dispose() {
+    stateSub?.cancel();
+    globalStateSub?.cancel();
+    distanceCalculator.dispose();
+    paymentController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget.stateManager.stateStream.listen((event) {
+    distanceCalculator = TextEditingController();
+    paymentController = TextEditingController();
+    stateSub = widget.stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
+    globalStateSub = getIt<GlobalStateManager>().stateStream.listen((event) {
       widget.stateManager
           .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this, false);
     });
@@ -60,14 +74,6 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   int currentIndex = 0;
-  void goBack(String error) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);
-    CustomFlushBarHelper.createError(
-      title: S.of(context).warnning,
-      message: error,
-    ).show(context);
-  }
 
   void createChatRoom(int orderId) {
     widget.stateManager.createChatRoom(this, orderId);

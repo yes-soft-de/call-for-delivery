@@ -27,8 +27,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
-  final _distanceCalculator = TextEditingController();
-  final _paymentController = TextEditingController();
   final OrderStatusScreenState screenState;
   OrderDetailsCaptainOrderLoadedState(
     this.screenState,
@@ -739,12 +737,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       distance: distance,
                       orderCost: double.tryParse(payment ?? 'n')));
                 },
-                controller: _distanceCalculator,
-                controller2: _paymentController,
+                controller: screenState.distanceCalculator,
+                controller2: screenState.paymentController,
               )),
           Visibility(
-            visible: _paymentController.text != '' &&
-                orderInfo.orderCost != num.tryParse(_paymentController.text),
+            visible: screenState.paymentController.text != '' &&
+                orderInfo.orderCost !=
+                    num.tryParse(screenState.paymentController.text),
             child: ScalingWidget(
               child: AlertContainer(
                 background: Theme.of(context).colorScheme.error,
