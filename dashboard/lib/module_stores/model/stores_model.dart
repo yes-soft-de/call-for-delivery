@@ -14,7 +14,8 @@ class StoresModel extends DataModel {
   DateTime? closingTime;
   DateTime? openingTime;
   String status = '';
-  String imageUrl='';
+  String? image;
+  String? imageUrl;
   String? city;
   String? employeeCount;
   String? bankAccountNumber;
@@ -28,7 +29,8 @@ class StoresModel extends DataModel {
       this.openingTime,
       this.closingTime,
       required this.status,
-    required  this.imageUrl, this.employeeCount ,this.bankName ,this.bankAccountNumber,this.city});
+        this.image,
+      this.imageUrl, this.employeeCount ,this.bankName ,this.bankAccountNumber,this.city});
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
@@ -40,7 +42,8 @@ class StoresModel extends DataModel {
           openingTime: DateHelper.convert(element.openingTime?.timestamp),
           closingTime: DateHelper.convert(element.closingTime?.timestamp),
           status: element.status ?? '',
-          imageUrl: element.image?.image ??ImageAsset.PLACEHOLDER,
+          image: element.image?.image,
+          imageUrl: element.image?.imageURL ??ImageAsset.PLACEHOLDER,
         bankAccountNumber: element.bankAccountNumber,
         bankName: element.bankName,
         city:element.city,

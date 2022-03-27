@@ -44,8 +44,8 @@ class StoresInActiveScreenState extends State<StoresInActiveScreen> {
     widget._stateManager.getStores(this);
   }
 
-  void updateStore(UpdateStoreRequest request) {
-    widget._stateManager.updateStore(this, request);
+  void updateStore(UpdateStoreRequest request,bool haveImage) {
+    widget._stateManager.updateStore(this, request,haveImage);
   }
 
   void refresh() {

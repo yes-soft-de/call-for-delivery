@@ -70,50 +70,50 @@ class StoresStateManager {
 //    });
 //  }
 
-  void updateStore(StoresScreenState screenState, UpdateStoreRequest request) {
-    if (request.image?.contains('/original-image/') == true) {
+  void updateStore(StoresScreenState screenState, UpdateStoreRequest request,bool haveImage) {
       _stateSubject.add(LoadingState(screenState));
-      _storesService.updateStore(request).then((value) {
-        if (value.hasError) {
-          getStores(screenState);
-          CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
-        } else {
-          getStores(screenState);
-          CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning,
-              message: S.current.storeUpdatedSuccessfully)
-            ..show(screenState.context);
-        }
+      if(haveImage){
+       _uploadService.uploadImage(request.image).then((image) {
+          if (image == null) {
+            screenState.getStores();
+            CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: S.current.errorUploadingImages)
+                .show(screenState.context);
+            return;
+          }else{
+            request.image=image;
+            _storesService.updateStore(request).then((value) {
+              if (value.hasError) {
+                getStores(screenState);
+                CustomFlushBarHelper.createError(
+                    title: S.current.warnning, message: value.error ?? '')
+                  ..show(screenState.context);
+              } else {
+                getStores(screenState);
+                CustomFlushBarHelper.createSuccess(
+                    title: S.current.warnning,
+                    message: S.current.storeUpdatedSuccessfully)
+                  ..show(screenState.context);
+              }
+            });
+          }
       });
-    } else {
-      _stateSubject.add(LoadingState(screenState));
-      _uploadService.uploadImage(request.image).then((value) {
-        if (value == null && request.image != null && request.image != '') {
-          getStores(screenState);
-          CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.errorUploadingImages)
-              .show(screenState.context);
-        } else {
-          request.image = value;
-          _storesService.updateStore(request).then((value) {
-            if (value.hasError) {
-              getStores(screenState);
-              CustomFlushBarHelper.createError(
-                  title: S.current.warnning, message: value.error ?? '')
-                ..show(screenState.context);
-            } else {
-              getStores(screenState);
-              CustomFlushBarHelper.createSuccess(
-                  title: S.current.warnning,
-                  message: S.current.storeUpdatedSuccessfully)
-                ..show(screenState.context);
-            }
-          });
-        }
-      });
-    }
+      }else{
+        _storesService.updateStore(request).then((value) {
+          if (value.hasError) {
+            getStores(screenState);
+            CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+              ..show(screenState.context);
+          } else {
+            getStores(screenState);
+            CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.storeUpdatedSuccessfully)
+              ..show(screenState.context);
+          }
+        });
+      }
   }
 }
