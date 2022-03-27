@@ -211,6 +211,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
      *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="boolean", property="isCaptainArrived"),
+     *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
