@@ -61,7 +61,7 @@ class Urls {
 
   /*------------------Package Category's ----------------*/
   static const GET_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/categories';
-  static const CREATE_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/category';
+  static const CREATE_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/packagecategory';
 
   /*-----------------------Package--------------------------------*/
   static const GET_PACKAGE_BY_CATEGORY = BASE_API_PACKAGE_ADMIN + '/packagesbycategoryid/';
