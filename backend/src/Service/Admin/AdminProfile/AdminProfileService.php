@@ -36,7 +36,7 @@ class AdminProfileService
         if ($adminProfile) {
             $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetResponse::class, $adminProfile);
 
-            if ($response->images) {
+            if (! empty($response->images->toArray())) {
                 $response2 = [];
 
                 foreach ($response->images->toArray() as $imageEntity) {
@@ -44,6 +44,9 @@ class AdminProfileService
                 }
 
                 $response->images = $response2;
+
+            } else {
+                $response->images = null;
             }
         }
 

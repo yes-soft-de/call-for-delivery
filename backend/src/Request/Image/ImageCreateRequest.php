@@ -17,7 +17,7 @@ class ImageCreateRequest
     /**
      * @var AdminProfileEntity|null
      */
-    private $adminProfile;
+    private $userId;
 
     public function setImagePath(string $imagePath): void
     {
@@ -39,8 +39,8 @@ class ImageCreateRequest
         $this->itemId = $itemId;
     }
 
-    public function setAdminProfile(?AdminProfileEntity $adminProfile): void
+    public function setUserId(?AdminProfileEntity $userId): void
     {
-        $this->adminProfile = $adminProfile;
+        $this->userId = $userId;
     }
 }

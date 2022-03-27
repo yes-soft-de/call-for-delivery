@@ -35,7 +35,8 @@ class ImageEntity
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'images')]
-    private $adminProfile;
+    #[ORM\JoinColumn(nullable: true)]
+    private $userId;
 
     public function getId(): ?int
     {
@@ -114,14 +115,14 @@ class ImageEntity
         return $this;
     }
 
-    public function getAdminProfile(): ?AdminProfileEntity
+    public function getUserId(): ?AdminProfileEntity
     {
-        return $this->adminProfile;
+        return $this->userId;
     }
 
-    public function setAdminProfile(?AdminProfileEntity $adminProfile): self
+    public function setUserId(?AdminProfileEntity $userId): self
     {
-        $this->adminProfile = $adminProfile;
+        $this->userId = $userId;
 
         return $this;
     }
