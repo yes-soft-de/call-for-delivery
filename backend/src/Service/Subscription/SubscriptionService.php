@@ -302,7 +302,7 @@ class SubscriptionService
     public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse
     {
       $packageBalance = $this->packageBalance($storeOwnerId);
-      
+ 
       if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
 
         $item['subscriptionStatus'] = $packageBalance->status;
@@ -315,8 +315,8 @@ class SubscriptionService
   
           $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
         }
-
-        $item['percentageOfOrdersConsumed'] = ($packageBalance->remainingOrders * $packageBalance->packageOrderCount) / 100 ;
+        
+        $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
         
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
       }
@@ -495,6 +495,25 @@ class SubscriptionService
       }
        
       return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
+    }
+
+    public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
+    {
+        if($remainingOrders <= (20 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
+        }
+        
+        if($remainingOrders <= (50 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
+        }
+        
+        if($remainingOrders <= (80 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
+        }
+        
+        if($remainingOrders === (100 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_100_PERCENT ;
+        }
     }
 }
  
