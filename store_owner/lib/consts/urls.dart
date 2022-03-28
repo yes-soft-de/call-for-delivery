@@ -224,4 +224,6 @@ class Urls {
       DOMAIN + '/v1/subscription/subscriptioncaptainoffer/create';
   static const GET_CHAT_ROOMS_API =
       DOMAIN + '/v1/orderchatroom/orderchatroomsforstorebeforeorderaccepted';
+  static const CONFIRM_CAPTAIN_LOCATION_API =
+      DOMAIN + '/v1/order/orderupdatecaptainarrived';
 }
