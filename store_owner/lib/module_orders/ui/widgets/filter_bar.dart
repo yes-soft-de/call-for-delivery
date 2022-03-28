@@ -107,7 +107,6 @@ class _FilterBarState extends State<FilterBar> {
         }
         setState(() {});
       } catch (e) {
-        print(e);
       }
     });
   }
@@ -205,7 +204,6 @@ class _FilterBarState extends State<FilterBar> {
                         Offset(initialOffset!.dx, initialOffset!.dx);
                   }
                 } catch (e) {
-                  print(e);
                 }
                 widget.onItemSelected(widget.currentIndex);
                 setState(() {});
