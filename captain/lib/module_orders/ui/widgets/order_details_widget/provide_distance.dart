@@ -30,7 +30,7 @@ class ProvideDistance extends StatelessWidget {
                     '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
                 controller: controller,
                 numbers: true,
-                last: false,
+                last:payment == false ? true : false,
               ),
               const SizedBox(
                 height: 8.0,
@@ -46,7 +46,7 @@ class ProvideDistance extends StatelessWidget {
                   hintText: S.current.collectedPayment,
                   controller: controller2,
                   numbers: true,
-                  last: false,
+                  last: true,
                 ),
               ),
             ],

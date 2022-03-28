@@ -17,8 +17,8 @@ class UpdatesLoadedState extends States {
   List<UpdateModel> model;
   UpdatesLoadedState(this.screenState, this.model) : super(screenState);
   bool markAll = false;
-  bool sorted = true;
-  String listTile = S.current.sortedByLatest;
+  bool sorted = false;
+  String listTile = S.current.sortByEarlier;
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class UpdatesLoadedState extends States {
                             .areYouSureAboutDeleteSelectedNotifications);
                   });
             },
-            child: Icon(Icons.delete_rounded),
+            child: const Icon(Icons.delete_rounded),
           ),
         ),
       ),
@@ -195,7 +195,7 @@ class UpdatesLoadedState extends States {
                 BoxShadow(
                   blurRadius: 10,
                   spreadRadius: 2,
-                  offset: Offset(-0.5, 0),
+                  offset: const Offset(-0.5, 0),
                   color: isDark
                       ? Theme.of(context)
                           .colorScheme
@@ -217,15 +217,15 @@ class UpdatesLoadedState extends States {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.amber[100]),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child:  Icon(
                           Icons.notifications_active_rounded,
                           color: Colors.amber,
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Expanded(
@@ -234,7 +234,7 @@ class UpdatesLoadedState extends States {
                         children: [
                           Text(
                             element.title,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
                             element.msg,

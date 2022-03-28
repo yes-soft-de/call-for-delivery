@@ -17,6 +17,7 @@ import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -26,8 +27,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
-  final _distanceCalculator = TextEditingController();
-  final _paymentController = TextEditingController();
   final OrderStatusScreenState screenState;
   OrderDetailsCaptainOrderLoadedState(
     this.screenState,
@@ -105,12 +104,43 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ),
           Visibility(
               visible: orderInfo.rating != null,
-              child: OrderButton(
-                title: S.current.rating,
-                subtitle:
-                    S.current.currentRating + ' ' + (orderInfo.rating ?? ''),
-                icon: Icons.star_rate_rounded,
-                backgroundColor: Colors.amber,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).colorScheme.primary),
+                  child: Center(
+                      child: Column(
+                    children: [
+                      Text(
+                        S.current.currentRating,
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                      RatingBar.builder(
+                        ignoreGestures: true,
+                        initialRating:
+                            double.tryParse(orderInfo.rating ?? '0') ?? 0,
+                        glowColor: Colors.amberAccent,
+                        minRating: 0.0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: false,
+                        itemCount: 5,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 1.0),
+                        onRatingUpdate: (rating) {},
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star_rounded,
+                          color: Colors.amberAccent,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  )),
+                ),
               )),
           // with order type we can get order widgets
           Visibility(
@@ -707,12 +737,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       distance: distance,
                       orderCost: double.tryParse(payment ?? 'n')));
                 },
-                controller: _distanceCalculator,
-                controller2: _paymentController,
+                controller: screenState.distanceCalculator,
+                controller2: screenState.paymentController,
               )),
           Visibility(
-            visible: _paymentController.text != '' &&
-                orderInfo.orderCost != num.tryParse(_paymentController.text),
+            visible: screenState.paymentController.text != '' &&
+                orderInfo.orderCost !=
+                    num.tryParse(screenState.paymentController.text),
             child: ScalingWidget(
               child: AlertContainer(
                 background: Theme.of(context).colorScheme.error,
