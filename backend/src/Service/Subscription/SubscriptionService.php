@@ -499,22 +499,30 @@ class SubscriptionService
 
     public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
     {
-        if($remainingOrders <= (20 * $packageOrderCount) / 100) {
-            return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
-        }
-        
-        if($remainingOrders <= (50 * $packageOrderCount) / 100) {
-            return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
-        }
-        
-        if($remainingOrders <= (80 * $packageOrderCount) / 100) {
-            return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
-        }
-        
-        if($remainingOrders === (100 * $packageOrderCount) / 100) {
+        if($remainingOrders === 0) {
             return SubscriptionConstant::CONSUMED_100_PERCENT ;
         }
 
+        if($remainingOrders === (100 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_0_PERCENT ;
+        }
+         
+        if($remainingOrders <= (20 * $packageOrderCount) / 100 && $remainingOrders >= (1 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
+        } 
+
+        if($remainingOrders <= (50 * $packageOrderCount) / 100 && $remainingOrders >= (21 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
+        }
+
+        if($remainingOrders <= (80 * $packageOrderCount) / 100 && $remainingOrders >= (51 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
+        }
+
+        if($remainingOrders <= (99 * $packageOrderCount) / 100 && $remainingOrders >= (81 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_MORE_THAN_80_PERCENT ;
+        }
+        
         return null;
     }
 }
