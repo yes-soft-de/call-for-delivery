@@ -19,14 +19,22 @@ class OrderLogsEntity
     private $orderId;
 
     #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'OrderLogsEntity')]
+    #[ORM\JoinColumn(nullable: true)]
     private $captainProfile;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'OrderLogsEntity')]
+    #[ORM\JoinColumn(nullable: true)]
     private $storeOwnerProfile;
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $orderState;
+
+    #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'orderLogsEntity')]
+    private $storeOwnerBranch;
 
     public function getId(): ?int
     {
@@ -77,6 +85,30 @@ class OrderLogsEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getOrderState(): ?string
+    {
+        return $this->orderState;
+    }
+
+    public function setOrderState(string $orderState): self
+    {
+        $this->orderState = $orderState;
+
+        return $this;
+    }
+
+    public function getStoreOwnerBranch(): ?StoreOwnerBranchEntity
+    {
+        return $this->storeOwnerBranch;
+    }
+
+    public function setStoreOwnerBranch(?StoreOwnerBranchEntity $storeOwnerBranch): self
+    {
+        $this->storeOwnerBranch = $storeOwnerBranch;
 
         return $this;
     }

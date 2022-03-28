@@ -19,7 +19,6 @@ use App\Manager\Order\StoreOrderDetailsManager;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
-use App\Manager\OrderLogs\OrderLogsManager;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 
 class OrderManager
@@ -30,9 +29,8 @@ class OrderManager
    private StoreOwnerProfileManager $storeOwnerProfileManager;
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
-   private OrderLogsManager $orderLogsManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, OrderLogsManager $orderLogsManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager, StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -40,7 +38,6 @@ class OrderManager
       $this->storeOwnerProfileManager = $storeOwnerProfileManager;
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
-      $this->orderLogsManager = $orderLogsManager;
     }
     
     /**
@@ -62,8 +59,7 @@ class OrderManager
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
 
-       $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $request);
-       $this->orderLogsManager->createOrderLogs($orderEntity, $request->getStoreOwner());
+       $orderEntity->storeOrderDetails = $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $request);
 
        return $orderEntity;
     }
@@ -156,8 +152,8 @@ class OrderManager
 
         $this->entityManager->flush();
      
-        $this->orderLogsManager->createOrderLogs($orderEntity, $orderEntity->getStoreOwner(), $orderEntity->getCaptainId());
-
+        $orderEntity->storeOrderDetails = $this->storeOrderDetailsManager->getOrderDetailsByOrderId($orderEntity->getId());
+     
         return $orderEntity;
     }
 

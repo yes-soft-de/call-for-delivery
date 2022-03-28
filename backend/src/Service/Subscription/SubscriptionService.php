@@ -514,6 +514,8 @@ class SubscriptionService
         if($remainingOrders === (100 * $packageOrderCount) / 100) {
             return SubscriptionConstant::CONSUMED_100_PERCENT ;
         }
+
+        return null;
     }
 }
  

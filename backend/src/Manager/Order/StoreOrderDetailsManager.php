@@ -21,7 +21,8 @@ class StoreOrderDetailsManager
 
     public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository, private StoreOwnerBranchManager $storeOwnerBranchManager, ImageManager $imageManager)
     {
-        $this->imageManager =  $imageManager;
+        $this->imageManager = $imageManager;
+        $this->storeOrderDetailsEntityRepository = $storeOrderDetailsEntityRepository;
     }
     
     /**
@@ -62,5 +63,10 @@ class StoreOrderDetailsManager
 
         return $this->imageManager->create($request);
         return $request;
+    }
+
+    public function getOrderDetailsByOrderId($orderId): StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' =>$orderId]);
     }
 }

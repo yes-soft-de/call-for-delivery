@@ -5,6 +5,7 @@ namespace App\Request\Rate;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\StoreOwnerBranchEntity;
 
 class OrderLogsCreateRequest
 {
@@ -13,6 +14,10 @@ class OrderLogsCreateRequest
    private StoreOwnerProfileEntity $storeOwnerProfile;
    
    private null|CaptainEntity $captainProfile;
+
+   private string $orderState;
+
+   private null|StoreOwnerBranchEntity $storeOwnerBranch;
 
    /**
     * Get the value of orderId
@@ -73,4 +78,43 @@ class OrderLogsCreateRequest
 
       return $this;
    }
+
+    /**
+    * Get the value of storeOwnerBranch
+    */ 
+    public function getStoreOwnerBranch()
+    {
+       return $this->storeOwnerBranch;
+    }
+ 
+    /**
+     * Set the value of storeOwnerBranch
+     *
+     * @return  self
+     */ 
+    public function setStoreOwnerBranch(StoreOwnerBranchEntity $storeOwnerBranch)
+    {
+       $this->storeOwnerBranch = $storeOwnerBranch;
+ 
+       return $this;
+    }
+    /**
+    * Get the value of storeOwnerBranch
+    */ 
+    public function getOrderState()
+    {
+       return $this->orderState;
+    }
+ 
+    /**
+     * Set the value of storeOwnerBranch
+     *
+     * @return  self
+     */ 
+    public function setOrderState(string $orderState)
+    {
+       $this->orderState = $orderState;
+ 
+       return $this;
+    }
 }

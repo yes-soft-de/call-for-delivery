@@ -20,7 +20,7 @@ class OrderLogsManager
         $this->orderLogsEntityRepository = $orderLogsEntityRepository;
     }
 
-    public function create(OrderLogsCreateRequest $request): ?OrderLogsEntity
+    public function createOrderLogs(OrderLogsCreateRequest $request): ?OrderLogsEntity
     {
         $entity = $this->autoMapping->map(OrderLogsCreateRequest::class, OrderLogsEntity::class, $request);
    
@@ -29,16 +29,5 @@ class OrderLogsManager
         $this->entityManager->flush();
 
         return $entity;
-    }
-
-    public function createOrderLogs($order, $storeOwner, $captain = null): ?OrderLogsEntity
-    {
-       $request = new OrderLogsCreateRequest();
-
-       $request->setOrderId($order);
-       $request->setStoreOwnerProfile($storeOwner);
-       $request->setCaptainProfile($captain);
-
-       return $this->create($request);
     }
 }

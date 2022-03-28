@@ -34,6 +34,7 @@ use App\Response\Order\OrderUpdateCaptainOrderCostResponse;
 use App\Constant\Order\OrderAttentionConstant;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Response\Order\OrderUpdateCaptainArrivedResponse;
+use App\Service\OrderLogs\OrderLogsService;
 
 class OrderService
 {
@@ -44,8 +45,9 @@ class OrderService
     private UploadFileHelperService $uploadFileHelperService;
     private CaptainService $captainService;
     private OrderChatRoomService $orderChatRoomService;
+    private OrderLogsService $orderLogsService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -54,6 +56,7 @@ class OrderService
        $this->uploadFileHelperService = $uploadFileHelperService;
        $this->captainService = $captainService;
        $this->orderChatRoomService = $orderChatRoomService;
+       $this->orderLogsService = $orderLogsService;
     }
 
     /**
@@ -75,6 +78,8 @@ class OrderService
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+
+            $this->orderLogsService->createOrderLogsRequest($order);
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -211,6 +216,8 @@ class OrderService
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getCaptainId()); 
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN); 
+            //create order log
+            $this->orderLogsService->createOrderLogsRequest($order);
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
