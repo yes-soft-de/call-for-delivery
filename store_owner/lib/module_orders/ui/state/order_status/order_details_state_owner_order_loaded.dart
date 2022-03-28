@@ -22,7 +22,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
-  final _distanceCalculator = TextEditingController();
   final OrderDetailsScreenState screenState;
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
@@ -30,7 +29,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   ) : super(screenState) {
     if (orderInfo.showConfirm == true &&
         orderInfo.state == OrderStatusEnum.IN_STORE) {
-      showOwnerAlertConfirm(screenState.context);
+      showOwnerAlertConfirm();
     }
   }
 
@@ -580,7 +579,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     )..show(context);
   }
 
-  void showOwnerAlertConfirm(BuildContext context) {
+  void showOwnerAlertConfirm() {
+    var context = screenState.context;
     showDialog(
         context: context,
         barrierDismissible: false,

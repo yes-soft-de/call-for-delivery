@@ -3,7 +3,7 @@ import 'images.dart';
 class Datum {
   int? id;
   String? captainName;
-  int? usedAs;
+  String? usedAs;
   Images? images;
   String? roomId;
   String? orderId;
@@ -20,7 +20,7 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
         captainName: json['captainName'] as String?,
-        usedAs: json['usedAs'] as int?,
+        usedAs: json['usedAs']?.toString() as String?,
         images: json['images'] == null
             ? null
             : Images.fromJson(json['images'] as Map<String, dynamic>),

@@ -114,8 +114,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       }
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
-      getInitData();
-      getMyOrdersFilter(false);
+      if (mounted) {
+        getInitData();
+        getMyOrdersFilter(false);
+      }
     });
     DeepLinksService.checkForGeoLink().then((value) {
       if (value != null) {
@@ -153,8 +155,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                     : StatusHelper.getOrderStatusColor(
                         OrderStatusEnum.IN_STORE)),
             CustomC4dAppBar.actionIcon(context, onTap: () {
-              Navigator.of(context)
-                  .pushNamed(ChatRoutes.roomChatList);
+              Navigator.of(context).pushNamed(ChatRoutes.roomChatList);
             },
                 icon: Icons.chat_rounded,
                 colorIcon: currentIndex == 0
@@ -279,15 +280,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   @override
   void dispose() {
-    if (_stateSubscription != null) {
-      _stateSubscription?.cancel();
-    }
-    if (_profileSubscription != null) {
-      _profileSubscription?.cancel();
-    }
-    if (_companySubscription != null) {
-      _companySubscription?.cancel();
-    }
+    _stateSubscription?.cancel();
+    _profileSubscription?.cancel();
+    _companySubscription?.cancel();
     super.dispose();
   }
 
