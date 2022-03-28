@@ -23,9 +23,11 @@ class BranchListStateLoaded extends States {
   List<Widget> getBranches(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in branches) {
+      print(element.branchPhone);
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: BranchCardList(
+            phone: element.branchPhone,
             onDelete: () {
               showDialog(
                   context: context,
