@@ -18,8 +18,9 @@ use App\Request\Image\ImageCreateRequest;
 class StoreOrderDetailsManager
 {
     private $imageManager;
-
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, private StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository, private StoreOwnerBranchManager $storeOwnerBranchManager, ImageManager $imageManager)
+    private StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository;
+    
+    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository, private StoreOwnerBranchManager $storeOwnerBranchManager, ImageManager $imageManager)
     {
         $this->imageManager = $imageManager;
         $this->storeOrderDetailsEntityRepository = $storeOrderDetailsEntityRepository;
@@ -65,7 +66,7 @@ class StoreOrderDetailsManager
         return $request;
     }
 
-    public function getOrderDetailsByOrderId($orderId): StoreOrderDetailsEntity
+    public function getOrderDetailsByOrderId(int $orderId): StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' =>$orderId]);
     }

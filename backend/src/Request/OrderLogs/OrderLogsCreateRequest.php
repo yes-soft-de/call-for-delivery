@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\Rate;
+namespace App\Request\OrderLogs;
 
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
@@ -17,7 +17,7 @@ class OrderLogsCreateRequest
 
    private string $orderState;
 
-   private null|StoreOwnerBranchEntity $storeOwnerBranch;
+   private StoreOwnerBranchEntity $storeOwnerBranch;
 
    /**
     * Get the value of orderId

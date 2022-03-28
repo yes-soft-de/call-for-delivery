@@ -4,7 +4,7 @@ namespace App\Service\OrderLogs;
 
 use App\AutoMapping;
 use App\Manager\OrderLogs\OrderLogsManager;
-use App\Request\Rate\OrderLogsCreateRequest;
+use App\Request\OrderLogs\OrderLogsCreateRequest;
 use App\Entity\OrderLogsEntity;
 use App\Entity\OrderEntity;
 use App\Response\OrderLogs\OrderLogsResponse;
@@ -27,7 +27,7 @@ class OrderLogsService
        return $this->autoMapping->map(OrderLogsEntity::class, OrderLogsResponse::class, $orderLog);
     }
     
-    public function createOrderLogsRequest(OrderEntity $order): ?OrderLogsResponse
+    public function createOrderLogsRequest(OrderEntity $order): OrderLogsResponse
     {
        $request = new OrderLogsCreateRequest();
    

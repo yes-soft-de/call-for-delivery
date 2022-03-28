@@ -5,13 +5,14 @@ namespace App\Manager\OrderLogs;
 use App\AutoMapping;
 use App\Entity\OrderLogsEntity;
 use App\Repository\OrderLogsEntityRepository;
-use App\Request\Rate\OrderLogsCreateRequest;
+use App\Request\OrderLogs\OrderLogsCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderLogsManager
 {
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
+    private OrderLogsEntityRepository $orderLogsEntityRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderLogsEntityRepository $orderLogsEntityRepository)
     {
