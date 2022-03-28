@@ -41,4 +41,10 @@ class OrdersResponse
     public $roomId;
 
     public $captainName;
+
+    public bool|null $isCaptainArrived;
+
+    public object|null $dateCaptainArrived;
+    
+    public string|null $branchPhone;
 }

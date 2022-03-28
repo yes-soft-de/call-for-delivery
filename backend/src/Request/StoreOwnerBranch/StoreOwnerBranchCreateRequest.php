@@ -13,6 +13,8 @@ class StoreOwnerBranchCreateRequest
     private $name;
    
     private $isActive;
+
+    private string|null $branchPhone;
       
    /**
     * @param mixed $storeOwner

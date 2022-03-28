@@ -211,6 +211,9 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
      *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="boolean", property="isCaptainArrived"),
+     *                  @OA\Property(type="object", property="dateCaptainArrived"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -450,6 +453,7 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="baseURL"),
      *                      ),
      *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="string", property="branchPhone"),
      * 
      *              ),
      *          )
@@ -488,6 +492,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="orderNumber"),
      *              @OA\Property(type="string", property="state", description="on way to pick order or in store or picked or ongoing or delivered"),
      *              @OA\Property(type="number", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *         ),
      *      ),
      *
@@ -501,6 +507,8 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state"),
      *              @OA\Property(type="integer", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *              )
      *      )
      * )

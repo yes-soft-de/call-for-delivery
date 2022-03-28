@@ -23,7 +23,7 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
     public function getActiveBranchesByStoreOwnerId($storeOwnerId): ?array
     {
         return $this->createQueryBuilder('storeOwnerBranch')
-            ->select('storeOwnerBranch.id', 'storeOwnerBranch.name', 'storeOwnerBranch.city', 'storeOwnerBranch.location', 'storeOwnerBranch.isActive')
+            ->select('storeOwnerBranch.id', 'storeOwnerBranch.name', 'storeOwnerBranch.city', 'storeOwnerBranch.location', 'storeOwnerBranch.isActive', 'storeOwnerBranch.branchPhone')
 
             ->andWhere('storeOwnerBranch.storeOwner = :storeOwnerId')
             ->setParameter('storeOwnerId', $storeOwnerId)

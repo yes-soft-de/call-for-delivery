@@ -143,7 +143,15 @@ class OrderManager
         $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
        
         $request->setCaptainId($captainId);
-       
+
+        if(! $request->getCaptainOrderCost()) {
+            $request->setCaptainOrderCost($orderEntity->getCaptainOrderCost());
+        }
+
+        if(! $request->getNoteCaptainOrderCost()) {
+            $request->setNoteCaptainOrderCost($orderEntity->getNoteCaptainOrderCost());
+        }
+        
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $this->entityManager->flush();
