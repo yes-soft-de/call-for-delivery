@@ -1,0 +1,24 @@
+App\Entity\AdminProfileEntity:
+  super_admin_profile:
+    name: Super Admin
+    phone: 966555555555
+    status: true
+    user: '@super_admin_user'
+
+  admin_one_profile:
+    name: أحمد
+    phone: 966551111111
+    status: true
+    user: '@admin_user_one'
+
+  admin_two_profile:
+    name: أسامة
+    phone: 966552222222
+    status: true
+    user: '@admin_user_two'
+
+  admin_three_profile:
+    name: كنان
+    phone: 966553333333
+    status: true
+    user: '@admin_user_three'

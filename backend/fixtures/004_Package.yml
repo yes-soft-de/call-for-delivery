@@ -1,0 +1,66 @@
+App\Entity\PackageEntity:
+  package_A_1:
+    name: الباقة المتزامنة
+    cost: 35
+    carCount: 4
+    city: جدة
+    orderCount: 4
+    status: active
+    note: هذه الباقات صالحة لمدة اسبوع كامل
+    expired: 7
+    packageCategory: '@first_category'
+
+  package_A_2:
+    name: الباقة اليومية
+    cost: 30
+    carCount: 2
+    city: جدة
+    orderCount: 5
+    status: active
+    note: هذه الباقة صالحة لمدة يوم واحد لتلبية حاجتك بسرعة
+    expired: 1
+    packageCategory: '@first_category'
+
+  package_A_3:
+    name: الباقة التجريبية
+    cost: 5
+    carCount: 1
+    city: المدينة
+    orderCount: 1
+    status: active
+    note: تساعدك هذه الباقة في تجريب خدماتنا كاملة
+    expired: 1
+    packageCategory: '@first_category'
+
+  package_B_1:
+    name: الباقة الأعمال
+    cost: 250
+    carCount: 50
+    city: رياض
+    orderCount: 200
+    status: active
+    note: هذه الباقة مخصصة لاصحاب المحال التجارية الكبيرة
+    expired: 60
+    packageCategory: '@second_category'
+
+  package_B_2:
+    name: باقة التوفير
+    cost: 100
+    carCount: 5
+    city: جدة
+    orderCount: 40
+    status: active
+    note: هذه الباقة تأمن لك عدد طلبات كثيرة خلال الشهر
+    expired: 30
+    packageCategory: '@second_category'
+
+  package_C_1:
+    name: باقة ألترا
+    cost: 400
+    carCount: 15
+    city: المدينة
+    orderCount: 150
+    status: active
+    note: هذه الباقة مخصصة للشركات والمولات
+    expired: 90
+    packageCategory: '@third_category'

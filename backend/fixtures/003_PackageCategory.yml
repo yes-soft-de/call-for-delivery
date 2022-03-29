@@ -1,0 +1,12 @@
+App\Entity\PackageCategoryEntity:
+  first_category:
+    name: الباقات الخدمية
+    description: هذه النوع من الباقات يعمل على تبيلة حاجاتك بسرعة
+
+  second_category:
+    name: الباقات سوبر
+    description: هذه الباقات تساعد في إدارة المنشأت الصغيرة الى المتوسطة
+
+  third_category:
+    name: الباقات الكبيرة
+    description: هذه الباقات مخصصة للشركات
