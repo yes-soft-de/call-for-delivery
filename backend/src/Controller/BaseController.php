@@ -79,6 +79,8 @@ class BaseController extends AbstractController
     const ERROR_YOU_HAVE_SUBSCRIPTION_ = ["you have subscription with captain offer","9454"];
     // notification
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
+    // admin
+    const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [

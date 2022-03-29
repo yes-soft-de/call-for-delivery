@@ -34,6 +34,10 @@ class ImageEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +111,18 @@ class ImageEntity
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?AdminProfileEntity
+    {
+        return $this->user;
+    }
+
+    public function setUser(?AdminProfileEntity $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

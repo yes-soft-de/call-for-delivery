@@ -8,22 +8,16 @@ use App\Entity\UserEntity;
 use App\Manager\Admin\AdminManager;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Response\User\UserRegisterResponse;
-use App\Service\Admin\Order\AdminOrderService;
-use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
 
 class AdminService implements AdminServiceInterface
 {
     private AutoMapping $autoMapping;
     private AdminManager $adminManager;
-    private AdminStoreOwnerService $adminStoreOwnerService;
-    private AdminOrderService $adminOrderService;
 
-    public function __construct(AutoMapping $autoMapping, AdminManager $adminManager, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService)
+    public function __construct(AutoMapping $autoMapping, AdminManager $adminManager)
     {
         $this->autoMapping = $autoMapping;
         $this->adminManager = $adminManager;
-        $this->adminStoreOwnerService = $adminStoreOwnerService;
-        $this->adminOrderService = $adminOrderService;
     }
 
     public function adminRegister(AdminRegisterRequest $request): UserRegisterResponse
