@@ -36,9 +36,13 @@ class StoreOwnerBranchEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $branchPhone;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwnerBranch', targetEntity: OrderLogsEntity::class)]
+    private $orderLogsEntity;
+
     public function __construct()
     {
         $this->storeOrderDetailsEntities = new ArrayCollection();
+        $this->orderLogsEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +148,36 @@ class StoreOwnerBranchEntity
     public function setBranchPhone(?string $branchPhone): self
     {
         $this->branchPhone = $branchPhone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLogsEntity[]
+     */
+    public function getOrderLogsEntity(): Collection
+    {
+        return $this->orderLogsEntity;
+    }
+
+    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if (!$this->orderLogsEntity->contains($orderLogsEntity)) {
+            $this->orderLogsEntity[] = $orderLogsEntity;
+            $orderLogsEntity->setStoreOwnerBranch($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if ($this->orderLogsEntity->removeElement($orderLogsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogsEntity->getStoreOwnerBranch() === $this) {
+                $orderLogsEntity->setStoreOwnerBranch(null);
+            }
+        }
 
         return $this;
     }
