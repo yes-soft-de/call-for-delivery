@@ -12,6 +12,8 @@ class StoreOwnerBranchUpdateRequest
 
     private $city;
 
+    private string|null $branchPhone;
+
     /**
      * Get the value of id
      */ 

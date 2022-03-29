@@ -26,44 +26,6 @@ class ChatRoomController extends BaseController
     }
 
     /**
-     * store and captain :fetch chat room for user
-     * @Route("chatroom", name="getChatRoom", methods={"GET"})
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Chat Room")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns chat room info",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="integer", property="userId"),
-     *                  @OA\Property(type="integer", property="usedAs", description="equal zero mean chat room between admin and store"),
-     *                  @OA\Property(type="string", property="roomId")
-     *          )
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getChatRoom(): JsonResponse
-    {
-        $result = $this->chatRoomService->getChatRoom($this->getUserId());
-
-        return $this->response($result, self::FETCH);
-    }
-
-    /**
      * admin: get chat rooms with stores
      * @Route("chatroomswithstores", name="getChatRoomsWithStores", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -104,6 +66,51 @@ class ChatRoomController extends BaseController
     public function getChatRoomsWithStores(): JsonResponse
     {
         $result = $this->chatRoomService->getChatRoomsWithStores();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: get chat rooms with captains
+     * @Route("chatroomswithcaptains", name="getChatRoomsWithCaptains", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Chat Room")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns chat rooms info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *             @OA\Items(
+     *                  @OA\Property(type="integer", property="captainProfileId"),
+     *                  @OA\Property(type="integer", property="captainName"),
+     *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="object", property="images",
+     *                    @OA\Property(type="string", property="imageURL"),
+     *                    @OA\Property(type="string", property="image"),
+     *                    @OA\Property(type="string", property="baseURL")
+     *                 ),
+     *              ),
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getChatRoomsWithCaptains(): JsonResponse
+    {
+        $result = $this->chatRoomService->getChatRoomsWithCaptains();
 
         return $this->response($result, self::FETCH);
     }

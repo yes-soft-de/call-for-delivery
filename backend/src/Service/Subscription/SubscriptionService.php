@@ -3,8 +3,11 @@
 namespace App\Service\Subscription;
 
 use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
@@ -13,17 +16,21 @@ use App\Response\Subscription\CanCreateOrderResponse;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
+use App\Service\Subscription\SubscriptionCaptainOfferService;
 
 class SubscriptionService
 {
     private AutoMapping $autoMapping;
     private SubscriptionManager $subscriptionManager;
+    private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
+        $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -33,9 +40,9 @@ class SubscriptionService
         
             return $isPackageReady;
         }
+        
+        $activateExistingSubscription = $this->checkSubscription($request->getStoreOwner());
 
-        $this->checkSubscription($request->getStoreOwner());
-       
         $isFuture = $this->getIsFutureState($request->getStoreOwner());
 
         $request->setIsFuture($isFuture);
@@ -44,7 +51,24 @@ class SubscriptionService
 
         $subscription = $this->subscriptionManager->createSubscription($request);
 
-        return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        //--check and update completeAccountStatus for the store owner profile
+
+        if ($subscription) {
+            $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
+        }
+
+        if ($activateExistingSubscription ===  SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+
+        }
+
+        if($subscription) {
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+        
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        }
     }
 
     public function getIsFutureState(int $storeOwner): int
@@ -68,12 +92,9 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
        if($subscription) {
-           $countOrders = $this->getCountOngoingOrders($subscription['id']);
           
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
-           $subscription['remainingCars'] = $subscription['remainingCars'] - $countOrders;
-
            if($subscription['hasExtra'] === true) {
 
             $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
@@ -123,13 +144,14 @@ class SubscriptionService
     public function checkValidityOfSubscription(int $storeOwnerId): string
     {
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-      
+
         //check and update RemainingTime
         $subscriptionExpired = $this->checkSubscriptionExpired($subscription);
-        
+       
         $remainingCars = $this->checkRemainingCars($subscription);
        
-       if($subscription) {
+        if($subscription) {
+
             if($subscription['subscriptionStatus'] === SubscriptionConstant::SUBSCRIBE_INACTIVE) {
            
                 return SubscriptionConstant::SUBSCRIBE_INACTIVE;
@@ -141,7 +163,7 @@ class SubscriptionService
                 $this->updateSubscribeState($subscription['id'], SubscriptionConstant::CARS_FINISHED);
     
                 return SubscriptionConstant::CARS_FINISHED;
-            }  
+            } 
 
             //orders are finished
             if($subscription['remainingOrders'] <= 0) {
@@ -221,7 +243,7 @@ class SubscriptionService
                 return SubscriptionConstant::DATE_FINISHED;
             }
             
-            return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+            return SubscriptionConstant::SUBSCRIPTION_OK;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -242,12 +264,27 @@ class SubscriptionService
         if($subscription) {
             $countOrders = $this->getCountOngoingOrders($subscription['id']);
 
-           if($subscription['remainingCars'] - $countOrders <= 0 ) {
+           if($subscription['remainingCars'] >= 0 ) {
+           
+                $remainingCars =  $subscription['packageCarCount'] - $countOrders;
+                
+                //Is there subscription captain offer and active?
+                if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
+                   
+                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
+                }
 
-                return SubscriptionConstant::CARS_FINISHED;
+                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+
+                if($currentSubscription->getRemainingCars() <= 0 ) {
+                
+                    return SubscriptionConstant::CARS_FINISHED;
+                }
+            
+                return SubscriptionConstant::SUBSCRIPTION_OK;
            }
 
-           return SubscriptionConstant::SUBSCRIPTION_OK;
+          return SubscriptionConstant::CARS_FINISHED;
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
@@ -270,7 +307,7 @@ class SubscriptionService
     public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse
     {
       $packageBalance = $this->packageBalance($storeOwnerId);
-      
+ 
       if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
 
         $item['subscriptionStatus'] = $packageBalance->status;
@@ -283,7 +320,9 @@ class SubscriptionService
   
           $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
         }
-      
+        
+        $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
+        
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
       }
 
@@ -393,6 +432,108 @@ class SubscriptionService
         }
         
          return $this->autoMapping->map("array", SubscriptionErrorResponse::class, $package);
+    }
+    
+    public function captainOfferExpired(null|array|SubscriptionEntity $subscription, int $remainingCars): int
+    {    
+        if($subscription) {
+           
+            $dateNow = new \DateTime('now');
+            $endSubscriptionCaptainOffer = $subscription['subscriptionCaptainOfferExpired'].'day';
+
+            $endDate =  new \DateTime($subscription['subscriptionCaptainOfferStartDate']->format('Y-m-d h:i:s') . $endSubscriptionCaptainOffer);
+
+            if($endDate < $dateNow) {
+
+                $remainingCars = $subscription['remainingCars'] - $subscription['subscriptionCaptainOfferCarCount'];
+            
+                $this->subscriptionCaptainOfferService->updateState($subscription['subscriptionCaptainOfferId'],  SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
+
+                return $remainingCars;
+            }
+
+            $remainingCars = $remainingCars + $subscription['subscriptionCaptainOfferCarCount'];
+
+            return $remainingCars;
+        }
+
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+    }
+
+    /**
+     * This function checks completeAccountStatus of the store owner profile and updates it when necessary
+     */
+    public function checkCompleteAccountStatusOfStoreOwnerProfile(StoreOwnerProfileEntity $storeOwner)
+    {
+        // First, check if there is a subscription
+        $subscriptionHistory = $this->subscriptionManager->getSubscriptionHistoryByStoreOwner($storeOwner);
+
+        if ($subscriptionHistory != null) {
+            // subscription is exist, then check completeAccountStatus field.
+            $storeOwnerProfileResult = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerId($storeOwner->getStoreOwnerId());
+
+            if ($storeOwnerProfileResult) {
+                if ($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED ||
+                    $storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED ||
+                    $storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+                    // then we can update completeAccountStatus to subscriptionCreated
+
+                    $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateRequest();
+
+                    $completeAccountStatusUpdateRequest->setUserId($storeOwner->getStoreOwnerId());
+                    $completeAccountStatusUpdateRequest->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED);
+
+                    $this->subscriptionManager->storeOwnerProfileCompleteAccountStatusUpdate($completeAccountStatusUpdateRequest);
+                }
+            }
+        }
+    }
+
+    public function checkRemainingCarsByOrderId(int $orderId): string
+    {
+      $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
+
+      return $this->checkRemainingCars($subscription);
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription(int $storeOwnerId): string
+    {
+      $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
+
+      if($captainOfferId) {
+        return $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+      }
+       
+      return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
+    }
+
+    public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
+    {
+        if($remainingOrders === 0) {
+            return SubscriptionConstant::CONSUMED_100_PERCENT ;
+        }
+
+        if($remainingOrders === (100 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_0_PERCENT ;
+        }
+         
+        if($remainingOrders <= (20 * $packageOrderCount) / 100 && $remainingOrders >= (1 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
+        } 
+
+        if($remainingOrders <= (50 * $packageOrderCount) / 100 && $remainingOrders >= (21 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
+        }
+
+        if($remainingOrders <= (80 * $packageOrderCount) / 100 && $remainingOrders >= (51 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
+        }
+
+        if($remainingOrders <= (99 * $packageOrderCount) / 100 && $remainingOrders >= (81 * $packageOrderCount) / 100) {
+            return SubscriptionConstant::CONSUMED_MORE_THAN_80_PERCENT ;
+        }
+        
+        return null;
     }
 }
  

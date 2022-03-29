@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Constant\StoreOwner\StoreProfileConstant;
-use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ChatRoomEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

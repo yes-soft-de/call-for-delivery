@@ -13,4 +13,6 @@ class StoreOwnerBranchResponse
     public $name;
 
     public $isActive;
+
+    public string|null $branchPhone;
 }

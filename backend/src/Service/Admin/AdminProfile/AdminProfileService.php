@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Service\Admin\AdminProfile;
+
+use App\AutoMapping;
+use App\Constant\Admin\AdminProfileConstant;
+use App\Entity\AdminProfileEntity;
+use App\Entity\UserEntity;
+use App\Manager\Admin\AdminProfile\AdminProfileManager;
+use App\Request\Admin\AdminProfile\AdminProfileRequest;
+use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
+use App\Request\Admin\AdminProfile\FilterAdminProfilesRequest;
+use App\Response\Admin\AdminProfile\AdminProfileGetForSuperAdminResponse;
+use App\Response\Admin\AdminProfile\AdminProfileUpdateResponse;
+use App\Response\Admin\AdminProfileGetResponse;
+use App\Service\FileUpload\UploadFileHelperService;
+
+class AdminProfileService
+{
+    private AutoMapping $autoMapping;
+    private AdminProfileManager $adminProfileManager;
+    private UploadFileHelperService $uploadFileHelperService;
+
+    public function __construct(AutoMapping $autoMapping, AdminProfileManager $adminProfileManager, UploadFileHelperService $uploadFileHelperService)
+    {
+        $this->autoMapping = $autoMapping;
+        $this->adminProfileManager = $adminProfileManager;
+        $this->uploadFileHelperService = $uploadFileHelperService;
+    }
+
+    public function getAdminProfileByAdminUserId(int $adminUserId): ?AdminProfileGetResponse
+    {
+        $response = [];
+
+        $adminProfile = $this->adminProfileManager->getAdminProfileByAdminUserId($adminUserId);
+
+        if ($adminProfile) {
+            $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetResponse::class, $adminProfile);
+
+            $response->images = $this->customizeAdminProfileImages($response->images->ToArray());
+        }
+
+        return $response;
+    }
+
+    public function updateAdminProfile(AdminProfileRequest $request): string|AdminProfileUpdateResponse
+    {
+        $adminProfileResult = $this->adminProfileManager->updateAdminProfile($request);
+
+        if ($adminProfileResult === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+
+        } else {
+            return $this->autoMapping->map(AdminProfileEntity::class, AdminProfileUpdateResponse::class, $adminProfileResult);
+        }
+    }
+
+    public function updateAdminProfileStatus(AdminProfileStatusUpdateRequest $request): string|AdminProfileGetForSuperAdminResponse
+    {
+        $adminProfileResult = $this->adminProfileManager->updateAdminProfileStatus($request);
+
+        if ($adminProfileResult === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+
+        } else {
+            $response = [];
+
+            $response = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $adminProfileResult);
+
+            $response->user = $this->getSpecificUserFields($response->user);
+
+            if ($response->images) {
+                $response->images = $this->customizeAdminProfileImages($response->images->toArray());
+            }
+
+            return $response;
+        }
+    }
+
+    public function updateAdminProfileBySuperAdmin(AdminProfileRequest $request): string|AdminProfileUpdateResponse
+    {
+        $adminProfileResult = $this->adminProfileManager->updateAdminProfileBySuperAdmin($request);
+
+        if ($adminProfileResult === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+
+        } else {
+            return $this->autoMapping->map(AdminProfileEntity::class, AdminProfileUpdateResponse::class, $adminProfileResult);
+        }
+    }
+
+    public function filterAdminProfiles(FilterAdminProfilesRequest $request): array
+    {
+        $response = [];
+
+        $adminProfiles = $this->adminProfileManager->filterAdminProfiles($request);
+
+        if (! empty($adminProfiles)) {
+            foreach ($adminProfiles as $key => $value) {
+                $response[] = $this->autoMapping->map(AdminProfileEntity::class, AdminProfileGetForSuperAdminResponse::class, $value);
+
+                $response[$key]->user = $this->getSpecificUserFields($response[$key]->user);
+
+                $response[$key]->images = $this->customizeAdminProfileImages($response[$key]->images->toArray());
+            }
+        }
+
+        return $response;
+    }
+
+    public function customizeAdminProfileImages(array $imageEntitiesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imageEntitiesArray)) {
+            foreach ($imageEntitiesArray as $imageEntity) {
+                $response[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+            }
+
+            return $response;
+
+        } else {
+            return null;
+        }
+    }
+
+    public function getSpecificUserFields(UserEntity $userEntity): array
+    {
+        $response = [];
+
+        $response['id'] = $userEntity->getId();
+        $response['userId'] = $userEntity->getUserId();
+        $response['roles'] = $userEntity->getRoles();
+
+        return $response;
+    }
+}

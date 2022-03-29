@@ -8,11 +8,10 @@ use App\Manager\Rate\RatingManager;
 use App\Request\Rate\RatingCreateRequest;
 use App\Response\Rate\RatingResponse;
 
-
 class RatingService
 {
-    private $autoMapping;
-    private $ratingManager;
+    private AutoMapping $autoMapping;
+    private RatingManager $ratingManager;
 
     public function __construct(AutoMapping $autoMapping, RatingManager $ratingManager)
     {
@@ -25,5 +24,10 @@ class RatingService
         $rating = $this->ratingManager->createRating($request);
 
         return $this->autoMapping->map(RateEntity::class, RatingResponse::class, $rating);
+    }
+
+    public function getAverageRating($rated): ?float
+    {
+        return $this->ratingManager->getAverageRating($rated);
     }
 }

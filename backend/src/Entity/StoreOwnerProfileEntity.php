@@ -71,11 +71,19 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: OrderEntity::class)]
     private $orderEntities;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwner', targetEntity: SubscriptionCaptainOfferEntity::class)]
+    private $subscriptionCaptainOffer;
+
+    #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: OrderLogsEntity::class)]
+    private $OrderLogsEntity;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
         $this->storeOwnerBranchEntities = new ArrayCollection();
         $this->orderEntities = new ArrayCollection();
+        $this->subscriptionCaptainOffer = new ArrayCollection();
+        $this->OrderLogsEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -359,6 +367,66 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($orderEntity->getStoreOwner() === $this) {
                 $orderEntity->setStoreOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubscriptionCaptainOfferEntity[]
+     */
+    public function getSubscriptionCaptainOffer(): Collection
+    {
+        return $this->subscriptionCaptainOffer;
+    }
+
+    public function addSubscriptionCaptainOffer(SubscriptionCaptainOfferEntity $subscriptionCaptainOffer): self
+    {
+        if (!$this->subscriptionCaptainOffer->contains($subscriptionCaptainOffer)) {
+            $this->subscriptionCaptainOffer[] = $subscriptionCaptainOffer;
+            $subscriptionCaptainOffer->setStoreOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriptionCaptainOffer(SubscriptionCaptainOfferEntity $subscriptionCaptainOffer): self
+    {
+        if ($this->subscriptionCaptainOffer->removeElement($subscriptionCaptainOffer)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionCaptainOffer->getStoreOwner() === $this) {
+                $subscriptionCaptainOffer->setStoreOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLogsEntity[]
+     */
+    public function getOrderLogsEntity(): Collection
+    {
+        return $this->OrderLogsEntity;
+    }
+
+    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if (!$this->OrderLogsEntity->contains($orderLogsEntity)) {
+            $this->OrderLogsEntity[] = $orderLogsEntity;
+            $orderLogsEntity->setStoreOwnerProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if ($this->OrderLogsEntity->removeElement($orderLogsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogsEntity->getStoreOwnerProfile() === $this) {
+                $orderLogsEntity->setStoreOwnerProfile(null);
             }
         }
 

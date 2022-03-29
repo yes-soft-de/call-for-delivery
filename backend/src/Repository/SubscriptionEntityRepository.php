@@ -7,6 +7,7 @@ use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
 use App\Entity\SubscriptionHistoryEntity;
+use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -14,6 +15,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -54,6 +56,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('subscription')
 
             ->select ('IDENTITY( subscription.package)')
+            ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
             ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
              'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
@@ -61,6 +64,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
              'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
             ->addSelect('subscriptionHistoryEntity.type')
+            ->addSelect('subscriptionCaptainOfferEntity.startDate as subscriptionCaptainOfferStartDate', 'subscriptionCaptainOfferEntity.expired as subscriptionCaptainOfferExpired', 'subscriptionCaptainOfferEntity.carCount as subscriptionCaptainOfferCarCount', 'subscriptionCaptainOfferEntity.status as subscriptionCaptainOfferCarStatus')
 
             ->andWhere('subscriptionDetailsEntity.storeOwner = :storeOwner')
 
@@ -69,6 +73,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
             ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
             ->leftJoin(SubscriptionHistoryEntity::class, 'subscriptionHistoryEntity', Join::WITH, 'subscription.id = subscriptionHistoryEntity.subscription')
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
 
             ->getQuery()
 
@@ -114,6 +119,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->where('subscription.id = :id')
             ->andWhere('orderEntity.state != :cancel')
             ->andWhere('orderEntity.state != :delivered')
+            ->andWhere('orderEntity.state != :pending')
              //Orders made within the current subscription date only
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
@@ -121,7 +127,57 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
         
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function getSubscriptionCurrentByOrderId($orderId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
+            ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
+            ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
+             'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
+             'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
+            ->addSelect('subscriptionCaptainOfferEntity.startDate as subscriptionCaptainOfferStartDate', 'subscriptionCaptainOfferEntity.expired as subscriptionCaptainOfferExpired', 'subscriptionCaptainOfferEntity.carCount as subscriptionCaptainOfferCarCount', 'subscriptionCaptainOfferEntity.status as subscriptionCaptainOfferCarStatus')
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'subscription.storeOwner = orderEntity.storeOwner')
+
+            ->andWhere('orderEntity.id = :orderId')
+            
+            ->setParameter('orderId', $orderId)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOffer(int $storeOwner): ?SubscriptionEntity
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->andWhere('subscriptionCaptainOfferEntity.storeOwner = :storeOwner')
+            ->setParameter('storeOwner', $storeOwner)
+
+            ->andWhere('subscriptionCaptainOfferEntity.status = :status')
+            ->setParameter('status', SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE)
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+           
+            ->orderBy('subscriptionCaptainOfferEntity.id', 'DESC')
+           
+            ->setMaxResults(1)
+           
             ->getQuery()
 
             ->getOneOrNullResult();

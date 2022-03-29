@@ -3,9 +3,13 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionCaptainOfferEntity;
+use App\Entity\SubscriptionHistoryEntity;
 use App\Repository\SubscriptionEntityRepository;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateIsFutureRequest;
@@ -88,6 +92,14 @@ class SubscriptionManager
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 
        return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
+       
+    }
+
+    public function isThereSubscription(int $storeOwnerId): ?array
+    {
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
+
+       return $this->subscriptionDetailsManager->getSubscriptionCurrentActive($storeOwner);
        
     }
 
@@ -195,5 +207,57 @@ class SubscriptionManager
     public function isPackageReadyForSubscription($packageId): ?array {
        
         return $this->packageManager->getPackageActiveById($packageId);
+    }
+
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity 
+    {
+        return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
+    }
+
+    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): string
+    { 
+        //TODO shortcut two queries in one query
+        $subscribeCurrent = $this->subscriptionDetailsManager->getSubscriptionCurrent($subscriptionCaptainOfferEntity->getStoreOwner()->getId());
+              
+        $subscribeEntity = $this->subscribeRepository->find($subscribeCurrent->getLastSubscription()->getId());
+
+        if (! $subscribeEntity) {
+
+            return SubscriptionConstant::ERROR;
+        }
+
+        $subscribeEntity->setSubscriptionCaptainOffer($subscriptionCaptainOfferEntity);
+    
+        $this->entityManager->flush();
+       
+        $remainingCars = $subscribeCurrent->getRemainingCars() + $subscriptionCaptainOfferEntity->getCarCount();
+        $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
+    
+        return SubscriptionConstant::UPDATE_STATE;
+    }
+    
+    public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    public function storeOwnerProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): StoreOwnerProfileEntity|string
+    {
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
+    }
+
+    public function getSubscriptionCurrentByOrderId($orderId): ?array
+    {
+        return $this->subscribeRepository->getSubscriptionCurrentByOrderId($orderId);
+    }
+
+    public function getSubscriptionHistoryByStoreOwner(StoreOwnerProfileEntity $storeOwnerProfileEntity): ?SubscriptionHistoryEntity
+    {
+        return $this->subscriptionHistoryManager->getSubscriptionHistoryByStoreOwner($storeOwnerProfileEntity);
+    }
+
+    public function checkWhetherThereIsActiveCaptainsOffer($storeOwnerId): ?SubscriptionEntity
+    {
+        return $this->subscribeRepository->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
     }
 }

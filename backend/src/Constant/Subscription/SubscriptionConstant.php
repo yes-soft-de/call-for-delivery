@@ -41,6 +41,8 @@ final class SubscriptionConstant
     const CAN_CREATE_ORDER = true;
 
     const CAN_NOT_CREATE_ORDER = false;
+
+    const CAN_NOT_CREATE_CAPTAIN_OFFER = false;
    
     const IS_HAS_EXTRA_TRUE = true;
    
@@ -59,4 +61,18 @@ final class SubscriptionConstant
     const CAN_SUBSCRIPTION_EXTRA_TRUE = true;
     
     const CAN_SUBSCRIPTION_EXTRA_FALSE = false;
+
+    const SUBSCRIPTION_FOUND = "subscription found";
+
+    const CONSUMED_LESS_THAN_20_PERCENT = "less than 20 %";
+
+    const CONSUMED_LESS_THAN_50_PERCENT = "less than 50 %";
+    
+    const CONSUMED_LESS_THAN_80_PERCENT = "less than 80 %";
+
+    const CONSUMED_100_PERCENT = "100 %";
+
+    const CONSUMED_0_PERCENT = "0 %";
+
+    const CONSUMED_MORE_THAN_80_PERCENT = "more than 80 %";
 }

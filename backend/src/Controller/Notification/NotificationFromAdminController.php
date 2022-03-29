@@ -65,7 +65,48 @@ class NotificationFromAdminController extends BaseController
      */
     public function getAllNotificationsFromAdminForStore(): JsonResponse
     {
-        $result = $this->notificationFromAdminService->getAllNotificationsFromAdminForStore($this->getUserId(), NotificationConstant::APP_TYPE_STORE);
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_STORE);
+
+        return $this->response($result, self::FETCH);
+    }
+    
+    /**
+     * captain: Get notifications from admin.
+     * @Route("notificationsfromadminforcaptain", name="getAllNotificationsFromAdminForCaptain", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Notification FROM ADMIN")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns notifications ",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *                  @OA\Items(
+     *                      @OA\Property(type="integer", property="id"),
+     *                      @OA\Property(type="string", property="title"),
+     *                      @OA\Property(type="string", property="msg"),
+     *                      @OA\Property(type="object", property="createdAt"),
+     *              )
+     *          )
+     *       )
+     *    )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllNotificationsFromAdminForCaptain(): JsonResponse
+    {
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_CAPTAIN);
 
         return $this->response($result, self::FETCH);
     }

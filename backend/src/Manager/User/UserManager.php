@@ -185,4 +185,13 @@ class UserManager
         return $this->userRepository->find($id);
     }
 
+    public function getUserEntityByUserId(string $userId): ?UserEntity
+    {
+        return $this->userRepository->findOneBy(["userId"=>$userId]);
+    }
+    
+    public function getUserByCaptainProfileId($captainProfileId): ?UserEntity
+    {
+        return $this->userRepository->getUserByCaptainProfileId($captainProfileId);
+    }
 }

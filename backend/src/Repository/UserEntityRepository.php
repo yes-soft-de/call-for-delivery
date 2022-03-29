@@ -3,12 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\UserEntity;
+use App\Entity\CaptainEntity;
 use App\Request\User\UserFilterRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method UserEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -106,5 +108,19 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
         $query->orderBy('userEntity.id', 'DESC');
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getUserByCaptainProfileId($captainProfileId): mixed
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = userEntity.id')
+           
+            ->andWhere('captainEntity.id = :captainProfileId')
+           
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

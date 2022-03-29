@@ -34,6 +34,9 @@ class SubscriptionEntity
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'subscriptionEntities')]
     private $storeOwner;
 
+    #[ORM\ManyToOne(targetEntity: SubscriptionCaptainOfferEntity::class, inversedBy: 'subscriptionEntitie')]
+    private $subscriptionCaptainOffer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +122,18 @@ class SubscriptionEntity
     public function setStoreOwner(?StoreOwnerProfileEntity $storeOwner): self
     {
         $this->storeOwner = $storeOwner;
+
+        return $this;
+    }
+
+    public function getSubscriptionCaptainOffer(): ?SubscriptionCaptainOfferEntity
+    {
+        return $this->subscriptionCaptainOffer;
+    }
+
+    public function setSubscriptionCaptainOffer(?SubscriptionCaptainOfferEntity $subscriptionCaptainOffer): self
+    {
+        $this->subscriptionCaptainOffer = $subscriptionCaptainOffer;
 
         return $this;
     }

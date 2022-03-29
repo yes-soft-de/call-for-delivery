@@ -29,7 +29,7 @@ class SuperAdminCommand extends Command
         $adminRegisterRequest->setUserId('superadmin1');
         $adminRegisterRequest->setUserName("superAdmin1");
         $adminRegisterRequest->setPassword('super123Admin');
-        $adminRegisterRequest->setRoles(['ROLE_SUPER_ADMIN']);
+        $adminRegisterRequest->setRoles(['ROLE_SUPER_ADMIN', 'ROLE_SUPER_USER']);
 
         return $adminRegisterRequest;
     }

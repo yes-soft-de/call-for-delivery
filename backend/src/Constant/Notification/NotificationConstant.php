@@ -19,4 +19,42 @@ final class NotificationConstant
     const APP_TYPE_STORE = "stores";
     
     const APP_TYPE_CAPTAIN = "captains";
+
+    const STATE_TITLE = "حالة الطلب";
+
+    const STATE_ON_WAY_PICK_ORDER = "الكابتن في طريقه إلى المتجر";
+
+    const STATE_IN_STORE = "الكابتن في المتجر";
+
+    const STATE_PICKED = "الكابتن إلتقط الطلب من المتجر";
+
+    const STATE_ONGOING = "الكابتن في طريقه لتسليم الطلب";
+
+    const STATE_DELIVERED = "تم تسليم الطلب";
+
+    const UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE = "عذرا لا تستطيع تعديل الطلب , الكابتن في المتجر.";
+
+    const CANCEL_ORDER_TITLE = "حذف طلب";
+
+    const CANCEL_ORDER_SUCCESS = "تم حذف الطلب بنجاح.";
+
+    const CANCEL_ORDER_ERROR_TIME = "لا يمكن حذف الطلب, لقد تجاوزت الوقت المسموح به للحذف.";
+
+    const CANCEL_ORDER_ERROR_ACCEPTED = "لا يمكن حذف الطلب, الكابتن استلم الطلب.";
+
+    const APP_TYPE_ALL = "all";
+//for captain
+    const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
+
+    const STATE_IN_STORE_CAPTAIN = "أنت في المتجر";
+
+    const STATE_PICKED_CAPTAIN = "لقد إلتقطت الطلب";
+
+    const STATE_ONGOING_CAPTAIN = "أنت في طريقك لتسليم الطلب";
+
+    const STATE_DELIVERED_CAPTAIN = "لقد سلمت الطلب ,شكرا لك";
+    
+    const STORE = "store";
+    
+    const CAPTAIN = "captain";
 }

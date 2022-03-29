@@ -6,10 +6,8 @@ use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Controller\BaseController;
 use App\AutoMapping;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
-use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
-use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerMultipleBranchesCreateRequest;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use stdClass;
@@ -65,6 +63,7 @@ class StoreOwnerBranchController extends BaseController
      *              ),
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="city"),
+     *          @OA\Property(type="string", property="branchPhone"),
      *      )
      * )
      *
@@ -83,6 +82,7 @@ class StoreOwnerBranchController extends BaseController
      *            @OA\Property(type="string", property="name"),
      *            @OA\Property(type="boolean", property="isActive"),
      *            @OA\Property(type="string", property="city"),
+     *            @OA\Property(type="string", property="branchPhone"),
      *      )
      *   )
      * )
@@ -207,6 +207,7 @@ class StoreOwnerBranchController extends BaseController
      *              ),
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="city"),
+     *          @OA\Property(type="string", property="branchPhone"),
      *      )
      * )
      *
@@ -225,6 +226,7 @@ class StoreOwnerBranchController extends BaseController
      *            @OA\Property(type="string", property="name"),
      *            @OA\Property(type="boolean", property="isActive"),
      *            @OA\Property(type="string", property="city"),
+     *            @OA\Property(type="string", property="branchPhone"),
      *      )
      *   )
      * )
@@ -363,6 +365,7 @@ class StoreOwnerBranchController extends BaseController
      *                @OA\Property(type="string", property="name"),
      *                @OA\Property(type="boolean", property="isActive"),
      *                @OA\Property(type="string", property="city"),
+     *                @OA\Property(type="string", property="branchPhone"),
      *              ),
      *           )
      *      )
@@ -400,6 +403,7 @@ class StoreOwnerBranchController extends BaseController
      *                @OA\Property(type="string", property="name"),
      *                @OA\Property(type="boolean", property="isActive"),
      *                @OA\Property(type="string", property="city"),
+     *                @OA\Property(type="string", property="branchPhone"),
      *           )
      *      )
      *  )

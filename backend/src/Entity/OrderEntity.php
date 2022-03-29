@@ -23,15 +23,15 @@ class OrderEntity
 
     #[ORM\Column(type: 'float', nullable: true)]
     private $orderCost;
-//this will related with captain entity when create captain Entity
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $captainId;
 
     #[ORM\Column(type: 'integer')]
     private $orderType;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $noteCaptainOrderCost;
 
     #[ORM\Column(type: 'datetime')]
     private $deliveryDate;
@@ -45,6 +45,9 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $kilometer;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $captainOrderCost;
+
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'orderEntities')]
     #[ORM\JoinColumn(nullable: false)]
     private $storeOwner;
@@ -52,9 +55,26 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderChatRoomEntity::class)]
     private $orderChatRoomEntities;
 
+    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'orderEntity')]
+    private $captainId;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isCaptainArrived;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $dateCaptainArrived;
+    
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: RateEntity::class)]
+    private $rateEntity;
+
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderLogsEntity::class)]
+    private $OrderLogsEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
+        $this->rateEntity = new ArrayCollection();
+        $this->OrderLogsEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,14 +118,14 @@ class OrderEntity
         return $this;
     }
 
-    public function getCaptainId(): ?int
+    public function getCaptainOrderCost(): ?float
     {
-        return $this->captainId;
+        return $this->captainOrderCost;
     }
 
-    public function setCaptainId(?int $captainId): self
+    public function setCaptainOrderCost(?float $captainOrderCost): self
     {
-        $this->captainId = $captainId;
+        $this->captainOrderCost = $captainOrderCost;
 
         return $this;
     }
@@ -130,6 +150,18 @@ class OrderEntity
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getNoteCaptainOrderCost(): ?string
+    {
+        return $this->noteCaptainOrderCost;
+    }
+
+    public function setNoteCaptainOrderCost(?string $noteCaptainOrderCost): self
+    {
+        $this->noteCaptainOrderCost = $noteCaptainOrderCost;
 
         return $this;
     }
@@ -218,6 +250,100 @@ class OrderEntity
             // set the owning side to null (unless already changed)
             if ($orderChatRoomEntity->getOrderId() === $this) {
                 $orderChatRoomEntity->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCaptainId(): ?CaptainEntity
+    {
+        return $this->captainId;
+    }
+
+    public function setCaptainId(?CaptainEntity $captainId): self
+    {
+        $this->captainId = $captainId;
+
+        return $this;
+    }
+
+    public function getIsCaptainArrived(): ?bool
+    {
+        return $this->isCaptainArrived;
+    }
+
+    public function setIsCaptainArrived(?bool $isCaptainArrived): self
+    {
+        $this->isCaptainArrived = $isCaptainArrived;
+        return $this;
+    }
+    
+    /**
+     * @return Collection|RateEntity[]
+     */
+    public function getRateEntity(): Collection
+    {
+        return $this->rateEntity;
+    }
+
+    public function addRateEntity(RateEntity $rateEntity): self
+    {
+        if (!$this->rateEntity->contains($rateEntity)) {
+            $this->rateEntity[] = $rateEntity;
+            $rateEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function getDateCaptainArrived(): ?\DateTimeInterface
+    {
+        return $this->dateCaptainArrived;
+    }
+
+    public function setDateCaptainArrived(?\DateTimeInterface $dateCaptainArrived): self
+    {
+        $this->dateCaptainArrived = $dateCaptainArrived;
+       
+        return $this;
+    }
+    public function removeRateEntity(RateEntity $rateEntity): self
+    {
+        if ($this->rateEntity->removeElement($rateEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($rateEntity->getOrderId() === $this) {
+                $rateEntity->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLogsEntity[]
+     */
+    public function getOrderLogsEntity(): Collection
+    {
+        return $this->OrderLogsEntity;
+    }
+
+    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if (!$this->OrderLogsEntity->contains($orderLogsEntity)) {
+            $this->OrderLogsEntity[] = $orderLogsEntity;
+            $orderLogsEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    {
+        if ($this->OrderLogsEntity->removeElement($orderLogsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogsEntity->getOrderId() === $this) {
+                $orderLogsEntity->setOrderId(null);
             }
         }
 

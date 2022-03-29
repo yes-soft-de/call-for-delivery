@@ -17,8 +17,8 @@ class NotificationFromAdminManager
         $this->adminNotificationToUsersEntityRepository = $adminNotificationToUsersEntityRepository;
     }
 
-    public function getAllNotificationsFromAdminForStore($userId, $appType): ?array
+    public function getAllNotificationsFromAdmin($userId, $appType): ?array
     {
-        return $this->adminNotificationToUsersEntityRepository->getAllNotificationsFromAdminForStore($userId, $appType);
+        return $this->adminNotificationToUsersEntityRepository->getAllNotificationsFromAdmin($userId, $appType);
     }
 }

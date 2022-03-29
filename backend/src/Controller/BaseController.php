@@ -43,6 +43,8 @@ class BaseController extends AbstractController
     // error captain
     const ERROR_CAPTAIN_INACTIVE = ["error captain inactive","9100"];
     const CAPTAIN_PROFILE_NOT_EXIST = ["captain profile not exist!", "9101"];
+    const CAPTAIN_PROFILE_CREATED = ["captain profile created!", "9103"];
+    const CAPTAIN_PROFILE_COMPLETED = ["captain profile created!", "9102"];
     //error store
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];
     const INCORRECT_ENTERED_DATA = ["incorrect entered date!", "9152"];
@@ -63,6 +65,7 @@ class BaseController extends AbstractController
     const YOU_HAVE_SUBSCRIBED = ["You have subscribed", "9303"];
     const SUBSCRIBE_THEN_NEXT = ["Please subscribe first, then create a subscription for later", "9304"];
     const NOT_POSSIBLE = ["This subscription was previously extended, cannot be extended again", "9305"];
+    const CAN_NOT_ACCEPTED_ORDER = ["The cars remaining is finished", "9306"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
@@ -70,8 +73,14 @@ class BaseController extends AbstractController
     const COMPANY_INFO_NOT_EXISTS = ["required company info does not exist!", "9230"];
     // package
     const PACKAGE_NOT_EXIST = ["package not exist", "9351"];
+    // package
+    const CAPTAIN_OFFER_NOT_EXIST = ["captain offer not exist", "9451"];
+    const ERROR_SUBSCRIPTION_CAN_NOT_CREATE_OFFER = ["error","9453"];
+    const ERROR_YOU_HAVE_SUBSCRIPTION_ = ["you have subscription with captain offer","9454"];
     // notification
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
+    // admin
+    const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
 
     const NOTFOUND=["Not found", "404"];
 //    const TEST = [
@@ -165,6 +174,24 @@ class BaseController extends AbstractController
 
     public function response($result, $status) :jsonResponse
     {
+        if($result === "errorMsg")
+        {
+            $encoders = [new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+
+            $this->serializer = new Serializer($normalizers, $encoders);
+            $result = $this->serializer->serialize($result, "json", [
+                'enable_max_depth' => true]);
+            $response = new jsonResponse(["status_code" => $status[1],
+                    "msg" => $status[0] . " " . "Error.",
+                ]
+                , Response::HTTP_OK);
+            $response->headers->set('Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Methods', 'PUT');
+            return $response;
+        }
+        
         if($result!=null)
         {
             $encoders = [new JsonEncoder()];
@@ -193,7 +220,7 @@ class BaseController extends AbstractController
             $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->headers->set('Access-Control-Allow-Methods', 'PUT');
             return $response;
-        }
+        }      
         else
         {
             $response = new JsonResponse(["status_code"=>"200",
