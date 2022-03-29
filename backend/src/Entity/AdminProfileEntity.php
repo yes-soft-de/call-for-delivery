@@ -37,7 +37,7 @@ class AdminProfileEntity
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: ImageEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ImageEntity::class)]
     private $images;
 
     public function __construct()
@@ -134,7 +134,7 @@ class AdminProfileEntity
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            $image->setUserId($this);
+            $image->setUser($this);
         }
 
         return $this;
@@ -144,8 +144,8 @@ class AdminProfileEntity
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getUserId() === $this) {
-                $image->setUserId(null);
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
             }
         }
 

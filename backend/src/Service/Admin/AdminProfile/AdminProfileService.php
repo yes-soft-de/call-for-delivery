@@ -69,8 +69,8 @@ class AdminProfileService
 
             $response->user = $this->getSpecificUserFields($response->user);
 
-            if ($response->image) {
-                $response->image = $this->uploadFileHelperService->getImageParams($response->image->getImagePath());
+            if ($response->images) {
+                $response->images = $this->customizeAdminProfileImages($response->images->toArray());
             }
 
             return $response;

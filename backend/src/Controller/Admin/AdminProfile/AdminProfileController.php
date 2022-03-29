@@ -7,7 +7,6 @@ use App\Constant\Admin\AdminProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\AdminProfile\AdminProfileRequest;
 use App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest;
-use App\Request\Admin\AdminProfile\AdminProfileUpdateBySuperAdminRequest;
 use App\Request\Admin\AdminProfile\FilterAdminProfilesRequest;
 use App\Service\Admin\AdminProfile\AdminProfileService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -125,13 +124,20 @@ class AdminProfileController extends BaseController
      *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="object", property="createdAt"),
      *              @OA\Property(type="object", property="updatedAt"),
-     *              @OA\Property(type="object", property="image",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
      *              @OA\Property(type="boolean", property="status")
      *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns admin profile does not exist",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9410"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="adminProfileNotExist")
      *      )
      * )
      *
@@ -159,6 +165,10 @@ class AdminProfileController extends BaseController
             $request->setUser($this->getUser());
 
             $response = $this->adminProfileService->updateAdminProfile($request);
+        }
+
+        if ($response === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return $this->response($response, self::ADMIN_PROFILE_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);

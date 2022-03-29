@@ -102,7 +102,7 @@ class ImageManager
         $response = [];
 
         foreach ($images as $image) {
-            $imageEntity = $this->imageEntityRepository->findOneBy(["userId" => $adminProfileEntity->getId()]);
+            $imageEntity = $this->imageEntityRepository->findOneBy(["user" => $adminProfileEntity->getId()]);
 
             if(! $imageEntity) {
                 $request = new ImageCreateRequest();
@@ -111,7 +111,7 @@ class ImageManager
                 $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ADMIN_PROFILE);
                 $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
                 $request->setItemId($adminProfileEntity->getId());
-                $request->setUserId($adminProfileEntity);
+                $request->setUser($adminProfileEntity);
 
                 $response[] = $this->create($request);
 
