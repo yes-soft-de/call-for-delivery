@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionHistoryEntity;
 use App\Entity\SubscriptionEntity;
 use App\Repository\SubscriptionHistoryEntityRepository;
@@ -82,5 +83,10 @@ class SubscriptionHistoryManager
         $this->entityManager->flush();
  
         return $subscriptionHistoryEntity;
+    }
+
+    public function getSubscriptionHistoryByStoreOwner(StoreOwnerProfileEntity $storeOwnerProfileEntity): ?SubscriptionHistoryEntity
+    {
+        return $this->subscribeHistoryRepository->findOneBy(["storeOwner"=>$storeOwnerProfileEntity]);
     }
 }
