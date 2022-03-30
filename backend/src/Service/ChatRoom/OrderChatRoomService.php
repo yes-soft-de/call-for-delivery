@@ -31,11 +31,7 @@ class OrderChatRoomService
         $orderChatRooms = $this->orderChatRoomManager->getOrderChatRoomsForStoreBeforeOrderAccepted($userId);
        
         foreach($orderChatRooms as $orderChatRoom) {
-          
-            if($orderChatRoom['usedAs'] === ChatRoomConstant::CAPTAIN_STORE_ENQUIRE) {
-                $orderChatRoom['usedAs'] = ChatRoomConstant::CAPTAIN_ENQUIRE;
-            }
-
+    
             $orderChatRoom['roomId'] = $orderChatRoom['roomId']->toBase32();
             $orderChatRoom['images'] = $this->uploadFileHelperService->getImageParams($orderChatRoom['imagePath']);
           

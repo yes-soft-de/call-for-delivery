@@ -143,4 +143,9 @@ class StoreOwnerBranchService
             }
         }
     }
+
+    public function getBranchEntityById($id): ?StoreOwnerBranchEntity
+    {
+        return $this->storeOwnerBranchManager->getBranchById($id);
+    }
 }

@@ -71,15 +71,15 @@ class OrderService
       
             return  $canCreateOrder;
         }
-
+        
         $order = $this->orderManager->createOrder($request);
         if($order) {
-        
+           
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderLogsService->createOrderLogsRequest($order, $request->getBranch());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -213,7 +213,7 @@ class OrderService
             }
 
             //create Notification Local for store
-            $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getCaptainId()); 
+            $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN); 
             //create order log

@@ -12,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Constant\ChatRoom\ChatRoomConstant;
 
 /**
  * @method OrderChatRoomEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -40,10 +41,12 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
             ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType')
          
             ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id')
+            ->andWhere('orderChatRoomEntity.usedAs = :orderChatRoomUsedAs')
          
             ->setParameter('userId', $userId)
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
             ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            ->setParameter('orderChatRoomUsedAs', ChatRoomConstant::CAPTAIN_STORE_ENQUIRE)
 
             ->getQuery()
             ->getResult();
