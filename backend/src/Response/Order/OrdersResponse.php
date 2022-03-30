@@ -47,4 +47,8 @@ class OrdersResponse
     public object|null $dateCaptainArrived;
     
     public string|null $branchPhone;
+    
+    public string|null $attention;
+
+    public string|null $captainOrderCost;
 }
