@@ -82,6 +82,8 @@ class InitSubscriptionsLoadedState extends States {
                         ),
                         hint: Text(S.current.choosePackageCategories),
                         onChanged: (String? value) {
+                          _selectedCity = null;
+                          _selectedPackageId = null;
                           _packages = packages
                               .singleWhere(
                                   (element) => element.id.toString() == value)
@@ -133,6 +135,7 @@ class InitSubscriptionsLoadedState extends States {
                           ),
                           hint: Text(S.current.chooseYourCity),
                           onChanged: (String? value) {
+                            _selectedPackageId = null;
                             _selectedCity = value;
                             screenState.refresh();
                           }),
