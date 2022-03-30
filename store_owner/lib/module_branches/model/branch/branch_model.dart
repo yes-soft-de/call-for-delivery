@@ -6,7 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class BranchModel extends DataModel {
   late LatLng location;
   late String name;
-  BranchModel({required this.location, required this.name});
+  late String? phone;
+  BranchModel(
+      {required this.location, required this.name, required this.phone});
   List<BranchModel> _branches = [];
 
   BranchModel.withData(BranchListResponse response) {
@@ -15,7 +17,8 @@ class BranchModel extends DataModel {
     data?.forEach((element) {
       _branches.add(BranchModel(
           location: LatLng(0, 0),
-          name: element.brancheName ?? S.current.unknown));
+          name: element.brancheName ?? S.current.unknown,
+          phone: element.branchPhone));
     });
   }
 }

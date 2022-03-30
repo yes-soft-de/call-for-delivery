@@ -5,6 +5,8 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
@@ -27,12 +29,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
-    if (orderInfo.showConfirm == true &&
+    if (orderInfo.isCaptainArrived == false &&
         orderInfo.state == OrderStatusEnum.IN_STORE) {
       showOwnerAlertConfirm();
     }
   }
-
+  bool dialogShowed = false;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -550,16 +552,21 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   }
 
   bool redo = false;
-  void showFlush(context, answer) {
+  void showFlush(context, bool answer) {
     late Flushbar flushbar;
     flushbar = Flushbar(
       borderRadius: BorderRadius.circular(25),
       onStatusChanged: (status) {
         if (FlushbarStatus.DISMISSED == status && !redo) {
-          screenState.sendOrderReportState(orderInfo.id, answer);
+          screenState.manager.confirmCaptainLocation(
+              screenState,
+              ConfirmCaptainLocationRequest(
+                  orderId: orderInfo.id, isCaptainArrived: answer));
         }
       },
       duration: Duration(seconds: 5),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
       backgroundColor: Theme.of(context).colorScheme.primary,
       title: S.current.warnning,
       message: S.current.sendingReport,
@@ -573,9 +580,14 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             redo = true;
             screenState.refresh();
             flushbar.dismiss();
-            screenState.changeStateToLoaded(orderInfo);
+            screenState.currentState =
+                OrderDetailsStateOwnerOrderLoaded(screenState, orderInfo);
+            screenState.refresh();
           },
-          child: Text(S.of(context).redo)),
+          child: Text(
+            S.of(context).redo,
+            style: Theme.of(context).textTheme.button,
+          )),
     )..show(context);
   }
 
@@ -584,7 +596,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) {
+        builder: (_) {
           return AlertDialog(
             title: Text(S.current.warnning),
             content: Container(
@@ -594,11 +606,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                     showFlush(context, true);
                   },
                   child: Text(S.of(context).yes)),
               TextButton(
                   onPressed: () {
+                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     showFlush(context, false);
                   },

@@ -20,6 +20,7 @@ class Data {
   String? city;
   String? brancheName;
   String? userName;
+  String? branchPhone;
 
   Data({this.id, this.location, this.brancheName, this.userName, this.city});
 
@@ -30,6 +31,7 @@ class Data {
     city = json['city'];
     brancheName = json['name'];
     userName = json['userName'];
+    branchPhone = json['branchPhone'];
   }
 }
 

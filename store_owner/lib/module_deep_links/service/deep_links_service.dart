@@ -6,20 +6,31 @@ import 'package:uni_links/uni_links.dart';
 class DeepLinksService {
   static Future<DeepLinksModel?> checkForGeoLink() async {
     var uri = await getInitialUri();
-
     if (uri == null) {
       return null;
     }
     if (uri.queryParameters['q'] == null) {
       return null;
     }
-
-    return DeepLinksModel(
-        location: LatLng(
-          double.parse(uri.queryParameters['q']!.split(',')[0]),
-          double.parse(uri.queryParameters['q']!.split(',')[1]),
-        ),
-        link: uri);
+    var model;
+    if (uri.toString().contains('+') == true) {
+      var end = uri.toString().indexOf('?');
+      var query = uri.toString().substring(4, end);
+      model = DeepLinksModel(
+          location: LatLng(
+            double.parse(query.split(',')[0].trim()),
+            double.parse(query.split(',')[1].trim()),
+          ),
+          link: uri);
+    } else {
+      model = DeepLinksModel(
+          location: LatLng(
+            double.parse(uri.queryParameters['q']!.split(',')[0]),
+            double.parse(uri.queryParameters['q']!.split(',')[1]),
+          ),
+          link: uri);
+    }
+    return model;
   }
 
   static Future<LatLng?> defaultLocation() async {

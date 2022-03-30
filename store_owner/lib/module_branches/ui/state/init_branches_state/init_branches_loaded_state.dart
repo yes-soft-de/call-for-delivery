@@ -9,7 +9,6 @@ import 'package:c4d/module_branches/ui/screens/init_branches/init_branches_scree
 import 'package:c4d/module_branches/ui/widget/branch_card.dart';
 import 'package:c4d/module_branches/ui/widget/edit_branch_dialog.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/google_map_widget.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -257,11 +256,11 @@ class InitAccountStateSelectBranch extends States {
                                     var request = <CreateBranchRequest>[];
                                     for (var element in branchLocation) {
                                       request.add(CreateBranchRequest(
-                                          name: element.name,
+                                          branchName: element.name,
                                           location: GeoJson(
                                               lat: element.location.latitude,
-                                              lon:
-                                                  element.location.longitude)));
+                                              lon: element.location.longitude),
+                                          phone: element.phone));
                                     }
                                     screenState.createBranch(
                                         CreateListBranchesRequest(
@@ -296,10 +295,17 @@ class InitAccountStateSelectBranch extends States {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      return EditBranchDialog();
+                      return EditBranchDialog(
+                        branchName: branchLocation[i].name,
+                        phoneNumber: branchLocation[i].phone ?? '',
+                      );
                     }).then((result) {
                   if (result != null) {
-                    branchLocation[i].name = result;
+                    result as BranchModel;
+                    branchLocation[i].name = result.name;
+                    if (result.phone?.isNotEmpty == true) {
+                      branchLocation[i].phone = result.phone;
+                    }
                     screenState.refresh();
                   }
                 });
@@ -342,12 +348,10 @@ class InitAccountStateSelectBranch extends States {
             );
           });
     }
-    branchLocation.add(
-        BranchModel(location: location, name: '${branchLocation.length + 1}'));
+    branchLocation.add(BranchModel(
+        location: location, name: '${branchLocation.length + 1}', phone: null));
     screenState.refresh();
     _getMarkers(branchLocation).then((value) => screenState.refresh());
-    // screenState.createBranch(CreateBrancheRequest(
-    //     branchName: '${branchLocation.length + 1}', location: location));
   }
 
   Future<Set<Marker>> _getMarkers(List<BranchModel> branches) async {

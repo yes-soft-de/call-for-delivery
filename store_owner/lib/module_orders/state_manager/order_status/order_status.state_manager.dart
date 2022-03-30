@@ -6,12 +6,14 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -60,6 +62,17 @@ class OrderStatusStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.captainRated)
             .show(screenState.context);
+      }
+    });
+  }
+
+  void confirmCaptainLocation(OrderDetailsScreenState screenState,
+      ConfirmCaptainLocationRequest request) {
+    _ordersService.confirmCaptainLocation(request).then((value) {
+      if (value.hasError) {
+        Fluttertoast.showToast(msg: value.error ?? S.current.errorHappened);
+      } else {
+        Fluttertoast.showToast(msg: S.current.reportSent);
       }
     });
   }

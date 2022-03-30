@@ -26,12 +26,11 @@ class OrderDetailsModel extends DataModel {
   late String? roomID;
   String? image;
   int? captainID;
+  String? branchPhone;
+  late bool isCaptainArrived;
 
   /// this field to know if we can remove order
   late bool canRemove;
-
-  /// to confirm that captain is really in store
-  late bool? showConfirm;
   String? distance;
   OrderDetailsModel(
       {required this.id,
@@ -48,11 +47,12 @@ class OrderDetailsModel extends DataModel {
       required this.state,
       required this.roomID,
       required this.canRemove,
-      required this.showConfirm,
       required this.deliveryDate,
       required this.image,
       required this.captainID,
-      required this.distance});
+      required this.distance,
+      required this.isCaptainArrived,
+      required this.branchPhone});
 
   late OrderDetailsModel _orders;
 
@@ -78,7 +78,8 @@ class OrderDetailsModel extends DataModel {
         image: element?.image?.image,
         canRemove:
             _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        showConfirm: showConfirmingOrderState,
+        isCaptainArrived: element?.isCaptainArrived ?? false,
+        branchPhone: element?.branchPhone,
         branchName: element?.branchName ?? S.current.unknown,
         createdDate: create,
         customerName: element?.recipientName ?? S.current.unknown,

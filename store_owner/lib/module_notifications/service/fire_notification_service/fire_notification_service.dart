@@ -63,7 +63,6 @@ class FireNotificationService {
         });
         FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
       } catch (e) {
-        print(e.toString());
       }
     }
   }

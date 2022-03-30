@@ -6,7 +6,6 @@ import 'package:c4d/module_branches/request/update_branch/update_branch_request.
 import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_branches/ui/screens/update_branches_screen/update_branches_screen.dart';
 import 'package:c4d/module_branches/ui/state/update_branches_state/update_branches_state.dart';
-import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
