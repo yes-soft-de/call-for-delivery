@@ -111,13 +111,24 @@ class OrderService
         $order = $this->orderManager->getSpecificOrderForStore($id);
         if($order) {
             
+            $order['attention'] = null;
+            
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
             
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
             }
+           
+            if($order['captainOrderCost']) {
+                if($order['orderCost'] !== $order['captainOrderCost']) {
+                        $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
+                 }
+                 else{
+                    $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_MATCH;
+                 }
+            }
         }
-
+   
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
 
