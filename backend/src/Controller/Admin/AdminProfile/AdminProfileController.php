@@ -283,7 +283,8 @@ class AdminProfileController extends BaseController
      *      description="filter request options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="name"),
-     *          @OA\Property(type="string", property="phone")
+     *          @OA\Property(type="string", property="phone"),
+     *          @OA\Property(type="boolean", property="status")
      *      )
      * )
      *

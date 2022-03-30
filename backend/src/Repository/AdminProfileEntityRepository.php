@@ -59,6 +59,11 @@ class AdminProfileEntityRepository extends ServiceEntityRepository
             $query->setParameter('phone', '%'.$request->getPhone().'%');
         }
 
+        if ($request->getStatus() !== null) {
+            $query->andWhere('adminProfile.status = :status');
+            $query->setParameter('status', $request->getStatus());
+        }
+
         return $query->getQuery()->getResult();
     }
 }
