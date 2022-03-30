@@ -97,10 +97,10 @@ class CaptainProfileLoadedState extends States {
                           title: S.of(context).car,
                           subTitle: model?.car,
                           iconData: Icons.local_taxi_rounded),
-                      CustomListTile(
-                          title: S.of(context).createDate,
-                          subTitle: model?.createDate,
-                          iconData: Icons.timer_rounded),
+//                      CustomListTile(
+//                          title: S.of(context).createDate,
+//                          subTitle: model?.createDate,
+//                          iconData: Icons.timer_rounded),
 //                      CustomListTile(
 //                          title: S.of(context).status,
 //                          subTitle: model?.isOnline,

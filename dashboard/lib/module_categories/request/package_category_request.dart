@@ -7,7 +7,9 @@ class PackageCategoryRequest{
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['id'] = id;
+    if(id != null){
+      map['id'] = id;
+    }
     map['name'] = name;
     map['description'] = description;
     return map;

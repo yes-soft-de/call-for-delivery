@@ -1,9 +1,16 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/ui/state/stores_lists/stores_loaded_state.dart';
+import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -13,13 +20,15 @@ import 'package:c4d/utils/effect/checked.dart';
 
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
+import '../../../abstracts/states/loading_state.dart';
+
 
 
 class UpdateStoreWidget extends StatefulWidget {
-  final Function(StoresModel) updateStore;
-  UpdateStoreRequest request;
+  final Function(UpdateStoreRequest,bool) updateStore;
+  StoresModel? storesModel;
 
-  UpdateStoreWidget({required this.updateStore,required this.request});
+  UpdateStoreWidget({required this.updateStore, this.storesModel});
 
   @override
   _UpdateStoreWidgetState createState() => _UpdateStoreWidgetState();
@@ -36,11 +45,13 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
   late TextEditingController _stcPay;
 
   String? imagePath;
+  String? networkImage;
+  Uint8List? imageBytes;
   String? selectedSize;
 
 
-  TimeOfDay? openingTime;
-  TimeOfDay? closingTime;
+  DateTime? openingTime;
+  DateTime? closingTime;
   String? status ;
   var date = DateTime.now();
   int val = 1;
@@ -212,34 +223,38 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                       ),
-                      InkWell(
-                        onTap: () {
-                          ImagePicker.platform
-                              .getImage(
-                                  source: ImageSource.gallery, imageQuality: 70)
-                              .then((value) {
-                            if (value != null) {
-                              imagePath = value.path;
-                              setState(() {});
-                            }
-                          });
-                        },
-                        child: Checked(
-                          child: Icon(
-                            Icons.image,
-                            size: 150,
-                          ),
-                          checked: imagePath != null && imagePath != '',
-                          checkedWidget: SizedBox(
-                              height: 150,
-                              child: ClipRRect(
+                      SizedBox(
+                        height: 200,
+                        child: InkWell(
+                          onTap: () {
+                            ImagePicker.platform
+                                .getImage(
+                                    source: ImageSource.gallery, imageQuality: 70)
+                                .then((value) async{
+                              if (value != null) {
+                                imageBytes = await value.readAsBytes();
+                                imagePath = value.path;
+                                setState(() {});
+                              }
+                            });
+                          },
+                          child:  Checked(
+                              checked: imagePath != null,
+                              checkedWidget: ClipRRect(
                                   borderRadius: BorderRadius.circular(25),
-                                  child: imagePath?.contains('http') == true
-                                      ? Image.network(imagePath ?? '')
-                                      : Image.file(
-                                          File(imagePath ?? ''),
-                                          fit: BoxFit.cover,
-                                        ))),
+                                  child: imageBytes != null
+                                      ? Image.memory(
+                                    imageBytes ?? Uint8List(0),
+                                    fit: BoxFit.cover,
+                                  )
+                                      : Image.network(
+                                    networkImage ?? '',
+                                    fit: BoxFit.cover,
+                                  )),
+                              child: Center(
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                  ))),
                         ),
                       ),
                       // Store Shift
@@ -269,7 +284,13 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                               ).then((value) {
                                 if (value == null) {
                                 } else {
-                                  openingTime = value;
+                                  var now = DateTime.now();
+                                  openingTime = DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day,
+                                      value.hour,
+                                      value.minute);
                                   setState(() {});
                                 }
                               });
@@ -282,8 +303,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    openingTime?.format(context).toString() ??
-                                        '00:00 ',
+                                    DateFormat.jm().format(
+                                        openingTime ?? DateTime.now()),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -307,7 +328,13 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                               ).then((value) {
                                 if (value == null) {
                                 } else {
-                                  closingTime = value;
+                                  var now = DateTime.now();
+                                  closingTime = DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day,
+                                      value.hour,
+                                      value.minute);
                                   setState(() {});
                                 }
                               });
@@ -320,8 +347,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    closingTime?.format(context).toString() ??
-                                        '00:00 ',
+                                    DateFormat.jm().format(
+                                        closingTime ?? DateTime.now()),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -393,36 +420,24 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
         ),
         label: S.current.update,
         onTap: () {
-          if (_key.currentState!.validate() &&
-              openingTime != null &&
-              closingTime != null) {
-            if (imagePath?.contains('http') == true && widget.request != null) {
-              imagePath = widget.request.image ?? '';
+          if (_key.currentState?.validate() == true && imagePath != null) {
+            if (imageBytes == null && imagePath != null) {
+              saveImageUpload(false);
+            } else {
+              saveImageUpload(true);
             }
-            widget.updateStore(
-              StoresModel(
-                id: widget.request.id,
-                  status: status??'active' ,imageUrl: imagePath??'',
-                  storeOwnerName: _nameController.text.trim(),
-                openingTime:
-              DateTime(date.year, date.month, date.day, openingTime!.hour,
-                  openingTime!.minute)
-                  .toUtc(),
-                closingTime:DateTime(date.year, date.month, date.day, closingTime!.hour,
-                    closingTime!.minute)
-                    .toUtc(),
-                phone: _phoneController.text.trim(),
-                city: _cityController.text,
-                bankName: _bankName.text,
-                bankAccountNumber: _bankAccountNumber.text
-              ));
+          } else if (imagePath == null) {
+            CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: S.current.noImage)
+                .show(context);
           } else {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm)
+                title: S.current.warnning,
+                message: S.current.pleaseCompleteTheForm)
                 .show(context);
           }
-        });
+        }
+        );
   }
 
   @override
@@ -434,24 +449,20 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
     _bankName = TextEditingController();
     _stcPay = TextEditingController();
 
-    if (widget.request != null) {
-      _nameController.text = widget.request.storeOwnerName ?? '';
-      imagePath = widget.request.image ?? null;
-      if (imagePath == '' || imagePath?.contains('/original-image/') == false) {
-        imagePath = null;
-      }
-      openingTime = TimeOfDay.fromDateTime(DateTime.parse(
-          widget.request.openingTime ?? DateTime.now().toString()));
-      closingTime = TimeOfDay.fromDateTime(DateTime.parse(
-          widget.request.closingTime ?? DateTime.now().toString()));
-      status = widget.request.status ?? 'active';
-      _bankAccountNumber.text = widget.request.bankAccountNumber ?? '';
-      _bankName.text = widget.request.bankName ?? '';
-      _stcPay.text = widget.request.stcPay ?? '';
+    if (widget.storesModel != null) {
+      _nameController.text = widget.storesModel?.storeOwnerName ?? '';
+      networkImage = widget.storesModel?.image;
+      imagePath = widget.storesModel?.imageUrl;
+      openingTime = widget.storesModel?.openingTime;
+      closingTime = widget.storesModel?.closingTime;
+      status = widget.storesModel?.status ?? 'active';
+      _bankAccountNumber.text =widget.storesModel?.bankAccountNumber ?? '';
+      _bankName.text = widget.storesModel?.bankName ?? '';
+//      _stcPay.text = widget.storesModel?.
       val = _bankAccountNumber.text != '' ? 1 : 2;
-      _cityController.text =widget.request.city ?? '';
-      _phoneController.text =widget.request.phone ?? '';
-      selectedSize =widget.request.employeeCount ?? '1-20';
+      _cityController.text =widget.storesModel?.city ?? '';
+      _phoneController.text =widget.storesModel?.phone ?? '';
+      selectedSize =widget.storesModel?.employeeCount ?? '1-20';
     }
     super.initState();
   }
@@ -471,5 +482,21 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
     ));
 
     return sizeDropdowns;
+  }
+  void saveImageUpload(bool haveImage) {
+    UpdateStoreRequest profileRequest = UpdateStoreRequest(
+      storeOwnerName: _nameController.text,
+      phone: _phoneController.text,
+      city: _cityController.text,
+      image: imagePath,
+      bankName: _bankName.text,
+      bankAccountNumber: _bankAccountNumber.text,
+      employeeCount: selectedSize,
+      closingTime: closingTime?.toUtc().toIso8601String(),
+      openingTime: openingTime?.toUtc().toIso8601String(),
+      status: status,
+      id: widget.storesModel?.id ?? -1
+    );
+    widget.updateStore(profileRequest,haveImage);
   }
 }

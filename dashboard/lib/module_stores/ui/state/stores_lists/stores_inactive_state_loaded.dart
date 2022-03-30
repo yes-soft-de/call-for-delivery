@@ -124,7 +124,7 @@ class StoresInActiveLoadedState extends States {
                       height: 75,
                       width: 75,
                       child: CustomNetworkImage(
-                        imageSource: element.imageUrl,
+                        imageSource: element.imageUrl ?? '',
                         width: 75,
                         height: 75,
                       ),
@@ -152,29 +152,10 @@ class StoresInActiveLoadedState extends States {
                               backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
                               body: UpdateStoreWidget(
-                                request: UpdateStoreRequest(
-                                  id: element.id,
-                                  storeOwnerName: element.storeOwnerName,
-                                  image: element.imageUrl,
-                                  openingTime:
-                                  element.openingTime?.toIso8601String(),
-                                  closingTime:
-                                  element.closingTime?.toIso8601String(),
-                                  status: element.status,
-                                  bankAccountNumber: element.bankAccountNumber,
-                                  bankName: element.bankName,
-                                  city: element.city,phone: element.phone,),
-                                updateStore: (e) {
+                                storesModel:element,
+                                updateStore: (request,haveImage) {
                                   Navigator.of(context).pop();
-                                  screenState.updateStore(UpdateStoreRequest(
-                                      status: e.status,
-                                      id: element.id,
-                                      storeOwnerName: e.storeOwnerName,
-                                      image: e.imageUrl,
-                                      openingTime: e.openingTime?.toIso8601String(),
-                                      closingTime: e.closingTime?.toIso8601String(),
-                                      bankName: e.bankName,
-                                      bankAccountNumber: e.bankAccountNumber ,city: e.city ,phone: e.phone));
+                                  screenState.updateStore(request,haveImage);
                                 },
                               ),
                             ),

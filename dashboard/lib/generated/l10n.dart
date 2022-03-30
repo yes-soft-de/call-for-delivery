@@ -4920,10 +4920,10 @@ class S {
     );
   }
 
-  /// `Notice`
+  /// `Updates`
   String get notice {
     return Intl.message(
-      'Notice',
+      'Updates',
       name: 'notice',
       desc: '',
       args: [],
