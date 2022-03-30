@@ -27,13 +27,13 @@ class OrdersChatListStateManager {
       _chatService.getOrderChatRooms().then((value) {
         if (value.hasError) {
           _stateSubject.add(ErrorState(screenState,
-              title: S.current.notifications,
+              title: S.current.enquiries,
               error: value.error ?? S.current.errorHappened, onPressed: () {
             getRooms(screenState);
           }));
         } else if (value.isEmpty) {
           _stateSubject.add(EmptyState(screenState,
-              title: S.current.notifications,
+              title: S.current.enquiries,
               emptyMessage: S.current.homeDataEmpty, onPressed: () {
             getRooms(screenState);
           }));
