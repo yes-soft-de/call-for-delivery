@@ -5,6 +5,9 @@
     "beste/clock": {
         "version": "1.0.0"
     },
+    "beste/json": {
+        "version": "1.0.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
