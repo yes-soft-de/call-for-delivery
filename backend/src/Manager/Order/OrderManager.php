@@ -59,7 +59,7 @@ class OrderManager
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
 
-       $orderEntity->storeOrderDetails = $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $request);
+       $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $request);
 
        return $orderEntity;
     }
@@ -151,8 +151,6 @@ class OrderManager
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateByCaptainRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $this->entityManager->flush();
-     
-        $orderEntity->storeOrderDetails = $this->storeOrderDetailsManager->getOrderDetailsByOrderId($orderEntity->getId());
      
         return $orderEntity;
     }

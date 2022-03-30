@@ -71,15 +71,15 @@ class OrderService
       
             return  $canCreateOrder;
         }
-
+        
         $order = $this->orderManager->createOrder($request);
         if($order) {
-        
+           
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderLogsService->createOrderLogsRequest($order, $request->getBranch());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
