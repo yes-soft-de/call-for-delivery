@@ -54,6 +54,8 @@ App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest:
             - NotBlank: ~
         name:
             - NotBlank: ~
+        branchPhone:
+            - NotBlank: ~
 
 App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest:
     properties:
@@ -62,6 +64,8 @@ App\Request\StoreOwnerBranch\StoreOwnerBranchUpdateRequest:
         location:
             - NotBlank: ~
         name:
+            - NotBlank: ~
+        branchPhone:
             - NotBlank: ~
 
 App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest:
