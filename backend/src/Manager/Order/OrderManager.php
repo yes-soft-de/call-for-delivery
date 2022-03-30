@@ -81,7 +81,7 @@ class OrderManager
      */
     public function getSpecificOrderForStore(int $id): ?array
     {      
-       return  $this->orderRepository->getSpecificOrderForStore($id);     
+       return  $this->orderRepository->getSpecificOrderForStore($id); 
     }
 
     public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array

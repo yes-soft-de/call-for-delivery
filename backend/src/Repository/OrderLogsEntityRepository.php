@@ -19,32 +19,16 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderLogsEntity::class);
     }
 
-    // /**
-    //  * @return OrderLogsEntity[] Returns an array of OrderLogsEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getOrderLogsByOrderId($orderId): ?array
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('orderLogsEntity')
+            ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')
 
-    /*
-    public function findOneBySomeField($value): ?OrderLogsEntity
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere("orderLogsEntity.orderId = :orderId")
+            
+            ->setParameter('orderId',$orderId)
+            
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

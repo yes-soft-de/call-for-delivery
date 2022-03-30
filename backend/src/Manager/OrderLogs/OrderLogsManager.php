@@ -31,4 +31,9 @@ class OrderLogsManager
 
         return $entity;
     }
+
+    public function getOrderLogsByOrderId($orderId): ?array
+    {
+      return $this->orderLogsEntityRepository->getOrderLogsByOrderId($orderId);
+    }
 }

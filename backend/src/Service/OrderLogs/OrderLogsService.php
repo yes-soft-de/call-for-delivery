@@ -8,6 +8,7 @@ use App\Request\OrderLogs\OrderLogsCreateRequest;
 use App\Entity\OrderLogsEntity;
 use App\Entity\OrderEntity;
 use App\Response\OrderLogs\OrderLogsResponse;
+use App\Response\OrderLogs\OrderLogsByOrderIdResponse;
 
 class OrderLogsService
 {
@@ -39,4 +40,16 @@ class OrderLogsService
 
        return $this->createOrderLogs($request);
     }
+
+    public function getOrderLogsByOrderId($orderId): ?array
+    {
+      $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
+      
+       foreach($orderLogs as $orderLog) {
+         $response[] = $this->autoMapping->map("array", OrderLogsByOrderIdResponse::class, $orderLog);            
+      }
+
+      return $response;
+    }
+
 }

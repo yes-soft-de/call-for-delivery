@@ -116,9 +116,14 @@ class OrderService
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
             }
+
+
+
+
+           $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
         }
 
-        return $this->autoMapping->map("array", OrdersResponse::class, $order);
+        return  $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
 
     public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
