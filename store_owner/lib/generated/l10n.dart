@@ -5559,6 +5559,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Dear`
+  String get dear {
+    return Intl.message(
+      'Dear',
+      name: 'dear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have consumed 35%`
+  String get orderAverage35 {
+    return Intl.message(
+      'You have consumed 35%',
+      name: 'orderAverage35',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have consumed 40%`
+  String get orderAverage40 {
+    return Intl.message(
+      'You have consumed 40%',
+      name: 'orderAverage40',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have consumed 75%`
+  String get orderAverage75 {
+    return Intl.message(
+      'You have consumed 75%',
+      name: 'orderAverage75',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have consumed 80%`
+  String get orderAverage80 {
+    return Intl.message(
+      'You have consumed 80%',
+      name: 'orderAverage80',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have consumed`
+  String get youConsumed {
+    return Intl.message(
+      'You have consumed',
+      name: 'youConsumed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

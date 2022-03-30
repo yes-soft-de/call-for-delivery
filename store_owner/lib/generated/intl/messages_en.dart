@@ -225,6 +225,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
+        "dear": MessageLookupByLibrary.simpleMessage("Dear"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteBranchSuccess":
@@ -456,6 +457,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "orderAverage35":
+            MessageLookupByLibrary.simpleMessage("You have consumed 35%"),
+        "orderAverage40":
+            MessageLookupByLibrary.simpleMessage("You have consumed 40%"),
+        "orderAverage75":
+            MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
+        "orderAverage80":
+            MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
@@ -841,6 +850,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youConsumed":
+            MessageLookupByLibrary.simpleMessage("You have consumed"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
