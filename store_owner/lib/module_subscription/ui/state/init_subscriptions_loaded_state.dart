@@ -243,9 +243,10 @@ class InitSubscriptionsLoadedState extends States {
   List<DropdownMenuItem<String>> _getCities() {
     var cityNames = <String>[];
     _packages.forEach((element) {
-      cityNames.add('${element.city}');
+      if (cityNames.contains(element.city) == false) {
+        cityNames.add('${element.city}');
+      }
     });
-
     var cityDropDown = <DropdownMenuItem<String>>[];
     cityNames.forEach((element) {
       cityDropDown.add(DropdownMenuItem(

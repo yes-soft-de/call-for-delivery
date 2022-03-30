@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/order_average.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,49 @@ class OrdersListStateOrdersLoaded extends States {
   OrdersListStateOrdersLoaded(
     this.screenState, {
     required this.orders,
-  }) : super(screenState);
+  }) : super(screenState) {
+    if (screenState.status?.consumingAlert == true) {
+      showDialog(
+          context: screenState.context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+              title: Text(S.current.warnning),
+              content: Container(
+                height: 125,
+                child: SingleChildScrollView(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${S.of(context).dear} ${screenState.currentProfile?.name}',
+                        textAlign: TextAlign.start,
+                      ),
+                      Container(
+                        height: 4,
+                      ),
+                      Text(
+                        OrderAverageHelper.getOrderAlertAverage(screenState.status?.percentageOfOrdersConsumed ?? '0 %'),
+                        textAlign: TextAlign.start,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(S.of(context).confirm)),
+              ],
+            );
+          });
+    }
+  }
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(children: getOrders());

@@ -1,16 +1,20 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/balance_status.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
+import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 
 class CanMakeOrderModel extends DataModel {
   late bool canCreateOrder;
   late String status;
-
-  CanMakeOrderModel({
-    required this.canCreateOrder,
-    required this.status,
-  });
+  late String percentageOfOrdersConsumed;
+  late bool consumingAlert;
+  CanMakeOrderModel(
+      {required this.canCreateOrder,
+      required this.status,
+      required this.percentageOfOrdersConsumed,
+      required this.consumingAlert});
 
   late CanMakeOrderModel _model;
 
@@ -18,7 +22,43 @@ class CanMakeOrderModel extends DataModel {
     var data = response.data;
     _model = CanMakeOrderModel(
         canCreateOrder: data?.canCreateOrder ?? true,
-        status: data?.subscriptionStatus ?? 'inactive');
+        status: data?.subscriptionStatus ?? 'inactive',
+        percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0 %',
+        consumingAlert: false);
+    // alert detect
+    var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
+    var totalOrder = num.tryParse(total) ?? 0;
+    var alert = false;
+    if (totalOrder >= 80.0) {
+      alert = _subscriptionAlert(totalOrder);
+    } else if (totalOrder >= 75.0) {
+      alert = _subscriptionAlert(totalOrder);
+    } else if (totalOrder >= 40.0) {
+      alert = _subscriptionAlert(totalOrder);
+    } else if (totalOrder >= 35.0) {
+      alert = _subscriptionAlert(totalOrder);
+    } else {
+      alert = _subscriptionAlert(totalOrder);
+    }
+    _model.consumingAlert = alert;
   }
+  bool _subscriptionAlert(num percent) {
+    var user = AuthPrefsHelper().getUsername();
+    var box = OrderHiveHelper().box;
+    if (percent < 35) {
+      box.delete('$user consumed 80%');
+      box.delete('$user consumed 75%');
+      box.delete('$user consumed 40%');
+      box.delete('$user consumed 35%');
+      return false;
+    }
+    bool seen = box.get('$user consumed $percent%') ?? false;
+    if (!seen) {
+      box.put('$user consumed $percent%', true);
+      return true;
+    }
+    return false;
+  }
+
   CanMakeOrderModel get data => _model;
 }
