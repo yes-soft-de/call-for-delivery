@@ -79,7 +79,7 @@ class OrderService
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            // $this->orderLogsService->createOrderLogsRequest($order, $request->getBranch());
+            $this->orderLogsService->createOrderLogsRequest($order);
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
