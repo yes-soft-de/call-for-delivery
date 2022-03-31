@@ -31,4 +31,14 @@ class OrderLogsManager
 
         return $entity;
     }
+
+    public function getOrderLogsByOrderId(int $orderId): ?array
+    {
+      return $this->orderLogsEntityRepository->getOrderLogsByOrderId($orderId);
+    }
+
+    public function getCurrentStage(int $orderId): ?array
+    {
+      return $this->orderLogsEntityRepository->getCurrentStage($orderId);
+    }
 }

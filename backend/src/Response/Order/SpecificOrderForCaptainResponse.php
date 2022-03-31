@@ -51,4 +51,6 @@ class SpecificOrderForCaptainResponse
     public string|null $branchPhone;
  
     public string|null $ratingComment;
+
+    public array|null $orderLogs;
 }

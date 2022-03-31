@@ -14,6 +14,8 @@ class OrderByIdGetForAdminResponse
 
     public int $orderType;
 
+    public array|null $orderLogs;
+
     /**
      * @var string|null $note
      */

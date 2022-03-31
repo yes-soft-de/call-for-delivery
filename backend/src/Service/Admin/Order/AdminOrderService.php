@@ -8,18 +8,21 @@ use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\OrderLogs\OrderLogsService;
 
 class AdminOrderService
 {
     private AutoMapping $autoMapping;
     private AdminOrderManager $adminOrderManager;
     private UploadFileHelperService $uploadFileHelperService;
+    private OrderLogsService $orderLogsService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
+        $this->orderLogsService = $orderLogsService;
     }
 
     public function getOrdersByStateForAdmin(string $orderStatus): int
@@ -57,6 +60,8 @@ class AdminOrderService
             if (empty($order['location'])) {
                 $order['location'] = null;
             }
+          
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
