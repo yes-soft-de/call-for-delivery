@@ -28,7 +28,26 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
             
             ->setParameter('orderId',$orderId)
             
+            ->orderBy('orderLogsEntity.id', 'DESC')
+
             ->getQuery()
             ->getResult();
+    }
+
+    public function getCurrentStageDate($orderId): ?array
+    {
+        return $this->createQueryBuilder('orderLogsEntity')
+            ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')
+
+            ->andWhere("orderLogsEntity.orderId = :orderId")
+            
+            ->setParameter('orderId',$orderId)
+            
+            ->orderBy('orderLogsEntity.id', 'DESC')
+
+            ->setMaxResults(1)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

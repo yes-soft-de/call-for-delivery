@@ -203,6 +203,8 @@ class OrderService
             else {
                 $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
             }
+
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);

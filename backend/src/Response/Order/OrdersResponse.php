@@ -47,10 +47,10 @@ class OrdersResponse
     public object|null $dateCaptainArrived;
     
     public string|null $branchPhone;
-
-    public array|null $orderLogs;
     
     public string|null $attention;
 
-    public string|null $captainOrderCost;
+    public float|null $captainOrderCost;
+    
+    public array|null $orderLogs;
 }
