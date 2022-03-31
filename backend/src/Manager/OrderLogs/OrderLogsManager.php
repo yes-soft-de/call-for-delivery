@@ -37,8 +37,8 @@ class OrderLogsManager
       return $this->orderLogsEntityRepository->getOrderLogsByOrderId($orderId);
     }
 
-    public function getCurrentStageDate(int $orderId): ?array
+    public function getCurrentStage(int $orderId): ?array
     {
-      return $this->orderLogsEntityRepository->getCurrentStageDate($orderId);
+      return $this->orderLogsEntityRepository->getCurrentStage($orderId);
     }
 }

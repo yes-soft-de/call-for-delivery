@@ -34,7 +34,7 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getCurrentStageDate(int $orderId): ?array
+    public function getCurrentStage(int $orderId): ?array
     {
         return $this->createQueryBuilder('orderLogsEntity')
             ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')

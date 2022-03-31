@@ -56,7 +56,7 @@ class OrderLogsService
     {
       $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
      
-      $currentStage = $this->orderLogsManager->getCurrentStageDate($orderId);
+      $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
    
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
