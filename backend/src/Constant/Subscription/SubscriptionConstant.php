@@ -75,4 +75,6 @@ final class SubscriptionConstant
     const CONSUMED_0_PERCENT = "0 %";
 
     const CONSUMED_MORE_THAN_80_PERCENT = "more than 80 %";
+
+    const PERCENT = "%";   
 }
