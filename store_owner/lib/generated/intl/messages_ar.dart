@@ -121,8 +121,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+        "captainOrderCost":
+            MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
+        "captainPaymentNote":
+            MessageLookupByLibrary.simpleMessage("ملاحظات عن المبلغ المقبوض"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":

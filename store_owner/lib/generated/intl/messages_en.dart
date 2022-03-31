@@ -123,8 +123,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain is in the way"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
+        "captainOrderCost":
+            MessageLookupByLibrary.simpleMessage("Retained cash"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
+        "captainPaymentNote":
+            MessageLookupByLibrary.simpleMessage("Retained cash note"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":

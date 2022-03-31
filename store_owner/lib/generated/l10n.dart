@@ -5619,6 +5619,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Retained cash`
+  String get captainOrderCost {
+    return Intl.message(
+      'Retained cash',
+      name: 'captainOrderCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retained cash note`
+  String get captainPaymentNote {
+    return Intl.message(
+      'Retained cash note',
+      name: 'captainPaymentNote',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
