@@ -19,7 +19,7 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderLogsEntity::class);
     }
 
-    public function getOrderLogsByOrderId($orderId): ?array
+    public function getOrderLogsByOrderId(int $orderId): ?array
     {
         return $this->createQueryBuilder('orderLogsEntity')
             ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')
@@ -34,7 +34,7 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getCurrentStageDate($orderId): ?array
+    public function getCurrentStageDate(int $orderId): ?array
     {
         return $this->createQueryBuilder('orderLogsEntity')
             ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')
