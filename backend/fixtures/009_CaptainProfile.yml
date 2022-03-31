@@ -1,0 +1,65 @@
+App\Entity\CaptainEntity:
+  captainOneProfile:
+    captainId: 1
+    captainName: كابتن رامي
+    age: 25
+    car: Tesla
+    status: active
+    phone: 966551111121
+    isOnline: true
+    bankName: السعودي
+    bankAccountNumber: 11223345678
+    stcPay: 11223345678
+    completeAccountStatus: profileCreated
+
+  captainTwoProfile:
+    captainId: 2
+    captainName: كابتن حبيب
+    age: 35
+    car: Tesla
+    status: active
+    phone: 966551111121
+    isOnline: true
+    bankName: السعودي
+    bankAccountNumber: 11223345678
+    stcPay: 11223345678
+    completeAccountStatus: profileCreated
+
+  captainThreeProfile:
+    captainId: 3
+    captainName: كابتن يزن
+    age: 27
+    car: Tesla
+    status: active
+    phone: 966551111121
+    isOnline: true
+    bankName: الراجحي
+    bankAccountNumber: 11223345678
+    stcPay: 11223345678
+    completeAccountStatus: profileCreated
+
+  captainFourProfile:
+    captainId: 4
+    captainName: كابتن رهف
+    age: 43
+    car: Tesla
+    status: active
+    phone: 966551111121
+    isOnline: true
+    bankName: السعودي
+    bankAccountNumber: 11223345678
+    stcPay: 11223345678
+    completeAccountStatus: profileCreated
+
+  captainFiveProfile:
+    captainId: 5
+    captainName: كابتن كنان
+    age: 51
+    car: Tesla
+    status: active
+    phone: 966551111121
+    isOnline: true
+    bankName: الراجحي
+    bankAccountNumber: 11223345678
+    stcPay: 11223345678
+    completeAccountStatus: profileCreated

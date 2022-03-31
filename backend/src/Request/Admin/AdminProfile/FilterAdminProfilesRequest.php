@@ -14,6 +14,11 @@ class FilterAdminProfilesRequest
      */
     private $phone;
 
+    /**
+     * @var bool|null
+     */
+    private $status;
+
     public function getName(): ?string
     {
         return $this->name;
@@ -25,5 +30,13 @@ class FilterAdminProfilesRequest
     public function getPhone(): ?string
     {
         return $this->phone;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getStatus(): ?bool
+    {
+        return $this->status;
     }
 }
