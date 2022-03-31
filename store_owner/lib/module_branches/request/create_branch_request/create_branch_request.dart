@@ -14,16 +14,12 @@ class CreateBranchRequest {
       this.location,
       this.city,
       this.branchName,
-      required this.phone
-      });
+      required this.phone});
 
   Map<String, dynamic> toJson() {
     return {
-     // 'city': this.city,
-      'location': {
-        'lat': this.location?.lat,
-        'lon': this.location?.lon
-      },
+      // 'city': this.city,
+      'location': {'lat': this.location?.lat, 'lon': this.location?.lon},
       'name': this.branchName,
       'branchPhone': this.phone
     };

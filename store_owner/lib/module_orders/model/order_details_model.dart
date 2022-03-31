@@ -2,8 +2,8 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
+import 'package:c4d/module_orders/response/order_logs/order_logs.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
@@ -32,6 +32,9 @@ class OrderDetailsModel extends DataModel {
   /// this field to know if we can remove order
   late bool canRemove;
   String? distance;
+  num? captainOrderCost;
+  String? attention;
+  late OrderLogs? orderLogs;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -52,14 +55,15 @@ class OrderDetailsModel extends DataModel {
       required this.captainID,
       required this.distance,
       required this.isCaptainArrived,
-      required this.branchPhone});
+      required this.branchPhone,
+      required this.attention,
+      required this.captainOrderCost,
+      required this.orderLogs});
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response) {
+  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
     var element = response.data;
-    bool showConfirmingOrderState =
-        OrderHiveHelper().getConfirmOrderState(element?.id ?? -1);
     // date converter
     // created At
     var create = DateFormat.jm()
@@ -99,10 +103,12 @@ class OrderDetailsModel extends DataModel {
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1,
         captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null);
-    _distance(_orders).then((value) {
-      _orders.distance = value;
-    });
+        distance: null,
+        attention: element?.attention,
+        captainOrderCost: element?.captainOrderCost,
+        orderLogs: element?.orderLogs);
+
+    _orders.distance = _distance(_orders, location);
   }
   bool _canRemove(DateTime date) {
     bool canRemove = true;
@@ -112,12 +118,13 @@ class OrderDetailsModel extends DataModel {
     return canRemove;
   }
 
-  Future<String?> _distance(OrderDetailsModel orderInfo) async {
+  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
     String? distance;
     if (orderInfo.destinationCoordinate != null) {
-      var value = await DeepLinksService.getDistance(LatLng(
-          orderInfo.destinationCoordinate?.latitude ?? 0,
-          orderInfo.destinationCoordinate?.longitude ?? 0));
+      var value = DeepLinksService.getInitDistance(
+          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
+              orderInfo.destinationCoordinate?.longitude ?? 0),
+          location);
       if (value == null) return null;
       distance = value.toStringAsFixed(1);
       distance = S.current.distance + ' $distance ' + S.current.km;

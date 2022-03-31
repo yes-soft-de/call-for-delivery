@@ -75,7 +75,8 @@ class _RatingFormState extends State<RatingForm> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Center(child: Text(S.current.chooseYourRateFromFiveStar)),
+                child:
+                    Center(child: Text(S.current.chooseYourRateFromFiveStar)),
               ),
               Center(
                 child: RatingBar.builder(

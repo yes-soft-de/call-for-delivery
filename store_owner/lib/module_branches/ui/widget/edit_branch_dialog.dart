@@ -46,7 +46,7 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       title: Text(S.current.updateBranch),
       content: Container(
-        constraints: BoxConstraints(maxHeight: 250,minWidth: 300),
+        constraints: BoxConstraints(maxHeight: 250, minWidth: 300),
         child: Form(
           key: formKey,
           child: Flex(

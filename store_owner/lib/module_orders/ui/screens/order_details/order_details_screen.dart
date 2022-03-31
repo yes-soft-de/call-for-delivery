@@ -47,6 +47,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       setState(() {});
     }
   }
+
   void rateCaptain(RatingRequest request) {
     widget._stateManager.rateCaptain(this, request);
   }

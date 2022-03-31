@@ -447,6 +447,38 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       ' ' +
                       S.current.sar),
                 ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: DottedLine(
+                          dashColor: Theme.of(context).disabledColor,
+                          lineThickness: 2.5,
+                          dashRadius: 25),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.money,
+                      ),
+                      title: Text(S.current.captainOrderCost),
+                      subtitle: Text(orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: DottedLine(
+                          dashColor: Theme.of(context).disabledColor,
+                          lineThickness: 2.5,
+                          dashRadius: 25),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.info,
+                      ),
+                      title: Text(S.current.captainPaymentNote),
+                      subtitle: Text(orderInfo.attention ?? ''),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

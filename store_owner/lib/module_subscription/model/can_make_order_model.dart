@@ -23,20 +23,28 @@ class CanMakeOrderModel extends DataModel {
     _model = CanMakeOrderModel(
         canCreateOrder: data?.canCreateOrder ?? true,
         status: data?.subscriptionStatus ?? 'inactive',
-        percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0 %',
+        percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0%',
         consumingAlert: false);
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
     var totalOrder = num.tryParse(total) ?? 0;
     var alert = false;
     if (totalOrder >= 80.0) {
+      _model.percentageOfOrdersConsumed = '80%';
+      totalOrder = 80.0;
       alert = _subscriptionAlert(totalOrder);
     } else if (totalOrder >= 75.0) {
+      totalOrder = 75.0;
       alert = _subscriptionAlert(totalOrder);
+      _model.percentageOfOrdersConsumed = '75%';
     } else if (totalOrder >= 40.0) {
+      totalOrder = 40.0;
       alert = _subscriptionAlert(totalOrder);
+      _model.percentageOfOrdersConsumed = '40%';
     } else if (totalOrder >= 35.0) {
+      totalOrder = 35.0;
       alert = _subscriptionAlert(totalOrder);
+      _model.percentageOfOrdersConsumed = '35%';
     } else {
       alert = _subscriptionAlert(totalOrder);
     }

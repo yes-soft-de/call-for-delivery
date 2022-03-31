@@ -104,8 +104,7 @@ class OrderRepository {
       ConfirmCaptainLocationRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        Urls.CONFIRM_CAPTAIN_LOCATION_API,
-        request.toJson(),
+        Urls.CONFIRM_CAPTAIN_LOCATION_API, request.toJson(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

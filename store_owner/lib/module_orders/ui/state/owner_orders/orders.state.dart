@@ -40,7 +40,9 @@ class OrdersListStateOrdersLoaded extends States {
                         height: 4,
                       ),
                       Text(
-                        OrderAverageHelper.getOrderAlertAverage(screenState.status?.percentageOfOrdersConsumed ?? '0 %'),
+                        OrderAverageHelper.getOrderAlertAverage(
+                            screenState.status?.percentageOfOrdersConsumed ??
+                                '0%'),
                         textAlign: TextAlign.start,
                       )
                     ],
