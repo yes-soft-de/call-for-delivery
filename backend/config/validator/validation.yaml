@@ -240,5 +240,3 @@ App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest:
     properties:
         id:
             - NotBlank: ~
-        status:
-            - NotBlank: ~
