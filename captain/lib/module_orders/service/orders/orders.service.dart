@@ -54,9 +54,11 @@ class OrdersService {
     }
     if (_ordersResponse.data == null) return DataModel.empty();
     if (_ordersResponse.data?.note != null) {
-      _ordersResponse.data?.note = await translateService(_ordersResponse.data!.note!);
+      _ordersResponse.data?.note =
+          await translateService(_ordersResponse.data!.note!);
     }
-    return OrderDetailsModel.withData(_ordersResponse);
+    var currentLocation = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(_ordersResponse, currentLocation);
   }
 
   Future<DataModel> getNearbyOrders() async {

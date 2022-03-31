@@ -5,13 +5,13 @@ class CustomAlertDialog extends StatelessWidget {
   final VoidCallback? onPressed;
   final String content;
   final String? title;
-  CustomAlertDialog(
+  const CustomAlertDialog(
       {required this.onPressed, required this.content, this.title});
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      duration: Duration(milliseconds: 750),
+      duration: const Duration(milliseconds: 750),
       tween: Tween<double>(begin: 0, end: 1),
       curve: Curves.bounceIn,
       builder: (context, double val, child) {
@@ -26,8 +26,12 @@ class CustomAlertDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        actionsAlignment: onPressed == null ? MainAxisAlignment.center : null,
         actions: [
-          TextButton(onPressed: onPressed, child: Text(S.current.confirm)),
+          Visibility(
+              visible: onPressed != null,
+              child: TextButton(
+                  onPressed: onPressed, child: Text(S.current.confirm))),
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();

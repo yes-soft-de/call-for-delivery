@@ -12,6 +12,7 @@ import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distan
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -33,6 +34,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     this.orderInfo,
   ) : super(screenState);
   bool speaking = false;
+  final TextEditingController noteController = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -112,34 +114,57 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       borderRadius: BorderRadius.circular(25),
                       color: Theme.of(context).colorScheme.primary),
                   child: Center(
-                      child: Column(
-                    children: [
-                      Text(
-                        S.current.currentRating,
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      RatingBar.builder(
-                        ignoreGestures: true,
-                        initialRating:
-                            double.tryParse(orderInfo.rating ?? '0') ?? 0,
-                        glowColor: Colors.amberAccent,
-                        minRating: 0.0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: false,
-                        itemCount: 5,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 1.0),
-                        onRatingUpdate: (rating) {},
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star_rounded,
-                          color: Colors.amberAccent,
+                    child: Column(
+                      children: [
+                        Text(
+                          S.current.currentRating,
+                          style: Theme.of(context).textTheme.button,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  )),
+                        RatingBar.builder(
+                          ignoreGestures: true,
+                          initialRating:
+                              double.tryParse(orderInfo.rating ?? '0') ?? 0,
+                          glowColor: Colors.amberAccent,
+                          minRating: 0.0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 1.0),
+                          onRatingUpdate: (rating) {},
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star_rounded,
+                            color: Colors.amberAccent,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          S.current.HisComment,
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                orderInfo.ratingComment ?? '',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               )),
           // with order type we can get order widgets
@@ -335,6 +360,39 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                   title: Text(S.current.branch),
                   subtitle: Text(orderInfo.branchName),
+                ),
+                Visibility(
+                  visible: orderInfo.branchPhone != null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                ),
+                Visibility(
+                  visible: orderInfo.branchPhone != null,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onTap: () {
+                        var url = 'tel:+${orderInfo.branchPhone}';
+                        canLaunch(url).then((value) {
+                          if (value) {
+                            launch(url);
+                          }
+                        });
+                      },
+                      child: ListTile(
+                        leading: const Icon(Icons.phone),
+                        title: Text(S.current.branchPhone),
+                        subtitle: Text(orderInfo.branchPhone ?? ''),
+                        trailing: const Icon(Icons.arrow_forward),
+                      ),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -724,6 +782,18 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: ProvideDistance(
+                thirdField: Visibility(
+                  visible: screenState.paymentController.text != '' &&
+                      orderInfo.orderCost !=
+                          num.tryParse(screenState.paymentController.text),
+                  child: ScalingWidget(
+                    child: CustomFormField(
+                      hintText: S.current.collectedPaymentNote,
+                      controller: noteController,
+                      last: true,
+                    ),
+                  ),
+                ),
                 onChanged: () {
                   screenState.refresh();
                 },
@@ -735,6 +805,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       state: StatusHelper.getStatusString(
                           OrderStatusEnum.values[index + 1]),
                       distance: distance,
+                      paymentNote: noteController.text.trim(),
                       orderCost: double.tryParse(payment ?? 'n')));
                 },
                 controller: screenState.distanceCalculator,

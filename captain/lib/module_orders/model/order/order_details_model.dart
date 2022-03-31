@@ -2,7 +2,6 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -34,6 +33,8 @@ class OrderDetailsModel extends DataModel {
   String? branchDistance;
   late bool usedAs;
   String? rating;
+  String? branchPhone;
+  String? ratingComment;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -58,11 +59,13 @@ class OrderDetailsModel extends DataModel {
       required this.distance,
       required this.branchDistance,
       required this.usedAs,
-      required this.rating});
+      required this.rating,
+      required this.branchPhone,
+      required this.ratingComment});
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response) {
+  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
     var element = response.data;
     // date converter
     // created At
@@ -109,20 +112,19 @@ class OrderDetailsModel extends DataModel {
       branchDistance: null,
       distance: null,
       usedAs: element?.usedAs == 'not used chat enquire' ? false : true,
+      branchPhone: element?.branchPhone,
+      ratingComment: element?.ratingComment,
     );
-    _distance(_orders).then((value) {
-      _orders.distance = value;
-    });
-    _branchDistance(_orders).then((value) {
-      _orders.branchDistance = value;
-    });
+    _orders.distance = _distance(_orders, location);
+    _orders.branchDistance = _branchDistance(_orders, location);
   }
-  Future<String?> _distance(OrderDetailsModel orderInfo) async {
+  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
     String? distance;
     if (orderInfo.destinationCoordinate != null) {
-      var value = await DeepLinksService.getDistance(LatLng(
-          orderInfo.destinationCoordinate?.latitude ?? 0,
-          orderInfo.destinationCoordinate?.longitude ?? 0));
+      var value = DeepLinksService.getInitDistance(
+          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
+              orderInfo.destinationCoordinate?.longitude ?? 0),
+          location);
       if (value == null) return null;
       distance = value.toStringAsFixed(1);
       distance = S.current.distance + ' $distance ' + S.current.km;
@@ -131,12 +133,13 @@ class OrderDetailsModel extends DataModel {
     return null;
   }
 
-  Future<String?> _branchDistance(OrderDetailsModel orderInfo) async {
+  String? _branchDistance(OrderDetailsModel orderInfo, LatLng? location) {
     if (orderInfo.branchCoordinate != null) {
       String? branchDistance;
-      var value = await DeepLinksService.getDistance(LatLng(
-          orderInfo.branchCoordinate?.latitude ?? 0,
-          orderInfo.branchCoordinate?.longitude ?? 0));
+      var value = DeepLinksService.getInitDistance(
+          LatLng(orderInfo.branchCoordinate?.latitude ?? 0,
+              orderInfo.branchCoordinate?.longitude ?? 0),
+          location);
       if (value == null) return null;
       branchDistance = value.toStringAsFixed(1);
       branchDistance = S.current.distance + ' $branchDistance ' + S.current.km;

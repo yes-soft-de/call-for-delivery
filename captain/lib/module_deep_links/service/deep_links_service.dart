@@ -52,4 +52,12 @@ class DeepLinksService {
         const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
     return straightDistance;
   }
+
+  static double? getInitDistance(LatLng headed, LatLng? location) {
+    var currentLocation = location;
+    if (currentLocation == null) return null;
+    var straightDistance =
+        const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
+    return straightDistance;
+  }
 }
