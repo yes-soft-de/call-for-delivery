@@ -4,11 +4,11 @@ namespace App\Response\OrderLogs;
 
 class OrderLogTimeLineResponse
 {
-    public $completionTime;
+    public string $completionTime;
 
-    public $currentStage;
+    public string $currentStage;
     
-    public $deliveredTime;
+    public string $deliveredTime;
 
     public int $id;
 
