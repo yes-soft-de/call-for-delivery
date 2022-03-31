@@ -105,14 +105,14 @@ class NotificationLocalService
         return $state;
     }
     
-    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainUserId = null): NotificationLocalResponse
+    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainProfileId = null): NotificationLocalResponse
     {       
         if ($userType === NotificationConstant::STORE) {
             $text = $this->getOrderStateForStore($state);
             $message = [
                 "text" => $text,
                 "orderId"=> $orderId,
-                "captainUserId"=> $captainUserId
+                "captainUserId"=> $captainProfileId
             ];
         }
 

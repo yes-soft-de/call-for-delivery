@@ -71,15 +71,15 @@ class OrderService
       
             return  $canCreateOrder;
         }
-
+        
         $order = $this->orderManager->createOrder($request);
         if($order) {
-        
+           
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderLogsService->createOrderLogsRequest($order, $request->getBranch());
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -111,19 +111,27 @@ class OrderService
         $order = $this->orderManager->getSpecificOrderForStore($id);
         if($order) {
             
+            $order['attention'] = null;
+            
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
             
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
             }
-
-
-
-
-           $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+           
+            if($order['captainOrderCost']) {
+                if($order['orderCost'] !== $order['captainOrderCost']) {
+                        $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
+                 }
+                 else{
+                    $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_MATCH;
+                 }
+            }
+         
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
         }
-
-        return  $this->autoMapping->map("array", OrdersResponse::class, $order);
+   
+        return $this->autoMapping->map("array", OrdersResponse::class, $order);
     }
 
     public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
@@ -218,7 +226,7 @@ class OrderService
             }
 
             //create Notification Local for store
-            $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getCaptainId()); 
+            $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN); 
             //create order log

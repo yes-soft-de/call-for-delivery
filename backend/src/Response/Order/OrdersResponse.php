@@ -49,4 +49,8 @@ class OrdersResponse
     public string|null $branchPhone;
 
     public array|null $orderLogs;
+    
+    public string|null $attention;
+
+    public string|null $captainOrderCost;
 }
