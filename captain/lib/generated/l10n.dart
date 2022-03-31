@@ -6249,6 +6249,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch Phone`
+  String get branchPhone {
+    return Intl.message(
+      'Branch Phone',
+      name: 'branchPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `His Comment`
+  String get HisComment {
+    return Intl.message(
+      'His Comment',
+      name: 'HisComment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collected payment note`
+  String get collectedPaymentNote {
+    return Intl.message(
+      'Collected payment note',
+      name: 'collectedPaymentNote',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
