@@ -1,0 +1,84 @@
+App\Entity\StoreOwnerProfileEntity:
+  storeOwnerOneProfile:
+    storeOwnerId: 6
+    storeOwnerName: رامي
+    status: true
+    city: جدة
+    phone: 966551111112
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: الراجحي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated
+
+  storeOwnerTwoProfile:
+    storeOwnerId: 7
+    storeOwnerName: كنان
+    status: true
+    city: جدة
+    phone: 966551111113
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: السعودي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated
+
+  storeOwnerThreeProfile:
+    storeOwnerId: 8
+    storeOwnerName: رهف
+    status: true
+    city: جدة
+    phone: 966551111114
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: الراجحي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated
+
+  storeOwnerFourProfile:
+    storeOwnerId: 9
+    storeOwnerName: حبيب
+    status: true
+    city: جدة
+    phone: 966551111115
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: السعودي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated
+
+  storeOwnerFiveProfile:
+    storeOwnerId: 10
+    storeOwnerName: يزن
+    status: true
+    city: جدة
+    phone: 966551111116
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: الراجحي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated
+
+  storeOwnerGoogleProfile:
+    storeOwnerId: 11
+    storeOwnerName: Google Store
+    status: true
+    city: جدة
+    phone: 966959796722
+    openingTime: '2022-03-03T08:00:00+0200'
+    closingTime: '2022-03-03T20:00:00+0200'
+    bankName: الراجحي
+    bankAccountNumber: 123456789
+    stcPay: 123456789
+    employeeCount: 1-20
+    completeAccountStatus: profileCreated

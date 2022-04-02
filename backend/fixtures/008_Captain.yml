@@ -1,0 +1,31 @@
+App\Entity\UserEntity:
+  captainOne:
+    __construct: false
+    userId: 966551111121
+    roles: ['ROLE_CAPTAIN', 'ROLE_USER']
+    password: 123456
+
+  captainTwo:
+    __construct: false
+    userId: 966551111122
+    roles: ['ROLE_CAPTAIN', 'ROLE_USER']
+    password: 123456
+
+  captainThree:
+    __construct: false
+    userId: 966551111123
+    roles: ['ROLE_CAPTAIN', 'ROLE_USER']
+    password: 123456
+
+  captainFour:
+    __construct: false
+    userId: 966551111124
+    roles: ['ROLE_CAPTAIN', 'ROLE_USER']
+    password: 123456
+
+  captainFive:
+    __construct: false
+    userId: 966551111125
+    roles: ['ROLE_CAPTAIN', 'ROLE_USER']
+    password: 123456
+

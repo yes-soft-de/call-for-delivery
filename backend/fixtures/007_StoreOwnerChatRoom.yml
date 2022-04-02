@@ -1,0 +1,36 @@
+App\Entity\ChatRoomEntity:
+  storeOwnerOneChatRoom:
+    userId: 6
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
+
+  storeOwnerTwoChatRoom:
+    userId: 7
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
+
+  storeOwnerThreeChatRoom:
+    userId: 8
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
+
+  storeOwnerFourChatRoom:
+    userId: 9
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
+
+  storeOwnerFiveChatRoom:
+    userId: 10
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
+
+  storeOwnerGoogleChatRoom:
+    userId: 11
+    usedAs: 0
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>

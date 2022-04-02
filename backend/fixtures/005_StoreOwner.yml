@@ -1,0 +1,36 @@
+App\Entity\UserEntity:
+  storeOwnerOne:
+    __construct: false
+    userId: 966551111112
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456
+
+  store_owner_two:
+    __construct: false
+    userId: 966551111113
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456
+
+  store_owner_three:
+    __construct: false
+    userId: 966551111114
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456
+
+  store_owner_four:
+    __construct: false
+    userId: 966551111115
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456
+
+  store_owner_five:
+    __construct: false
+    userId: 966551111116
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456
+
+  store_owner_google:
+    __construct: false
+    userId: 966959796722
+    roles: ['ROLE_OWNER', 'ROLE_USER']
+    password: 123456789
