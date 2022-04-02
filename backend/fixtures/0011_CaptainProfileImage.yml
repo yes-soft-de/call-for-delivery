@@ -1,0 +1,32 @@
+App\Entity\ImageEntity:
+  captainProfileImage_{1..5}:
+    imagePath: image/original-image/2022-04-02_10-52-06/captain-avatar-624886f883538.jpg
+    entityType: 2
+    itemId: <current()>
+    usedAs: 0
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  captainMechanicLicenseImage_{1..5}:
+    imagePath: image/original-image/2022-04-02_10-52-06/mechanic-license-1928-62488b9de6349.jpg
+    entityType: 2
+    itemId: <current()>
+    usedAs: 1
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  captainDriveLicensImage_{1..5}:
+    imagePath: image/original-image/2022-04-02_10-52-06/driver-license-62488b74cbf31.jpg
+    entityType: 2
+    itemId: <current()>
+    usedAs: 2
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  captainIdentityImage_{1..5}:
+    imagePath: image/original-image/2022-04-02_10-52-06/46802793-624895cf220cd.jpg
+    entityType: 2
+    itemId: <current()>
+    usedAs: 4
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
