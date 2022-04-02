@@ -61,7 +61,7 @@ class AdminOrderService
                 $order['location'] = null;
             }
           
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderIdForAdmin($id);
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);

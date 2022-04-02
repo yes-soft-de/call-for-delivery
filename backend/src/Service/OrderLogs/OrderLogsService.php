@@ -56,12 +56,14 @@ class OrderLogsService
     public function getOrderLogsByOrderId($orderId): ?array
     {
       $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
-     
+  
+      $orderLogs = $this->removeElement($orderLogs);
+  
       $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
    
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
-
+    
     public function getOrderLogsTimeLine(array $orderLogs , array $currentStage): ?array
     {
         $response = [];
@@ -69,6 +71,7 @@ class OrderLogsService
         $orderReceivedDate = "";
 
         foreach ($orderLogs as $orderLog) {
+
             if($orderLog['orderState'] === OrderStateConstant::ORDER_STATE_PENDING) {
                $createDate = $orderLog['createdAt'];
             }
@@ -84,6 +87,10 @@ class OrderLogsService
             if ($orderReceivedDate && $currentStage['createdAt']) {
                     $state['deliveredTime'] =  $this->dateFactoryService->subtractTwoDates($orderReceivedDate, $currentStage['createdAt']);   
             }
+
+            if($orderLog['isCaptainArrived'] ) {
+                unset($orderLog);
+            }
         }
 
         if($currentStage) {
@@ -96,5 +103,28 @@ class OrderLogsService
         }
 
         return  $response;
+    }
+
+    public function getOrderLogsByOrderIdForAdmin($orderId): ?array
+    {
+      $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
+     
+      $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
+   
+      return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
+    }
+
+//remove element from array when (is Captain Arrived) not equal null, for not to repeat the same log
+    public function removeElement(array $array): ?array
+    {
+       foreach($array as $kye => $value ) {
+          
+           if($value["isCaptainArrived"] !== null) {
+              
+               unset($array[$kye]);
+           }
+       }
+
+      return array_values($array);
     }
 }
