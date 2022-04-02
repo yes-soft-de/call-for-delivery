@@ -3,13 +3,12 @@
 
 namespace App\Service\Notification;
 
-// use App\AutoMapping;
-// use App\Entity\NotificationFirebaseTokenEntity;
-// use App\Manager\Notification\NotificationFirebaseManager;
-// use App\Request\Notification\NotificationNewChatAnonymousRequest;
-// use App\Request\Notification\NotificationTokenByUserIDRequest;
-// use App\Request\Notification\NotificationTokenRequest;
-// use App\Response\Notification\NotificationTokenResponse;
+use App\AutoMapping;
+use App\Entity\NotificationFirebaseTokenEntity;
+use App\Manager\Notification\NotificationFirebaseManager;
+use App\Request\Notification\NotificationNewChatAnonymousRequest;
+use App\Request\Notification\NotificationTokenByUserIDRequest;
+use App\Response\Notification\NotificationTokenResponse;
 // use Kreait\Firebase\Exception\FirebaseException;
 // use Kreait\Firebase\Exception\MessagingException;
 // use Kreait\Firebase\Messaging;
@@ -18,22 +17,32 @@ namespace App\Service\Notification;
 // use App\Constant\MessageConstant;
 // use App\Constant\DeliveryCompanyNameConstant;
 // use Kreait\Firebase\Messaging\ApnsConfig;
+use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
 
 class NotificationFirebaseService
 {
-//     private $messaging;
-//     private $notificationFirebaseManager;
-//     private $autoMapping;
+    // private $messaging;
+    private $notificationFirebaseManager;
+    private $autoMapping;
 
-//     const URL = '/order_details';
-//     const URLCHAT = '/chat';
+    const URL = '/order_details';
+    const URLCHAT = '/chat';
 
-//     public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager)
-//     {
-//         $this->messaging = $messaging;
-//         $this->notificationFirebaseManager = $notificationFirebaseManager;
-//         $this->autoMapping = $autoMapping;
-//     }
+    public function __construct(AutoMapping $autoMapping
+    // , Messaging $messaging
+    , NotificationFirebaseManager $notificationFirebaseManager)
+    {
+        // $this->messaging = $messaging;
+        $this->notificationFirebaseManager = $notificationFirebaseManager;
+        $this->autoMapping = $autoMapping;
+    }
+
+    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request)
+    {
+        $userRegister = $this->notificationFirebaseManager->createNotificationFirebaseToken($request);
+
+        return $this->autoMapping->map(NotificationTokenEntity::class,NotificationTokenResponse::class, $userRegister);
+    }
 
     // public function getCaptainTokens()
     // {
@@ -218,13 +227,6 @@ class NotificationFirebaseService
     //     }
 
     //     return $devicesToken;
-    // }
-
-    // public function notificationTokenCreate(NotificationTokenRequest $request)
-    // {
-    //     $userRegister = $this->notificationManager->notificationTokenCreate($request);
-
-    //     return $this->autoMapping->map(NotificationTokenEntity::class,NotificationTokenResponse::class, $userRegister);
     // }
 
     // public function getNotificationTokenByUserID($userID)

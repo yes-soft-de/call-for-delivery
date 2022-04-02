@@ -3,8 +3,6 @@
 namespace App\Controller\Notification;
 
 use App\AutoMapping;
-use App\Request\Notification\NotificationTokenByUserIdRequest;
-use App\Request\Notification\NotificationTokenRequest;
 use App\Service\Notification\NotificationFirebaseService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
@@ -15,7 +13,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
 
+/**
+ * fetch Local Notification.
+ * @Route("v1/notificationfirbase/")
+ */
 class NotificationFirebaseController extends BaseController
 {
     private $autoMapping;
@@ -30,7 +33,7 @@ class NotificationFirebaseController extends BaseController
 
     /**
      * create token.
-     * @Route("/notificationfirebasetoken", name="notificationFirebassetoken", methods={"POST"})
+     * @Route("notificationfirebasetoken", name="createNotificationFirebaseToken", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      * *
@@ -69,11 +72,11 @@ class NotificationFirebaseController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class,NotificationFirebaseTokenRequest::class,(object)$data);
-        $request->setUserID($this->getUserId());
+        $request = $this->autoMapping->map(stdClass::class,NotificationFirebaseTokenCreateRequest::class,(object)$data);
+        $request->setUserId($this->getUserId());
 
-        // $response = $this->notificationFirebaseService->createNotificationFirebaseToken($request);
-        $response="";
+        $response = $this->notificationFirebaseService->createNotificationFirebaseToken($request);
+   
         return $this->response($response, self::CREATE);
     }
 

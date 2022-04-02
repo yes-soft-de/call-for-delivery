@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NotificationFirebaseTokenEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: NotificationFirebaseTokenEntityRepository::class)]
 class NotificationFirebaseTokenEntity
@@ -12,7 +13,8 @@ class NotificationFirebaseTokenEntity
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
+ 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
