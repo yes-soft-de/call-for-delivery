@@ -87,10 +87,6 @@ class OrderLogsService
             if ($orderReceivedDate && $currentStage['createdAt']) {
                     $state['deliveredTime'] =  $this->dateFactoryService->subtractTwoDates($orderReceivedDate, $currentStage['createdAt']);   
             }
-
-            // if($orderLog['isCaptainArrived'] ) {
-            //     unset($orderLog);
-            // }
         }
 
         if($currentStage) {
