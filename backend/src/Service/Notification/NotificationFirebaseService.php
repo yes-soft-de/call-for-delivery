@@ -66,6 +66,8 @@ class NotificationFirebaseService
         ->withHighestPossiblePriority();
 
         $message = $message->withAndroidConfig($config);
+
+        return $config ;
     }
 
 
