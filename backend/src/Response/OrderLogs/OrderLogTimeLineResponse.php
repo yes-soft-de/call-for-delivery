@@ -16,5 +16,5 @@ class OrderLogTimeLineResponse
 
     public string $orderState;
 
-    public null|string $isCaptainArrived;
+    public null|bool $isCaptainArrived;
 }

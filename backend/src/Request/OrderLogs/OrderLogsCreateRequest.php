@@ -19,7 +19,7 @@ class OrderLogsCreateRequest
 
    private StoreOwnerBranchEntity $storeOwnerBranch;
 
-   private null|string $isCaptainArrived;
+   private null|bool $isCaptainArrived;
 
    /**
     * Get the value of orderId
@@ -133,7 +133,7 @@ class OrderLogsCreateRequest
     *
     * @return  self
     */ 
-   public function setIsCaptainArrived(null|string $isCaptainArrived)
+   public function setIsCaptainArrived(null|bool $isCaptainArrived)
    {
       $this->isCaptainArrived = $isCaptainArrived;
 
