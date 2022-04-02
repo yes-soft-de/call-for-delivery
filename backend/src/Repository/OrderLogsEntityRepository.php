@@ -22,7 +22,7 @@ class OrderLogsEntityRepository extends ServiceEntityRepository
     public function getOrderLogsByOrderId(int $orderId): ?array
     {
         return $this->createQueryBuilder('orderLogsEntity')
-            ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState')
+            ->select('orderLogsEntity.id, orderLogsEntity.createdAt, orderLogsEntity.orderState, orderLogsEntity.isCaptainArrived')
 
             ->andWhere("orderLogsEntity.orderId = :orderId")
             

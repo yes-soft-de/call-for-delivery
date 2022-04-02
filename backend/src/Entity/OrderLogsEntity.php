@@ -33,6 +33,9 @@ class OrderLogsEntity
     #[ORM\Column(type: 'string', length: 255)]
     private $orderState;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isCaptainArrived;
+
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'orderLogsEntity')]
     private $storeOwnerBranch;
 
@@ -110,6 +113,17 @@ class OrderLogsEntity
     {
         $this->storeOwnerBranch = $storeOwnerBranch;
 
+        return $this;
+    }
+
+    public function getIsCaptainArrived(): ?bool
+    {
+        return $this->isCaptainArrived;
+    }
+
+    public function setIsCaptainArrived(?bool $isCaptainArrived): self
+    {
+        $this->isCaptainArrived = $isCaptainArrived;
         return $this;
     }
 }
