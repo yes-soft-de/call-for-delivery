@@ -560,7 +560,9 @@
     "orderAverage80": "You have consumed 80%",
     "youConsumed": "You have consumed",
     "captainOrderCost": "Retained cash",
-    "captainPaymentNote": "Retained cash note"
+    "captainPaymentNote": "Retained cash note",
+    "orderTimeLine": "Order Time Line"
+
 
 
 
