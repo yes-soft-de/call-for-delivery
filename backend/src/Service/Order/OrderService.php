@@ -286,7 +286,11 @@ class OrderService
     public function updateCaptainArrived(OrderUpdateCaptainArrivedRequest $request): ?OrderUpdateCaptainArrivedResponse
     {
         $order = $this->orderManager->updateCaptainArrived($request);
-
+        
+        if($order) {
+            $this->orderLogsService->createOrderLogsRequest($order);
+        }
+     
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 }

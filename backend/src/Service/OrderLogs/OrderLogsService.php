@@ -45,6 +45,7 @@ class OrderLogsService
        $request->setStoreOwnerProfile($order->getStoreOwner());
        $request->setOrderState($order->getState());
        $request->setCaptainProfile($order->getCaptainId());
+       $request->setIsCaptainArrived($order->getIsCaptainArrived());
        if($branch) {
          $request->setStoreOwnerBranch($branch);
        }

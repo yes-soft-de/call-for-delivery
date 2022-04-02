@@ -15,4 +15,6 @@ class OrderLogTimeLineResponse
     public object $createdAt;
 
     public string $orderState;
+
+    public bool $isCaptainArrived;
 }

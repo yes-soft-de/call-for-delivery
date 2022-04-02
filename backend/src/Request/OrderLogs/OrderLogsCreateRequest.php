@@ -19,6 +19,8 @@ class OrderLogsCreateRequest
 
    private StoreOwnerBranchEntity $storeOwnerBranch;
 
+   private bool $isCaptainArrived;
+
    /**
     * Get the value of orderId
     */ 
@@ -117,4 +119,24 @@ class OrderLogsCreateRequest
  
        return $this;
     }
+
+   /**
+    * Get the value of isCaptainArrived
+    */ 
+   public function getIsCaptainArrived()
+   {
+      return $this->isCaptainArrived;
+   }
+
+   /**
+    * Set the value of isCaptainArrived
+    *
+    * @return  self
+    */ 
+   public function setIsCaptainArrived(bool $isCaptainArrived)
+   {
+      $this->isCaptainArrived = $isCaptainArrived;
+
+      return $this;
+   }
 }
