@@ -1,13 +1,13 @@
+import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
-import 'package:c4d/module_orders/response/order_logs/order_logs.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 
 class OrderDetailsModel extends DataModel {
   late int id;
@@ -34,7 +34,7 @@ class OrderDetailsModel extends DataModel {
   String? distance;
   num? captainOrderCost;
   String? attention;
-  late OrderLogs? orderLogs;
+  late OrderTimeLine? orderLogs;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -106,10 +106,33 @@ class OrderDetailsModel extends DataModel {
         distance: null,
         attention: element?.attention,
         captainOrderCost: element?.captainOrderCost,
-        orderLogs: element?.orderLogs);
+        orderLogs: _getOrderLogs(element?.orderLogs));
 
     _orders.distance = _distance(_orders, location);
   }
+  OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
+    if (orderLogs == null) {
+      return null;
+    }
+    List<Step> steps = [];
+    orderLogs.orderLogs?.logs?.forEach((element) {
+      // step date
+      var date = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.yMd()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      steps.add(Step(
+          state: StatusHelper.getStatusEnum(element.orderState), date: date));
+    });
+    OrderTimeLine orderTimeLine = OrderTimeLine(
+        steps: steps,
+        completionTime: orderLogs.orderLogs?.orderState?.completionTime,
+        currentState: StatusHelper.getStatusEnum(
+            orderLogs.orderLogs?.orderState?.currentStage));
+    return orderTimeLine;
+  }
+
   bool _canRemove(DateTime date) {
     bool canRemove = true;
     if (DateTime.now().difference(date).inMinutes < 30) {
@@ -134,4 +157,21 @@ class OrderDetailsModel extends DataModel {
   }
 
   OrderDetailsModel get data => _orders;
+}
+
+class OrderTimeLine {
+  String? completionTime;
+  OrderStatusEnum currentState;
+  List<Step> steps;
+  OrderTimeLine(
+      {this.completionTime, required this.steps, required this.currentState});
+}
+
+class Step {
+  OrderStatusEnum state;
+  String date;
+  Step({
+    required this.state,
+    required this.date,
+  });
 }
