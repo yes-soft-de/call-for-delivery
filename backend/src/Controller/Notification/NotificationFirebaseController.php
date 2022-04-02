@@ -172,4 +172,15 @@ class NotificationFirebaseController extends BaseController
 
         return $this->response($response, self::CREATE);
     }
+
+    /**
+     * @Route("/notificationtocaptainsfortest", name="notificationToCaptainsForTest", methods={"POST"})
+     * @return JsonResponse
+     */
+    public function notificationToCaptainsForTest(Request $request): JsonResponse
+    {
+        $response = $this->notificationService->notificationToCaptains($request);
+
+        return $this->response($response, self::CREATE);
+    }
 }

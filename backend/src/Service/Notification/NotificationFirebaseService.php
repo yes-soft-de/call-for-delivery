@@ -7,19 +7,20 @@ use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Response\Notification\NotificationFirebaseTokenResponse;
-// use Kreait\Firebase\Exception\FirebaseException;
-// use Kreait\Firebase\Exception\MessagingException;
-// use Kreait\Firebase\Messaging;
-// use Kreait\Firebase\Messaging\CloudMessage;
-// use Kreait\Firebase\Messaging\Notification;
-// use App\Constant\MessageConstant;
-// use App\Constant\DeliveryCompanyNameConstant;
-// use Kreait\Firebase\Messaging\ApnsConfig;
+use Kreait\Firebase\Exception\FirebaseException;
+use Kreait\Firebase\Exception\MessagingException;
+use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use App\Constant\MessageConstant;
+use App\Constant\DeliveryCompanyNameConstant;
+use Kreait\Firebase\Messaging\ApnsConfig;
 use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
+use Kreait\Firebase\Messaging\AndroidConfig;
 
 class NotificationFirebaseService
 {
-    // private $messaging;
+    private $messaging;
     private $notificationFirebaseManager;
     private $autoMapping;
 
@@ -27,10 +28,10 @@ class NotificationFirebaseService
     const URLCHAT = '/chat';
 
     public function __construct(AutoMapping $autoMapping
-    // , Messaging $messaging
+    , Messaging $messaging
     , NotificationFirebaseManager $notificationFirebaseManager)
     {
-        // $this->messaging = $messaging;
+        $this->messaging = $messaging;
         $this->notificationFirebaseManager = $notificationFirebaseManager;
         $this->autoMapping = $autoMapping;
     }
@@ -41,6 +42,32 @@ class NotificationFirebaseService
 
         return $this->autoMapping->map(NotificationFirebaseTokenEntity ::class, NotificationFirebaseTokenResponse::class, $token);
     }
+
+    public function notificationToCaptains()
+    {
+
+        $config = AndroidConfig::fromArray([
+            'ttl' => '3600s',
+            'priority' => 'normal',
+            'notification' => [
+                'title' => '$GOOG up 1.43% on the day',
+                'body' => '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.',
+                'icon' => 'stock_ticker_update',
+                'color' => '#f45342',
+                'sound' => 'default',
+                'restricted_package_name' => 'de.yessoft.c4d_captain'
+            ],
+        ]);
+       
+        $message = CloudMessage::new()
+        ->withNotification(
+            Notification::create("C4D", "TEST"))
+        ->withDefaultSounds()
+        ->withHighestPossiblePriority();
+
+        $message = $message->withAndroidConfig($config);
+    }
+
 
     // public function getCaptainTokens()
     // {
