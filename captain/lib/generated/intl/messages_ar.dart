@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "اشتراكك منتهي الصلاحية الرجاء تجديده"),
+        "HisComment": MessageLookupByLibrary.simpleMessage("تعليقه"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
@@ -100,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchLocation": MessageLookupByLibrary.simpleMessage("موقع الفرع"),
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
+        "branchPhone": MessageLookupByLibrary.simpleMessage("رقم هاتف الفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
         "calculating": MessageLookupByLibrary.simpleMessage("جاري الحساب"),
         "camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
@@ -204,6 +206,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض"),
         "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
             "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه"),
+        "collectedPaymentNote": MessageLookupByLibrary.simpleMessage(
+            "ملاحظات الكابتن حول سعر الطلبية"),
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),

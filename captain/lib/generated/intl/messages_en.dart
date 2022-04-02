@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "Expired subscriptions please renew your subscription"),
+        "HisComment": MessageLookupByLibrary.simpleMessage("His Comment"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
@@ -103,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Branch location"),
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
+        "branchPhone": MessageLookupByLibrary.simpleMessage("Branch Phone"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
@@ -210,6 +212,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Collected Payment"),
         "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
             "Collected payment not match with bill that you should receive"),
+        "collectedPaymentNote":
+            MessageLookupByLibrary.simpleMessage("Collected payment note"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),

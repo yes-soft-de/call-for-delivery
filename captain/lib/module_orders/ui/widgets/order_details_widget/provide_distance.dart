@@ -9,13 +9,16 @@ class ProvideDistance extends StatelessWidget {
   final bool payment;
   final Function(String, String?) callBack;
   final Function()? onChanged;
+  final Widget thirdField;
   const ProvideDistance(
       {Key? key,
       required this.controller,
       required this.callBack,
       required this.controller2,
       this.payment = true,
-      this.onChanged})
+      this.onChanged,
+     required this.thirdField
+      })
       : super(key: key);
 
   @override
@@ -30,7 +33,7 @@ class ProvideDistance extends StatelessWidget {
                     '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
                 controller: controller,
                 numbers: true,
-                last:payment == false ? true : false,
+                last: payment == false ? true : false,
               ),
               const SizedBox(
                 height: 8.0,
@@ -49,6 +52,10 @@ class ProvideDistance extends StatelessWidget {
                   last: true,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top:8.0),
+                child: thirdField,
+              )
             ],
           ),
         ),
@@ -67,8 +74,12 @@ class ProvideDistance extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  if (controller.text.isNotEmpty ) {
-                    callBack(controller.text, controller2.text.trim() == '' ? null :controller2.text.trim());
+                  if (controller.text.isNotEmpty) {
+                    callBack(
+                        controller.text,
+                        controller2.text.trim() == ''
+                            ? null
+                            : controller2.text.trim());
                   } else {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,

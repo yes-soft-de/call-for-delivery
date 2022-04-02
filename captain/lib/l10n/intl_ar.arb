@@ -587,6 +587,7 @@
     "copyFinished": "تم النسخ بنجاح",
     "chooseYourRateFromFiveStar": "اختر التقييم المناسب من خمس نجوم",
     "comment": "تعليقك",
+    "HisComment": "تعليقه",
     "rateCommentReview": "ملاحظاتك وانطباعاتك وما نحتاجه للتحسين",
     "phoneNumberThatShowsForCaptain": "الذي سيظهر للمتجر",
     "eg": "مثال",
@@ -623,7 +624,9 @@
     "collectedPayment": "المبلغ المقبوض",
     "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
     "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
-    "currentRating": "المتجر قيمك ب"
+    "currentRating": "المتجر قيمك ب",
+    "branchPhone": "رقم هاتف الفرع",
+    "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية"
 
 
 

@@ -622,7 +622,12 @@
     "collectedPayment": "Collected Payment",
     "collectedPaymentNotMatch": "Collected payment not match with bill that you should receive",
     "finishingOrderMessageWithPayment": "Please provide us with distance you reached out and collected payment with this order To finish the order",
-    "currentRating": "Your current rating by this store is"
+    "currentRating": "Your current rating by this store is",
+    "branchPhone": "Branch Phone",
+    "HisComment": "His Comment",
+    "collectedPaymentNote": "Collected payment note"
+
+
 
 
 
