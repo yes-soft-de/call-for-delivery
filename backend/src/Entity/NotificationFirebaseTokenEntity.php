@@ -21,7 +21,7 @@ class NotificationFirebaseTokenEntity
     #[ORM\Column(type: 'string', length: 255)]
     private $token;
 
-    #[ORM\OneToOne(targetEntity: UserEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: UserEntity::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 

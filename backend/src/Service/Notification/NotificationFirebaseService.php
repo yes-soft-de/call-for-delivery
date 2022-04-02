@@ -6,9 +6,7 @@ namespace App\Service\Notification;
 use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
-use App\Request\Notification\NotificationNewChatAnonymousRequest;
-use App\Request\Notification\NotificationTokenByUserIDRequest;
-use App\Response\Notification\NotificationTokenResponse;
+use App\Response\Notification\NotificationFirebaseTokenResponse;
 // use Kreait\Firebase\Exception\FirebaseException;
 // use Kreait\Firebase\Exception\MessagingException;
 // use Kreait\Firebase\Messaging;
@@ -37,11 +35,11 @@ class NotificationFirebaseService
         $this->autoMapping = $autoMapping;
     }
 
-    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request)
+    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request): ?NotificationFirebaseTokenResponse
     {
-        $userRegister = $this->notificationFirebaseManager->createNotificationFirebaseToken($request);
+        $token = $this->notificationFirebaseManager->createNotificationFirebaseToken($request);
 
-        return $this->autoMapping->map(NotificationTokenEntity::class,NotificationTokenResponse::class, $userRegister);
+        return $this->autoMapping->map(NotificationFirebaseTokenEntity ::class, NotificationFirebaseTokenResponse::class, $token);
     }
 
     // public function getCaptainTokens()

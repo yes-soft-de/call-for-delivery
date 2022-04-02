@@ -14,31 +14,34 @@ class NotificationFirebaseManager
 {
     private $autoMapping;
     private $entityManager;
-    private $notificationLocalEntityRepository;
+    private $notificationFirebaseTokenEntityRepository;
+    private UserManager $userManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, NotificationFirebaseTokenEntityRepository $notificationFirebaseTokenEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, NotificationFirebaseTokenEntityRepository $notificationFirebaseTokenEntityRepository, UserManager $userManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->notificationFirebaseTokenEntityRepository = $notificationFirebaseTokenEntityRepository;
+        $this->userManager = $userManager;
     }
 
-    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request)
+    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request): ?NotificationFirebaseTokenEntity
     {
-        $create = $this->autoMapping->map(NotificationFirebaseTokenRequest::class, NotificationFirebaseTokenEntity::class, $request);
-
-        $item = $this->notificationFirebaseTokenEntityRepository->findBy(['userID' => $request->getUserID()]);
-        if ($item)
-        {
-            $this->entityManager->remove($item[0]);
+        $notificationFirebaseTokenEntity = $this->notificationFirebaseTokenEntityRepository->findOneBy(['user' => $request->getUserId()]);
+      
+        if ($notificationFirebaseTokenEntity) {
+            $this->entityManager->remove($notificationFirebaseTokenEntity);
             $this->entityManager->flush();
         }
 
-        $this->entityManager->persist($create);
+        $notificationFirebaseTokenEntity = $this->autoMapping->map(NotificationFirebaseTokenCreateRequest::class, NotificationFirebaseTokenEntity::class, $request);
+          
+        $notificationFirebaseTokenEntity->setUser($this->userManager->getUser($request->getUserId()));
+      
+        $this->entityManager->persist($notificationFirebaseTokenEntity);
         $this->entityManager->flush();
-        $this->entityManager->clear();
 
-        return $create;
+        return $notificationFirebaseTokenEntity;
     }
 
     public function getCaptainTokens()

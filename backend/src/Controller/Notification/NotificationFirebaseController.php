@@ -16,7 +16,7 @@ use App\Controller\BaseController;
 use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
 
 /**
- * fetch Local Notification.
+ * firebase Notification.
  * @Route("v1/notificationfirbase/")
  */
 class NotificationFirebaseController extends BaseController
@@ -60,15 +60,16 @@ class NotificationFirebaseController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *               @OA\Property(type="object", property="token"),
-     *               @OA\Property(type="object", property="date"),
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="token"),
+     *               @OA\Property(type="object", property="createdAt"),
      *          )
      *      )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function createNotificationFirebaseToken(Request $request)
+    public function createNotificationFirebaseToken(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
