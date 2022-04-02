@@ -129,7 +129,7 @@ class SubscriptionBalanceLoadedState extends States {
           children: [
             // status hint
             Visibility(
-              visible: balance.status != 'active',
+              visible: balanceStatusEnum != BalanceStatus.ACTIVE,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -216,7 +216,10 @@ class SubscriptionBalanceLoadedState extends States {
                               height: 35,
                               width: 35,
                               decoration: BoxDecoration(
-                                  boxShadow: balance.status != 'inactive'
+                                  boxShadow: balanceStatusEnum !=
+                                              BalanceStatus.INACTIVE &&
+                                          balanceStatusEnum !=
+                                              BalanceStatus.EXPIRED
                                       ? [
                                           BoxShadow(
                                               color: Colors.green,
@@ -226,11 +229,16 @@ class SubscriptionBalanceLoadedState extends States {
                                         ]
                                       : [],
                                   borderRadius: BorderRadius.circular(10),
-                                  color: balance.status == 'inactive'
+                                  color: balanceStatusEnum ==
+                                              BalanceStatus.INACTIVE ||
+                                          balanceStatusEnum ==
+                                              BalanceStatus.EXPIRED
                                       ? Theme.of(context).disabledColor
                                       : Colors.green),
                               child: Visibility(
-                                visible: balance.status != 'inactive',
+                                visible: balanceStatusEnum !=
+                                        BalanceStatus.INACTIVE &&
+                                    balanceStatusEnum != BalanceStatus.EXPIRED,
                                 child: Icon(
                                   Icons.check_rounded,
                                   color:
@@ -250,7 +258,10 @@ class SubscriptionBalanceLoadedState extends States {
                                 width: 35,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    boxShadow: balance.status == 'inactive'
+                                    boxShadow: balanceStatusEnum ==
+                                                BalanceStatus.INACTIVE ||
+                                            balanceStatusEnum ==
+                                                BalanceStatus.EXPIRED
                                         ? [
                                             BoxShadow(
                                                 color: Theme.of(context)
@@ -261,11 +272,17 @@ class SubscriptionBalanceLoadedState extends States {
                                                 offset: Offset(-0.1, 0))
                                           ]
                                         : [],
-                                    color: balance.status == 'inactive'
+                                    color: balanceStatusEnum ==
+                                                BalanceStatus.INACTIVE ||
+                                            balanceStatusEnum ==
+                                                BalanceStatus.EXPIRED
                                         ? Theme.of(context).colorScheme.error
                                         : Theme.of(context).disabledColor),
                                 child: Visibility(
-                                  visible: balance.status == 'inactive',
+                                  visible: balanceStatusEnum ==
+                                          BalanceStatus.INACTIVE ||
+                                      balanceStatusEnum ==
+                                          BalanceStatus.EXPIRED,
                                   child: Icon(
                                     Icons.check_rounded,
                                     color: Theme.of(context)

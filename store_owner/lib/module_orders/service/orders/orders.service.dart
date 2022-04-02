@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
@@ -62,7 +63,8 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    return OrderDetailsModel.withData(response);
+    var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response, location);
   }
 
   Future<DataModel> getCompanyInfo() async {

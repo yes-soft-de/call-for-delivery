@@ -18,6 +18,7 @@ class EditBranchDialog extends StatefulWidget {
 }
 
 class _EditBranchDialogState extends State<EditBranchDialog> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
     nameController = TextEditingController();
@@ -45,81 +46,86 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       title: Text(S.current.updateBranch),
       content: Container(
-        constraints: BoxConstraints(maxHeight: 200),
-        child: Flex(
-          direction: Axis.vertical,
-          children: [
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                child: Text(
-                  S.of(context).newName,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(fontWeight: FontWeight.bold),
+        constraints: BoxConstraints(maxHeight: 250, minWidth: 300),
+        child: Form(
+          key: formKey,
+          child: Flex(
+            direction: Axis.vertical,
+            children: [
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                  child: Text(
+                    S.of(context).newName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            CustomFormField(
-              onChanged: () {
-                setState(() {});
-              },
-              controller: nameController,
-              hintText: S.current.branch01,
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                child: Text(
-                  S.of(context).phoneNumber,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(fontWeight: FontWeight.bold),
+              CustomFormField(
+                onChanged: () {
+                  setState(() {});
+                },
+                controller: nameController,
+                hintText: S.current.branch01,
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                  child: Text(
+                    S.of(context).phoneNumber,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomLoginFormField(
-                      controller: phoneController,
-                      phone: true,
-                      last: true,
-                      hintText: '5xxxxxxxx'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 28.0),
-                  child: SizedBox(
-                    width: 125,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomLoginFormField(
-                        halfField: true,
-                        contentPadding: EdgeInsets.only(left: 8.0, right: 8.0),
-                        controller: countryController,
-                        numbers: true,
-                        phoneHint: false,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomLoginFormField(
+                        controller: phoneController,
+                        phone: true,
                         last: true,
-                        maxLength: 3,
-                        hintText: S.current.countryCode,
-                        sufIcon: Padding(
-                          padding: const EdgeInsets.only(right: 4.0, left: 4.0),
-                          child: Container(
-                            width: 30,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).primaryColor),
-                            child: Center(
-                              child: Text(
-                                '+',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .button
-                                    ?.copyWith(color: Colors.white),
+                        hintText: '5xxxxxxxx'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 28.0),
+                    child: SizedBox(
+                      width: 125,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomLoginFormField(
+                          halfField: true,
+                          contentPadding:
+                              EdgeInsets.only(left: 8.0, right: 8.0),
+                          controller: countryController,
+                          numbers: true,
+                          phoneHint: false,
+                          last: true,
+                          maxLength: 3,
+                          hintText: S.current.countryCode,
+                          sufIcon: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 4.0, left: 4.0),
+                            child: Container(
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor),
+                              child: Center(
+                                child: Text(
+                                  '+',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .button
+                                      ?.copyWith(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
@@ -127,10 +133,10 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,
@@ -146,10 +152,13 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
             ),
             onPressed: nameController.text.isNotEmpty == true
                 ? () {
-                    Navigator.of(context).pop(BranchModel(
-                        location: LatLng(0, 0),
-                        name: nameController.text,
-                        phone: countryController.text + phoneController.text));
+                    if (formKey.currentState?.validate() == true) {
+                      Navigator.of(context).pop(BranchModel(
+                          location: LatLng(0, 0),
+                          name: nameController.text,
+                          phone:
+                              countryController.text + phoneController.text));
+                    }
                   }
                 : null)
       ],

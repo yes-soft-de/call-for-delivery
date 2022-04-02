@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_subscription/state_manager/subscription_balance_state_manager.dart';
@@ -46,6 +47,7 @@ class SubscriptionBalanceScreenState extends State<SubscriptionBalanceScreen> {
 
   @override
   void initState() {
+    currentState = LoadingState(this);
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {

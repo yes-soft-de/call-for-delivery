@@ -552,7 +552,17 @@
     "yes": "Yes",
     "no": "No",
     "confirmingCaptainLocation": "Confirm with yes and no if captain reach you",
-    "redo": "Redo"
+    "redo": "Redo",
+    "dear": "Dear",
+    "orderAverage35": "You have consumed 35%",
+    "orderAverage40": "You have consumed 40%",
+    "orderAverage75": "You have consumed 75%",
+    "orderAverage80": "You have consumed 80%",
+    "youConsumed": "You have consumed",
+    "captainOrderCost": "Retained cash",
+    "captainPaymentNote": "Retained cash note"
+
+
 
 
 

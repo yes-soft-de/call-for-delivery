@@ -50,6 +50,7 @@ class NewOrderStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.addNewOrder(request).then((value) {
       if (value.hasError) {
+        getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')

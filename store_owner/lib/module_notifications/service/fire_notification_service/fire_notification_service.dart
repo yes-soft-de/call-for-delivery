@@ -62,8 +62,7 @@ class FireNotificationService {
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }
 

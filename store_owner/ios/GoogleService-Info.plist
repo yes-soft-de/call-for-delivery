@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>de.yessoft.c4d_store</string>
+	<string>de.yessoft.c4d</string>
 	<key>PROJECT_ID</key>
 	<string>c4d-app-c299b</string>
 	<key>STORAGE_BUCKET</key>
