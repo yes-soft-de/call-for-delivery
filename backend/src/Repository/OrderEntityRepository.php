@@ -363,10 +363,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterCaptainNotArrivedOrdersByAdmin(CaptainNotArrivedOrderFilterByAdminRequest $request): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
-                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+            ->select('orderEntity.id', 'orderEntity.createdAt', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName',
+                'storeOwnerProfileEntity.storeOwnerName')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -381,10 +379,18 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOrderDetails.branch = storeOwnerBranch.id')
 
             ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
+                CaptainEntity::class,
+                'captainEntity',
                 Join::WITH,
-                'imageEntity.id = storeOrderDetails.images')
+                'captainEntity.captainId = orderEntity.captainId'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
 
             ->leftJoin(
                 OrderLogsEntity::class,

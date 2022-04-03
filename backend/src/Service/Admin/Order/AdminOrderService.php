@@ -77,8 +77,6 @@ class AdminOrderService
         $orders = $this->adminOrderManager->filterCaptainNotArrivedOrdersByAdmin($request);
 
         foreach ($orders as $order) {
-            $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
-
             $response[] = $this->autoMapping->map("array", CaptainNotArrivedOrderFilterResponse::class, $order);
         }
 
