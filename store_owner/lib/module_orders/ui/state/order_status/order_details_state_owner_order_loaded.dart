@@ -9,6 +9,7 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
@@ -29,12 +30,15 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
-    if (orderInfo.isCaptainArrived == false &&
-        orderInfo.state == OrderStatusEnum.IN_STORE) {
+    if (confirmMessagesStates.contains(orderInfo.state) && orderInfo.isCaptainArrived == null) {
       showOwnerAlertConfirm();
     }
   }
   bool dialogShowed = false;
+  var confirmMessagesStates = [
+    OrderStatusEnum.IN_STORE,
+    OrderStatusEnum.DELIVERING
+  ];
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -109,11 +113,27 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
+        // captain confirmation
+        Visibility(
+            visible: confirmMessagesStates.contains(orderInfo.state),
+            child: OrderButton(
+              backgroundColor: Colors.orange,
+              icon: Icons.question_mark_rounded,
+              onTap: () {
+                showOwnerAlertConfirm();
+              },
+              subtitle: orderInfo.isCaptainArrived == null
+                  ? (S.current.NotConfirmed)
+                  : (orderInfo.isCaptainArrived == true
+                      ? S.current.captainInStore
+                      : S.current.captainNotInStore),
+              title: S.current.captainLocation,
+            )),
         // rate
         Visibility(
           visible: orderInfo.roomID != null,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -644,13 +664,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).pop();
                     showFlush(context, true);
                   },
                   child: Text(S.of(context).yes)),
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     showFlush(context, false);
                   },
