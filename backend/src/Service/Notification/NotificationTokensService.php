@@ -8,11 +8,12 @@ use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationTokensManager;
 use App\Response\Notification\NotificationTokenResponse;
 use App\Request\Notification\NotificationTokensCreateRequest;
+use App\Constant\Notification\NotificationTokenConstant;
 
 class NotificationTokensService
 {
-    private $notificationTokensManager;
-    private $autoMapping;
+    private NotificationTokensManager $notificationTokensManager;
+    private AutoMapping $autoMapping;
 
     public function __construct(AutoMapping $autoMapping, NotificationTokensManager $notificationTokensManager)
     {
@@ -27,8 +28,13 @@ class NotificationTokensService
         return $this->autoMapping->map(NotificationFirebaseTokenEntity ::class, NotificationTokenResponse::class, $token);
     }
 
-    public function getCaptainTokens()
+    public function getCaptainTokens(): ?array
     {
-        return $this->notificationManager->getCaptainTokens();
+        return $this->notificationTokensManager->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+    }
+
+    public function getTokenByUserId(int $userId): ?NotificationFirebaseTokenEntity
+    {
+        return $this->notificationTokensManager->getTokenByUserId($userId);
     }
 }

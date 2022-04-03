@@ -12,9 +12,9 @@ use App\Manager\User\UserManager;
 
 class NotificationTokensManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $notificationFirebaseTokenEntityRepository;
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
+    private NotificationFirebaseTokenEntityRepository $notificationFirebaseTokenEntityRepository;
     private UserManager $userManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, NotificationFirebaseTokenEntityRepository $notificationFirebaseTokenEntityRepository, UserManager $userManager)
@@ -44,8 +44,13 @@ class NotificationTokensManager
         return $notificationFirebaseTokenEntity;
     }
 
-    public function getCaptainTokens()
+    public function getUsersTokensByAppType(int $appType): ?array
     {
-        return $this->notificationTokenEntityRepository->getCaptainTokens();
+        return $this->notificationFirebaseTokenEntityRepository->getUsersTokensByAppType($appType);
+    }
+
+    public function getTokenByUserId(int $userId): ?NotificationFirebaseTokenEntity
+    {
+        return $this->notificationFirebaseTokenEntityRepository->findOneBy(["user" => $userId]);
     }
 }

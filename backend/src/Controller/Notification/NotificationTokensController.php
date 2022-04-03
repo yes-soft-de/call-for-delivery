@@ -51,7 +51,7 @@ class NotificationTokensController extends BaseController
      *        description="create token",
      *        @OA\JsonContent(
      *              @OA\Property(type="string", property="token"),
-     *              @OA\Property(type="string", property="appType"),
+     *              @OA\Property(type="string", property="appType", description="store =1, captain=2, all=3"),
      *               ),
      *         ),
      *

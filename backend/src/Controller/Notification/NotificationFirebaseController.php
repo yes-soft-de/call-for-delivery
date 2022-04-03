@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
 
 /**
  * firebase Notification.
@@ -31,60 +30,10 @@ class NotificationFirebaseController extends BaseController
         $this->notificationFirebaseService = $notificationFirebaseService;
     }
 
-    /**
-     * create token.
-     * @Route("notificationfirebasetoken", name="createNotificationFirebaseToken", methods={"POST"})
-     * @param Request $request
-     * @return JsonResponse
-     * *
-     * @OA\Tag(name="Notification Firebase")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     *  @OA\RequestBody (
-     *        description="create token",
-     *        @OA\JsonContent(
-     *              @OA\Property(type="string", property="token"),
-     *               ),
-     *         ),
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns object",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *               @OA\Property(type="integer", property="id"),
-     *               @OA\Property(type="string", property="token"),
-     *               @OA\Property(type="object", property="createdAt"),
-     *          )
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function createNotificationFirebaseToken(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class,NotificationFirebaseTokenCreateRequest::class,(object)$data);
-        $request->setUserId($this->getUserId());
-
-        $response = $this->notificationFirebaseService->createNotificationFirebaseToken($request);
-   
-        return $this->response($response, self::CREATE);
-    }
-
 
     /**
      * notification new chat.
-     * @Route("/notificationnewchatanonymous", name="notificationNewChatAnonymous", methods={"POST"})
+     * @Route("notificationnewchatanonymous", name="notificationNewChatAnonymous", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      * *
@@ -131,7 +80,7 @@ class NotificationFirebaseController extends BaseController
 
     /**
      * notification new chat by other UserID.
-     * @Route("/notificationnewchatbyuserid", name="notificationnewchatByOtherUserID", methods={"POST"})
+     * @Route("notificationnewchatbyuserid", name="notificationnewchatByOtherUserID", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      * *

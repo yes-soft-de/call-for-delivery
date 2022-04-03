@@ -35,6 +35,8 @@ use App\Constant\Order\OrderAttentionConstant;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Response\Order\OrderUpdateCaptainArrivedResponse;
 use App\Service\OrderLogs\OrderLogsService;
+use App\Service\Notification\NotificationFirebaseService;
+use App\Constant\Notification\NotificationFirebaseConstant;
 
 class OrderService
 {
@@ -46,8 +48,9 @@ class OrderService
     private CaptainService $captainService;
     private OrderChatRoomService $orderChatRoomService;
     private OrderLogsService $orderLogsService;
+    private NotificationFirebaseService $notificationFirebaseService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -57,6 +60,7 @@ class OrderService
        $this->captainService = $captainService;
        $this->orderChatRoomService = $orderChatRoomService;
        $this->orderLogsService = $orderLogsService;
+       $this->notificationFirebaseService = $notificationFirebaseService;
     }
 
     /**
@@ -80,6 +84,20 @@ class OrderService
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
             $this->orderLogsService->createOrderLogsRequest($order);
+            //create firebase notification to store
+             try{
+                  $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                  }
+             catch (\Exception $e){
+                  error_log($e);
+                }
+             //create firebase notification to captains
+             try{
+                  $this->notificationFirebaseService->notificationToCaptains($order->getId());
+                }
+             catch (\Exception $e){
+                    error_log($e);
+                }
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -233,6 +251,20 @@ class OrderService
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN); 
             //create order log
             $this->orderLogsService->createOrderLogsRequest($order);
+            //create firebase notification to store
+             try{
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+              }
+             catch (\Exception $e){
+                  error_log($e);
+              }
+            // create firebase notification to captain
+             try{
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+              }
+             catch (\Exception $e){
+                  error_log($e);
+              }
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);

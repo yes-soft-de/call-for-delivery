@@ -4,9 +4,8 @@ namespace App\Repository;
 
 use App\Entity\NotificationFirebaseTokenEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method NotificationFirebaseTokenEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,57 +19,17 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, NotificationFirebaseTokenEntity::class);
     }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(NotificationFirebaseTokenEntity $entity, bool $flush = true): void
+    
+    public function  getUsersTokensByAppType(int $appType): ?array
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+        return $this->createQueryBuilder('notificationFirebaseToken')
+            ->select('notificationFirebaseToken.id', 'notificationFirebaseToken.token', 'notificationFirebaseToken.appType', 'notificationFirebaseToken.createdAt')
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(NotificationFirebaseTokenEntity $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+            ->where('notificationFirebaseToken.appType = :appType')
 
-    // /**
-    //  * @return NotificationFirebaseTokenEntity[] Returns an array of NotificationFirebaseTokenEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
+            ->setParameter('appType',$appType)
+
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?NotificationFirebaseTokenEntity
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

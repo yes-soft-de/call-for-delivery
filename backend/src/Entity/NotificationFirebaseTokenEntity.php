@@ -25,6 +25,9 @@ class NotificationFirebaseTokenEntity
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
+    #[ORM\Column(type: 'integer')]
+    private $appType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,18 @@ class NotificationFirebaseTokenEntity
     public function setUser(UserEntity $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAppType(): ?int
+    {
+        return $this->appType;
+    }
+
+    public function setAppType(int $appType): self
+    {
+        $this->appType = $appType;
 
         return $this;
     }

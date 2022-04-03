@@ -3,109 +3,131 @@
 
 namespace App\Service\Notification;
 
-use App\AutoMapping;
-use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
-use App\Response\Notification\NotificationFirebaseTokenResponse;
+use App\Service\Notification\NotificationTokensService;
 use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Exception\MessagingException;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
-use App\Constant\MessageConstant;
-use App\Constant\DeliveryCompanyNameConstant;
-use Kreait\Firebase\Messaging\ApnsConfig;
-use App\Request\Notification\NotificationFirebaseTokenCreateRequest;
-use Kreait\Firebase\Messaging\AndroidConfig;
+use App\Constant\Notification\NotificationFirebaseConstant;
+use App\Constant\Notification\NotificationConstant;
+use App\Constant\Order\OrderStateConstant;
 
 class NotificationFirebaseService
 {
-    private $messaging;
-    private $notificationFirebaseManager;
-    private $autoMapping;
+    private Messaging $messaging;
+    private NotificationFirebaseManager $notificationFirebaseManager;
+    private NotificationTokensService $notificationTokensService;
 
-    const URL = '/order_details';
-    const URLCHAT = '/chat';
-
-    public function __construct(AutoMapping $autoMapping
-    , Messaging $messaging
-    , NotificationFirebaseManager $notificationFirebaseManager)
+    public function __construct(Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService)
     {
         $this->messaging = $messaging;
         $this->notificationFirebaseManager = $notificationFirebaseManager;
-        $this->autoMapping = $autoMapping;
+        $this->notificationTokensService = $notificationTokensService;
     }
 
-    public function createNotificationFirebaseToken(NotificationFirebaseTokenCreateRequest $request): ?NotificationFirebaseTokenResponse
+    public function notificationToCaptains(int $orderId)
     {
-        $token = $this->notificationFirebaseManager->createNotificationFirebaseToken($request);
+        $getTokens = $this->notificationTokensService->getCaptainTokens();
 
-        return $this->autoMapping->map(NotificationFirebaseTokenEntity ::class, NotificationFirebaseTokenResponse::class, $token);
-    }
+        $tokens = [];
 
-    public function notificationToCaptains()
-    {
+        foreach ($getTokens as $token) {
+            $tokens[] = $token['token'];
+        }
 
-        $config = AndroidConfig::fromArray([
-            'ttl' => '3600s',
-            'priority' => 'normal',
-            'notification' => [
-                'title' => '$GOOG up 1.43% on the day',
-                'body' => '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.',
-                'icon' => 'stock_ticker_update',
-                'color' => '#f45342',
-                'sound' => 'default',
-                'restricted_package_name' => 'de.yessoft.c4d_captain'
-            ],
-        ]);
-       
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
         $message = CloudMessage::new()
-        ->withNotification(
-            Notification::create("C4D", "TEST"))
-        ->withDefaultSounds()
-        ->withHighestPossiblePriority();
-
-        $message = $message->withAndroidConfig($config);
-
-        return $config ;
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+        $this->messaging->sendMulticast($message, $tokens);
     }
 
+    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
+    { 
+        if($userType === NotificationConstant::STORE) {
+           $text = $this->getOrderStateForStore($orderState);
+        }
 
-    // public function getCaptainTokens()
-    // {
-    //     return $this->notificationManager->getCaptainTokens();
-    // }
+        if($userType === NotificationConstant::CAPTAIN) {
+           $text = $this->getOrderStateForCaptain($orderState);
+        }
 
-    // public function getAdminsTokens()
-    // {
-    //     return $this->notificationManager->getAdminsTokens();
-    // }
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        $token[] = $deviceToken->getToken();
 
-    // public function notificationToCaptains($orderNumber)
-    // {
-    //     $getTokens = $this->getCaptainTokens();
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
 
-    //     $tokens = [];
+        $msg = $text." ".$orderId;
 
-    //     foreach ($getTokens as $token) {
-    //         $tokens[] = $token['token'];
-    //     }
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
 
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URL,
-    //         'argument' => $orderNumber,
-    //     ];
+        $this->messaging->sendMulticast($message, $token);
+    }
 
-    //     $message = CloudMessage::new()
-    //         ->withNotification(
-    //             Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, MessageConstant::$MESSAGE_CAPTAIN_NEW_ORDER))
-    //         ->withDefaultSounds()
-    //         ->withHighestPossiblePriority()->withData($payload);
+    //TODO Move to a separate service
+    public function getOrderStateForStore($state): string
+    {
+        if ($state === OrderStateConstant::ORDER_STATE_PENDING){
+            $state = NotificationFirebaseConstant::CREATE_ORDER_SUCCESS;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ON_WAY){
+            $state = NotificationFirebaseConstant::STATE_ON_WAY_PICK_ORDER;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationFirebaseConstant::STATE_IN_STORE;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationFirebaseConstant::STATE_PICKED;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationFirebaseConstant::STATE_ONGOING;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationFirebaseConstant::STATE_DELIVERED;
+        }
 
-    //     $this->messaging->sendMulticast($message, $tokens);
-    // }
+        return $state;
+    }
 
+     //TODO Move to a separate service
+    public function getOrderStateForCaptain($state): string
+    {
+        if ($state === OrderStateConstant::ORDER_STATE_ON_WAY){
+            $state = NotificationFirebaseConstant::STATE_ON_WAY_PICK_ORDER_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationFirebaseConstant::STATE_IN_STORE_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationFirebaseConstant::STATE_PICKED_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationFirebaseConstant::STATE_ONGOING_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationFirebaseConstant::STATE_DELIVERED_CAPTAIN;
+        }
+        
+        return $state;
+    }
+    
     // /**
     //  * @throws MessagingException
     //  * @throws FirebaseException
