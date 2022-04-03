@@ -36,4 +36,5 @@ class NotificationTokensService
     {
         return $this->notificationTokensManager->getTokenByUserId($userId);
     }
+
 }

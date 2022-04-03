@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\NotificationFirebaseTokenEntity;
+use App\Entity\CaptainEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method NotificationFirebaseTokenEntity|null find($id, $lockMode = null, $lockVersion = null)

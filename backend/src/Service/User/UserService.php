@@ -55,4 +55,14 @@ class UserService
 
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userResult);
     }
+    
+    public function getUserByCaptainProfileId($captainProfileId): ?UserEntity
+    {
+        return $this->userManager->getUserByCaptainProfileId($captainProfileId);
+    }
+
+    public function getUserByStoreProfileId($storeProfileId): ?UserEntity
+    {
+        return $this->userManager->getUserByStoreProfileId($storeProfileId);
+    }
 }

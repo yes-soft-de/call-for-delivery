@@ -5,8 +5,7 @@ namespace App\Service\Notification;
 
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Service\Notification\NotificationTokensService;
-use Kreait\Firebase\Exception\FirebaseException;
-use Kreait\Firebase\Exception\MessagingException;
+use App\Service\User\UserService;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -22,12 +21,14 @@ class NotificationFirebaseService
     private Messaging $messaging;
     private NotificationFirebaseManager $notificationFirebaseManager;
     private NotificationTokensService $notificationTokensService;
+    private UserService $userService;
 
-    public function __construct(Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService)
+    public function __construct(Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService)
     {
         $this->messaging = $messaging;
         $this->notificationFirebaseManager = $notificationFirebaseManager;
         $this->notificationTokensService = $notificationTokensService;
+        $this->userService = $userService;
     }
 
     public function notificationToCaptains(int $orderId)
@@ -131,7 +132,7 @@ class NotificationFirebaseService
         return $state;
     }
     
-    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request)
+    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request, $userType)
     {
         $devicesToken = [];
        
@@ -144,7 +145,16 @@ class NotificationFirebaseService
         }
 
         if($request->getOtherUserID()){
-            $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
+           
+            if($userType ===  NotificationTokenConstant::APP_TYPE_CAPTAIN) {
+                $user = $this->userService->getUserByCaptainProfileId($request->getOtherUserID());
+            }
+           
+            if($userType ===  NotificationTokenConstant::APP_TYPE_STORE) {
+                $user = $this->userService->getUserByStoreProfileId($request->getOtherUserID());
+            }
+
+            $token = $this->notificationTokensService->getTokenByUserId($user->getId());
        
             $devicesToken[] = $token->getToken();
         }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Request\User\UserFilterRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -119,6 +120,20 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('captainEntity.id = :captainProfileId')
            
             ->setParameter('captainProfileId', $captainProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getUserByStoreProfileId($storeProfileId): ?UserEntity 
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = userEntity.id')
+           
+            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
+           
+            ->setParameter('storeProfileId', $storeProfileId)
 
             ->getQuery()
             ->getOneOrNullResult();

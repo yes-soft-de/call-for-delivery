@@ -17,6 +17,7 @@ use App\Controller\BaseController;
 use App\Request\Notification\NotificationFirebaseByUserIdRequest;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Request\Notification\NotificationFirebaseFromAdminRequest;
+use App\Constant\Notification\NotificationTokenConstant;
 
 /**
  * firebase Notification.
@@ -72,8 +73,16 @@ class NotificationFirebaseController extends BaseController
         $request = $this->autoMapping->map(stdClass::class,NotificationFirebaseByUserIdRequest::class,(object)$data);
 
         $request->setUserID($this->getUserId());
+       
+        if( $this->isGranted('ROLE_CAPTAIN') ) {
+            $userType = NotificationTokenConstant::APP_TYPE_STORE;
+         }
+       
+        if( $this->isGranted('ROLE_OWNER') ) {
+            $userType = NotificationTokenConstant::APP_TYPE_CAPTAIN;
+         }
 
-        $response = $this->notificationFirebaseService->notificationNewChatByUserID($request);
+        $response = $this->notificationFirebaseService->notificationNewChatByUserID($request, $userType);
 
         return $this->response($response, self::CREATE);
     }

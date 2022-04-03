@@ -53,4 +53,9 @@ class NotificationTokensManager
     {
         return $this->notificationFirebaseTokenEntityRepository->findOneBy(["user" => $userId]);
     }
+
+    public function getToken(int $userId): ?NotificationFirebaseTokenEntity
+    {
+        return $this->notificationFirebaseTokenEntityRepository->getToken($userId);
+    }
 }
