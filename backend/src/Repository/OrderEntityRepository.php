@@ -390,9 +390,10 @@ class OrderEntityRepository extends ServiceEntityRepository
                 OrderLogsEntity::class,
                 'orderLogEntity',
                 Join::WITH,
-                'orderLogEntity.orderId = orderEntity.id AND orderLogEntity.isCaptainArrived = :captainArrived'
+                'orderLogEntity.orderId = orderEntity.id'
             )
-            ->setParameter('captainArrived', false)
+            ->andWhere('orderLogEntity.isCaptainArrived = :captainArrived')
+            ->setParameter('captainArrived', 0)
 
             ->orderBy('orderEntity.id', 'DESC');
 
