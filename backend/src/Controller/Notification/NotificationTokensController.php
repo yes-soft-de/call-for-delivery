@@ -14,6 +14,9 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
 use App\Request\Notification\NotificationTokensCreateRequest;
+use App\Constant\Notification\NotificationTokenConstant;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * firebase Notification.
@@ -21,20 +24,21 @@ use App\Request\Notification\NotificationTokensCreateRequest;
  */
 class NotificationTokensController extends BaseController
 {
-    private $autoMapping;
-    private $notificationTokensService;
+    private AutoMapping $autoMapping;
+    private NotificationTokensService $notificationTokensService;
+    private ValidatorInterface $validator;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, NotificationTokensService $notificationTokensService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, NotificationTokensService $notificationTokensService, ValidatorInterface $validator)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->notificationTokensService = $notificationTokensService;
+        $this->validator = $validator;
     }
 
     /**
      * create token.
      * @Route("notificationtoken", name="createNotificationToken", methods={"POST"})
-     * @IsGranted("ROLE_USER") 
      * @param Request $request
      * @return JsonResponse
      *
@@ -51,7 +55,6 @@ class NotificationTokensController extends BaseController
      *        description="create token",
      *        @OA\JsonContent(
      *              @OA\Property(type="string", property="token"),
-     *              @OA\Property(type="string", property="appType", description="store =1, captain=2, all=3"),
      *               ),
      *         ),
      *
@@ -78,6 +81,23 @@ class NotificationTokensController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class,NotificationTokensCreateRequest::class,(object)$data);
         $request->setUserId($this->getUserId());
+       
+        if( $this->isGranted('ROLE_CAPTAIN') ) {
+            $request->setAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+         }
+        if( $this->isGranted('ROLE_OWNER') ) {
+            $request->setAppType(NotificationTokenConstant::APP_TYPE_STORE);
+         }
+        if( $this->isGranted('ROLE_ADMIN') ) {
+            $request->setAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+         }
+ 
+         $violations = $this->validator->validate($request);
+         if (\count($violations) > 0) {
+             $violationsString = (string) $violations;
+ 
+             return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
 
         $response = $this->notificationTokensService->createNotificationToken($request);
    

@@ -44,4 +44,6 @@ final class NotificationFirebaseConstant
     const MESSAGE_CAPTAIN_NEW_ORDER = "يوجد طلب جديد";
 
     const DELIVERY_COMPANY_NAME = "C4D";
+
+    const MESSAGE_NEW_CHAT = "لديك رسالة جديدة";
 }

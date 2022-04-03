@@ -43,4 +43,24 @@ class NotificationTokensCreateRequest
     {
         $this->token = $token;
     }
+
+    /**
+     * Get the value of appType
+     */ 
+    public function getAppType()
+    {
+        return $this->appType;
+    }
+
+    /**
+     * Set the value of appType
+     *
+     * @return  self
+     */ 
+    public function setAppType($appType)
+    {
+        $this->appType = $appType;
+
+        return $this;
+    }
 }

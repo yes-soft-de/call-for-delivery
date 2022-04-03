@@ -13,6 +13,9 @@ use Kreait\Firebase\Messaging\Notification;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Request\Notification\NotificationFirebaseByUserIdRequest;
+use App\Request\Notification\NotificationFirebaseFromAdminRequest;
+use App\Constant\Notification\NotificationTokenConstant;
 
 class NotificationFirebaseService
 {
@@ -29,7 +32,7 @@ class NotificationFirebaseService
 
     public function notificationToCaptains(int $orderId)
     {
-        $getTokens = $this->notificationTokensService->getCaptainTokens();
+        $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
 
         $tokens = [];
 
@@ -128,187 +131,63 @@ class NotificationFirebaseService
         return $state;
     }
     
-    // /**
-    //  * @throws MessagingException
-    //  * @throws FirebaseException
-    //  */
-    // public function notificationOrderUpdateForUser($userID, $orderNumber, $msg)
-    // {
-    //     $token = $this->getNotificationTokenByUserID($userID);
+    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request)
+    {
+        $devicesToken = [];
+       
+        if(! $request->getOtherUserID()){
+            $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+       
+            foreach ($adminsTokens as $token) {
+                $devicesToken[] = $token['token'];
+            }
+        }
 
-    //     $devicesToken[] = $token;
+        if($request->getOtherUserID()){
+            $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
+       
+            $devicesToken[] = $token->getToken();
+        }
 
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URL,
-    //         'argument' => $orderNumber,
-    //     ];
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => null,
+        ];
 
-    //     $msg = $msg." ".$orderNumber;
+        $message = CloudMessage::new()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withHighestPossiblePriority();
 
-    //     $message = CloudMessage::new()
-    //         ->withNotification(
-    //             Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, $msg))
-    //         ->withDefaultSounds()
-    //         ->withHighestPossiblePriority()->withData($payload);
+        $message = $message->withData($payload);
 
-    //     $this->messaging->sendMulticast($message, $devicesToken);
-    // }
+        $this->messaging->sendMulticast($message, $devicesToken);
 
-    // public function getStoreTokens($storeIDs)
-    // {
-    //     return $this->notificationManager->getStoreTokens($storeIDs);
-    // }
+        return $devicesToken;
+    }
+    
+    public function notificationNewChatFromAdmin(NotificationFirebaseFromAdminRequest $request)
+    {
+        $devicesToken = [];
 
-    // /**
-    //  * @throws MessagingException
-    //  * @throws FirebaseException
-    //  */
-    // public function notificationOrderUpdateForStores($storeIds, $orderNumber, $msg)
-    // {
-    //     $storeIDs = array_unique($storeIds);
+        $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
+       
+        $devicesToken[] = $token->getToken();
+        
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => null,
+        ];
 
-    //     $tokens = [];
+        $message = CloudMessage::new()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withHighestPossiblePriority();
 
-    //     $getTokens = $this->getStoreTokens($storeIDs);
+        $message = $message->withData($payload);
 
-    //     foreach ($getTokens as $token) {
-    //         $tokens[] = $token['token'];
-    //     }
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URL,
-    //         'argument' => $orderNumber,
-    //     ];
+        $this->messaging->sendMulticast($message, $devicesToken);
 
-    //     $msg = $msg." ".$orderNumber;
-
-    //     $message = CloudMessage::new()
-    //         ->withNotification(
-    //             Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, $msg))
-    //         ->withDefaultSounds()
-    //         ->withHighestPossiblePriority()->withData($payload);
-
-    //     $this->messaging->sendMulticast($message, $tokens);
-    // }
-
-    // public function notificationNewChatAnonymous(NotificationNewChatAnonymousRequest $request)
-    // {
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URLCHAT,
-    //         'argument' => null,
-    //     ];
-
-    //     $devicesToken = [];
-    //     $userToken = $this->notificationManager->getAnonymousToken($request->getAnonymousChatID());
-    //     if( $userToken) {
-    //         $devicesToken[] = $userToken['token'];
-    //     }
-
-    //     $message = CloudMessage::new()
-    //             ->withNotification(Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, MessageConstant::$MESSAGE_NEW_CHAT))->withDefaultSounds()
-    //             ->withHighestPossiblePriority();
-
-    //     $message = $message->withData($payload);
-
-    //     try {
-    //         $this->messaging->sendMulticast($message, $devicesToken);
-    //     }
-    //     catch (\Exception $e) {
-    //         error_log($e);
-    //     }
-
-    //     return $devicesToken;
-    // }
-
-    // public function notificationNewChatToAdmins($chatRoomID = null, $userID = null){
-
-    //     if($userID) {
-    //         $client = $this->notificationManager->getClientNameByUserID($userID);
-
-    //         if($client){
-    //             $clientName = $client['clientName'];
-    //         }
-    //     }
-    //     else {
-    //         $anonymouseName = $this->notificationManager->getAnonymouseNameByChaRoomID($chatRoomID);
-
-    //         if($anonymouseName) {
-    //             $clientName = $anonymouseName['name'];
-    //         }
-
-    //         else {
-    //             $clientName = "anonymouse";
-    //         }
-    //     }
-
-    //     $msg =  MessageConstant::$MESSAGE_NEW_CHAT_TO_ADMIN;
-    //     if(isset($clientName)){
-    //         $msg =  MessageConstant::$MESSAGE_NEW_CHAT_TO_ADMIN.$clientName;
-    //     }
-
-    //     $getTokens = $this->getAdminsTokens();
-
-    //     $devicesToken = [];
-
-    //     foreach ($getTokens as $token) {
-    //         $devicesToken[] = $token['token'];
-    //     }
-
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URLCHAT,
-    //         'argument' => "",
-    //     ];
-
-    //     $message = CloudMessage::new()
-    //             ->withNotification(Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, $msg))->withDefaultSounds()
-    //             ->withHighestPossiblePriority();
-
-    //     $message = $message->withData($payload);
-
-    //     try{
-    //         $this->messaging->sendMulticast($message, $devicesToken);
-    //     }
-    //     catch (\Exception $e){
-    //         error_log($e);
-    //     }
-
-    //     return $devicesToken;
-    // }
-
-    // public function getNotificationTokenByUserID($userID)
-    // {
-    //     return $this->notificationManager->getNotificationTokenByUserID($userID);
-    // }
-
-    // public function notificationNewChatByUserID(NotificationTokenByUserIDRequest $request)
-    // {
-    //     if(!$request->getOtherUserID()){
-    //         return $this->notificationNewChatToAdmins($request->getChatRoomID(), $request->getUserID());
-    //     }
-
-    //     $payload = [
-    //         'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-    //         'navigate_route' => self::URLCHAT,
-    //         'argument' => null,
-    //     ];
-
-    //     $devicesToken = [];
-
-    //     $userToken = $this->notificationManager->getNotificationTokenByUserID($request->getOtherUserID());
-
-    //     $devicesToken[] = $userToken;
-
-    //     $message = CloudMessage::new()
-    //     ->withNotification(Notification::create(DeliveryCompanyNameConstant::$Delivery_Company_Name, MessageConstant::$MESSAGE_NEW_CHAT))->withDefaultSounds()
-    //     ->withHighestPossiblePriority();
-
-    //     $message = $message->withData($payload);
-
-    //     $this->messaging->sendMulticast($message, $devicesToken);
-
-    //     return $devicesToken;
-    // }
+        return $devicesToken;
+    }
 }
