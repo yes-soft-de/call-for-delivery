@@ -3,6 +3,7 @@
 namespace App\Manager\Admin\Order;
 
 use App\Repository\OrderEntityRepository;
+use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 
 class AdminOrderManager
@@ -32,5 +33,11 @@ class AdminOrderManager
     public function getSpecificOrderByIdForAdmin(int $id): ?array
     {
         return $this->orderEntityRepository->getSpecificOrderByIdForAdmin($id);
+    }
+
+    // This function filters only orders in which the captain does not arrive the store yet
+    public function filterCaptainNotArrivedOrdersByAdmin(CaptainNotArrivedOrderFilterByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterCaptainNotArrivedOrdersByAdmin($request);
     }
 }
