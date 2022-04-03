@@ -87,7 +87,7 @@ config/jwt
 /public/media/cache/
 ###< liip/imagine-bundle ###
 /migrations
-/config/mandoob-456f3-firebase-adminsdk-6k6lp-6ddbf7dad6.json
+/config/c4d-app-c299b-firebase-adminsdk-vvvu2-e95160bc8e.json
 
 /.web-server-pid
 /app/config/parameters.yml

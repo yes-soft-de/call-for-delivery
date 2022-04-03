@@ -1,0 +1,203 @@
+<?php
+
+
+namespace App\Service\Notification;
+
+use App\Manager\Notification\NotificationFirebaseManager;
+use App\Service\Notification\NotificationTokensService;
+use App\Service\User\UserService;
+use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use App\Constant\Notification\NotificationFirebaseConstant;
+use App\Constant\Notification\NotificationConstant;
+use App\Constant\Order\OrderStateConstant;
+use App\Request\Notification\NotificationFirebaseByUserIdRequest;
+use App\Request\Notification\NotificationFirebaseFromAdminRequest;
+use App\Constant\Notification\NotificationTokenConstant;
+
+class NotificationFirebaseService
+{
+    private Messaging $messaging;
+    private NotificationFirebaseManager $notificationFirebaseManager;
+    private NotificationTokensService $notificationTokensService;
+    private UserService $userService;
+
+    public function __construct(Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService)
+    {
+        $this->messaging = $messaging;
+        $this->notificationFirebaseManager = $notificationFirebaseManager;
+        $this->notificationTokensService = $notificationTokensService;
+        $this->userService = $userService;
+    }
+
+    public function notificationToCaptains(int $orderId)
+    {
+        $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+
+        $tokens = [];
+
+        foreach ($getTokens as $token) {
+            $tokens[] = $token['token'];
+        }
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+        $this->messaging->sendMulticast($message, $tokens);
+    }
+
+    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
+    { 
+        if($userType === NotificationConstant::STORE) {
+           $text = $this->getOrderStateForStore($orderState);
+        }
+
+        if($userType === NotificationConstant::CAPTAIN) {
+           $text = $this->getOrderStateForCaptain($orderState);
+        }
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $msg = $text." ".$orderId;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+
+        $this->messaging->sendMulticast($message, $token);
+    }
+
+    //TODO Move to a separate service
+    public function getOrderStateForStore($state): string
+    {
+        if ($state === OrderStateConstant::ORDER_STATE_PENDING){
+            $state = NotificationFirebaseConstant::CREATE_ORDER_SUCCESS;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ON_WAY){
+            $state = NotificationFirebaseConstant::STATE_ON_WAY_PICK_ORDER;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationFirebaseConstant::STATE_IN_STORE;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationFirebaseConstant::STATE_PICKED;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationFirebaseConstant::STATE_ONGOING;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationFirebaseConstant::STATE_DELIVERED;
+        }
+
+        return $state;
+    }
+
+     //TODO Move to a separate service
+    public function getOrderStateForCaptain($state): string
+    {
+        if ($state === OrderStateConstant::ORDER_STATE_ON_WAY){
+            $state = NotificationFirebaseConstant::STATE_ON_WAY_PICK_ORDER_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationFirebaseConstant::STATE_IN_STORE_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationFirebaseConstant::STATE_PICKED_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationFirebaseConstant::STATE_ONGOING_CAPTAIN;
+        }
+        if ($state === OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationFirebaseConstant::STATE_DELIVERED_CAPTAIN;
+        }
+        
+        return $state;
+    }
+    
+    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request, $userType)
+    {
+        $devicesToken = [];
+       
+        if(! $request->getOtherUserID()){
+            $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+       
+            foreach ($adminsTokens as $token) {
+                $devicesToken[] = $token['token'];
+            }
+        }
+
+        if($request->getOtherUserID()){
+           
+            if($userType ===  NotificationTokenConstant::APP_TYPE_CAPTAIN) {
+                $user = $this->userService->getUserByCaptainProfileId($request->getOtherUserID());
+            }
+           
+            if($userType ===  NotificationTokenConstant::APP_TYPE_STORE) {
+                $user = $this->userService->getUserByStoreProfileId($request->getOtherUserID());
+            }
+
+            $token = $this->notificationTokensService->getTokenByUserId($user->getId());
+       
+            $devicesToken[] = $token->getToken();
+        }
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => null,
+        ];
+
+        $message = CloudMessage::new()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
+    
+    public function notificationNewChatFromAdmin(NotificationFirebaseFromAdminRequest $request)
+    {
+        $devicesToken = [];
+
+        $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
+       
+        $devicesToken[] = $token->getToken();
+        
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => null,
+        ];
+
+        $message = CloudMessage::new()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
+}
