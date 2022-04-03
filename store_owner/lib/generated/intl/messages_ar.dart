@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "اشتراكك منتهي الصلاحية الرجاء تجديده"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
+        "NotConfirmed": MessageLookupByLibrary.simpleMessage("لم يتم التأكد"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
@@ -119,8 +120,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في المحل"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
+        "captainLocation": MessageLookupByLibrary.simpleMessage("موقع الكابتن"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+        "captainNotInStore":
+            MessageLookupByLibrary.simpleMessage("الكابتن ليس في المتجر"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
         "captainPackageExtra":

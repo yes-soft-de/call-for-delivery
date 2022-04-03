@@ -561,7 +561,12 @@
     "youConsumed": "You have consumed",
     "captainOrderCost": "Retained cash",
     "captainPaymentNote": "Retained cash note",
-    "orderTimeLine": "Order Time Line"
+    "orderTimeLine": "Order Time Line",
+    "captainLocation": "Captain Location",
+    "captainNotInStore": "Captain not in Store",
+    "NotConfirmed": "Not Confirmed"
+
+
 
 
 
