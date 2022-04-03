@@ -472,47 +472,52 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       ' ' +
                       S.current.sar),
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: DottedLine(
-                          dashColor: Theme.of(context).disabledColor,
-                          lineThickness: 2.5,
-                          dashRadius: 25),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.money,
+                Visibility(
+                  visible: orderInfo.captainOrderCost != null,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
                       ),
-                      title: Text(S.current.captainOrderCost),
-                      subtitle: Text(
-                          orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: DottedLine(
-                          dashColor: Theme.of(context).disabledColor,
-                          lineThickness: 2.5,
-                          dashRadius: 25),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.info,
+                      ListTile(
+                        leading: Icon(
+                          Icons.money,
+                        ),
+                        title: Text(S.current.captainOrderCost),
+                        subtitle: Text(
+                            orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
                       ),
-                      title: Text(S.current.captainPaymentNote),
-                      subtitle: Text(orderInfo.attention ?? ''),
-                    ),
-                  ],
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                      ),
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.info,
+                          ),
+                          title: Text(S.current.captainPaymentNote),
+                          subtitle: Text(orderInfo.attention ?? ''),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
           ),
         ),
-        // with order type we can get order widgets
-        Visibility(
-            visible: orderInfo.state != OrderStatusEnum.CANCELLED,
-            child: Container()),
         Container(
           height: 75,
         ),
