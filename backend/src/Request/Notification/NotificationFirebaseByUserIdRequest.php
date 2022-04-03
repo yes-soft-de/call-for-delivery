@@ -4,21 +4,23 @@ namespace App\Request\Notification;
 
 class NotificationFirebaseByUserIdRequest
 {
-    private int|null $otherUserID;
+    /**
+     * @var int|null
+     */
+    private $otherUserID;
 
     private int $userID;
 
-
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getOtherUserID()
+    public function getOtherUserID(): ?int
     {
         return $this->otherUserID;
     }
 
     /**
-     * @param mixed $otherUserID
+     * @param int|null $otherUserID
      */
     public function setOtherUserID(int|null $otherUserID): void
     {
@@ -26,15 +28,15 @@ class NotificationFirebaseByUserIdRequest
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUserID()
+    public function getUserID(): int
     {
         return $this->userID;
     }
 
     /**
-     * @param mixed $userID
+     * @param int $userID
      */
     public function setUserID(int $userID): void
     {
