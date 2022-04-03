@@ -1,11 +1,12 @@
 import 'order_logs.dart';
 
-class OrderLogs {
+class OrderLogsResponse {
   OrderLogs? orderLogs;
 
-  OrderLogs({this.orderLogs});
+  OrderLogsResponse({this.orderLogs});
 
-  factory OrderLogs.fromJson(Map<String, dynamic> json) => OrderLogs(
+  factory OrderLogsResponse.fromJson(Map<String, dynamic> json) =>
+      OrderLogsResponse(
         orderLogs: json['orderLogs'] == null
             ? null
             : OrderLogs.fromJson(json['orderLogs'] as Map<String, dynamic>),

@@ -69,7 +69,8 @@ class DeepLinksService {
 
   static double? getInitDistance(LatLng headed, LatLng? currentLocation) {
     if (currentLocation == null) return null;
-    var straightDistance = const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
+    var straightDistance =
+        const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
     return straightDistance;
   }
 }

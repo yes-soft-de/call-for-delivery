@@ -67,6 +67,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
+                  arguments: orderInfo.id);
+            },
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -461,7 +466,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                         Icons.money,
                       ),
                       title: Text(S.current.captainOrderCost),
-                      subtitle: Text(orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
+                      subtitle: Text(
+                          orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 16.0, right: 16.0),

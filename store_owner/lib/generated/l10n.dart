@@ -5639,6 +5639,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order Time Line`
+  String get orderTimeLine {
+    return Intl.message(
+      'Order Time Line',
+      name: 'orderTimeLine',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
