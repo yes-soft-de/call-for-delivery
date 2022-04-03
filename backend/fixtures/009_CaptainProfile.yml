@@ -18,7 +18,7 @@ App\Entity\CaptainEntity:
     age: 35
     car: Tesla
     status: active
-    phone: 966551111121
+    phone: 966551111122
     isOnline: true
     bankName: السعودي
     bankAccountNumber: 11223345678
@@ -31,7 +31,7 @@ App\Entity\CaptainEntity:
     age: 27
     car: Tesla
     status: active
-    phone: 966551111121
+    phone: 966551111123
     isOnline: true
     bankName: الراجحي
     bankAccountNumber: 11223345678
@@ -44,7 +44,7 @@ App\Entity\CaptainEntity:
     age: 43
     car: Tesla
     status: active
-    phone: 966551111121
+    phone: 966551111124
     isOnline: true
     bankName: السعودي
     bankAccountNumber: 11223345678
@@ -57,7 +57,7 @@ App\Entity\CaptainEntity:
     age: 51
     car: Tesla
     status: active
-    phone: 966551111121
+    phone: 966551111125
     isOnline: true
     bankName: الراجحي
     bankAccountNumber: 11223345678
