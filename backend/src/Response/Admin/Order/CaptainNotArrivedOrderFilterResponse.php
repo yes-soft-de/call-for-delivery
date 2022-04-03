@@ -10,7 +10,13 @@ class CaptainNotArrivedOrderFilterResponse
 
     public string $storeOwnerName;
 
-    public string $branchName;
+    /**
+     * @var string|null
+     */
+    public ?string $branchName;
 
-    public string $captainName;
+    /**
+     * @var string|null
+     */
+    public ?string $captainName;
 }
