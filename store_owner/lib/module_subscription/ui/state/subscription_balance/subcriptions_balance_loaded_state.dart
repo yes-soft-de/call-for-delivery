@@ -136,15 +136,7 @@ class SubscriptionBalanceLoadedState extends States {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: isDark ? Colors.amber : Colors.yellow,
-                      boxShadow: isDark
-                          ? []
-                          : [
-                              BoxShadow(
-                                  color: Colors.yellow,
-                                  spreadRadius: 0.1,
-                                  blurRadius: 7,
-                                  offset: Offset(-0.1, 0))
-                            ]),
+                    ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
@@ -154,8 +146,7 @@ class SubscriptionBalanceLoadedState extends States {
                         title: Text(
                           SubscriptionsStatusHelper.getStatusMessage(
                               balance.status),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          
                         )),
                   ),
                 ),
