@@ -240,3 +240,12 @@ App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Notification\NotificationTokensCreateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        userId:
+            - NotBlank: ~

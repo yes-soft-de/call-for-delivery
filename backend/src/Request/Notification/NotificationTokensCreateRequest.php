@@ -4,11 +4,13 @@
 namespace App\Request\Notification;
 
 
-class NotificationFirebaseTokenCreateRequest
+class NotificationTokensCreateRequest
 {
     private int $userId;
 
     private string $token;
+
+    private string $appType;
 
     /**
      * @return mixed
@@ -21,7 +23,7 @@ class NotificationFirebaseTokenCreateRequest
     /**
      * @param mixed $userID
      */
-    public function setUserId($userId): void
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
@@ -37,7 +39,7 @@ class NotificationFirebaseTokenCreateRequest
     /**
      * @param mixed $token
      */
-    public function setToken($token): void
+    public function setToken(string $token): void
     {
         $this->token = $token;
     }

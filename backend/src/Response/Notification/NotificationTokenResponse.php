@@ -2,7 +2,7 @@
 
 namespace App\Response\Notification;
 
-class NotificationFirebaseTokenResponse
+class NotificationTokenResponse
 {
     /**
      * @var int
@@ -15,7 +15,7 @@ class NotificationFirebaseTokenResponse
     public $token;
 
     /**
-     * @var array
+     * @var dateTime
      */
     public $createdAt;
 }
