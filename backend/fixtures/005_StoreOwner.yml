@@ -5,31 +5,31 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
 
-  store_owner_two:
+  storeOwnerTwo:
     __construct: false
     userId: 966551111113
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
 
-  store_owner_three:
+  storeOwnerThree:
     __construct: false
     userId: 966551111114
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
 
-  store_owner_four:
+  storeOwnerFour:
     __construct: false
     userId: 966551111115
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
 
-  store_owner_five:
+  storeOwnerFive:
     __construct: false
     userId: 966551111116
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
 
-  store_owner_google:
+  storeOwnerGoogle:
     __construct: false
     userId: 966959796722
     roles: ['ROLE_OWNER', 'ROLE_USER']

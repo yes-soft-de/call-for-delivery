@@ -12,6 +12,7 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerTwoProfile:
     storeOwnerId: 7
@@ -26,6 +27,7 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerThreeProfile:
     storeOwnerId: 8
@@ -40,6 +42,7 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerFourProfile:
     storeOwnerId: 9
@@ -54,6 +57,7 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerFiveProfile:
     storeOwnerId: 10
@@ -68,6 +72,7 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerGoogleProfile:
     storeOwnerId: 11
@@ -82,3 +87,4 @@ App\Entity\StoreOwnerProfileEntity:
     stcPay: 123456789
     employeeCount: 1-20
     completeAccountStatus: profileCreated
+    images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png

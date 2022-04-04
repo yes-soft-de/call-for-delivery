@@ -240,3 +240,15 @@ App\Request\Admin\AdminProfile\AdminProfileStatusUpdateRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Notification\NotificationTokensCreateRequest:
+    properties:
+        appType:
+            - NotBlank: ~
+        userId:
+            - NotBlank: ~
+
+App\Request\Notification\NotificationFirebaseFromAdminRequest:
+    properties:
+        otherUserID:
+            - NotBlank: ~

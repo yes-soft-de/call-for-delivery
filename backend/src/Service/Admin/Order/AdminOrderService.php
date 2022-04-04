@@ -4,7 +4,9 @@ namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
 use App\Manager\Admin\Order\AdminOrderManager;
+use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
@@ -61,9 +63,23 @@ class AdminOrderService
                 $order['location'] = null;
             }
           
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderIdForAdmin($id);
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
+    }
+
+    // This function filters only orders in which the captain does not arrive the store yet
+    public function filterCaptainNotArrivedOrdersByAdmin(CaptainNotArrivedOrderFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->filterCaptainNotArrivedOrdersByAdmin($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", CaptainNotArrivedOrderFilterResponse::class, $order);
+        }
+
+        return $response;
     }
 }

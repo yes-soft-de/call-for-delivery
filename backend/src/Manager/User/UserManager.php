@@ -194,4 +194,9 @@ class UserManager
     {
         return $this->userRepository->getUserByCaptainProfileId($captainProfileId);
     }
+    
+    public function getUserByStoreProfileId($storeProfileId): ?UserEntity
+    {
+        return $this->userRepository->getUserByStoreProfileId($storeProfileId);
+    }
 }
