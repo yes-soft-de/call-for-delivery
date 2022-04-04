@@ -161,6 +161,7 @@ class RegisterStateInit extends RegisterState {
                   ),
                   Expanded(
                     child: CustomLoginFormField(
+                      last:  false,
                       controller: passwordController,
                       confirmationPassword: password2Controller.text,
                       password: true,
