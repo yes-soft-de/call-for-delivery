@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_check_api/check_api_module.dart';
 import 'package:c4d/module_home/home_module.dart';
+import 'package:c4d/module_rest_data/rest_data_module.dart';
 import 'package:c4d/module_users/users_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatefulWidget {
   final CheckApiModule _checkApiModule;
   final HomeModule _homeModule;
   final UsersModule _usersModule;
+  final RestDataModule _restDataModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -99,7 +101,8 @@ class MyApp extends StatefulWidget {
       this._settingsModule,
       this._checkApiModule,
       this._homeModule,
-      this._usersModule
+      this._usersModule,
+      this._restDataModule
       );
 
   @override

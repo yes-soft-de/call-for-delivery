@@ -13,12 +13,12 @@ class HomeCard extends StatelessWidget {
     return GestureDetector(
       onTap:onTap ,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(5.0),
         child: Card(elevation: 5,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child:
         Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
