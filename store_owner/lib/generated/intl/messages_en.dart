@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "Expired subscriptions please renew your subscription"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
+        "NotConfirmed": MessageLookupByLibrary.simpleMessage("Not Confirmed"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -121,8 +122,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain is in store"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("Captain is in the way"),
+        "captainLocation":
+            MessageLookupByLibrary.simpleMessage("Captain Location"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
+        "captainNotInStore":
+            MessageLookupByLibrary.simpleMessage("Captain not in Store"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("Retained cash"),
         "captainPackageExtra":

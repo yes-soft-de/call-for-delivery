@@ -5649,6 +5649,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Location`
+  String get captainLocation {
+    return Intl.message(
+      'Captain Location',
+      name: 'captainLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain not in Store`
+  String get captainNotInStore {
+    return Intl.message(
+      'Captain not in Store',
+      name: 'captainNotInStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Confirmed`
+  String get NotConfirmed {
+    return Intl.message(
+      'Not Confirmed',
+      name: 'NotConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

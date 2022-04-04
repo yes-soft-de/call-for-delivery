@@ -560,7 +560,10 @@
     "youConsumed": "لقد استهلكت",
     "captainOrderCost": "المبلغ الذي استلمه الكابتن",
     "captainPaymentNote": "ملاحظات عن المبلغ المقبوض",
-    "orderTimeLine": "دورة حياة الطلب"
+    "orderTimeLine": "دورة حياة الطلب",
+    "captainLocation": "موقع الكابتن",
+    "captainNotInStore": "الكابتن ليس في المتجر",
+    "NotConfirmed": "لم يتم التأكد"
 
 
 

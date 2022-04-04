@@ -27,7 +27,7 @@ class OrderDetailsModel extends DataModel {
   String? image;
   int? captainID;
   String? branchPhone;
-  late bool isCaptainArrived;
+  late bool? isCaptainArrived;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -82,7 +82,7 @@ class OrderDetailsModel extends DataModel {
         image: element?.image?.image,
         canRemove:
             _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        isCaptainArrived: element?.isCaptainArrived ?? false,
+        isCaptainArrived: element?.isCaptainArrived,
         branchPhone: element?.branchPhone,
         branchName: element?.branchName ?? S.current.unknown,
         createdDate: create,

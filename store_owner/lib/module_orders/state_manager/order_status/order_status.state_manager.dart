@@ -70,8 +70,10 @@ class OrderStatusStateManager {
       ConfirmCaptainLocationRequest request) {
     _ordersService.confirmCaptainLocation(request).then((value) {
       if (value.hasError) {
+        getOrder(screenState, request.orderId,false);
         Fluttertoast.showToast(msg: value.error ?? S.current.errorHappened);
       } else {
+        getOrder(screenState, request.orderId,false);
         Fluttertoast.showToast(msg: S.current.reportSent);
       }
     });
