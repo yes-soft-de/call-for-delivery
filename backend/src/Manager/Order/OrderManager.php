@@ -207,4 +207,13 @@ class OrderManager
 
         return $orderEntity;
     }
+    
+    public function orderCancel(OrderEntity $orderEntity): ?OrderEntity
+    {        
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }
