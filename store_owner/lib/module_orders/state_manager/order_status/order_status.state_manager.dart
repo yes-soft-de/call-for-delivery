@@ -70,12 +70,17 @@ class OrderStatusStateManager {
       ConfirmCaptainLocationRequest request) {
     _ordersService.confirmCaptainLocation(request).then((value) {
       if (value.hasError) {
-        getOrder(screenState, request.orderId,false);
+        getOrder(screenState, request.orderId, false);
         Fluttertoast.showToast(msg: value.error ?? S.current.errorHappened);
       } else {
-        getOrder(screenState, request.orderId,false);
+        getOrder(screenState, request.orderId, false);
         Fluttertoast.showToast(msg: S.current.reportSent);
       }
     });
+  }
+
+  void deleteOrder(int orderId, OrderDetailsScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.deleteOrder(orderId);
   }
 }

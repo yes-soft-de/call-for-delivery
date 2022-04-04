@@ -205,7 +205,7 @@ class Urls {
   static const NEW_ORDER_API = DOMAIN + '/v1/order/create';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/order/storeorders';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
-  static const DELETE_ORDER = DOMAIN + '/v1/';
+  static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';

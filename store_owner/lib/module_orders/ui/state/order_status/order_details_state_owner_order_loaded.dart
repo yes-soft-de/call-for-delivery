@@ -30,9 +30,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
-    if (confirmMessagesStates.contains(orderInfo.state) && orderInfo.isCaptainArrived == null) {
+    if (confirmMessagesStates.contains(orderInfo.state) &&
+        orderInfo.isCaptainArrived == null) {
       showOwnerAlertConfirm();
     }
+    screenState.canRemoveIt = orderInfo.canRemove;
+    screenState.refresh();
   }
   bool dialogShowed = false;
   var confirmMessagesStates = [
@@ -490,12 +493,14 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                         ),
                         title: Text(S.current.captainOrderCost),
                         subtitle: Text(
-                            orderInfo.captainOrderCost?.toStringAsFixed(2) ?? ''),
+                            orderInfo.captainOrderCost?.toStringAsFixed(2) ??
+                                ''),
                       ),
                       Visibility(
                         visible: orderInfo.attention != null,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
                           child: DottedLine(
                               dashColor: Theme.of(context).disabledColor,
                               lineThickness: 2.5,
