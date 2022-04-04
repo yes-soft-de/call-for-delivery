@@ -4,7 +4,7 @@ namespace App\Response\Order;
 
 class OrderCancelResponse
 {
-    public int $id;
+    public null|int $id;
 
     public null|string $state;
 
