@@ -55,8 +55,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String> needForLogging(bool login) async {
     if (login) {
-      await getIt<AuthService>().accountStatus();
-      return AuthPrefsHelper().getAccountStatusPhase();
+      try {
+        await getIt<AuthService>().accountStatus();
+        return AuthPrefsHelper().getAccountStatusPhase();
+      } catch (e) {
+        return AuthorizationRoutes.LOGIN_SCREEN;
+      }
     } else if (AboutHiveHelper().getWelcome()) {
       return AuthorizationRoutes.LOGIN_SCREEN;
     } else {
