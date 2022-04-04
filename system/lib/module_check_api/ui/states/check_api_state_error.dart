@@ -81,8 +81,9 @@ class CheckApiStateError extends States {
     );
   }
   Widget get _animatedButtonUI =>
-      CheckButton(screenState.loadingSnapshot.connectionState ==
-          ConnectionState.waiting);
+      CheckButton(
+        loading: screenState.loadingSnapshot.connectionState ==
+            ConnectionState.waiting,text: 'Check',);
 
   void _onTapDown(TapDownDetails details) {
     screenState.controller.forward();

@@ -30,6 +30,7 @@ class AuthService {
 
   Stream<AuthStatus> get authListener => _authSubject.stream;
   String get username => _prefsHelper.getUsername() ?? '';
+  String get password => _prefsHelper.getPassword() ?? '';
 
   Future<void> loginApi(String username, String password) async {
     LoginResponse? loginResult = await _authManager.login(LoginRequest(
