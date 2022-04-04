@@ -382,7 +382,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 CaptainEntity::class,
                 'captainEntity',
                 Join::WITH,
-                'captainEntity.captainId = orderEntity.captainId'
+                'captainEntity.id = orderEntity.captainId'
             )
 
             ->leftJoin(
