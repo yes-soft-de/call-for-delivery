@@ -34,4 +34,9 @@ class OrderChatRoomsStoreResponse
      * @var int|null $orderId
      */
     public $orderId;
+
+    /**
+     * @var int|null $captainId
+     */
+    public $captainId;
 }

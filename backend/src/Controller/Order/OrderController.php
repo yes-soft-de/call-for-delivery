@@ -23,6 +23,7 @@ use App\Constant\Main\MainErrorConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
+use App\Constant\Order\OrderResultConstant;
 
 /**
  * Create and fetch order.
@@ -732,6 +733,65 @@ class OrderController extends BaseController
          }
 
         $response = $this->orderService->updateCaptainArrived($request);
+      
+        return $this->response($response, self::UPDATE);
+    }
+
+     /**
+     * store: order cancel.
+     * @Route("ordercancel/{id}", name="orderCancel", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="state"),
+     *              )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9202"),
+     *          @OA\Property(type="string", property="msg", description="can not remove it, The captain received the order"),
+     *      )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function orderCancel(int $id): JsonResponse
+    {
+        $response = $this->orderService->orderCancel($id);
+
+        if(isset($response->statusError)) {
+            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_TIME) {
+                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_TIME);
+            }
+           
+            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED) {
+                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
+            }
+        }
       
         return $this->response($response, self::UPDATE);
     }

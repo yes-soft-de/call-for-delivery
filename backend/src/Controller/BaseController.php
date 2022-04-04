@@ -27,7 +27,8 @@ class BaseController extends AbstractController
     const FETCH = ["fetched","200"];
     //error order
     const ERROR = ["error","9201"];
-    const ERROR_ORDER_REMOVE = ["error","9202"];
+    const ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE = ["can not remove it, The captain received the order","9202"];
+    const ERROR_ORDER_REMOVE_TIME = ["can not remove it, Exceeded time allowed","9206"];
     const ERROR_ORDER_UPDATE = ["error","9203"];
     const ERROR_ORDER_CAN_NOT_CREATE = ["error","9204"];
     const ERROR_ORDER_NOT_FOUND = ["error","9205"];
@@ -83,6 +84,7 @@ class BaseController extends AbstractController
     const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
 
     const NOTFOUND=["Not found", "404"];
+    
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
 //        "tow"=>[ "error captain inactive", "9002"]

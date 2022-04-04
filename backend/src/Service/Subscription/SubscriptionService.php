@@ -509,8 +509,10 @@ class SubscriptionService
 
     public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
     {
-        $percentage = ( 100 * $remainingOrders ) / $packageOrderCount;
+        $sub = $packageOrderCount -  $remainingOrders;
         
+        $percentage = ( $sub / $packageOrderCount ) * 100;
+         
         return $percentage . SubscriptionConstant::PERCENT ;
     }
     

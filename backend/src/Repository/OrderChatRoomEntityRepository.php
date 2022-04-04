@@ -32,7 +32,7 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderChatRoomEntity')
             ->select('identity(orderChatRoomEntity.orderId) as orderId')
             ->addSelect('orderChatRoomEntity.id', 'orderChatRoomEntity.usedAs', 'orderChatRoomEntity.createdAt', 'orderChatRoomEntity.roomId')
-            ->addSelect('captainEntity.captainName')
+            ->addSelect('captainEntity.id as captainId', 'captainEntity.captainName')
             ->addSelect('imageEntity.imagePath')
           
             ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = orderChatRoomEntity.orderId')
