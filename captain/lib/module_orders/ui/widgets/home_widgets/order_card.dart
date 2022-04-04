@@ -71,7 +71,7 @@ class OrderCard extends StatelessWidget {
                   ),
                   Icon(
                     Icons.arrow_circle_left_outlined,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).textTheme.button?.color,
                   )
                 ],
               ),
@@ -90,7 +90,7 @@ class OrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).backgroundColor),
+              color:Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
@@ -113,7 +113,7 @@ class OrderCard extends StatelessWidget {
             title,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).backgroundColor),
+                color: Theme.of(context).textTheme.button?.color),
           ),
           Text(subtitle,
               style: Theme.of(context)
@@ -126,7 +126,7 @@ class OrderCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).backgroundColor;
+    Color dividerColor = Theme.of(context).textTheme.button?.color ?? Colors.white;
     return Divider(
       height: 8,
       thickness: 1.5,
@@ -209,7 +209,7 @@ class NearbyOrdersCard extends StatelessWidget {
                 ),
                 Icon(
                   Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).textTheme.button?.color,
                 )
               ],
             ),
@@ -227,7 +227,7 @@ class NearbyOrdersCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
@@ -239,7 +239,7 @@ class NearbyOrdersCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).backgroundColor;
+    Color dividerColor = Theme.of(context).textTheme.button?.color ?? Colors.white;
     return Divider(
       height: 8,
       thickness: 1.5,
