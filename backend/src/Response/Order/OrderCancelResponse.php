@@ -6,7 +6,7 @@ class OrderCancelResponse
 {
     public int $id;
 
-    public string $state;
+    public null|string $state;
 
-    public string $statusError;
+    public null|string $statusError;
 }
