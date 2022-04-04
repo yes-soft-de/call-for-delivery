@@ -117,14 +117,16 @@ class OrderDetailsModel extends DataModel {
     List<Step> steps = [];
     orderLogs.orderLogs?.logs?.forEach((element) {
       // step date
-      var date = DateFormat.jm()
+      var stepDate = DateFormat.jm()
               .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
           DateFormat.yMd()
               .format(DateHelper.convert(element.createdAt?.timestamp));
       steps.add(Step(
-          state: StatusHelper.getStatusEnum(element.orderState), date: date));
+          state: StatusHelper.getStatusEnum(element.orderState),
+          date: stepDate));
     });
+    steps = steps.reversed.toList();
     OrderTimeLine orderTimeLine = OrderTimeLine(
         steps: steps,
         completionTime: orderLogs.orderLogs?.orderState?.completionTime,

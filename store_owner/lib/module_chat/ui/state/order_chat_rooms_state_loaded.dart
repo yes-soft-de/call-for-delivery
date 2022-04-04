@@ -140,7 +140,7 @@ class OrderChatRoomsLoadedState extends States {
                   arguments: ChatArgument(
                       roomID: element.roomId,
                       userType: 'captain',
-                      userID: element.id));
+                      userID: element.captainId));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -193,7 +193,7 @@ class OrderChatRoomsLoadedState extends States {
                           Text(
                             S.current.enquiryAboutOrder +
                                 ' #${element.orderId}',
-                            maxLines: 1,
+                                maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],

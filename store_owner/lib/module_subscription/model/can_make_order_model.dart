@@ -27,7 +27,7 @@ class CanMakeOrderModel extends DataModel {
         consumingAlert: false);
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
-    var totalOrder = num.tryParse(total) ?? 0;
+    var totalOrder = num.tryParse(total)?.floorToDouble() ?? 0;
     var alert = false;
     if (totalOrder >= 80.0) {
       _model.percentageOfOrdersConsumed = '80%';

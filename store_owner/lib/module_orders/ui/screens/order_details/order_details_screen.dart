@@ -23,7 +23,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   OrderStatusStateManager get manager => widget._stateManager;
-  void deleteOrder(model) {}
+  void deleteOrder() {
+    widget._stateManager.deleteOrder(orderId, this);
+  }
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     widget._stateManager.rateCaptain(this, request);
   }
 
+  bool canRemoveIt = false;
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,13 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         resizeToAvoidBottomInset: false,
         appBar: CustomC4dAppBar.appBar(context, title: S.current.orderDetails),
         body: currentState.getUI(context),
+        floatingActionButton: Visibility(
+            visible: canRemoveIt,
+            child: FloatingActionButton(
+              onPressed: () {
+                deleteOrder();
+              },
+            )),
       ),
     );
   }

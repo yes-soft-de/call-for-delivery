@@ -14,9 +14,7 @@ import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart' as intl;
 
 class SubscriptionBalanceLoadedState extends States {
