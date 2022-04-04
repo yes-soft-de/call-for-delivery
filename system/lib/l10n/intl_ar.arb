@@ -436,7 +436,9 @@
     "manageOrder": "إدارة الطلبات",
     "state": "الحالة",
     "changeOrderState": "Change order state",
-    "orderUpdatedSuccessfully": "Order updated successfully"
+    "orderUpdatedSuccessfully": "Order updated successfully",
+    "restData": "Rest data",
+    "enterYourPassword": "Enter your password"
 
 
 }

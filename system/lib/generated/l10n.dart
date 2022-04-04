@@ -4379,6 +4379,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Rest data`
+  String get restData {
+    return Intl.message(
+      'Rest data',
+      name: 'restData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get enterYourPassword {
+    return Intl.message(
+      'Enter your password',
+      name: 'enterYourPassword',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
