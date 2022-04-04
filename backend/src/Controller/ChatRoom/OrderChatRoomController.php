@@ -61,6 +61,7 @@ class OrderChatRoomController extends BaseController
      *                  @OA\Property(type="object", property="images"),
      *                  @OA\Property(type="string", property="roomId"),
      *                  @OA\Property(type="integer", property="orderId"),
+     *                  @OA\Property(type="integer", property="captainId"),
      *          )
      *      )
      * )
