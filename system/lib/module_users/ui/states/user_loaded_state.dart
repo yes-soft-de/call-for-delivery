@@ -35,7 +35,7 @@ class UsersLoadedState extends States{
     if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
-//          screenState.getUsers();
+          screenState.getUsers(screenState.request);
         },
         error: error,
       );
@@ -82,11 +82,12 @@ class UsersLoadedState extends States{
       }
       widgets.add(
           UserCard(usersModel: element,
+            sendNotification: (){},
             updatePassword: (){
               showDialog(
                 context: screenState.context,
                 builder: (context) {
-                  return CustomDialogBox(title:S.of(context).changePassword,
+                  return CustomDialogBox(title:S.of(context).changePassword,titleAction: S.of(context).update,hintText: S.of(context).newPassword,
                     updatePass: (newPass){
                     newPass as String;
                     screenState.updatePassword(UpdatePassRequest(element.id, newPass));

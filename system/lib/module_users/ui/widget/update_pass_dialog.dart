@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title;
+  final String titleAction;
+  final String hintText;
   final Function updatePass;
 
-  const CustomDialogBox({required this.title,required this.updatePass}) ;
+  const CustomDialogBox({required this.title,required this.updatePass,required this.titleAction,required this.hintText}) ;
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -58,7 +60,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   password: true,
                   contentPadding:
                   const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  hintText: S.of(context).newPassword,
+                  hintText: widget.hintText,
                 ),
               ),
 
@@ -70,7 +72,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                       Navigator.of(context).pop();
                       widget.updatePass(passwordController.text);
                     },
-                    child: Text(S.of(context).update,style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),)),
+                    child: Text(widget.titleAction,style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),)),
               ),
             ],
           ),
