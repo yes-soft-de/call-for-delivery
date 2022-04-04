@@ -252,3 +252,10 @@ App\Request\Notification\NotificationFirebaseFromAdminRequest:
     properties:
         otherUserID:
             - NotBlank: ~
+
+App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
+    properties:
+        title:
+            - NotBlank: ~
+        messageBody:
+            - NotBlank: ~
