@@ -234,6 +234,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                         arguments: ChatArgument(
                             roomID: orderInfo.roomID ?? '',
+                            userID: orderInfo.captainID,
                             userType: 'captain'));
                   },
                   leading: Icon(
