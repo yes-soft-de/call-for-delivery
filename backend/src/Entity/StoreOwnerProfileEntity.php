@@ -77,6 +77,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: OrderLogsEntity::class)]
     private $OrderLogsEntity;
 
+    #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentEntity::class)]
+    private $storeOwnerPaymentEntity;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -84,6 +87,7 @@ class StoreOwnerProfileEntity
         $this->orderEntities = new ArrayCollection();
         $this->subscriptionCaptainOffer = new ArrayCollection();
         $this->OrderLogsEntity = new ArrayCollection();
+        $this->storeOwnerPaymentEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -427,6 +431,36 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($orderLogsEntity->getStoreOwnerProfile() === $this) {
                 $orderLogsEntity->setStoreOwnerProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StoreOwnerPaymentEntity>
+     */
+    public function getStoreOwnerPaymentEntity(): Collection
+    {
+        return $this->storeOwnerPaymentEntity;
+    }
+
+    public function addStoreOwnerPaymentEntity(StoreOwnerPaymentEntity $storeOwnerPaymentEntity): self
+    {
+        if (!$this->storeOwnerPaymentEntity->contains($storeOwnerPaymentEntity)) {
+            $this->storeOwnerPaymentEntity[] = $storeOwnerPaymentEntity;
+            $storeOwnerPaymentEntity->setStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOwnerPaymentEntity(StoreOwnerPaymentEntity $storeOwnerPaymentEntity): self
+    {
+        if ($this->storeOwnerPaymentEntity->removeElement($storeOwnerPaymentEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOwnerPaymentEntity->getStore() === $this) {
+                $storeOwnerPaymentEntity->setStore(null);
             }
         }
 

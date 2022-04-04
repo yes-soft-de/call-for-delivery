@@ -252,3 +252,19 @@ App\Request\Notification\NotificationFirebaseFromAdminRequest:
     properties:
         otherUserID:
             - NotBlank: ~
+
+App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        store:
+            - NotBlank: ~
+
+App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        amount:
+            - NotBlank: ~
+        store:
+            - NotBlank: ~
