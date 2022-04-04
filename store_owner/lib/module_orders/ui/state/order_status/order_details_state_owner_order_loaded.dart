@@ -5,8 +5,11 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
@@ -22,18 +25,23 @@ import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
-  final _distanceCalculator = TextEditingController();
   final OrderDetailsScreenState screenState;
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
-    if (orderInfo.showConfirm == true &&
-        orderInfo.state == OrderStatusEnum.IN_STORE) {
-      showOwnerAlertConfirm(screenState.context);
+    if (confirmMessagesStates.contains(orderInfo.state) &&
+        orderInfo.isCaptainArrived == null) {
+      showOwnerAlertConfirm();
     }
+    screenState.canRemoveIt = orderInfo.canRemove;
+    screenState.refresh();
   }
-
+  bool dialogShowed = false;
+  var confirmMessagesStates = [
+    OrderStatusEnum.IN_STORE,
+    OrderStatusEnum.DELIVERING
+  ];
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -66,6 +74,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
+                  arguments: orderInfo.id);
+            },
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -103,11 +116,27 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
+        // captain confirmation
+        Visibility(
+            visible: confirmMessagesStates.contains(orderInfo.state),
+            child: OrderButton(
+              backgroundColor: Colors.orange,
+              icon: Icons.question_mark_rounded,
+              onTap: () {
+                showOwnerAlertConfirm();
+              },
+              subtitle: orderInfo.isCaptainArrived == null
+                  ? (S.current.NotConfirmed)
+                  : (orderInfo.isCaptainArrived == true
+                      ? S.current.captainInStore
+                      : S.current.captainNotInStore),
+              title: S.current.captainLocation,
+            )),
         // rate
         Visibility(
           visible: orderInfo.roomID != null,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -208,6 +237,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                         arguments: ChatArgument(
                             roomID: orderInfo.roomID ?? '',
+                            userID: orderInfo.captainID,
                             userType: 'captain'));
                   },
                   leading: Icon(
@@ -446,14 +476,54 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       ' ' +
                       S.current.sar),
                 ),
+                Visibility(
+                  visible: orderInfo.captainOrderCost != null,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.money,
+                        ),
+                        title: Text(S.current.captainOrderCost),
+                        subtitle: Text(
+                            orderInfo.captainOrderCost?.toStringAsFixed(2) ??
+                                ''),
+                      ),
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                      ),
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.info,
+                          ),
+                          title: Text(S.current.captainPaymentNote),
+                          subtitle: Text(orderInfo.attention ?? ''),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ),
-        // with order type we can get order widgets
-        Visibility(
-            visible: orderInfo.state != OrderStatusEnum.CANCELLED,
-            child: Container()),
         Container(
           height: 75,
         ),
@@ -551,16 +621,21 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   }
 
   bool redo = false;
-  void showFlush(context, answer) {
+  void showFlush(context, bool answer) {
     late Flushbar flushbar;
     flushbar = Flushbar(
       borderRadius: BorderRadius.circular(25),
       onStatusChanged: (status) {
         if (FlushbarStatus.DISMISSED == status && !redo) {
-          screenState.sendOrderReportState(orderInfo.id, answer);
+          screenState.manager.confirmCaptainLocation(
+              screenState,
+              ConfirmCaptainLocationRequest(
+                  orderId: orderInfo.id, isCaptainArrived: answer));
         }
       },
       duration: Duration(seconds: 5),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
       backgroundColor: Theme.of(context).colorScheme.primary,
       title: S.current.warnning,
       message: S.current.sendingReport,
@@ -574,17 +649,23 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             redo = true;
             screenState.refresh();
             flushbar.dismiss();
-            screenState.changeStateToLoaded(orderInfo);
+            screenState.currentState =
+                OrderDetailsStateOwnerOrderLoaded(screenState, orderInfo);
+            screenState.refresh();
           },
-          child: Text(S.of(context).redo)),
+          child: Text(
+            S.of(context).redo,
+            style: Theme.of(context).textTheme.button,
+          )),
     )..show(context);
   }
 
-  void showOwnerAlertConfirm(BuildContext context) {
+  void showOwnerAlertConfirm() {
+    var context = screenState.context;
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) {
+        builder: (_) {
           return AlertDialog(
             title: Text(S.current.warnning),
             content: Container(

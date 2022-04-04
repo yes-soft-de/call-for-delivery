@@ -22,10 +22,10 @@ class Urls {
   static const UPDATE_PASSWORD = BASE_API + '/updatepassword';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
-  static const NOTIFICATION_API = BASE_API + '/notificationtoken';
+  static const NOTIFICATION_API = DOMAIN + '/v1/notificationtoken/notificationtoken';
   static const COMPANYINFO_API = BASE_API + '/companyinfoforuser';
   static const NOTIFICATIONNEWCHAT_API =
-      BASE_API + '/notificationnewchatbyuserid';
+      DOMAIN + '/v1/notificationfirbase/notificationnewchatbyuserid';
   static const NEEDFORSUPPORT = BASE_API + '/updateneedsupport';
   static const NEEDFORSUPPORT_ANYNAMOUS = BASE_API + '/anonymouschat';
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
@@ -205,7 +205,7 @@ class Urls {
   static const NEW_ORDER_API = DOMAIN + '/v1/order/create';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/order/storeorders';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
-  static const DELETE_ORDER = DOMAIN + '/v1/';
+  static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
@@ -224,4 +224,6 @@ class Urls {
       DOMAIN + '/v1/subscription/subscriptioncaptainoffer/create';
   static const GET_CHAT_ROOMS_API =
       DOMAIN + '/v1/orderchatroom/orderchatroomsforstorebeforeorderaccepted';
+  static const CONFIRM_CAPTAIN_LOCATION_API =
+      DOMAIN + '/v1/order/orderupdatecaptainarrived';
 }

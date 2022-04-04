@@ -23,7 +23,8 @@ class ChatManager {
     _chatRepository.sendNotification(chatArgument);
   }
 
-  Future<OrderChatRoomsResponse?> getOrderChatRooms() => _chatRepository.getOrderChatRooms();
+  Future<OrderChatRoomsResponse?> getOrderChatRooms() =>
+      _chatRepository.getOrderChatRooms();
 
   void needSupport() {
     //  _chatRepository.needSupport();

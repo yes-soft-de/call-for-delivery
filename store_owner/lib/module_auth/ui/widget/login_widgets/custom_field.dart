@@ -173,6 +173,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
               OptionalWidget(
                 effect: widget.password,
                 effectiveWidget: IconButton(
+                    focusNode: FocusNode(skipTraversal: true),
                     splashRadius: 18,
                     splashColor:
                         Theme.of(context).colorScheme.secondaryContainer,

@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "اشتراكك منتهي الصلاحية الرجاء تجديده"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
+        "NotConfirmed": MessageLookupByLibrary.simpleMessage("لم يتم التأكد"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
@@ -119,10 +120,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكابتن في المحل"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("الكابتن في الطريق"),
+        "captainLocation": MessageLookupByLibrary.simpleMessage("موقع الكابتن"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+        "captainNotInStore":
+            MessageLookupByLibrary.simpleMessage("الكابتن ليس في المتجر"),
+        "captainOrderCost":
+            MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
+        "captainPaymentNote":
+            MessageLookupByLibrary.simpleMessage("ملاحظات عن المبلغ المقبوض"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
@@ -221,6 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
         "day": MessageLookupByLibrary.simpleMessage("يوم"),
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
+        "dear": MessageLookupByLibrary.simpleMessage("عزيزنا"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
@@ -451,6 +460,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
+        "orderAverage35": MessageLookupByLibrary.simpleMessage(
+            "نود تذكيرك لسداد الدفعة الثانية من رسوم الباقة وذلك لكي نستمر بخدمتكم . حيث تم استهلاك 35% من رسوم الباقة وشكرا"),
+        "orderAverage40": MessageLookupByLibrary.simpleMessage(
+            "تذكير ثاني لسداد الدفعة الثانية من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 40% من رصيد الباقة وشكرا"),
+        "orderAverage75": MessageLookupByLibrary.simpleMessage(
+            "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
+        "orderAverage80": MessageLookupByLibrary.simpleMessage(
+            "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":
@@ -480,6 +497,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
         "orderTime": MessageLookupByLibrary.simpleMessage("موعد التوصيل"),
+        "orderTimeLine":
+            MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
@@ -839,6 +858,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youConsumed": MessageLookupByLibrary.simpleMessage("لقد استهلكت"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

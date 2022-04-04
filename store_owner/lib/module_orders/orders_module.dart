@@ -3,6 +3,7 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_time_line_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -13,7 +14,8 @@ class OrdersModule extends YesModule {
   final NewOrderScreen _newOrderScreen;
   final OrderDetailsScreen _orderStatus;
   final OrderLogsScreen _logsScreen;
-  OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen,
+  final OrderTimeLineScreen _orderTimeLineScreen;
+  OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen,this._orderTimeLineScreen,
       this._logsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -24,6 +26,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.OWNER_ORDERS_SCREEN: (context) => _ordersScreen,
       OrdersRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
       OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN: (context) => _logsScreen,
+      OrdersRoutes.OWNER_TIME_LINE_SCREEN: (context) => _orderTimeLineScreen,
     };
   }
 }

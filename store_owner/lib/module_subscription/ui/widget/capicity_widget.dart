@@ -81,7 +81,10 @@ class CapacityBar extends StatelessWidget {
                 )),
           ),
           Container(
-              width: 50,
+            constraints: BoxConstraints(
+              minWidth: 50,
+              maxWidth: 75
+            ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

@@ -5,10 +5,7 @@ import 'package:c4d/module_branches/request/create_list_branches/create_list_bra
 import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_branches/ui/screens/init_branches/init_branches_screen.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
-import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

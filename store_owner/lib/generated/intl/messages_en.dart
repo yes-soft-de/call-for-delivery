@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "Expired subscriptions please renew your subscription"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
+        "NotConfirmed": MessageLookupByLibrary.simpleMessage("Not Confirmed"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -121,10 +122,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain is in store"),
         "captainIsInTheWay":
             MessageLookupByLibrary.simpleMessage("Captain is in the way"),
+        "captainLocation":
+            MessageLookupByLibrary.simpleMessage("Captain Location"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
+        "captainNotInStore":
+            MessageLookupByLibrary.simpleMessage("Captain not in Store"),
+        "captainOrderCost":
+            MessageLookupByLibrary.simpleMessage("Retained cash"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
+        "captainPaymentNote":
+            MessageLookupByLibrary.simpleMessage("Retained cash note"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
@@ -225,6 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
+        "dear": MessageLookupByLibrary.simpleMessage("Dear"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteBranchSuccess":
@@ -456,6 +466,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "orderAverage35":
+            MessageLookupByLibrary.simpleMessage("You have consumed 35%"),
+        "orderAverage40":
+            MessageLookupByLibrary.simpleMessage("You have consumed 40%"),
+        "orderAverage75":
+            MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
+        "orderAverage80":
+            MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
@@ -486,6 +504,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
+        "orderTimeLine":
+            MessageLookupByLibrary.simpleMessage("Order Time Line"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
@@ -841,6 +861,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youConsumed":
+            MessageLookupByLibrary.simpleMessage("You have consumed"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

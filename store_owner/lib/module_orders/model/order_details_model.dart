@@ -1,13 +1,13 @@
+import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 
 class OrderDetailsModel extends DataModel {
   late int id;
@@ -26,13 +26,15 @@ class OrderDetailsModel extends DataModel {
   late String? roomID;
   String? image;
   int? captainID;
+  String? branchPhone;
+  late bool? isCaptainArrived;
 
   /// this field to know if we can remove order
   late bool canRemove;
-
-  /// to confirm that captain is really in store
-  late bool? showConfirm;
   String? distance;
+  num? captainOrderCost;
+  String? attention;
+  late OrderTimeLine? orderLogs;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -48,18 +50,20 @@ class OrderDetailsModel extends DataModel {
       required this.state,
       required this.roomID,
       required this.canRemove,
-      required this.showConfirm,
       required this.deliveryDate,
       required this.image,
       required this.captainID,
-      required this.distance});
+      required this.distance,
+      required this.isCaptainArrived,
+      required this.branchPhone,
+      required this.attention,
+      required this.captainOrderCost,
+      required this.orderLogs});
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response) {
+  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
     var element = response.data;
-    bool showConfirmingOrderState =
-        OrderHiveHelper().getConfirmOrderState(element?.id ?? -1);
     // date converter
     // created At
     var create = DateFormat.jm()
@@ -78,7 +82,8 @@ class OrderDetailsModel extends DataModel {
         image: element?.image?.image,
         canRemove:
             _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        showConfirm: showConfirmingOrderState,
+        isCaptainArrived: element?.isCaptainArrived,
+        branchPhone: element?.branchPhone,
         branchName: element?.branchName ?? S.current.unknown,
         createdDate: create,
         customerName: element?.recipientName ?? S.current.unknown,
@@ -98,11 +103,38 @@ class OrderDetailsModel extends DataModel {
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1,
         captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null);
-    _distance(_orders).then((value) {
-      _orders.distance = value;
-    });
+        distance: null,
+        attention: element?.attention,
+        captainOrderCost: element?.captainOrderCost,
+        orderLogs: _getOrderLogs(element?.orderLogs));
+
+    _orders.distance = _distance(_orders, location);
   }
+  OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
+    if (orderLogs == null) {
+      return null;
+    }
+    List<Step> steps = [];
+    orderLogs.orderLogs?.logs?.forEach((element) {
+      // step date
+      var stepDate = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.yMd()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      steps.add(Step(
+          state: StatusHelper.getStatusEnum(element.orderState),
+          date: stepDate));
+    });
+    steps = steps.reversed.toList();
+    OrderTimeLine orderTimeLine = OrderTimeLine(
+        steps: steps,
+        completionTime: orderLogs.orderLogs?.orderState?.completionTime,
+        currentState: StatusHelper.getStatusEnum(
+            orderLogs.orderLogs?.orderState?.currentStage));
+    return orderTimeLine;
+  }
+
   bool _canRemove(DateTime date) {
     bool canRemove = true;
     if (DateTime.now().difference(date).inMinutes < 30) {
@@ -111,12 +143,13 @@ class OrderDetailsModel extends DataModel {
     return canRemove;
   }
 
-  Future<String?> _distance(OrderDetailsModel orderInfo) async {
+  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
     String? distance;
     if (orderInfo.destinationCoordinate != null) {
-      var value = await DeepLinksService.getDistance(LatLng(
-          orderInfo.destinationCoordinate?.latitude ?? 0,
-          orderInfo.destinationCoordinate?.longitude ?? 0));
+      var value = DeepLinksService.getInitDistance(
+          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
+              orderInfo.destinationCoordinate?.longitude ?? 0),
+          location);
       if (value == null) return null;
       distance = value.toStringAsFixed(1);
       distance = S.current.distance + ' $distance ' + S.current.km;
@@ -126,4 +159,21 @@ class OrderDetailsModel extends DataModel {
   }
 
   OrderDetailsModel get data => _orders;
+}
+
+class OrderTimeLine {
+  String? completionTime;
+  OrderStatusEnum currentState;
+  List<Step> steps;
+  OrderTimeLine(
+      {this.completionTime, required this.steps, required this.currentState});
+}
+
+class Step {
+  OrderStatusEnum state;
+  String date;
+  Step({
+    required this.state,
+    required this.date,
+  });
 }

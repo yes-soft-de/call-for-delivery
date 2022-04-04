@@ -1,4 +1,5 @@
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
+import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 
 import 'created_at.dart';
 import 'delivery_date.dart';
@@ -23,7 +24,12 @@ class Data {
   Images? image;
   String? roomId;
   String? captainId;
-
+  bool? isCaptainArrived;
+  CreatedAt? dateCaptainArrived;
+  String? branchPhone;
+  num? captainOrderCost;
+  String? attention;
+  OrderLogsResponse? orderLogs;
   Data(
       {this.id,
       this.state,
@@ -42,7 +48,13 @@ class Data {
       this.branchName,
       this.image,
       this.roomId,
-      this.captainId});
+      this.captainId,
+      this.branchPhone,
+      this.dateCaptainArrived,
+      this.isCaptainArrived,
+      this.orderLogs,
+      this.attention,
+      this.captainOrderCost});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -70,7 +82,16 @@ class Data {
       storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
       branchName: json['branchName'] as String?,
       roomId: json['roomId'] as String?,
-      captainId: json['captainUserId']?.toString());
+      captainId: json['captainUserId']?.toString(),
+      branchPhone: json['branchPhone']?.toString(),
+      isCaptainArrived: json['isCaptainArrived'] as bool?,
+      dateCaptainArrived: json['dateCaptainArrived'] == null
+          ? null
+          : CreatedAt.fromJson(
+              json['dateCaptainArrived'] as Map<String, dynamic>),
+      attention: json['attention'] as String?,
+      captainOrderCost: json['captainOrderCost'] as num?,
+      orderLogs: OrderLogsResponse.fromJson(json));
 
   Map<String, dynamic> toJson() => {
         'id': id,

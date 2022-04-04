@@ -14,9 +14,7 @@ import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart' as intl;
 
 class SubscriptionBalanceLoadedState extends States {
@@ -129,22 +127,14 @@ class SubscriptionBalanceLoadedState extends States {
           children: [
             // status hint
             Visibility(
-              visible: balance.status != 'active',
+              visible: balanceStatusEnum != BalanceStatus.ACTIVE,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: isDark ? Colors.amber : Colors.yellow,
-                      boxShadow: isDark
-                          ? []
-                          : [
-                              BoxShadow(
-                                  color: Colors.yellow,
-                                  spreadRadius: 0.1,
-                                  blurRadius: 7,
-                                  offset: Offset(-0.1, 0))
-                            ]),
+                    ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
@@ -154,8 +144,7 @@ class SubscriptionBalanceLoadedState extends States {
                         title: Text(
                           SubscriptionsStatusHelper.getStatusMessage(
                               balance.status),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          
                         )),
                   ),
                 ),
@@ -216,7 +205,10 @@ class SubscriptionBalanceLoadedState extends States {
                               height: 35,
                               width: 35,
                               decoration: BoxDecoration(
-                                  boxShadow: balance.status != 'inactive'
+                                  boxShadow: balanceStatusEnum !=
+                                              BalanceStatus.INACTIVE &&
+                                          balanceStatusEnum !=
+                                              BalanceStatus.EXPIRED
                                       ? [
                                           BoxShadow(
                                               color: Colors.green,
@@ -226,11 +218,16 @@ class SubscriptionBalanceLoadedState extends States {
                                         ]
                                       : [],
                                   borderRadius: BorderRadius.circular(10),
-                                  color: balance.status == 'inactive'
+                                  color: balanceStatusEnum ==
+                                              BalanceStatus.INACTIVE ||
+                                          balanceStatusEnum ==
+                                              BalanceStatus.EXPIRED
                                       ? Theme.of(context).disabledColor
                                       : Colors.green),
                               child: Visibility(
-                                visible: balance.status != 'inactive',
+                                visible: balanceStatusEnum !=
+                                        BalanceStatus.INACTIVE &&
+                                    balanceStatusEnum != BalanceStatus.EXPIRED,
                                 child: Icon(
                                   Icons.check_rounded,
                                   color:
@@ -250,7 +247,10 @@ class SubscriptionBalanceLoadedState extends States {
                                 width: 35,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    boxShadow: balance.status == 'inactive'
+                                    boxShadow: balanceStatusEnum ==
+                                                BalanceStatus.INACTIVE ||
+                                            balanceStatusEnum ==
+                                                BalanceStatus.EXPIRED
                                         ? [
                                             BoxShadow(
                                                 color: Theme.of(context)
@@ -261,11 +261,17 @@ class SubscriptionBalanceLoadedState extends States {
                                                 offset: Offset(-0.1, 0))
                                           ]
                                         : [],
-                                    color: balance.status == 'inactive'
+                                    color: balanceStatusEnum ==
+                                                BalanceStatus.INACTIVE ||
+                                            balanceStatusEnum ==
+                                                BalanceStatus.EXPIRED
                                         ? Theme.of(context).colorScheme.error
                                         : Theme.of(context).disabledColor),
                                 child: Visibility(
-                                  visible: balance.status == 'inactive',
+                                  visible: balanceStatusEnum ==
+                                          BalanceStatus.INACTIVE ||
+                                      balanceStatusEnum ==
+                                          BalanceStatus.EXPIRED,
                                   child: Icon(
                                     Icons.check_rounded,
                                     color: Theme.of(context)

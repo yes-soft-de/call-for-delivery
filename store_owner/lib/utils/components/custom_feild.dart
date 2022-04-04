@@ -22,6 +22,7 @@ class CustomFormField extends StatefulWidget {
   final bool phone;
   final Function()? onChanged;
   final FormFieldValidator<String>? validatorFunction;
+  final TextInputAction? keyAction;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
@@ -40,7 +41,8 @@ class CustomFormField extends StatefulWidget {
       this.validator = true,
       this.phone = false,
       this.onChanged,
-      this.validatorFunction});
+      this.validatorFunction,
+      this.keyAction});
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -80,7 +82,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                       : null,
                   textInputAction: widget.maxLines == null && widget.last
                       ? null
-                      : TextInputAction.next,
+                      : (widget.keyAction ?? TextInputAction.next),
                   inputFormatters: widget.numbers
                       ? <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp('[0-9.]')),

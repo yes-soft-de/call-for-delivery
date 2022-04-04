@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
+import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -35,51 +36,50 @@ class _RatingFormState extends State<RatingForm> {
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context, title: widget.title),
-        body: SingleChildScrollView(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.amber),
-                    child: ListTile(
-                      title: Text(
-                        widget.message,
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      leading: Icon(
-                        Icons.info,
-                        color: Theme.of(context).textTheme.button?.color,
-                      ),
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: CustomListView.custom(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.amber),
+                  child: ListTile(
+                    title: Text(
+                      widget.message,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    leading: Icon(
+                      Icons.info,
+                      color: Theme.of(context).textTheme.button?.color,
                     ),
                   ),
                 ),
-                Divider(
-                  color: Theme.of(context).backgroundColor,
-                  indent: 32,
-                  endIndent: 32,
-                  thickness: 2,
+              ),
+              Divider(
+                color: Theme.of(context).backgroundColor,
+                indent: 32,
+                endIndent: 32,
+                thickness: 2,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  SvgAsset.RATE_SVG,
+                  height: 200,
+                  width: 200,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    SvgAsset.RATE_SVG,
-                    height: 200,
-                    width: 200,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(S.current.chooseYourRateFromFiveStar),
-                ),
-                RatingBar.builder(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    Center(child: Text(S.current.chooseYourRateFromFiveStar)),
+              ),
+              Center(
+                child: RatingBar.builder(
                   initialRating: 0,
                   glowColor: Colors.amberAccent,
                   minRating: 0.0,
@@ -96,39 +96,39 @@ class _RatingFormState extends State<RatingForm> {
                     color: Colors.amberAccent,
                   ),
                 ),
-                ListTile(
-                  title: Text(S.current.comment),
-                  subtitle: CustomFormField(
-                    controller: widget.controller,
-                    hintText: S.current.rateCommentReview,
-                    maxLines: 3,
-                    last: true,
-                  ),
+              ),
+              ListTile(
+                title: Text(S.current.comment),
+                subtitle: CustomFormField(
+                  keyAction: TextInputAction.done,
+                  controller: widget.controller,
+                  hintText: S.current.rateCommentReview,
+                  maxLines: 3,
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-                        onPressed: _rate == null
-                            ? null
-                            : () {
-                                widget.onPressed(_rate?.toInt() ?? 0);
-                              },
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(S.current.submit,
-                              style: Theme.of(context).textTheme.button),
-                        ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                      onPressed: _rate == null
+                          ? null
+                          : () {
+                              widget.onPressed(_rate?.toInt() ?? 0);
+                            },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(S.current.submit,
+                            style: Theme.of(context).textTheme.button),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

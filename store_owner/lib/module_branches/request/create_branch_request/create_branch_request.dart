@@ -1,22 +1,27 @@
+import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class CreateBrancheRequest {
-  LatLng? location;
+class CreateBranchRequest {
+  GeoJson? location;
   String? city;
   String? userName;
   String? branchName;
+  String? phone;
   int? id;
-  CreateBrancheRequest(
-      {this.id, this.userName, this.location, this.city, this.branchName});
+  CreateBranchRequest(
+      {this.id,
+      this.userName,
+      this.location,
+      this.city,
+      this.branchName,
+      required this.phone});
 
   Map<String, dynamic> toJson() {
     return {
-      'city': this.city,
-      'location': {
-        'lat': this.location?.latitude,
-        'lon': this.location?.longitude
-      },
-      'brancheName': this.branchName,
+      // 'city': this.city,
+      'location': {'lat': this.location?.lat, 'lon': this.location?.lon},
+      'name': this.branchName,
+      'branchPhone': this.phone
     };
   }
 }

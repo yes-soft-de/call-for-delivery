@@ -3,11 +3,11 @@ import 'images.dart';
 class Datum {
   int? id;
   String? captainName;
-  int? usedAs;
+  String? usedAs;
   Images? images;
   String? roomId;
   String? orderId;
-
+  int? captainID;
   Datum({
     this.id,
     this.captainName,
@@ -15,17 +15,19 @@ class Datum {
     this.images,
     this.roomId,
     this.orderId,
+    this.captainID
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
         captainName: json['captainName'] as String?,
-        usedAs: json['usedAs'] as int?,
+        usedAs: json['usedAs']?.toString() as String?,
         images: json['images'] == null
             ? null
             : Images.fromJson(json['images'] as Map<String, dynamic>),
         roomId: json['roomId'] as String?,
         orderId: json['orderId'] as String?,
+        captainID: json['captainId'] as int?
       );
 
   Map<String, dynamic> toJson() => {

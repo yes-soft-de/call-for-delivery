@@ -1,9 +1,6 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
-import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -25,8 +22,10 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late States currentState;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  void deleteOrder(model) {}
+  OrderStatusStateManager get manager => widget._stateManager;
+  void deleteOrder() {
+    widget._stateManager.deleteOrder(orderId, this);
+  }
 
   @override
   void initState() {
@@ -38,66 +37,14 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       }
     });
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      widget._stateManager.getOrder(this, orderId, false);
+      if (mounted) {
+        widget._stateManager.getOrder(this, orderId, false);
+      }
     });
     super.initState();
   }
 
-  void sendOrderReportState(var orderId, bool answar) {}
-
-  void sendState(bool success) {
-    if (success) {
-      Flushbar(
-        title: S.of(context).warnning,
-        message: 'S.of(context).sendToRecordSuccess',
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
-      )..show(context);
-    } else {
-      Flushbar(
-        title: S.of(context).warnning,
-        message: 'S.of(context).sendToRecordFaild',
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      )..show(context);
-    }
-  }
-
-  void goBack(String error) {
-    Flushbar(
-      title: S.of(context).errorHappened,
-      message: error,
-      icon: Icon(
-        Icons.info,
-        size: 28.0,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.red,
-      duration: Duration(seconds: 3),
-    )..show(context);
-  }
-
   void refresh() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void requestOrderProgress() {}
-
-  void getOrderDetails(var orderId) {}
-
-  void changeStateToLoaded(OrderDetailsModel order) {
     if (mounted) {
       setState(() {});
     }
@@ -107,6 +54,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     widget._stateManager.rateCaptain(this, request);
   }
 
+  bool canRemoveIt = false;
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -127,6 +75,13 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         resizeToAvoidBottomInset: false,
         appBar: CustomC4dAppBar.appBar(context, title: S.current.orderDetails),
         body: currentState.getUI(context),
+        floatingActionButton: Visibility(
+            visible: canRemoveIt,
+            child: FloatingActionButton(
+              onPressed: () {
+                deleteOrder();
+              },
+            )),
       ),
     );
   }

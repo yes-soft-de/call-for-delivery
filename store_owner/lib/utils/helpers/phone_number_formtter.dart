@@ -5,12 +5,16 @@ class PhoneNumberFormatter {
     if (text == null) return null;
     if (text == '' || text.isEmpty) return '';
     if (text.length <= 9) return text;
-    var phoneNumber =
-        TheCountryNumber().parseNumber(internationalNumber: '+' + text);
-    var dial = phoneNumber.dialCode.substring(1);
-    var number = phoneNumber.number;
-    var formattedText =
-        '+($dial)-${number.substring(0, 3)}-${number.substring(3, 6)}-${number.substring(6)}';
-    return formattedText;
+    try {
+      var phoneNumber =
+          TheCountryNumber().parseNumber(internationalNumber: '+' + text);
+      var dial = phoneNumber.dialCode.substring(1);
+      var number = phoneNumber.number;
+      var formattedText =
+          '+($dial)-${number.substring(0, 3)}-${number.substring(3, 6)}-${number.substring(6)}';
+      return formattedText;
+    } catch (e) {
+      return null;
+    }
   }
 }

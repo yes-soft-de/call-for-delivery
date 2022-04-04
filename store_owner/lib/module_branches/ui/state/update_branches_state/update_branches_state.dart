@@ -3,19 +3,18 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
+import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/response/branches/branches_response.dart';
 import 'package:c4d/module_branches/ui/screens/update_branches_screen/update_branches_screen.dart';
 import 'package:c4d/module_branches/ui/widget/branch_card.dart';
 import 'package:c4d/module_branches/ui/widget/edit_branch_dialog.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_profile/request/branch/create_branch_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/google_map_widget.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' as lat;
 import 'package:latlong2/latlong.dart' as la;
 
 class UpdateBranchStateLoaded extends States {
@@ -31,6 +30,7 @@ class UpdateBranchStateLoaded extends States {
   Set<Marker> markers = {};
 
   BranchesModel? branchLocation;
+  bool initFlag = true;
   bool flag = true;
   BranchesModel? model;
   bool window = false;
@@ -38,10 +38,10 @@ class UpdateBranchStateLoaded extends States {
   Widget getUI(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     BranchesModel? branchesModel = args is BranchesModel ? args : null;
-    if (flag && branchesModel != null) {
+    if (initFlag && branchesModel != null) {
       branchLocation = branchesModel;
       model = branchesModel;
-      flag = false;
+      initFlag = false;
       _getMarkers(context).then((value) {
         markers = value;
         screenState.refresh();
@@ -75,11 +75,13 @@ class UpdateBranchStateLoaded extends States {
                         screenState.customInfoWindowController.onCameraMove!();
                       },
                       onMapCreated: (con) async {
-                        screenState.customInfoWindowController
-                            .googleMapController = con;
-                        await con.setMapStyle(
-                            getIt<ThemePreferencesHelper>().getStyleMode());
-                        screenState.controller.complete(con);
+                        try {
+                          screenState.customInfoWindowController
+                              .googleMapController = con;
+                          await con.setMapStyle(
+                              getIt<ThemePreferencesHelper>().getStyleMode());
+                          screenState.controller.complete(con);
+                        } catch (e) {}
                       },
                     ),
                   ),
@@ -152,10 +154,12 @@ class UpdateBranchStateLoaded extends States {
                           onPressed: branchLocation == null
                               ? null
                               : () {
-                                  if (flag) {
+                                  if (flag && branchesModel == null) {
                                     screenState.createBranch(
                                         CreateBranchRequest(
-                                            name: branchLocation?.branchName,
+                                            branchName:
+                                                branchLocation?.branchName,
+                                            phone: branchLocation?.branchPhone,
                                             location: GeoJson(
                                                 lat: branchLocation
                                                     ?.location.latitude,
@@ -168,7 +172,9 @@ class UpdateBranchStateLoaded extends States {
                                                 branchLocation?.branchName,
                                             location: branchLocation?.location,
                                             city: branchLocation?.city,
-                                            id: branchLocation?.id));
+                                            id: branchesModel?.id,
+                                            phone:
+                                                branchLocation?.branchPhone));
                                   }
                                 },
                         ),
@@ -189,6 +195,7 @@ class UpdateBranchStateLoaded extends States {
     return BranchCard(
         onDelete: () {
           branchLocation = null;
+          model = null;
           if (flag == false) {
             flag = true;
           }
@@ -201,10 +208,16 @@ class UpdateBranchStateLoaded extends States {
           showDialog(
               context: context,
               builder: (_) {
-                return EditBranchDialog();
+                return EditBranchDialog(
+                  branchName: branchLocation?.branchName ?? '',
+                  phoneNumber: branchLocation?.branchPhone ?? '',
+                );
               }).then((result) {
             if (result != null) {
-              branchLocation?.branchName = result;
+              branchLocation?.branchName = result?.name;
+              if (result.phone != '') {
+                branchLocation?.branchPhone = result?.phone;
+              }
               screenState.refresh();
             }
           });

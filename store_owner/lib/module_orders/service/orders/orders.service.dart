@@ -1,10 +1,12 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -61,7 +63,8 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    return OrderDetailsModel.withData(response);
+    var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response, location);
   }
 
   Future<DataModel> getCompanyInfo() async {
@@ -101,6 +104,18 @@ class OrdersService {
     ActionResponse? response = await _ordersManager.ratingCaptain(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> confirmCaptainLocation(
+      ConfirmCaptainLocationRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.confirmCaptainLocation(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

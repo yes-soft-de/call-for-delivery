@@ -1,6 +1,7 @@
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -67,7 +68,7 @@ class OrderRepository {
   Future<ActionResponse?> deleteOrder(int orderId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        '${Urls.DELETE_ORDER}$orderId', {'state': 'canceled'},
+        '${Urls.DELETE_ORDER}/$orderId', {'state': 'canceled'},
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
@@ -97,5 +98,15 @@ class OrderRepository {
     );
     if (response == null) return null;
     return CompanyInfoResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> confirmCaptainLocation(
+      ConfirmCaptainLocationRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.CONFIRM_CAPTAIN_LOCATION_API, request.toJson(),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }

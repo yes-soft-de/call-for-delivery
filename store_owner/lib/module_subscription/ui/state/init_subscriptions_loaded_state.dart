@@ -82,6 +82,8 @@ class InitSubscriptionsLoadedState extends States {
                         ),
                         hint: Text(S.current.choosePackageCategories),
                         onChanged: (String? value) {
+                          _selectedCity = null;
+                          _selectedPackageId = null;
                           _packages = packages
                               .singleWhere(
                                   (element) => element.id.toString() == value)
@@ -133,6 +135,7 @@ class InitSubscriptionsLoadedState extends States {
                           ),
                           hint: Text(S.current.chooseYourCity),
                           onChanged: (String? value) {
+                            _selectedPackageId = null;
                             _selectedCity = value;
                             screenState.refresh();
                           }),
@@ -240,9 +243,10 @@ class InitSubscriptionsLoadedState extends States {
   List<DropdownMenuItem<String>> _getCities() {
     var cityNames = <String>[];
     _packages.forEach((element) {
-      cityNames.add('${element.city}');
+      if (cityNames.contains(element.city) == false) {
+        cityNames.add('${element.city}');
+      }
     });
-
     var cityDropDown = <DropdownMenuItem<String>>[];
     cityNames.forEach((element) {
       cityDropDown.add(DropdownMenuItem(
