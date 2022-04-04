@@ -53,4 +53,6 @@ class SpecificOrderForCaptainResponse
     public string|null $ratingComment;
 
     public array|null $orderLogs;
+
+    public $storeId;
 }
