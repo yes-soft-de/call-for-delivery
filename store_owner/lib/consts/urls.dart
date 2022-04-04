@@ -22,7 +22,7 @@ class Urls {
   static const UPDATE_PASSWORD = BASE_API + '/updatepassword';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
-  static const NOTIFICATION_API = DOMAIN + '/v1/notificationtoken';
+  static const NOTIFICATION_API = DOMAIN + '/v1/notificationtoken/notificationtoken';
   static const COMPANYINFO_API = BASE_API + '/companyinfoforuser';
   static const NOTIFICATIONNEWCHAT_API =
       DOMAIN + '/v1/notificationfirbase/notificationnewchatbyuserid';
