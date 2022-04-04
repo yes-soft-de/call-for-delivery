@@ -4,6 +4,7 @@
 namespace App\Service\Notification;
 
 use App\Manager\Notification\NotificationFirebaseManager;
+use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\Notification\NotificationTokensService;
 use App\Service\User\UserService;
 use Kreait\Firebase\Contract\Messaging;
@@ -197,6 +198,63 @@ class NotificationFirebaseService
         $message = $message->withData($payload);
 
         $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
+
+    /**
+     * This function for sending customizable firebase notification via System Control App
+     */
+    public function sendNotificationBySuperAdmin(NotificationFirebaseBySuperAdminCreateRequest $request): array
+    {
+        $devicesToken = [];
+
+        if (! $request->getOtherUserId() && $request->getAppType() !== null) {
+            // send notification for all captains or all store owners
+            $usersTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+
+            if ($usersTokens) {
+                foreach ($usersTokens as $userToken) {
+                    $devicesToken[] = $userToken['token'];
+                }
+
+                $payload = [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'navigate_route' => NotificationFirebaseConstant::URL,
+                    'argument' => null,
+                ];
+
+                $message = CloudMessage::new()
+                    ->withNotification(
+                        Notification::create($request->getTitle(), $request->getMessageBody()))
+                    ->withDefaultSounds()
+                    ->withHighestPossiblePriority()->withData($payload);
+
+                $this->messaging->sendMulticast($message, $devicesToken);
+            }
+
+        } elseif ($request->getOtherUserId() !== null && $request->getAppType() === null) {
+            // send notification for all captains or all store owners
+            $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
+
+            if ($token != null) {
+                $devicesToken[] = $token->getToken();
+
+                $payload = [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+                    'argument' => null,
+                ];
+
+                $message = CloudMessage::new()
+                    ->withNotification(Notification::create($request->getTitle(), $request->getMessageBody()))->withDefaultSounds()
+                    ->withHighestPossiblePriority();
+
+                $message = $message->withData($payload);
+
+                $this->messaging->sendMulticast($message, $devicesToken);
+            }
+        }
 
         return $devicesToken;
     }
