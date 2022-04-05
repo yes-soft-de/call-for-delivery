@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
+import 'package:c4d/module_stores/response/order_logs_response/data.dart';
  import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,10 +25,15 @@ class OrderDetailsModel extends DataModel {
   late String? roomID;
   String? image;
   String? captainID;
+  String? branchPhone;
+  late bool? isCaptainArrived;
 
   /// this field to know if we can remove order
   late bool canRemove;
-
+  String? distance;
+  num? captainOrderCost;
+  String? attention;
+  late OrderTimeLine? orderLogs;
   /// to confirm that captain is really in store
   late bool? showConfirm;
   OrderDetailsModel(
@@ -48,7 +54,7 @@ class OrderDetailsModel extends DataModel {
       required this.showConfirm,
       required this.deliveryDate,
       required this.image,
-      required this.captainID});
+      required this.captainID,this.orderLogs});
 
   late OrderDetailsModel _orders;
 
@@ -93,7 +99,32 @@ class OrderDetailsModel extends DataModel {
         roomID: element?.roomId,
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1,
-        captainID: element?.captainId);
+        captainID: element?.captainId,
+        orderLogs: _getOrderLogs(element?.orderLogs));
+  }
+  OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
+    if (orderLogs == null) {
+      return null;
+    }
+    List<Step> steps = [];
+    orderLogs.orderLogs?.logs?.forEach((element) {
+      // step date
+      var stepDate = DateFormat.jm()
+          .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.yMd()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      steps.add(Step(
+          state: StatusHelper.getStatusEnum(element.orderState),
+          date: stepDate));
+    });
+    steps = steps.reversed.toList();
+    OrderTimeLine orderTimeLine = OrderTimeLine(
+        steps: steps,
+        completionTime: orderLogs.orderLogs?.orderState?.completionTime,
+        currentState: StatusHelper.getStatusEnum(
+            orderLogs.orderLogs?.orderState?.currentStage));
+    return orderTimeLine;
   }
   bool _canRemove(DateTime date) {
     bool canRemove = true;
@@ -104,4 +135,20 @@ class OrderDetailsModel extends DataModel {
   }
 
   OrderDetailsModel get data => _orders;
+}
+class OrderTimeLine {
+  String? completionTime;
+  OrderStatusEnum currentState;
+  List<Step> steps;
+  OrderTimeLine(
+      {this.completionTime, required this.steps, required this.currentState});
+}
+
+class Step {
+  OrderStatusEnum state;
+  String date;
+  Step({
+    required this.state,
+    required this.date,
+  });
 }

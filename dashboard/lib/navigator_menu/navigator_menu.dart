@@ -110,6 +110,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
                 FontAwesomeIcons.stickyNote),
             customExpansionTile(
+                title: S.current.orders,
+                icon: FontAwesomeIcons.jediOrder,
+                children: [
+                  customListTile(getIt<StoresModule>().captainNotArrivedScreen,
+                      S.current.captainNotArrived,  Icons.storefront_rounded, true),
+                ],
+                page: widget.currentPage),
+            customExpansionTile(
                 title: S.current.directSupport,
                 icon: FontAwesomeIcons.headphonesAlt,
                 children: [

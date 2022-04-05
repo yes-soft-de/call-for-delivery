@@ -1,8 +1,11 @@
+import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
 import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
  import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
@@ -116,6 +119,17 @@ class StoresService {
     }
     if (_clients.data == null) return DataModel.empty();
     return StoresNeedSupportModel.withData(_clients.data!);
+  }
+
+  Future<DataModel> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest  request) async {
+    OrderCaptainResponse? response = await _storeManager.getOrdersNotArrivedCaptainFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderCaptainNotArrivedModel.withData(response);
   }
 
   Future<DataModel> getStoreOrdersFilter(FilterOrderRequest request) async {
