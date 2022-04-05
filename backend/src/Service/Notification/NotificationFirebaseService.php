@@ -56,7 +56,7 @@ class NotificationFirebaseService
         $this->messaging->sendMulticast($message, $tokens);
     }
 
-    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
+    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType): string
     { 
         if($userType === NotificationConstant::STORE) {
            $text = $this->getOrderStateForStore($orderState);
@@ -66,7 +66,13 @@ class NotificationFirebaseService
            $text = $this->getOrderStateForCaptain($orderState);
         }
 
+        $token = [];
+        
         $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
         $token[] = $deviceToken->getToken();
 
         $payload = [
