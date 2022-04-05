@@ -5309,6 +5309,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Order Time Line`
+  String get orderTimeLine {
+    return Intl.message(
+      'Order Time Line',
+      name: 'orderTimeLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain not arrived`
+  String get captainNotArrived {
+    return Intl.message(
+      'Captain not arrived',
+      name: 'captainNotArrived',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

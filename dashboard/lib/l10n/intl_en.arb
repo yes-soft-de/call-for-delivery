@@ -541,5 +541,7 @@
     "invalidMapLink": "Invalid map link",
     "orderImage": "Order Image",
     "orderCostWithDeliveryCost": "Order cost contains delivery tax",
-    "km": "Km"
+    "km": "Km",
+    "orderTimeLine": "Order Time Line",
+    "captainNotArrived": "Captain not arrived"
 }

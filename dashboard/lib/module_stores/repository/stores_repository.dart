@@ -1,5 +1,7 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
  import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
@@ -127,6 +129,16 @@ class StoresRepository {
     if (response == null) return null;
     return OrdersResponse.fromJson(response);
   }
+  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_CAPTAIN_NOT_ARRIVED,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrderCaptainResponse.fromJson(response);
+  }
 
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) async {
     var token = await _authService.getToken();
@@ -137,4 +149,5 @@ class StoresRepository {
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
   }
+
 }

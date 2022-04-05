@@ -1,5 +1,7 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
@@ -40,6 +42,8 @@ class StoreManager {
 
   Future<OrdersResponse?> getStoreOrdersFilter(FilterOrderRequest request) =>
       _storesRepository.getStoreOrdersFilter(request);
+  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest request) =>
+      _storesRepository.getOrdersNotArrivedCaptainFilter(request);
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
       _storesRepository.getOrderDetails(orderId);
 }
