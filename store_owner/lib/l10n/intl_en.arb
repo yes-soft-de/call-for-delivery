@@ -564,7 +564,11 @@
     "orderTimeLine": "Order Time Line",
     "captainLocation": "Captain Location",
     "captainNotInStore": "Captain not in Store",
-    "NotConfirmed": "Not Confirmed"
+    "NotConfirmed": "Not Confirmed",
+    "youCannotDeleteOrder": "You can't delete order, You exceeded time limit",
+    "areYouSureAboutDeleteOrder": "Are sure about deleting this order ? "
+
+
 
 
 

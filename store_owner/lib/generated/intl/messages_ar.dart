@@ -67,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
@@ -858,6 +860,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها"),
         "youConsumed": MessageLookupByLibrary.simpleMessage("لقد استهلكت"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
