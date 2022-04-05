@@ -56,7 +56,7 @@ class NotificationFirebaseService
         $this->messaging->sendMulticast($message, $tokens);
     }
 
-    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType): string|null
+    public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
     { 
         if($userType === NotificationConstant::STORE) {
            $text = $this->getOrderStateForStore($orderState);
