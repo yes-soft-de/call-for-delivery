@@ -17,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Main\MainErrorConstant;
 
 /**
  * Create and fetch Payments from store.
@@ -55,8 +57,8 @@ class AdminStoreOwnerPaymentController extends BaseController
      * @OA\RequestBody(
      *      description="new payment",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="amount"),
-     *          @OA\Property(type="number", property="store"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="integer", property="store"),
      *      )
      * )
      *
@@ -68,12 +70,23 @@ class AdminStoreOwnerPaymentController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="amount"),
-     *            @OA\Property(type="string", property="date"),
+     *            @OA\Property(type="number", property="amount"),
+     *            @OA\Property(type="object", property="date"),
      *      )
      *   )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9157"),
+     *          @OA\Property(type="string", property="msg", description="store owner profile not exist! Error."),
+     *      )
+     * )
+     * 
      * @Security(name="Bearer")
      */
     public function createStoreOwnerPayment(Request $request): JsonResponse
@@ -91,12 +104,16 @@ class AdminStoreOwnerPaymentController extends BaseController
         }
 
         $result = $this->adminStoreOwnerPaymentService->createStoreOwnerPayment($request);
+        
+        if($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
 
         return $this->response($result, self::CREATE);
     }
 
     /**
-     * admin:Create new Payment from store
+     * admin:Update Payment from store
      * @Route("storeownerpayment", name="updateStoreOwnerPayment", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -115,8 +132,8 @@ class AdminStoreOwnerPaymentController extends BaseController
      *      description="new payment",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="string", property="amount"),
-     *          @OA\Property(type="number", property="store"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="integer", property="store"),
      *      )
      * )
      *
@@ -128,12 +145,23 @@ class AdminStoreOwnerPaymentController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="amount"),
-     *            @OA\Property(type="string", property="date"),
+     *            @OA\Property(type="number", property="amount"),
+     *            @OA\Property(type="object", property="date"),
      *      )
      *   )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9157"),
+     *          @OA\Property(type="string", property="msg", description="store owner profile not exist! Error."),
+     *      )
+     * )
+     * 
      * @Security(name="Bearer")
      */
     public function updateStoreOwnerPayment(Request $request): JsonResponse
@@ -151,8 +179,12 @@ class AdminStoreOwnerPaymentController extends BaseController
         }
 
         $result = $this->adminStoreOwnerPaymentService->updateStoreOwnerPayment($request);
+       
+        if($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::UPDATE);
     }
 
     /**
@@ -179,9 +211,10 @@ class AdminStoreOwnerPaymentController extends BaseController
      *          @OA\Property(type="array", property="Data",
      *           @OA\Items(
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="amount"),
-     *              @OA\Property(type="number", property="date"),
-     *              @OA\Property(type="string", property="store"),
+     *              @OA\Property(type="number", property="amount"),
+     *              @OA\Property(type="object", property="date"),
+     *              @OA\Property(type="integer", property="storeId"),
+     *              @OA\Property(type="string", property="storeOwnerName"),
      *          )
      *       )
      *    )
@@ -189,7 +222,7 @@ class AdminStoreOwnerPaymentController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllStorePayments($storeId): JsonResponse
+    public function getAllStorePayments(int $storeId): JsonResponse
     {
         $result = $this->adminStoreOwnerPaymentService->getAllStorePayments($storeId);
 

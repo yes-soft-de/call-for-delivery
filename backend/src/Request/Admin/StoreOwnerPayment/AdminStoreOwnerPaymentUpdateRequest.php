@@ -5,7 +5,7 @@ use App\Entity\StoreOwnerProfileEntity;
 
 class AdminStoreOwnerPaymentUpdateRequest
 {
-    private string $id;
+    private int $id;
 
     private float $amount;
 

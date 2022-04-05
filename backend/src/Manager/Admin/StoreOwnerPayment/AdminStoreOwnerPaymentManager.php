@@ -9,6 +9,7 @@ use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use App\Constant\StoreOwner\StoreProfileConstant;
 
 class AdminStoreOwnerPaymentManager
 {
@@ -25,9 +26,15 @@ class AdminStoreOwnerPaymentManager
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
     }
 
-    public function createStoreOwnerPayment(AdminStoreOwnerPaymentCreateRequest $request): StoreOwnerPaymentEntity
+    public function createStoreOwnerPayment(AdminStoreOwnerPaymentCreateRequest $request): StoreOwnerPaymentEntity|string
     {
-        $request->setStore($this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore()));
+        $store = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore());
+       
+        if(! $store) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $request->setStore($store);
 
         $storeOwnerPaymentEntity = $this->autoMapping->map(AdminStoreOwnerPaymentCreateRequest::class, StoreOwnerPaymentEntity::class, $request);
 
@@ -37,13 +44,18 @@ class AdminStoreOwnerPaymentManager
         return $storeOwnerPaymentEntity;
     }
 
-    public function updateStoreOwnerPayment(AdminStoreOwnerPaymentUpdateRequest $request): ?StoreOwnerPaymentEntity 
+    public function updateStoreOwnerPayment(AdminStoreOwnerPaymentUpdateRequest $request): StoreOwnerPaymentEntity|string|null
     {
         $storeOwnerPaymentEntity = $this->storeOwnerPaymentEntityRepository->find($request->getId());
 
         if ($storeOwnerPaymentEntity) {
-   
-            $request->setStore($this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore()));
+            $store = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore());
+     
+            if(! $store) {
+                return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+            }
+    
+            $request->setStore($store);
 
             $storeOwnerPaymentEntity = $this->autoMapping->mapToObject(AdminStoreOwnerPaymentUpdateRequest::class, StoreOwnerPaymentEntity::class, $request, $storeOwnerPaymentEntity);
 
