@@ -536,5 +536,8 @@
     "distance": "المسافة",
     "orderImage": "صورة الطلب",
     "orderCostWithDeliveryCost": "سعر الطلب شامل تكلفة التوصيل",
-    "km": "كم"
+    "km": "كم",
+    "orderTimeLine": "دورة حياة الطلب",
+    "captainNotArrived": "الكباتن اللذين لم يصلو المتجر"
+
 }

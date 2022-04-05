@@ -5,7 +5,7 @@ class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
-  static const String VERSION_ADMIN = '/v1/admin';
+    static const String VERSION_ADMIN = '/v1/admin';
   static const String BASE_API_STORE = DOMAIN + VERSION + '/store';
   static const String BASE_API_CATEGORY = DOMAIN + VERSION_ADMIN + '/packagecategory';
   static const String BASE_API_PACKAGE_ADMIN = DOMAIN + VERSION_ADMIN + '/package';
@@ -58,6 +58,7 @@ class Urls {
 
   static const FILTER_OWNER_ORDERS_API = BASE_API_ORDER + '/filterordersbyadmin';
   static const GET_ORDERS_DETAILS = BASE_API_ORDER + '/orderbyidforadmin/';
+  static const FILTER_CAPTAIN_NOT_ARRIVED = BASE_API_ORDER + '/filtercaptainnotarrivedorders';
 
   /*------------------Package Category's ----------------*/
   static const GET_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/categories';
