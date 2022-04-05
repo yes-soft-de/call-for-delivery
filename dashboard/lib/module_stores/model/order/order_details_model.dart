@@ -116,7 +116,7 @@ class OrderDetailsModel extends DataModel {
               .format(DateHelper.convert(element.createdAt?.timestamp));
       steps.add(Step(
           state: StatusHelper.getStatusEnum(element.orderState),
-          date: stepDate));
+          date: stepDate,isCaptainArrived: element.isCaptainArrived ?? true));
     });
     steps = steps.reversed.toList();
     OrderTimeLine orderTimeLine = OrderTimeLine(
@@ -147,7 +147,9 @@ class OrderTimeLine {
 class Step {
   OrderStatusEnum state;
   String date;
+  bool isCaptainArrived;
   Step({
+    required this.isCaptainArrived,
     required this.state,
     required this.date,
   });
