@@ -57,7 +57,7 @@ class OrderLogsService
     {
       $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
   
-      $orderLogs = $this->removeElement($orderLogs);
+      $orderLogs = $this->removeDuplicated($orderLogs);
   
       $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
    
@@ -110,17 +110,13 @@ class OrderLogsService
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
 
-//remove element from array when (is Captain Arrived) not equal null, for not to repeat the same log
-    public function removeElement(array $array): ?array
+//this remove item duplicated
+    public function removeDuplicated(array $array): ?array
     {
-       foreach($array as $kye => $value ) {
-          
-           if($value["isCaptainArrived"] !== null) {
-              
-               unset($array[$kye]);
-           }
-       }
+        $temp = array_unique(array_column($array, 'orderState'));
 
-      return array_values($array);
+        $logs = array_intersect_key($array, $temp);
+
+        return array_values($logs);
     }
 }

@@ -779,7 +779,7 @@ class OrderController extends BaseController
      * 
      * @Security(name="Bearer")
      */
-    public function orderCancel($id): JsonResponse
+    public function orderCancel(int $id): JsonResponse
     {
         $response = $this->orderService->orderCancel($id);
 

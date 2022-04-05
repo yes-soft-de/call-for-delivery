@@ -193,7 +193,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
             ->addSelect('imageEntity.imagePath')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
+            ->addSelect('storeOwnerProfileEntity.id as storeId','storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
             ->addSelect('rateEntity.rating', 'rateEntity.comment as ratingComment')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
@@ -382,7 +382,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 CaptainEntity::class,
                 'captainEntity',
                 Join::WITH,
-                'captainEntity.captainId = orderEntity.captainId'
+                'captainEntity.id = orderEntity.captainId'
             )
 
             ->leftJoin(

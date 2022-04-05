@@ -3,6 +3,7 @@
 namespace App\Controller\Notification;
 
 use App\AutoMapping;
+use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\Notification\NotificationFirebaseService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
@@ -142,6 +143,55 @@ class NotificationFirebaseController extends BaseController
     public function notificationToCaptainsForTest(): JsonResponse
     {
         $response = $this->notificationFirebaseService->notificationToCaptains(2);
+
+        return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * super admin: send firebase notification to user/all captains/all store owners, with customized title and message.
+     * @Route("firebasenotificationbysuperadmin", name="sendFirebaseNotificationBySuperAdmin", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Notification Firebase")
+     *
+     * @OA\RequestBody (
+     *     description="send firebase notification request by super admin",
+     *     @OA\JsonContent(
+     *         @OA\Property(type="integer", property="otherUserId"),
+     *         @OA\Property(type="integer", property="appType"),
+     *         @OA\Property(type="string", property="title"),
+     *         @OA\Property(type="string", property="messageBody")
+     *     )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns object",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items()
+     *          )
+     *      )
+     * )
+     */
+    public function sendNotificationBySuperAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, NotificationFirebaseBySuperAdminCreateRequest::class,(object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->notificationFirebaseService->sendNotificationBySuperAdmin($request);
 
         return $this->response($response, self::CREATE);
     }

@@ -4,9 +4,9 @@ namespace App\Response\Order;
 
 class OrderCancelResponse
 {
-    public int $id;
+    public null|int $id;
 
-    public string $state;
+    public null|string $state;
 
-    public string $statusError;
+    public null|string $statusError;
 }
