@@ -29,6 +29,7 @@ class Data {
   String? rating;
   String? ratingComment;
   String? branchPhone;
+  int? storeId;
 
   Data(
       {this.id,
@@ -55,7 +56,9 @@ class Data {
       this.usedAs,
       this.rating,
       this.branchPhone,
-      this.ratingComment});
+      this.ratingComment,
+      this.storeId
+      });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -92,7 +95,10 @@ class Data {
       location: json['location'] == null
           ? null
           : Destination.fromJson(json['location'] as Map<String, dynamic>),
-      usedAs: json['usedAs'] as String?);
+      usedAs: json['usedAs'] as String?,
+      storeId: json['storeId'] as int?,
+    
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,

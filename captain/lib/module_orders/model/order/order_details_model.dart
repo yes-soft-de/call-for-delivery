@@ -35,6 +35,7 @@ class OrderDetailsModel extends DataModel {
   String? rating;
   String? branchPhone;
   String? ratingComment;
+  late int storeId;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -61,7 +62,9 @@ class OrderDetailsModel extends DataModel {
       required this.usedAs,
       required this.rating,
       required this.branchPhone,
-      required this.ratingComment});
+      required this.ratingComment,
+      required this.storeId
+      });
 
   late OrderDetailsModel _orders;
 
@@ -113,7 +116,7 @@ class OrderDetailsModel extends DataModel {
       distance: null,
       usedAs: element?.usedAs == 'not used chat enquire' ? false : true,
       branchPhone: element?.branchPhone,
-      ratingComment: element?.ratingComment,
+      ratingComment: element?.ratingComment, storeId: element?.storeId ?? -1,
     );
     _orders.distance = _distance(_orders, location);
     _orders.branchDistance = _branchDistance(_orders, location);

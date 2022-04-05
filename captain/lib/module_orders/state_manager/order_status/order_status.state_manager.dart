@@ -57,7 +57,7 @@ class OrderStatusStateManager {
     });
   }
 
-  void createChatRoom(OrderStatusScreenState screenState, int orderId) {
+  void createChatRoom(OrderStatusScreenState screenState, int orderId,int storeId) {
     _ordersService.createChatRoom(orderId).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -71,7 +71,7 @@ class OrderStatusStateManager {
           value as RoomId;
           Navigator.of(screenState.context).pushNamed(ChatRoutes.chatRoute,
               arguments:
-                  ChatArgument(roomID: value.roomId ?? '', userType: 'store'));
+                  ChatArgument(roomID: value.roomId ?? '', userType: 'store',userID: storeId));
           CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning, message: S.current.chatRoomCreated)
               .show(screenState.context);

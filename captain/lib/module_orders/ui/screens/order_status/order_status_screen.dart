@@ -75,8 +75,8 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
 
   int currentIndex = 0;
 
-  void createChatRoom(int orderId) {
-    widget.stateManager.createChatRoom(this, orderId);
+  void createChatRoom(int orderId,int storeId) {
+    widget.stateManager.createChatRoom(this, orderId,storeId);
   }
 
   void refresh() {

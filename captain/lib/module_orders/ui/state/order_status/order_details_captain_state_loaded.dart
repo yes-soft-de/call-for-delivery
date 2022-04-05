@@ -558,7 +558,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               subtitle: S.current.canConnectHint,
               title: S.current.canConnect,
               onTap: () {
-                screenState.createChatRoom(orderInfo.id);
+                screenState.createChatRoom(orderInfo.id, orderInfo.storeId);
               },
             ),
           ),
@@ -573,7 +573,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               onTap: () {
                 Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                     arguments: ChatArgument(
-                        roomID: orderInfo.roomID ?? '', userType: 'store'));
+                        roomID: orderInfo.roomID ?? '',
+                        userType: 'store',
+                        userID: orderInfo.storeId));
               },
             ),
           ),
