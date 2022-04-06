@@ -275,3 +275,12 @@ App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
             - NotBlank: ~
         messageBody:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest:
+    properties:
+        countHours:
+            - NotBlank: ~
+        compensationForEveryOrder:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
