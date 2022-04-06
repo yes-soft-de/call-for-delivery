@@ -10,7 +10,7 @@ App\Entity\CaptainEntity:
     bankName: السعودي
     bankAccountNumber: 11223345678
     stcPay: 11223345678
-    completeAccountStatus: profileCreated
+    completeAccountStatus: profileCompleted
 
   captainTwoProfile:
     captainId: 2
@@ -23,7 +23,7 @@ App\Entity\CaptainEntity:
     bankName: السعودي
     bankAccountNumber: 11223345678
     stcPay: 11223345678
-    completeAccountStatus: profileCreated
+    completeAccountStatus: profileCompleted
 
   captainThreeProfile:
     captainId: 3
@@ -36,7 +36,7 @@ App\Entity\CaptainEntity:
     bankName: الراجحي
     bankAccountNumber: 11223345678
     stcPay: 11223345678
-    completeAccountStatus: profileCreated
+    completeAccountStatus: profileCompleted
 
   captainFourProfile:
     captainId: 4
@@ -49,7 +49,7 @@ App\Entity\CaptainEntity:
     bankName: السعودي
     bankAccountNumber: 11223345678
     stcPay: 11223345678
-    completeAccountStatus: profileCreated
+    completeAccountStatus: profileCompleted
 
   captainFiveProfile:
     captainId: 5
@@ -62,4 +62,4 @@ App\Entity\CaptainEntity:
     bankName: الراجحي
     bankAccountNumber: 11223345678
     stcPay: 11223345678
-    completeAccountStatus: profileCreated
+    completeAccountStatus: profileCompleted

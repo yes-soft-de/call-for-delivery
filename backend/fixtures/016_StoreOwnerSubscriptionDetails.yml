@@ -1,0 +1,54 @@
+App\Entity\SubscriptionDetailsEntity:
+  storeOneSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerOneProfile'
+    hasExtra: false
+    lastSubscription: '@storeOneSubscription'
+
+  storeTwoSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerTwoProfile'
+    hasExtra: false
+    lastSubscription: '@storeTwoSubscription'
+
+  storeThreeSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerThreeProfile'
+    hasExtra: false
+    lastSubscription: '@storeThreeSubscription'
+
+  storeFourSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerFourProfile'
+    hasExtra: false
+    lastSubscription: '@storeFourSubscription'
+
+  storeFiveSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerFiveProfile'
+    hasExtra: false
+    lastSubscription: '@storeFiveSubscription'
+
+  storeGoogleSubscriptionDetails:
+    remainingOrders: '@package_A_3->orderCount'
+    remainingCars: '@package_A_3->carCount'
+    remainingTime: 0
+    status: active
+    storeOwner: '@storeOwnerGoogleProfile'
+    hasExtra: false
+    lastSubscription: '@storeGoogleSubscription'

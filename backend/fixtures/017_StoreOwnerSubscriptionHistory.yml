@@ -1,0 +1,36 @@
+App\Entity\SubscriptionHistoryEntity:
+  storeOneSubscriptionHistory:
+    storeOwner: '@storeOwnerOneProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeOneSubscription'
+
+  storeTwoSubscriptionHistory:
+    storeOwner: '@storeOwnerTwoProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeTwoSubscription'
+
+  storeThreeSubscriptionHistory:
+    storeOwner: '@storeOwnerThreeProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeThreeSubscription'
+
+  storeFourSubscriptionHistory:
+    storeOwner: '@storeOwnerFourProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeFourSubscription'
+
+  storeFiveSubscriptionHistory:
+    storeOwner: '@storeOwnerFiveProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeFiveSubscription'
+
+  storeGoogleSubscriptionHistory:
+    storeOwner: '@storeOwnerGoogleProfile'
+    type: false
+    createdAt: <(new \DateTime('Now'))>
+    subscription: '@storeGoogleSubscription'

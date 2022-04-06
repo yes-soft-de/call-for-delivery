@@ -1,0 +1,48 @@
+App\Entity\StoreOwnerBranchEntity:
+  storeOneBranch:
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
+    city: جدة
+    name: العزيزية
+    isActive: 1
+    storeOwner: '@storeOwnerOneProfile'
+    branchPhone: 966552111112
+
+  storeTwoBranch:
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
+    city: جدة
+    name: الصفا
+    isActive: 1
+    storeOwner: '@storeOwnerTwoProfile'
+    branchPhone: 966552111113
+
+  storeThreeBranch:
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
+    city: جدة
+    name: السلامة
+    isActive: 1
+    storeOwner: '@storeOwnerThreeProfile'
+    branchPhone: 966552111114
+
+  storeFourBranch:
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
+    city: جدة
+    name: الحمراء
+    isActive: 1
+    storeOwner: '@storeOwnerFourProfile'
+    branchPhone: 966552111115
+
+  storeFiveBranch:
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
+    city: جدة
+    name: الجوهرة
+    isActive: 1
+    storeOwner: '@storeOwnerFiveProfile'
+    branchPhone: 966552111116
+
+  storeGoogleBranch:
+    location: { "lat": 21.4015883, "lon": 39.2001628 }
+    city: جدة
+    name: المدينة الصناعية
+    isActive: 1
+    storeOwner: '@storeOwnerGoogleProfile'
+    branchPhone: 966959796723
