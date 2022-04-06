@@ -1,0 +1,24 @@
+App\Entity\CaptainOfferEntity:
+  captainOfferOne:
+    carCount: 1
+    status: active
+    expired: 1
+    price: 5
+
+  captainOfferTwo:
+    carCount: 2
+    status: active
+    expired: 4
+    price: 10
+
+  captainOfferThree:
+    carCount: 3
+    status: active
+    expired: 7
+    price: 15
+
+  captainOfferFour:
+    carCount: 4
+    status: active
+    expired: 10
+    price: 18
