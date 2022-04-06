@@ -284,3 +284,16 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
             - NotBlank: ~
         salary:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
+    properties:
+        countOrdersInMonth:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+        monthCompensation:
+            - NotBlank: ~
+        bounceMaxCountOrdersInMonth:
+            - NotBlank: ~
+        bounceMinCountOrdersInMonth:
+            - NotBlank: ~
