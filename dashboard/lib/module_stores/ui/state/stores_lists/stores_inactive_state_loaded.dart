@@ -1,4 +1,3 @@
-import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StoresInActiveLoadedState extends States {
   final StoresInActiveScreenState screenState;
@@ -109,7 +107,7 @@ class StoresInActiveLoadedState extends States {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(screenState.context).primaryColor,
+              color: Theme.of(screenState.context).colorScheme.primary,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Flex(

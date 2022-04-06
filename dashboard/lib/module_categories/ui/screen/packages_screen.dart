@@ -55,8 +55,8 @@ class PackagesScreenState extends State<PackagesScreen> {
   void updatePakage(PackageRequest request) {
     widget._stateManager.updatePackage(this, request);
   }
-  void enablePackage(ActivePackageRequest request) {
-    widget._stateManager.enablePackage(this, request);
+  void enablePackage(ActivePackageRequest request,bool loading) {
+    widget._stateManager.enablePackage(this, request,loading);
   }
 
   void refresh() {

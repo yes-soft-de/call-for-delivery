@@ -150,7 +150,7 @@ class PackagesLoadedState extends States {
               });
         },
         enablePackage: (status){
-          screenState.enablePackage(ActivePackageRequest(status: status ,id: element.id));
+          screenState.enablePackage(ActivePackageRequest(status: status ,id: element.id),false);
         },
       ));
     }

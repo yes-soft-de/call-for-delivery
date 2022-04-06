@@ -49,7 +49,14 @@ class CaptainOffersLoadedState extends States {
       child: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: CustomListView.custom(children: getCategories()),
+          child: SizedBox(
+            child: CustomListView.custom(children: [
+              Wrap(
+                  alignment: WrapAlignment.start,
+                  direction: Axis.horizontal,
+                  children: getCategories())
+            ]),
+          ),
         ),
       ),
     );
@@ -67,22 +74,28 @@ class CaptainOffersLoadedState extends States {
 //        continue;
 //      }
 
-      widgets.add(CaptainOfferCard(
-        model: element,
-        onEdit: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return CaptainOfferForm(
-                  request: element,
-                  onSave: (request){
-                  screenState.updateCaptainOffer(request);
-                },);
-              });
-        },
-        onEnable: (status){
-          screenState.enableCaptainOffer(EnableOfferRequest(id: element.id,status: status));
-        },
+      widgets.add(
+        SizedBox(
+          width: 190,
+          child: CaptainOfferCard(
+            model: element,
+            onEdit: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return CaptainOfferForm(
+                      request: element,
+                      onSave: (request) {
+                        screenState.updateCaptainOffer(request);
+                      },
+                    );
+                  });
+            },
+            onEnable: (status) {
+              screenState.enableCaptainOffer(
+                  EnableOfferRequest(id: element.id, status: status),false);
+            },
+          ),
         ),
       );
     }

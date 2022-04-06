@@ -51,11 +51,11 @@ class _AnimatedLiquidCircularProgressIndicatorState
           key: widget.key,
           value: _animationController.value,
           valueColor: AlwaysStoppedAnimation(
-            Theme.of(context).primaryColor.withOpacity(0.4),
+            Theme.of(context).colorScheme.primary.withOpacity(0.4),
           ), // Defaults to the current Theme's accentColor.
           backgroundColor: Theme.of(context)
               .scaffoldBackgroundColor, // Defaults to the current Theme's backgroundColor.
-          borderColor: Theme.of(context).primaryColor,
+          borderColor: Theme.of(context).colorScheme.primary,
           borderWidth: 2,
           direction: Axis.vertical, //
           center: Center(

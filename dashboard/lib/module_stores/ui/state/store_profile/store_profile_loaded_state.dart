@@ -48,30 +48,40 @@ class StoreProfileLoadedState extends States {
           height: MediaQuery.of(context).size.height * 0.30,
         ),
       ),
-          Container(
-            color:profile?.status =='active' ?Colors.green.shade200 :
-            Colors.red.shade200 ,
-            child: ListTileSwitch(
-                switchActiveColor: Colors.green.shade900,
-                switchInactiveColor: Colors.red.shade900,
-                title:  Text(profile?.status =='active'
-                    ? S.current.active
-                    : S.current.inactive,   style: TextStyle(color: Colors.white ,fontWeight: FontWeight.w600),),
-                value: profile?.status == 'active',
-                onChanged: (v) {
-                  if (v) {
-                    profile?.status = 'active';
-                    screenState.enableStore(ActiveStoreRequest(id: profile!.id,status:'active'));
-                  } else {
-                    profile?.status = 'inactive';
-                    screenState.enableStore(ActiveStoreRequest(id: profile!.id ,status:'inactive' ));
-                  }
-                }),
-          ),
-              CustomListTile(
-                title: S.current.storeName,
-                subTitle: profile?.storeOwnerName,
-              ),
+      Container(
+        color: profile?.status == 'active' ? Colors.green : Colors.red.shade900,
+        child: ListTileSwitch(
+            switchActiveColor: Colors.green.shade200,
+            switchInactiveColor: Colors.red.shade200,
+            title: Text(
+              profile?.status == 'active'
+                  ? S.current.active
+                  : S.current.inactive,
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+            value: profile?.status == 'active',
+            onChanged: (v) {
+              if (v) {
+                profile?.status = 'active';
+                screenState.enableStore(
+                    ActiveStoreRequest(
+                      id: profile!.id,
+                      status: 'active',
+                    ),
+                    false);
+              } else {
+                profile?.status = 'inactive';
+                screenState.enableStore(
+                    ActiveStoreRequest(id: profile!.id, status: 'inactive'),
+                    false);
+              }
+            }),
+      ),
+      CustomListTile(
+        title: S.current.storeName,
+        subTitle: profile?.storeOwnerName,
+      ),
       CustomListTile(
         title: S.current.storePhone,
         subTitle: profile?.phone,
@@ -85,7 +95,7 @@ class StoreProfileLoadedState extends States {
         subTitle: profile?.bankNumber,
       ),
       CustomListTile(
-        title:S.current.city,
+        title: S.current.city,
         subTitle: profile?.city,
       ),
       CustomListTile(
@@ -96,9 +106,7 @@ class StoreProfileLoadedState extends States {
         title: S.current.closingTime,
         subTitle: profile?.closingTime,
       ),
-
-
-          Container(
+      Container(
         width: double.maxFinite,
         color: Theme.of(context).backgroundColor,
         child: Padding(
@@ -148,22 +156,25 @@ class StoreProfileLoadedState extends States {
       children: [
         Container(
           width: 130,
+          height: 60,
           decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               border: Border.symmetric(
                 horizontal: BorderSide(
                     color: Theme.of(context).scaffoldBackgroundColor, width: 1),
               )),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 16.0, bottom: 16, left: 8, right: 8),
-            child: Text(
-              title,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
               ),
-              maxLines: 1,
             ),
           ),
         ),
@@ -173,15 +184,23 @@ class StoreProfileLoadedState extends States {
         ),
         Expanded(
             child: Container(
-          color: Theme.of(context).backgroundColor,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 16.0, bottom: 16, left: 8, right: 8),
-            child: Text(
-              subTitle ?? '',
-              style: TextStyle(
-                color: Theme.of(context).disabledColor,
-                fontWeight: FontWeight.w600,
+          height: 60,
+          decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              border: Border.symmetric(
+                horizontal: BorderSide(
+                    color: Theme.of(context).scaffoldBackgroundColor, width: 1),
+              )),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Text(
+                subTitle ?? '',
+                style: TextStyle(
+                  color: Theme.of(context).disabledColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

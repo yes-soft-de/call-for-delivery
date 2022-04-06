@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -21,8 +22,11 @@ class StoreProfileStateManager {
 
   StoreProfileStateManager(this._storesService);
 
-  void getStore(StoreInfoScreenState screenState, int id) {
-    _stateSubject.add(LoadingState(screenState));
+  void getStore(StoreInfoScreenState screenState, int id,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _storesService.getStoreProfile(id).then((value) {
       if (value.hasError) {
         _stateSubject.add(
@@ -37,24 +41,45 @@ class StoreProfileStateManager {
     });
   }
 
-  void enableStore(StoreInfoScreenState screenState,
-      ActiveStoreRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+  void enableStore(StoreInfoScreenState screenState, ActiveStoreRequest request,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _storesService.enableStore(request).then((value) {
       if (value.hasError) {
-        CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
-        getStore(screenState, request.id);
+        getStore(screenState, request.id,loading);
+        showSnackFailed(
+            screenState, value.error ?? S.current.errorHappened, loading);
       } else {
-        getStore(screenState, request.id);
-        CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.storeUpdatedSuccessfully)
-            .show(screenState.context);
         getIt<GlobalStateManager>().updateList();
+        getStore(screenState, request.id,loading);
+        showSnackSuccess(
+            screenState, S.current.storeUpdatedSuccessfully, loading);
       }
     });
   }
 
+  void showSnackSuccess(
+      StoreInfoScreenState screenState, String message, bool loading) {
+    if (loading) {
+      CustomFlushBarHelper.createSuccess(
+              title: S.current.warnning,
+              message: S.current.storeUpdatedSuccessfully)
+          .show(screenState.context);
+    } else {
+      Fluttertoast.showToast(msg: message);
+    }
+  }
+
+  void showSnackFailed(
+      StoreInfoScreenState screenState, String message, bool loading) {
+    if (loading) {
+      CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: message)
+          .show(screenState.context);
+    } else {
+      Fluttertoast.showToast(msg: message);
+    }
+  }
 }
