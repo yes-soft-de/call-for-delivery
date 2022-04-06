@@ -19,9 +19,9 @@ use OpenApi\Annotations as OA;
 
 /**
  * Create and fetch Captain's Financial System According To Count Of Orders.
- * @Route("v1/admin/captainfinancialsystemaccordingntocountoforders/")
+ * @Route("v1/admin/captainfinancialsystemaccordingntocountofordersbyadmin/")
  */
-class CaptainFinancialSystemAccordingToCountOfOrdersController extends BaseController
+class AdminCaptainFinancialSystemAccordingToCountOfOrdersController extends BaseController
 {
     private AutoMapping $autoMapping;
     private ValidatorInterface $validator;
@@ -37,7 +37,7 @@ class CaptainFinancialSystemAccordingToCountOfOrdersController extends BaseContr
 
     /**
      * admin:Captain's Financial System According To Count Of Orders
-     * @Route("captainfinancialsystemaccordingtocountoforders", name="createCaptainFinancialSystemAccordingToCountOfOrders", methods={"POST"})
+     * @Route("captainfinancialsystemaccordingtocountofordersbyadmin", name="createCaptainFinancialSystemAccordingToCountOfOrdersByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -102,7 +102,7 @@ class CaptainFinancialSystemAccordingToCountOfOrdersController extends BaseContr
 
     /**
      * admin:Get all Captain's Financial System According To Count Of Orders.
-     * @Route("captainfinancialsystemaccordingtocountoforders", name="getAllCaptainFinancialSystemAccordingToCountOfOrders", methods={"GET"})
+     * @Route("captainfinancialsystemaccordingtocountofordersbyadmin", name="getAllCaptainFinancialSystemAccordingToCountOfOrdersByAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      *

@@ -19,7 +19,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * Create and fetch Captain's Financial System According To Count Of Hours.
- * @Route("v1/admin/captainfinancialsystemaccordingtocountofhours/")
+ * @Route("v1/admin/captainfinancialsystemaccordingtocountofhoursbyadmin/")
  */
 class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseController
 {
@@ -37,7 +37,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
 
     /**
      * admin:Create New Captain's Financial System According To Count Of Hours
-     * @Route("captainfinancialsystemaccordingtocountofhours", name="createCaptainFinancialSystemAccordingToCountOfHours", methods={"POST"})
+     * @Route("captainfinancialsystemaccordingtocountofhoursbyadmin", name="createCaptainFinancialSystemAccordingToCountOfHoursByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -98,7 +98,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
 
     /**
      * admin:Get all Captain's Financial System According To Count Of Hours.
-     * @Route("captainfinancialsystemaccordingtocountofhours", name="getAllCaptainFinancialSystemAccordingToCountOfHours", methods={"GET"})
+     * @Route("captainfinancialsystemaccordingtocountofhoursbyadmin", name="getAllCaptainFinancialSystemAccordingToCountOfHoursByAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      *
