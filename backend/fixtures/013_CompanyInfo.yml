@@ -1,0 +1,12 @@
+App\Entity\CompanyInfoEntity:
+  companyInfo:
+    phone: 966555111222
+    phoneTwo: 966555111333
+    whatsapp: 966555111333
+    fax: 966555123123
+    email: contact.dept@c4d.com
+    bankName: الراجحي
+    stc: 312312312678
+    kilometers: 22
+    maxKilometerBonus: 50.50
+    minKilometerBonus: 25.25
