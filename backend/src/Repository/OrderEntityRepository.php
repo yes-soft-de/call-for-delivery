@@ -363,7 +363,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterCaptainNotArrivedOrdersByAdmin(CaptainNotArrivedOrderFilterByAdminRequest $request): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('DISTINCT(orderEntity.id) as id', 'orderEntity.createdAt', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName',
+            ->select('orderEntity.id', 'orderEntity.createdAt', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName',
                 'storeOwnerProfileEntity.storeOwnerName')
 
             ->leftJoin(
