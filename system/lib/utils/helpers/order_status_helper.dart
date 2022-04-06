@@ -1,14 +1,14 @@
-import 'package:c4d/consts/order_status.dart';
 import 'package:flutter/material.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 
 class StatusHelper {
   static OrderStatusEnum getStatusEnum(String? status) {
     if (status == 'pending') {
       return OrderStatusEnum.WAITING;
-    } else if (status == 'pickingorder') {
+    } else if (status == 'on way to pick order') {
       return OrderStatusEnum.GOT_CAPTAIN;
-    } else if (status == 'instore') {
+    } else if (status == 'in store') {
       return OrderStatusEnum.IN_STORE;
     } else if (status == 'ongoing') {
       return OrderStatusEnum.DELIVERING;
@@ -25,11 +25,11 @@ class StatusHelper {
       case OrderStatusEnum.WAITING:
         return 'pending';
       case OrderStatusEnum.IN_STORE:
-        return 'instore';
+        return 'in store';
       case OrderStatusEnum.DELIVERING:
         return 'ongoing';
       case OrderStatusEnum.GOT_CAPTAIN:
-        return 'pickingorder';
+        return 'on way to pick order';
       case OrderStatusEnum.FINISHED:
         return 'delivered';
       case OrderStatusEnum.CANCELLED:

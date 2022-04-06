@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:c4d/module_users/model/users_model.dart';
 import 'package:c4d/utils/helpers/role_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -7,9 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class UserCard extends StatelessWidget {
   final UsersModel usersModel;
   final VoidCallback updatePassword;
+  final VoidCallback sendNotification;
 
 
-  UserCard({required this.usersModel,required this.updatePassword});
+  UserCard({required this.usersModel,required this.updatePassword,required this.sendNotification});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,12 @@ class UserCard extends StatelessWidget {
               Text(StatusRoleHelper.getOrderStatusMessages(usersModel.role))
             ],),
           ),
+          SizedBox(height: 8,),
+          Center(
+            child: InkWell(
+                onTap: sendNotification,
+                child: Image.asset(ImageAsset.BELL,height: 50,)),
+          )
         ],),
       ),),
     );

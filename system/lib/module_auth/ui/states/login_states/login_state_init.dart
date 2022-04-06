@@ -58,6 +58,7 @@ class LoginStateInit extends LoginState {
                         ),
                         Text(
                           'Sign in to continue',
+                          style: TextStyle(color:Theme.of(context).primaryColor),
                         ),
                         SizedBox(
                           height: 30,
@@ -72,9 +73,9 @@ class LoginStateInit extends LoginState {
                               borderRadius: BorderRadius.circular(10),
                               color: Theme.of(context).secondaryHeaderColor,
                             ),
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Icon(Icons.supervised_user_circle),
+                              child: Icon(Icons.supervised_user_circle,color:Theme.of(context).primaryColor),
                             ),
                           ),
                           title: Padding(
@@ -96,9 +97,9 @@ class LoginStateInit extends LoginState {
                               borderRadius: BorderRadius.circular(10),
                               color: Theme.of(context).secondaryHeaderColor,
                             ),
-                            child: const Padding(
+                            child:   Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Icon(Icons.lock),
+                              child: Icon(Icons.lock,color: Theme.of(context).primaryColor,),
                             ),
                           ),
                           title: Padding(
@@ -126,7 +127,7 @@ class LoginStateInit extends LoginState {
                           loading: screen.loadingSnapshot.connectionState ==
                               ConnectionState.waiting,
                           text: S.of(context).login,
-                          bgColor: Theme.of(context).primaryColorLight,
+                          bgColor: Theme.of(context).primaryColor,
                           textColor: Colors.white,
                         ),
                       ],

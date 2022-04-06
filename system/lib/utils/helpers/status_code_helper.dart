@@ -25,6 +25,8 @@ class StatusCodeHelper {
         return S.current.invalidCredentials;
       case '9001':
         return S.current.accountAlreadyExist;
+      case '9205':
+        return S.current.orderNumberNotFound;
       case '-1':
         return S.current.dataDecodeError;
       default:

@@ -6,6 +6,7 @@ class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
   static const String API_VERSION = '/v1/main';
   static const String BASE_API_VERSION = DOMAIN + API_VERSION;
+  static const String BASE_API_VERSION_COMMANDER = DOMAIN + '/v1/datacommander';
   static const String BASE_API = DOMAIN + '';
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -30,4 +31,5 @@ class Urls {
   static const GET_USERS = BASE_API_VERSION + '/filterusersbysuperadmin';
   static const UPDATE_USER_PASSWORD = BASE_API_VERSION + '/userpasswordbysuperadmin';
   static const UPDATE_ORDER_STATUS = BASE_API_VERSION + '/updateorderstatebysuperadmin';
+  static const REST_DATA_API = BASE_API_VERSION_COMMANDER + '/renewdatabasefromscratch';
 }

@@ -3,12 +3,13 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_check_api/ui/screen/check_api_screen.dart';
 import 'package:c4d/module_check_api/ui/widget/check_button.dart';
+import 'package:c4d/module_rest_data/ui/screen/rest_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CheckApiStateError extends States {
-  final CheckApiScreenState screenState;
-  CheckApiStateError(this.screenState) : super(screenState);
+class RestDataStateError extends States {
+  final RestDataScreenState screenState;
+  RestDataStateError(this.screenState) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -83,15 +84,15 @@ class CheckApiStateError extends States {
   Widget get _animatedButtonUI =>
       CheckButton(
         loading: screenState.loadingSnapshot.connectionState ==
-            ConnectionState.waiting,text: 'Check',);
+            ConnectionState.waiting,text: 'Rest Data',);
 
   void _onTapDown(TapDownDetails details) {
     screenState.controller.forward();
-    screenState.checkApiHealth();
+    screenState.restData();
   }
 
   void _onTapUp(TapUpDetails details) {
     screenState.controller.reverse();
-    screenState.checkApiHealth();
+    screenState.restData();
   }
 }

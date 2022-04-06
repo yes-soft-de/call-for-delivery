@@ -17,6 +17,8 @@ class ImageAsset {
   static const PASSWORD = ROOT + 'password.png';
   static const MESSAGES = ROOT + 'messages.png';
   static const ORDER = ROOT + 'order_status.png';
+  static const REST_DATA = ROOT + 'rest_data.png';
+  static const BELL = ROOT + 'bell.png';
 }
 
 class SvgAsset {
@@ -35,4 +37,7 @@ class LottieAsset {
   static const LOADING_CART = ROOT + 'cart_loading.json';
   static const SPLASH = ROOT + 'splash.json';
   static const LOGIN_IMAGE = ROOT + 'login_image.json';
+  static const CLOUD_STORAGE = ROOT + 'cloud-storage.json';
+  static const INTERNET_SERVERS = ROOT + 'internet-servers.json';
+  static const VIRTUAL_SERVERS = ROOT + 'virtual-server.json';
 }

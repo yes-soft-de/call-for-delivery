@@ -4,6 +4,7 @@ import 'package:c4d/module_home/widget/home_card.dart';
 import 'package:c4d/module_order/manager/order_manager.dart';
 import 'package:c4d/module_order/request/order_state_request.dart';
 import 'package:c4d/module_order/state_manager/orders_state_manager.dart';
+import 'package:c4d/module_rest_data/rest_data_routes.dart';
 import '../../module_order/ui/widget/update_orderstate_dialog.dart';
 import 'package:c4d/module_users/users_routes.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -83,7 +84,9 @@ class HomeScreenState extends State<HomeScreen> {
                   HomeCard(title: S.of(context).checkServer,image: ImageAsset.CHECK_SERVER,onTap: (){
                     Navigator.pushNamed(context, CheckApiRoutes.ROUTE_CheckApi);
                   },),
-                  HomeCard(title: S.of(context).changePassword,image: ImageAsset.PASSWORD,onTap: (){},),
+                  HomeCard(title: S.of(context).restData,image: ImageAsset.REST_DATA,onTap: (){
+                    Navigator.pushNamed(context, RestDataRoutes.ROUTE_REST_DATA);
+                  },),
                 ],),
                 Wrap(
                   children: [

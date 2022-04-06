@@ -23,7 +23,7 @@ class CustomListView {
       crossAxisCount: 2,
       controller: controller,
       padding: padding,
-      childAspectRatio: 5/4,
+      childAspectRatio:6/7,
       physics: BouncingScrollPhysics(parent: NeverScrollableScrollPhysics()),
       children: children,
     );

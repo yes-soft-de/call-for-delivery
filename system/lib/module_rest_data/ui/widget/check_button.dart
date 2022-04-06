@@ -3,9 +3,8 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 class CheckButton extends StatelessWidget {
   final bool loading;
-  final String text;
 
-  CheckButton( {required this.loading,required this.text});
+  CheckButton(this.loading);
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +13,19 @@ class CheckButton extends StatelessWidget {
       width: 270,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100.0),
-        color: Theme.of(context).primaryColor,
+        color: Colors.white,
       ),
       child: Center(
         child:loading ?LoadingIndicator(
           indicatorType:
           Indicator.ballTrianglePathColoredFilled,
-          colors: [Colors.white],
+          colors: [Colors.blue.shade900],
         ): Text(
-          text,
+          'Check',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Color(0xFF8185E2),
           ),
         ),
       ),
