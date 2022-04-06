@@ -1,0 +1,48 @@
+App\Entity\SubscriptionEntity:
+  storeOneSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerOneProfile'
+
+  storeTwoSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerTwoProfile'
+
+  storeThreeSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerThreeProfile'
+
+  storeFourSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerFourProfile'
+
+  storeFiveSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerFiveProfile'
+
+  storeGoogleSubscription:
+    startDate: <(new \DateTime('Now'))>
+    endDate: <(new \DateTime('Now' . '1day'))>
+    status: active
+    isFuture: 0
+    package: '@package_A_3'
+    storeOwner: '@storeOwnerGoogleProfile'

@@ -1,8 +1,8 @@
 App\Entity\StoreOwnerProfileEntity:
   storeOwnerOneProfile:
     storeOwnerId: 6
-    storeOwnerName: رامي
-    status: true
+    storeOwnerName: متجر رامي
+    status: active
     city: جدة
     phone: 966551111112
     openingTime: '2022-03-03T08:00:00+0200'
@@ -11,13 +11,13 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerTwoProfile:
     storeOwnerId: 7
-    storeOwnerName: كنان
-    status: true
+    storeOwnerName: متجر كنان
+    status: active
     city: جدة
     phone: 966551111113
     openingTime: '2022-03-03T08:00:00+0200'
@@ -26,13 +26,13 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerThreeProfile:
     storeOwnerId: 8
-    storeOwnerName: رهف
-    status: true
+    storeOwnerName: متجر رهف
+    status: active
     city: جدة
     phone: 966551111114
     openingTime: '2022-03-03T08:00:00+0200'
@@ -41,13 +41,13 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerFourProfile:
     storeOwnerId: 9
-    storeOwnerName: حبيب
-    status: true
+    storeOwnerName: متجر حبيب
+    status: active
     city: جدة
     phone: 966551111115
     openingTime: '2022-03-03T08:00:00+0200'
@@ -56,13 +56,13 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerFiveProfile:
     storeOwnerId: 10
-    storeOwnerName: يزن
-    status: true
+    storeOwnerName: متجر يزن
+    status: active
     city: جدة
     phone: 966551111116
     openingTime: '2022-03-03T08:00:00+0200'
@@ -71,13 +71,13 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
 
   storeOwnerGoogleProfile:
     storeOwnerId: 11
     storeOwnerName: Google Store
-    status: true
+    status: active
     city: جدة
     phone: 966959796722
     openingTime: '2022-03-03T08:00:00+0200'
@@ -86,5 +86,5 @@ App\Entity\StoreOwnerProfileEntity:
     bankAccountNumber: 123456789
     stcPay: 123456789
     employeeCount: 1-20
-    completeAccountStatus: profileCreated
+    completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
