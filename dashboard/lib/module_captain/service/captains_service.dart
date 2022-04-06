@@ -24,8 +24,7 @@ class CaptainsService {
   CaptainsService(this._manager);
 
   Future<DataModel> getCaptainOffer() async {
-    CaptainOfferResponse? _ordersResponse =
-        await _manager.getCaptainOffer();
+    CaptainOfferResponse? _ordersResponse = await _manager.getCaptainOffer();
     if (_ordersResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -36,9 +35,9 @@ class CaptainsService {
     if (_ordersResponse.data == null) return DataModel.empty();
     return CaptainsOffersModel.withData(_ordersResponse.data!);
   }
+
   Future<DataModel> addCaptainOffer(CaptainOfferRequest request) async {
-    ActionResponse? actionResponse =
-        await _manager.addCaptainOffer(request);
+    ActionResponse? actionResponse = await _manager.addCaptainOffer(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -49,10 +48,9 @@ class CaptainsService {
     }
     return DataModel.empty();
   }
-  Future<DataModel> updateCaptainOffer(
-      CaptainOfferRequest request) async {
-    ActionResponse? actionResponse =
-    await _manager.updateCaptainOffer(request);
+
+  Future<DataModel> updateCaptainOffer(CaptainOfferRequest request) async {
+    ActionResponse? actionResponse = await _manager.updateCaptainOffer(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -64,10 +62,8 @@ class CaptainsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> enableCaptainOffer(
-      EnableOfferRequest request) async {
-    ActionResponse? actionResponse =
-    await _manager.enableCaptainOffer(request);
+  Future<DataModel> enableCaptainOffer(EnableOfferRequest request) async {
+    ActionResponse? actionResponse = await _manager.enableCaptainOffer(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -79,10 +75,8 @@ class CaptainsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> updateCaptain(
-      UpdateCaptainRequest request) async {
-    ActionResponse? actionResponse =
-    await _manager.updateCaptain(request);
+  Future<DataModel> updateCaptain(UpdateCaptainRequest request) async {
+    ActionResponse? actionResponse = await _manager.updateCaptain(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -94,10 +88,8 @@ class CaptainsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> enableCaptain(
-      EnableCaptainRequest request) async {
-    ActionResponse? actionResponse =
-    await _manager.enableCaptain(request);
+  Future<DataModel> enableCaptain(EnableCaptainRequest request) async {
+    ActionResponse? actionResponse = await _manager.enableCaptain(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -108,11 +100,9 @@ class CaptainsService {
     }
     return DataModel.empty();
   }
-
 
   Future<DataModel> getCaptains() async {
-    CaptainResponse? _ordersResponse =
-    await _manager.getCaptains();
+    CaptainResponse? _ordersResponse = await _manager.getCaptains();
     if (_ordersResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -125,8 +115,7 @@ class CaptainsService {
   }
 
   Future<DataModel> getInActiveCaptains() async {
-    CaptainResponse? _ordersResponse =
-    await _manager.getInActiveCaptain();
+    CaptainResponse? _ordersResponse = await _manager.getInActiveCaptain();
     if (_ordersResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -140,7 +129,7 @@ class CaptainsService {
 
   Future<DataModel> getCaptainProfile(int id) async {
     CaptainProfileResponse? _storeResponse =
-    await _manager.getCaptainProfile(id);
+        await _manager.getCaptainProfile(id);
     if (_storeResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -151,9 +140,9 @@ class CaptainsService {
     if (_storeResponse.data == null) return DataModel.empty();
     return ProfileModel.withData(_storeResponse.data!);
   }
+
   Future<DataModel> getCaptainSupport() async {
-    CaptainNeedSupportResponse? _clients =
-    await _manager.getCaptainSupport();
+    CaptainNeedSupportResponse? _clients = await _manager.getCaptainSupport();
     if (_clients == null) {
       return DataModel.withError(S.current.networkError);
     }

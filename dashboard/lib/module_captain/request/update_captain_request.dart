@@ -1,6 +1,6 @@
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 
-class UpdateCaptainRequest{
+class UpdateCaptainRequest {
   int id;
   String? captainName;
   Location? location;
@@ -17,10 +17,22 @@ class UpdateCaptainRequest{
   num? salary;
   num? bounce;
 
-  UpdateCaptainRequest({required this.id, this.captainName, this.location, this.age,
-      this.car, this.phone, this.bankName, this.bankAccountNumber, this.stcPay,
-      this.images, this.mechanicLicense, this.identity, this.isOnline,
-      this.salary, this.bounce });
+  UpdateCaptainRequest(
+      {required this.id,
+      this.captainName,
+      this.location,
+      this.age,
+      this.car,
+      this.phone,
+      this.bankName,
+      this.bankAccountNumber,
+      this.stcPay,
+      this.images,
+      this.mechanicLicense,
+      this.identity,
+      this.isOnline,
+      this.salary,
+      this.bounce});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -38,11 +50,9 @@ class UpdateCaptainRequest{
     map['isOnline'] = isOnline;
     map['salary'] = salary;
     map['bounce'] = bounce;
-    if(location != null){
+    if (location != null) {
       map['location'] = location?.toJson();
     }
     return map;
   }
-
-
 }

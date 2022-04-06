@@ -75,9 +75,11 @@ class CategoriesScreenState extends State<CategoriesScreen> {
             showDialog(
                 context: context,
                 builder: (_) {
-                 return CategoryForm(onSave: (request){
-                   addCategory(request);
-                 },);
+                  return CategoryForm(
+                    onSave: (request) {
+                      addCategory(request);
+                    },
+                  );
                 });
           },
         ),

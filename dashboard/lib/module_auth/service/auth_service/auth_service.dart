@@ -140,7 +140,6 @@ class AuthService {
     await _prefsHelper.cleanAll();
   }
 
-
   Future<void> resendCode(VerifyCodeRequest request) async {
     // Create the profile in our database
     RegisterResponse? registerResponse = await _authManager.resendCode(request);

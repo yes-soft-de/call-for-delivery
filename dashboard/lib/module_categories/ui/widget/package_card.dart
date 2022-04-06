@@ -85,7 +85,9 @@ class SinglePackageCard extends StatelessWidget {
                     ),
                   ),
                   CustomC4dAppBar.actionIcon(context,
-                      onTap: edit, icon: Icons.edit,padding: EdgeInsetsDirectional.only(end: 8))
+                      onTap: edit,
+                      icon: Icons.edit,
+                      padding: EdgeInsetsDirectional.only(end: 8))
                 ],
               ),
               Padding(

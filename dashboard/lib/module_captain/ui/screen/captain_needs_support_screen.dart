@@ -19,7 +19,8 @@ class CaptainsNeedsSupportScreen extends StatefulWidget {
       CaptainsNeedsSupportScreenState();
 }
 
-class CaptainsNeedsSupportScreenState extends State<CaptainsNeedsSupportScreen> {
+class CaptainsNeedsSupportScreenState
+    extends State<CaptainsNeedsSupportScreen> {
   late States currentState;
 
   @override

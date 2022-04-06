@@ -155,15 +155,18 @@ class UpdateBranchStateLoaded extends States {
                               : () {
                                   if (flag) {
                                     var request = <CreateBranchRequest>[];
-                                      request.add(CreateBranchRequest(
-                                          name: branchLocation!.branchName,
-                                          location: GeoJson(
-                                              lat: branchLocation!.location.latitude,
-                                              lon:
-                                              branchLocation!.location.longitude)));
+                                    request.add(CreateBranchRequest(
+                                        name: branchLocation!.branchName,
+                                        location: GeoJson(
+                                            lat: branchLocation!
+                                                .location.latitude,
+                                            lon: branchLocation!
+                                                .location.longitude)));
                                     screenState.createBranch(
                                         CreateListBranchesRequest(
-                                            branches: request,storeOwnerProfileId:int.parse(screenState.storeID ?? '-1')));
+                                            branches: request,
+                                            storeOwnerProfileId: int.parse(
+                                                screenState.storeID ?? '-1')));
                                   } else {
                                     screenState.updateBranch(
                                         UpdateBranchesRequest(

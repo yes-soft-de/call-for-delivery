@@ -7,7 +7,10 @@ class CustomAlertDialog extends StatelessWidget {
   final String? title;
   final bool oneAction;
   CustomAlertDialog(
-      {required this.onPressed, required this.content, this.title,required this.oneAction});
+      {required this.onPressed,
+      required this.content,
+      this.title,
+      required this.oneAction});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,16 @@ class CustomAlertDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         actions: [
-          TextButton(onPressed: onPressed, child:oneAction ? Text(S.current.ok): Text(S.current.confirm)),
-        oneAction?Container():  TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(S.current.cancel)),
+          TextButton(
+              onPressed: onPressed,
+              child: oneAction ? Text(S.current.ok) : Text(S.current.confirm)),
+          oneAction
+              ? Container()
+              : TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(S.current.cancel)),
         ],
       ),
     );

@@ -7,11 +7,12 @@ class ReportModel extends DataModel {
   int ongoingOrdersCount = 0;
   int allOrdersCount = 0;
 
-  ReportModel(
-      {required this.allOrdersCount,
-      required this.activeStoresCount,
-      required this.ongoingOrdersCount,
-      required this.inactiveStoresCount,});
+  ReportModel({
+    required this.allOrdersCount,
+    required this.activeStoresCount,
+    required this.ongoingOrdersCount,
+    required this.inactiveStoresCount,
+  });
 
   ReportModel.withData(Data data) : super.withData() {
     activeStoresCount = data.activeStoresCount ?? 0;

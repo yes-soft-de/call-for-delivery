@@ -47,7 +47,6 @@ class AppTypeHelper {
     }
   }
 
-
   static IconData getOrderStatusIcon(OrderStatusEnum status) {
     switch (status) {
       case OrderStatusEnum.WAITING:

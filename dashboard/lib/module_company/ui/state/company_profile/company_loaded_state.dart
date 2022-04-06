@@ -87,7 +87,6 @@ class CompanyLoadedState extends States {
                   hintText: S.current.phoneNumber,
                   phone: true,
                   numbers: true,
-
                 ),
                 // phone2
                 Padding(
@@ -103,7 +102,7 @@ class CompanyLoadedState extends States {
                   controller: phone2Controller,
                   hintText: S.current.phoneNumber,
                   phone: true,
-                  validator:false ,
+                  validator: false,
                   numbers: true,
                 ),
                 // whatsapp
@@ -152,7 +151,6 @@ class CompanyLoadedState extends States {
                 CustomFormField(
                   controller: bankController,
                   hintText: S.current.bankName,
-
                 ),
                 // stc
                 Padding(

@@ -18,7 +18,6 @@ class CompanyProfileResponse {
       statusCode = '-1';
     }
   }
-
 }
 
 class Data {
@@ -45,7 +44,10 @@ class Data {
       this.bankName,
       this.stc,
       this.email,
-      this.roomID , this.kilometers ,this.maxKilometerBonus,this.minKilometerBonus});
+      this.roomID,
+      this.kilometers,
+      this.maxKilometerBonus,
+      this.minKilometerBonus});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -74,9 +76,9 @@ class Data {
     map['stc'] = stc;
     map['email'] = email;
     map['roomID'] = roomID;
-    map['minKilometerBonus']=minKilometerBonus;
-    map['maxKilometerBonus']=maxKilometerBonus;
-    map['kilometers']=kilometers;
+    map['minKilometerBonus'] = minKilometerBonus;
+    map['maxKilometerBonus'] = maxKilometerBonus;
+    map['kilometers'] = kilometers;
     return map;
   }
 }

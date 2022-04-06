@@ -37,11 +37,13 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     widget._stateManager.getCaptainProfile(this, captainId);
   }
 
-  void enableCaptain(String status ) {
-    widget._stateManager.acceptCaptainProfile(this, captainId, EnableCaptainRequest(id: captainId,status:status));
+  void enableCaptain(String status) {
+    widget._stateManager.acceptCaptainProfile(
+        this, captainId, EnableCaptainRequest(id: captainId, status: status));
   }
+
   void updateCaptainProfile(UpdateCaptainRequest request) {
-    widget._stateManager.updateCaptainProfile(this , request);
+    widget._stateManager.updateCaptainProfile(this, request);
   }
 
   void refresh() {
@@ -62,8 +64,9 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.profile,
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.profile,
 //          actions: [
 //            Padding(
 //              padding: const EdgeInsets.all(8.0),

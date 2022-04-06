@@ -15,8 +15,7 @@ class NoticeService {
   NoticeService(this._manager);
 
   Future<DataModel> getNotice() async {
-    NoticeResponse? _ordersResponse =
-        await _manager.getNotice();
+    NoticeResponse? _ordersResponse = await _manager.getNotice();
     if (_ordersResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -27,9 +26,9 @@ class NoticeService {
     if (_ordersResponse.data == null) return DataModel.empty();
     return NoticeModel.withData(_ordersResponse.data!);
   }
+
   Future<DataModel> addNotice(NoticeRequest request) async {
-    ActionResponse? actionResponse =
-        await _manager.addNotice(request);
+    ActionResponse? actionResponse = await _manager.addNotice(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -40,10 +39,9 @@ class NoticeService {
     }
     return DataModel.empty();
   }
-  Future<DataModel> updateNotice(
-      NoticeRequest request) async {
-    ActionResponse? actionResponse =
-    await _manager.updateNotice(request);
+
+  Future<DataModel> updateNotice(NoticeRequest request) async {
+    ActionResponse? actionResponse = await _manager.updateNotice(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -54,7 +52,4 @@ class NoticeService {
     }
     return DataModel.empty();
   }
-
-
-
 }

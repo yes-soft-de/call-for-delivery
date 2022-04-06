@@ -54,8 +54,7 @@ class CompanyRepository {
   Future<ActionResponse?> updateCompanyProfile(
       CreateCompanyProfile request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
-        Urls.COMPANY_INFO, request.toJson(),
+    dynamic response = await _apiClient.put(Urls.COMPANY_INFO, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

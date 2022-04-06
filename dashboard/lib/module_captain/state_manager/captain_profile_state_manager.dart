@@ -58,21 +58,20 @@ class CaptainProfileStateManager {
     });
   }
 
-
-  void updateCaptainProfile(CaptainProfileScreenState screenState,
-       UpdateCaptainRequest request) {
+  void updateCaptainProfile(
+      CaptainProfileScreenState screenState, UpdateCaptainRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _captainsService.updateCaptain(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error.toString())
+                title: S.current.warnning, message: value.error.toString())
             .show(screenState.context);
         getCaptainProfile(screenState, request.id);
       } else {
-        getCaptainProfile(screenState,  request.id);
+        getCaptainProfile(screenState, request.id);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.captainUpdatedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.captainUpdatedSuccessfully)
             .show(screenState.context);
         getIt<GlobalStateManager>().updateList();
       }

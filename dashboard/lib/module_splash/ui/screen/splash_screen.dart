@@ -21,9 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-       _getNextRoute().then((route) {
-         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-       });
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
     });
     super.initState();
   }
@@ -32,7 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        child: Image.asset(ImageAsset.LOGO,height: 150,width: 150,),
+        child: Image.asset(
+          ImageAsset.LOGO,
+          height: 150,
+          width: 150,
+        ),
       ),
     );
   }

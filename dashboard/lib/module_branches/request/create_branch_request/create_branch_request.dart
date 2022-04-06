@@ -5,7 +5,6 @@ class CreateBranchRequest {
   String? name;
   GeoJson? location;
 
-
   CreateBranchRequest({
     this.name,
     this.location,

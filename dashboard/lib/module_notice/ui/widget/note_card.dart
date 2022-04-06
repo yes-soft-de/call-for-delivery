@@ -6,7 +6,7 @@ class NoteCard extends StatelessWidget {
   final String? msg;
   final Function() edit;
 
-  NoteCard({required this.title, required this.msg ,required this.edit});
+  NoteCard({required this.title, required this.msg, required this.edit});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,18 @@ class NoteCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListTile(
-              title:   Text(title ?? S.of(context).unknown),
-               subtitle: Text(msg ?? S.of(context).unknown),
-              trailing:   InkWell(
+              title: Text(title ?? S.of(context).unknown),
+              subtitle: Text(msg ?? S.of(context).unknown),
+              trailing: InkWell(
                 customBorder: CircleBorder(),
                 onTap: edit,
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).colorScheme.background.withOpacity(0.8),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .background
+                        .withOpacity(0.8),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -44,7 +47,6 @@ class NoteCard extends StatelessWidget {
                   ),
                 ),
               ),
-
             ),
           ),
         ),

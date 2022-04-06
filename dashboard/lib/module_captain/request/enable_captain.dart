@@ -1,9 +1,8 @@
-class EnableCaptainRequest{
+class EnableCaptainRequest {
   int? id;
   String? status;
 
-
-  EnableCaptainRequest( {this.id,this.status} );
+  EnableCaptainRequest({this.id, this.status});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -11,5 +10,4 @@ class EnableCaptainRequest{
     map['status'] = status;
     return map;
   }
-
 }

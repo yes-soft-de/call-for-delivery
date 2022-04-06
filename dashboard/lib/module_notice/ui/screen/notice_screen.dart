@@ -78,9 +78,11 @@ class NoticeScreenState extends State<NoticeScreen> {
             showDialog(
                 context: context,
                 builder: (_) {
-                 return NoticeForm(onSave: (request){
-                   addNotice(request);
-                 },);
+                  return NoticeForm(
+                    onSave: (request) {
+                      addNotice(request);
+                    },
+                  );
                 });
           },
         ),

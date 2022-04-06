@@ -82,24 +82,30 @@ class Data {
     id = json['id'];
     captainID = json['captainId'];
     captainName = json['captainName'];
-    location =json['location'] != null ? Location.fromJson(json['location']) : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
     age = json['age'];
     car = json['car'];
-    drivingLicence =json['drivingLicence'] != null ? ImageUrl.fromJson(json['drivingLicence']) :null;
+    drivingLicence = json['drivingLicence'] != null
+        ? ImageUrl.fromJson(json['drivingLicence'])
+        : null;
     salary = json['salary'];
     status = json['status'];
     rating = json['rating'];
     bounce = json['bounce'];
     roomID = json['roomId'];
-    image =json['images'] != null ? ImageUrl.fromJson(json['images']) :null;
+    image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];
     isOnline = json['isOnline'];
     bankName = json['bankName'];
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
-    mechanicLicense =json['mechanicLicense'] != null ? ImageUrl.fromJson(json['mechanicLicense']) :null;
-    identity =json['identity'] != null ? ImageUrl.fromJson(json['identity']) :null;
+    mechanicLicense = json['mechanicLicense'] != null
+        ? ImageUrl.fromJson(json['mechanicLicense'])
+        : null;
+    identity =
+        json['identity'] != null ? ImageUrl.fromJson(json['identity']) : null;
     createDate = json['createDate'] != null
         ? CreateDate.fromJson(json['createDate'])
         : null;

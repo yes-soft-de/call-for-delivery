@@ -92,7 +92,7 @@ class CaptainOfferStateManager {
             title: S.current.warnning, message: value.error ?? '')
           ..show(screenState.context);
       } else {
-        getCaptainOffer(screenState,false);
+        getCaptainOffer(screenState, false);
         Fluttertoast.showToast(msg: S.current.updateOfferSuccessfully);
       }
     });

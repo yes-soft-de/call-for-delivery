@@ -93,7 +93,7 @@ class CaptainOffersLoadedState extends States {
             },
             onEnable: (status) {
               screenState.enableCaptainOffer(
-                  EnableOfferRequest(id: element.id, status: status),false);
+                  EnableOfferRequest(id: element.id, status: status), false);
             },
           ),
         ),

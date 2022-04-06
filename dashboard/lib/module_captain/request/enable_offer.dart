@@ -1,9 +1,8 @@
-class EnableOfferRequest{
+class EnableOfferRequest {
   int? id;
   String? status;
 
-
-  EnableOfferRequest( {this.id,this.status} );
+  EnableOfferRequest({this.id, this.status});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -11,5 +10,4 @@ class EnableOfferRequest{
     map['status'] = status;
     return map;
   }
-
 }

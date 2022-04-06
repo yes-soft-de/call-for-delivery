@@ -1,4 +1,5 @@
 import 'package:c4d/utils/logger/logger.dart';
+
 class ActionResponse {
   String? statusCode;
   String? msg;

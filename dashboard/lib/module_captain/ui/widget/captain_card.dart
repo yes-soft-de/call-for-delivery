@@ -23,10 +23,10 @@ class CaptainCard extends StatelessWidget {
           const EdgeInsets.only(right: 16.0, left: 16.0, bottom: 8.0, top: 8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
-        onTap:() {
-              Navigator.of(context).pushNamed(CaptainsRoutes.CAPTAIN_PROFILE,
-                  arguments: captainId);
-            },
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: captainId);
+        },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),

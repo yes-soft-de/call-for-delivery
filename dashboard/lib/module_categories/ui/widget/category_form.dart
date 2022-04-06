@@ -30,13 +30,12 @@ class _CategoryFormState extends State<CategoryForm> {
   void initState() {
     super.initState();
 
-    if(widget.request != null){
+    if (widget.request != null) {
       print('notNull');
       _nameController.text = widget.request?.categoryName ?? '';
       _decController.text = widget.request?.description ?? '';
-      id =widget.request?.id ?? -1;
+      id = widget.request?.id ?? -1;
     }
-
   }
 
   @override
@@ -63,8 +62,6 @@ class _CategoryFormState extends State<CategoryForm> {
                       controller: _nameController,
                       hintText: S.current.category,
                     ),
-
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -79,7 +76,6 @@ class _CategoryFormState extends State<CategoryForm> {
                       controller: _decController,
                       hintText: S.current.description,
                     ),
-
                     SizedBox(
                       height: 100,
                     ),
@@ -90,11 +86,14 @@ class _CategoryFormState extends State<CategoryForm> {
           onTap: () {
             if (_key.currentState!.validate()) {
               Navigator.pop(context);
-              widget.onSave(PackageCategoryRequest(name: _nameController.text ,description: _decController.text,id: id));
+              widget.onSave(PackageCategoryRequest(
+                  name: _nameController.text,
+                  description: _decController.text,
+                  id: id));
             } else {
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.pleaseCompleteTheForm)
+                      title: S.current.warnning,
+                      message: S.current.pleaseCompleteTheForm)
                   .show(context);
             }
           }),

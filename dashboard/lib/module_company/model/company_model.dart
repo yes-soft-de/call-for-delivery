@@ -14,9 +14,9 @@ class CompanyProfileModel extends DataModel {
   String email = '';
   String roomID = '';
 
-  num kilometers= 0;
+  num kilometers = 0;
   num maxKilometerBonus = 0;
-  num minKilometerBonus=0;
+  num minKilometerBonus = 0;
 
   CompanyProfileModel? _model;
 
@@ -30,12 +30,9 @@ class CompanyProfileModel extends DataModel {
       required this.stc,
       required this.email,
       required this.roomID,
-
-        required this.minKilometerBonus,
-        required this.maxKilometerBonus,
-        required this.kilometers
-
-      });
+      required this.minKilometerBonus,
+      required this.maxKilometerBonus,
+      required this.kilometers});
 
   CompanyProfileModel.withData(Data data) : super.withData() {
     _model = CompanyProfileModel(
@@ -47,7 +44,7 @@ class CompanyProfileModel extends DataModel {
         bank: data.bankName ?? '',
         stc: data.stc ?? '',
         email: data.email ?? '',
-        roomID: data.roomID ?? '' ,
+        roomID: data.roomID ?? '',
         kilometers: data.kilometers ?? 0,
         maxKilometerBonus: data.maxKilometerBonus ?? 0,
         minKilometerBonus: data.minKilometerBonus ?? 0);

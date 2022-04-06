@@ -19,11 +19,11 @@ class CaptainNeedSupportModel extends DataModel {
     _model = [];
     for (var element in data) {
       _model.add(CaptainNeedSupportModel(
-          roomID: element.roomId ?? '-1',
-          image: element.image?.image ?? '',
+        roomID: element.roomId ?? '-1',
+        image: element.image?.image ?? '',
         captainName: element.captainName ?? '',
-          id: element.id?.toString() ?? '',
-          ));
+        id: element.id?.toString() ?? '',
+      ));
     }
   }
   List<CaptainNeedSupportModel> get data => _model;

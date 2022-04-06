@@ -1,10 +1,10 @@
-class NoticeRequest{
+class NoticeRequest {
   int? id;
   String? title;
   String? msg;
   String? appType;
 
-  NoticeRequest( {this.id, this.title, this.msg , this.appType } );
+  NoticeRequest({this.id, this.title, this.msg, this.appType});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -14,5 +14,4 @@ class NoticeRequest{
     map['appType'] = appType;
     return map;
   }
-
 }

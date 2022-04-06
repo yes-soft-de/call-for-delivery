@@ -16,7 +16,7 @@ class CategoriesLoadedState extends States {
   final bool empty;
   final List<PackagesCategoryModel>? model;
 
- CategoriesLoadedState(this.screenState, this.model,
+  CategoriesLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {
@@ -66,20 +66,22 @@ class CategoriesLoadedState extends States {
         continue;
       }
 
-      widgets.add(CategoryCard(
-        description: element.description ?? '',
-        name: element.categoryName,
-        onEdit: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return CategoryForm(
-                  request: element,
-                  onSave: (request){
-                  screenState.updateCategory(request);
-                },);
-              });
-        },
+      widgets.add(
+        CategoryCard(
+          description: element.description ?? '',
+          name: element.categoryName,
+          onEdit: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return CategoryForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateCategory(request);
+                    },
+                  );
+                });
+          },
         ),
       );
     }

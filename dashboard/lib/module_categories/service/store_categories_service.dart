@@ -34,6 +34,7 @@ class CategoriesService {
     if (_ordersResponse.data == null) return DataModel.empty();
     return PackagesCategoryModel.withData(_ordersResponse.data!);
   }
+
   Future<DataModel> createCategory(PackageCategoryRequest request) async {
     ActionResponse? actionResponse =
         await _categoriesManager.createCategory(request);
@@ -47,10 +48,10 @@ class CategoriesService {
     }
     return DataModel.empty();
   }
-  Future<DataModel> updateCategory(
-      PackageCategoryRequest request) async {
+
+  Future<DataModel> updateCategory(PackageCategoryRequest request) async {
     ActionResponse? actionResponse =
-    await _categoriesManager.updateCategory(request);
+        await _categoriesManager.updateCategory(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -62,10 +63,9 @@ class CategoriesService {
     return DataModel.empty();
   }
 
-  Future<DataModel> updatePackage(
-      PackageRequest request) async {
+  Future<DataModel> updatePackage(PackageRequest request) async {
     ActionResponse? actionResponse =
-    await _categoriesManager.updatePackage(request);
+        await _categoriesManager.updatePackage(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -91,9 +91,10 @@ class CategoriesService {
 
     return PackagesModel.withData(_productCategories.data!);
   }
+
   Future<DataModel> createPackage(PackageRequest request) async {
     ActionResponse? actionResponse =
-    await _categoriesManager.createPackage(request);
+        await _categoriesManager.createPackage(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -106,7 +107,8 @@ class CategoriesService {
   }
 
   Future<DataModel> enablePackage(ActivePackageRequest request) async {
-    ActionResponse? actionResponse = await _categoriesManager.enablePackage(request);
+    ActionResponse? actionResponse =
+        await _categoriesManager.enablePackage(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -117,7 +119,6 @@ class CategoriesService {
     }
     return DataModel.empty();
   }
-
 
   Future<DataModel> deleteCategories(String id) async {
     ActionResponse? actionResponse =
@@ -131,5 +132,4 @@ class CategoriesService {
     }
     return DataModel.empty();
   }
-
 }

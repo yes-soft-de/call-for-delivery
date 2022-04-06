@@ -25,14 +25,15 @@ class CompanyFinanceStateManager {
     _stateSubject.add(LoadingState(screenState));
     _companyService.getCompanyProfile().then((value) {
       if (value.isEmpty) {
-        _stateSubject.add(CompanyFinanceLoadedState(screenState, null, empty: true));
-      } else if (value.hasError) {
         _stateSubject
-            .add(CompanyFinanceLoadedState(screenState, null, error: value.error));
+            .add(CompanyFinanceLoadedState(screenState, null, empty: true));
+      } else if (value.hasError) {
+        _stateSubject.add(
+            CompanyFinanceLoadedState(screenState, null, error: value.error));
       } else {
         CompanyProfileModel model = value as CompanyProfileModel;
-        _stateSubject.add(
-            CompanyFinanceLoadedState(screenState, model.data, error: value.error));
+        _stateSubject.add(CompanyFinanceLoadedState(screenState, model.data,
+            error: value.error));
       }
     });
   }

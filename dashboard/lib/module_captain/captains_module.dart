@@ -9,7 +9,6 @@ import 'package:c4d/abstracts/module/yes_module.dart';
 
 import 'ui/screen/captains_offer_screen.dart';
 
-
 @injectable
 class CaptainsModule extends YesModule {
   final CaptainOffersScreen captainOffersScreen;
@@ -20,8 +19,12 @@ class CaptainsModule extends YesModule {
   final CaptainsNeedsSupportScreen supportScreen;
 
   CaptainsModule(
-      this.captainOffersScreen, this.inActiveCaptains, this.captainsScreen, this.captainProfileScreen, this.supportScreen,
-     ) {
+    this.captainOffersScreen,
+    this.inActiveCaptains,
+    this.captainsScreen,
+    this.captainProfileScreen,
+    this.supportScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -31,7 +34,6 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAIN_PROFILE: (context) => captainProfileScreen,
       CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => inActiveCaptains,
       CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
-
     };
   }
 }

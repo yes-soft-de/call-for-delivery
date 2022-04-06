@@ -24,7 +24,7 @@ class PackagesLoadedState extends States {
       {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {
-      screenState.canAddPackage= false;
+      screenState.canAddPackage = false;
       screenState.refresh();
     }
   }
@@ -63,7 +63,8 @@ class PackagesLoadedState extends States {
                 items: getChoices(),
                 onChanged: (v) {
                   screenState.id = v.toString();
-                  screenState.getPackagesCategories( int.parse(screenState.id??'-1'),categories ?? []);
+                  screenState.getPackagesCategories(
+                      int.parse(screenState.id ?? '-1'), categories ?? []);
                 },
                 hint: Text(
                   S.current.chooseCategory,
@@ -131,30 +132,35 @@ class PackagesLoadedState extends States {
 //        continue;
 //      }
       widgets.add(SinglePackageCard(
-        carsCount: element.carCount.toString(),ordersCount: element.orderCount.toString(),
+        carsCount: element.carCount.toString(),
+        ordersCount: element.orderCount.toString(),
         packageInfo: element.note,
         packageName: element.name,
         cost: element.cost.toString(),
         expaired: element.expired.toString(),
         city: element.city,
         status: element.status,
-        edit: (){
+        edit: () {
           showDialog(
               context: context,
               builder: (_) {
                 return PackageForm(
                   request: element,
-                  onSave: (request){
+                  onSave: (request) {
                     screenState.updatePakage(request);
-                  },);
+                  },
+                );
               });
         },
-        enablePackage: (status){
-          screenState.enablePackage(ActivePackageRequest(status: status ,id: element.id),false);
+        enablePackage: (status) {
+          screenState.enablePackage(
+              ActivePackageRequest(status: status, id: element.id), false);
         },
       ));
     }
-    widgets.add(SizedBox(height: 100,));
+    widgets.add(SizedBox(
+      height: 100,
+    ));
     return widgets;
   }
 

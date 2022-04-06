@@ -169,7 +169,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
     return Padding(
       key: ValueKey(page.runtimeType),
       padding: EdgeInsets.only(
-          left: subtitle ? 16.0 : 8.0, right: subtitle ? 16 : 8.0,bottom: selected ? 8 : 0),
+          left: subtitle ? 16.0 : 8.0,
+          right: subtitle ? 16 : 8.0,
+          bottom: selected ? 8 : 0),
       child: Container(
         decoration: BoxDecoration(
             color: selected ? Theme.of(context).colorScheme.primary : null,

@@ -45,9 +45,11 @@ class CompanyFinanceScreenState extends State<CompanyFinanceScreen> {
   void createProfile(CreateCompanyProfile request) {
     widget._stateManager.createProfile(this, request);
   }
+
   void UpdateCompanyProfile(CreateCompanyProfile request) {
     widget._stateManager.UpdateCompanyProfile(this, request);
   }
+
   void refresh() {
     if (mounted) {
       setState(() {});

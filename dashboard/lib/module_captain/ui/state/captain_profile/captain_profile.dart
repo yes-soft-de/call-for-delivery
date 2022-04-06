@@ -113,16 +113,24 @@ class CaptainProfileLoadedState extends States {
                             leading: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Theme.of(context).scaffoldBackgroundColor,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Icon( Icons.account_box_rounded,color: Theme.of(context).primaryColor),
+                                  child: Icon(Icons.account_box_rounded,
+                                      color: Theme.of(context).primaryColor),
                                 )),
-                            title: Text(S.of(context).captainStatus,    style: TextStyle(color: Colors.white),),
-                            subtitle: Text( model?.status == 'active'
-                                ? S.current.captainStateActive
-                                : S.current.captainStateInactive,    style: TextStyle(color: Colors.white),),
+                            title: Text(
+                              S.of(context).captainStatus,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              model?.status == 'active'
+                                  ? S.current.captainStateActive
+                                  : S.current.captainStateInactive,
+                              style: TextStyle(color: Colors.white),
+                            ),
                             value: model?.status == 'active',
                             onChanged: (v) {
                               if (v) {
@@ -175,8 +183,8 @@ class CaptainProfileLoadedState extends States {
               context: context,
               builder: (_) {
                 return Scaffold(
-                  appBar: CustomC4dAppBar.appBar(context,
-                      title: S.current.update),
+                  appBar:
+                      CustomC4dAppBar.appBar(context, title: S.current.update),
                   body: UpdateCaptainProfile(
                     request: model,
                     updateProfile: (request) {

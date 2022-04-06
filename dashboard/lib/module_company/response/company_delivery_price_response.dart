@@ -35,7 +35,7 @@ class Data {
   num? deliveryCost;
   num? representativeCommission;
 
-  Data({this.id, this.deliveryCost , this.representativeCommission});
+  Data({this.id, this.deliveryCost, this.representativeCommission});
 
   Data.fromJson(dynamic json) {
     id = json['id'];

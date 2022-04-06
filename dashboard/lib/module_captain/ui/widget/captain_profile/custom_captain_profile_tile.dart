@@ -18,8 +18,7 @@ class CustomListTile extends StatelessWidget {
             Icons.circle,
             color: subTitle == 'active' ? Colors.green : Colors.red,
             size: 30,
-          )
-      );
+          ));
       subTitle = subTitle == 'active'
           ? S.current.captainStateActive
           : S.current.captainStateInactive;

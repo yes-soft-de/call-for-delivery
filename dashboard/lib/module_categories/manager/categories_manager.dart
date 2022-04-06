@@ -13,21 +13,16 @@ class CategoriesManager {
 
   CategoriesManager(this._categoriesRepository);
 
-
-
   Future<PackageCategoryResponse?> getCategories() =>
       _categoriesRepository.getPackagesCategories();
 
   Future<ActionResponse?> createCategory(PackageCategoryRequest request) =>
       _categoriesRepository.addCategory(request);
 
-  Future<ActionResponse?> updateCategory(
-      PackageCategoryRequest request) =>
+  Future<ActionResponse?> updateCategory(PackageCategoryRequest request) =>
       _categoriesRepository.updateCategory(request);
 
-
-  Future<ActionResponse?> updatePackage(
-      PackageRequest request) =>
+  Future<ActionResponse?> updatePackage(PackageRequest request) =>
       _categoriesRepository.updatePackage(request);
 
   Future<PackagesResponse?> getPackagesByCategory(int id) =>
@@ -41,5 +36,4 @@ class CategoriesManager {
 
   Future<ActionResponse?> deleteCategories(String id) =>
       _categoriesRepository.deleteCategories(id);
-
 }

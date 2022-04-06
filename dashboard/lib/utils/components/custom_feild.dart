@@ -24,8 +24,7 @@ class CustomFormField extends StatefulWidget {
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
   CustomFormField(
-      {
-      this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      {this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
       this.hintText,
       this.preIcon,
       this.sufIcon,
@@ -65,7 +64,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
               getIt<LocalizationService>().getLanguage() == 'ar' && kIsWeb
                   ? 16
                   : null,
-          keyboardType: widget.numbers ? TextInputType.phone :TextInputType.multiline,
+          keyboardType:
+              widget.numbers ? TextInputType.phone : TextInputType.multiline,
           onEditingComplete:
               widget.maxLines != null ? null : () => node.nextFocus(),
           onFieldSubmitted: widget.maxLines == null && widget.last

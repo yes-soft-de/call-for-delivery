@@ -4,7 +4,7 @@ import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 
 class ProfileModel extends DataModel {
-  int id =-1;
+  int id = -1;
   String? image;
   String? name;
   String? phone;
@@ -23,7 +23,7 @@ class ProfileModel extends DataModel {
   String? createDate;
   ProfileModel(
       {required this.id,
-        this.image,
+      this.image,
       this.name,
       this.phone,
       this.stcPay,
@@ -44,7 +44,7 @@ class ProfileModel extends DataModel {
 
   ProfileModel.withData(Data data) : super.withData() {
     _models = ProfileModel(
-      id: data.id ?? -1,
+        id: data.id ?? -1,
         image: data.image?.image,
         name: data.captainName,
         phone: data.phone,

@@ -37,10 +37,12 @@ class CaptainOfferCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomC4dAppBar.actionIcon(context,
-                    icon: Icons.edit, onTap: onEdit,padding: EdgeInsetsDirectional.only(start: 16,top: 8)),
+                    icon: Icons.edit,
+                    onTap: onEdit,
+                    padding: EdgeInsetsDirectional.only(start: 16, top: 8)),
                 Spacer(),
                 Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 16,top: 8),
+                  padding: const EdgeInsetsDirectional.only(end: 16, top: 8),
                   child: Switch(
                       activeColor: Colors.green,
                       value: model.status == 'active',
