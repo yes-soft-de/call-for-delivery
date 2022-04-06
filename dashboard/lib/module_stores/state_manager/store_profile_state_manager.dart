@@ -48,12 +48,12 @@ class StoreProfileStateManager {
     }
     _storesService.enableStore(request).then((value) {
       if (value.hasError) {
-        getStore(screenState, request.id,loading);
+        getStore(screenState, request.id, loading);
         showSnackFailed(
             screenState, value.error ?? S.current.errorHappened, loading);
       } else {
         getIt<GlobalStateManager>().updateList();
-        getStore(screenState, request.id,loading);
+        getStore(screenState, request.id, loading);
         showSnackSuccess(
             screenState, S.current.storeUpdatedSuccessfully, loading);
       }

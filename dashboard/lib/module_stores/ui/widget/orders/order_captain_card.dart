@@ -6,12 +6,12 @@ class CaptainNotCard extends StatelessWidget {
   final String branchName;
   final String captainName;
   final String createdDate;
-  CaptainNotCard(
-      {required this.storeName,
-        required this.captainName,
-        required this.createdDate,
-        required this.branchName,
-});
+  CaptainNotCard({
+    required this.storeName,
+    required this.captainName,
+    required this.createdDate,
+    required this.branchName,
+  });
 
   @override
   Widget build(BuildContext context) {

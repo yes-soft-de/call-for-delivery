@@ -97,8 +97,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     }
   }
 
-  void rateCaptain( ) {
-  }
+  void rateCaptain() {}
 
   bool flag = true;
   @override

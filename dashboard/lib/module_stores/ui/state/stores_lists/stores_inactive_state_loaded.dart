@@ -81,7 +81,6 @@ class StoresInActiveLoadedState extends States {
     );
   }
 
-
   List<Widget> getStores() {
     List<Widget> widgets = [];
     if (model == null) {
@@ -148,12 +147,12 @@ class StoresInActiveLoadedState extends States {
                               appBar: CustomC4dAppBar.appBar(context,
                                   title: S.current.updateStore),
                               backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
+                                  Theme.of(context).scaffoldBackgroundColor,
                               body: UpdateStoreWidget(
-                                storesModel:element,
-                                updateStore: (request,haveImage) {
+                                storesModel: element,
+                                updateStore: (request, haveImage) {
                                   Navigator.of(context).pop();
-                                  screenState.updateStore(request,haveImage);
+                                  screenState.updateStore(request, haveImage);
                                 },
                               ),
                             ),

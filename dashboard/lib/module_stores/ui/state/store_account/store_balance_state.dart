@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/store_balance_model.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
+import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -81,9 +81,8 @@ class StoreBalanceLoadedState extends States {
           ),
           ElevatedButton(
               onPressed: () {
-                screenState.pay(StorePaymentRequest(
-                    storeOwnerProfileId: screenState.storeID,
-                    note: _note.text,
+                screenState.pay(CreateStorePaymentsRequest(
+                    storeId: screenState.storeID,
                     amount: num.parse(_amount.text.trim())));
               },
               style: ElevatedButton.styleFrom(
@@ -220,7 +219,7 @@ class StoreBalanceLoadedState extends States {
                             context: screenState.context,
                             builder: (context) {
                               return CustomAlertDialog(
-                                oneAction: false,
+                                  oneAction: false,
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     screenState

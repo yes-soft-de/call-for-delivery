@@ -3,7 +3,8 @@ class FilterOrderRequest {
   String? state;
   String? toDate;
   String? fromDate;
-  FilterOrderRequest({this.fromDate, this.state, this.toDate ,this.storeOwnerProfileId});
+  FilterOrderRequest(
+      {this.fromDate, this.state, this.toDate, this.storeOwnerProfileId});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

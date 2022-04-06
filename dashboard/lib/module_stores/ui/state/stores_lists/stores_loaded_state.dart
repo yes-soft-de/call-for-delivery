@@ -78,10 +78,8 @@ class StoresLoadedState extends States {
                     storeOwnerName: element.storeOwnerName,
                     phone: element.phone,
                     status: element.status,
-                  imageUrl: element.imageUrl,
-                    employeeCount: element.employeeCount
-                )
-            );
+                    imageUrl: element.imageUrl,
+                    employeeCount: element.employeeCount));
           },
           child: Container(
             decoration: BoxDecoration(
@@ -115,7 +113,9 @@ class StoresLoadedState extends States {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,arguments: element.id);
+                    Navigator.pushNamed(
+                        screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
+                        arguments: element.id);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -133,7 +133,9 @@ class StoresLoadedState extends States {
                     ),
                   ),
                 ),
-                SizedBox(width: 16,),
+                SizedBox(
+                  width: 16,
+                ),
                 InkWell(
                   onTap: () {
                     showDialog(
@@ -150,9 +152,9 @@ class StoresLoadedState extends States {
                                   Theme.of(context).scaffoldBackgroundColor,
                               body: UpdateStoreWidget(
                                 storesModel: element,
-                                updateStore: (request,haveImage) {
+                                updateStore: (request, haveImage) {
                                   Navigator.of(context).pop();
-                                  screenState.updateStore(request,haveImage);
+                                  screenState.updateStore(request, haveImage);
                                 },
                               ),
                             ),
@@ -175,8 +177,9 @@ class StoresLoadedState extends States {
                     ),
                   ),
                 ),
-                SizedBox(width: 16,),
-              
+                SizedBox(
+                  width: 16,
+                ),
               ],
             ),
           ),

@@ -42,7 +42,8 @@ class StoreManager {
 
   Future<OrdersResponse?> getStoreOrdersFilter(FilterOrderRequest request) =>
       _storesRepository.getStoreOrdersFilter(request);
-  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest request) =>
+  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(
+          FilterOrderCaptainNotArrivedRequest request) =>
       _storesRepository.getOrdersNotArrivedCaptainFilter(request);
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
       _storesRepository.getOrderDetails(orderId);

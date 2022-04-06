@@ -48,8 +48,8 @@ class StoresScreenState extends State<StoresScreen> {
 //    widget._stateManager.createStore(this, request);
 //  }
 
-  void updateStore(UpdateStoreRequest request,bool haveImage) {
-    widget._stateManager.updateStore(this, request,haveImage);
+  void updateStore(UpdateStoreRequest request, bool haveImage) {
+    widget._stateManager.updateStore(this, request, haveImage);
   }
 
   void refresh() {

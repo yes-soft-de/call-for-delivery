@@ -3,7 +3,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order_logs_response/data.dart';
- import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
@@ -34,6 +34,7 @@ class OrderDetailsModel extends DataModel {
   num? captainOrderCost;
   String? attention;
   late OrderTimeLine? orderLogs;
+
   /// to confirm that captain is really in store
   late bool? showConfirm;
   OrderDetailsModel(
@@ -54,7 +55,8 @@ class OrderDetailsModel extends DataModel {
       required this.showConfirm,
       required this.deliveryDate,
       required this.image,
-      required this.captainID,this.orderLogs});
+      required this.captainID,
+      this.orderLogs});
 
   late OrderDetailsModel _orders;
 
@@ -110,7 +112,7 @@ class OrderDetailsModel extends DataModel {
     orderLogs.orderLogs?.logs?.forEach((element) {
       // step date
       var stepDate = DateFormat.jm()
-          .format(DateHelper.convert(element.createdAt?.timestamp)) +
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
           DateFormat.yMd()
               .format(DateHelper.convert(element.createdAt?.timestamp));
@@ -126,6 +128,7 @@ class OrderDetailsModel extends DataModel {
             orderLogs.orderLogs?.orderState?.currentStage));
     return orderTimeLine;
   }
+
   bool _canRemove(DateTime date) {
     bool canRemove = true;
     if (DateTime.now().difference(date).inMinutes < 30) {
@@ -136,6 +139,7 @@ class OrderDetailsModel extends DataModel {
 
   OrderDetailsModel get data => _orders;
 }
+
 class OrderTimeLine {
   String? completionTime;
   OrderStatusEnum currentState;

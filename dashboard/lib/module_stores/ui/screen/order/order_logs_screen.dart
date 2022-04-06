@@ -62,17 +62,18 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
       if (arg != null && arg is int) {
         storeID = arg;
         ordersFilter = FilterOrderRequest(
-          storeOwnerProfileId: storeID,
+            storeOwnerProfileId: storeID,
             state: 'pending',
-            fromDate:
-            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
+            fromDate: DateTime(today.year, today.month, today.day, 0)
+                .toIso8601String(),
             toDate: DateTime.now().toIso8601String());
         widget._stateManager.getOrdersFilters(this, ordersFilter);
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.orderLog,
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.orderLog,
       ),
       body: Column(
         children: [

@@ -20,8 +20,8 @@ class OrderCaptainNotArrivedStateManager {
 
   OrderCaptainNotArrivedStateManager(this._orderService);
 
-  void getOrdersFilters(
-      OrderCaptainNotArrivedScreenState screenState, FilterOrderCaptainNotArrivedRequest request,
+  void getOrdersFilters(OrderCaptainNotArrivedScreenState screenState,
+      FilterOrderCaptainNotArrivedRequest request,
       [bool loading = true]) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));

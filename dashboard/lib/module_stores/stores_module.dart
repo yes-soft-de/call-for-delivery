@@ -26,8 +26,16 @@ class StoresModule extends YesModule {
   final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
   final OrderTimeLineScreen orderTimeLineScreen;
 
-  StoresModule(this.storesScreen, this._storeInfoScreen,
-      this.storesInActiveScreen, this.storeBalanceScreen, this.supportScreen, this._orderStatus, this._logsScreen, this.captainNotArrivedScreen, this.orderTimeLineScreen) {
+  StoresModule(
+      this.storesScreen,
+      this._storeInfoScreen,
+      this.storesInActiveScreen,
+      this.storeBalanceScreen,
+      this.supportScreen,
+      this._orderStatus,
+      this._logsScreen,
+      this.captainNotArrivedScreen,
+      this.orderTimeLineScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -41,8 +49,6 @@ class StoresModule extends YesModule {
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
-
-
     };
   }
 }

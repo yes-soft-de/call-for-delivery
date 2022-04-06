@@ -22,10 +22,8 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 import '../../../abstracts/states/loading_state.dart';
 
-
-
 class UpdateStoreWidget extends StatefulWidget {
-  final Function(UpdateStoreRequest,bool) updateStore;
+  final Function(UpdateStoreRequest, bool) updateStore;
   StoresModel? storesModel;
 
   UpdateStoreWidget({required this.updateStore, this.storesModel});
@@ -49,10 +47,9 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
   Uint8List? imageBytes;
   String? selectedSize;
 
-
   DateTime? openingTime;
   DateTime? closingTime;
-  String? status ;
+  String? status;
   var date = DateTime.now();
   int val = 1;
   @override
@@ -99,7 +96,6 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         controller: _phoneController,
                         hintText: S.current.phoneNumber,
                       ),
-
 
                       Padding(
                         padding: const EdgeInsets.only(
@@ -229,8 +225,9 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                           onTap: () {
                             ImagePicker.platform
                                 .getImage(
-                                    source: ImageSource.gallery, imageQuality: 70)
-                                .then((value) async{
+                                    source: ImageSource.gallery,
+                                    imageQuality: 70)
+                                .then((value) async {
                               if (value != null) {
                                 imageBytes = await value.readAsBytes();
                                 imagePath = value.path;
@@ -238,23 +235,23 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                               }
                             });
                           },
-                          child:  Checked(
+                          child: Checked(
                               checked: imagePath != null,
                               checkedWidget: ClipRRect(
                                   borderRadius: BorderRadius.circular(25),
                                   child: imageBytes != null
                                       ? Image.memory(
-                                    imageBytes ?? Uint8List(0),
-                                    fit: BoxFit.cover,
-                                  )
+                                          imageBytes ?? Uint8List(0),
+                                          fit: BoxFit.cover,
+                                        )
                                       : Image.network(
-                                    networkImage ?? '',
-                                    fit: BoxFit.cover,
-                                  )),
+                                          networkImage ?? '',
+                                          fit: BoxFit.cover,
+                                        )),
                               child: Center(
                                   child: Icon(
-                                    Icons.camera_alt,
-                                  ))),
+                                Icons.camera_alt,
+                              ))),
                         ),
                       ),
                       // Store Shift
@@ -285,12 +282,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 if (value == null) {
                                 } else {
                                   var now = DateTime.now();
-                                  openingTime = DateTime(
-                                      now.year,
-                                      now.month,
-                                      now.day,
-                                      value.hour,
-                                      value.minute);
+                                  openingTime = DateTime(now.year, now.month,
+                                      now.day, value.hour, value.minute);
                                   setState(() {});
                                 }
                               });
@@ -303,8 +296,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    DateFormat.jm().format(
-                                        openingTime ?? DateTime.now()),
+                                    DateFormat.jm()
+                                        .format(openingTime ?? DateTime.now()),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -329,12 +322,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 if (value == null) {
                                 } else {
                                   var now = DateTime.now();
-                                  closingTime = DateTime(
-                                      now.year,
-                                      now.month,
-                                      now.day,
-                                      value.hour,
-                                      value.minute);
+                                  closingTime = DateTime(now.year, now.month,
+                                      now.day, value.hour, value.minute);
                                   setState(() {});
                                 }
                               });
@@ -347,8 +336,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    DateFormat.jm().format(
-                                        closingTime ?? DateTime.now()),
+                                    DateFormat.jm()
+                                        .format(closingTime ?? DateTime.now()),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -356,7 +345,6 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                           ),
                         ),
                       ),
-
 
                       Padding(
                         padding: const EdgeInsets.only(
@@ -383,18 +371,17 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButtonFormField(
                                         autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                            AutovalidateMode.onUserInteraction,
                                         elevation: 3,
                                         validator: (String? value) {
                                           if (value == null) {
-                                            return S.current
-                                                .chooseYourSize;
+                                            return S.current.chooseYourSize;
                                           }
                                         },
                                         value: selectedSize,
                                         decoration: InputDecoration(
                                           hintText:
-                                          S.of(context).chooseYourSize,
+                                              S.of(context).chooseYourSize,
                                           hintMaxLines: 2,
                                           helperMaxLines: 2,
                                           border: InputBorder.none,
@@ -428,16 +415,15 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
             }
           } else if (imagePath == null) {
             CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: S.current.noImage)
+                    title: S.current.warnning, message: S.current.noImage)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: S.current.pleaseCompleteTheForm)
+                    title: S.current.warnning,
+                    message: S.current.pleaseCompleteTheForm)
                 .show(context);
           }
-        }
-        );
+        });
   }
 
   @override
@@ -456,16 +442,17 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
       openingTime = widget.storesModel?.openingTime;
       closingTime = widget.storesModel?.closingTime;
       status = widget.storesModel?.status ?? 'active';
-      _bankAccountNumber.text =widget.storesModel?.bankAccountNumber ?? '';
+      _bankAccountNumber.text = widget.storesModel?.bankAccountNumber ?? '';
       _bankName.text = widget.storesModel?.bankName ?? '';
 //      _stcPay.text = widget.storesModel?.
       val = _bankAccountNumber.text != '' ? 1 : 2;
-      _cityController.text =widget.storesModel?.city ?? '';
-      _phoneController.text =widget.storesModel?.phone ?? '';
-      selectedSize =widget.storesModel?.employeeCount ?? '1-20';
+      _cityController.text = widget.storesModel?.city ?? '';
+      _phoneController.text = widget.storesModel?.phone ?? '';
+      selectedSize = widget.storesModel?.employeeCount ?? '1-20';
     }
     super.initState();
   }
+
   List<DropdownMenuItem<String>> _getSizes(BuildContext context) {
     var sizeDropdowns = <DropdownMenuItem<String>>[];
     sizeDropdowns.add(DropdownMenuItem(
@@ -483,20 +470,20 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
 
     return sizeDropdowns;
   }
+
   void saveImageUpload(bool haveImage) {
     UpdateStoreRequest profileRequest = UpdateStoreRequest(
-      storeOwnerName: _nameController.text,
-      phone: _phoneController.text,
-      city: _cityController.text,
-      image: imagePath,
-      bankName: _bankName.text,
-      bankAccountNumber: _bankAccountNumber.text,
-      employeeCount: selectedSize,
-      closingTime: closingTime?.toUtc().toIso8601String(),
-      openingTime: openingTime?.toUtc().toIso8601String(),
-      status: status,
-      id: widget.storesModel?.id ?? -1
-    );
-    widget.updateStore(profileRequest,haveImage);
+        storeOwnerName: _nameController.text,
+        phone: _phoneController.text,
+        city: _cityController.text,
+        image: imagePath,
+        bankName: _bankName.text,
+        bankAccountNumber: _bankAccountNumber.text,
+        employeeCount: selectedSize,
+        closingTime: closingTime?.toUtc().toIso8601String(),
+        openingTime: openingTime?.toUtc().toIso8601String(),
+        status: status,
+        id: widget.storesModel?.id ?? -1);
+    widget.updateStore(profileRequest, haveImage);
   }
 }

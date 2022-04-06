@@ -29,8 +29,9 @@ class StoreProfileModel extends DataModel {
       this.openingTime,
       required this.bankName,
       required this.bankNumber,
-        this.employeeCount,this.city,this.status
-      });
+      this.employeeCount,
+      this.city,
+      this.status});
 
   StoreProfileModel.withData(Data data) : super.withData() {
     _models = StoreProfileModel(
@@ -43,9 +44,10 @@ class StoreProfileModel extends DataModel {
         closingTime: DateFormat.jm()
             .format(DateHelper.convert(data.closingTime?.timestamp)),
         bankName: data.bankName ?? '',
-        bankNumber: data.bankAccountNumber ?? '',employeeCount: data.employeeCount,
-        city: data.city,status: data.status
-    );
+        bankNumber: data.bankAccountNumber ?? '',
+        employeeCount: data.employeeCount,
+        city: data.city,
+        status: data.status);
   }
 
   StoreProfileModel get data {

@@ -11,13 +11,12 @@ class OrderCaptainNotArrivedModel extends DataModel {
   late String storeName;
   late String captainName;
   late String createdDate;
-  OrderCaptainNotArrivedModel({
-    required this.branchName,
-    required this.createdDate,
-    required this.id,
-    required this.captainName,
-    required this.storeName
-  });
+  OrderCaptainNotArrivedModel(
+      {required this.branchName,
+      required this.createdDate,
+      required this.id,
+      required this.captainName,
+      required this.storeName});
   List<OrderCaptainNotArrivedModel> _orders = [];
   OrderCaptainNotArrivedModel.withData(OrderCaptainResponse response) {
     var data = response.data;
@@ -25,7 +24,7 @@ class OrderCaptainNotArrivedModel extends DataModel {
       // date formatter
       // created At
       var create = DateFormat.jm()
-          .format(DateHelper.convert(element.createdAt?.timestamp)) +
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
           DateFormat.Md()
               .format(DateHelper.convert(element.createdAt?.timestamp));
@@ -34,8 +33,7 @@ class OrderCaptainNotArrivedModel extends DataModel {
           createdDate: create,
           storeName: element.storeOwnerName ?? S.current.unknown,
           id: element.id ?? -1,
-        captainName: element.captainName ?? S.current.unknown
-          ));
+          captainName: element.captainName ?? S.current.unknown));
     });
   }
   List<OrderCaptainNotArrivedModel> get data => _orders;

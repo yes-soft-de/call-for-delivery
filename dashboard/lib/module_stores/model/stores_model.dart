@@ -29,8 +29,12 @@ class StoresModel extends DataModel {
       this.openingTime,
       this.closingTime,
       required this.status,
-        this.image,
-      this.imageUrl, this.employeeCount ,this.bankName ,this.bankAccountNumber,this.city});
+      this.image,
+      this.imageUrl,
+      this.employeeCount,
+      this.bankName,
+      this.bankAccountNumber,
+      this.city});
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
@@ -43,12 +47,11 @@ class StoresModel extends DataModel {
           closingTime: DateHelper.convert(element.closingTime?.timestamp),
           status: element.status ?? '',
           image: element.image?.image,
-          imageUrl: element.image?.imageURL ??ImageAsset.PLACEHOLDER,
-        bankAccountNumber: element.bankAccountNumber,
-        bankName: element.bankName,
-        city:element.city,
-        employeeCount: element.employeeCount
-      ));
+          imageUrl: element.image?.imageURL ?? ImageAsset.PLACEHOLDER,
+          bankAccountNumber: element.bankAccountNumber,
+          bankName: element.bankName,
+          city: element.city,
+          employeeCount: element.employeeCount));
     }
   }
 

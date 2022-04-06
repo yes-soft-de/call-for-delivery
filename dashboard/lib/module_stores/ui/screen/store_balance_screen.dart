@@ -1,10 +1,10 @@
+import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
 import 'package:c4d/module_stores/state_manager/store_balance_state_manager.dart';
 
 @injectable
@@ -30,12 +30,12 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
     super.initState();
   }
 
-  void pay(StorePaymentRequest request) {
+  void pay(CreateStorePaymentsRequest request) {
     widget._stateManager.payForStore(this, request);
   }
 
   void deletePay(String id) {
-    widget._stateManager.deletePayment(this, id);
+   // widget._stateManager.deletePayment(this, id);
   }
 
   void getPayments() {
@@ -58,8 +58,8 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).storeBalance),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.of(context).storeBalance),
       body: currentState.getUI(context),
     );
   }
