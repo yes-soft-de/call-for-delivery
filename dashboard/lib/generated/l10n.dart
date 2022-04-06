@@ -5329,6 +5329,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Payment created successfully`
+  String get paymentSuccessfully {
+    return Intl.message(
+      'Payment created successfully',
+      name: 'paymentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment updated successfully`
+  String get updatePaymentSuccessfully {
+    return Intl.message(
+      'Payment updated successfully',
+      name: 'updatePaymentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

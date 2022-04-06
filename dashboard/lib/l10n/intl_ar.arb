@@ -538,6 +538,8 @@
     "orderCostWithDeliveryCost": "سعر الطلب شامل تكلفة التوصيل",
     "km": "كم",
     "orderTimeLine": "دورة حياة الطلب",
-    "captainNotArrived": "الكباتن اللذين لم يصلو المتجر"
+    "captainNotArrived": "الكباتن اللذين لم يصلو المتجر",
+    "paymentSuccessfully": "تم تسجيل دفعة بنجاح",
+    "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح"
 
 }

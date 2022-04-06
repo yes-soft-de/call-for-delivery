@@ -493,6 +493,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
+        "paymentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
         "paymentsVia":
@@ -738,6 +740,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updatePackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل الباقة بنجاح"),
+        "updatePaymentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الدفعة بنجاح"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),

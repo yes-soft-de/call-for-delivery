@@ -543,5 +543,7 @@
     "orderCostWithDeliveryCost": "Order cost contains delivery tax",
     "km": "Km",
     "orderTimeLine": "Order Time Line",
-    "captainNotArrived": "Captain not arrived"
+    "captainNotArrived": "Captain not arrived",
+    "paymentSuccessfully": "Payment created successfully",
+    "updatePaymentSuccessfully": "Payment updated successfully"
 }

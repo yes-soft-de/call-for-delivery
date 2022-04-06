@@ -498,6 +498,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
+        "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment created successfully"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
@@ -745,6 +747,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updatePackageSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Package updated successfully"),
+        "updatePaymentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment updated successfully"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
