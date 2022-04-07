@@ -275,3 +275,36 @@ App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
             - NotBlank: ~
         messageBody:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest:
+    properties:
+        countHours:
+            - NotBlank: ~
+        compensationForEveryOrder:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
+    properties:
+        countOrdersInMonth:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+        monthCompensation:
+            - NotBlank: ~
+        bounceMaxCountOrdersInMonth:
+            - NotBlank: ~
+        bounceMinCountOrdersInMonth:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest:
+    properties:
+        categoryName:
+            - NotBlank: ~
+        countKilometersFrom:
+            - NotBlank: ~
+        countKilometersTo:
+            - NotBlank: ~
+        amount:
+            - NotBlank: ~
