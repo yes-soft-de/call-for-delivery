@@ -5,7 +5,6 @@ namespace App\Controller\Admin\StoreOwnerPayment;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -19,6 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Main\MainErrorConstant;
+use App\Constant\Payment\PaymentConstant;
 
 /**
  * Create and fetch Payments from store.
@@ -113,8 +113,8 @@ class AdminStoreOwnerPaymentController extends BaseController
     }
 
     /**
-     * admin:Update Payment from store
-     * @Route("storeownerpayment", name="updateStoreOwnerPayment", methods={"PUT"})
+     * admin:delete Payment from store
+     * @Route("storeownerpayment/{id}", name="deleteStoreOwnerPayment", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -128,17 +128,8 @@ class AdminStoreOwnerPaymentController extends BaseController
      *      required=true
      * )
      *
-     * @OA\RequestBody(
-     *      description="new payment",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="number", property="amount"),
-     *          @OA\Property(type="integer", property="store"),
-     *      )
-     * )
-     *
      * @OA\Response(
-     *      response=201,
+     *      response=401,
      *      description="Returns new payment",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -157,34 +148,22 @@ class AdminStoreOwnerPaymentController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9157"),
-     *          @OA\Property(type="string", property="msg", description="store owner profile not exist! Error."),
+     *          @OA\Property(type="string", property="status_code", description="9501"),
+     *          @OA\Property(type="string", property="msg", description="payment not exist!"),
      *      )
      * )
      * 
      * @Security(name="Bearer")
      */
-    public function updateStoreOwnerPayment(Request $request): JsonResponse
+    public function deleteStoreOwnerPayment($id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, AdminStoreOwnerPaymentUpdateRequest::class, (object)$data);
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->adminStoreOwnerPaymentService->updateStoreOwnerPayment($request);
+        $result = $this->adminStoreOwnerPaymentService->deleteStoreOwnerPayment($id);
        
-        if($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        if($result === PaymentConstant::PAYMENT_NOT_EXISTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_NOT_EXIST);
         }
 
-        return $this->response($result, self::UPDATE);
+        return $this->response($result, self::DELETE);
     }
 
     /**

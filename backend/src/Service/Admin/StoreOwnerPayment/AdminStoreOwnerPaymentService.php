@@ -6,10 +6,11 @@ use App\AutoMapping;
 use App\Entity\StoreOwnerPaymentEntity;
 use App\Manager\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentManager;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateResponse;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Payment\PaymentConstant;
+use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentDeleteResponse;
 
 class AdminStoreOwnerPaymentService
 {
@@ -33,15 +34,15 @@ class AdminStoreOwnerPaymentService
         return $this->autoMapping->map(StoreOwnerPaymentEntity::class, AdminStoreOwnerPaymentCreateResponse::class, $payment);
     }
 
-    public function updateStoreOwnerPayment(AdminStoreOwnerPaymentUpdateRequest $request): AdminStoreOwnerPaymentCreateResponse|string|null
+    public function deleteStoreOwnerPayment($id): AdminStoreOwnerPaymentDeleteResponse|string
     {
-        $payment = $this->adminStoreOwnerPaymentManager->updateStoreOwnerPayment($request);
+        $payment = $this->adminStoreOwnerPaymentManager->deleteStoreOwnerPayment($id);
        
-        if($payment === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+        if($payment ===  PaymentConstant::PAYMENT_NOT_EXISTS) {
             return $payment;
         }
        
-        return $this->autoMapping->map(StoreOwnerPaymentEntity::class, AdminStoreOwnerPaymentCreateResponse::class, $payment);
+        return $this->autoMapping->map(StoreOwnerPaymentEntity::class, AdminStoreOwnerPaymentDeleteResponse::class, $payment);
     }
 
     public function getAllStorePayments(int $storeId): array
