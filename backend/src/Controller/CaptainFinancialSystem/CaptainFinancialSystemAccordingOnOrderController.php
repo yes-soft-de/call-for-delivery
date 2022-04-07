@@ -18,12 +18,12 @@ use OpenApi\Annotations as OA;
  */
 class CaptainFinancialSystemAccordingOnOrderController extends BaseController
 {
-    private CaptainFinancialSystemAccordingOnOrderService $CaptainFinancialSystemAccordingOnOrderService;
+    private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService;
 
-    public function __construct(SerializerInterface $serializer, CaptainFinancialSystemAccordingOnOrderService $CaptainFinancialSystemAccordingOnOrderService)
+    public function __construct(SerializerInterface $serializer, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService)
     {
         parent::__construct($serializer);
-        $this->CaptainFinancialSystemAccordingOnOrderService = $CaptainFinancialSystemAccordingOnOrderService;
+        $this->captainFinancialSystemAccordingOnOrderService = $captainFinancialSystemAccordingOnOrderService;
     }
 
     /**
@@ -32,7 +32,7 @@ class CaptainFinancialSystemAccordingOnOrderController extends BaseController
      * @IsGranted("ROLE_CAPTAIN")
      * @return JsonResponse
      *
-     * @OA\Tag(name="Captain's Financial System According OnOrder")
+     * @OA\Tag(name="Captain's Financial System According On Order")
      *
      * @OA\Parameter(
      *      name="token",
@@ -43,7 +43,7 @@ class CaptainFinancialSystemAccordingOnOrderController extends BaseController
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns payments",
+     *      description="Returns Captain's Financial System According On Order",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -65,7 +65,7 @@ class CaptainFinancialSystemAccordingOnOrderController extends BaseController
      */
     public function getAllCaptainFinancialSystemAccordingOnOrder(): JsonResponse
     {
-        $result = $this->CaptainFinancialSystemAccordingOnOrderService->getAllCaptainFinancialSystemAccordingOnOrder();
+        $result = $this->captainFinancialSystemAccordingOnOrderService->getAllCaptainFinancialSystemAccordingOnOrder();
 
         return $this->response($result, self::FETCH);
     }

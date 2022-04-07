@@ -9,20 +9,20 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingOnOrderRe
 
 class CaptainFinancialSystemAccordingOnOrderService
 {
-    private CaptainFinancialSystemAccordingOnOrderManager $CaptainFinancialSystemAccordingOnOrderManager;
+    private CaptainFinancialSystemAccordingOnOrderManager $captainFinancialSystemAccordingOnOrderManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingOnOrderManager $CaptainFinancialSystemAccordingOnOrderManager)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingOnOrderManager $captainFinancialSystemAccordingOnOrderManager)
     {
         $this->autoMapping = $autoMapping;
-        $this->CaptainFinancialSystemAccordingOnOrderManager = $CaptainFinancialSystemAccordingOnOrderManager;
+        $this->captainFinancialSystemAccordingOnOrderManager = $captainFinancialSystemAccordingOnOrderManager;
     }
 
     public function getAllCaptainFinancialSystemAccordingOnOrder(): array
     {
         $response = [];
 
-        $items = $this->CaptainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
+        $items = $this->captainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
 
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, CaptainFinancialSystemAccordingOnOrderResponse::class, $item);

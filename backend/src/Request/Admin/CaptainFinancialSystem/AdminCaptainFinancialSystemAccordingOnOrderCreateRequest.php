@@ -2,7 +2,6 @@
 
 namespace App\Request\Admin\CaptainFinancialSystem;
 
-
 class AdminCaptainFinancialSystemAccordingOnOrderCreateRequest
 {
     private string $categoryName;

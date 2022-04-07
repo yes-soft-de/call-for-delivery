@@ -9,20 +9,20 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 
 class CaptainFinancialSystemAccordingToCountOfHoursService
 {
-    private CaptainFinancialSystemAccordingToCountOfHoursManager $CaptainFinancialSystemAccordingToCountOfHoursManager;
+    private CaptainFinancialSystemAccordingToCountOfHoursManager $captainFinancialSystemAccordingToCountOfHoursManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfHoursManager $CaptainFinancialSystemAccordingToCountOfHoursManager)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfHoursManager $captainFinancialSystemAccordingToCountOfHoursManager)
     {
         $this->autoMapping = $autoMapping;
-        $this->CaptainFinancialSystemAccordingToCountOfHoursManager = $CaptainFinancialSystemAccordingToCountOfHoursManager;
+        $this->captainFinancialSystemAccordingToCountOfHoursManager = $captainFinancialSystemAccordingToCountOfHoursManager;
     }
 
     public function getAllCaptainFinancialSystemAccordingToCountOfHours(): array
     {
         $response = [];
 
-        $items = $this->CaptainFinancialSystemAccordingToCountOfHoursManager->getAllCaptainFinancialSystemAccordingToCountOfHours();
+        $items = $this->captainFinancialSystemAccordingToCountOfHoursManager->getAllCaptainFinancialSystemAccordingToCountOfHours();
 
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, CaptainFinancialSystemAccordingToCountOfHoursResponse::class, $item);

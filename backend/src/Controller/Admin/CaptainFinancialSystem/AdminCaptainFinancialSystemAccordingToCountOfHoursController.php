@@ -113,7 +113,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns payments",
+     *      description="Returns Captain's Financial System According To Count Of Hours",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),

@@ -9,12 +9,12 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 
 class CaptainFinancialSystemAccordingToCountOfOrdersService
 {
-    private CaptainFinancialSystemAccordingToCountOfOrdersManager $CaptainFinancialSystemAccordingToCountOfOrdersManager;
+    private CaptainFinancialSystemAccordingToCountOfOrdersManager $captainFinancialSystemAccordingToCountOfOrdersManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfOrdersManager $CaptainFinancialSystemAccordingToCountOfOrdersManager)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfOrdersManager $captainFinancialSystemAccordingToCountOfOrdersManager)
     {
-        $this->CaptainFinancialSystemAccordingToCountOfOrdersManager = $CaptainFinancialSystemAccordingToCountOfOrdersManager;
+        $this->captainFinancialSystemAccordingToCountOfOrdersManager = $captainFinancialSystemAccordingToCountOfOrdersManager;
         $this->autoMapping = $autoMapping;
     }
 
@@ -22,7 +22,7 @@ class CaptainFinancialSystemAccordingToCountOfOrdersService
     {
         $response = [];
 
-        $items = $this->CaptainFinancialSystemAccordingToCountOfOrdersManager->getAllCaptainFinancialSystemAccordingToCountOfOrders();
+        $items = $this->captainFinancialSystemAccordingToCountOfOrdersManager->getAllCaptainFinancialSystemAccordingToCountOfOrders();
 
         foreach ($items as $item) {
             $response[] = $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, CaptainFinancialSystemAccordingToCountOfOrdersResponse::class, $item);

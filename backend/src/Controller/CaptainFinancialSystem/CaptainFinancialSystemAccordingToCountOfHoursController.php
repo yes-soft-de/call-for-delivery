@@ -13,17 +13,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 
 /**
- * Create and fetch Captain's Financial System According To Count Of Hours.
+ * fetch Captain's Financial System According To Count Of Hours.
  * @Route("v1/captainfinancialsystemaccordingtocountofhours/")
  */
 class CaptainFinancialSystemAccordingToCountOfHoursController extends BaseController
 {
-    private CaptainFinancialSystemAccordingToCountOfHoursService $CaptainFinancialSystemAccordingToCountOfHoursService;
+    private CaptainFinancialSystemAccordingToCountOfHoursService $captainFinancialSystemAccordingToCountOfHoursService;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfHoursService $CaptainFinancialSystemAccordingToCountOfHoursService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, CaptainFinancialSystemAccordingToCountOfHoursService $captainFinancialSystemAccordingToCountOfHoursService)
     {
         parent::__construct($serializer);
-        $this->CaptainFinancialSystemAccordingToCountOfHoursService = $CaptainFinancialSystemAccordingToCountOfHoursService;
+        $this->captainFinancialSystemAccordingToCountOfHoursService = $captainFinancialSystemAccordingToCountOfHoursService;
     }
 
     /**
@@ -62,7 +62,7 @@ class CaptainFinancialSystemAccordingToCountOfHoursController extends BaseContro
      */
     public function getAllCaptainFinancialSystemAccordingToCountOfHours(): JsonResponse
     {
-        $result = $this->CaptainFinancialSystemAccordingToCountOfHoursService->getAllCaptainFinancialSystemAccordingToCountOfHours();
+        $result = $this->captainFinancialSystemAccordingToCountOfHoursService->getAllCaptainFinancialSystemAccordingToCountOfHours();
 
         return $this->response($result, self::FETCH);
     }

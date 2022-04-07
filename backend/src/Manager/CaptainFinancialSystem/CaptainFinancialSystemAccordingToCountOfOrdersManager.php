@@ -2,16 +2,14 @@
 
 namespace App\Manager\CaptainFinancialSystem;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CaptainFinancialSystemAccordingToCountOfOrdersEntityRepository;
 
 class CaptainFinancialSystemAccordingToCountOfOrdersManager
 {
     private CaptainFinancialSystemAccordingToCountOfOrdersEntityRepository $captainFinancialSystemAccordingToCountOfOrdersEntityRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, CaptainFinancialSystemAccordingToCountOfOrdersEntityRepository $captainFinancialSystemAccordingToCountOfOrdersEntityRepository)
+    public function __construct(CaptainFinancialSystemAccordingToCountOfOrdersEntityRepository $captainFinancialSystemAccordingToCountOfOrdersEntityRepository)
     {
-        $this->entityManager = $entityManager;
         $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository = $captainFinancialSystemAccordingToCountOfOrdersEntityRepository;
     }
 

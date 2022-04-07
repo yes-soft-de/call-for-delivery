@@ -12,17 +12,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
 
 /**
- * Create and fetch Captain's Financial System According To Count Of Orders.
+ * fetch Captain's Financial System According To Count Of Orders.
  * @Route("v1/captainfinancialsystemaccordingntocountoforders/")
  */
 class CaptainFinancialSystemAccordingToCountOfOrdersController extends BaseController
 {
-    private CaptainFinancialSystemAccordingToCountOfOrdersService $CaptainFinancialSystemAccordingToCountOfOrdersService;
+    private CaptainFinancialSystemAccordingToCountOfOrdersService $captainFinancialSystemAccordingToCountOfOrdersService;
 
-    public function __construct(SerializerInterface $serializer, CaptainFinancialSystemAccordingToCountOfOrdersService $CaptainFinancialSystemAccordingToCountOfOrdersService)
+    public function __construct(SerializerInterface $serializer, CaptainFinancialSystemAccordingToCountOfOrdersService $captainFinancialSystemAccordingToCountOfOrdersService)
     {
         parent::__construct($serializer);
-        $this->CaptainFinancialSystemAccordingToCountOfOrdersService = $CaptainFinancialSystemAccordingToCountOfOrdersService;
+        $this->captainFinancialSystemAccordingToCountOfOrdersService = $captainFinancialSystemAccordingToCountOfOrdersService;
     }
 
     /**
@@ -63,7 +63,7 @@ class CaptainFinancialSystemAccordingToCountOfOrdersController extends BaseContr
      */
     public function getAllCaptainFinancialSystemAccordingToCountOfOrders(): JsonResponse
     {
-        $result = $this->CaptainFinancialSystemAccordingToCountOfOrdersService->getAllCaptainFinancialSystemAccordingToCountOfOrders();
+        $result = $this->captainFinancialSystemAccordingToCountOfOrdersService->getAllCaptainFinancialSystemAccordingToCountOfOrders();
 
         return $this->response($result, self::FETCH);
     }

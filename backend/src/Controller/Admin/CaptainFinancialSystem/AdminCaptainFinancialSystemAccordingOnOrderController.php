@@ -54,7 +54,7 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
      * @OA\RequestBody(
      *      description="new Captain's Financial System According On Order",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="categoryName"),
+     *          @OA\Property(type="string", property="categoryName"),
      *          @OA\Property(type="number", property="countKilometersFrom"),
      *          @OA\Property(type="number", property="countKilometersTo"),
      *          @OA\Property(type="number", property="amount"),
