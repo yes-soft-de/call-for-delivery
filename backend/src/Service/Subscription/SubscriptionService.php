@@ -199,14 +199,21 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscribeState($id, $status);
     }
 
-    public function updateRemainingOrders(int $storeOwnerId): string
+    //$operationType : Increase the number of orders by 1 or decrease the number of orders by 1
+    public function updateRemainingOrders(int $storeOwnerId, string $operationType): string
     {
         $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrent($storeOwnerId);
         if($subscriptionCurrent) {
             if($subscriptionCurrent->getRemainingOrders() > 0) {
-       
-                $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
-              
+              //when create order
+                if($operationType === SubscriptionConstant::OPERATION_TYPE_SUBTRACTION) {
+                   $remainingOrders = $subscriptionCurrent->getRemainingOrders() - 1 ;
+                } 
+                //when cancel order
+                if($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+                   $remainingOrders = $subscriptionCurrent->getRemainingOrders() + 1 ;
+                } 
+
                 $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription()->getId(), $remainingOrders);
                
                 return SubscriptionConstant::SUBSCRIPTION_OK;
