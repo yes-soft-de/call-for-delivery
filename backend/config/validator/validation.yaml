@@ -104,15 +104,15 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
 App\Request\Order\OrderCreateRequest:
     properties:
         orderCost:
-              - NotBlank: ~
+            - NotBlank: ~
         deliveryDate:
-              - NotBlank: ~
+            - NotBlank: ~
         destination:
-              - NotBlank: ~
+            - NotBlank: ~
         detail:
-              - NotBlank: ~
+            - NotBlank: ~
         branch:
-              - NotBlank: ~
+            - NotBlank: ~
 
 App\Request\Admin\Package\PackageCategoryUpdateRequest:
     properties:
@@ -260,20 +260,44 @@ App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest:
         store:
             - NotBlank: ~
 
-App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest:
-    properties:
-        id:
-            - NotBlank: ~
-        amount:
-            - NotBlank: ~
-        store:
-            - NotBlank: ~
-
 App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
     properties:
         title:
             - NotBlank: ~
         messageBody:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest:
+    properties:
+        countHours:
+            - NotBlank: ~
+        compensationForEveryOrder:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
+    properties:
+        countOrdersInMonth:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+        monthCompensation:
+            - NotBlank: ~
+        bounceMaxCountOrdersInMonth:
+            - NotBlank: ~
+        bounceMinCountOrdersInMonth:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest:
+    properties:
+        categoryName:
+            - NotBlank: ~
+        countKilometersFrom:
+            - NotBlank: ~
+        countKilometersTo:
+            - NotBlank: ~
+        amount:
             - NotBlank: ~
 
 App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
