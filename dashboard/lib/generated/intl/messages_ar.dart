@@ -495,6 +495,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
         "paymentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
+        "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
         "paymentsVia":
@@ -674,6 +675,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
+        "storePayments":
+            MessageLookupByLibrary.simpleMessage("قائمة الدفعات للمتجر"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),

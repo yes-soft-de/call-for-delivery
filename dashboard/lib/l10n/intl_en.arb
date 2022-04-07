@@ -545,5 +545,9 @@
     "orderTimeLine": "Order Time Line",
     "captainNotArrived": "Captain not arrived",
     "paymentSuccessfully": "Payment created successfully",
-    "updatePaymentSuccessfully": "Payment updated successfully"
+    "updatePaymentSuccessfully": "Payment updated successfully",
+    "storePayments": "Store payments",
+    "payments": "Payments"
+
+
 }

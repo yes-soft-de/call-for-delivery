@@ -500,6 +500,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment created successfully"),
+        "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
@@ -681,6 +682,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
+        "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
         "storeRated":

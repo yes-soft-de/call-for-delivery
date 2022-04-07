@@ -5349,6 +5349,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Store payments`
+  String get storePayments {
+    return Intl.message(
+      'Store payments',
+      name: 'storePayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments`
+  String get payments {
+    return Intl.message(
+      'Payments',
+      name: 'payments',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

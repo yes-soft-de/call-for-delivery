@@ -540,6 +540,8 @@
     "orderTimeLine": "دورة حياة الطلب",
     "captainNotArrived": "الكباتن اللذين لم يصلو المتجر",
     "paymentSuccessfully": "تم تسجيل دفعة بنجاح",
-    "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح"
+    "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح",
+    "storePayments": "قائمة الدفعات للمتجر",
+    "payments": "الدفعات"
 
 }
