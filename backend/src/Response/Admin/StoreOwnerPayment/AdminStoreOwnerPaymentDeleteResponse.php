@@ -2,10 +2,10 @@
 
 namespace App\Response\Admin\StoreOwnerPayment;
 
-class AdminStoreOwnerPaymentCreateResponse
+class AdminStoreOwnerPaymentDeleteResponse
 {
     /**
-     * @var int
+     * @var null|int
      */
     public $id;
 
@@ -18,9 +18,4 @@ class AdminStoreOwnerPaymentCreateResponse
      * @var array
      */
     public $date;
-
-    /**
-     * @var string|null
-     */
-    public $note;
 }

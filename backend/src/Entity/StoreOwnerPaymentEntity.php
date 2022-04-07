@@ -25,6 +25,9 @@ class StoreOwnerPaymentEntity
     #[ORM\JoinColumn(nullable: false)]
     private $store;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $note;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,18 @@ class StoreOwnerPaymentEntity
     public function setStore(?StoreOwnerProfileEntity $store): self
     {
         $this->store = $store;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

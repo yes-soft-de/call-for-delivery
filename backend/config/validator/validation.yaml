@@ -260,15 +260,6 @@ App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest:
         store:
             - NotBlank: ~
 
-App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest:
-    properties:
-        id:
-            - NotBlank: ~
-        amount:
-            - NotBlank: ~
-        store:
-            - NotBlank: ~
-
 App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
     properties:
         title:

@@ -6,10 +6,10 @@ use App\AutoMapping;
 use App\Entity\StoreOwnerPaymentEntity;
 use App\Repository\StoreOwnerPaymentEntityRepository;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Payment\PaymentConstant;
 
 class AdminStoreOwnerPaymentManager
 {
@@ -44,24 +44,18 @@ class AdminStoreOwnerPaymentManager
         return $storeOwnerPaymentEntity;
     }
 
-    public function updateStoreOwnerPayment(AdminStoreOwnerPaymentUpdateRequest $request): StoreOwnerPaymentEntity|string|null
+    public function deleteStoreOwnerPayment($id): StoreOwnerPaymentEntity|string
     {
-        $storeOwnerPaymentEntity = $this->storeOwnerPaymentEntityRepository->find($request->getId());
+        $storeOwnerPaymentEntity = $this->storeOwnerPaymentEntityRepository->find($id);
 
-        if ($storeOwnerPaymentEntity) {
-            $store = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore());
-     
-            if(! $store) {
-                return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
-            }
-    
-            $request->setStore($store);
-
-            $storeOwnerPaymentEntity = $this->autoMapping->mapToObject(AdminStoreOwnerPaymentUpdateRequest::class, StoreOwnerPaymentEntity::class, $request, $storeOwnerPaymentEntity);
-
-            $this->entityManager->flush();
+        if (! $storeOwnerPaymentEntity) {     
+            
+            return PaymentConstant::PAYMENT_NOT_EXISTS;
         }
-
+       
+        $this->entityManager->remove($storeOwnerPaymentEntity);
+        $this->entityManager->flush();
+       
         return $storeOwnerPaymentEntity;
     }
 
