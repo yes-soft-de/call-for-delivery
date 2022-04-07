@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/state_manager/store_balance_state_manager.dart';
+import 'package:c4d/module_payments/state_manager/store_balance_state_manager.dart';
 
 @injectable
 class StoreBalanceScreen extends StatefulWidget {
@@ -35,7 +35,7 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
   }
 
   void deletePay(String id) {
-   // widget._stateManager.deletePayment(this, id);
+    widget._stateManager.deletePayment(this, id);
   }
 
   void getPayments() {
@@ -59,7 +59,7 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
     }
     return Scaffold(
       appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).storeBalance),
+          CustomC4dAppBar.appBar(context, title: S.of(context).storePayments),
       body: currentState.getUI(context),
     );
   }

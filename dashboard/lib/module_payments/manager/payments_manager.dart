@@ -13,8 +13,6 @@ class PaymentsManager {
       _paymentsRepository.getStorePayments(id);
   Future<ActionResponse?> paymentToStore(CreateStorePaymentsRequest request) =>
       _paymentsRepository.paymentToStore(request);
-
-  Future<ActionResponse?> updateStorePayments(
-          CreateStorePaymentsRequest request) =>
-      _paymentsRepository.updateStorePayments(request);
+  Future<ActionResponse?> deleteStorePayment(String id) =>
+      _paymentsRepository.deleteStorePayments(id);
 }

@@ -1,10 +1,10 @@
 import 'package:c4d/module_payments/model/store_balance_model.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/service/payments_service.dart';
+import 'package:c4d/module_payments/ui/state/store_account/store_balance_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_account/store_balance_state.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -43,12 +43,13 @@ class StoreBalanceStateManager {
     _stateSubject.add(LoadingState(screenState));
     _storePaymentsService.paymentToStore(request).then((value) {
       if (value.hasError) {
+        getBalance(screenState, request.storeId ?? -1);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        getBalance(screenState, request.id ?? -1);
+        getBalance(screenState, request.storeId ?? -1);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.paymentSuccessfully)
@@ -57,40 +58,21 @@ class StoreBalanceStateManager {
     });
   }
 
-  void updatePaymentToStore(
-      StoreBalanceScreenState screenState, CreateStorePaymentsRequest request) {
+  void deletePayment(StoreBalanceScreenState screenState, String id) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.updateStorePayments(request).then((value) {
+    _storePaymentsService.deletePaymentToStore(id).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        getBalance(screenState, request.id ?? -1);
+        getBalance(screenState, screenState.storeID);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.updatePaymentSuccessfully)
+                message: value.error ?? S.current.paymentsDeletedSuccessfully)
             .show(screenState.context);
       }
     });
   }
-
-  // void deletePayment(StoreBalanceScreenState screenState, String id) {
-  //   _stateSubject.add(LoadingState(screenState));
-  //   _storePaymentsService.deletePaymentToStore(id).then((value) {
-  //     if (value.hasError) {
-  //       CustomFlushBarHelper.createError(
-  //               title: S.current.warnning,
-  //               message: value.error ?? S.current.errorHappened)
-  //           .show(screenState.context);
-  //     } else {
-  //       getBalance(screenState, screenState.storeID);
-  //       CustomFlushBarHelper.createSuccess(
-  //               title: S.current.warnning,
-  //               message: value.error ?? S.current.deleteSuccess)
-  //           .show(screenState.context);
-  //     }
-  //   });
-  // }
 }

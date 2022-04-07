@@ -31,11 +31,11 @@ class PaymentsRepository {
     return StorePaymentsResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> updateStorePayments(
-      CreateStorePaymentsRequest request) async {
+  Future<ActionResponse?> deleteStorePayments(String id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
-        Urls.CREATE_STORE_PAYMENTS, request.toJson(),
+    dynamic response = await _apiClient.delete(
+       Urls.CREATE_STORE_PAYMENTS +
+        '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

@@ -13,7 +13,7 @@ class PaymentsService {
   final PaymentsManager _paymentsManager;
 
   PaymentsService(this._paymentsManager);
-
+  /*-----------------------------------STORE PAYMENTS----------------------------------------------- */
   Future<DataModel> paymentToStore(CreateStorePaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.paymentToStore(request);
@@ -22,19 +22,6 @@ class PaymentsService {
       return DataModel.withError(S.current.networkError);
     }
     if (actionResponse.statusCode != '201') {
-      return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
-    }
-    return DataModel.empty();
-  }
-    Future<DataModel> updateStorePayments(CreateStorePaymentsRequest request) async {
-    ActionResponse? actionResponse =
-        await _paymentsManager.updateStorePayments(request);
-
-    if (actionResponse == null) {
-      return DataModel.withError(S.current.networkError);
-    }
-    if (actionResponse.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
@@ -54,4 +41,17 @@ class PaymentsService {
     return StoreBalanceModel.withData(actionResponse.data ?? []);
   }
 
+  Future<DataModel> deletePaymentToStore(String id) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deleteStorePayment(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

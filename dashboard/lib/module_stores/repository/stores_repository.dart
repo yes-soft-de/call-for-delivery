@@ -11,7 +11,6 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
 import 'package:c4d/module_stores/response/store_balance_response/store_balance_response.dart';
 import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/module_stores/response/stores_response.dart';
@@ -86,27 +85,6 @@ class StoresRepository {
     return StoreBalanceResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> createStorePayments(
-      StorePaymentRequest request) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(
-        '',
-//        Urls.CREATE_PAYMENTS_FOR_STORE,
-        request.toJson(),
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return ActionResponse.fromJson(response);
-  }
-
-  Future<ActionResponse?> deleteStorePayments(String id) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.delete(
-//        Urls.DELETE_PAYMENTS_FOR_STORE +
-        '/$id',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return ActionResponse.fromJson(response);
-  }
 
   Future<StoreNeedSupportResponse?> getStoreSupport() async {
     var token = await _authService.getToken();

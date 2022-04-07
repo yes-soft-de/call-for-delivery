@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
-import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';

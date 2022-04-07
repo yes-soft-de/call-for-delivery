@@ -542,6 +542,7 @@
     "paymentSuccessfully": "تم تسجيل دفعة بنجاح",
     "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح",
     "storePayments": "قائمة الدفعات للمتجر",
-    "payments": "الدفعات"
+    "payments": "الدفعات",
+    "paymentsDeletedSuccessfully": "تم حذف الدفعة بنجاح"
 
 }

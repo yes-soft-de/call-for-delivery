@@ -496,6 +496,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
+        "paymentsDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
         "paymentsVia":

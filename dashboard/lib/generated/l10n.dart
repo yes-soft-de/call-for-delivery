@@ -5369,6 +5369,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Payment deleted successfully`
+  String get paymentsDeletedSuccessfully {
+    return Intl.message(
+      'Payment deleted successfully',
+      name: 'paymentsDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

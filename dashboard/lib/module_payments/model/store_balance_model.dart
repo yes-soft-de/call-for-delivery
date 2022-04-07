@@ -14,7 +14,7 @@ class StoreBalanceModel extends DataModel {
       payments.add(PaymentModel(
           id: e.id ?? -1,
           amount: e.amount ?? 0,
-          note: '',
+          note: e.note,
           paymentDate: DateHelper.convert(e.date?.timestamp)));
     });
     _model = StoreBalanceModel(paymentsToStore: payments);

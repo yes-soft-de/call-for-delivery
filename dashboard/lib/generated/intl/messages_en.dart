@@ -501,6 +501,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment created successfully"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
+        "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment deleted successfully"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),

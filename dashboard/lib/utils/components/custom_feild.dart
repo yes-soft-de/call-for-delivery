@@ -20,6 +20,7 @@ class CustomFormField extends StatefulWidget {
   final bool validator;
   final bool phone;
   final Function()? onChanged;
+  final TextInputAction? textInputAction;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
@@ -36,7 +37,9 @@ class CustomFormField extends StatefulWidget {
       this.last = false,
       this.validator = true,
       this.phone = false,
-      this.onChanged});
+      this.onChanged,
+      this.textInputAction
+      });
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -72,7 +75,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               ? (_) => node.unfocus()
               : null,
           textInputAction: widget.maxLines == null && widget.last
-              ? null
+              ? (widget.textInputAction ?? null)
               : TextInputAction.next,
           inputFormatters: widget.numbers
               ? <TextInputFormatter>[

@@ -547,7 +547,9 @@
     "paymentSuccessfully": "Payment created successfully",
     "updatePaymentSuccessfully": "Payment updated successfully",
     "storePayments": "Store payments",
-    "payments": "Payments"
+    "payments": "Payments",
+    "paymentsDeletedSuccessfully": "Payment deleted successfully"
+
 
 
 }
