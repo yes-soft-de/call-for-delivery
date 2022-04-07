@@ -55,7 +55,8 @@ class AdminSupplierCategoryController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="description"),
-     *          @OA\Property(type="boolean", property="status")
+     *          @OA\Property(type="boolean", property="status"),
+     *          @OA\Property(type="string", property="image")
      *      )
      * )
      *

@@ -10,7 +10,10 @@ class SupplierCategoryCreateByAdminRequest
 
     private bool $status;
 
-    private ?string $image;
+    /**
+     * @var string|null
+     */
+    private $image;
 
     /**
      * @return string|null
