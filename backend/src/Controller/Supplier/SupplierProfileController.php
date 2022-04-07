@@ -3,11 +3,14 @@
 namespace App\Controller\Supplier;
 
 use App\AutoMapping;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
+use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Service\Supplier\SupplierProfileService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,5 +87,84 @@ class SupplierProfileController extends BaseController
         }
 
         return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * Supplier: update supplier profile.
+     * @Route("supplierprofile", name="updateSupplierProfileBySignedInSupplie", methods={"PUT"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Register a new supplier request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="supplierName"),
+     *          @OA\Property(type="string", property="phone"),
+     *          @OA\Property(type="string", property="image")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the supplier profile info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="supplierName"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="object", property="image"),
+     *              @OA\Property(type="object", property="createdAt")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns supplier profile not exist message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9551"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data", example="supplier profile not exist!")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateSupplierProfile(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SupplierProfileUpdateRequest::class, (object)$data);
+
+        $request->setUser($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->supplierProfileService->updateSupplierProfile($request);
+
+        if ($response === SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST) {
+            return $this->response($response, self::SUPPLIER_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }

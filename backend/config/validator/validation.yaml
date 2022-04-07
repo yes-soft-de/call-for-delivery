@@ -306,3 +306,8 @@ App\Request\User\UserRegisterRequest:
             - NotBlank: ~
         password:
             - NotBlank: ~
+
+App\Request\Supplier\SupplierProfileUpdateRequest:
+    properties:
+        supplierName:
+            - NotBlank: ~

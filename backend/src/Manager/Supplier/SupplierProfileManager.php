@@ -4,12 +4,17 @@ namespace App\Manager\Supplier;
 
 use App\AutoMapping;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
+use App\Manager\Image\ImageManager;
 use App\Manager\User\UserManager;
 use App\Repository\SupplierProfileEntityRepository;
 use App\Request\Supplier\SupplierProfileCreateRequest;
+use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -18,13 +23,15 @@ class SupplierProfileManager
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
+    private ImageManager $imageManager;
     private SupplierProfileEntityRepository $supplierProfileEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, SupplierProfileEntityRepository $supplierProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, ImageManager $imageManager, SupplierProfileEntityRepository $supplierProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->imageManager = $imageManager;
         $this->supplierProfileEntityRepository = $supplierProfileEntityRepository;
     }
 
@@ -77,5 +84,33 @@ class SupplierProfileManager
         $this->entityManager->flush();
 
         return $supplierProfileEntity;
+    }
+
+    public function updateSupplierProfile(SupplierProfileUpdateRequest $request): string|SupplierProfileEntity
+    {
+        $supplierProfileEntity = $this->supplierProfileEntityRepository->findOneBy(["user"=>$request->getUser()]);
+
+        if (! $supplierProfileEntity) {
+            return SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST;
+
+        } else {
+            $request->setUser($supplierProfileEntity->getUser());
+
+            if ($request->getImage() !== null && $request->getImage() !== "") {
+                $this->createOrUpdateSupplierProfileImage($request->getImage(), $supplierProfileEntity->getId());
+            }
+
+            $supplierProfileEntity = $this->autoMapping->mapToObject(SupplierProfileUpdateRequest::class, SupplierProfileEntity::class,
+                $request, $supplierProfileEntity);
+
+            $this->entityManager->flush();
+
+            return $supplierProfileEntity;
+        }
+    }
+
+    public function createOrUpdateSupplierProfileImage(string $imagePath, int $itemId)
+    {
+        $this->imageManager->createImageOrUpdate($imagePath, $itemId, ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
     }
 }
