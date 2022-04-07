@@ -77,11 +77,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
-            onTap: () {
+            onTap:orderInfo.state != OrderStatusEnum.CANCELLED ? () {
               Navigator.of(context).pushNamed(
                   OrdersRoutes.OWNER_TIME_LINE_SCREEN,
                   arguments: orderInfo.id);
-            },
+            } : null,
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),

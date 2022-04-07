@@ -52,6 +52,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
   StreamSubscription? _statusSubscription;
+  StreamSubscription? _globalStateManager;
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
@@ -113,7 +114,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         setState(() {});
       }
     });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
+    _globalStateManager =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
       if (mounted) {
         getInitData();
         getMyOrdersFilter(false);
@@ -283,6 +285,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     _stateSubscription?.cancel();
     _profileSubscription?.cancel();
     _companySubscription?.cancel();
+    _statusSubscription?.cancel();
+    _globalStateManager?.cancel();
     super.dispose();
   }
 

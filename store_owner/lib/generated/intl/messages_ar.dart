@@ -193,9 +193,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
-        "completed": MessageLookupByLibrary.simpleMessage("منتهية"),
+        "completed": MessageLookupByLibrary.simpleMessage("مسلمة"),
         "completedOrders":
-            MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
+            MessageLookupByLibrary.simpleMessage(" طلبات مسلمة "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
