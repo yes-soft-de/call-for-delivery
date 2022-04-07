@@ -82,6 +82,8 @@ class BaseController extends AbstractController
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
     // admin
     const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
+    // supplier category
+    const SUPPLIER_CATEGORY_NOT_EXIST = ["supplier category does not exist", "9550"];
 
     const NOTFOUND=["Not found", "404"];
     

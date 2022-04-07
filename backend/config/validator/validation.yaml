@@ -282,3 +282,17 @@ App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
