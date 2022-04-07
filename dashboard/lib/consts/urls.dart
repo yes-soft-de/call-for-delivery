@@ -19,6 +19,9 @@ class Urls {
   static const String BASE_API_NOTICE_ADMIN =
       DOMAIN + VERSION_ADMIN + '/notification';
   static const String BASE_API_CHAT_ROM = DOMAIN + VERSION + '/chatroom';
+  static const String BASE_API_FIREBASE_NOTIFICATION = DOMAIN + VERSION + '/notificationfirbase';
+  static const String BASE_API_NOTIFICATION_TOKEN = DOMAIN + VERSION + '/notificationtoken';
+
 
   static const String BASE_API_CAPTAIN_OFFER_ADMIN =
       DOMAIN + VERSION_ADMIN + '/captainoffer';
@@ -27,8 +30,8 @@ class Urls {
   static const String BASE_API_CAPTAIN = DOMAIN + VERSION_ADMIN + '/captain';
 
   static const String BASE_API_ORDER = DOMAIN + VERSION_ADMIN + '/order';
-  static const String BASE_API_STORE_PAYMENTS = DOMAIN + VERSION_ADMIN + '/storeownerpayment';
-
+  static const String BASE_API_STORE_PAYMENTS =
+      DOMAIN + VERSION_ADMIN + '/storeownerpayment';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -52,10 +55,10 @@ class Urls {
   static const NEEDFORSUPPORT_ANYNAMOUS = BASE_API + '/anonymouschat';
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
   static const NOTIFICATIONNEWCHAT_ANYN_API =
-      BASE_API + '/notificationnewchatanonymous';
-  static const NOTIFICATION_API = BASE_API + '/notificationtoken';
+      BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatanonymous';
+  static const NOTIFICATION_API = BASE_API_NOTIFICATION_TOKEN + '/notificationtoken';
   static const NOTIFICATIONNEWCHAT_API =
-      BASE_API + '/notificationnewchatbyuserid';
+      BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatbyuserid';
   static const NEEDFORSUPPORT = BASE_API + '/updateneedsupport';
 
   /*--------Store-------------------*/
@@ -117,8 +120,7 @@ class Urls {
   static const ACTIVATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofilestatus';
   static const UPDATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofile';
   /*------------------------STORE PAYMENTS------------------------*/
-  static const CREATE_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storeownerpayment';
+  static const CREATE_STORE_PAYMENTS =
+      BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
-
-
 }

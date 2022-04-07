@@ -254,14 +254,14 @@ class InitAccountStateSelectBranch extends States {
                                 ? null
                                 : () {
                                     var request = <CreateBranchRequest>[];
-                                    for (var element in branchLocation) {
-                                      request.add(CreateBranchRequest(
-                                          name: element.name,
-                                          location: GeoJson(
-                                              lat: element.location.latitude,
-                                              lon:
-                                                  element.location.longitude)));
-                                    }
+                                    // for (var element in branchLocation) {
+                                    //   request.add(CreateBranchRequest(
+                                    //       name: element.name,
+                                    //       location: GeoJson(
+                                    //           lat: element.location.latitude,
+                                    //           lon:
+                                    //               element.location.longitude)));
+                                    // }
                                     screenState.createBranch(
                                         CreateListBranchesRequest(
                                             branches: request));
@@ -292,16 +292,16 @@ class InitAccountStateSelectBranch extends States {
                 screenState.refresh();
               },
               onEdit: () {
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return EditBranchDialog();
-                    }).then((result) {
-                  if (result != null) {
-                    branchLocation[i].name = result;
-                    screenState.refresh();
-                  }
-                });
+                // showDialog(
+                //     context: context,
+                //     builder: (_) {
+                //       return EditBranchDialog();
+                //     }).then((result) {
+                //   if (result != null) {
+                //     branchLocation[i].name = result;
+                //     screenState.refresh();
+                //   }
+                // });
               },
               preview: () {
                 menu = false;
@@ -341,8 +341,8 @@ class InitAccountStateSelectBranch extends States {
             );
           });
     }
-    branchLocation.add(
-        BranchModel(location: location, name: '${branchLocation.length + 1}'));
+    // branchLocation.add(
+    //     BranchModel(location: location, name: '${branchLocation.length + 1}'));
     screenState.refresh();
     _getMarkers(branchLocation).then((value) => screenState.refresh());
     // screenState.createBranch(CreateBrancheRequest(

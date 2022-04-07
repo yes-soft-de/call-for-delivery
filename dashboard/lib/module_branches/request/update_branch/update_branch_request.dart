@@ -5,7 +5,13 @@ class UpdateBranchesRequest {
   String? city;
   String? branchName;
   int? id;
-  UpdateBranchesRequest({this.id, this.location, this.city, this.branchName});
+  String? phone;
+  UpdateBranchesRequest(
+      {this.id,
+      this.location,
+      this.city,
+      this.branchName,
+      required this.phone});
 
   Map<String, dynamic> toJson() {
     return {
@@ -14,8 +20,9 @@ class UpdateBranchesRequest {
         'lat': this.location?.latitude,
         'lon': this.location?.longitude
       },
-      'city': this.city,
+  //    'city': this.city,
       'name': this.branchName,
+      'branchPhone': this.phone
     };
   }
 }
