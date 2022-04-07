@@ -865,6 +865,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "You can\'t delete order, You exceeded time limit"),
+        "youCannotDeleteOrderCaptainAccepted":
+            MessageLookupByLibrary.simpleMessage(
+                "You can\'t delete order, captain accepted this order"),
         "youConsumed":
             MessageLookupByLibrary.simpleMessage("You have consumed"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

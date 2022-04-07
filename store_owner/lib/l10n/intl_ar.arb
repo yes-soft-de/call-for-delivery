@@ -565,7 +565,8 @@
     "captainNotInStore": "الكابتن ليس في المتجر",
     "NotConfirmed": "لم يتم التأكد",
     "youCannotDeleteOrder": "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها",
-    "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"
+    "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
+    "youCannotDeleteOrderCaptainAccepted": "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"
 
 
 

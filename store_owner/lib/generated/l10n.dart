@@ -5699,6 +5699,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You can't delete order, captain accepted this order`
+  String get youCannotDeleteOrderCaptainAccepted {
+    return Intl.message(
+      'You can\'t delete order, captain accepted this order',
+      name: 'youCannotDeleteOrderCaptainAccepted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

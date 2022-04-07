@@ -862,6 +862,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها"),
+        "youCannotDeleteOrderCaptainAccepted":
+            MessageLookupByLibrary.simpleMessage(
+                "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"),
         "youConsumed": MessageLookupByLibrary.simpleMessage("لقد استهلكت"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
