@@ -34,7 +34,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         orderInfo.isCaptainArrived == null) {
       showOwnerAlertConfirm();
     }
-    screenState.canRemoveIt = orderInfo.canRemove;
+    if (orderInfo.state == OrderStatusEnum.WAITING) {
+      screenState.canRemoveIt = orderInfo.canRemove;
+    }
     screenState.refresh();
   }
   bool dialogShowed = false;
