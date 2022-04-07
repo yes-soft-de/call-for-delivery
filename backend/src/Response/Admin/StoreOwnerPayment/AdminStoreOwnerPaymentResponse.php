@@ -28,4 +28,9 @@ class AdminStoreOwnerPaymentResponse
      * @var string
      */
     public $storeOwnerName;
+
+    /**
+     * @var null|string
+     */
+    public $note;
 }

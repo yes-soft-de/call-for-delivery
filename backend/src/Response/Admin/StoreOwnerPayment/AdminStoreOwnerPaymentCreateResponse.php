@@ -18,4 +18,9 @@ class AdminStoreOwnerPaymentCreateResponse
      * @var array
      */
     public $date;
+
+    /**
+     * @var string|null
+     */
+    public $note;
 }

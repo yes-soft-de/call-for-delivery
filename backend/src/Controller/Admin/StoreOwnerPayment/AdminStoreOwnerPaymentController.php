@@ -59,6 +59,7 @@ class AdminStoreOwnerPaymentController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="number", property="amount"),
      *          @OA\Property(type="integer", property="store"),
+     *          @OA\Property(type="string", property="note"),
      *      )
      * )
      *
@@ -72,6 +73,7 @@ class AdminStoreOwnerPaymentController extends BaseController
      *            @OA\Property(type="integer", property="id"),
      *            @OA\Property(type="number", property="amount"),
      *            @OA\Property(type="object", property="date"),
+     *            @OA\Property(type="string", property="note"),
      *      )
      *   )
      * )
@@ -194,6 +196,7 @@ class AdminStoreOwnerPaymentController extends BaseController
      *              @OA\Property(type="object", property="date"),
      *              @OA\Property(type="integer", property="storeId"),
      *              @OA\Property(type="string", property="storeOwnerName"),
+     *              @OA\Property(type="string", property="note"),
      *          )
      *       )
      *    )
