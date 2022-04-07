@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Service\Admin\CaptainFinancialSystem;
+
+use App\AutoMapping;
+use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
+use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderManager;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest;
+use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateResponse;
+
+class AdminCaptainFinancialSystemAccordingOnOrderService
+{
+    private AutoMapping $autoMapping;
+    private AdminCaptainFinancialSystemAccordingOnOrderManager $adminCaptainFinancialSystemAccordingOnOrderManager;
+
+    public function __construct(AutoMapping $autoMapping, AdminCaptainFinancialSystemAccordingOnOrderManager $adminCaptainFinancialSystemAccordingOnOrderManager)
+    {
+        $this->autoMapping = $autoMapping;
+        $this->adminCaptainFinancialSystemAccordingOnOrderManager = $adminCaptainFinancialSystemAccordingOnOrderManager;
+    }
+
+    public function createCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderCreateRequest $request): AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderManager->createCaptainFinancialSystemAccordingOnOrder($request);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $result);
+    }
+
+    public function getAllCaptainFinancialSystemAccordingOnOrder(): array
+    {
+        $response = [];
+
+        $items = $this->adminCaptainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
+
+        foreach ($items as $item) {
+            $response[] = $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $item);
+        }
+
+        return $response;
+    }
+}

@@ -86,6 +86,8 @@ class BaseController extends AbstractController
     const SUPPLIER_CATEGORY_NOT_EXIST = ["supplier category does not exist", "9550"];
 
     const NOTFOUND=["Not found", "404"];
+    //payments
+    const PAYMENT_NOT_EXIST = ["payment not exist!", "9501"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

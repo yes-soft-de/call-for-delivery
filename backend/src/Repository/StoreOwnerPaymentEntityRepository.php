@@ -52,13 +52,15 @@ class StoreOwnerPaymentEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('storeOwnerPaymentEntity')
            
             ->select('IDENTITY (storeOwnerPaymentEntity.store) as storeId')
-            ->addSelect('storeOwnerPaymentEntity.id', 'storeOwnerPaymentEntity.amount', 'storeOwnerPaymentEntity.date')
+            ->addSelect('storeOwnerPaymentEntity.id', 'storeOwnerPaymentEntity.amount', 'storeOwnerPaymentEntity.date', 'storeOwnerPaymentEntity.note')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerPaymentEntity.store')
             
             ->andWhere('storeOwnerPaymentEntity.store = :id')
             ->setParameter('id', $storeId)
+
+            ->orderBy('storeOwnerPaymentEntity.id', 'DESC')
             
             ->getQuery()
             ->getResult();

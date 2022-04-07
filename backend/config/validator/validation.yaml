@@ -276,6 +276,24 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
         salary:
             - NotBlank: ~
 
+App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
+    properties:
+        name:
+
+App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
 App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
     properties:
         countOrdersInMonth:
@@ -299,24 +317,3 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnO
             - NotBlank: ~
         amount:
             - NotBlank: ~
-
-App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
-    properties:
-        name:
-            - NotBlank: ~
-        status:
-            - NotNull: ~
-
-App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
-    properties:
-        id:
-            - NotBlank: ~
-        name:
-            - NotBlank: ~
-
-App\Request\Admin\SupplierCategory\SupplierCategoryStatusUpdateByAdminRequest:
-    properties:
-        id:
-            - NotBlank: ~
-        status:
-            - NotNull: ~

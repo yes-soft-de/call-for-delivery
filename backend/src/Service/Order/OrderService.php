@@ -81,7 +81,7 @@ class OrderService
         $order = $this->orderManager->createOrder($request);
         if($order) {
            
-            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId());
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
@@ -388,6 +388,8 @@ class OrderService
                 catch (\Exception $e){
                     error_log($e);
                 }
+          
+                $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
             }
         }
      

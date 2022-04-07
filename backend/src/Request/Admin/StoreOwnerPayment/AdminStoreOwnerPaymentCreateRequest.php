@@ -10,6 +10,8 @@ class AdminStoreOwnerPaymentCreateRequest
 
     private int|StoreOwnerProfileEntity $store;
 
+    private string|null $note;
+
     /**
      * Get the value of store
      */ 
