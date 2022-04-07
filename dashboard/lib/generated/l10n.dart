@@ -5329,6 +5329,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain not arrived to store`
+  String get captainNotArrivedToStore {
+    return Intl.message(
+      'Captain not arrived to store',
+      name: 'captainNotArrivedToStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
