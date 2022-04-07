@@ -5679,6 +5679,36 @@ class S {
       args: [],
     );
   }
+
+  /// `You can't delete order, You exceeded time limit`
+  String get youCannotDeleteOrder {
+    return Intl.message(
+      'You can\'t delete order, You exceeded time limit',
+      name: 'youCannotDeleteOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about deleting this order ? `
+  String get areYouSureAboutDeleteOrder {
+    return Intl.message(
+      'Are sure about deleting this order ? ',
+      name: 'areYouSureAboutDeleteOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't delete order, captain accepted this order`
+  String get youCannotDeleteOrderCaptainAccepted {
+    return Intl.message(
+      'You can\'t delete order, captain accepted this order',
+      name: 'youCannotDeleteOrderCaptainAccepted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "Are sure about deleting this order ? "),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting selected notifications"),
@@ -861,6 +863,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "You can\'t delete order, You exceeded time limit"),
+        "youCannotDeleteOrderCaptainAccepted":
+            MessageLookupByLibrary.simpleMessage(
+                "You can\'t delete order, captain accepted this order"),
         "youConsumed":
             MessageLookupByLibrary.simpleMessage("You have consumed"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

@@ -88,8 +88,7 @@ class OrdersListStateOrdersLoaded extends States {
               background: screenState.currentIndex == 0
                   ? null
                   : StatusHelper.getOrderStatusColor(element.state),
-              orderCost:
-                  element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
+              orderCost:element.orderCost,
               note: element.note,
             ),
           ),

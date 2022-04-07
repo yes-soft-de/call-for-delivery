@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -23,17 +25,10 @@ class NewOrderScreen extends StatefulWidget {
 class NewOrderScreenState extends State<NewOrderScreen> {
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
     widget._stateManager.createOrder(this, request);
-  }
-
-  void goBack() {
-    Navigator.of(context).pop();
-  }
-
-  void initNewOrder() {
-    refresh();
   }
 
   void refresh() {
@@ -58,7 +53,7 @@ class NewOrderScreenState extends State<NewOrderScreen> {
     currentState = LoadingState(this);
     countryNumberController.text = '966';
     widget._stateManager.getBranches(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -77,6 +72,19 @@ class NewOrderScreenState extends State<NewOrderScreen> {
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    orderDetailsController.dispose();
+    noteController.dispose();
+    receiptNameController.dispose();
+    phoneNumberController.dispose();
+    countryNumberController.dispose();
+    toController.dispose();
+    priceController.dispose();
+    _stateSubscription?.cancel();
+    super.dispose();
   }
 
   void saveInfo(String info) {}

@@ -13,6 +13,7 @@ import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         orderInfo.isCaptainArrived == null) {
       showOwnerAlertConfirm();
     }
-    screenState.canRemoveIt = orderInfo.canRemove;
+    if (orderInfo.state == OrderStatusEnum.WAITING) {
+      screenState.canRemoveIt = orderInfo.canRemove;
+    }
     screenState.refresh();
   }
   bool dialogShowed = false;
@@ -74,11 +77,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
-            onTap: () {
+            onTap:orderInfo.state != OrderStatusEnum.CANCELLED ? () {
               Navigator.of(context).pushNamed(
                   OrdersRoutes.OWNER_TIME_LINE_SCREEN,
                   arguments: orderInfo.id);
-            },
+            } : null,
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -472,9 +475,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 ListTile(
                   leading: Icon(Icons.price_change_rounded),
                   title: Text(S.current.orderCostWithDeliveryCost),
-                  subtitle: Text(orderInfo.orderCost.toStringAsFixed(1) +
-                      ' ' +
-                      S.current.sar),
+                  subtitle: Text(
+                      FixedNumber.getFixedNumber(orderInfo.orderCost) +
+                          ' ' +
+                          S.current.sar),
                 ),
                 Visibility(
                   visible: orderInfo.captainOrderCost != null,
@@ -492,9 +496,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                           Icons.money,
                         ),
                         title: Text(S.current.captainOrderCost),
-                        subtitle: Text(
-                            orderInfo.captainOrderCost?.toStringAsFixed(2) ??
-                                ''),
+                        subtitle: Text(FixedNumber.getFixedNumber(
+                                orderInfo.captainOrderCost ?? 0) +
+                            ' ' +
+                            S.current.sar),
                       ),
                       Visibility(
                         visible: orderInfo.attention != null,

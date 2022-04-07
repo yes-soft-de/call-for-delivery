@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
 import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 
 class OwnerOrderCard extends StatelessWidget {
@@ -8,7 +9,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String orderStatus;
   final String deliveryDate;
   final String createdDate;
-  final String orderCost;
+  final num orderCost;
   final String note;
   final Color? background;
   OwnerOrderCard(
@@ -91,7 +92,7 @@ class OwnerOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
-                    title: S.current.cost, subtitle: orderCost),
+                    title: S.current.cost, subtitle: FixedNumber.getFixedNumber(orderCost) + ' ' + S.current.sar),
                 Icon(
                   Icons.arrow_circle_left_outlined,
                   color: Theme.of(context).textTheme.button?.color,

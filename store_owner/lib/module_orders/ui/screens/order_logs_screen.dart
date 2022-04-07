@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -25,6 +27,8 @@ class OrderLogsScreen extends StatefulWidget {
 class OrderLogsScreenState extends State<OrderLogsScreen> {
   late States currentState;
   int currentIndex = 0;
+  StreamSubscription? _stateSubscription;
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -47,12 +51,18 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());
     widget._stateManager.getOrdersFilters(this, ordersFilter);
-    widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription?.cancel();
+    super.dispose();
   }
 
   late FilterOrderRequest ordersFilter;

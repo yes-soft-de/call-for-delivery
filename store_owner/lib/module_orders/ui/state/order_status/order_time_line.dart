@@ -145,7 +145,7 @@ class OrderTimLineLoadedState extends States {
       CustomStepTimeLine(
           status: OrderStatusEnum.FINISHED,
           currentIndex: currentIndex,
-          date: model!.steps.length >= 4
+          date: model!.steps.length >= 5
               ? model?.steps[4].date
               : null),
     ];
