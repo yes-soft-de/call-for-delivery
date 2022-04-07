@@ -25,6 +25,7 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
     phoneController = TextEditingController();
     countryController = TextEditingController();
     nameController.text = widget.branchName;
+    countryController.text = '966';
     if (widget.phoneNumber.isNotEmpty) {
       try {
         final sNumber = TheCountryNumber()
