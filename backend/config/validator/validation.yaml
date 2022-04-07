@@ -299,3 +299,10 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnO
             - NotBlank: ~
         amount:
             - NotBlank: ~
+
+App\Request\User\UserRegisterRequest:
+    properties:
+        userId:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
