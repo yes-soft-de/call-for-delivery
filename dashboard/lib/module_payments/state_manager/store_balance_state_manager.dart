@@ -1,11 +1,10 @@
+import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/service/payments_service.dart';
+import 'package:c4d/module_payments/ui/state/store_account/store_balance_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/store_balance_model.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
-import 'package:c4d/module_stores/service/store_payment.dart';
-import 'package:c4d/module_stores/service/store_service.dart';
-import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_account/store_balance_state.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -13,17 +12,16 @@ import 'package:c4d/abstracts/states/state.dart';
 
 @injectable
 class StoreBalanceStateManager {
-  final StoresService _storesService;
-  final StorePaymentsService _storePaymentsService;
+  final PaymentsService _storePaymentsService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  StoreBalanceStateManager(this._storesService, this._storePaymentsService);
+  StoreBalanceStateManager(this._storePaymentsService);
 
   void getBalance(StoreBalanceScreenState screenState, int storeID) {
     _stateSubject.add(LoadingState(screenState));
-    _storesService.getStoreBalance(storeID).then((value) {
+    _storePaymentsService.getStorePayments(storeID).then((value) {
       if (value.hasError) {
         _stateSubject.add(StoreBalanceLoadedState(
           screenState,
@@ -41,20 +39,21 @@ class StoreBalanceStateManager {
   }
 
   void payForStore(
-      StoreBalanceScreenState screenState, StorePaymentRequest request) {
+      StoreBalanceScreenState screenState, CreateStorePaymentsRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _storePaymentsService.paymentToStore(request).then((value) {
       if (value.hasError) {
+        getBalance(screenState, request.storeId ?? -1);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        getBalance(screenState, request.storeOwnerProfileId ?? -1);
-//        CustomFlushBarHelper.createSuccess(
-//                title: S.current.warnning,
-//                message: value.error ?? S.current.paymentSuccessfully)
-//            .show(screenState.context);
+        getBalance(screenState, request.storeId ?? -1);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: value.error ?? S.current.paymentSuccessfully)
+            .show(screenState.context);
       }
     });
   }
@@ -71,7 +70,7 @@ class StoreBalanceStateManager {
         getBalance(screenState, screenState.storeID);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.deleteSuccess)
+                message: value.error ?? S.current.paymentsDeletedSuccessfully)
             .show(screenState.context);
       }
     });

@@ -52,7 +52,7 @@ class DeepLinksService {
     var currentLocation = await defaultLocation();
     if (currentLocation == null) return 0.0;
     var straightDistance =
-    const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
+        const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
     return straightDistance;
   }
 }

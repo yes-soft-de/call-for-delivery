@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
@@ -13,7 +12,6 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StoresLoadedState extends States {
   final StoresScreenState screenState;
@@ -80,15 +78,13 @@ class StoresLoadedState extends States {
                     storeOwnerName: element.storeOwnerName,
                     phone: element.phone,
                     status: element.status,
-                  imageUrl: element.imageUrl,
-                    employeeCount: element.employeeCount
-                )
-            );
+                    imageUrl: element.imageUrl,
+                    employeeCount: element.employeeCount));
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(screenState.context).primaryColor,
-              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(screenState.context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Flex(
               direction: Axis.horizontal,
@@ -117,26 +113,28 @@ class StoresLoadedState extends States {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,arguments: element.id);
+                    Navigator.pushNamed(
+                        screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
+                        arguments: element.id);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(screenState.context)
-                            .backgroundColor
-                            .withOpacity(0.2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.business_center,
-                          color: Colors.white,
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(screenState.context)
+                          .backgroundColor
+                          .withOpacity(0.2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.business_center,
+                        color: Colors.white,
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: 16,
                 ),
                 InkWell(
                   onTap: () {
@@ -154,33 +152,33 @@ class StoresLoadedState extends States {
                                   Theme.of(context).scaffoldBackgroundColor,
                               body: UpdateStoreWidget(
                                 storesModel: element,
-                                updateStore: (request,haveImage) {
+                                updateStore: (request, haveImage) {
                                   Navigator.of(context).pop();
-                                  screenState.updateStore(request,haveImage);
+                                  screenState.updateStore(request, haveImage);
                                 },
                               ),
                             ),
                           );
                         });
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(screenState.context)
-                            .backgroundColor
-                            .withOpacity(0.2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(screenState.context)
+                          .backgroundColor
+                          .withOpacity(0.2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: 16,
                 ),
               ],
             ),

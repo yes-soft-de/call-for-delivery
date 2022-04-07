@@ -10,6 +10,5 @@ class ChatArgument {
       required this.userType,
       this.support = false,
       this.userID,
-      this.guest = false
-      });
+      this.guest = false});
 }

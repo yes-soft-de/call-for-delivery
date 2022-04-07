@@ -150,7 +150,7 @@ class _AddProductsFormState extends State<AddProductsForm> {
 
 class UpdateProductsForm extends StatefulWidget {
   final Function(String, String, String) addProduct;
-    var request;
+  var request;
   UpdateProductsForm({required this.addProduct, this.request});
   @override
   _UpdateProductsFormState createState() => _UpdateProductsFormState();
@@ -175,8 +175,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.update),
+      appBar: CustomC4dAppBar.appBar(context, title: S.current.update),
       body: StackedForm(
           child: Form(
             key: _key,
@@ -266,7 +265,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
 
 class UpdateProductsCommissionForm extends StatefulWidget {
   final Function(bool, String) updateCommission;
-   var request;
+  var request;
   UpdateProductsCommissionForm({required this.updateCommission, this.request});
   @override
   _UpdateProductsCommissionFormState createState() =>
@@ -290,8 +289,7 @@ class _UpdateProductsCommissionFormState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.update),
+      appBar: CustomC4dAppBar.appBar(context, title: S.current.update),
       body: StackedForm(
           child: Form(
             key: _key,

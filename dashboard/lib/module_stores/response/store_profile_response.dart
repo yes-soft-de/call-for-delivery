@@ -17,7 +17,6 @@ class StoreProfileResponse {
       statusCode = '-1';
     }
   }
-
 }
 
 class Data {
@@ -34,18 +33,18 @@ class Data {
   String? bankName;
   String? bankAccountNumber;
 
-  Data({
-    this.id,
-    this.storeOwnerName,
-    this.image,
-    this.phone,
-    this.closingTime,
-    this.openingTime,
-    this.status,
-    this.city,
-    this.bankAccountNumber,
-    this.bankName,this.employeeCount
-  });
+  Data(
+      {this.id,
+      this.storeOwnerName,
+      this.image,
+      this.phone,
+      this.closingTime,
+      this.openingTime,
+      this.status,
+      this.city,
+      this.bankAccountNumber,
+      this.bankName,
+      this.employeeCount});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -53,9 +52,9 @@ class Data {
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];
     closingTime =
-    json['closingTime'] != null ? Date.fromJson(json['closingTime']) : null;
+        json['closingTime'] != null ? Date.fromJson(json['closingTime']) : null;
     openingTime =
-    json['openingTime'] != null ? Date.fromJson(json['openingTime']) : null;
+        json['openingTime'] != null ? Date.fromJson(json['openingTime']) : null;
     status = json['status'];
     city = json['city'];
     bankAccountNumber = json['bankAccountNumber'];

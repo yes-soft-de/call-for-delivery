@@ -19,18 +19,17 @@ class PackageCategoriesStateManager {
   final PublishSubject<States> _stateSubject = PublishSubject();
   Stream<States> get stateStream => _stateSubject.stream;
 
-  PackageCategoriesStateManager(
-      this._categoriesService,this._uploadService);
+  PackageCategoriesStateManager(this._categoriesService, this._uploadService);
 
   void getCategories(CategoriesScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     _categoriesService.getCategories().then((value) {
       if (value.hasError) {
-        _stateSubject.add(
-            CategoriesLoadedState(screenState, null, error: value.error));
+        _stateSubject
+            .add(CategoriesLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(CategoriesLoadedState(screenState, null,
-            empty: value.isEmpty));
+        _stateSubject.add(
+            CategoriesLoadedState(screenState, null, empty: value.isEmpty));
       } else {
         PackagesCategoryModel model = value as PackagesCategoryModel;
         _stateSubject.add(CategoriesLoadedState(screenState, model.data));
@@ -38,10 +37,10 @@ class PackageCategoriesStateManager {
     });
   }
 
-  void createCategory(CategoriesScreenState screenState,
-      PackageCategoryRequest request) {
+  void createCategory(
+      CategoriesScreenState screenState, PackageCategoryRequest request) {
     _stateSubject.add(LoadingState(screenState));
-      _categoriesService.createCategory(request).then((value) {
+    _categoriesService.createCategory(request).then((value) {
       if (value.hasError) {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
@@ -50,15 +49,14 @@ class PackageCategoriesStateManager {
       } else {
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.saveSuccess)
+            title: S.current.warnning, message: S.current.saveSuccess)
           ..show(screenState.context);
-      }}
-      );
-    }
+      }
+    });
+  }
 
-  void updateCategory(CategoriesScreenState screenState,
-      PackageCategoryRequest request) {
+  void updateCategory(
+      CategoriesScreenState screenState, PackageCategoryRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _categoriesService.updateCategory(request).then((value) {
       if (value.hasError) {

@@ -9,7 +9,7 @@ import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import '../../ui/state/order/order_logs_loaded_state.dart';
 import '../../ui/screen/order/order_logs_screen.dart';
- import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable

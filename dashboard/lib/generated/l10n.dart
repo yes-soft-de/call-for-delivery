@@ -5330,6 +5330,111 @@ class S {
     );
   }
 
+  /// `Payment created successfully`
+  String get paymentSuccessfully {
+    return Intl.message(
+      'Payment created successfully',
+      name: 'paymentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment updated successfully`
+  String get updatePaymentSuccessfully {
+    return Intl.message(
+      'Payment updated successfully',
+      name: 'updatePaymentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store payments`
+  String get storePayments {
+    return Intl.message(
+      'Store payments',
+      name: 'storePayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments`
+  String get payments {
+    return Intl.message(
+      'Payments',
+      name: 'payments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment deleted successfully`
+  String get paymentsDeletedSuccessfully {
+    return Intl.message(
+      'Payment deleted successfully',
+      name: 'paymentsDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter phone number`
+  String get pleaseEnterValidPhoneNumber {
+    return Intl.message(
+      'Please enter phone number',
+      name: 'pleaseEnterValidPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid character`
+  String get pleaseEnterValidCountryCode {
+    return Intl.message(
+      'invalid character',
+      name: 'pleaseEnterValidCountryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setup Account`
+  String get storeAccountInit {
+    return Intl.message(
+      'Setup Account',
+      name: 'storeAccountInit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty Field`
+  String get emptyField {
+    return Intl.message(
+      'Empty Field',
+      name: 'emptyField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid`
+  String get InvalidInput {
+    return Intl.message(
+      'Invalid',
+      name: 'InvalidInput',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code`
+  String get countryCode {
+    return Intl.message(
+      'Code',
+      name: 'countryCode',
   /// `Captain not arrived to store`
   String get captainNotArrivedToStore {
     return Intl.message(

@@ -4,14 +4,13 @@ import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
- import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
 import 'package:c4d/module_stores/response/store_balance_response/store_balance_response.dart';
 import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/module_stores/response/stores_response.dart';
@@ -25,7 +24,7 @@ class StoresRepository {
 
   Future<StoresResponse?> getStores() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_STORES+'active',
+    dynamic response = await _apiClient.get(Urls.GET_STORES + 'active',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoresResponse.fromJson(response);
@@ -33,12 +32,11 @@ class StoresRepository {
 
   Future<StoresResponse?> getStoresInActive() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_STORES+'inactive',
+    dynamic response = await _apiClient.get(Urls.GET_STORES + 'inactive',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoresResponse.fromJson(response);
   }
-
 
   Future<StoreProfileResponse?> getStoreProfile(int id) async {
     var token = await _authService.getToken();
@@ -47,6 +45,7 @@ class StoresRepository {
     if (response == null) return null;
     return StoreProfileResponse.fromJson(response);
   }
+
   Future<ActionResponse?> enableStore(ActiveStoreRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
@@ -59,8 +58,7 @@ class StoresRepository {
   Future<ActionResponse?> updateStore(UpdateStoreRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        Urls.UPDATE_STORE_INFO,
-        request.toJson(),
+        Urls.UPDATE_STORE_INFO, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
@@ -71,9 +69,7 @@ class StoresRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
 //        Urls.GET_ACCOUNT_BALANCE_CAPTAIN_SPECIFIC +
-            '$captainId' +
-            '/$firstDate' +
-            '/$lastDate',
+        '$captainId' + '/$firstDate' + '/$lastDate',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoreBalanceResponse.fromJson(response);
@@ -83,34 +79,13 @@ class StoresRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
 //        Urls.GET_ACCOUNT_BALANCE_STORE +
-            '$storeId',
+        '$storeId',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StoreBalanceResponse.fromJson(response);
   }
 
 
-  Future<ActionResponse?> createStorePayments(
-      StorePaymentRequest request) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(
-      '',
-//        Urls.CREATE_PAYMENTS_FOR_STORE,
-        request.toJson(),
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return ActionResponse.fromJson(response);
-  }
-
-  Future<ActionResponse?> deleteStorePayments(String id) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.delete(
-//        Urls.DELETE_PAYMENTS_FOR_STORE +
-            '/$id',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return ActionResponse.fromJson(response);
-  }
   Future<StoreNeedSupportResponse?> getStoreSupport() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_STORES,
@@ -119,7 +94,8 @@ class StoresRepository {
     return StoreNeedSupportResponse.fromJson(response);
   }
 
-  Future<OrdersResponse?> getStoreOrdersFilter(FilterOrderRequest request) async {
+  Future<OrdersResponse?> getStoreOrdersFilter(
+      FilterOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_OWNER_ORDERS_API,
@@ -129,7 +105,9 @@ class StoresRepository {
     if (response == null) return null;
     return OrdersResponse.fromJson(response);
   }
-  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest request) async {
+
+  Future<OrderCaptainResponse?> getOrdersNotArrivedCaptainFilter(
+      FilterOrderCaptainNotArrivedRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_CAPTAIN_NOT_ARRIVED,
@@ -149,5 +127,4 @@ class StoresRepository {
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
   }
-
 }

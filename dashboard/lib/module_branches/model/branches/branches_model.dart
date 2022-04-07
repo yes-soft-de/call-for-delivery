@@ -5,17 +5,18 @@ import 'package:latlong2/latlong.dart';
 
 class BranchesModel extends DataModel {
   late LatLng location;
-  late String city;
+  String? city;
   late String userName;
   late String branchName;
   late int id;
-  BranchesModel({
-    required this.location,
-    required this.branchName,
-    required this.id,
-    required this.city,
-    required this.userName,
-  });
+  String? branchPhone;
+  BranchesModel(
+      {required this.location,
+      required this.branchName,
+      required this.id,
+      required this.city,
+      required this.userName,
+      required this.branchPhone});
   List<BranchesModel> _branches = [];
 
   BranchesModel.withData(BranchListResponse response) {
@@ -28,7 +29,8 @@ class BranchesModel extends DataModel {
           branchName: element.brancheName ?? S.current.unknown,
           city: element.city ?? '',
           id: element.id ?? -1,
-          userName: element.userName ?? S.current.unknown));
+          userName: element.userName ?? S.current.unknown,
+          branchPhone: element.branchPhone));
     });
   }
   BranchesModel.empty();

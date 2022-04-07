@@ -13,8 +13,7 @@ import 'package:c4d/utils/helpers/translating.dart';
 class OrderTimLineLoadedState extends States {
   OrderTimeLineScreenState screenState;
   OrderTimeLine? model;
-  OrderTimLineLoadedState(this.screenState, this.model)
-      : super(screenState);
+  OrderTimLineLoadedState(this.screenState, this.model) : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
@@ -23,15 +22,14 @@ class OrderTimLineLoadedState extends States {
         children: [
           ListView(
             padding: EdgeInsets.all(8),
-            physics: BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
-             Visibility(
-               visible: model?.completionTime != '',
-               child: ListTile(
+              Visibility(
+                visible: model?.completionTime != '',
+                child: ListTile(
                   shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(25)),
+                      borderRadius: BorderRadius.circular(25)),
                   leading: Container(
                       height: double.maxFinite,
                       width: 50,
@@ -51,7 +49,7 @@ class OrderTimLineLoadedState extends States {
                         fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
-             ),
+              ),
               Flex(
                 direction: Axis.vertical,
                 children: getStepperAdmin(StatusHelper.getOrderStatusIndex(
@@ -88,9 +86,7 @@ class OrderTimLineLoadedState extends States {
       CustomStepTimeLine(
           status: OrderStatusEnum.GOT_CAPTAIN,
           currentIndex: currentIndex,
-          date: model!.steps.length >= 2
-              ? model?.steps[1].date
-              : null),
+          date: model!.steps.length >= 2 ? model?.steps[1].date : null),
       Padding(
         padding: const EdgeInsets.only(right: 22.0, left: 22.0),
         child: ListTile(
@@ -108,9 +104,7 @@ class OrderTimLineLoadedState extends States {
       CustomStepTimeLine(
           status: OrderStatusEnum.IN_STORE,
           currentIndex: currentIndex,
-          date: model!.steps.length >= 3
-              ? model?.steps[2].date
-              : null),
+          date: model!.steps.length >= 3 ? model?.steps[2].date : null),
       Padding(
         padding: const EdgeInsets.only(right: 22.0, left: 22.0),
         child: ListTile(
@@ -127,9 +121,7 @@ class OrderTimLineLoadedState extends States {
       CustomStepTimeLine(
           status: OrderStatusEnum.DELIVERING,
           currentIndex: currentIndex,
-          date: model!.steps.length >= 4
-              ? model?.steps[3].date
-              : null),
+          date: model!.steps.length >= 4 ? model?.steps[3].date : null),
       Padding(
         padding: const EdgeInsets.only(right: 22.0, left: 22.0),
         child: ListTile(
@@ -146,9 +138,7 @@ class OrderTimLineLoadedState extends States {
       CustomStepTimeLine(
           status: OrderStatusEnum.FINISHED,
           currentIndex: currentIndex,
-          date: model!.steps.length >= 4
-              ? model?.steps[4].date
-              : null),
+          date: model!.steps.length >= 4 ? model?.steps[4].date : null),
     ];
     return steps;
   }

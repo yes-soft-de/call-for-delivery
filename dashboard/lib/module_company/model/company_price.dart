@@ -16,7 +16,9 @@ class CompanyDeliveryPriceModel extends DataModel {
   CompanyDeliveryPriceModel? _model;
   CompanyDeliveryPriceModel.withData(Data data) : super.withData() {
     _model = CompanyDeliveryPriceModel(
-        id: data.id ?? -1, deliveryPrice: data.deliveryCost ?? 0,representativeCommission: data.representativeCommission ??0);
+        id: data.id ?? -1,
+        deliveryPrice: data.deliveryCost ?? 0,
+        representativeCommission: data.representativeCommission ?? 0);
   }
 
   CompanyDeliveryPriceModel get data {

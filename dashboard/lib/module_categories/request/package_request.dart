@@ -1,4 +1,4 @@
-class PackageRequest{
+class PackageRequest {
   int? id;
   int? packageCategoryID;
   String? name;
@@ -10,7 +10,17 @@ class PackageRequest{
   num? carCount;
   num? orderCount;
 
-  PackageRequest( {this.id, this.packageCategoryID, this.name ,this.city,this.status,this.carCount,this.cost,this.expired,this.note,this.orderCount } );
+  PackageRequest(
+      {this.id,
+      this.packageCategoryID,
+      this.name,
+      this.city,
+      this.status,
+      this.carCount,
+      this.cost,
+      this.expired,
+      this.note,
+      this.orderCount});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -26,5 +36,4 @@ class PackageRequest{
     map['orderCount'] = orderCount;
     return map;
   }
-
 }

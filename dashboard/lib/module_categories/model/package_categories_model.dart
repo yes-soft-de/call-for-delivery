@@ -5,13 +5,14 @@ import '../response/package_category_response.dart';
 
 class PackagesCategoryModel extends DataModel {
   String categoryName = '';
-  String? description ;
+  String? description;
 
   int id = -1;
 
   List<PackagesCategoryModel> _model = [];
 
-  PackagesCategoryModel({required this.categoryName, required this.id , this.description});
+  PackagesCategoryModel(
+      {required this.categoryName, required this.id, this.description});
 
   PackagesCategoryModel.withData(List<Data> data) : super.withData() {
     _model = [];

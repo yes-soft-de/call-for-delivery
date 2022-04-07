@@ -19,8 +19,8 @@ class CaptainOfferResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error(
-          'Captain Offer Response', e.toString(), StackTrace.current);
+      Logger()
+          .error('Captain Offer Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;
@@ -35,10 +35,8 @@ class CaptainOfferData {
   num? carCount;
   num? expired;
 
-  CaptainOfferData({
-    this.id,
-    this.expired,this.price,this.carCount,this.status
-  });
+  CaptainOfferData(
+      {this.id, this.expired, this.price, this.carCount, this.status});
 
   CaptainOfferData.fromJson(dynamic json) {
     id = json['id'];
@@ -47,5 +45,4 @@ class CaptainOfferData {
     carCount = json['carCount'];
     expired = json['expired'];
   }
-
 }

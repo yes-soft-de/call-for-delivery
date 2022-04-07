@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -206,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
+        "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
         "createDate": MessageLookupByLibrary.simpleMessage("Create Date"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
@@ -255,6 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
+        "emptyField": MessageLookupByLibrary.simpleMessage("Empty Field"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
         "enterProductInfo":
@@ -500,6 +503,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
+        "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment created successfully"),
+        "payments": MessageLookupByLibrary.simpleMessage("Payments"),
+        "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment deleted successfully"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
@@ -523,6 +531,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "Please Download mandob_moshtarayat"),
+        "pleaseEnterValidCountryCode":
+            MessageLookupByLibrary.simpleMessage("invalid character"),
+        "pleaseEnterValidPhoneNumber":
+            MessageLookupByLibrary.simpleMessage("Please enter phone number"),
         "pleaseEnterYourEmail":
             MessageLookupByLibrary.simpleMessage("Please Enter Your Email"),
         "pleaseInputPhoneNumber":
@@ -672,6 +684,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Unauthorized"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("STC Pay Code"),
         "store": MessageLookupByLibrary.simpleMessage("Store"),
+        "storeAccountInit":
+            MessageLookupByLibrary.simpleMessage("Setup Account"),
         "storeAvailable":
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
@@ -681,6 +695,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
+        "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
         "storeRated":
@@ -747,6 +762,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updatePackageSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Package updated successfully"),
+        "updatePaymentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Payment updated successfully"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":

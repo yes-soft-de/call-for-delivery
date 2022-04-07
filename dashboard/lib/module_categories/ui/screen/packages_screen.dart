@@ -44,8 +44,8 @@ class PackagesScreenState extends State<PackagesScreen> {
     widget._stateManager.getCategories(this);
   }
 
-  void getPackagesCategories(int id ,List<PackagesCategoryModel> categories) {
-    widget._stateManager.getPackagesByCategory(this, id,categories);
+  void getPackagesCategories(int id, List<PackagesCategoryModel> categories) {
+    widget._stateManager.getPackagesByCategory(this, id, categories);
   }
 
   void createPackage(PackageRequest request) {
@@ -55,8 +55,9 @@ class PackagesScreenState extends State<PackagesScreen> {
   void updatePakage(PackageRequest request) {
     widget._stateManager.updatePackage(this, request);
   }
-  void enablePackage(ActivePackageRequest request) {
-    widget._stateManager.enablePackage(this, request);
+
+  void enablePackage(ActivePackageRequest request, bool loading) {
+    widget._stateManager.enablePackage(this, request, loading);
   }
 
   void refresh() {
@@ -71,13 +72,13 @@ class PackagesScreenState extends State<PackagesScreen> {
   @override
   Widget build(BuildContext context) {
     if (id != null) {
-    canAddPackage = true;
+      canAddPackage = true;
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.of(context).packages, icon: Icons.menu, onTap: () {
-            GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-          }),
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: currentState.getUI(context),
       floatingActionButton: Hider(
         active: canAddPackage,
@@ -88,10 +89,12 @@ class PackagesScreenState extends State<PackagesScreen> {
             showDialog(
                 context: context,
                 builder: (_) {
-                  return PackageForm(onSave: (request){
-                    request.packageCategoryID = int.parse(id ?? '-1');
-                    createPackage(request);
-                  },);
+                  return PackageForm(
+                    onSave: (request) {
+                      request.packageCategoryID = int.parse(id ?? '-1');
+                      createPackage(request);
+                    },
+                  );
                 });
           },
         ),

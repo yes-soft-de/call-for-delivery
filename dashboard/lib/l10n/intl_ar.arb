@@ -456,8 +456,8 @@
     "packageCategory": "تصنيفات الباقات",
     "addCategory": "إضاف تصنيف",
     "ok": "حسناً",
-  "categoryName": "اسم التصنيف",
-  "description": "وصف",
+    "categoryName": "اسم التصنيف",
+    "description": "وصف",
     "categoryUpdatedSuccessfully": "تم تحديث الفئة بنجاح",
     "search": "بحث",
     "packageInfo": "معلومات الباقة",
@@ -485,12 +485,12 @@
     "kilometerLimtMin": "قيمة التعويض في حال عدم تجاوز حد الكيلومترات",
 
     "branchManagement": "إدارة الأفرع",
-  "selectedBranchesMenu": "My Selected Branches",
-  "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
-  "confirmDeletionBranch": "هل تريد حذف هذا الفرع",
-  "deleteBranchSuccess": "تم حذف الفرع بنجاح",
-  "chooseBranch": "Choose Branch",
-  "thereIsNoBranches": "لا يوجد أفرع متاحة",
+    "selectedBranchesMenu": "My Selected Branches",
+    "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
+    "confirmDeletionBranch": "هل تريد حذف هذا الفرع",
+    "deleteBranchSuccess": "تم حذف الفرع بنجاح",
+    "chooseBranch": "Choose Branch",
+    "thereIsNoBranches": "لا يوجد أفرع متاحة",
 
     "addNote": "إضافة تحديث",
     "title": "عنوان",
@@ -539,6 +539,18 @@
     "km": "كم",
     "orderTimeLine": "دورة حياة الطلب",
     "captainNotArrived": "الكباتن اللذين لم يصلو المتجر",
+    "paymentSuccessfully": "تم تسجيل دفعة بنجاح",
+    "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح",
+    "storePayments": "قائمة الدفعات للمتجر",
+    "payments": "الدفعات",
+    "paymentsDeletedSuccessfully": "تم حذف الدفعة بنجاح",
+    "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
+    "pleaseEnterValidCountryCode": "ادخال خاطئ",
+    "storeAccountInit": "تهيئة الحساب",
+    "emptyField": "حقل فارغ",
+    "InvalidInput": "غير صالح",
+    "countryCode": "النداء",
     "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر"
+
 
 }

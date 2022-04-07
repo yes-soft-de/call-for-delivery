@@ -35,20 +35,20 @@ class ChatRepository {
     if (token != null) {
       if (chatArgument.guest) {
         await _apiClient.post(
-        Urls.NOTIFICATIONNEWCHAT_ANYN_API,
-        chatArgument.userID == null
-            ? {'anonymousChatID': ''}
-            : {'anonymousChatID': chatArgument.userID},
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
+          Urls.NOTIFICATIONNEWCHAT_ANYN_API,
+          chatArgument.userID == null
+              ? {'anonymousChatID': ''}
+              : {'anonymousChatID': chatArgument.userID},
+          headers: {'Authorization': 'Bearer ' + '$token'},
+        );
       } else {
-          await _apiClient.post(
-        Urls.NOTIFICATIONNEWCHAT_API,
-        chatArgument.userID == null
-            ? {'otherUserID': ''}
-            : {'otherUserID': chatArgument.userID},
-        headers: {'Authorization': 'Bearer ' + '$token'},
-      );
+        await _apiClient.post(
+          Urls.NOTIFICATIONNEWCHAT_API,
+          chatArgument.userID == null
+              ? {'otherUserID': ''}
+              : {'otherUserID': chatArgument.userID},
+          headers: {'Authorization': 'Bearer ' + '$token'},
+        );
       }
     }
   }

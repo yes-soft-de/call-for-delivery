@@ -20,7 +20,7 @@ class BranchesListScreen extends StatefulWidget {
 
 class BranchesListScreenState extends State<BranchesListScreen> {
   States? currentState;
-  String? storeID='-1' ;
+  String? storeID = '-1';
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class BranchesListScreenState extends State<BranchesListScreen> {
       }
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget._manager.getBranchesList(this,storeID??'-1');
+      widget._manager.getBranchesList(this, storeID ?? '-1');
       if (mounted) {
         setState(() {});
       }
@@ -45,7 +45,7 @@ class BranchesListScreenState extends State<BranchesListScreen> {
   }
 
   void deleteBranch(int id) {
-    widget._manager.deleteBranch(this, id,storeID??'-1');
+    widget._manager.deleteBranch(this, id, storeID ?? '-1');
   }
 
   @override
@@ -54,7 +54,7 @@ class BranchesListScreenState extends State<BranchesListScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         storeID = arg.toString();
-        widget._manager.getBranchesList(this, storeID??'-1');
+        widget._manager.getBranchesList(this, storeID ?? '-1');
       }
     }
     return Scaffold(
@@ -64,8 +64,8 @@ class BranchesListScreenState extends State<BranchesListScreen> {
         actions: [
           CustomC4dAppBar.actionIcon(context, onTap: () {
             print("hihiStore" + storeID.toString());
-            Navigator.of(context)
-                .pushNamed(BranchesRoutes.UPDATE_BRANCH_SCREEN,arguments: storeID);
+            Navigator.of(context).pushNamed(BranchesRoutes.UPDATE_BRANCH_SCREEN,
+                arguments: storeID);
           }, icon: Icons.add_rounded)
         ],
       ),

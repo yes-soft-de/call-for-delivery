@@ -11,21 +11,18 @@ class NoticeRepository {
   final ApiClient _apiClient;
   final AuthService _authService;
 
-  NoticeRepository(
-      this._apiClient, this._authService);
+  NoticeRepository(this._apiClient, this._authService);
 
   Future<NoticeResponse?> getNotice() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_NOTICE ,
-        headers: {
-          'Authorization': 'Bearer ' + token.toString(),
-        });
+    dynamic response = await _apiClient.get(Urls.GET_NOTICE, headers: {
+      'Authorization': 'Bearer ' + token.toString(),
+    });
     if (response == null) return null;
     return NoticeResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> addNotice(
-      NoticeRequest request) async {
+  Future<ActionResponse?> addNotice(NoticeRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.CREATE_NOTICE, request.toJson(),
@@ -34,9 +31,7 @@ class NoticeRepository {
     return ActionResponse.fromJson(response);
   }
 
-
-  Future<ActionResponse?> updateNotice(
-      NoticeRequest request) async {
+  Future<ActionResponse?> updateNotice(NoticeRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.UPDATE_NOTICE, request.toJson(),

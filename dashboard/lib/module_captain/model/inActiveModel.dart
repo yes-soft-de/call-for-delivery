@@ -8,10 +8,11 @@ class InActiveModel extends DataModel {
 
   List<InActiveModel> _model = [];
 
-  InActiveModel(
-      {required this.captainID,
-      required this.image,
-      required this.captainName,});
+  InActiveModel({
+    required this.captainID,
+    required this.image,
+    required this.captainName,
+  });
 
   InActiveModel.withData(List<Data> data) : super.withData() {
     _model = [];

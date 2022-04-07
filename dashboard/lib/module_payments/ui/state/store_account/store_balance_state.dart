@@ -1,8 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/store_balance_model.dart';
-import 'package:c4d/module_stores/request/store_payment_request.dart';
-import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
+import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -42,6 +42,7 @@ class StoreBalanceLoadedState extends States {
     }
     return FixedContainer(
       child: CustomListView.custom(
+        padding: EdgeInsets.only(left: 16, right: 16),
         children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -75,14 +76,15 @@ class StoreBalanceLoadedState extends States {
             controller: _note,
             hintText: S.current.note,
             last: true,
+            textInputAction: TextInputAction.done,
           ),
           SizedBox(
             height: 16,
           ),
           ElevatedButton(
               onPressed: () {
-                screenState.pay(StorePaymentRequest(
-                    storeOwnerProfileId: screenState.storeID,
+                screenState.pay(CreateStorePaymentsRequest(
+                    storeId: screenState.storeID,
                     note: _note.text,
                     amount: num.parse(_amount.text.trim())));
               },
@@ -95,7 +97,7 @@ class StoreBalanceLoadedState extends States {
               ),
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
                     S.current.pay,
                     style: TextStyle(
@@ -104,41 +106,6 @@ class StoreBalanceLoadedState extends States {
                   ),
                 ),
               )),
-          SizedBox(
-            height: 16,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 32.0, left: 32),
-            child: Divider(
-              thickness: 2.5,
-              color: Theme.of(context).backgroundColor,
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Column(
-              children: [
-//                CustomListTileCaptainsPayment(
-//                    title: S.of(context).remainingAmountForStore,
-//                    subTitle: model?.amountOwedToStore.toString() ?? '',
-//                    iconData: Icons.monetization_on_rounded),
-//                CustomListTileCaptainsPayment(
-//                    title: S.of(context).sumPaymentsForStore,
-//                    subTitle: model?.sumPaymentsToStore.toString() ?? '',
-//                    iconData: Icons.monetization_on_rounded),
-//                CustomListTileCaptainsPayment(
-//                    title: S.of(context).total,
-//                    subTitle: model?.total.toString() ?? '',
-//                    iconData: Icons.monetization_on_rounded),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
           Padding(
             padding: const EdgeInsets.only(right: 32.0, left: 32),
             child: Divider(
@@ -165,7 +132,7 @@ class StoreBalanceLoadedState extends States {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            S.current.paymentsForStore,
+            S.current.payments,
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -205,7 +172,7 @@ class StoreBalanceLoadedState extends States {
             title: Text(S.current.paymentAmount),
             subtitle: Text(element.amount.toString()),
             trailing: SizedBox(
-              width: 150,
+              width: 125,
               child: Row(
                 children: [
                   Text(
@@ -220,7 +187,7 @@ class StoreBalanceLoadedState extends States {
                             context: screenState.context,
                             builder: (context) {
                               return CustomAlertDialog(
-                                oneAction: false,
+                                  oneAction: false,
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     screenState

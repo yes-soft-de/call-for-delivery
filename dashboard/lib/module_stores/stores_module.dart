@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
-import 'package:c4d/module_stores/ui/screen/store_balance_screen.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
@@ -26,8 +26,16 @@ class StoresModule extends YesModule {
   final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
   final OrderTimeLineScreen orderTimeLineScreen;
 
-  StoresModule(this.storesScreen, this._storeInfoScreen,
-      this.storesInActiveScreen, this.storeBalanceScreen, this.supportScreen, this._orderStatus, this._logsScreen, this.captainNotArrivedScreen, this.orderTimeLineScreen) {
+  StoresModule(
+      this.storesScreen,
+      this._storeInfoScreen,
+      this.storesInActiveScreen,
+      this.storeBalanceScreen,
+      this.supportScreen,
+      this._orderStatus,
+      this._logsScreen,
+      this.captainNotArrivedScreen,
+      this.orderTimeLineScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -41,8 +49,6 @@ class StoresModule extends YesModule {
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
-
-
     };
   }
 }

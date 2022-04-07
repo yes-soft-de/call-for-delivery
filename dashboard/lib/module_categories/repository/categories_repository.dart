@@ -15,21 +15,19 @@ class CategoriesRepository {
   final ApiClient _apiClient;
   final AuthService _authService;
 
-  CategoriesRepository(
-      this._apiClient, this._authService);
+  CategoriesRepository(this._apiClient, this._authService);
 
   Future<PackageCategoryResponse?> getPackagesCategories() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_PACKAGE_CATEGORY ,
-        headers: {
-          'Authorization': 'Bearer ' + token.toString(),
-        });
+    dynamic response =
+        await _apiClient.get(Urls.GET_PACKAGE_CATEGORY, headers: {
+      'Authorization': 'Bearer ' + token.toString(),
+    });
     if (response == null) return null;
     return PackageCategoryResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> addCategory(
-      PackageCategoryRequest request) async {
+  Future<ActionResponse?> addCategory(PackageCategoryRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.CREATE_PACKAGE_CATEGORY, request.toJson(),
@@ -38,8 +36,7 @@ class CategoriesRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> addPackage(
-      PackageRequest request) async {
+  Future<ActionResponse?> addPackage(PackageRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.CREATE_PACKAGE, request.toJson(),
@@ -48,8 +45,7 @@ class CategoriesRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> updateCategory(
-      PackageCategoryRequest request) async {
+  Future<ActionResponse?> updateCategory(PackageCategoryRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.CREATE_PACKAGE_CATEGORY, request.toJson(),
@@ -58,8 +54,7 @@ class CategoriesRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> updatePackage(
-      PackageRequest request) async {
+  Future<ActionResponse?> updatePackage(PackageRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.CREATE_PACKAGE, request.toJson(),
@@ -67,7 +62,6 @@ class CategoriesRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
 
   Future<ActionResponse?> enablePackage(ActivePackageRequest request) async {
     var token = await _authService.getToken();
@@ -80,17 +74,12 @@ class CategoriesRepository {
 
   Future<PackagesResponse?> getPackageByCategory(int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_PACKAGE_BY_CATEGORY+ '$id',
+    dynamic response = await _apiClient.get(
+        Urls.GET_PACKAGE_BY_CATEGORY + '$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return PackagesResponse.fromJson(response);
   }
-
-
-
-
-
-
 
   Future<ActionResponse?> deleteCategories(String id) async {
     var token = await _authService.getToken();
@@ -102,10 +91,9 @@ class CategoriesRepository {
 
   Future<ActionResponse?> getCategory(String id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(''+ '$id',
+    dynamic response = await _apiClient.get('' + '$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
 }

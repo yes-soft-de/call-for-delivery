@@ -25,12 +25,12 @@ class Data {
   int? activeStoresCount;
   int? allOrdersCount;
 
-  Data(
-      {
-      this.countOngoingOrders,
-      this.inactiveStoresCount,
-      this.activeStoresCount,
-      this.allOrdersCount,});
+  Data({
+    this.countOngoingOrders,
+    this.inactiveStoresCount,
+    this.activeStoresCount,
+    this.allOrdersCount,
+  });
 
   Data.fromJson(dynamic json) {
     countOngoingOrders = json['ongoingOrdersCount'];

@@ -7,7 +7,7 @@ import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 @injectable
 class AppThemeDataService {
   static final PublishSubject<ThemeData> _darkModeSubject =
-  PublishSubject<ThemeData>();
+      PublishSubject<ThemeData>();
 
   Stream<ThemeData> get darkModeStream => _darkModeSubject.stream;
 
@@ -38,7 +38,7 @@ class AppThemeDataService {
           focusColor: PrimaryColor,
           checkboxTheme: CheckboxThemeData(
             checkColor:
-            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
               const Set<MaterialState> interactiveStates = <MaterialState>{
                 MaterialState.pressed,
                 MaterialState.hovered,
@@ -50,7 +50,7 @@ class AppThemeDataService {
               return Colors.white;
             }),
             fillColor:
-            MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
               const Set<MaterialState> interactiveStates = <MaterialState>{
                 MaterialState.pressed,
                 MaterialState.hovered,
@@ -66,10 +66,10 @@ class AppThemeDataService {
           fontFamily: 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              )),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+          )),
           textTheme: TextTheme(
             button: TextStyle(
               color: Colors.white,
@@ -92,7 +92,7 @@ class AppThemeDataService {
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
-          BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
+              BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
         ));
   }
 

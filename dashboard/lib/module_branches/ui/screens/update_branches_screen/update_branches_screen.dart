@@ -101,10 +101,10 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (storeID == '-1' && args != null) {
-      if ( args is String) {
+      if (args is String) {
         storeID = args;
-      }else if (args is BranchesModel){
-        branchesModel = args ;
+      } else if (args is BranchesModel) {
+        branchesModel = args;
       }
     }
 

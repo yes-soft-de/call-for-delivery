@@ -19,8 +19,7 @@ class PackagesResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error(
-          'Packages Response', e.toString(), StackTrace.current);
+      Logger().error('Packages Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;
@@ -39,12 +38,16 @@ class PackageData {
   num? orderCount;
   num? expired;
 
-  PackageData({
-    this.id,
-    this.name,
-    this.note,
-    this.orderCount,this.expired,this.cost,this.carCount,this.status,this.city
-  });
+  PackageData(
+      {this.id,
+      this.name,
+      this.note,
+      this.orderCount,
+      this.expired,
+      this.cost,
+      this.carCount,
+      this.status,
+      this.city});
 
   PackageData.fromJson(dynamic json) {
     id = json['id'];
@@ -57,5 +60,4 @@ class PackageData {
     orderCount = json['orderCount'];
     expired = json['expired'];
   }
-
 }

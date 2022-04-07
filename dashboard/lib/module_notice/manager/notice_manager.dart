@@ -10,16 +10,11 @@ class NoticeManager {
 
   NoticeManager(this._categoriesRepository);
 
-  Future<NoticeResponse?> getNotice() =>
-      _categoriesRepository.getNotice();
+  Future<NoticeResponse?> getNotice() => _categoriesRepository.getNotice();
 
   Future<ActionResponse?> addNotice(NoticeRequest request) =>
       _categoriesRepository.addNotice(request);
 
-  Future<ActionResponse?> updateNotice(
-      NoticeRequest request) =>
+  Future<ActionResponse?> updateNotice(NoticeRequest request) =>
       _categoriesRepository.updateNotice(request);
-
-
-
 }

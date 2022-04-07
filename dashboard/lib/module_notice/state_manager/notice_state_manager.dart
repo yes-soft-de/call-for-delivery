@@ -17,18 +17,17 @@ class NoticeStateManager {
   final PublishSubject<States> _stateSubject = PublishSubject();
   Stream<States> get stateStream => _stateSubject.stream;
 
-  NoticeStateManager(
-      this._service);
+  NoticeStateManager(this._service);
 
   void getNotice(NoticeScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     _service.getNotice().then((value) {
       if (value.hasError) {
-        _stateSubject.add(
-            NoticeLoadedState(screenState, null, error: value.error));
+        _stateSubject
+            .add(NoticeLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(NoticeLoadedState(screenState, null,
-            empty: value.isEmpty));
+        _stateSubject
+            .add(NoticeLoadedState(screenState, null, empty: value.isEmpty));
       } else {
         NoticeModel model = value as NoticeModel;
         _stateSubject.add(NoticeLoadedState(screenState, model.data));
@@ -36,10 +35,9 @@ class NoticeStateManager {
     });
   }
 
-  void addNotice(NoticeScreenState screenState,
-      NoticeRequest request) {
+  void addNotice(NoticeScreenState screenState, NoticeRequest request) {
     _stateSubject.add(LoadingState(screenState));
-      _service.addNotice(request).then((value) {
+    _service.addNotice(request).then((value) {
       if (value.hasError) {
         getNotice(screenState);
         CustomFlushBarHelper.createError(
@@ -48,15 +46,13 @@ class NoticeStateManager {
       } else {
         getNotice(screenState);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.saveSuccess)
+            title: S.current.warnning, message: S.current.saveSuccess)
           ..show(screenState.context);
-      }}
-      );
-    }
+      }
+    });
+  }
 
-  void updateNotice(NoticeScreenState screenState,
-      NoticeRequest request) {
+  void updateNotice(NoticeScreenState screenState, NoticeRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _service.updateNotice(request).then((value) {
       if (value.hasError) {

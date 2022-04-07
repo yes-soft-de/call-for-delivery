@@ -17,21 +17,18 @@ class CaptainsRepository {
   final ApiClient _apiClient;
   final AuthService _authService;
 
-  CaptainsRepository(
-      this._apiClient, this._authService);
+  CaptainsRepository(this._apiClient, this._authService);
 
   Future<CaptainOfferResponse?> getCaptainOffer() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_OFFERS ,
-        headers: {
-          'Authorization': 'Bearer ' + token.toString(),
-        });
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_OFFERS, headers: {
+      'Authorization': 'Bearer ' + token.toString(),
+    });
     if (response == null) return null;
     return CaptainOfferResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> addCaptainOffer(
-      CaptainOfferRequest request) async {
+  Future<ActionResponse?> addCaptainOffer(CaptainOfferRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.CREATE_CAPTAIN_OFFERS, request.toJson(),
@@ -39,8 +36,6 @@ class CaptainsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
-
 
   Future<ActionResponse?> updateCaptainOffer(
       CaptainOfferRequest request) async {
@@ -61,11 +56,9 @@ class CaptainsRepository {
     return ActionResponse.fromJson(response);
   }
 
-
-
   Future<CaptainResponse?> getInActiveCaptain() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS +'inactive',
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS + 'inactive',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainResponse.fromJson(response);
@@ -73,7 +66,7 @@ class CaptainsRepository {
 
   Future<CaptainResponse?> getCaptains() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS+'active',
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS + 'active',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainResponse.fromJson(response);
@@ -105,6 +98,7 @@ class CaptainsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
   Future<CaptainNeedSupportResponse?> getCaptainSupport() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_CAPTAINS,

@@ -16,22 +16,17 @@ class CaptainsManager {
 
   CaptainsManager(this._repository);
 
-
-
   Future<CaptainOfferResponse?> getCaptainOffer() =>
       _repository.getCaptainOffer();
 
   Future<ActionResponse?> addCaptainOffer(CaptainOfferRequest request) =>
       _repository.addCaptainOffer(request);
 
-  Future<ActionResponse?> updateCaptainOffer(
-      CaptainOfferRequest request) =>
+  Future<ActionResponse?> updateCaptainOffer(CaptainOfferRequest request) =>
       _repository.updateCaptainOffer(request);
 
-  Future<ActionResponse?> enableCaptainOffer(
-      EnableOfferRequest request) =>
+  Future<ActionResponse?> enableCaptainOffer(EnableOfferRequest request) =>
       _repository.enableCaptainOffer(request);
-
 
   Future<CaptainResponse?> getCaptains() => _repository.getCaptains();
 

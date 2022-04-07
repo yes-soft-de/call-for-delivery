@@ -56,12 +56,13 @@ class StoresNeedSupportLoadedState extends States {
         name: element.storeName,
         image: element.image,
         onTap: () {
-          Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
-              arguments: ChatArgument(
+          Navigator.of(context).pushNamed(
+            ChatRoutes.chatRoute,
+            arguments: ChatArgument(
                 roomID: element.roomID,
                 userType: 'store',
                 userID: int.parse(element.id)),
-              );
+          );
         },
       ));
     }

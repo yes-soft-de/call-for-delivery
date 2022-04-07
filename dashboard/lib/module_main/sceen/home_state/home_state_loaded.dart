@@ -49,7 +49,7 @@ class HomeLoadedState extends States {
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(
                   thickness: 2.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
               widgetTile(model?.inactiveStoresCount.toString() ?? '',
@@ -60,25 +60,25 @@ class HomeLoadedState extends States {
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(
                   thickness: 2.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(
-                  model?.allOrdersCount.toString() ?? '', S.current.allOrdersCount),
+              widgetTile(model?.allOrdersCount.toString() ?? '',
+                  S.current.allOrdersCount),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(
                   thickness: 2.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-
             ]),
       ),
     );
   }
 
   Widget widgetTile(String count, String title) {
+    var context = screenState.context;
     return Container(
       width: !ScreenType.isDesktop(screenState.context)
           ? MediaQuery.of(screenState.context).size.width * 0.5
@@ -97,7 +97,13 @@ class HomeLoadedState extends States {
               constraints: BoxConstraints(maxWidth: 180),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: Theme.of(screenState.context).primaryColor,
+                gradient: LinearGradient(colors: [
+                  Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.95),
+                  Theme.of(context).colorScheme.primary,
+                ]),
+                color: Theme.of(screenState.context).colorScheme.primary,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

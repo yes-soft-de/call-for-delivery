@@ -19,8 +19,7 @@ class NoticeResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error(
-          'Notice Response', e.toString(), StackTrace.current);
+      Logger().error('Notice Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;
@@ -29,12 +28,7 @@ class NoticeResponse {
 }
 
 class Data {
-  Data({
-    this.id,
-    this.title,
-    this.msg,
-    this.appType
-  });
+  Data({this.id, this.title, this.msg, this.appType});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -47,4 +41,3 @@ class Data {
   String? msg;
   String? appType;
 }
-

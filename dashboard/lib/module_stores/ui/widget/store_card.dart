@@ -2,7 +2,7 @@ import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
 class StoreCard extends StatelessWidget {
-  final String  Id;
+  final String Id;
   final String image;
   final String name;
 

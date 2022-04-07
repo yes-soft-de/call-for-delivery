@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
@@ -206,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
         "countTodayOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
+        "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
@@ -255,6 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
         "emailAddressIsRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى توفير البريد الالكتروني"),
+        "emptyField": MessageLookupByLibrary.simpleMessage("حقل فارغ"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("قائمة فارغة"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
         "enterProductInfo":
@@ -495,6 +498,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
+        "paymentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
+        "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
+        "paymentsDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
         "paymentsVia":
@@ -519,6 +527,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "الرجاء تحميل mandob_moshtarayat"),
+        "pleaseEnterValidCountryCode":
+            MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
+        "pleaseEnterValidPhoneNumber":
+            MessageLookupByLibrary.simpleMessage("ادخل رقم هاتف صالح"),
         "pleaseEnterYourEmail": MessageLookupByLibrary.simpleMessage(
             "الرجاء ادخال البريد الالكتروني"),
         "pleaseInputPhoneNumber":
@@ -666,6 +678,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "أنت غير مخول بالقيام بهذا الطلب"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("رقم حساب STC PAY"),
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
+        "storeAccountInit":
+            MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
         "storeAvailable": MessageLookupByLibrary.simpleMessage("المتجر متوفر"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("حساب المتجر"),
         "storeCreatedSuccessfully":
@@ -674,6 +688,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
+        "storePayments":
+            MessageLookupByLibrary.simpleMessage("قائمة الدفعات للمتجر"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
@@ -740,6 +756,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updatePackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل الباقة بنجاح"),
+        "updatePaymentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الدفعة بنجاح"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),

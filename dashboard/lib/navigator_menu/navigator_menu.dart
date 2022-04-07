@@ -80,8 +80,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.packages,
                 icon: Icons.backpack_outlined,
                 children: [
-                  customListTile(getIt<CategoriesModule>().packageCategoriesScreen,
-                      S.current.categories, Icons.category, true),
+                  customListTile(
+                      getIt<CategoriesModule>().packageCategoriesScreen,
+                      S.current.categories,
+                      Icons.category,
+                      true),
 //                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
 //                      S.current.subCategories, FontAwesomeIcons.square, true),
                   customListTile(
@@ -89,8 +92,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.packages,
                       FontAwesomeIcons.wolfPackBattalion,
                       true),
-                  customListTile(getIt<CaptainsModule>().captainOffersScreen,
-                      S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
+                  customListTile(
+                      getIt<CaptainsModule>().captainOffersScreen,
+                      S.current.captainsOffer,
+                      FontAwesomeIcons.solidListAlt,
+                      true),
                 ],
                 page: widget.currentPage),
             // captain
@@ -113,8 +119,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.orders,
                 icon: FontAwesomeIcons.jediOrder,
                 children: [
-                  customListTile(getIt<StoresModule>().captainNotArrivedScreen,
-                      S.current.captainNotArrived,  Icons.storefront_rounded, true),
+                  customListTile(
+                      getIt<StoresModule>().captainNotArrivedScreen,
+                      S.current.captainNotArrived,
+                      Icons.storefront_rounded,
+                      true),
                 ],
                 page: widget.currentPage),
             customExpansionTile(
@@ -122,9 +131,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: FontAwesomeIcons.headphonesAlt,
                 children: [
                   customListTile(getIt<StoresModule>().supportScreen,
-                      S.current.stores,  Icons.storefront_rounded, true),
+                      S.current.stores, Icons.storefront_rounded, true),
                   customListTile(getIt<CaptainsModule>().supportScreen,
-                      S.current.captains,  FontAwesomeIcons.car, true),
+                      S.current.captains, FontAwesomeIcons.car, true),
                 ],
                 page: widget.currentPage),
             customExpansionTile(
@@ -160,11 +169,33 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
     return Padding(
       key: ValueKey(page.runtimeType),
       padding: EdgeInsets.only(
-          left: subtitle ? 16.0 : 8.0, right: subtitle ? 16 : 8.0),
+          left: subtitle ? 16.0 : 8.0,
+          right: subtitle ? 16 : 8.0,
+          bottom: selected ? 8 : 0),
       child: Container(
         decoration: BoxDecoration(
-            color: selected ? Theme.of(context).primaryColor : null,
-            borderRadius: BorderRadius.circular(25)),
+            color: selected ? Theme.of(context).colorScheme.primary : null,
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
+                        spreadRadius: 0.5,
+                        blurRadius: 5,
+                        offset: Offset(1, 1)),
+                  ]
+                : null,
+            gradient: selected
+                ? LinearGradient(colors: [
+                    Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                    Theme.of(context).colorScheme.primary,
+                  ])
+                : null),
         child: ListTile(
           minLeadingWidth: subtitle ? 4 : null,
           visualDensity: VisualDensity(vertical: -2),

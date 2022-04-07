@@ -30,20 +30,19 @@ class _CategoryFormState extends State<NoticeForm> {
   final TextEditingController _decController = TextEditingController();
 
   int? id;
-  String appType='';
+  String appType = '';
 
   @override
   void initState() {
     super.initState();
 
-    if(widget.request != null){
+    if (widget.request != null) {
       print('notNull');
       _nameController.text = widget.request?.title ?? '';
       _decController.text = widget.request?.msg ?? '';
-      id =widget.request?.id ?? -1;
-      appType =widget.request!.appType ??'';
+      id = widget.request?.id ?? -1;
+      appType = widget.request!.appType ?? '';
     }
-
   }
 
   @override
@@ -70,8 +69,6 @@ class _CategoryFormState extends State<NoticeForm> {
                       controller: _nameController,
                       hintText: S.current.title,
                     ),
-
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -95,7 +92,7 @@ class _CategoryFormState extends State<NoticeForm> {
                         textAlign: TextAlign.start,
                       ),
                     ),
-                   Wrap(children: appChips(context),spacing: 30),
+                    Wrap(children: appChips(context), spacing: 30),
                     SizedBox(
                       height: 100,
                     ),
@@ -106,28 +103,34 @@ class _CategoryFormState extends State<NoticeForm> {
           onTap: () {
             if (_key.currentState!.validate() && appType.isNotEmpty) {
               Navigator.pop(context);
-              widget.onSave(NoticeRequest(title: _nameController.text ,msg: _decController.text,id: id,appType: appType));
+              widget.onSave(NoticeRequest(
+                  title: _nameController.text,
+                  msg: _decController.text,
+                  id: id,
+                  appType: appType));
             } else {
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.pleaseCompleteTheForm)
+                      title: S.current.warnning,
+                      message: S.current.pleaseCompleteTheForm)
                   .show(context);
             }
           }),
     );
   }
+
   List<Widget> appChips(BuildContext context) {
     List<Widget> widgets = [];
     for (AppTypeEnum element in AppTypeEnum.values) {
-      widgets.add(
-          ChipChoose(title: AppTypeHelper.getAppTypeMessages(element),
-            selected:appType == AppTypeHelper.getTypeString(element) ?true: false,
-            onTap: (){
-            setState(() {
-              appType = AppTypeHelper.getTypeString(element);
-            });
-            },
-          ));
+      widgets.add(ChipChoose(
+        title: AppTypeHelper.getAppTypeMessages(element),
+        selected:
+            appType == AppTypeHelper.getTypeString(element) ? true : false,
+        onTap: () {
+          setState(() {
+            appType = AppTypeHelper.getTypeString(element);
+          });
+        },
+      ));
     }
     return widgets;
   }

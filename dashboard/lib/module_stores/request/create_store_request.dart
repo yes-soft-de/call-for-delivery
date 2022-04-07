@@ -13,17 +13,18 @@ class UpdateStoreRequest {
   String? city;
 
   UpdateStoreRequest(
-      {
-        required this.id,
-        this.storeOwnerName,
+      {required this.id,
+      this.storeOwnerName,
       this.image,
       this.phone,
       this.closingTime,
       this.openingTime,
       this.status,
       this.stcPay,
-      this.bankAccountNumber,this.city,
-      this.bankName,this.employeeCount});
+      this.bankAccountNumber,
+      this.city,
+      this.bankName,
+      this.employeeCount});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};

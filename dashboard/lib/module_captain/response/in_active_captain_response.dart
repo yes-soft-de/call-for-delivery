@@ -92,7 +92,9 @@ class Data {
         json['location'] != null ? Location.fromJson(json['location']) : null;
     age = json['age']?.toString();
     car = json['car'];
-    drivingLicence =json['drivingLicence'] != null ? ImageUrl.fromJson(json['drivingLicence']) :null;
+    drivingLicence = json['drivingLicence'] != null
+        ? ImageUrl.fromJson(json['drivingLicence'])
+        : null;
     salary = json['salary'];
     status = json['status'];
     state = json['state'];
@@ -105,8 +107,11 @@ class Data {
     bankName = json['bankName'];
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
-    mechanicLicense = json['mechanicLicense'] != null ?ImageUrl.fromJson(json['mechanicLicense']) : null;
-    identity = json['identity'] != null ?ImageUrl.fromJson(json['identity']) : null;
+    mechanicLicense = json['mechanicLicense'] != null
+        ? ImageUrl.fromJson(json['mechanicLicense'])
+        : null;
+    identity =
+        json['identity'] != null ? ImageUrl.fromJson(json['identity']) : null;
   }
 
   Map<String, dynamic> toJson() {

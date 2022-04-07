@@ -21,38 +21,37 @@ class StoresInActiveStateManager {
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  StoresInActiveStateManager(this._storesService, this._authService,
-      this._uploadService);
+  StoresInActiveStateManager(
+      this._storesService, this._authService, this._uploadService);
 
   void getStores(StoresInActiveScreenState screenState) {
     _storesService.getStoresInActive().then((value) {
       if (value.hasError) {
-        _stateSubject.add(StoresInActiveLoadedState(screenState, null,
-            error: value.error));
+        _stateSubject.add(
+            StoresInActiveLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
         _stateSubject.add(StoresInActiveLoadedState(screenState, []));
       } else {
         StoresModel model = value as StoresModel;
-        _stateSubject.add(StoresInActiveLoadedState(
-            screenState, model.data));
+        _stateSubject.add(StoresInActiveLoadedState(screenState, model.data));
       }
     });
   }
 
-
-  void updateStore(StoresInActiveScreenState screenState, UpdateStoreRequest request,bool haveImage) {
+  void updateStore(StoresInActiveScreenState screenState,
+      UpdateStoreRequest request, bool haveImage) {
     _stateSubject.add(LoadingState(screenState));
-    if(haveImage){
+    if (haveImage) {
       _uploadService.uploadImage(request.image).then((image) {
         if (image == null) {
           screenState.getStores();
           CustomFlushBarHelper.createError(
-              title: S.current.warnning,
-              message: S.current.errorUploadingImages)
+                  title: S.current.warnning,
+                  message: S.current.errorUploadingImages)
               .show(screenState.context);
           return;
-        }else{
-          request.image=image;
+        } else {
+          request.image = image;
           _storesService.updateStore(request).then((value) {
             if (value.hasError) {
               getStores(screenState);
@@ -69,7 +68,7 @@ class StoresInActiveStateManager {
           });
         }
       });
-    }else{
+    } else {
       _storesService.updateStore(request).then((value) {
         if (value.hasError) {
           getStores(screenState);
@@ -86,5 +85,4 @@ class StoresInActiveStateManager {
       });
     }
   }
-
 }

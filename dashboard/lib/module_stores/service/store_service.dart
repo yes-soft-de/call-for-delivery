@@ -8,7 +8,7 @@ import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
- import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -81,6 +81,7 @@ class StoresService {
     }
     return DataModel.empty();
   }
+
   Future<DataModel> enableStore(ActiveStoreRequest request) async {
     ActionResponse? actionResponse = await _storeManager.enableStore(request);
 
@@ -107,9 +108,9 @@ class StoresService {
     if (_storeResponse.data == null) return DataModel.empty();
     return StoreBalanceModel.withData(_storeResponse.data!);
   }
+
   Future<DataModel> getStoreNeedSupport() async {
-    StoreNeedSupportResponse? _clients =
-    await _storeManager.getStoreSupport();
+    StoreNeedSupportResponse? _clients = await _storeManager.getStoreSupport();
     if (_clients == null) {
       return DataModel.withError(S.current.networkError);
     }
@@ -121,8 +122,10 @@ class StoresService {
     return StoresNeedSupportModel.withData(_clients.data!);
   }
 
-  Future<DataModel> getOrdersNotArrivedCaptainFilter(FilterOrderCaptainNotArrivedRequest  request) async {
-    OrderCaptainResponse? response = await _storeManager.getOrdersNotArrivedCaptainFilter(request);
+  Future<DataModel> getOrdersNotArrivedCaptainFilter(
+      FilterOrderCaptainNotArrivedRequest request) async {
+    OrderCaptainResponse? response =
+        await _storeManager.getOrdersNotArrivedCaptainFilter(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -133,7 +136,8 @@ class StoresService {
   }
 
   Future<DataModel> getStoreOrdersFilter(FilterOrderRequest request) async {
-    OrdersResponse? response = await _storeManager.getStoreOrdersFilter(request);
+    OrdersResponse? response =
+        await _storeManager.getStoreOrdersFilter(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -142,9 +146,10 @@ class StoresService {
     if (response.data == null) return DataModel.empty();
     return OrderModel.withData(response);
   }
+
   Future<DataModel> getOrderDetails(int orderId) async {
     OrderDetailsResponse? response =
-    await _storeManager.getOrderDetails(orderId);
+        await _storeManager.getOrderDetails(orderId);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(

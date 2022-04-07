@@ -47,7 +47,8 @@ class NoticeLoadedState extends States {
       child: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: CustomListView.custom(children: getCategories(screenState.currentIndex)),
+          child: CustomListView.custom(
+              children: getCategories(screenState.currentIndex)),
         ),
       ),
     );
@@ -61,68 +62,73 @@ class NoticeLoadedState extends States {
     }
     if (model!.isEmpty) return widgets;
     for (var element in model ?? <NoticeModel>[]) {
-      if(currentIndex == 0 && ( element.appType =='captains' ||element.appType =='all' )){
-        widgets.add(NoteCard(
-          title: element.title,
-          msg: element.msg,
-          edit: (){
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return NoticeForm(
-                    request: element,
-                    onSave: (request){
-                      screenState.updateNotice(request);
-                    },);
-                });
-          },
-        ),
+      if (currentIndex == 0 &&
+          (element.appType == 'captains' || element.appType == 'all')) {
+        widgets.add(
+          NoteCard(
+            title: element.title,
+            msg: element.msg,
+            edit: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return NoticeForm(
+                      request: element,
+                      onSave: (request) {
+                        screenState.updateNotice(request);
+                      },
+                    );
+                  });
+            },
+          ),
         );
-      }
-     else if(currentIndex == 1 &&  ( element.appType =='stores' ||element.appType =='all' )){
-        widgets.add(NoteCard(
-          title: element.title,
-          msg: element.msg,
-          edit: (){
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return NoticeForm(
-                    request: element,
-                    onSave: (request){
-                      screenState.updateNotice(request);
-                    },);
-                });
-          },
-        ),
+      } else if (currentIndex == 1 &&
+          (element.appType == 'stores' || element.appType == 'all')) {
+        widgets.add(
+          NoteCard(
+            title: element.title,
+            msg: element.msg,
+            edit: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return NoticeForm(
+                      request: element,
+                      onSave: (request) {
+                        screenState.updateNotice(request);
+                      },
+                    );
+                  });
+            },
+          ),
         );
       }
     }
 
     if (model != null) {
-    widgets.insert(
-    0,
-      FilterBar(
-        cursorRadius: BorderRadius.circular(25),
-        animationDuration: Duration(milliseconds: 350),
-        backgroundColor: Theme.of(context).backgroundColor,
-        currentIndex: currentIndex,
-        borderRadius: BorderRadius.circular(25),
-        floating: true,
-        height: 40,
-        cursorColor: Theme.of(context).colorScheme.primary,
-        items: [
-          FilterItem(label: S.current.captain),
-          FilterItem(label: S.current.store),
-        ],
-        onItemSelected: (index) {
-          screenState.currentIndex = index;
-        screenState.refresh();
-        },
-        selectedContent: Theme.of(context).textTheme.button!.color!,
-        unselectedContent: Theme.of(context).textTheme.headline6!.color!,
-      ),
-    );
+      widgets.insert(
+        0,
+        FilterBar(
+          cursorRadius: BorderRadius.circular(25),
+          animationDuration: Duration(milliseconds: 350),
+          backgroundColor: Theme.of(context).backgroundColor,
+          currentIndex: currentIndex,
+          borderRadius: BorderRadius.circular(25),
+          floating: true,
+          height: 40,
+          cursorColor: Theme.of(context).colorScheme.primary,
+          items: [
+            FilterItem(label: S.current.captain),
+            FilterItem(label: S.current.store),
+          ],
+          onItemSelected: (index) {
+            screenState.currentIndex = index;
+            screenState.refresh();
+          },
+          selectedContent: Theme.of(context).textTheme.button!.color!,
+          unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        ),
+      );
     }
     return widgets;
   }

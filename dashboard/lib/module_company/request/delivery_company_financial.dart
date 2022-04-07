@@ -3,7 +3,8 @@ class DeliveryCompanyFinancialRequest {
   String? deliveryCost;
   String? representativeCommission;
 
-  DeliveryCompanyFinancialRequest({this.id, this.deliveryCost,this.representativeCommission});
+  DeliveryCompanyFinancialRequest(
+      {this.id, this.deliveryCost, this.representativeCommission});
 
   DeliveryCompanyFinancialRequest.fromJson(dynamic json) {
     id = json['id'];

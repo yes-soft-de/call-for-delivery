@@ -7,11 +7,13 @@ class OrderCaptainResponse {
 
   OrderCaptainResponse({this.statusCode, this.msg, this.data});
 
-  factory OrderCaptainResponse.fromJson(Map<String, dynamic> json) => OrderCaptainResponse(
-    statusCode: json['status_code'] as String?,
-    msg: json['msg'] as String?,
-    data: (json['Data'] as List<dynamic>?)
-        ?.map((e) => OrderCaptainNotArrivedData.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
+  factory OrderCaptainResponse.fromJson(Map<String, dynamic> json) =>
+      OrderCaptainResponse(
+        statusCode: json['status_code'] as String?,
+        msg: json['msg'] as String?,
+        data: (json['Data'] as List<dynamic>?)
+            ?.map((e) =>
+                OrderCaptainNotArrivedData.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
 }

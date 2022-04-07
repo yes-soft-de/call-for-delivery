@@ -18,7 +18,7 @@ class CaptainsNeedsSupportStateManager {
 
   CaptainsNeedsSupportStateManager(this._service);
 
-  void getCaptainSupport(CaptainsNeedsSupportScreenState   screenState) {
+  void getCaptainSupport(CaptainsNeedsSupportScreenState screenState) {
     _service.getCaptainSupport().then((value) {
       if (value.hasError) {
         _stateSubject.add(CaptainsNeedSupportLoadedState(screenState, null,

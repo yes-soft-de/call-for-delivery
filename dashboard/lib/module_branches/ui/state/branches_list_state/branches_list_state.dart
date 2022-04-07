@@ -26,6 +26,7 @@ class BranchListStateLoaded extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: BranchCardList(
+            phone: element.branchPhone,
             onDelete: () {
               showDialog(
                   context: context,
@@ -35,8 +36,7 @@ class BranchListStateLoaded extends States {
                         Navigator.of(context).pop();
                         screenState.deleteBranch(element.id);
                       },
-                      oneAction: false,
-                      content: S.current.confirmDeletionBranch,
+                      content: S.current.confirmDeletionBranch, oneAction: false,
                     );
                   });
             },

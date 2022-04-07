@@ -544,5 +544,16 @@
     "km": "Km",
     "orderTimeLine": "Order Time Line",
     "captainNotArrived": "Captain not arrived",
+    "paymentSuccessfully": "Payment created successfully",
+    "updatePaymentSuccessfully": "Payment updated successfully",
+    "storePayments": "Store payments",
+    "payments": "Payments",
+    "paymentsDeletedSuccessfully": "Payment deleted successfully",
+    "pleaseEnterValidPhoneNumber": "Please enter phone number",
+    "pleaseEnterValidCountryCode": "invalid character",
+    "storeAccountInit": "Setup Account",
+    "emptyField": "Empty Field",
+    "InvalidInput": "Invalid",
+    "countryCode": "Code",
     "captainNotArrivedToStore": "Captain not arrived to store"
 }

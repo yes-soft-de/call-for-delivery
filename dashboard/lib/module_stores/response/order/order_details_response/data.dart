@@ -43,7 +43,8 @@ class Data {
       this.branchName,
       this.image,
       this.roomId,
-      this.captainId,this.orderLogs});
+      this.captainId,
+      this.orderLogs});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -71,7 +72,7 @@ class Data {
       storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
       branchName: json['branchName'] as String?,
       roomId: json['roomId'] as String?,
-      captainId: json['captainUserId'] as String? ,
+      captainId: json['captainUserId'] as String?,
       orderLogs: OrderLogsResponse.fromJson(json));
 
   Map<String, dynamic> toJson() => {

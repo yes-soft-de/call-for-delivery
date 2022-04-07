@@ -1,6 +1,7 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_branches/ui/widget/custom_icon_button.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/utils/helpers/phone_number_formtter.dart';
 import 'package:flutter/material.dart';
 
 class BranchCard extends StatelessWidget {
@@ -98,11 +99,13 @@ class BranchCardList extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final String branchName;
+  final String? phone;
   const BranchCardList(
       {Key? key,
       required this.onDelete,
       required this.onEdit,
-      required this.branchName})
+      required this.branchName,
+      this.phone})
       : super(key: key);
 
   @override
@@ -116,8 +119,8 @@ class BranchCardList extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Theme.of(context).backgroundColor,
-                blurRadius: 12,
-                spreadRadius: 2.5,
+                blurRadius: 5,
+                spreadRadius: 1,
                 offset: Offset(-0.5, 0))
           ]),
       child: Padding(
@@ -132,16 +135,31 @@ class BranchCardList extends StatelessWidget {
               icon: Icons.store_rounded,
               iconColor: Theme.of(context).colorScheme.secondary,
             ),
-            Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: Padding(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                   child: Text(
                     branchName,
                     overflow: TextOverflow.ellipsis,
                   ),
-                )),
+                ),
+                Visibility(
+                  visible: phone != null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Text(
+                      PhoneNumberFormatter.format(phone) ?? '',
+                      textDirection:
+                          Localizations.localeOf(context).languageCode == 'ar'
+                              ? TextDirection.ltr
+                              : null,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Flexible(
               fit: FlexFit.tight,
               flex: 1,

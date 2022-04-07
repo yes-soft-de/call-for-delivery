@@ -68,7 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.of(context).login ,canGoBack: false),
+            title: S.of(context).login, canGoBack: false),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
               ? _currentStates.getUI(context)
@@ -97,8 +97,8 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-       Navigator.of(context)
-           .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

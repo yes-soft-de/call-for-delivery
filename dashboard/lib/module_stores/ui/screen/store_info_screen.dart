@@ -28,8 +28,9 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
   void getStore(int id) {
     widget.stateManager.getStore(this, id);
   }
-  void enableStore(ActiveStoreRequest request) {
-    widget.stateManager.enableStore(this, request);
+
+  void enableStore(ActiveStoreRequest request, [bool loading = true]) {
+    widget.stateManager.enableStore(this, request, loading);
   }
 
   @override
@@ -65,28 +66,16 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
       appBar: CustomC4dAppBar.appBar(context,
           title: model?.storeOwnerName ?? S.current.storeName,
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                customBorder: CircleBorder(),
-                onTap: () {
-                  Navigator.of(context).pushNamed(BranchesRoutes.BRANCHES_LIST_SCREEN,
-                      arguments: model?.id ?? -1);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.location_on,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context).pushNamed(
+                  BranchesRoutes.BRANCHES_LIST_SCREEN,
+                  arguments: model?.id ?? -1);
+            }, icon: Icons.location_on_rounded),
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context).pushNamed(
+                  StoresRoutes.STORE_BALANCE,
+                  arguments: model?.id ?? -1);
+            }, icon: Icons.account_balance_rounded)
           ]),
       body: currentState.getUI(context),
     );

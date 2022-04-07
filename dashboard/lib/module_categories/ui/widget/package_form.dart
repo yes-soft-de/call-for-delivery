@@ -33,13 +33,13 @@ class _CategoryFormState extends State<PackageForm> {
   final TextEditingController _expirdCountController = TextEditingController();
 
   int? id;
-  String? status='active';
+  String? status = 'active';
 
   @override
   void initState() {
     super.initState();
 
-    if(widget.request != null){
+    if (widget.request != null) {
       print('notNull');
       _nameController.text = widget.request?.name ?? '';
       _noteController.text = widget.request?.note ?? '';
@@ -49,9 +49,8 @@ class _CategoryFormState extends State<PackageForm> {
       _carCountController.text = widget.request?.carCount.toString() ?? '0';
       _orderCountController.text = widget.request?.orderCount.toString() ?? '0';
       _expirdCountController.text = widget.request?.expired.toString() ?? '0';
-      id =widget.request?.id ?? -1;
+      id = widget.request?.id ?? -1;
     }
-
   }
 
   @override
@@ -91,9 +90,6 @@ class _CategoryFormState extends State<PackageForm> {
                       controller: _cityController,
                       hintText: S.current.city,
                     ),
-
-
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -108,7 +104,6 @@ class _CategoryFormState extends State<PackageForm> {
                       hintText: S.current.orderCount,
                       numbers: true,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -123,7 +118,6 @@ class _CategoryFormState extends State<PackageForm> {
                       hintText: S.current.carCount,
                       numbers: true,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -138,7 +132,6 @@ class _CategoryFormState extends State<PackageForm> {
                       hintText: S.current.dayCount,
                       numbers: true,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -177,14 +170,20 @@ class _CategoryFormState extends State<PackageForm> {
           onTap: () {
             if (_key.currentState!.validate()) {
               Navigator.pop(context);
-              widget.onSave(PackageRequest(name: _nameController.text ,
-                  note: _noteController.text,id: id,
-                  orderCount:int.parse(_orderCountController.text),cost:int.parse(_costController.text) ,carCount: int.parse(_carCountController.text),
-                  city: _cityController.text ,expired:int.parse(_expirdCountController.text),status: status));
+              widget.onSave(PackageRequest(
+                  name: _nameController.text,
+                  note: _noteController.text,
+                  id: id,
+                  orderCount: int.parse(_orderCountController.text),
+                  cost: int.parse(_costController.text),
+                  carCount: int.parse(_carCountController.text),
+                  city: _cityController.text,
+                  expired: int.parse(_expirdCountController.text),
+                  status: status));
             } else {
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.pleaseCompleteTheForm)
+                      title: S.current.warnning,
+                      message: S.current.pleaseCompleteTheForm)
                   .show(context);
             }
           }),

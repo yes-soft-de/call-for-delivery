@@ -3,6 +3,7 @@ import 'package:c4d/module_categories/model/packages_model.dart';
 import 'package:c4d/module_categories/request/active_package_request.dart';
 import 'package:c4d/module_categories/request/package_request.dart';
 import 'package:c4d/module_categories/ui/state/packages/packages_loaded_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -21,44 +22,45 @@ class PackagesStateManager {
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  PackagesStateManager(
-      this._categoriesService, this._authService);
-
-  void getCategories(PackagesScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+  PackagesStateManager(this._categoriesService, this._authService);
+  PackagesCategoryModel? cats;
+  void getCategories(PackagesScreenState screenState, [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _categoriesService.getCategories().then((value) {
       if (value.hasError) {
         _stateSubject.add(
-            PackagesLoadedState(screenState, null,null, error: value.error));
+            PackagesLoadedState(screenState, null, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(PackagesLoadedState(screenState, null,null,
-            empty: value.isEmpty));
+        _stateSubject.add(
+            PackagesLoadedState(screenState, null, null, empty: value.isEmpty));
       } else {
         PackagesCategoryModel model = value as PackagesCategoryModel;
-        _stateSubject.add(PackagesLoadedState(screenState, model.data,[]));
+        cats = model;
+        _stateSubject.add(PackagesLoadedState(screenState, model.data, []));
       }
     });
   }
 
-  void getPackagesByCategory(PackagesScreenState screenState, int id,List<PackagesCategoryModel> categories) {
+  void getPackagesByCategory(PackagesScreenState screenState, int id,
+      List<PackagesCategoryModel> categories) {
 //    _stateSubject.add(LoadingState(screenState));
     _categoriesService.getPackagesByCategory(id).then((value) {
       if (value.hasError) {
-        _stateSubject.add(
-            PackagesLoadedState(screenState, categories, null, error: value.error));
+        _stateSubject.add(PackagesLoadedState(screenState, categories, null,
+            error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            PackagesLoadedState(screenState, categories, []));
+        _stateSubject.add(PackagesLoadedState(screenState, categories, []));
       } else {
         PackagesModel packagesModel = value as PackagesModel;
         _stateSubject.add(
-            PackagesLoadedState(screenState,categories, packagesModel.data));
+            PackagesLoadedState(screenState, categories, packagesModel.data));
       }
     });
   }
 
-  void createPackage(
-      PackagesScreenState screenState, PackageRequest request) {
+  void createPackage(PackagesScreenState screenState, PackageRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _categoriesService.createPackage(request).then((value) {
       if (value.hasError) {
@@ -79,28 +81,27 @@ class PackagesStateManager {
   }
 
   void enablePackage(
-      PackagesScreenState screenState, ActivePackageRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+      PackagesScreenState screenState, ActivePackageRequest request,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _categoriesService.enablePackage(request).then((value) {
       if (value.hasError) {
         screenState.id = null;
-        getCategories(screenState);
+        getCategories(screenState, loading);
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '')
           ..show(screenState.context);
       } else {
-        screenState.id = null;
-        getCategories(screenState);
-        CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.updatePackageSuccessfully)
-          ..show(screenState.context);
+        getPackagesByCategory(screenState,
+            int.tryParse(screenState.id ?? '1') ?? -1, cats?.data ?? []);
+        Fluttertoast.showToast(msg: S.current.updatePackageSuccessfully);
       }
     });
   }
 
-  void updatePackage(
-      PackagesScreenState screenState, PackageRequest request) {
+  void updatePackage(PackagesScreenState screenState, PackageRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _categoriesService.updatePackage(request).then((value) {
       if (value.hasError) {
@@ -119,5 +120,4 @@ class PackagesStateManager {
       }
     });
   }
-
 }

@@ -48,8 +48,9 @@ class CaptainOffersScreenState extends State<CaptainOffersScreen> {
   void updateCaptainOffer(CaptainOfferRequest request) {
     widget._stateManager.updateCaptainOffer(this, request);
   }
-  void enableCaptainOffer(EnableOfferRequest request) {
-    widget._stateManager.enableCaptainOffer(this, request);
+
+  void enableCaptainOffer(EnableOfferRequest request, [bool loading = true]) {
+    widget._stateManager.enableCaptainOffer(this, request, loading);
   }
 //  void deleteCategories(String id) {
 //    widget._stateManager.deleteCategories(this, id);
@@ -78,9 +79,11 @@ class CaptainOffersScreenState extends State<CaptainOffersScreen> {
             showDialog(
                 context: context,
                 builder: (_) {
-                 return CaptainOfferForm(onSave: (request){
-                   addCaptainOffer(request);
-                 },);
+                  return CaptainOfferForm(
+                    onSave: (request) {
+                      addCaptainOffer(request);
+                    },
+                  );
                 });
           },
         ),

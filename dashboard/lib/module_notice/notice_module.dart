@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 
-
 @injectable
 class NoticeModule extends YesModule {
   final NoticeScreen noticeScreen;
   NoticeModule(
-      this.noticeScreen,
-     ) {
+    this.noticeScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {

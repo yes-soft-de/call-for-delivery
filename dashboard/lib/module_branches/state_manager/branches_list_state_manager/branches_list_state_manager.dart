@@ -22,12 +22,12 @@ class BranchesListStateManager {
   BranchesListStateManager(
     this._branchesListService,
   );
-  void getBranchesList(BranchesListScreenState screenState ,String id) {
+  void getBranchesList(BranchesListScreenState screenState, String id) {
     _stateSubject.add(LoadingState(screenState));
     _branchesListService.getBranches(id).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getBranchesList(screenState,id);
+          getBranchesList(screenState, id);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
@@ -43,17 +43,18 @@ class BranchesListStateManager {
     });
   }
 
-  void deleteBranch(BranchesListScreenState screenState, int id,String storeID) {
+  void deleteBranch(
+      BranchesListScreenState screenState, int id, String storeID) {
     _stateSubject.add(LoadingState(screenState));
     _branchesListService.deleteBranch(id).then((value) {
       if (value.hasError) {
-        getBranchesList(screenState,storeID);
+        getBranchesList(screenState, storeID);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
-        getBranchesList(screenState,storeID);
+        getBranchesList(screenState, storeID);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.deleteBranchSuccess)

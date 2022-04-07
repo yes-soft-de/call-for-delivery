@@ -7,7 +7,6 @@ import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_captain/ui/state/in_active/in_active_captains_loaded_state.dart';
 
-
 @injectable
 class InActiveCaptainsStateManager {
   final CaptainsService _captainsService;

@@ -20,12 +20,12 @@ class CustomFormField extends StatefulWidget {
   final bool validator;
   final bool phone;
   final Function()? onChanged;
+  final TextInputAction? textInputAction;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
   CustomFormField(
-      {
-      this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      {this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
       this.hintText,
       this.preIcon,
       this.sufIcon,
@@ -37,7 +37,9 @@ class CustomFormField extends StatefulWidget {
       this.last = false,
       this.validator = true,
       this.phone = false,
-      this.onChanged});
+      this.onChanged,
+      this.textInputAction
+      });
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -65,14 +67,15 @@ class _CustomFormFieldState extends State<CustomFormField> {
               getIt<LocalizationService>().getLanguage() == 'ar' && kIsWeb
                   ? 16
                   : null,
-          keyboardType: widget.numbers ? TextInputType.phone :TextInputType.multiline,
+          keyboardType:
+              widget.numbers ? TextInputType.phone : TextInputType.multiline,
           onEditingComplete:
               widget.maxLines != null ? null : () => node.nextFocus(),
           onFieldSubmitted: widget.maxLines == null && widget.last
               ? (_) => node.unfocus()
               : null,
           textInputAction: widget.maxLines == null && widget.last
-              ? null
+              ? (widget.textInputAction ?? null)
               : TextInputAction.next,
           inputFormatters: widget.numbers
               ? <TextInputFormatter>[
