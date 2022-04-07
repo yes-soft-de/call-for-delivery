@@ -548,7 +548,14 @@
     "updatePaymentSuccessfully": "Payment updated successfully",
     "storePayments": "Store payments",
     "payments": "Payments",
-    "paymentsDeletedSuccessfully": "Payment deleted successfully"
+    "paymentsDeletedSuccessfully": "Payment deleted successfully",
+    "pleaseEnterValidPhoneNumber": "Please enter phone number",
+    "pleaseEnterValidCountryCode": "invalid character",
+    "storeAccountInit": "Setup Account",
+    "emptyField": "Empty Field",
+    "InvalidInput": "Invalid",
+    "countryCode": "Code"
+
 
 
 

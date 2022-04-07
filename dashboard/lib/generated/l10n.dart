@@ -5379,6 +5379,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter phone number`
+  String get pleaseEnterValidPhoneNumber {
+    return Intl.message(
+      'Please enter phone number',
+      name: 'pleaseEnterValidPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid character`
+  String get pleaseEnterValidCountryCode {
+    return Intl.message(
+      'invalid character',
+      name: 'pleaseEnterValidCountryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setup Account`
+  String get storeAccountInit {
+    return Intl.message(
+      'Setup Account',
+      name: 'storeAccountInit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty Field`
+  String get emptyField {
+    return Intl.message(
+      'Empty Field',
+      name: 'emptyField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid`
+  String get InvalidInput {
+    return Intl.message(
+      'Invalid',
+      name: 'InvalidInput',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code`
+  String get countryCode {
+    return Intl.message(
+      'Code',
+      name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -543,6 +543,14 @@
     "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح",
     "storePayments": "قائمة الدفعات للمتجر",
     "payments": "الدفعات",
-    "paymentsDeletedSuccessfully": "تم حذف الدفعة بنجاح"
+    "paymentsDeletedSuccessfully": "تم حذف الدفعة بنجاح",
+    "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
+    "pleaseEnterValidCountryCode": "ادخال خاطئ",
+    "storeAccountInit": "تهيئة الحساب",
+    "emptyField": "حقل فارغ",
+    "InvalidInput": "غير صالح",
+    "countryCode": "النداء"
+
+
 
 }
