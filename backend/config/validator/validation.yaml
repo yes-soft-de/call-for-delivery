@@ -275,3 +275,10 @@ App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest:
             - NotBlank: ~
         messageBody:
             - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
+    properties:
+        name:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
