@@ -554,9 +554,6 @@
     "storeAccountInit": "Setup Account",
     "emptyField": "Empty Field",
     "InvalidInput": "Invalid",
-    "countryCode": "Code"
-
-
-
-
+    "countryCode": "Code",
+    "captainNotArrivedToStore": "Captain not arrived to store"
 }

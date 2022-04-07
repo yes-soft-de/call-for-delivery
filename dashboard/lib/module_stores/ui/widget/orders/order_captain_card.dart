@@ -2,16 +2,19 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class CaptainNotCard extends StatelessWidget {
+  final int orderID;
   final String storeName;
   final String branchName;
   final String captainName;
   final String createdDate;
-  CaptainNotCard({
-    required this.storeName,
-    required this.captainName,
-    required this.createdDate,
-    required this.branchName,
-  });
+  CaptainNotCard(
+
+      {required this.storeName,
+        required this.captainName,
+        required this.createdDate,
+        required this.branchName,
+        required this.orderID
+});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,9 @@ class CaptainNotCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+            verticalTile(context,
+                title: S.current.orderNumber, subtitle: orderID.toString()),
+            divider(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

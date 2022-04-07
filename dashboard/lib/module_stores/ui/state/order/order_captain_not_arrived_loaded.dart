@@ -32,6 +32,7 @@ class OrderCaptainLoadedState extends States {
                   arguments: element.id);
             },
             child: CaptainNotCard(
+              orderID: element.id,
               captainName: element.captainName,
               createdDate: element.createdDate,
               storeName: element.storeName,

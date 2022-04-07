@@ -111,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainNotArrived": MessageLookupByLibrary.simpleMessage(
             "الكباتن اللذين لم يصلو المتجر"),
+        "captainNotArrivedToStore":
+            MessageLookupByLibrary.simpleMessage("الكابتن لم يصل إلى المتجر"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":

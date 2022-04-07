@@ -549,8 +549,8 @@
     "storeAccountInit": "تهيئة الحساب",
     "emptyField": "حقل فارغ",
     "InvalidInput": "غير صالح",
-    "countryCode": "النداء"
-
+    "countryCode": "النداء",
+    "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر"
 
 
 }
