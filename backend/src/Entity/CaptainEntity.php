@@ -68,6 +68,9 @@ class CaptainEntity
 
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainPaymentEntity::class)]
     private $captainPaymentEntity;
+    
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainFinancialSystemDetailEntity::class)]
+    private $captainFinancialSystemDetailEntity;
 
     public function __construct()
     {
@@ -75,6 +78,7 @@ class CaptainEntity
         $this->orderChatRoomEntity = new ArrayCollection();
         $this->OrderLogsEntity = new ArrayCollection();
         $this->captainPaymentEntity = new ArrayCollection();
+        $this->captainFinancialSystemDetailEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -364,6 +368,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainPaymentEntity->getCaptain() === $this) {
                 $captainPaymentEntity->setCaptain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialSystemDetailEntity>
+     */
+    public function getCaptainFinancialSystemDetailEntity(): Collection
+    {
+        return $this->captainFinancialSystemDetailEntity;
+    }
+
+    public function addCaptainFinancialSystemDetailEntity(CaptainFinancialSystemDetailEntity $captainFinancialSystemDetailEntity): self
+    {
+        if (!$this->captainFinancialSystemDetailEntity->contains($captainFinancialSystemDetailEntity)) {
+            $this->captainFinancialSystemDetailEntity[] = $captainFinancialSystemDetailEntity;
+            $captainFinancialSystemDetailEntity->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialSystemDetailEntity(CaptainFinancialSystemDetailEntity $captainFinancialSystemDetailEntity): self
+    {
+        if ($this->captainFinancialSystemDetailEntity->removeElement($captainFinancialSystemDetailEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialSystemDetailEntity->getCaptain() === $this) {
+                $captainFinancialSystemDetailEntity->setCaptain(null);
             }
         }
 
