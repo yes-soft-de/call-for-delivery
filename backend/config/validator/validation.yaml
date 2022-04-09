@@ -306,3 +306,10 @@ App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest:
             - NotBlank: ~
         captainFinancialSystemId:
             - NotBlank: ~
+         
+App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        captain:
+            - NotBlank: ~
