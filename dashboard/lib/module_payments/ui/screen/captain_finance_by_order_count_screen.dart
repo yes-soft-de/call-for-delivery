@@ -1,3 +1,4 @@
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_finance_by_order_count_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -29,6 +30,7 @@ class CaptainFinanceByCountOrderScreenState
       currentState = event;
       refresh();
     });
+    getFinances();
     super.initState();
   }
 
@@ -36,7 +38,7 @@ class CaptainFinanceByCountOrderScreenState
     widget._stateManager.createFinance(this, request);
   }
 
-  void getPayments() {
+  void getFinances() {
     widget._stateManager.getFinances(this);
   }
 
@@ -48,16 +50,11 @@ class CaptainFinanceByCountOrderScreenState
 
   @override
   Widget build(BuildContext context) {
-    if (storeID == -1) {
-      var arg = ModalRoute.of(context)?.settings.arguments;
-      if (arg != null && arg is int) {
-        storeID = arg;
-        widget._stateManager.getFinances(this);
-      }
-    }
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).storePayments),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.of(context).financeCountOrder, icon: Icons.menu, onTap: () {
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: currentState.getUI(context),
     );
   }

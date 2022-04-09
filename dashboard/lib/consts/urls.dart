@@ -34,13 +34,13 @@ class Urls {
   static const String BASE_API_STORE_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/storeownerpayment';
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER =
-      DOMAIN + VERSION_ADMIN + 'captainfinancialsystemaccordingnorderbyadmin';
+      DOMAIN + VERSION_ADMIN + '/captainfinancialsystemaccordingnorderbyadmin';
   static const String BASE_API_CAPTAIN_FINANCE_BY_HOURS = DOMAIN +
       VERSION_ADMIN +
-      'captainfinancialsystemaccordingtocountofhoursbyadmin';
+      '/captainfinancialsystemaccordingtocountofhoursbyadmin';
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS = DOMAIN +
       VERSION_ADMIN +
-      'captainfinancialsystemaccordingntocountofordersbyadmin';
+      '/captainfinancialsystemaccordingntocountofordersbyadmin';
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';

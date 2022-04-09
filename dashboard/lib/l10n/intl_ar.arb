@@ -550,7 +550,12 @@
     "emptyField": "حقل فارغ",
     "InvalidInput": "غير صالح",
     "countryCode": "النداء",
-    "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر"
+    "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر",
+    "captainFinance": "باقات عمل الكابتن",
+    "financeByOrders": "باقة حسب الطلبات",
+    "financeByHours": "باقة حسب الساعات",
+    "financeCountOrder": "باقة على الطلب"
+
 
 
 }

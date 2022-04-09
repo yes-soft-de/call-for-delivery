@@ -1,3 +1,4 @@
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_payments/state_manager/captain_finance_by_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,13 @@ class CaptainFinanceByOrderScreenState
       currentState = event;
       refresh();
     });
+    getFinances();
     super.initState();
   }
 
   CaptainFinanceByOrderStateManager get stateManager => widget._stateManager;
-  
-  void getPayments() {
+
+  void getFinances() {
     widget._stateManager.getFinances(this);
   }
 
@@ -45,16 +47,11 @@ class CaptainFinanceByOrderScreenState
 
   @override
   Widget build(BuildContext context) {
-    if (storeID == -1) {
-      var arg = ModalRoute.of(context)?.settings.arguments;
-      if (arg != null && arg is int) {
-        storeID = arg;
-        widget._stateManager.getFinances(this);
-      }
-    }
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).storePayments),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.of(context).financeByOrders, icon: Icons.menu, onTap: () {
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: currentState.getUI(context),
     );
   }

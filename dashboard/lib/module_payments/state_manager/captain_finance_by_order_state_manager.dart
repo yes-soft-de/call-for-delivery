@@ -1,3 +1,4 @@
+import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
@@ -33,7 +34,7 @@ class CaptainFinanceByOrderStateManager {
         _stateSubject.add(
             CaptainFinanceByOrderLoadedState(screenState, null, empty: value.isEmpty));
       } else {
-        StoreBalanceModel _balance = value as StoreBalanceModel;
+        CaptainFinanceByOrderModel _balance = value as CaptainFinanceByOrderModel;
         _stateSubject.add(CaptainFinanceByOrderLoadedState(screenState, _balance.data));
       }
     });

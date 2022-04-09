@@ -5449,6 +5449,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Finance`
+  String get captainFinance {
+    return Intl.message(
+      'Captain Finance',
+      name: 'captainFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by orders`
+  String get financeByOrders {
+    return Intl.message(
+      'Finance by orders',
+      name: 'financeByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by hours`
+  String get financeByHours {
+    return Intl.message(
+      'Finance by hours',
+      name: 'financeByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance on order`
+  String get financeCountOrder {
+    return Intl.message(
+      'Finance on order',
+      name: 'financeCountOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

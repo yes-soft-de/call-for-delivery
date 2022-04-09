@@ -555,5 +555,9 @@
     "emptyField": "Empty Field",
     "InvalidInput": "Invalid",
     "countryCode": "Code",
-    "captainNotArrivedToStore": "Captain not arrived to store"
+    "captainNotArrivedToStore": "Captain not arrived to store",
+    "captainFinance": "Captain Finance",
+    "financeByOrders": "Finance by orders",
+    "financeByHours": "Finance by hours",
+    "financeCountOrder": "Finance on order"
 }

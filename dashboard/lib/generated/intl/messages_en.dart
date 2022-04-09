@@ -93,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainActivated": MessageLookupByLibrary.simpleMessage(
             "Captain Activated Successfully"),
+        "captainFinance":
+            MessageLookupByLibrary.simpleMessage("Captain Finance"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
@@ -291,6 +293,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financeByHours":
+            MessageLookupByLibrary.simpleMessage("Finance by hours"),
+        "financeByOrders":
+            MessageLookupByLibrary.simpleMessage("Finance by orders"),
+        "financeCountOrder":
+            MessageLookupByLibrary.simpleMessage("Finance on order"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

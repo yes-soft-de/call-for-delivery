@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
@@ -15,7 +15,7 @@ class CaptainFinanceByOrderCountLoadedState extends States {
 
   final bool empty;
   final String? error;
-  final StoreBalanceModel? model;
+  final List<CaptainFinanceByOrdersCountModel>? model;
   final CaptainFinanceByCountOrderScreenState screenState;
   final _amount = TextEditingController();
   final _note = TextEditingController();
@@ -24,7 +24,7 @@ class CaptainFinanceByOrderCountLoadedState extends States {
     if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
-          screenState.getPayments();
+          screenState.getFinances();
         },
         error: error,
       );
@@ -32,7 +32,7 @@ class CaptainFinanceByOrderCountLoadedState extends States {
       return EmptyStateWidget(
           empty: S.current.emptyStaff,
           onRefresh: () {
-            screenState.getPayments();
+            screenState.getFinances();
           });
     }
     return FixedContainer(child: Container());

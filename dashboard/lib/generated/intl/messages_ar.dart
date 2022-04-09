@@ -93,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
         "captainActivated":
             MessageLookupByLibrary.simpleMessage("تم تفعيل الكابتن بنجاح"),
+        "captainFinance":
+            MessageLookupByLibrary.simpleMessage("باقات عمل الكابتن"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
@@ -288,6 +290,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("الفاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financeByHours":
+            MessageLookupByLibrary.simpleMessage("باقة حسب الساعات"),
+        "financeByOrders":
+            MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
+        "financeCountOrder":
+            MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
