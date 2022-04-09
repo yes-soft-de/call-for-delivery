@@ -79,7 +79,7 @@ class CaptainFinancialSystemDetailController extends BaseController
      *
      * @OA\Response(
      *      response="default",
-     *      description="Returns the completeAccountStatus of the user",
+     *      description="Returns error",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="9601"),
      *          @OA\Property(type="string", property="msg", description="youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow Error."),
