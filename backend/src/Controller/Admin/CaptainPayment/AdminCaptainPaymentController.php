@@ -72,7 +72,7 @@ class AdminCaptainPaymentController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
      *            @OA\Property(type="number", property="amount"),
-     *            @OA\Property(type="object", property="date"),
+     *            @OA\Property(type="object", property="createdAt"),
      *            @OA\Property(type="string", property="note"),
      *      )
      *   )
@@ -84,7 +84,7 @@ class AdminCaptainPaymentController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9157"),
+     *          @OA\Property(type="string", property="status_code", description="9101"),
      *          @OA\Property(type="string", property="msg", description="captain profile not exist! Error."),
      *      )
      * )
@@ -139,7 +139,7 @@ class AdminCaptainPaymentController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *            @OA\Property(type="integer", property="id"),
      *            @OA\Property(type="number", property="amount"),
-     *            @OA\Property(type="object", property="date"),
+     *            @OA\Property(type="object", property="createdAt"),
      *      )
      *   )
      * )
@@ -193,9 +193,9 @@ class AdminCaptainPaymentController extends BaseController
      *           @OA\Items(
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="number", property="amount"),
-     *              @OA\Property(type="object", property="date"),
+     *              @OA\Property(type="object", property="createdAt"),
      *              @OA\Property(type="integer", property="captainId"),
-     *              @OA\Property(type="string", property="CaptainName"),
+     *              @OA\Property(type="string", property="captainName"),
      *              @OA\Property(type="string", property="note"),
      *          )
      *       )

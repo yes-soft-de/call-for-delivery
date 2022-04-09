@@ -317,4 +317,9 @@ class CaptainManager
 
         return $captainProfileEntity;
     }
+    
+    public function getCaptainProfileById(int $id): ?CaptainEntity
+    {
+        return $this->captainEntityRepository->find($id);
+    }
 }

@@ -28,7 +28,7 @@ class AdminCaptainPaymentManager
 
     public function createCaptainPayment(AdminCaptainPaymentCreateRequest $request): CaptainPaymentEntity|string
     {
-        $captain = $this->captainManager->getCaptainProfile($request->getCaptain());
+        $captain = $this->captainManager->getCaptainProfileById($request->getCaptain());
        
         if(! $captain) {
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
