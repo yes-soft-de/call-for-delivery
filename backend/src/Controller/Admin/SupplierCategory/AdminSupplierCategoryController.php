@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\SupplierCategory;
 
 use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
 use App\Constant\SupplierCategory\SupplierCategoryResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest;
@@ -146,9 +147,7 @@ class AdminSupplierCategoryController extends BaseController
      *      description="Returns the updated supplier category",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="9550"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data", example="supplierCategoryNotExist"
-     *          )
+     *          @OA\Property(type="string", property="msg", example="supplier category does not exist Error")
      *      )
      * )
      *
@@ -170,7 +169,7 @@ class AdminSupplierCategoryController extends BaseController
         $response = $this->adminSupplierCategoryService->updateSupplierCategoryByAdmin($request);
 
         if ($response === SupplierCategoryResultConstant::SUPPLIER_CATEGORY_NOT_EXIST) {
-            return $this->response($response, self::SUPPLIER_CATEGORY_NOT_EXIST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUPPLIER_CATEGORY_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);
@@ -222,9 +221,7 @@ class AdminSupplierCategoryController extends BaseController
      *      description="Returns the updated supplier category",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="9550"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data", example="supplierCategoryNotExist"
-     *          )
+     *          @OA\Property(type="string", property="msg", example="supplier category does not exist Error")
      *      )
      * )
      *
@@ -246,7 +243,7 @@ class AdminSupplierCategoryController extends BaseController
         $response = $this->adminSupplierCategoryService->updateSupplierCategoryStatusByAdmin($request);
 
         if ($response === SupplierCategoryResultConstant::SUPPLIER_CATEGORY_NOT_EXIST) {
-            return $this->response($response, self::SUPPLIER_CATEGORY_NOT_EXIST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUPPLIER_CATEGORY_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);
