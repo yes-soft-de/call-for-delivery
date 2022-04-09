@@ -24,6 +24,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
 
 /**
  * Create and fetch order.
@@ -114,6 +115,11 @@ class OrderController extends BaseController
 
         $result = $this->orderService->createOrder($request);
       
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+
         if (isset($result->canCreateOrder)) {
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);

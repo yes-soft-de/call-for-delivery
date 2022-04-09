@@ -39,6 +39,8 @@ use App\Service\Notification\NotificationFirebaseService;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
+use App\Service\StoreOwner\StoreOwnerProfileService;
+use App\Constant\StoreOwner\StoreProfileConstant;
 
 class OrderService
 {
@@ -51,8 +53,9 @@ class OrderService
     private OrderChatRoomService $orderChatRoomService;
     private OrderLogsService $orderLogsService;
     private NotificationFirebaseService $notificationFirebaseService;
+    private StoreOwnerProfileService $storeOwnerProfileService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, StoreOwnerProfileService $storeOwnerProfileService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -63,14 +66,20 @@ class OrderService
        $this->orderChatRoomService = $orderChatRoomService;
        $this->orderLogsService = $orderLogsService;
        $this->notificationFirebaseService = $notificationFirebaseService;
+       $this->storeOwnerProfileService = $storeOwnerProfileService;
     }
 
     /**
      * @param OrderCreateRequest $request
      * @return OrderResponse|CanCreateOrderResponse
      */
-    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse
+    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
     {
+        $store = $this->storeOwnerProfileService->checkStoreActive($request->getStoreOwner());
+        if($store === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $store;
+        }
+        
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner()); 
      
         if($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {

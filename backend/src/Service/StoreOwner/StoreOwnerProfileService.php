@@ -141,4 +141,11 @@ class StoreOwnerProfileService
 
         return $item;
     }
+    
+    public function checkStoreActive($userId): string
+    {
+        $storeProfile = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($userId);
+       
+        return $storeProfile->getStatus();
+    }
 }
