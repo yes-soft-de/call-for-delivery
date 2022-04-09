@@ -100,6 +100,7 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
+            - NotBlank: ~
 
 App\Request\Order\OrderCreateRequest:
     properties:
@@ -279,6 +280,7 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
 App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
     properties:
         name:
+            - NotBlank: ~
 
 App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
     properties:
