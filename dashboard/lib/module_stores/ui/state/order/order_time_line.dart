@@ -57,9 +57,19 @@ class OrderTimLineLoadedState extends States {
               ),
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context , index){
-                return CustomStepTimeLineAdmin(status: model?.steps[index].state ?? OrderStatusEnum.WAITING ,currentIndex: index,date: model?.steps[index].date,captainArrived: model?.steps[index].isCaptainArrived ?? true,);
-              },itemCount: model?.steps.length,shrinkWrap: true,),
+                itemBuilder: (context, index) {
+                  return CustomStepTimeLineAdmin(
+                    status:
+                        model?.steps[index].state ?? OrderStatusEnum.WAITING,
+                    currentIndex: index,
+                    date: model?.steps[index].date,
+                    captainArrived:
+                        model?.steps[index].isCaptainArrived ?? true,
+                  );
+                },
+                itemCount: model?.steps.length,
+                shrinkWrap: true,
+              ),
             ],
           ),
         ],
@@ -142,10 +152,9 @@ class OrderTimLineLoadedState extends States {
     ];
     return steps;
   }
-  List<Widget> getStepperAdmin(int currentIndex) {
-    List<Widget> steps = [
 
-      ];
+  List<Widget> getStepperAdmin(int currentIndex) {
+    List<Widget> steps = [];
     return steps;
   }
 }

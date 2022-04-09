@@ -85,7 +85,6 @@ class StoresRepository {
     return StoreBalanceResponse.fromJson(response);
   }
 
-
   Future<StoreNeedSupportResponse?> getStoreSupport() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_STORES,

@@ -38,8 +38,7 @@ class CustomFormField extends StatefulWidget {
       this.validator = true,
       this.phone = false,
       this.onChanged,
-      this.textInputAction
-      });
+      this.textInputAction});
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {

@@ -20,7 +20,7 @@ class UpdateBranchesRequest {
         'lat': this.location?.latitude,
         'lon': this.location?.longitude
       },
-  //    'city': this.city,
+      //    'city': this.city,
       'name': this.branchName,
       'branchPhone': this.phone
     };

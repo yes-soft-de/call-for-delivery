@@ -117,7 +117,10 @@ class CustomStepTimeLineAdmin extends StatelessWidget {
   final String? date;
   final bool captainArrived;
   CustomStepTimeLineAdmin(
-      {required this.status, required this.currentIndex, this.date,required this.captainArrived});
+      {required this.status,
+      required this.currentIndex,
+      this.date,
+      required this.captainArrived});
 
   @override
   Widget build(BuildContext context) {
@@ -141,20 +144,24 @@ class CustomStepTimeLineAdmin extends StatelessWidget {
             StatusHelper.getOrderStatusMessages(status),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          subtitle:   Column(
+          subtitle: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-       ( StatusHelper.getOrderStatusIndex(status) == 2 && !captainArrived) ?
-               Text(S.current.captainNotArrivedToStore,
-                style: TextStyle(fontWeight: FontWeight.w600,color: Colors.red.shade900),
-              ):  Text(StatusHelper.getOrderStatusDescriptionMessages(status),
-                 style: TextStyle(fontWeight: FontWeight.w600),
-    )
+              (StatusHelper.getOrderStatusIndex(status) == 2 && !captainArrived)
+                  ? Text(
+                      S.current.captainNotArrivedToStore,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red.shade900),
+                    )
+                  : Text(
+                      StatusHelper.getOrderStatusDescriptionMessages(status),
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    )
             ],
           ),
           trailing: Text(date ?? ''),
-
         ),
         Padding(
           padding: const EdgeInsets.only(right: 22.0, left: 22.0),

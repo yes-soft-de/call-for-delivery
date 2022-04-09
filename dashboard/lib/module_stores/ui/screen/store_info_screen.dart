@@ -72,8 +72,7 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
                   arguments: model?.id ?? -1);
             }, icon: Icons.location_on_rounded),
             CustomC4dAppBar.actionIcon(context, onTap: () {
-              Navigator.of(context).pushNamed(
-                  StoresRoutes.STORE_BALANCE,
+              Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
                   arguments: model?.id ?? -1);
             }, icon: Icons.account_balance_rounded)
           ]),

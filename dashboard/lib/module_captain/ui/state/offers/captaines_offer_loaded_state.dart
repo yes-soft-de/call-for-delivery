@@ -52,15 +52,16 @@ class CaptainOffersLoadedState extends States {
           child: SizedBox(
             child: CustomListView.custom(
               children: [
-                GridView(padding: EdgeInsets.all(4),
+                GridView(
+                    padding: EdgeInsets.all(4),
                     physics: NeverScrollableScrollPhysics(),
                     children: getCategories(),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, childAspectRatio: 0.70,
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.70,
                         mainAxisSpacing: 8,
-                        crossAxisSpacing: 8.0
-                        )),
+                        crossAxisSpacing: 8.0)),
                 SizedBox(
                   height: 50,
                 ),
