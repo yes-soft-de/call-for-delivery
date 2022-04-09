@@ -12,6 +12,8 @@ final class ImageEntityTypeConstant
 
     const ENTITY_TYPE_ADMIN_PROFILE = 3;
 
+    const ENTITY_TYPE_SUPPLIER_CATEGORY = 4;
+
     const IMAGE_NULL = null;
 
     const ENTITY_TYPE_SUPPLIER_PROFILE = 5;

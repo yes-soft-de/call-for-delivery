@@ -82,12 +82,16 @@ class BaseController extends AbstractController
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
     // admin
     const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
+    // supplier category
+    const SUPPLIER_CATEGORY_NOT_EXIST = ["supplier category does not exist", "9550"];
 
     const NOTFOUND=["Not found", "404"];
     //payments
     const PAYMENT_NOT_EXIST = ["payment not exist!", "9501"];
     // supplier
     const SUPPLIER_PROFILE_NOT_EXIST = ["supplier profile not exist!", "9551"];
+    //payments
+    const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
