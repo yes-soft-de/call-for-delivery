@@ -109,6 +109,11 @@ class SupplierProfileManager
         }
     }
 
+    public function getSupplierProfileByUserId(int $userId): ?array
+    {
+        return $this->supplierProfileEntityRepository->getSupplierProfileByUserId($userId);
+    }
+
     public function createOrUpdateSupplierProfileImage(string $imagePath, int $itemId)
     {
         $this->imageManager->createImageOrUpdate($imagePath, $itemId, ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
