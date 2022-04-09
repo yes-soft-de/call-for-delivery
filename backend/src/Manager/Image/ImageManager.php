@@ -135,7 +135,7 @@ class ImageManager
                 $request = new ImageCreateRequest();
 
                 $request->setImagePath($image['image']);
-                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ADMIN_PROFILE);
+                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE);
                 $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
                 $request->setItemId($supplierProfileEntity->getId());
                 $request->setSupplierProfile($supplierProfileEntity);
