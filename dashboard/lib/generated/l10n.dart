@@ -5435,6 +5435,11 @@ class S {
     return Intl.message(
       'Code',
       name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Captain not arrived to store`
   String get captainNotArrivedToStore {
     return Intl.message(
