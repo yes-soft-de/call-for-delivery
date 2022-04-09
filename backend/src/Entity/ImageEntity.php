@@ -38,6 +38,9 @@ class ImageEntity
     #[ORM\JoinColumn(nullable: true)]
     private $user;
 
+    #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class, inversedBy: 'imageEntities')]
+    private $supplierProfile;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class ImageEntity
     public function setUser(?AdminProfileEntity $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSupplierProfile(): ?SupplierProfileEntity
+    {
+        return $this->supplierProfile;
+    }
+
+    public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): self
+    {
+        $this->supplierProfile = $supplierProfile;
 
         return $this;
     }

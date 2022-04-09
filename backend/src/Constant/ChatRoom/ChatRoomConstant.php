@@ -17,4 +17,6 @@ final class ChatRoomConstant
     const CHAT_ENQUIRE_USE = "used chat enquire";
 
     const CHAT_ENQUIRE_NOT_USE = "not used chat enquire";
+
+    const ADMIN_SUPPLIER = 5;
 }
