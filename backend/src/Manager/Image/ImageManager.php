@@ -8,6 +8,7 @@ use App\Constant\Image\ImageResultConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\ImageEntity;
+use App\Entity\SupplierProfileEntity;
 use App\Repository\ImageEntityRepository;
 use App\Request\Image\ImageCreateRequest;
 use App\Request\Image\ImageUpdateRequest;
@@ -112,6 +113,32 @@ class ImageManager
                 $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
                 $request->setItemId($adminProfileEntity->getId());
                 $request->setUser($adminProfileEntity);
+
+                $response[] = $this->create($request);
+
+            } else {
+                $response[] = $this->updateImage($image['image'], $imageEntity);
+            }
+        }
+
+        return $response;
+    }
+
+    public function createOrUpdateSupplierProfileImages(array $images, SupplierProfileEntity $supplierProfileEntity): array
+    {
+        $response = [];
+
+        foreach ($images as $image) {
+            $imageEntity = $this->imageEntityRepository->findOneBy(["supplierProfile" => $supplierProfileEntity->getId()]);
+
+            if(! $imageEntity) {
+                $request = new ImageCreateRequest();
+
+                $request->setImagePath($image['image']);
+                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE);
+                $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+                $request->setItemId($supplierProfileEntity->getId());
+                $request->setSupplierProfile($supplierProfileEntity);
 
                 $response[] = $this->create($request);
 
