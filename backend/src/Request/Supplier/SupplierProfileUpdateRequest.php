@@ -49,6 +49,11 @@ class SupplierProfileUpdateRequest
         $this->supplierCategory = $supplierCategory;
     }
 
+    public function setImages(?array $images): void
+    {
+        $this->images = $images;
+    }
+
     /**
      * @return array|null
      */

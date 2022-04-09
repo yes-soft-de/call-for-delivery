@@ -103,7 +103,7 @@ class SupplierProfileManager
             $request->setSupplierCategory($this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
 
             if (! empty($request->getImages())) {
-                $this->createOrUpdateSupplierProfileImage($request->getImages(), $supplierProfileEntity);
+                $request->setImages($this->createOrUpdateSupplierProfileImage($request->getImages(), $supplierProfileEntity));
             }
 
             $supplierProfileEntity = $this->autoMapping->mapToObject(SupplierProfileUpdateRequest::class, SupplierProfileEntity::class,
@@ -120,8 +120,8 @@ class SupplierProfileManager
         return $this->supplierProfileEntityRepository->getSupplierProfileByUserId($userId);
     }
 
-    public function createOrUpdateSupplierProfileImage(array $images, SupplierProfileEntity $supplierProfileEntity)
+    public function createOrUpdateSupplierProfileImage(array $images, SupplierProfileEntity $supplierProfileEntity): array
     {
-        $this->imageManager->createOrUpdateSupplierProfileImages($images, $supplierProfileEntity);
+        return $this->imageManager->createOrUpdateSupplierProfileImages($images, $supplierProfileEntity);
     }
 }

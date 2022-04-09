@@ -43,7 +43,7 @@ class SupplierProfileService
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
     }
 
-    public function updateSupplierProfile(SupplierProfileUpdateRequest $request): string|SupplierProfileGetResponse
+    public function updateSupplierProfile(SupplierProfileUpdateRequest $request): string|SupplierProfileUpdateResponse
     {
         $supplierProfileResult = $this->supplierProfileManager->updateSupplierProfile($request);
 
