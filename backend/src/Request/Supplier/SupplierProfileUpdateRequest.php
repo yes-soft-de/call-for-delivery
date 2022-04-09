@@ -2,6 +2,7 @@
 
 namespace App\Request\Supplier;
 
+use App\Entity\SupplierCategoryEntity;
 use App\Entity\UserEntity;
 
 class SupplierProfileUpdateRequest
@@ -10,15 +11,17 @@ class SupplierProfileUpdateRequest
 
     private string $supplierName;
 
+    private int|SupplierCategoryEntity $supplierCategory;
+
     /**
      * @var string|null
      */
     private $phone;
 
     /**
-     * @var string|null
+     * @var array|null
      */
-    private $image;
+    private $images;
 
     /**
      * @return UserEntity|int
@@ -36,11 +39,21 @@ class SupplierProfileUpdateRequest
         $this->user = $user;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImage(): ?string
+    public function getSupplierCategory(): int|SupplierCategoryEntity
     {
-        return $this->image;
+        return $this->supplierCategory;
+    }
+
+    public function setSupplierCategory(int|SupplierCategoryEntity $supplierCategory): void
+    {
+        $this->supplierCategory = $supplierCategory;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getImages(): ?array
+    {
+        return $this->images;
     }
 }

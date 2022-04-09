@@ -11,6 +11,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
 use App\Manager\Image\ImageManager;
+use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Manager\User\UserManager;
 use App\Repository\SupplierProfileEntityRepository;
 use App\Request\Supplier\SupplierProfileCreateRequest;
@@ -24,14 +25,17 @@ class SupplierProfileManager
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
     private ImageManager $imageManager;
+    private SupplierCategoryManager $supplierCategoryManager;
     private SupplierProfileEntityRepository $supplierProfileEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, ImageManager $imageManager, SupplierProfileEntityRepository $supplierProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, ImageManager $imageManager, SupplierCategoryManager $supplierCategoryManager,
+                                SupplierProfileEntityRepository $supplierProfileEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
         $this->imageManager = $imageManager;
+        $this->supplierCategoryManager = $supplierCategoryManager;
         $this->supplierProfileEntityRepository = $supplierProfileEntityRepository;
     }
 
@@ -96,8 +100,10 @@ class SupplierProfileManager
         } else {
             $request->setUser($supplierProfileEntity->getUser());
 
-            if ($request->getImage() !== null && $request->getImage() !== "") {
-                $this->createOrUpdateSupplierProfileImage($request->getImage(), $supplierProfileEntity->getId());
+            $request->setSupplierCategory($this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
+
+            if (! empty($request->getImages())) {
+                $this->createOrUpdateSupplierProfileImage($request->getImages(), $supplierProfileEntity);
             }
 
             $supplierProfileEntity = $this->autoMapping->mapToObject(SupplierProfileUpdateRequest::class, SupplierProfileEntity::class,
@@ -109,13 +115,13 @@ class SupplierProfileManager
         }
     }
 
-    public function getSupplierProfileByUserId(int $userId): ?array
+    public function getSupplierProfileByUserId(int $userId): ?SupplierProfileEntity
     {
         return $this->supplierProfileEntityRepository->getSupplierProfileByUserId($userId);
     }
 
-    public function createOrUpdateSupplierProfileImage(string $imagePath, int $itemId)
+    public function createOrUpdateSupplierProfileImage(array $images, SupplierProfileEntity $supplierProfileEntity)
     {
-        $this->imageManager->createImageOrUpdate($imagePath, $itemId, ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+        $this->imageManager->createOrUpdateSupplierProfileImages($images, $supplierProfileEntity);
     }
 }

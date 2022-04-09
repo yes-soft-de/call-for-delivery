@@ -2,7 +2,7 @@
 
 namespace App\Response\Supplier;
 
-class SupplierProfileGetResponse
+class SupplierProfileUpdateResponse
 {
     /**
      * @var int|null
@@ -20,17 +20,7 @@ class SupplierProfileGetResponse
     public $phone;
 
     /**
-     * @var array|null
-     */
-    public $images;
-
-    /**
      * @var object|null
      */
     public $createdAt;
-
-    /**
-     * @var string|null
-     */
-    public $supplierCategoryName;
 }

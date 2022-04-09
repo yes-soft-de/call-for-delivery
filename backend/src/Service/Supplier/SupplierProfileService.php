@@ -11,6 +11,7 @@ use App\Manager\Supplier\SupplierProfileManager;
 use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Response\Supplier\SupplierProfileGetResponse;
+use App\Response\Supplier\SupplierProfileUpdateResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
@@ -50,18 +51,41 @@ class SupplierProfileService
             return SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST;
 
         } else {
-            return $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetResponse::class, $supplierProfileResult);
+            return $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileUpdateResponse::class, $supplierProfileResult);
         }
     }
 
     public function getSupplierProfileByUserId(int $userId)
     {
+        $response = [];
+
         $supplierProfile = $this->supplierProfileManager->getSupplierProfileByUserId($userId);
 
         if ($supplierProfile !== null) {
-            $supplierProfile['image'] = $this->uploadFileHelperService->getImageParams($supplierProfile['image']);
+            $response = $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetResponse::class, $supplierProfile);;
+
+            $response->images = $this->customizeSupplierProfileImages($response->images->ToArray());
+
+            if ($supplierProfile->getSupplierCategory()) {
+                $response->supplierCategoryName = $supplierProfile->getSupplierCategory()->getName();
+            }
         }
 
-        return $this->autoMapping->map("array", SupplierProfileGetResponse::class, $supplierProfile);
+        return $response;
+    }
+
+    public function customizeSupplierProfileImages(array $imageEntitiesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imageEntitiesArray)) {
+            foreach ($imageEntitiesArray as $imageEntity) {
+                $response[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+            }
+
+            return $response;
+        }
+
+        return null;
     }
 }

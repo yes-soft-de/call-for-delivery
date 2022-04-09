@@ -110,7 +110,12 @@ class SupplierProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="supplierName"),
      *          @OA\Property(type="string", property="phone"),
-     *          @OA\Property(type="string", property="image")
+     *          @OA\Property(type="array", property="images",
+     *              @OA\Items(
+     *                  @OA\Property(type="string", property="image")
+     *              )
+     *          ),
+     *          @OA\Property(type="integer", property="supplierCategory")
      *      )
      * )
      *
@@ -124,7 +129,6 @@ class SupplierProfileController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="supplierName"),
      *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="image"),
      *              @OA\Property(type="object", property="createdAt")
      *          )
      *      )
@@ -193,12 +197,15 @@ class SupplierProfileController extends BaseController
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="supplierName"),
      *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="image",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL"),
+     *              @OA\Property(type="array", property="images",
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  )
      *              ),
-     *              @OA\Property(type="object", property="createdAt")
+     *              @OA\Property(type="object", property="createdAt"),
+     *              @OA\Property(type="string", property="supplierCategoryName")
      *          )
      *      )
      * )

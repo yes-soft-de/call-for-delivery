@@ -2,12 +2,8 @@
 
 namespace App\Repository;
 
-use App\Constant\Image\ImageEntityTypeConstant;
-use App\Constant\Image\ImageUseAsConstant;
-use App\Entity\ImageEntity;
 use App\Entity\SupplierProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,25 +19,25 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SupplierProfileEntity::class);
     }
 
-    public function getSupplierProfileByUserId(int $userId): ?array
+    public function getSupplierProfileByUserId(int $userId): SupplierProfileEntity|null
     {
         return $this->createQueryBuilder('supplierProfileEntity')
-            ->select('supplierProfileEntity.id', 'supplierProfileEntity.createdAt', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.phone')
-            ->addSelect('imageEntity.imagePath as image')
+//            ->select('IDENTITY (supplierProfileEntity.id) as id', 'supplierProfileEntity.createdAt', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.phone', 'supplierProfileEntity.imageEntities')
+//            ->addSelect('imageEntity.imagePath as image')
 
             ->andWhere('supplierProfileEntity.user = :userId')
             ->setParameter('userId', $userId)
 
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.itemId = supplierProfileEntity.id'
-            )
-
-            ->andWhere('imageEntity.entityType = :entityType AND imageEntity.usedAs = :usedAs')
-            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE)
-            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+//            ->leftJoin(
+//                ImageEntity::class,
+//                'imageEntity',
+//                Join::WITH,
+//                'imageEntity.itemId = supplierProfileEntity.id'
+//            )
+//
+//            ->andWhere('imageEntity.entityType = :entityType AND imageEntity.usedAs = :usedAs')
+//            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE)
+//            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
 
             ->getQuery()
             ->getOneOrNullResult();

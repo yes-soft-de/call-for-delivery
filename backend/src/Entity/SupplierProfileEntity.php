@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SupplierProfileEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -27,6 +29,18 @@ class SupplierProfileEntity
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
+
+    #[ORM\OneToOne(targetEntity: SupplierCategoryEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private $supplierCategory;
+
+    #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: ImageEntity::class)]
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,6 +91,48 @@ class SupplierProfileEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getSupplierCategory(): ?SupplierCategoryEntity
+    {
+        return $this->supplierCategory;
+    }
+
+    public function setSupplierCategory(?SupplierCategoryEntity $supplierCategory): self
+    {
+        $this->supplierCategory = $supplierCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ImageEntity[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImageEntity(ImageEntity $imageEntity): self
+    {
+        if (!$this->images->contains($imageEntity)) {
+            $this->images[] = $imageEntity;
+            $imageEntity->setSupplierProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImageEntity(ImageEntity $imageEntity): self
+    {
+        if ($this->images->removeElement($imageEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($imageEntity->getSupplierProfile() === $this) {
+                $imageEntity->setSupplierProfile(null);
+            }
+        }
 
         return $this;
     }
