@@ -29,7 +29,7 @@ class CaptainFinancialSystemDetailManager
     {
         $request->setCaptain($this->captainManager->getCaptainProfileByUserId($request->getCaptain()));
 
-        $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["captain" => $request->getCaptain(), "status" => CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE]);
+        $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["captain" => $request->getCaptain()]);
         
         if($captainFinancialSystemDetailEntity) {
             return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
