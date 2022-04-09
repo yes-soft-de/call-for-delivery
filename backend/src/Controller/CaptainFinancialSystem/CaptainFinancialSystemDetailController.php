@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use stdClass;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Main\MainErrorConstant;
 
 /**
  * create Captain Financial System Detail.
@@ -73,6 +75,17 @@ class CaptainFinancialSystemDetailController extends BaseController
      *   )
      * )
      * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns the completeAccountStatus of the user",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9601"),
+     *          @OA\Property(type="string", property="msg", description="youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow Error."),
+     *   )
+     * )
+     *  
      * @Security(name="Bearer")
      */
     public function createCaptainFinancialSystemDetail(Request $request): JsonResponse
@@ -92,6 +105,10 @@ class CaptainFinancialSystemDetailController extends BaseController
         }
 
         $result = $this->captainFinancialSystemDetailService->createCaptainFinancialSystemDetail($request);
+
+        if($result === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE);
+        }
 
         return $this->response($result, self::CREATE);
     }

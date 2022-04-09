@@ -20,13 +20,22 @@ class CaptainFinancialSystemDetailEntity
     #[ORM\Column(type: 'integer')]
     private $captainFinancialSystemId;
 
-    #[ORM\OneToOne(targetEntity: CaptainEntity::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $captain;
-
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
+
+    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'captainFinancialSystemDetailEntity')]
+    private $captain;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime')]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $updatedBy;
+
+    #[ORM\Column(type: 'boolean')]
+    private $status;
 
     public function getId(): ?int
     {
@@ -57,18 +66,6 @@ class CaptainFinancialSystemDetailEntity
         return $this;
     }
 
-    public function getCaptain(): ?CaptainEntity
-    {
-        return $this->captain;
-    }
-
-    public function setCaptain(CaptainEntity $captain): self
-    {
-        $this->captain = $captain;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -77,6 +74,54 @@ class CaptainFinancialSystemDetailEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCaptain(): ?CaptainEntity
+    {
+        return $this->captain;
+    }
+
+    public function setCaptain(?CaptainEntity $captain): self
+    {
+        $this->captain = $captain;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?int
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?int $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

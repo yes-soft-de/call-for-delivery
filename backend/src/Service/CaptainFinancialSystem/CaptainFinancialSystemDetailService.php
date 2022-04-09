@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
 class CaptainFinancialSystemDetailService
 {
@@ -19,10 +20,14 @@ class CaptainFinancialSystemDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailResponse
+    public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailResponse|string
     {
-        $item = $this->captainFinancialSystemDetailManager->createCaptainFinancialSystemDetail($request);
+        $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailManager->createCaptainFinancialSystemDetail($request);
+      
+        if($captainFinancialSystemDetailEntity === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
+            return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
+        }
 
-        return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $item);
+        return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 }

@@ -5,9 +5,7 @@ namespace App\Request\CaptainFinancialSystem;
 use App\Entity\CaptainEntity;
 
 class CaptainFinancialSystemDetailRequest
-{
-    private int $id;
-    
+{    
     private int $captainFinancialSystemType;
 
     private int $captainFinancialSystemId;
