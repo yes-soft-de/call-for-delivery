@@ -104,15 +104,15 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
 App\Request\Order\OrderCreateRequest:
     properties:
         orderCost:
-              - NotBlank: ~
+            - NotBlank: ~
         deliveryDate:
-              - NotBlank: ~
+            - NotBlank: ~
         destination:
-              - NotBlank: ~
+            - NotBlank: ~
         detail:
-              - NotBlank: ~
+            - NotBlank: ~
         branch:
-              - NotBlank: ~
+            - NotBlank: ~
 
 App\Request\Admin\Package\PackageCategoryUpdateRequest:
     properties:
@@ -275,6 +275,24 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
             - NotBlank: ~
         salary:
             - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
+    properties:
+        name:
+
+App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
 
 App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
     properties:
