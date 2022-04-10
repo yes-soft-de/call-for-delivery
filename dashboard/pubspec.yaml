@@ -179,6 +179,10 @@ flutter:
     - family: MandobIcons
       fonts:
         - asset: assets/fonts/MandobIcons.ttf
+    - family: Dubai
+      fonts:
+        - asset: assets/fonts/Dubai-Regular.woff
+        - asset: assets/fonts/Dubai-Bold.woff
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

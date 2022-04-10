@@ -1,5 +1,6 @@
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/service/payments_service.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
@@ -41,9 +42,9 @@ class CaptainFinanceByOrderCountStateManager {
   }
 
   void createFinance(
-      CaptainFinanceByCountOrderScreenState screenState, CreateStorePaymentsRequest request) {
+      CaptainFinanceByCountOrderScreenState screenState, CreateCaptainFinanceByCountOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.paymentToStore(request).then((value) {
+    _storePaymentsService.createCaptainFinanceByOrderCounts(request).then((value) {
       if (value.hasError) {
         getFinances(screenState);
         CustomFlushBarHelper.createError(
@@ -54,7 +55,7 @@ class CaptainFinanceByOrderCountStateManager {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.paymentSuccessfully)
+                message: value.error ?? S.current.addPackageSuccessfully)
             .show(screenState.context);
       }
     });

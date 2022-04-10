@@ -55,7 +55,7 @@ class CaptainFinanceByHoursStateManager {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.paymentSuccessfully)
+                message: value.error ?? S.current.addPackageSuccessfully)
             .show(screenState.context);
       }
     });

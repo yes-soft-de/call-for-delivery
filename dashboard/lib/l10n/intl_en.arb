@@ -559,5 +559,20 @@
     "captainFinance": "Captain Finance",
     "financeByOrders": "Finance by orders",
     "financeByHours": "Finance by hours",
-    "financeCountOrder": "Finance on order"
+    "financeCountOrder": "Finance on order",
+    "bounceCountOrdersInMonth": "Orders in month",
+    "amount": "Amount",
+    "countKilometersFrom": "Minimum kilometers",
+    "countKilometersTo": "Max kilometers",
+    "addWorkPackage": "Add work plan",
+    "eg": "e.g :",
+    "countHours": "Count Hours",
+    "compensationForEveryOrder": "Compensation for every order",
+    "countOrdersInMonth": "Count order in month",
+    "monthCompensation": "Month compensation",
+    "bounceMaxCountOrdersInMonth": "Bounce max count orders in month",
+    "bounceMinCountOrdersInMonth": "Bounce min count orders in month"
+
+
+
 }
