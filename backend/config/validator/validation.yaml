@@ -361,3 +361,12 @@ App\Request\Announcement\AnnouncementCreateRequest:
             - NotBlank: ~
         quantity:
             - NotNull: ~
+
+App\Request\Announcement\AnnouncementUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        price:
+            - NotBlank: ~
+        quantity:
+            - NotNull: ~

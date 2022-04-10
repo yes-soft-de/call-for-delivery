@@ -170,6 +170,32 @@ class ImageManager
         return $response;
     }
 
+    public function createOrUpdateAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
+    {
+        $response = [];
+
+        foreach ($images as $image) {
+            $imageEntity = $this->imageEntityRepository->findOneBy(["announcement" => $announcementEntity->getId()]);
+
+            if(! $imageEntity) {
+                $request = new ImageCreateRequest();
+
+                $request->setImagePath($image['image']);
+                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ANNOUNCEMENT);
+                $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ANNOUNCEMENT);
+                $request->setItemId($announcementEntity->getId());
+                $request->setAnnouncement($announcementEntity);
+
+                $response[] = $this->create($request);
+
+            } else {
+                $response[] = $this->updateImage($image['image'], $imageEntity);
+            }
+        }
+
+        return $response;
+    }
+
     public function updateImage(string $image, ImageEntity $imageEntity): ?ImageEntity
     {
         if($imageEntity) {

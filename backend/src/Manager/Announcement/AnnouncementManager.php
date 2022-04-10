@@ -3,11 +3,14 @@
 namespace App\Manager\Announcement;
 
 use App\AutoMapping;
+use App\Constant\Announcement\AnnouncementResultConstant;
 use App\Constant\Announcement\AnnouncementStatusConstant;
 use App\Entity\AnnouncementEntity;
 use App\Manager\Image\ImageManager;
 use App\Manager\Supplier\SupplierProfileManager;
+use App\Repository\AnnouncementEntityRepository;
 use App\Request\Announcement\AnnouncementCreateRequest;
+use App\Request\Announcement\AnnouncementUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AnnouncementManager
@@ -16,13 +19,16 @@ class AnnouncementManager
     private EntityManagerInterface $entityManager;
     private SupplierProfileManager $supplierProfileManager;
     private ImageManager $imageManager;
+    private AnnouncementEntityRepository $announcementEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierProfileManager $supplierProfileManager, ImageManager $imageManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierProfileManager $supplierProfileManager, ImageManager $imageManager,
+                                AnnouncementEntityRepository $announcementEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->supplierProfileManager = $supplierProfileManager;
         $this->imageManager = $imageManager;
+        $this->announcementEntityRepository = $announcementEntityRepository;
     }
 
     public function createAnnouncement(AnnouncementCreateRequest $request): AnnouncementEntity
@@ -47,5 +53,29 @@ class AnnouncementManager
     public function createAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
     {
         return $this->imageManager->createAnnouncementImages($images, $announcementEntity);
+    }
+
+    public function updateAnnouncement(AnnouncementUpdateRequest $request): string|AnnouncementEntity
+    {
+        $announcementEntity = $this->announcementEntityRepository->find($request->getId());
+
+        if (! $announcementEntity) {
+            return AnnouncementResultConstant::ANNOUNCEMENT_NOT_EXIST;
+        }
+
+        if (! empty($request->getImages())) {
+            $request->setImages($this->createAnnouncementImages($request->getImages(), $announcementEntity));
+        }
+
+        $announcementEntity = $this->autoMapping->mapToObject(AnnouncementUpdateRequest::class, AnnouncementEntity::class, $request, $announcementEntity);
+
+        $this->entityManager->flush();
+
+        return $announcementEntity;
+    }
+
+    public function createOrUpdateAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
+    {
+        return $this->imageManager->createOrUpdateAnnouncementImages($images, $announcementEntity);
     }
 }
