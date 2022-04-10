@@ -360,7 +360,7 @@ App\Request\Announcement\AnnouncementCreateRequest:
         price:
             - NotBlank: ~
         quantity:
-            - NotNull: ~
+            - NotBlank: ~
 
 App\Request\Announcement\AnnouncementUpdateRequest:
     properties:
@@ -369,4 +369,11 @@ App\Request\Announcement\AnnouncementUpdateRequest:
         price:
             - NotBlank: ~
         quantity:
+            - NotBlank: ~
+
+App\Request\Announcement\AnnouncementStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
             - NotNull: ~

@@ -28,4 +28,9 @@ class AnnouncementCreateResponse
      * @var object|null
      */
     public $createdAt;
+
+    /**
+     * @var bool|null
+     */
+    public $status;
 }

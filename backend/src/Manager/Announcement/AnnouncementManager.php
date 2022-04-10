@@ -10,6 +10,7 @@ use App\Manager\Image\ImageManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\AnnouncementEntityRepository;
 use App\Request\Announcement\AnnouncementCreateRequest;
+use App\Request\Announcement\AnnouncementStatusUpdateRequest;
 use App\Request\Announcement\AnnouncementUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -77,5 +78,20 @@ class AnnouncementManager
     public function createOrUpdateAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
     {
         return $this->imageManager->createOrUpdateAnnouncementImages($images, $announcementEntity);
+    }
+
+    public function updateAnnouncementStatus(AnnouncementStatusUpdateRequest $request): string|AnnouncementEntity
+    {
+        $announcementEntity = $this->announcementEntityRepository->find($request->getId());
+
+        if (! $announcementEntity) {
+            return AnnouncementResultConstant::ANNOUNCEMENT_NOT_EXIST;
+        }
+
+        $announcementEntity = $this->autoMapping->mapToObject(AnnouncementStatusUpdateRequest::class, AnnouncementEntity::class, $request, $announcementEntity);
+
+        $this->entityManager->flush();
+
+        return $announcementEntity;
     }
 }
