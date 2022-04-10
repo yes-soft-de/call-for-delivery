@@ -94,6 +94,17 @@ class OrderController extends BaseController
      *      )
      *   )
      * )
+     * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9151 or 9204"),
+     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *        )
+     *     )
      *
      * @Security(name="Bearer")
      */

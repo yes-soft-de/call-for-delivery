@@ -316,9 +316,9 @@ class SubscriptionService
 
     public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse|string
     {
-        $store = $this->storeOwnerProfileService->checkStoreActive($storeOwnerId);
-        if($store === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
-            return $store;
+        $storeStatus = $this->storeOwnerProfileService->checkStoreStatus($storeOwnerId);
+        if($storeStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $storeStatus;
         }
 
         $packageBalance = $this->packageBalance($storeOwnerId);

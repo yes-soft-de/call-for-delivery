@@ -142,7 +142,7 @@ class StoreOwnerProfileService
         return $item;
     }
     
-    public function checkStoreActive($userId): string
+    public function checkStoreStatus($userId): string
     {
         $storeProfile = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($userId);
        
