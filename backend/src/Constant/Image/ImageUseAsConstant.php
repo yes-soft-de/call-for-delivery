@@ -13,4 +13,6 @@ final class ImageUseAsConstant
     const IMAGE_USE_AS_ORDER_IMAGE = 3;
 
     const IMAGE_USE_AS_IDENTITY_IMAGE = 4;
+
+    const IMAGE_USE_AS_SUPPLIER_CATEGORY = 5;
 }

@@ -100,19 +100,20 @@ App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
 App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
+            - NotBlank: ~
 
 App\Request\Order\OrderCreateRequest:
     properties:
         orderCost:
-              - NotBlank: ~
+            - NotBlank: ~
         deliveryDate:
-              - NotBlank: ~
+            - NotBlank: ~
         destination:
-              - NotBlank: ~
+            - NotBlank: ~
         detail:
-              - NotBlank: ~
+            - NotBlank: ~
         branch:
-              - NotBlank: ~
+            - NotBlank: ~
 
 App\Request\Admin\Package\PackageCategoryUpdateRequest:
     properties:
@@ -276,6 +277,25 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
         salary:
             - NotBlank: ~
 
+App\Request\Admin\SupplierCategory\SupplierCategoryCreateByAdminRequest:
+    properties:
+        name:
+            - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
+App\Request\Admin\SupplierCategory\SupplierCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
 App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest:
     properties:
         countOrdersInMonth:
@@ -300,9 +320,30 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnO
         amount:
             - NotBlank: ~
 
+App\Request\User\UserRegisterRequest:
+    properties:
+        userId:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
+
+App\Request\Supplier\SupplierProfileUpdateRequest:
+    properties:
+        supplierName:
+            - NotBlank: ~
+        supplierCategory:
+            - NotBlank: ~
+
 App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest:
     properties:
         captainFinancialSystemType:
             - NotBlank: ~
         captainFinancialSystemId:
+            - NotBlank: ~
+         
+App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        captain:
             - NotBlank: ~
