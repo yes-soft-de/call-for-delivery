@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\SupplierProfile;
 
 use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest;
 use App\Service\Admin\SupplierProfile\AdminSupplierProfileService;
@@ -66,15 +68,9 @@ class AdminSupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="name"),
+     *              @OA\Property(type="string", property="supplierName"),
      *              @OA\Property(type="string", property="phone"),
      *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="object", property="updatedAt"),
-     *              @OA\Property(type="object", property="image",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
      *              @OA\Property(type="boolean", property="status")
      *          )
      *      )
@@ -84,11 +80,10 @@ class AdminSupplierProfileController extends BaseController
      *
      * @OA\Response(
      *      response="default",
-     *      description="Returns admin profile does not exist response",
+     *      description="Returns supplier profile does not exist response",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9410"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data", example="adminProfileNotExist")
+     *          @OA\Property(type="string", property="status_code", example="9551"),
+     *          @OA\Property(type="string", property="msg", example="supplier profile not exist! Error.")
      *      )
      * )
      *
@@ -109,9 +104,9 @@ class AdminSupplierProfileController extends BaseController
 
         $response = $this->adminSupplierProfileService->updateSupplierProfileStatusByAdmin($request);
 
-//        if ($response === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
-//            return $this->response($response, self::ADMIN_PROFILE_NOT_EXIST);
-//        }
+        if ($response === SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUPPLIER_PROFILE_NOT_EXIST);
+        }
 
         return $this->response($response, self::UPDATE);
     }
