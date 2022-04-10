@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Repository\SupplierProfileEntityRepository;
+use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -36,5 +37,10 @@ class AdminSupplierProfileManager
         $this->entityManager->flush();
 
         return $supplierProfileEntity;
+    }
+
+    public function filterSupplierProfileByAdmin(SupplierProfileFilterByAdminRequest $request): array
+    {
+        return $this->supplierProfileEntityRepository->filterSupplierProfileByAdmin($request);
     }
 }
