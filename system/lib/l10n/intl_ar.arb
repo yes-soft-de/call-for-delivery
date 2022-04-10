@@ -438,7 +438,11 @@
     "changeOrderState": "Change order state",
     "orderUpdatedSuccessfully": "Order updated successfully",
     "restData": "Rest data",
-    "enterYourPassword": "Enter your password"
+    "enterYourPassword": "Enter your password",
+    "notificationsSentSuccessfully": "تم إرسال الإشعار بنجاح",
+    "notificationMessage": "الإشعار",
+    "notificationTitle": "عنوان الإشعار",
+    "sendNotification": "إرسال إشعارات"
 
 
 }

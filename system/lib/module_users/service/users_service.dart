@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_users/manager/users_manager.dart';
 import 'package:c4d/module_users/model/users_model.dart';
@@ -35,6 +36,19 @@ class UsersService {
       return DataModel.withError(S.current.networkError);
     }
     if (actionResponse.statusCode != '204') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+  Future<DataModel> sendNotification(SendNotificationRequest request) async {
+    ActionResponse? actionResponse =
+    await _manager.sendNotification(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
       return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
           actionResponse.statusCode));
     }

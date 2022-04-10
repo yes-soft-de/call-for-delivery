@@ -339,7 +339,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
+        "notificationMessage": MessageLookupByLibrary.simpleMessage("الإشعار"),
+        "notificationTitle":
+            MessageLookupByLibrary.simpleMessage("عنوان الإشعار"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "notificationsSentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم إرسال الإشعار بنجاح"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
@@ -530,6 +535,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
+        "sendNotification":
+            MessageLookupByLibrary.simpleMessage("إرسال إشعارات"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),

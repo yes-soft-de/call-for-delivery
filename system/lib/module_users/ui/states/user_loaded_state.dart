@@ -3,6 +3,7 @@ import 'package:c4d/consts/role_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_users/model/users_model.dart';
 import 'package:c4d/module_users/request/filter_user_request.dart';
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_users/ui/screen/users_screen.dart';
 import 'package:c4d/module_users/ui/widget/chip_choose.dart';
@@ -82,7 +83,16 @@ class UsersLoadedState extends States{
       }
       widgets.add(
           UserCard(usersModel: element,
-            sendNotification: (){},
+            sendNotification: (){
+              showDialog(
+                  context: screenState.context,
+                  builder: (context) {
+                    return CustomSendNotificationDialogBox(
+                        send: (title, message){
+                          screenState.sendNotification(SendNotificationRequest(title: title,messageBody: message,otherUserId: element.id));
+                        });
+                  });
+            },
             updatePassword: (){
               showDialog(
                 context: screenState.context,

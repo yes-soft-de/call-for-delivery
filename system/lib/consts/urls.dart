@@ -32,4 +32,5 @@ class Urls {
   static const UPDATE_USER_PASSWORD = BASE_API_VERSION + '/userpasswordbysuperadmin';
   static const UPDATE_ORDER_STATUS = BASE_API_VERSION + '/updateorderstatebysuperadmin';
   static const REST_DATA_API = BASE_API_VERSION_COMMANDER + '/renewdatabasefromscratch';
+  static const SEND_NOTIFICATION = BASE_API + '/v1/notificationfirbase/firebasenotificationbysuperadmin';
 }

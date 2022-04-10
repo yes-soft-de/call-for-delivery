@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_users/request/filter_user_request.dart';
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_users/state_manager/users_state_manager.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,9 @@ class UsersScreenState extends State<UsersScreen>  {
   void updatePassword(UpdatePassRequest request){
     widget._stateManager.updatePassword(this, request);
 
+  }
+  void sendNotification(SendNotificationRequest request){
+    widget._stateManager.sendNotification(this, request);
   }
   @override
   Widget build(BuildContext context) {

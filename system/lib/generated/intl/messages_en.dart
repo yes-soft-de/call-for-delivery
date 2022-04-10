@@ -340,7 +340,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("Notes"),
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
+        "notificationMessage": MessageLookupByLibrary.simpleMessage("message"),
+        "notificationTitle": MessageLookupByLibrary.simpleMessage("title"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "notificationsSentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Notifications Sent Successfully"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
@@ -534,6 +538,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
+        "sendNotification":
+            MessageLookupByLibrary.simpleMessage("Send notification"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
