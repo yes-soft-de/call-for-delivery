@@ -37,6 +37,9 @@ class SupplierProfileEntity
     #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: ImageEntity::class)]
     private $images;
 
+    #[ORM\Column(type: 'boolean')]
+    private $status = false;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -133,6 +136,18 @@ class SupplierProfileEntity
                 $imageEntity->setSupplierProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
