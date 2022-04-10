@@ -19,18 +19,21 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
 use App\Service\Subscription\SubscriptionCaptainOfferService;
+use App\Service\StoreOwner\StoreOwnerProfileService;
 
 class SubscriptionService
 {
     private AutoMapping $autoMapping;
     private SubscriptionManager $subscriptionManager;
     private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
+    private StoreOwnerProfileService $storeOwnerProfileService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService, StoreOwnerProfileService $storeOwnerProfileService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
+        $this->storeOwnerProfileService = $storeOwnerProfileService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -311,32 +314,37 @@ class SubscriptionService
         return SubscriptionConstant::UNSUBSCRIBED;
     }
 
-    public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse
+    public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse|string
     {
-      $packageBalance = $this->packageBalance($storeOwnerId);
- 
-      if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
-
-        $item['subscriptionStatus'] = $packageBalance->status;
-
-        if($packageBalance->status ===  SubscriptionConstant::SUBSCRIBE_ACTIVE) {
-         
-          $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
+        $store = $this->storeOwnerProfileService->checkStoreActive($storeOwnerId);
+        if($store === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $store;
         }
-        else{
-  
-          $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+
+        $packageBalance = $this->packageBalance($storeOwnerId);
+    
+        if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
+
+            $item['subscriptionStatus'] = $packageBalance->status;
+
+            if($packageBalance->status ===  SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+            
+            $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
+            }
+            else{
+    
+            $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+            }
+            
+            $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
+            
+            return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
         }
-        
-        $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
-        
+
+        $item['subscriptionStatus'] = SubscriptionConstant::UNSUBSCRIBED;
+        $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
-      }
-
-      $item['subscriptionStatus'] = SubscriptionConstant::UNSUBSCRIBED;
-      $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
-
-      return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
     }
     
     public function subscriptionForOneDay(int $storeOwnerId): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse

@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Main\MainErrorConstant;
 
 /**
  * @Route("v1/subscription/")
@@ -254,6 +256,11 @@ class SubscriptionController extends BaseController
     public function canCreateOrder(): JsonResponse
     {
         $result = $this->subscriptionService->canCreateOrder($this->getUserId());
+       
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
 
         return $this->response($result, self::FETCH);
     }
