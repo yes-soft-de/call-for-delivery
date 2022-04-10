@@ -17,4 +17,6 @@ final class ImageEntityTypeConstant
     const IMAGE_NULL = null;
 
     const ENTITY_TYPE_SUPPLIER_PROFILE = 5;
+
+    const ENTITY_TYPE_ANNOUNCEMENT = 6;
 }

@@ -40,9 +40,13 @@ class SupplierProfileEntity
     #[ORM\Column(type: 'boolean')]
     private $status = false;
 
+    #[ORM\OneToMany(mappedBy: 'supplier', targetEntity: AnnouncementEntity::class)]
+    private $announcementEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->announcementEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +152,36 @@ class SupplierProfileEntity
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AnnouncementEntity[]
+     */
+    public function getAnnouncementEntities(): Collection
+    {
+        return $this->announcementEntities;
+    }
+
+    public function addAnnouncementEntity(AnnouncementEntity $announcementEntity): self
+    {
+        if (!$this->announcementEntities->contains($announcementEntity)) {
+            $this->announcementEntities[] = $announcementEntity;
+            $announcementEntity->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncementEntity(AnnouncementEntity $announcementEntity): self
+    {
+        if ($this->announcementEntities->removeElement($announcementEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($announcementEntity->getSupplier() === $this) {
+                $announcementEntity->setSupplier(null);
+            }
+        }
 
         return $this;
     }

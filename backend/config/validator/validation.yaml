@@ -354,3 +354,10 @@ App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Announcement\AnnouncementCreateRequest:
+    properties:
+        price:
+            - NotBlank: ~
+        quantity:
+            - NotNull: ~

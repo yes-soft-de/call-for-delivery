@@ -3,6 +3,7 @@
 namespace App\Request\Image;
 
 use App\Entity\AdminProfileEntity;
+use App\Entity\AnnouncementEntity;
 use App\Entity\SupplierProfileEntity;
 
 class ImageCreateRequest
@@ -24,6 +25,11 @@ class ImageCreateRequest
      * @var SupplierProfileEntity|null
      */
     private $supplierProfile;
+
+    /**
+     * @var AnnouncementEntity|null
+     */
+    private $announcement;
 
     public function setImagePath(string $imagePath): void
     {
@@ -53,5 +59,10 @@ class ImageCreateRequest
     public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): void
     {
         $this->supplierProfile = $supplierProfile;
+    }
+
+    public function setAnnouncement(?AnnouncementEntity $announcement): void
+    {
+        $this->announcement = $announcement;
     }
 }
