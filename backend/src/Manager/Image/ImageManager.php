@@ -7,6 +7,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageResultConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
+use App\Entity\AnnouncementEntity;
 use App\Entity\ImageEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Repository\ImageEntityRepository;
@@ -139,6 +140,51 @@ class ImageManager
                 $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
                 $request->setItemId($supplierProfileEntity->getId());
                 $request->setSupplierProfile($supplierProfileEntity);
+
+                $response[] = $this->create($request);
+
+            } else {
+                $response[] = $this->updateImage($image['image'], $imageEntity);
+            }
+        }
+
+        return $response;
+    }
+
+    public function createAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
+    {
+        $response = [];
+
+        foreach ($images as $image) {
+            $request = new ImageCreateRequest();
+
+            $request->setImagePath($image['image']);
+            $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ANNOUNCEMENT);
+            $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ANNOUNCEMENT);
+            $request->setItemId($announcementEntity->getId());
+            $request->setAnnouncement($announcementEntity);
+
+            $response[] = $this->create($request);
+        }
+
+        return $response;
+    }
+
+    public function createOrUpdateAnnouncementImages(array $images, AnnouncementEntity $announcementEntity): array
+    {
+        $response = [];
+
+        foreach ($images as $image) {
+            $imageEntity = $this->imageEntityRepository->findOneBy(["announcement" => $announcementEntity->getId()]);
+
+            if(! $imageEntity) {
+                $request = new ImageCreateRequest();
+
+                $request->setImagePath($image['image']);
+                $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_ANNOUNCEMENT);
+                $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ANNOUNCEMENT);
+                $request->setItemId($announcementEntity->getId());
+                $request->setAnnouncement($announcementEntity);
 
                 $response[] = $this->create($request);
 

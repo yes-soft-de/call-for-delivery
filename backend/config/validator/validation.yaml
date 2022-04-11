@@ -354,3 +354,26 @@ App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Announcement\AnnouncementCreateRequest:
+    properties:
+        price:
+            - NotBlank: ~
+        quantity:
+            - NotBlank: ~
+
+App\Request\Announcement\AnnouncementUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        price:
+            - NotBlank: ~
+        quantity:
+            - NotBlank: ~
+
+App\Request\Announcement\AnnouncementStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~

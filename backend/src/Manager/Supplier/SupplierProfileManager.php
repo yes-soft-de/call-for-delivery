@@ -124,4 +124,9 @@ class SupplierProfileManager
     {
         return $this->imageManager->createOrUpdateSupplierProfileImages($images, $supplierProfileEntity);
     }
+
+    public function getSupplierProfileEntityBySupplierId(int $supplierId): ?SupplierProfileEntity
+    {
+        return $this->supplierProfileEntityRepository->findOneBy(["user"=>$supplierId]);
+    }
 }

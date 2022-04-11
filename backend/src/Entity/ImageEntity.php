@@ -41,6 +41,9 @@ class ImageEntity
     #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class, inversedBy: 'imageEntities')]
     private $supplierProfile;
 
+    #[ORM\ManyToOne(targetEntity: AnnouncementEntity::class, inversedBy: 'images')]
+    private $announcement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +141,18 @@ class ImageEntity
     public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): self
     {
         $this->supplierProfile = $supplierProfile;
+
+        return $this;
+    }
+
+    public function getAnnouncement(): ?AnnouncementEntity
+    {
+        return $this->announcement;
+    }
+
+    public function setAnnouncement(?AnnouncementEntity $announcement): self
+    {
+        $this->announcement = $announcement;
 
         return $this;
     }
