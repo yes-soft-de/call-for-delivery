@@ -92,7 +92,7 @@ class OrdersService {
   Future<DataModel> deleteOrder(int id) async {
     ActionResponse? response = await _ordersManager.deleteOrder(id);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
