@@ -98,4 +98,9 @@ class AdminSupplierCategoryManager
     {
         $this->imageManager->createImageOrUpdate($imagePath, $itemId, ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_CATEGORY, ImageUseAsConstant::IMAGE_USE_AS_SUPPLIER_CATEGORY);
     }
+
+    public function getAllSupplierCategoriesForAdmin(): array
+    {
+        return $this->supplierCategoryEntityRepository->getAllSupplierCategoriesForAdmin();
+    }
 }

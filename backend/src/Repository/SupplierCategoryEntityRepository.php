@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\ImageEntity;
 use App\Entity\SupplierCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,5 +21,27 @@ class SupplierCategoryEntityRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SupplierCategoryEntity::class);
+    }
+
+    public function getAllSupplierCategoriesForAdmin(): array
+    {
+        return $this->createQueryBuilder('supplierCategoryEntity')
+            ->select('supplierCategoryEntity.id', 'supplierCategoryEntity.name', 'supplierCategoryEntity.description', 'supplierCategoryEntity.status')
+            ->addSelect('imageEntity.imagePath as image')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = supplierCategoryEntity.id AND imageEntity.entityType = :entityType AND imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_CATEGORY)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_SUPPLIER_CATEGORY)
+
+            ->orderBy('supplierCategoryEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
     }
 }
