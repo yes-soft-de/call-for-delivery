@@ -17,7 +17,7 @@ class SubscriptionsStatusHelper {
       case 'unsubscribed':
         return S.current.notSubscription;
       default:
-        return S.current.errorHappened;
+        return status;
     }
   }
 

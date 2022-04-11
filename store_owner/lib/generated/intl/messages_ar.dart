@@ -348,6 +348,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount": MessageLookupByLibrary.simpleMessage("لدي حساب"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "inactive": MessageLookupByLibrary.simpleMessage("غير مفعل"),
+        "inactiveStore": MessageLookupByLibrary.simpleMessage(
+            "متجرك غير مفعل الرجاء انتظار التفعيل من قبل الإدارة"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "سنقوم بأرسال كود تحقق الى رقمك"),

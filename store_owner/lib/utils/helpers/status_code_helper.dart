@@ -57,6 +57,8 @@ class StatusCodeHelper {
         return S.current.youCannotDeleteOrder;
       case '9202':
         return S.current.youCannotDeleteOrderCaptainAccepted;
+      case '9151':
+        return S.current.inactiveStore;
       case '-1':
         return S.current.dataDecodeError;
       default:
