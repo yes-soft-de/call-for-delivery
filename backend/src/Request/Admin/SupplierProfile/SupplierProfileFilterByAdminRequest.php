@@ -19,6 +19,11 @@ class SupplierProfileFilterByAdminRequest
      */
     private $status;
 
+    /**
+     * @var int|null
+     */
+    private $supplierCategoryId;
+
     public function getSupplierName(): ?string
     {
         return $this->supplierName;
@@ -32,5 +37,10 @@ class SupplierProfileFilterByAdminRequest
     public function getStatus(): ?bool
     {
         return $this->status;
+    }
+
+    public function getSupplierCategoryId(): ?int
+    {
+        return $this->supplierCategoryId;
     }
 }

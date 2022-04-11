@@ -103,4 +103,9 @@ class AdminSupplierCategoryManager
     {
         return $this->supplierCategoryEntityRepository->getAllSupplierCategoriesForAdmin();
     }
+
+    public function getSupplierCategoryEntityByCategoryId(int $supplierCategoryId): ?SupplierCategoryEntity
+    {
+        return $this->supplierCategoryEntityRepository->find($supplierCategoryId);
+    }
 }

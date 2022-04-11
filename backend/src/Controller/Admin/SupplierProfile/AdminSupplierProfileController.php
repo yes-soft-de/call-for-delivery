@@ -8,6 +8,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest;
 use App\Service\Admin\SupplierProfile\AdminSupplierProfileService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -133,7 +134,8 @@ class AdminSupplierProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="supplierName"),
      *          @OA\Property(type="string", property="phone"),
-     *          @OA\Property(type="boolean", property="status")
+     *          @OA\Property(type="boolean", property="status"),
+     *          @OA\Property(type="integer", property="supplierCategoryId")
      *      )
      * )
      *
@@ -170,6 +172,144 @@ class AdminSupplierProfileController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, SupplierProfileFilterByAdminRequest::class, (object)$data);
 
         $response = $this->adminSupplierProfileService->filterSupplierProfileByAdmin($request);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * Admin: update supplier profile
+     * @Route("supplierprofile", name="updateSupplierProfileByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update supplier profile by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="supplierName"),
+     *          @OA\Property(type="integer", property="supplierCategory"),
+     *          @OA\Property(type="string", property="phone"),
+     *          @OA\Property(type="array", property="images",
+     *              @OA\Items(
+     *                  @OA\Property(type="string", property="image")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the supplier's profile info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="204"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="supplierName"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="object", property="createdAt"),
+     *              @OA\Property(type="boolean", property="status")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns supplier profile does not exist response",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9551"),
+     *          @OA\Property(type="string", property="msg", example="supplier profile not exist! Error.")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateSupplierProfileByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SupplierProfileUpdateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminSupplierProfileService->updateSupplierProfileByAdmin($request);
+
+        if ($response === SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUPPLIER_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Admin: get supplier profile by id
+     * @Route("supplierprofilebyid/{supplierProfileId}", name="getSupplierProfileByIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $supplierProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the supplier's profile info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="204"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="object", property="user",
+     *                  @OA\Property(type="string", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              ),
+     *              @OA\Property(type="string", property="supplierName"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="object", property="createdAt"),
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="string", property="supplierCategoryName"),
+     *              @OA\Property(type="array", property="images",
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSupplierProfileBySupplierProfileIdForAdmin(int $supplierProfileId): JsonResponse
+    {
+        $response = $this->adminSupplierProfileService->getSupplierProfileBySupplierProfileIdForAdmin($supplierProfileId);
 
         return $this->response($response, self::FETCH);
     }
