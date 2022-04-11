@@ -377,3 +377,10 @@ App\Request\Announcement\AnnouncementStatusUpdateRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Admin\Announcement\AnnouncementAdministrationStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        administrationStatus:
+            - NotNull: ~

@@ -43,6 +43,9 @@ class AnnouncementEntity
     #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: ImageEntity::class)]
     private $images;
 
+    #[ORM\Column(type: 'boolean')]
+    private $administrationStatus = true;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -163,6 +166,18 @@ class AnnouncementEntity
                 $image->setAnnouncement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdministrationStatus(): ?bool
+    {
+        return $this->administrationStatus;
+    }
+
+    public function setAdministrationStatus(bool $administrationStatus): self
+    {
+        $this->administrationStatus = $administrationStatus;
 
         return $this;
     }
