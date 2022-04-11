@@ -9,6 +9,7 @@ use App\Entity\UserEntity;
 use App\Manager\Admin\SupplierProfile\AdminSupplierProfileManager;
 use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest;
 use App\Response\Admin\SupplierProfile\SupplierProfileGetByAdminResponse;
 use App\Response\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
@@ -84,5 +85,16 @@ class AdminSupplierProfileService
         $response['roles'] = $userEntity->getRoles();
 
         return $response;
+    }
+
+    public function updateSupplierProfileByAdmin(SupplierProfileUpdateByAdminRequest $request): string|SupplierProfileStatusUpdateByAdminResponse
+    {
+        $supplierProfileResult = $this->adminSupplierProfileManager->updateSupplierProfileByAdmin($request);
+
+        if ($supplierProfileResult === SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST) {
+            return SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST;
+        }
+
+        return $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileStatusUpdateByAdminResponse::class, $supplierProfileResult);
     }
 }

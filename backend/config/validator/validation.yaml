@@ -377,3 +377,10 @@ App\Request\Announcement\AnnouncementStatusUpdateRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        supplierName:
+            - NotNull: ~
