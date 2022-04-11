@@ -134,7 +134,8 @@ class AdminSupplierProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="supplierName"),
      *          @OA\Property(type="string", property="phone"),
-     *          @OA\Property(type="boolean", property="status")
+     *          @OA\Property(type="boolean", property="status"),
+     *          @OA\Property(type="integer", property="supplierCategoryId")
      *      )
      * )
      *
