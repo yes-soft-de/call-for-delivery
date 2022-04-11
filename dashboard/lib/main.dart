@@ -113,8 +113,7 @@ class MyApp extends StatefulWidget {
       this._branchesModule,
       this._noticeModule,
       this._captainsModule,
-      this._paymentsModule
-      );
+      this._paymentsModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

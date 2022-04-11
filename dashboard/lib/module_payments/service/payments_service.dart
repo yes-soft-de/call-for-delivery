@@ -2,10 +2,12 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/manager/payments_manager.dart';
+import 'package:c4d/module_payments/model/captain_balance_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
@@ -13,6 +15,7 @@ import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
+import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
@@ -53,6 +56,49 @@ class PaymentsService {
   Future<DataModel> deletePaymentToStore(String id) async {
     ActionResponse? actionResponse =
         await _paymentsManager.deleteStorePayment(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  /*-----------------------------------CAPTAIN PAYMENTS----------------------------------------------- */
+  Future<DataModel> getCaptainBalance(int captainId) async {
+    CaptainPaymentsResponse? _captainProfileResponse =
+        await _paymentsManager.getAccountBalance(captainId);
+    if (_captainProfileResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_captainProfileResponse.statusCode != '200') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          _captainProfileResponse.statusCode));
+    }
+    if (_captainProfileResponse.data == null) return DataModel.empty();
+    return CaptainBalanceModel.withData(_captainProfileResponse.data ?? []);
+  }
+
+  Future<DataModel> paymentToCaptain(CaptainPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.paymentToCaptain(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deletePaymentToCaptain(String id) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deletePaymentToCaptain(id);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);

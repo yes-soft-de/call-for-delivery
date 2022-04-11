@@ -123,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain not arrived"),
         "captainNotArrivedToStore": MessageLookupByLibrary.simpleMessage(
             "Captain not arrived to store"),
+        "captainPayments":
+            MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":

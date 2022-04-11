@@ -41,6 +41,11 @@ class Urls {
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS = DOMAIN +
       VERSION_ADMIN +
       '/captainfinancialsystemaccordingntocountofordersbyadmin';
+  static const BASE_CAPTAIN_PAYMENT =
+      DOMAIN + VERSION_ADMIN + '/captainpayment';
+  static const BASE_CAPTAIN_PAYMENTS =
+      DOMAIN + VERSION_ADMIN + '/captainpayments';
+
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -132,6 +137,10 @@ class Urls {
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
+  /*------------------------CAPTAIN PAYMENTS------------------------*/
+  static const CREATE_CAPTAIN_PAYMENTS =
+      BASE_CAPTAIN_PAYMENT + '/captainpayment';
+  static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
   /*------------------------CAPTAIN FINANCE------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDERS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER +

@@ -21,7 +21,6 @@ class CaptainFinanceByOrderCountStateManager {
 
   CaptainFinanceByOrderCountStateManager(this._storePaymentsService);
 
-
   void getFinances(CaptainFinanceByCountOrderScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     _storePaymentsService.getCaptainFinanceByOrderCounts().then((value) {
@@ -32,19 +31,24 @@ class CaptainFinanceByOrderCountStateManager {
           error: value.error,
         ));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            CaptainFinanceByOrderCountLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(CaptainFinanceByOrderCountLoadedState(
+            screenState, null,
+            empty: value.isEmpty));
       } else {
-        CaptainFinanceByOrdersCountModel _balance = value as CaptainFinanceByOrdersCountModel;
-        _stateSubject.add(CaptainFinanceByOrderCountLoadedState(screenState, _balance.data));
+        CaptainFinanceByOrdersCountModel _balance =
+            value as CaptainFinanceByOrdersCountModel;
+        _stateSubject.add(
+            CaptainFinanceByOrderCountLoadedState(screenState, _balance.data));
       }
     });
   }
 
-  void createFinance(
-      CaptainFinanceByCountOrderScreenState screenState, CreateCaptainFinanceByCountOrderRequest request) {
+  void createFinance(CaptainFinanceByCountOrderScreenState screenState,
+      CreateCaptainFinanceByCountOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.createCaptainFinanceByOrderCounts(request).then((value) {
+    _storePaymentsService
+        .createCaptainFinanceByOrderCounts(request)
+        .then((value) {
       if (value.hasError) {
         getFinances(screenState);
         CustomFlushBarHelper.createError(
@@ -60,5 +64,4 @@ class CaptainFinanceByOrderCountStateManager {
       }
     });
   }
-
 }

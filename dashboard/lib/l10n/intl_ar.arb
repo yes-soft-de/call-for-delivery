@@ -566,7 +566,8 @@
     "countOrdersInMonth": "عدد الطلبات في الشهر",
     "monthCompensation": "التعويض الشهري",
     "bounceMaxCountOrdersInMonth": "حد التعويض الأعلى",
-    "bounceMinCountOrdersInMonth": "حد التعويض الأدنى"
+    "bounceMinCountOrdersInMonth": "حد التعويض الأدنى",
+    "captainPayments": "دفعات الكابتن"
 
 
 

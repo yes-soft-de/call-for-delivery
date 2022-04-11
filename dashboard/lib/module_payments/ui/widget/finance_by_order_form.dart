@@ -56,7 +56,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context, title: S.of(context).addPackage),
       body: StackedForm(
-        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+          visible: MediaQuery.of(context).viewInsets.bottom == 0,
           child: Form(
             key: _key,
             child: FixedContainer(
@@ -139,7 +139,6 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                   ]),
             ),
           ),
-          
           label: S.current.save,
           onTap: () {
             if (_key.currentState?.validate() == true) {

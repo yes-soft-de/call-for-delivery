@@ -571,7 +571,9 @@
     "countOrdersInMonth": "Count order in month",
     "monthCompensation": "Month compensation",
     "bounceMaxCountOrdersInMonth": "Bounce max count orders in month",
-    "bounceMinCountOrdersInMonth": "Bounce min count orders in month"
+    "bounceMinCountOrdersInMonth": "Bounce min count orders in month",
+    "captainPayments": "Captain Payments"
+
 
 
 

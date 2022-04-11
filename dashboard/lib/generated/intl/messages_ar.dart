@@ -124,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "الكباتن اللذين لم يصلو المتجر"),
         "captainNotArrivedToStore":
             MessageLookupByLibrary.simpleMessage("الكابتن لم يصل إلى المتجر"),
+        "captainPayments":
+            MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
