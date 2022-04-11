@@ -1,0 +1,9 @@
+App\Entity\ImageEntity:
+  supplierProfileImage_{1..5}:
+    imagePath: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
+    entityType: 5
+    itemId: <current()>
+    usedAs: 0
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+    supplierProfile: '@supplierProfile_<current()>'

@@ -1,0 +1,45 @@
+App\Entity\SupplierProfileEntity:
+  supplierProfile_1:
+    user: '@supplier_1'
+    supplierName: المورد رامي
+    phone: '@supplier_1->userId'
+    createdAt: <(new \DateTime('Now'))>
+    supplierCategory: '@electronicSupplierCategory'
+    status: true
+    completeAccountStatus: profileCompleted
+
+  supplierProfile_2:
+    user: '@supplier_2'
+    supplierName: المورد يزن
+    phone: '@supplier_2->userId'
+    createdAt: <(new \DateTime('Now'))>
+    supplierCategory: '@restaurantSupplierCategory'
+    status: true
+    completeAccountStatus: profileCompleted
+
+  supplierProfile_3:
+    user: '@supplier_3'
+    supplierName: المورد حبيب
+    phone: '@supplier_3->userId'
+    createdAt: <(new \DateTime('Now'))>
+    supplierCategory: '@vegetableSupplierCategory'
+    status: true
+    completeAccountStatus: profileCompleted
+
+  supplierProfile_4:
+    user: '@supplier_4'
+    supplierName: المورد كنان
+    phone: '@supplier_1->userId'
+    createdAt: <(new \DateTime('Now'))>
+    supplierCategory: '@vehicleSupplierCategory'
+    status: true
+    completeAccountStatus: profileCompleted
+
+  supplierProfile_5:
+    user: '@supplier_5'
+    supplierName: المورد رهف
+    phone: '@supplier_5->userId'
+    createdAt: <(new \DateTime('Now'))>
+    supplierCategory: '@medicalSupplierCategory'
+    status: true
+    completeAccountStatus: profileCompleted
