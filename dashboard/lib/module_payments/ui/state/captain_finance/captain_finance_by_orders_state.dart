@@ -133,5 +133,4 @@ class CaptainFinanceByOrderLoadedState extends States {
       ),
     );
   }
-
 }

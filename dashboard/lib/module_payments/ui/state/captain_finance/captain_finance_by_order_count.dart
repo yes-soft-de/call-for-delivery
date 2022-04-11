@@ -65,21 +65,21 @@ class CaptainFinanceByOrderCountLoadedState extends States {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                horizontalsTile(
-                    S.current.countOrdersInMonth,
-                    FixedNumber.getFixedNumber(
-                        element.countOrdersInMonth)),
+                horizontalsTile(S.current.countOrdersInMonth,
+                    FixedNumber.getFixedNumber(element.countOrdersInMonth)),
                 horizontalsTile(
                     S.current.salary,
                     FixedNumber.getFixedNumber(element.salary) +
                         ' ${S.current.sar}'),
                 horizontalsTile(
                     S.current.bounceMinCountOrdersInMonth,
-                    FixedNumber.getFixedNumber(element.bounceMinCountOrdersInMonth) +
+                    FixedNumber.getFixedNumber(
+                            element.bounceMinCountOrdersInMonth) +
                         ' ${S.current.sar}'),
                 horizontalsTile(
                     S.current.bounceMaxCountOrdersInMonth,
-                    FixedNumber.getFixedNumber(element.bounceMaxCountOrdersInMonth) +
+                    FixedNumber.getFixedNumber(
+                            element.bounceMaxCountOrdersInMonth) +
                         ' ${S.current.sar}'),
                 horizontalsTile(
                     S.current.monthCompensation,

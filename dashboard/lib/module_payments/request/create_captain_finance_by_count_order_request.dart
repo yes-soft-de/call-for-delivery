@@ -13,7 +13,6 @@ class CreateCaptainFinanceByCountOrderRequest {
     this.bounceMinCountOrdersInMonth,
   });
 
-
   Map<String, dynamic> toJson() => {
         'countOrdersInMonth': countOrdersInMonth,
         'salary': salary,

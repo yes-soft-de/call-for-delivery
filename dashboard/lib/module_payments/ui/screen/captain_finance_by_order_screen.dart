@@ -74,7 +74,8 @@ class CaptainFinanceByOrderScreenState
             icon: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Icon(Icons.add_rounded,
-                  color: Theme.of(context).textTheme.button?.color ?? Colors.white),
+                  color: Theme.of(context).textTheme.button?.color ??
+                      Colors.white),
             ),
             label: Padding(
               padding: const EdgeInsets.all(10.0),

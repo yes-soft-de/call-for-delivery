@@ -34,7 +34,8 @@ class CaptainFinanceByHoursStateManager {
         _stateSubject.add(CaptainFinanceByHoursLoadedState(screenState, null,
             empty: value.isEmpty));
       } else {
-        CaptainFinanceByHoursModel _balance = value as CaptainFinanceByHoursModel;
+        CaptainFinanceByHoursModel _balance =
+            value as CaptainFinanceByHoursModel;
         _stateSubject
             .add(CaptainFinanceByHoursLoadedState(screenState, _balance.data));
       }

@@ -31,17 +31,19 @@ class CaptainFinanceByOrderStateManager {
           error: value.error,
         ));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            CaptainFinanceByOrderLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(CaptainFinanceByOrderLoadedState(screenState, null,
+            empty: value.isEmpty));
       } else {
-        CaptainFinanceByOrderModel _balance = value as CaptainFinanceByOrderModel;
-        _stateSubject.add(CaptainFinanceByOrderLoadedState(screenState, _balance.data));
+        CaptainFinanceByOrderModel _balance =
+            value as CaptainFinanceByOrderModel;
+        _stateSubject
+            .add(CaptainFinanceByOrderLoadedState(screenState, _balance.data));
       }
     });
   }
 
-  void createFinance(
-      CaptainFinanceByOrderScreenState screenState, CreateCaptainFinanceByOrderRequest request) {
+  void createFinance(CaptainFinanceByOrderScreenState screenState,
+      CreateCaptainFinanceByOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _storePaymentsService.createCaptainFinanceByOrder(request).then((value) {
       if (value.hasError) {
@@ -59,5 +61,4 @@ class CaptainFinanceByOrderStateManager {
       }
     });
   }
-
 }

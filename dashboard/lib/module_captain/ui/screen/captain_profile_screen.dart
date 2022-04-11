@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,37 +65,12 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(
-        context,
-        title: S.current.profile,
-//          actions: [
-//            Padding(
-//              padding: const EdgeInsets.all(8.0),
-//              child: Align(
-//                alignment: AlignmentDirectional.centerStart,
-//                child: InkWell(
-//                  customBorder: CircleBorder(),
-//                  onTap: () {
-////                    Navigator.pushNamed(context, CaptainsRoutes.CAPTAIN_BALANCE,
-////                        arguments: captainId);
-//                  },
-//                  child: Container(
-//                    decoration: BoxDecoration(
-//                        color: Theme.of(context).primaryColor,
-//                        shape: BoxShape.circle),
-//                    child: Padding(
-//                      padding: const EdgeInsets.all(8.0),
-//                      child: Icon(
-//                        Icons.account_balance,
-//                        color: Colors.white,
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//              ),
-//            ),
-//          ]
-      ),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.profile, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_TO_CAPTAIN,arguments: captainId);
+        }, icon: Icons.account_balance_rounded)
+      ]),
       body: currentState.getUI(context),
     );
   }

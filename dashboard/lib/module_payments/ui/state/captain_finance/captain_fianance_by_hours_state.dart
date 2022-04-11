@@ -65,17 +65,16 @@ class CaptainFinanceByHoursLoadedState extends States {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                horizontalsTile(
-                    S.current.countHours,
-                    FixedNumber.getFixedNumber(
-                        element.countHours)),
+                horizontalsTile(S.current.countHours,
+                    FixedNumber.getFixedNumber(element.countHours)),
                 horizontalsTile(
                     S.current.salary,
                     FixedNumber.getFixedNumber(element.salary) +
                         ' ${S.current.sar}'),
                 horizontalsTile(
                     S.current.compensationForEveryOrder,
-                    FixedNumber.getFixedNumber(element.compensationForEveryOrder) +
+                    FixedNumber.getFixedNumber(
+                            element.compensationForEveryOrder) +
                         ' ${S.current.sar}'),
               ],
             ),
