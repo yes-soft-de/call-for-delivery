@@ -19,4 +19,11 @@ final class CaptainFinancialSystem
     const CAPTAIN_FINANCIAL_SYSTEM_THREE = 3;
 
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = "youNotHaveCaptainFinancialSystem";
+    
+    //It is recommended to add this field to the entity
+    const KILOMETER_TO_DOUBLE_ORDER = 19;
+   
+    const TOTAL_IS_MAIN_YES = "yes";
+
+    const TOTAL_IS_MAIN_NO = "no";
 }

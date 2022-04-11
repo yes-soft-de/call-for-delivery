@@ -9,16 +9,26 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
+use App\Service\CaptainPayment\CaptainPaymentService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOneBalanceDetailService;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemOneBalanceDetailService;
+use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
 
 class CaptainFinancialSystemDetailService
 {
     private CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager;
     private AutoMapping $autoMapping;
+    private CaptainPaymentService $captainPaymentService;
+    private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService;
+    private AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->autoMapping = $autoMapping;
+        $this->captainPaymentService = $captainPaymentService;
+        $this->captainFinancialSystemOneBalanceDetailService = $captainFinancialSystemOneBalanceDetailService;
+        $this->adminCaptainFinancialSystemOneBalanceDetailService = $adminCaptainFinancialSystemOneBalanceDetailService;
     }
 
     public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailResponse|string
@@ -32,69 +42,37 @@ class CaptainFinancialSystemDetailService
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 
-    public function getBalanceDetailForCaptain(int $userId)
+    public function getBalanceDetailForCaptain(int $userId):CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
         if($financialSystemDetail) {
              //sum captain's payments
-            $sumPayments = $this->captainFinancialSystemDetailManager->getSumPayments($financialSystemDetail['captainId']);
+            $sumPayments = $this->captainPaymentService->getSumPayments($financialSystemDetail['captainId']);
        
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-                return $this->getBalanceDetailWithSystemOne( $financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments[0]['sumPayments']);
+                return $this->captainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments['sumPayments']);
             }
         }
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
 
-    public function getBalanceDetailForAdmin(int $captainId)
+    public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailForAdmin($captainId);
        
         if($financialSystemDetail) {
              //sum captain's payments
-            $sumPayments = $this->captainFinancialSystemDetailManager->getSumPayments($captainId);
+            $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
        
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-                return $this->getBalanceDetailWithSystemOne( $financialSystemDetail, $captainId, $sumPayments[0]['sumPayments'], true);
+                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne( $financialSystemDetail, $captainId, $sumPayments['sumPayments']);
             }
         }
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
-    }
-
-    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, bool $admin = null): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
-    {
-        $countOrdersMaxFromNineteen = 0;
-        //get Count Orders
-        $countOrders = $this->captainFinancialSystemDetailManager->getCountOrders($captainId);
-        //get Orders Details
-        $detailsOrders = $this->captainFinancialSystemDetailManager->getDetailOrders($captainId);
-
-        foreach($detailsOrders as $detailOrder) {
-           if($detailOrder['kilometer'] > 19 ) {
-                $countOrdersMaxFromNineteen = $countOrdersMaxFromNineteen + 1;
-           }
-        }
-
-        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrders'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
-    
-        $financialSystemDetail['sumPayments'] = $sumPayments;
-             
-        $financialSystemDetail['countOrders'] = $countOrders['countOrders'];
-
-        $financialSystemDetail['countOrdersMaxFromNineteen'] = $countOrdersMaxFromNineteen;
-        if($admin === true) {
-            $financialSystemDetail['total'] = $sumPayments - $financialSystemDetail['financialDues'];
-            //We may need a special admin response file in the future
-            return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail); 
-        }
-
-        $financialSystemDetail['total'] = $financialSystemDetail['financialDues'] - $sumPayments;
-
-        return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
     }
 }

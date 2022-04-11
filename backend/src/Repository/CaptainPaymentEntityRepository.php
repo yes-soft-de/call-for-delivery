@@ -99,4 +99,17 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getSumPayments(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+
+            ->select('sum(captainPaymentEntity.amount) as sumPayments')
+
+            ->where('captainPaymentEntity.captain = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

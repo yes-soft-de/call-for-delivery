@@ -57,23 +57,8 @@ class CaptainFinancialSystemDetailManager
         return $financialSystemDetail;
     }
 
-    public function getCaptainFinancialSystemDetailForAdmin($captainId): ?array
+    public function getCaptainFinancialSystemDetailForAdmin(int $captainId): ?array
     {      
         return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
-    }
-
-    public function getCountOrders($captainId): array
-    {
-        return $this->captainFinancialSystemDetailEntityRepository->getCountOrders($captainId);
-    }
-
-    public function getDetailOrders($captainId): array
-    {
-        return $this->captainFinancialSystemDetailEntityRepository->getDetailOrders($captainId);
-    }
-
-    public function getSumPayments($captainId): array
-    {
-        return $this->captainFinancialSystemDetailEntityRepository->getSumPayments($captainId);
     }
 }

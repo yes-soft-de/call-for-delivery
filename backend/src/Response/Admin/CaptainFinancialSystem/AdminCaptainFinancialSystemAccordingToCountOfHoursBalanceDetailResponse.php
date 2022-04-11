@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\CaptainFinancialSystem;
+namespace App\Response\Admin\CaptainFinancialSystem;
 
-class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
+class AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
 {
     public int $countOrders;
     
@@ -17,6 +17,6 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public float $sumPayments;
 
     public float $total;
-
+    
     public string $totalIsMain;
 }

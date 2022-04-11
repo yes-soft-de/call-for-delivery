@@ -18,4 +18,9 @@ class CaptainPaymentManager
     {
         return $this->captainPaymentEntityRepository->getCaptainPaymentsFilter($request);
     }
+
+    public function getSumPayments(int $captainId): ?array
+    {
+        return $this->captainPaymentEntityRepository->getSumPayments($captainId);
+    }
 }

@@ -6,15 +6,12 @@ use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity;
 use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
 use App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity;
-use App\Entity\OrderEntity;
-use App\Entity\CaptainPaymentEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use Doctrine\ORM\Query\Expr\Join;
-use App\Constant\Order\OrderStateConstant;
 /**
  * @method CaptainFinancialSystemDetailEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainFinancialSystemDetailEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -95,53 +92,5 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
         }
 
         return $query->getQuery()->getOneOrNullResult();
-    }
-
-    public function getCountOrders(int $captainId): array
-    {
-        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
-
-            ->select('count(orderEntity.id) as countOrders')
-
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.captainId = :captainId')
-
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
-
-            ->setParameter('captainId', $captainId)
-
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function getDetailOrders(int $captainId): array
-    {
-        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
-
-            ->select('orderEntity.id, orderEntity.kilometer')
-
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.captainId = :captainId')
-
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
-
-            ->setParameter('captainId', $captainId)
-
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getSumPayments(int $captainId): array
-    {
-        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
-
-            ->select('sum(captainPaymentEntity.amount) as sumPayments')
-
-            ->leftJoin(CaptainPaymentEntity::class, 'captainPaymentEntity', Join::WITH, 'captainPaymentEntity.captain = :captainId')
-
-            ->setParameter('captainId', $captainId)
-
-            ->getQuery()
-            ->getResult();
     }
 }

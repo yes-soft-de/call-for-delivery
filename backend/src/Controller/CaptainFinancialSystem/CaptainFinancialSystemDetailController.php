@@ -143,6 +143,7 @@ class CaptainFinancialSystemDetailController extends BaseController
      *          @OA\Property(type="float", property="total"),
      *          @OA\Property(type="float", property="financialDues"),
      *          @OA\Property(type="float", property="sumPayments"),
+     *          @OA\Property(type="string", property="totalIsMain"),
      *      )
      *   )
      * )
@@ -201,6 +202,7 @@ class CaptainFinancialSystemDetailController extends BaseController
      *          @OA\Property(type="float", property="total"),
      *          @OA\Property(type="float", property="financialDues"),
      *          @OA\Property(type="float", property="sumPayments"),
+     *          @OA\Property(type="string", property="totalIsMain"),
      *      )
      *   )
      * )
