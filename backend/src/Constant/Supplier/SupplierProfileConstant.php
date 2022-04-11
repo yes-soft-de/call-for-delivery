@@ -11,4 +11,6 @@ final class SupplierProfileConstant
     const COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED = "profileCompleted";
 
     const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
+
+    const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 }

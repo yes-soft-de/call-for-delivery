@@ -8,6 +8,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
 use App\Manager\Supplier\SupplierProfileManager;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Response\Supplier\SupplierProfileGetResponse;
@@ -92,5 +93,10 @@ class SupplierProfileService
     public function getCompleteAccountStatusBySupplierId(int $supplierId): ?array
     {
         return $this->supplierProfileManager->getCompleteAccountStatusBySupplierId($supplierId);
+    }
+
+    public function supplierProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): SupplierProfileEntity|string
+    {
+        return $this->supplierProfileManager->supplierProfileCompleteAccountStatusUpdate($request);
     }
 }

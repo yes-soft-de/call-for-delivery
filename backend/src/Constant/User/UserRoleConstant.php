@@ -16,5 +16,9 @@ final class UserRoleConstant
 
     const SUPPLIER_USER_TYPE = "supplierUserType";
 
+    const ROLE_OWNER = 'ROLE_OWNER';
+
+    const ROLE_CAPTAIN = 'ROLE_CAPTAIN';
+
     const ROLE_SUPPLIER = 'ROLE_SUPPLIER';
 }
