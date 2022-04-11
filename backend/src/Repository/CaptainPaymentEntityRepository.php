@@ -9,6 +9,8 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
+use DateTime;
+use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
 
 /**
  * @method CaptainPaymentEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -64,5 +66,37 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
             
             ->getQuery()
             ->getResult();
+    }
+    
+    public function  getCaptainPaymentsFilter(CaptainPaymentFilterRequest $request): array
+    { 
+        $query = $this->createQueryBuilder('captainPaymentEntity')
+                    ->select('captainPaymentEntity.id', 'captainPaymentEntity.amount', 'captainPaymentEntity.createdAt', 'captainPaymentEntity.note')
+           
+                    ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+            
+                    ->andWhere('captainPaymentEntity.captain = captainEntity.id')
+                    
+                    ->setParameter('userId', $request->getUserId())
+                    
+                    ->orderBy('captainPaymentEntity.id', 'DESC');
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('captainPaymentEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('captainPaymentEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('captainPaymentEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('captainPaymentEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
