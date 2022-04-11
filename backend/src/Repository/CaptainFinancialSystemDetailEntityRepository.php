@@ -3,11 +3,18 @@
 namespace App\Repository;
 
 use App\Entity\CaptainFinancialSystemDetailEntity;
+use App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity;
+use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
+use App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity;
+use App\Entity\OrderEntity;
+use App\Entity\CaptainPaymentEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
-
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use Doctrine\ORM\Query\Expr\Join;
+use App\Constant\Order\OrderStateConstant;
 /**
  * @method CaptainFinancialSystemDetailEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainFinancialSystemDetailEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -43,5 +50,98 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    
+    public function getCaptainFinancialSystemDetailCurrent(int $captainId): ?array
+    {
+        $query = $this->createQueryBuilder('captainFinancialSystemDetailEntity');
+
+        $query->select('captainFinancialSystemDetailEntity.id', 'captainFinancialSystemDetailEntity.createdAt', 'captainFinancialSystemDetailEntity.updatedAt', 'captainFinancialSystemDetailEntity.captainFinancialSystemType');
+
+        $query->where('captainFinancialSystemDetailEntity.captain = :captainId');
+        $query->setParameter('captainId', $captainId);
+        //TODO remove comments next time
+        // $query->andWhere('captainFinancialSystemDetailEntity.status = :status');
+        // $query->setParameter('status', CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE);
+        $item = $query->select('captainFinancialSystemDetailEntity.captainFinancialSystemType')->getQuery()->getOneOrNullResult();
+       
+        if($item) {
+            if ($item['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
+            
+                $query->addSelect('systemOne.countHours', 'systemOne.compensationForEveryOrder', 'systemOne.salary');
+                
+                $query->leftJoin(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, 'systemOne', Join::WITH, 'systemOne.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
+
+                return $query->getQuery()->getOneOrNullResult();
+            }
+
+            if ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
+            
+                $query->addSelect('systemTwo.countOrdersInMonth', 'systemTwo.salary', 'systemTwo.monthCompensation', 'systemTwo.bounceMaxCountOrdersInMonth', 'systemTwo.bounceMinCountOrdersInMonth');
+                
+                $query->leftJoin(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, 'systemTwo', Join::WITH, 'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
+        
+                return $query->getQuery()->getOneOrNullResult();     
+            }
+        
+            if ($item['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
+                $query->addSelect('systemThree.categoryName', 'systemThree.countKilometersFrom', 'systemThree.countKilometersTo', 'systemThree.amount', 'systemThree.bounce', 'systemThree.bounceCountOrdersInMonth');
+                
+                $query->leftJoin(CaptainFinancialSystemAccordingOnOrderEntity::class, 'systemThree', Join::WITH, 'systemThree.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
+        
+                return $query->getQuery()->getOneOrNullResult();
+            }
+        }
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    public function getCountOrders(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
+
+            ->select('count(orderEntity.id) as countOrders')
+
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.captainId = :captainId')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getDetailOrders(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
+
+            ->select('orderEntity.id, orderEntity.kilometer')
+
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.captainId = :captainId')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getSumPayments(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
+
+            ->select('sum(captainPaymentEntity.amount) as sumPayments')
+
+            ->leftJoin(CaptainPaymentEntity::class, 'captainPaymentEntity', Join::WITH, 'captainPaymentEntity.captain = :captainId')
+
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getResult();
     }
 }
