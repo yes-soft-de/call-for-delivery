@@ -21,7 +21,7 @@ use App\Constant\Main\MainErrorConstant;
 use App\Constant\Payment\PaymentConstant;
 
 /**
- * Create and fetch Payments from captain.
+ * Create and fetch Payments to captain.
  * @Route("v1/admin/captainpayment/")
  */
 class AdminCaptainPaymentController extends BaseController
@@ -39,7 +39,7 @@ class AdminCaptainPaymentController extends BaseController
     }
 
     /**
-     * admin:Create new Payment from captain
+     * admin:Create new Payment to captain
      * @Route("captainpayment", name="createCaptainPayment", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -115,7 +115,7 @@ class AdminCaptainPaymentController extends BaseController
     }
 
     /**
-     * admin:delete Payment from captain
+     * admin:delete Payment to captain
      * @Route("captainpayment/{id}", name="deleteCaptainPayment", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
