@@ -248,4 +248,50 @@ class AdminSupplierCategoryController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * Admin: fetch all supplier categories.
+     * @Route("suppliercategories", name="getAllSupplierCategoriesByAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier Category")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns all existing supplier categories",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="name"),
+     *                  @OA\Property(type="string", property="description"),
+     *                  @OA\Property(type="boolean", property="status"),
+     *                  @OA\Property(type="object", property="image",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL"),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllSupplierCategoriesForAdmin(): JsonResponse
+    {
+        $response = $this->adminSupplierCategoryService->getAllSupplierCategoriesForAdmin();
+
+        return $this->response($response, self::FETCH);
+    }
 }
