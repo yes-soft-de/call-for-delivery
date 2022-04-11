@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Constant\SupplierCategory\SupplierCategoryStatusConstant;
 use App\Entity\ImageEntity;
 use App\Entity\SupplierCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -28,6 +29,31 @@ class SupplierCategoryEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('supplierCategoryEntity')
             ->select('supplierCategoryEntity.id', 'supplierCategoryEntity.name', 'supplierCategoryEntity.description', 'supplierCategoryEntity.status')
             ->addSelect('imageEntity.imagePath as image')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = supplierCategoryEntity.id AND imageEntity.entityType = :entityType AND imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_CATEGORY)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_SUPPLIER_CATEGORY)
+
+            ->orderBy('supplierCategoryEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllActiveSupplierCategories(): array
+    {
+        return $this->createQueryBuilder('supplierCategoryEntity')
+            ->select('supplierCategoryEntity.id', 'supplierCategoryEntity.name', 'supplierCategoryEntity.description', 'supplierCategoryEntity.status')
+            ->addSelect('imageEntity.imagePath as image')
+
+            ->andWhere('supplierCategoryEntity.status = :activeStatus')
+            ->setParameter('activeStatus', SupplierCategoryStatusConstant::ACTIVE_SUPPLIER_CATEGORY_STATUS)
 
             ->leftJoin(
                 ImageEntity::class,
