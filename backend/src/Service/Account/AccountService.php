@@ -12,18 +12,21 @@ use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Response\Account\CompleteAccountStatusGetResponse;
 use App\Service\Captain\CaptainService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
+use App\Service\Supplier\SupplierProfileService;
 
 class AccountService
 {
     private AutoMapping $autoMapping;
     private StoreOwnerProfileService $storeOwnerProfileService;
     private CaptainService $captainService;
+    private SupplierProfileService $supplierProfileService;
 
-    public function __construct(AutoMapping $autoMapping, StoreOwnerProfileService $storeOwnerProfileService, CaptainService $captainService)
+    public function __construct(AutoMapping $autoMapping, StoreOwnerProfileService $storeOwnerProfileService, CaptainService $captainService, SupplierProfileService $supplierProfileService)
     {
         $this->autoMapping = $autoMapping;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->captainService = $captainService;
+        $this->supplierProfileService = $supplierProfileService;
     }
 
     public function getCompleteAccountStatusByUserId(string $userId, string $userType): ?CompleteAccountStatusGetResponse
@@ -35,6 +38,11 @@ class AccountService
 
         } elseif ($userType === UserRoleConstant::CAPTAIN_USER_TYPE) {
             $completeAccountStatus = $this->captainService->getCompleteAccountStatusOfCaptainProfile($userId);
+
+            return $this->autoMapping->map('array', CompleteAccountStatusGetResponse::class, $completeAccountStatus);
+
+        } elseif ($userType === UserRoleConstant::SUPPLIER_USER_TYPE) {
+            $completeAccountStatus = $this->supplierProfileService->getCompleteAccountStatusBySupplierId($userId);
 
             return $this->autoMapping->map('array', CompleteAccountStatusGetResponse::class, $completeAccountStatus);
         }

@@ -88,4 +88,9 @@ class SupplierProfileService
 
         return null;
     }
+
+    public function getCompleteAccountStatusBySupplierId(int $supplierId): ?array
+    {
+        return $this->supplierProfileManager->getCompleteAccountStatusBySupplierId($supplierId);
+    }
 }

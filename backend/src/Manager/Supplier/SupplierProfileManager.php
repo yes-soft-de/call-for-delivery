@@ -129,4 +129,9 @@ class SupplierProfileManager
     {
         return $this->supplierProfileEntityRepository->findOneBy(["user"=>$supplierId]);
     }
+
+    public function getCompleteAccountStatusBySupplierId(int $supplierId): ?array
+    {
+        return $this->supplierProfileEntityRepository->getCompleteAccountStatusBySupplierId($supplierId);
+    }
 }

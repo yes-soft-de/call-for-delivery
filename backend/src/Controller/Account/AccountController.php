@@ -5,6 +5,7 @@ namespace App\Controller\Account;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
@@ -116,6 +117,23 @@ class AccountController extends BaseController
 
             } elseif ($response->completeAccountStatus === null) {
                 $response->completeAccountStatus = CaptainConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+                return $this->response($response, self::FETCH);
+
+            } else {
+                return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+            }
+
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::SUPPLIER_USER_TYPE);
+
+            if ($response->completeAccountStatus === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                return $this->response($response, self::SUPPLIER_PROFILE_CREATED);
+
+            } elseif ($response->completeAccountStatus === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+                return $this->response($response, self::SUPPLIER_PROFILE_COMPLETED);
+
+            } elseif ($response->completeAccountStatus === null) {
+                $response->completeAccountStatus = SupplierProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
                 return $this->response($response, self::FETCH);
 
             } else {

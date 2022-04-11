@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Repository\SupplierProfileEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -42,6 +43,9 @@ class SupplierProfileEntity
 
     #[ORM\OneToMany(mappedBy: 'supplier', targetEntity: AnnouncementEntity::class)]
     private $announcementEntities;
+
+    #[ORM\Column(type: 'string', length: 20)]
+    private $completeAccountStatus = SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED;
 
     public function __construct()
     {
@@ -182,6 +186,18 @@ class SupplierProfileEntity
                 $announcementEntity->setSupplier(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompleteAccountStatus(): ?string
+    {
+        return $this->completeAccountStatus;
+    }
+
+    public function setCompleteAccountStatus(string $completeAccountStatus): self
+    {
+        $this->completeAccountStatus = $completeAccountStatus;
 
         return $this;
     }
