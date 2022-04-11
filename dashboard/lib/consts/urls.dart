@@ -72,7 +72,7 @@ class Urls {
   static const NOTIFICATION_API =
       BASE_API_NOTIFICATION_TOKEN + '/notificationtoken';
   static const NOTIFICATIONNEWCHAT_API =
-      BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatbyuserid';
+      BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatfromadmin';
   static const NEEDFORSUPPORT = BASE_API + '/updateneedsupport';
 
   /*--------Store-------------------*/
