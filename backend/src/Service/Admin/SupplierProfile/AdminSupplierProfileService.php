@@ -97,4 +97,25 @@ class AdminSupplierProfileService
 
         return $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileStatusUpdateByAdminResponse::class, $supplierProfileResult);
     }
+
+    public function getSupplierProfileBySupplierProfileIdForAdmin(int $supplierProfileId): SupplierProfileGetByAdminResponse|array
+    {
+        $response = [];
+
+        $supplierProfile = $this->adminSupplierProfileManager->getSupplierProfileBySupplierProfileIdForAdmin($supplierProfileId);
+
+        if ($supplierProfile) {
+            $response = $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetByAdminResponse::class, $supplierProfile);
+
+            $response->user = $this->getSpecificUserFields($response->user);
+
+            $response->images = $this->customizeSupplierProfileImages($response->images->toArray());
+
+            if ($supplierProfile->getSupplierCategory()) {
+                $response->supplierCategoryName = $supplierProfile->getSupplierCategory()->getName();
+            }
+        }
+
+        return $response;
+    }
 }

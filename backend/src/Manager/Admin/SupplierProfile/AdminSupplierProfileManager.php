@@ -78,4 +78,9 @@ class AdminSupplierProfileManager
     {
         return $this->imageManager->createOrUpdateSupplierProfileImages($images, $supplierProfileEntity);
     }
+
+    public function getSupplierProfileBySupplierProfileIdForAdmin(int $supplierProfileId): ?SupplierProfileEntity
+    {
+        return $this->supplierProfileEntityRepository->find($supplierProfileId);
+    }
 }

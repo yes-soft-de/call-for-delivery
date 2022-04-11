@@ -2,6 +2,7 @@
 
 namespace App\Response\Admin\SupplierProfile;
 
+use App\Entity\SupplierCategoryEntity;
 use App\Entity\UserEntity;
 
 class SupplierProfileGetByAdminResponse

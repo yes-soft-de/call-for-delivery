@@ -256,4 +256,60 @@ class AdminSupplierProfileController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * Admin: get supplier profile by id
+     * @Route("supplierprofilebyid/{supplierProfileId}", name="getSupplierProfileByIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $supplierProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the supplier's profile info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="204"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="object", property="user",
+     *                  @OA\Property(type="string", property="id"),
+     *                  @OA\Property(type="string", property="userId"),
+     *                  @OA\Property(type="array", property="roles",
+     *                      @OA\Items()
+     *                  )
+     *              ),
+     *              @OA\Property(type="string", property="supplierName"),
+     *              @OA\Property(type="string", property="phone"),
+     *              @OA\Property(type="object", property="createdAt"),
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="string", property="supplierCategoryName"),
+     *              @OA\Property(type="array", property="images",
+     *                  @OA\Items(
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL")
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSupplierProfileBySupplierProfileIdForAdmin(int $supplierProfileId): JsonResponse
+    {
+        $response = $this->adminSupplierProfileService->getSupplierProfileBySupplierProfileIdForAdmin($supplierProfileId);
+
+        return $this->response($response, self::FETCH);
+    }
 }
