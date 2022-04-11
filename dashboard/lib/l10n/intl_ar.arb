@@ -567,9 +567,12 @@
     "monthCompensation": "التعويض الشهري",
     "bounceMaxCountOrdersInMonth": "حد التعويض الأعلى",
     "bounceMinCountOrdersInMonth": "حد التعويض الأدنى",
-    "captainPayments": "دفعات الكابتن"
+    "captainPayments": "دفعات الكابتن",
 
-
+    "inActiveSupplier": "الموردين غير المفعلة",
+    "suppliers": "الموردين",
+    "suppliersCategories": "فئات الموردين",
+    "categoryImage": "صورة التصنيف"
 
 
 
