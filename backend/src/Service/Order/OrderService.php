@@ -39,6 +39,7 @@ use App\Service\Notification\NotificationFirebaseService;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
+use App\Constant\StoreOwner\StoreProfileConstant;
 
 class OrderService
 {
@@ -69,11 +70,11 @@ class OrderService
      * @param OrderCreateRequest $request
      * @return OrderResponse|CanCreateOrderResponse
      */
-    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse
-    {
+    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
+    {        
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner()); 
      
-        if($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+        if($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
       
             return  $canCreateOrder;
         }

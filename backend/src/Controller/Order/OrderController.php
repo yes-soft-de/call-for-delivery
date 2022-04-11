@@ -24,6 +24,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
 
 /**
  * Create and fetch order.
@@ -93,6 +94,17 @@ class OrderController extends BaseController
      *      )
      *   )
      * )
+     * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9151 or 9204"),
+     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *        )
+     *     )
      *
      * @Security(name="Bearer")
      */
@@ -114,6 +126,11 @@ class OrderController extends BaseController
 
         $result = $this->orderService->createOrder($request);
       
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+
         if (isset($result->canCreateOrder)) {
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);

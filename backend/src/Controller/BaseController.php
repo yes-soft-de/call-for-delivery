@@ -93,6 +93,8 @@ class BaseController extends AbstractController
     //CAPTAIN FINANCIAL SYSTEM
     const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = ["youNotHaveCaptainFinancialSystem", "9602"];
+    // announcement
+    const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

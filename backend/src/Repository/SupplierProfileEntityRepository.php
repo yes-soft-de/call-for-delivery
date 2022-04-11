@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SupplierProfileEntity;
+use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,24 +23,35 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
     public function getSupplierProfileByUserId(int $userId): SupplierProfileEntity|null
     {
         return $this->createQueryBuilder('supplierProfileEntity')
-//            ->select('IDENTITY (supplierProfileEntity.id) as id', 'supplierProfileEntity.createdAt', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.phone', 'supplierProfileEntity.imageEntities')
-//            ->addSelect('imageEntity.imagePath as image')
 
             ->andWhere('supplierProfileEntity.user = :userId')
             ->setParameter('userId', $userId)
 
-//            ->leftJoin(
-//                ImageEntity::class,
-//                'imageEntity',
-//                Join::WITH,
-//                'imageEntity.itemId = supplierProfileEntity.id'
-//            )
-//
-//            ->andWhere('imageEntity.entityType = :entityType AND imageEntity.usedAs = :usedAs')
-//            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE)
-//            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
-
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function filterSupplierProfileByAdmin(SupplierProfileFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('supplierProfileEntity')
+
+            ->orderBy('supplierProfileEntity.id', 'DESC');
+
+        if ($request->getSupplierName() != null || $request->getSupplierName() != "") {
+            $query->andWhere('supplierProfileEntity.supplierName LIKE :name');
+            $query->setParameter('name', '%'.$request->getSupplierName().'%');
+        }
+
+        if ($request->getPhone() != null || $request->getPhone() != "") {
+            $query->andWhere('supplierProfileEntity.phone LIKE :phone');
+            $query->setParameter('phone', '%'.$request->getPhone().'%');
+        }
+
+        if ($request->getStatus() !== null) {
+            $query->andWhere('supplierProfileEntity.status = :status');
+            $query->setParameter('status', $request->getStatus());
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
