@@ -5,20 +5,27 @@ class StackedForm extends StatelessWidget {
   final Widget child;
   final String label;
   final VoidCallback onTap;
-
-  StackedForm({required this.child, required this.label, required this.onTap});
+  final bool visible;
+  StackedForm(
+      {required this.child,
+      required this.label,
+      required this.onTap,
+      this.visible = false});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         child,
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: FadedButtonBar(
-              onPressed: onTap,
-              text: label,
-            )),
+        Visibility(
+          visible: visible,
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FadedButtonBar(
+                onPressed: onTap,
+                text: label,
+              )),
+        ),
       ],
     );
   }

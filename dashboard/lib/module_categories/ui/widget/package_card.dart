@@ -43,7 +43,7 @@ class SinglePackageCard extends StatelessWidget {
               BoxShadow(
                   color: Theme.of(context).backgroundColor,
                   spreadRadius: 1,
-                  blurRadius: 10,
+                  blurRadius: 5,
                   offset: Offset(-0.2, 0)),
             ]),
         child: Padding(

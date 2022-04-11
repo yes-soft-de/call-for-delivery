@@ -550,7 +550,28 @@
     "emptyField": "حقل فارغ",
     "InvalidInput": "غير صالح",
     "countryCode": "النداء",
-    "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر"
+    "captainNotArrivedToStore": "الكابتن لم يصل إلى المتجر",
+    "captainFinance": "باقات عمل الكابتن",
+    "financeByOrders": "باقة حسب الطلبات",
+    "financeByHours": "باقة حسب الساعات",
+    "financeCountOrder": "باقة على الطلب",
+    "bounceCountOrdersInMonth": "عدد الطلبات في الشهر",
+    "amount": "الراتب",
+    "countKilometersFrom": "الحد الأدنى للكيلومترات",
+    "countKilometersTo": "الحد الأعلى للكيلومترات",
+    "addWorkPackage": "إضافة باقة عمل",
+    "eg": "مثال :",
+    "countHours": "عدد الساعات",
+    "compensationForEveryOrder": "التعويض عن كل طلب",
+    "countOrdersInMonth": "عدد الطلبات في الشهر",
+    "monthCompensation": "التعويض الشهري",
+    "bounceMaxCountOrdersInMonth": "حد التعويض الأعلى",
+    "bounceMinCountOrdersInMonth": "حد التعويض الأدنى"
+
+
+
+
+
 
 
 }

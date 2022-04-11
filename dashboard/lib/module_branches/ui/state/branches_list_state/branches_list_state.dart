@@ -36,7 +36,8 @@ class BranchListStateLoaded extends States {
                         Navigator.of(context).pop();
                         screenState.deleteBranch(element.id);
                       },
-                      content: S.current.confirmDeletionBranch, oneAction: false,
+                      content: S.current.confirmDeletionBranch,
+                      oneAction: false,
                     );
                   });
             },

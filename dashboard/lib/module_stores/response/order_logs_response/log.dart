@@ -6,7 +6,7 @@ class Log {
   String? orderState;
   bool? isCaptainArrived;
 
-  Log({this.id, this.createdAt, this.orderState ,this.isCaptainArrived});
+  Log({this.id, this.createdAt, this.orderState, this.isCaptainArrived});
 
   factory Log.fromJson(Map<String, dynamic> json) => Log(
         id: json['id'] as int?,

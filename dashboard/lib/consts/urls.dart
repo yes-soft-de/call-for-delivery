@@ -19,9 +19,10 @@ class Urls {
   static const String BASE_API_NOTICE_ADMIN =
       DOMAIN + VERSION_ADMIN + '/notification';
   static const String BASE_API_CHAT_ROM = DOMAIN + VERSION + '/chatroom';
-  static const String BASE_API_FIREBASE_NOTIFICATION = DOMAIN + VERSION + '/notificationfirbase';
-  static const String BASE_API_NOTIFICATION_TOKEN = DOMAIN + VERSION + '/notificationtoken';
-
+  static const String BASE_API_FIREBASE_NOTIFICATION =
+      DOMAIN + VERSION + '/notificationfirbase';
+  static const String BASE_API_NOTIFICATION_TOKEN =
+      DOMAIN + VERSION + '/notificationtoken';
 
   static const String BASE_API_CAPTAIN_OFFER_ADMIN =
       DOMAIN + VERSION_ADMIN + '/captainoffer';
@@ -32,7 +33,14 @@ class Urls {
   static const String BASE_API_ORDER = DOMAIN + VERSION_ADMIN + '/order';
   static const String BASE_API_STORE_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/storeownerpayment';
-
+  static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER =
+      DOMAIN + VERSION_ADMIN + '/captainfinancialsystemaccordingnorderbyadmin';
+  static const String BASE_API_CAPTAIN_FINANCE_BY_HOURS = DOMAIN +
+      VERSION_ADMIN +
+      '/captainfinancialsystemaccordingtocountofhoursbyadmin';
+  static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS = DOMAIN +
+      VERSION_ADMIN +
+      '/captainfinancialsystemaccordingntocountofordersbyadmin';
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
@@ -56,7 +64,8 @@ class Urls {
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
   static const NOTIFICATIONNEWCHAT_ANYN_API =
       BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatanonymous';
-  static const NOTIFICATION_API = BASE_API_NOTIFICATION_TOKEN + '/notificationtoken';
+  static const NOTIFICATION_API =
+      BASE_API_NOTIFICATION_TOKEN + '/notificationtoken';
   static const NOTIFICATIONNEWCHAT_API =
       BASE_API_FIREBASE_NOTIFICATION + '/notificationnewchatbyuserid';
   static const NEEDFORSUPPORT = BASE_API + '/updateneedsupport';
@@ -123,4 +132,14 @@ class Urls {
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
+  /*------------------------CAPTAIN FINANCE------------------------*/
+  static const GET_CAPTAIN_FINANCE_BY_ORDERS =
+      BASE_API_CAPTAIN_FINANCE_BY_ORDER +
+          '/captainfinancialsystemaccordingonorderbyadmin';
+  static const GET_CAPTAIN_FINANCE_BY_HOURS =
+      BASE_API_CAPTAIN_FINANCE_BY_HOURS +
+          '/captainfinancialsystemaccordingtocountofhoursbyadmin';
+  static const GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS =
+      BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS +
+          '/captainfinancialsystemaccordingtocountofordersbyadmin';
 }

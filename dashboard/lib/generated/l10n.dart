@@ -5435,11 +5435,176 @@ class S {
     return Intl.message(
       'Code',
       name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Captain not arrived to store`
   String get captainNotArrivedToStore {
     return Intl.message(
       'Captain not arrived to store',
       name: 'captainNotArrivedToStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Finance`
+  String get captainFinance {
+    return Intl.message(
+      'Captain Finance',
+      name: 'captainFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by orders`
+  String get financeByOrders {
+    return Intl.message(
+      'Finance by orders',
+      name: 'financeByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by hours`
+  String get financeByHours {
+    return Intl.message(
+      'Finance by hours',
+      name: 'financeByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance on order`
+  String get financeCountOrder {
+    return Intl.message(
+      'Finance on order',
+      name: 'financeCountOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders in month`
+  String get bounceCountOrdersInMonth {
+    return Intl.message(
+      'Orders in month',
+      name: 'bounceCountOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message(
+      'Amount',
+      name: 'amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum kilometers`
+  String get countKilometersFrom {
+    return Intl.message(
+      'Minimum kilometers',
+      name: 'countKilometersFrom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max kilometers`
+  String get countKilometersTo {
+    return Intl.message(
+      'Max kilometers',
+      name: 'countKilometersTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add work plan`
+  String get addWorkPackage {
+    return Intl.message(
+      'Add work plan',
+      name: 'addWorkPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g :`
+  String get eg {
+    return Intl.message(
+      'e.g :',
+      name: 'eg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Hours`
+  String get countHours {
+    return Intl.message(
+      'Count Hours',
+      name: 'countHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compensation for every order`
+  String get compensationForEveryOrder {
+    return Intl.message(
+      'Compensation for every order',
+      name: 'compensationForEveryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count order in month`
+  String get countOrdersInMonth {
+    return Intl.message(
+      'Count order in month',
+      name: 'countOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Month compensation`
+  String get monthCompensation {
+    return Intl.message(
+      'Month compensation',
+      name: 'monthCompensation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce max count orders in month`
+  String get bounceMaxCountOrdersInMonth {
+    return Intl.message(
+      'Bounce max count orders in month',
+      name: 'bounceMaxCountOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce min count orders in month`
+  String get bounceMinCountOrdersInMonth {
+    return Intl.message(
+      'Bounce min count orders in month',
+      name: 'bounceMinCountOrdersInMonth',
       desc: '',
       args: [],
     );

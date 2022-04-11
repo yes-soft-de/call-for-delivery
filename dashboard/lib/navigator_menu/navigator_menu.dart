@@ -5,6 +5,7 @@ import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
+import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -113,6 +114,29 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
+            // captain finance
+             customExpansionTile(
+                title: S.current.captainFinance,
+                icon: Icons.account_balance_rounded,
+                children: [
+                  customListTile(
+                      getIt<PaymentsModule>().financeByOrderScreen,
+                      S.current.financeByOrders,
+                      FontAwesomeIcons.box,
+                      true),
+                  customListTile(
+                      getIt<PaymentsModule>().financeByHoursScreen,
+                      S.current.financeByHours,
+                      FontAwesomeIcons.clock,
+                      true),
+                  customListTile(
+                      getIt<PaymentsModule>().financeByCountOrderScreen,
+                      S.current.financeCountOrder,
+                      FontAwesomeIcons.boxes,
+                      true),
+                ],
+                page: widget.currentPage),
+           
             customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
                 FontAwesomeIcons.stickyNote),
             customExpansionTile(
@@ -171,7 +195,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
       padding: EdgeInsets.only(
           left: subtitle ? 16.0 : 8.0,
           right: subtitle ? 16 : 8.0,
-          bottom: selected ? 8 : 0),
+          bottom: selected ? 8 : 0,
+          top: selected ? 8 : 0),
       child: Container(
         decoration: BoxDecoration(
             color: selected ? Theme.of(context).colorScheme.primary : null,

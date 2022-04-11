@@ -50,12 +50,23 @@ class CaptainOffersLoadedState extends States {
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
           child: SizedBox(
-            child: CustomListView.custom(children: [
-              Wrap(
-                  alignment: WrapAlignment.start,
-                  direction: Axis.horizontal,
-                  children: getCategories())
-            ]),
+            child: CustomListView.custom(
+              children: [
+                GridView(
+                    padding: EdgeInsets.all(4),
+                    physics: NeverScrollableScrollPhysics(),
+                    children: getCategories(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.70,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8.0)),
+                SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -75,34 +86,27 @@ class CaptainOffersLoadedState extends States {
 //      }
 
       widgets.add(
-        SizedBox(
-          width: 190,
-          child: CaptainOfferCard(
-            model: element,
-            onEdit: () {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return CaptainOfferForm(
-                      request: element,
-                      onSave: (request) {
-                        screenState.updateCaptainOffer(request);
-                      },
-                    );
-                  });
-            },
-            onEnable: (status) {
-              screenState.enableCaptainOffer(
-                  EnableOfferRequest(id: element.id, status: status), false);
-            },
-          ),
+        CaptainOfferCard(
+          model: element,
+          onEdit: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return CaptainOfferForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateCaptainOffer(request);
+                    },
+                  );
+                });
+          },
+          onEnable: (status) {
+            screenState.enableCaptainOffer(
+                EnableOfferRequest(id: element.id, status: status), false);
+          },
         ),
       );
     }
-
-    widgets.add(SizedBox(
-      height: 50,
-    ));
     return widgets;
   }
 }

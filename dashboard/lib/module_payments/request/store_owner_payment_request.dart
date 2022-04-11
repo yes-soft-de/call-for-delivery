@@ -3,7 +3,7 @@ class CreateStorePaymentsRequest {
   int? storeId;
   int? id;
   String? note;
-  CreateStorePaymentsRequest({this.amount, this.storeId, this.id,this.note});
+  CreateStorePaymentsRequest({this.amount, this.storeId, this.id, this.note});
 
   Map<String, dynamic> toJson() {
     if (id != null) {
