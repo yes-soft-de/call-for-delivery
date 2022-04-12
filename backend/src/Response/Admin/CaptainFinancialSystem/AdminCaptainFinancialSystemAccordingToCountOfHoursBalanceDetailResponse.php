@@ -8,15 +8,15 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     
     public float $countOrdersMaxFromNineteen;
     
-    public float $compensationForEveryOrder;
+    public float|null $compensationForEveryOrder;
 
-    public float $salary;
+    public float|null $salary;
 
-    public float $financialDues;
+    public float|null $financialDues;
 
-    public float $sumPayments;
+    public float|null $sumPayments;
 
-    public float $total;
-    
+    public float|null $total;
+
     public bool $advancePayment;
 }

@@ -29,9 +29,15 @@ class AdminCaptainFinancialSystemDetailService
         if($financialSystemDetail) {
              //sum captain's payments
             $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
-       
+            if($sumPayments['sumPayments'] === null) {
+                $sumPayments = 0;
+            }
+            else {
+                $sumPayments = $sumPayments['sumPayments'];
+            }
+           
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne( $financialSystemDetail, $captainId, $sumPayments['sumPayments']);
+                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne( $financialSystemDetail, $captainId, $sumPayments);
             }
         }
 
