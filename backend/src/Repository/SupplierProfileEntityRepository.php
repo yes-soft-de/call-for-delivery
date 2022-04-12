@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
+use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Entity\ChatRoomEntity;
+use App\Entity\SupplierCategoryEntity;
 use App\Entity\SupplierProfileEntity;
+use App\Entity\UserEntity;
 use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,12 +25,41 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SupplierProfileEntity::class);
     }
 
-    public function getSupplierProfileByUserId(int $userId): SupplierProfileEntity|null
+    public function getSupplierProfileEntityByUserId(int $userId): SupplierProfileEntity|null
     {
         return $this->createQueryBuilder('supplierProfileEntity')
 
             ->andWhere('supplierProfileEntity.user = :userId')
             ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getSupplierProfileByUserId(int $userId): ?array
+    {
+        return $this->createQueryBuilder('supplierProfileEntity')
+            ->select('supplierProfileEntity.id', 'supplierProfileEntity.phone', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.completeAccountStatus', 'supplierProfileEntity.createdAt',
+                'supplierProfileEntity.status')
+            ->addSelect('chatRoomEntity.roomId')
+            ->addSelect('supplierCategoryEntity.name as supplierCategoryName')
+
+            ->andWhere('supplierProfileEntity.user = :userEntity')
+            ->setParameter('userEntity', $userId)
+
+            ->leftJoin(
+                ChatRoomEntity::class,
+                'chatRoomEntity',
+                Join::WITH,
+                'chatRoomEntity.userId = supplierProfileEntity.user'
+            )
+
+            ->leftJoin(
+                SupplierCategoryEntity::class,
+                'supplierCategoryEntity',
+                Join::WITH,
+                'supplierCategoryEntity.id = supplierProfileEntity.supplierCategory'
+            )
 
             ->getQuery()
             ->getOneOrNullResult();

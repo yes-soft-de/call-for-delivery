@@ -205,7 +205,9 @@ class SupplierProfileController extends BaseController
      *                  )
      *              ),
      *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="string", property="supplierCategoryName")
+     *              @OA\Property(type="string", property="supplierCategoryName"),
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="string", property="roomId")
      *          )
      *      )
      * )
