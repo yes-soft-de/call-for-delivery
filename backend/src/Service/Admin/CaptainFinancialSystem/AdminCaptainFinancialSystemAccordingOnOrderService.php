@@ -40,7 +40,7 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
         return $response;
     }
     
-    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
+    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): ?AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
     {
         $result = $this->adminCaptainFinancialSystemAccordingOnOrderManager->updateCaptainFinancialSystemAccordingOnOrder($request);
 

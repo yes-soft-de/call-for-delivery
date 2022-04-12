@@ -37,7 +37,7 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
         return $this->captainFinancialSystemAccordingOnOrderEntityRepository->findAll();
     }
 
-    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): CaptainFinancialSystemAccordingOnOrderEntity
+    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): ?CaptainFinancialSystemAccordingOnOrderEntity
     {
         $captainFinancialSystemAccordingOnOrderEntity = $this->captainFinancialSystemAccordingOnOrderEntityRepository->find($request->getId());
         if(! $captainFinancialSystemAccordingOnOrderEntity){

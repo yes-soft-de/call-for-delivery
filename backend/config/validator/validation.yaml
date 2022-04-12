@@ -397,3 +397,29 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnO
             - NotBlank: ~
         amount:
             - NotBlank: ~
+            
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        countHours:
+            - NotBlank: ~
+        compensationForEveryOrder:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        countOrdersInMonth:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+        monthCompensation:
+            - NotBlank: ~
+        bounceMaxCountOrdersInMonth:
+            - NotBlank: ~
+        bounceMinCountOrdersInMonth:
+            - NotBlank: ~

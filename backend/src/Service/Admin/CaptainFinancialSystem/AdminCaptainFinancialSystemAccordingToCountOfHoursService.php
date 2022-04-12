@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursManager;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateResponse;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfHoursService
 {
@@ -37,5 +38,12 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursService
         }
 
         return $response;
+    }
+    
+    public function updateCaptainFinancialSystemAccordingToCountOfHours(AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest $request): ?AdminCaptainFinancialSystemAccordingToCountOfHoursCreateResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursManager->updateCaptainFinancialSystemAccordingToCountOfHours($request);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, AdminCaptainFinancialSystemAccordingToCountOfHoursCreateResponse::class, $result);
     }
 }
