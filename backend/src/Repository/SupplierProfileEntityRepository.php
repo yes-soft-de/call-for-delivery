@@ -59,4 +59,16 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getCompleteAccountStatusBySupplierId(int $supplierId): ?array
+    {
+        return $this->createQueryBuilder('supplierProfileEntity')
+            ->select('supplierProfileEntity.completeAccountStatus')
+
+            ->andWhere('supplierProfileEntity.user = :user')
+            ->setParameter('user', $supplierId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

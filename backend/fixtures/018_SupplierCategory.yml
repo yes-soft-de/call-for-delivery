@@ -1,0 +1,30 @@
+App\Entity\SupplierCategoryEntity:
+  electronicSupplierCategory:
+    name: موردي تجهيزات الكترونية
+    description: تصنيف خاص بموردي القطع والتجهيزات لمختلف الاجهزة الالكترونية
+    status: true
+
+  restaurantSupplierCategory:
+    name: موردي مستلزمات المطاعم
+    description: تصنيف خاص بموردي كافة المستلزمات والأدوات الخاصة بالمطاعم
+    status: true
+
+  vegetableSupplierCategory:
+    name: موردي خضار وفواكه
+    description: تصنيف خاص بموردي الخضار والفواكه
+    status: true
+
+  vehicleSupplierCategory:
+    name: موردي سيارات
+    description: تصنيف خاص بموردي السيارات بأنواعها المختلفة
+    status: true
+
+  medicalSupplierCategory:
+    name: موردي تجهيزات طبية
+    description: تصنيف خاص بموردي القطع والتجهيزات والمستلزمات الطبية
+    status: true
+
+  clothesSupplierCategory:
+    name: موردي الألبسة الجاهزة
+    description: تصنيف خاص بموردي الألبسة الجاهزة الرجالية والنسائية والأطفال
+    status: true

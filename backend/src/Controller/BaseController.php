@@ -90,6 +90,11 @@ class BaseController extends AbstractController
     const PAYMENT_NOT_EXIST = ["payment not exist!", "9501"];
     // supplier
     const SUPPLIER_PROFILE_NOT_EXIST = ["supplier profile not exist!", "9551"];
+
+    const SUPPLIER_PROFILE_CREATED = ["supplier profile created", "9552"];
+    const SUPPLIER_PROFILE_COMPLETED = ["supplier profile created", "9553"];
+    //payments
+
     //CAPTAIN FINANCIAL SYSTEM
     const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = ["youNotHaveCaptainFinancialSystem", "9602"];

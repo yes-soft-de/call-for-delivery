@@ -5,6 +5,7 @@ namespace App\Controller\Account;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
@@ -39,7 +40,7 @@ class AccountController extends BaseController
     }
 
     /**
-     * store, captain, and supplies: Get complete account status of the user.
+     * store, captain, and supplier: Get complete account status of the user.
      * @Route("profilecompleteaccountstatus", name="getCompleteAccountStatusOfUser", methods={"GET"})
      * @IsGranted("ROLE_USER")
      * @return JsonResponse
@@ -83,7 +84,7 @@ class AccountController extends BaseController
      */
     public function getCompleteAccountStatusByUserId(): JsonResponse
     {
-        if ($this->isGranted('ROLE_OWNER')) {
+        if ($this->isGranted(UserRoleConstant::ROLE_OWNER)) {
             $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::STORE_OWNER_USER_TYPE);
 
             if($response->completeAccountStatus) {
@@ -105,7 +106,7 @@ class AccountController extends BaseController
                 return $this->response($response, self::FETCH);
             }
 
-        } elseif ($this->isGranted('ROLE_CAPTAIN')) {
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_CAPTAIN)) {
             $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::CAPTAIN_USER_TYPE);
 
             if ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
@@ -121,11 +122,28 @@ class AccountController extends BaseController
             } else {
                 return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
             }
+
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::SUPPLIER_USER_TYPE);
+
+            if ($response->completeAccountStatus === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                return $this->response($response, self::SUPPLIER_PROFILE_CREATED);
+
+            } elseif ($response->completeAccountStatus === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+                return $this->response($response, self::SUPPLIER_PROFILE_COMPLETED);
+
+            } elseif ($response->completeAccountStatus === null) {
+                $response->completeAccountStatus = SupplierProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
+                return $this->response($response, self::FETCH);
+
+            } else {
+                return $this->response(UserReturnResultConstant::WRONG_USER_TYPE, self::ERROR_USER_TYPE);
+            }
         }
     }
 
     /**
-     * store, captain, and supplies: Update complete account status of the user.
+     * store, captain, and supplier: Update complete account status of the user.
      * @Route("profilecompleteaccountstatus", name="updateCompleteAccountStatusOfTheUser", methods={"PUT"})
      * @IsGranted("ROLE_USER")
      * @param Request $request
@@ -191,7 +209,7 @@ class AccountController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        if ($this->isGranted('ROLE_OWNER')) {
+        if ($this->isGranted(UserRoleConstant::ROLE_OWNER)) {
             $response = $this->accountService->updateCompleteAccountStatus($request, UserRoleConstant::STORE_OWNER_USER_TYPE);
 
             if($response === StoreProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
@@ -201,10 +219,20 @@ class AccountController extends BaseController
                 return $this->response($response, self::UPDATE);
             }
 
-        } elseif ($this->isGranted('ROLE_CAPTAIN')) {
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_CAPTAIN)) {
             $response = $this->accountService->updateCompleteAccountStatus($request, UserRoleConstant::CAPTAIN_USER_TYPE);
 
             if($response === CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
+                return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
+
+            } else {
+                return $this->response($response, self::UPDATE);
+            }
+
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $response = $this->accountService->updateCompleteAccountStatus($request, UserRoleConstant::SUPPLIER_USER_TYPE);
+
+            if ($response === SupplierProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS) {
                 return $this->response($response, self::WRONG_COMPLETE_ACCOUNT_STATUS);
 
             } else {

@@ -3,6 +3,7 @@
 namespace App\Manager\Supplier;
 
 use App\AutoMapping;
+use App\Constant\Captain\CaptainConstant;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
@@ -14,6 +15,7 @@ use App\Manager\Image\ImageManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Manager\User\UserManager;
 use App\Repository\SupplierProfileEntityRepository;
+use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Supplier\SupplierProfileCreateRequest;
 use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
@@ -128,5 +130,36 @@ class SupplierProfileManager
     public function getSupplierProfileEntityBySupplierId(int $supplierId): ?SupplierProfileEntity
     {
         return $this->supplierProfileEntityRepository->findOneBy(["user"=>$supplierId]);
+    }
+
+    public function getCompleteAccountStatusBySupplierId(int $supplierId): ?array
+    {
+        return $this->supplierProfileEntityRepository->getCompleteAccountStatusBySupplierId($supplierId);
+    }
+
+    public function supplierProfileCompleteAccountStatusUpdate(CompleteAccountStatusUpdateRequest $request): SupplierProfileEntity|string
+    {
+        if (! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
+            return SupplierProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+        }
+
+        $supplierProfile = $this->supplierProfileEntityRepository->getSupplierProfileByUserId($request->getUserId());
+
+        if ($supplierProfile) {
+            $supplierProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateRequest::class, SupplierProfileEntity::class, $request, $supplierProfile);
+
+            $this->entityManager->flush();
+
+            return $supplierProfile;
+        }
+    }
+
+    public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
+    {
+        if ($completeAccountStatus !== SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+            return false;
+        }
+
+        return true;
     }
 }

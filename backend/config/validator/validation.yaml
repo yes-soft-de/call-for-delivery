@@ -378,6 +378,13 @@ App\Request\Announcement\AnnouncementStatusUpdateRequest:
         status:
             - NotNull: ~
 
+App\Request\Admin\Announcement\AnnouncementAdministrationStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        administrationStatus:
+            - NotNull: ~
+
 App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest:
     properties:
         id:
