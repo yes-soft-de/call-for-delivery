@@ -174,7 +174,7 @@ class CaptainManager
 
     public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
     {
-        if ($completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
+        if ($completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED && $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED) {
             return false;
         }
 
@@ -320,5 +320,15 @@ class CaptainManager
     public function getCaptainProfileById(int $id): ?CaptainEntity
     {
         return $this->captainEntityRepository->find($id);
+    }
+
+    public function captainProfileCompleteAccountStatusUpdateCreateRequest(int $userId, string $completeAccountStatus): CaptainEntity|string
+    {
+        $request = new CompleteAccountStatusUpdateRequest();
+       
+        $request->setCompleteAccountStatus($completeAccountStatus);
+        $request->setUserId($userId); 
+
+        return $this->captainProfileCompleteAccountStatusUpdate($request);
     }
 }

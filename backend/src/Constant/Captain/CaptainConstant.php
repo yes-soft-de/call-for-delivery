@@ -25,4 +25,6 @@ final class CaptainConstant
     const COMPLETE_ACCOUNT_IS_EMPTY = "complete account status is empty";
 
     const CAPTAIN_PROFILE_NOT_EXIST = "captainProfileNotExist";
+
+    const COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED = "financialSelected";
 }
