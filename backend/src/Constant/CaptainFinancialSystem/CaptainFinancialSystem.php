@@ -23,7 +23,7 @@ final class CaptainFinancialSystem
     //It is recommended to add this field to the entity
     const KILOMETER_TO_DOUBLE_ORDER = 19;
    
-    const TOTAL_IS_MAIN_YES = "yes";
+    const ADVANCE_PAYMENT_YES = true;
 
-    const TOTAL_IS_MAIN_NO = "no";
+    const  ADVANCE_PAYMENT_NO = false;
 }

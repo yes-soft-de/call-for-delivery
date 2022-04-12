@@ -44,10 +44,10 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
 
         $total = $sumPayments - $financialSystemDetail['financialDues'];
        
-        $financialSystemDetail['totalIsMain'] = CaptainFinancialSystem::TOTAL_IS_MAIN_YES;
+        $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
         
         if($total <= 0 ) {
-            $financialSystemDetail['totalIsMain'] = CaptainFinancialSystem::TOTAL_IS_MAIN_NO;    
+            $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
 
         $financialSystemDetail['total'] = abs($total);
