@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Captain\CaptainConstant;
 
 class CaptainFinancialSystemDetailManager
 {
@@ -40,7 +41,7 @@ class CaptainFinancialSystemDetailManager
         $captainFinancialSystemDetailEntity->setStatus(CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE);
         $this->entityManager->persist($captainFinancialSystemDetailEntity);
         $this->entityManager->flush();
-
+        $this->captainManager->captainProfileCompleteAccountStatusUpdateCreateRequest($request->getCaptain()->getCaptainId(), CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED);
         return $captainFinancialSystemDetailEntity;
     }
 

@@ -115,6 +115,9 @@ class AccountController extends BaseController
             } elseif ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
                 return $this->response($response, self::CAPTAIN_PROFILE_COMPLETED);
 
+            } elseif ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED) {
+                return $this->response($response, self::CAPTAIN_PROFILE_SYSTEM_FINANCIAL_SELECTED);
+
             } elseif ($response->completeAccountStatus === null) {
                 $response->completeAccountStatus = CaptainConstant::COMPLETE_ACCOUNT_IS_EMPTY;
                 return $this->response($response, self::FETCH);
