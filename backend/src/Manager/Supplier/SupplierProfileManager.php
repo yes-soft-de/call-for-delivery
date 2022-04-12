@@ -111,6 +111,10 @@ class SupplierProfileManager
             $supplierProfileEntity = $this->autoMapping->mapToObject(SupplierProfileUpdateRequest::class, SupplierProfileEntity::class,
                 $request, $supplierProfileEntity);
 
+            if ($supplierProfileEntity->getCompleteAccountStatus() === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                $supplierProfileEntity->setCompleteAccountStatus(SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED);
+            }
+
             $this->entityManager->flush();
 
             return $supplierProfileEntity;

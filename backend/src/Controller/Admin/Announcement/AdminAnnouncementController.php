@@ -7,6 +7,7 @@ use App\Constant\Announcement\AnnouncementResultConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Announcement\AnnouncementAdministrationStatusUpdateRequest;
+use App\Request\Admin\Announcement\AnnouncementFilterByAdminRequest;
 use App\Service\Admin\Announcement\AdminAnnouncementService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
@@ -112,5 +113,74 @@ class AdminAnnouncementController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * admin: filter announcements.
+     * @Route("filterannouncement", name="filterAnnouncementsByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Announcement")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filter announcements by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="supplierProfileId"),
+     *          @OA\Property(type="integer", property="supplierCategoryId"),
+     *          @OA\Property(type="string", property="status"),
+     *          @OA\Property(type="string", property="administrationStatus")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the announcement according to the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="number", property="price"),
+     *              @OA\Property(type="number", property="quantity"),
+     *              @OA\Property(type="string", property="details"),
+     *              @OA\Property(type="boolean", property="status"),
+     *              @OA\Property(type="boolean", property="administrationStatus"),
+     *              @OA\Property(type="object", property="createdAt"),
+     *              @OA\Property(type="boolean", property="updatedAt"),
+     *              @OA\Property(type="object", property="supplier",
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="supplierName")
+     *              ),
+     *              @OA\Property(type="object", property="images",
+     *                  @OA\Property(type="string", property="imageURL"),
+     *                  @OA\Property(type="string", property="image"),
+     *                  @OA\Property(type="string", property="baseURL"),
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterAnnouncementsByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AnnouncementFilterByAdminRequest::class, (object)$data);
+
+        $response = $this->adminAnnouncementService->filterAnnouncementsByAdmin($request);
+
+        return $this->response($response, self::FETCH);
     }
 }

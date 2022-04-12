@@ -7,6 +7,7 @@ use App\Constant\Announcement\AnnouncementResultConstant;
 use App\Entity\AnnouncementEntity;
 use App\Repository\AnnouncementEntityRepository;
 use App\Request\Admin\Announcement\AnnouncementAdministrationStatusUpdateRequest;
+use App\Request\Admin\Announcement\AnnouncementFilterByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminAnnouncementManager
@@ -36,5 +37,10 @@ class AdminAnnouncementManager
         $this->entityManager->flush();
 
         return $announcementEntity;
+    }
+
+    public function filterAnnouncementsByAdmin(AnnouncementFilterByAdminRequest $request): array
+    {
+        return $this->announcementEntityRepository->filterAnnouncementsByAdmin($request);
     }
 }

@@ -1,0 +1,48 @@
+App\Entity\ImageEntity:
+  electronicSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 1
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  restaurantSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 2
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  vegetableSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 3
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  vehicleSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 4
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  medicalSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 5
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  clothesSupplierCategoryImage:
+    imagePath: image/original-image/2022-04-11_22-47-37/613ttygjhfl-ac-sx466-6255c2cd2e797.jpg
+    entityType: 4
+    itemId: 6
+    usedAs: 5
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
