@@ -1,6 +1,6 @@
 class EnableSupplierRequest {
   int? id;
-  String? status;
+  bool? status;
 
   EnableSupplierRequest({this.id, this.status});
 

@@ -23,7 +23,6 @@ class _CategoryFormState extends State<CategoryForm> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _decController = TextEditingController();
-
   int? id;
 
   @override

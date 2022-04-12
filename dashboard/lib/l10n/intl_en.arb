@@ -577,7 +577,8 @@
     "inActiveSupplier": "inActive Supplier",
     "suppliers": "Suppliers",
     "suppliersCategories": "Supplier Categories",
-    "categoryImage": "Category image"
+    "categoryImage": "Category image",
+    "supplierUpdatedSuccessfully": "Supplier updated successfully"
 
 
 
