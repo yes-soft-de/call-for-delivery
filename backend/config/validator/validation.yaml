@@ -384,3 +384,16 @@ App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest:
             - NotBlank: ~
         supplierName:
             - NotNull: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        categoryName:
+            - NotBlank: ~
+        countKilometersFrom:
+            - NotBlank: ~
+        countKilometersTo:
+            - NotBlank: ~
+        amount:
+            - NotBlank: ~
