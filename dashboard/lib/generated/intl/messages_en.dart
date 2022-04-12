@@ -151,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
+        "categoryImage": MessageLookupByLibrary.simpleMessage("Category image"),
         "categoryName": MessageLookupByLibrary.simpleMessage("Category name"),
         "categoryUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Category Updated Successfully"),
@@ -362,6 +363,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("Inactive Captains"),
+        "inActiveSupplier":
+            MessageLookupByLibrary.simpleMessage("inActive Supplier"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
@@ -748,6 +751,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "sum": MessageLookupByLibrary.simpleMessage("total"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
+        "suppliers": MessageLookupByLibrary.simpleMessage("Suppliers"),
+        "suppliersCategories":
+            MessageLookupByLibrary.simpleMessage("Supplier Categories"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting this order , please confirm"),
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),

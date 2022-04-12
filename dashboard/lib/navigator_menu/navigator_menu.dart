@@ -8,6 +8,7 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -130,7 +131,29 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
-
+            customExpansionTile(
+                title: S.current.suppliers,
+                icon: Icons.backpack_outlined,
+                children: [
+                  customListTile(
+                      getIt<SupplierCategoriesModule>().categoriesScreen,
+                      S.current.suppliersCategories,
+                      Icons.category,
+                      true),
+//                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
+//                      S.current.subCategories, FontAwesomeIcons.square, true),
+//                  customListTile(
+//                      getIt<CategoriesModule>().packagesScreen,
+//                      S.current.packages,
+//                      FontAwesomeIcons.wolfPackBattalion,
+//                      true),
+//                  customListTile(
+//                      getIt<CaptainsModule>().captainOffersScreen,
+//                      S.current.captainsOffer,
+//                      FontAwesomeIcons.solidListAlt,
+//                      true),
+                ],
+                page: widget.currentPage),
             customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
                 FontAwesomeIcons.stickyNote),
             customExpansionTile(

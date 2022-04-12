@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
+        "categoryImage": MessageLookupByLibrary.simpleMessage("صورة التصنيف"),
         "categoryName": MessageLookupByLibrary.simpleMessage("اسم التصنيف"),
         "categoryUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الفئة بنجاح"),
@@ -358,6 +359,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "identity": MessageLookupByLibrary.simpleMessage("الهوية"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("الكباتن الغير مفعلين"),
+        "inActiveSupplier":
+            MessageLookupByLibrary.simpleMessage("الموردين غير المفعلة"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "هذا المتجر غير مُفعل حتى الآن"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
@@ -744,6 +747,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),
+        "suppliers": MessageLookupByLibrary.simpleMessage("الموردين"),
+        "suppliersCategories":
+            MessageLookupByLibrary.simpleMessage("فئات الموردين"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من قيامك بحذف هذا الطلب"),
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),

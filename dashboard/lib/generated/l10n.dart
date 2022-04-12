@@ -5619,6 +5619,46 @@ class S {
       args: [],
     );
   }
+
+  /// `inActive Supplier`
+  String get inActiveSupplier {
+    return Intl.message(
+      'inActive Supplier',
+      name: 'inActiveSupplier',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suppliers`
+  String get suppliers {
+    return Intl.message(
+      'Suppliers',
+      name: 'suppliers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supplier Categories`
+  String get suppliersCategories {
+    return Intl.message(
+      'Supplier Categories',
+      name: 'suppliersCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category image`
+  String get categoryImage {
+    return Intl.message(
+      'Category image',
+      name: 'categoryImage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -8,6 +8,7 @@ import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/effect/scroll_behavior.dart';
@@ -97,6 +98,7 @@ class MyApp extends StatefulWidget {
   final NoticeModule _noticeModule;
   final CaptainsModule _captainsModule;
   final PaymentsModule _paymentsModule;
+  final SupplierCategoriesModule _supplierCategoriesModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -113,7 +115,9 @@ class MyApp extends StatefulWidget {
       this._branchesModule,
       this._noticeModule,
       this._captainsModule,
-      this._paymentsModule);
+      this._paymentsModule,
+      this._supplierCategoriesModule
+      );
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

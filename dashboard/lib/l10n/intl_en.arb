@@ -572,7 +572,12 @@
     "monthCompensation": "Month compensation",
     "bounceMaxCountOrdersInMonth": "Bounce max count orders in month",
     "bounceMinCountOrdersInMonth": "Bounce min count orders in month",
-    "captainPayments": "Captain Payments"
+    "captainPayments": "Captain Payments",
+
+    "inActiveSupplier": "inActive Supplier",
+    "suppliers": "Suppliers",
+    "suppliersCategories": "Supplier Categories",
+    "categoryImage": "Category image"
 
 
 
