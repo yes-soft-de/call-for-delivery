@@ -18,4 +18,9 @@ class SupplierCategoryManager
     {
         return $this->supplierCategoryEntityRepository->find($supplierCategoryId);
     }
+
+    public function getAllActiveSupplierCategories(): array
+    {
+        return $this->supplierCategoryEntityRepository->getAllActiveSupplierCategories();
+    }
 }

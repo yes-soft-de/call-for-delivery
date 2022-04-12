@@ -31,4 +31,9 @@ class CaptainPaymentService
 
         return $response;
     }
+
+    public function getSumPayments($captainId): array
+    {
+        return $this->captainPaymentManager->getSumPayments($captainId);
+    }
 }

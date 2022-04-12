@@ -216,4 +216,14 @@ class OrderManager
 
         return $orderEntity;
     }
+    
+    public function getCountOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderRepository->getCountOrdersByCaptainId($captainId);
+    }    
+    
+    public function getDetailOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderRepository->getDetailOrdersByCaptainId($captainId);
+    }    
 }

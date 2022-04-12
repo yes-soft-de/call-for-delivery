@@ -396,4 +396,14 @@ class OrderService
      
         return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
     }
+
+    public function getCountOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderManager->getCountOrdersByCaptainId($captainId);
+    }  
+    
+    public function getDetailOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderManager->getDetailOrdersByCaptainId($captainId);
+    }   
 }
