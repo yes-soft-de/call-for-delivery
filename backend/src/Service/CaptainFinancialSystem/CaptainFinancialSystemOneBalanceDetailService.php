@@ -32,9 +32,7 @@ class CaptainFinancialSystemOneBalanceDetailService
            }
         }
 
-        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrders'] + $countOrdersMaxFromNineteen) * 
-        
-        $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
+        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrders'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
     
         $financialSystemDetail['sumPayments'] = $sumPayments;
              
