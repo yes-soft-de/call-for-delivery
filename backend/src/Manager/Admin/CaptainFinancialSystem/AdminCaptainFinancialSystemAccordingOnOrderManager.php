@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
 use App\Repository\CaptainFinancialSystemAccordingOnOrderEntityRepository;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
 
 class AdminCaptainFinancialSystemAccordingOnOrderManager
 {
@@ -34,5 +35,19 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
     public function getAllCaptainFinancialSystemAccordingOnOrder(): ?array
     {
         return $this->captainFinancialSystemAccordingOnOrderEntityRepository->findAll();
+    }
+
+    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): ?CaptainFinancialSystemAccordingOnOrderEntity
+    {
+        $captainFinancialSystemAccordingOnOrderEntity = $this->captainFinancialSystemAccordingOnOrderEntityRepository->find($request->getId());
+        if(! $captainFinancialSystemAccordingOnOrderEntity){
+           return $captainFinancialSystemAccordingOnOrderEntity;
+        }
+        
+        $captainFinancialSystemAccordingOnOrderEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest::class, CaptainFinancialSystemAccordingOnOrderEntity::class, $request,  $captainFinancialSystemAccordingOnOrderEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemAccordingOnOrderEntity;
     }
 }

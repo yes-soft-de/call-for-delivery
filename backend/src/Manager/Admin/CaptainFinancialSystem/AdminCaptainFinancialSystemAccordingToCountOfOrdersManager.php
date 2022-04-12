@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity;
 use App\Repository\CaptainFinancialSystemAccordingToCountOfOrdersEntityRepository;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
 {
@@ -34,5 +35,20 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
     public function getAllCaptainFinancialSystemAccordingToCountOfOrders(): ?array
     {
         return $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->findAll();
+    }
+    
+    public function updateCaptainFinancialSystemAccordingToCountOfOrders(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest $request): ?CaptainFinancialSystemAccordingToCountOfOrdersEntity
+    {
+        $captainFinancialSystemAccordingToCountOfOrdersEntity =  $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->find($request->getId());
+       
+        if(! $captainFinancialSystemAccordingToCountOfOrdersEntity) {
+            return $captainFinancialSystemAccordingToCountOfOrdersEntity;
+        }
+
+        $captainFinancialSystemAccordingToCountOfOrdersEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest::class, CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, $request,  $captainFinancialSystemAccordingToCountOfOrdersEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemAccordingToCountOfOrdersEntity;
     }
 }

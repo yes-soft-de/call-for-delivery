@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersManager;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfOrdersService
 {
@@ -37,5 +38,12 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersService
         }
 
         return $response;
+    }
+    
+    public function updateCaptainFinancialSystemAccordingToCountOfOrders(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest $request): ?AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersManager->updateCaptainFinancialSystemAccordingToCountOfOrders($request);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse::class, $result);
     }
 }

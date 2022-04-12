@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest;
 
 /**
  * Create and fetch Captain's Financial System According To Count Of Hours.
@@ -135,5 +136,67 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
         $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursService->getAllCaptainFinancialSystemAccordingToCountOfHours();
 
         return $this->response($result, self::FETCH);
+    }
+
+     /**
+     * admin:Update Captain's Financial System According To Count Of Hours
+     * @Route("captainfinancialsystemaccordingtocountofhoursbyadmin", name="updateCaptainFinancialSystemAccordingToCountOfHoursByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain's Financial System According To Count Of Hours")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update Captain's Financial System According To Count Of Hours",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="countHours"),
+     *          @OA\Property(type="number", property="compensationForEveryOrder"),
+     *          @OA\Property(type="number", property="salary"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns Captain's Financial System According To Count Of Hours",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="countHours"),
+     *          @OA\Property(type="number", property="compensationForEveryOrder"),
+     *          @OA\Property(type="number", property="salary"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainFinancialSystemAccordingToCountOfHours(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursService->updateCaptainFinancialSystemAccordingToCountOfHours($request);
+
+        return $this->response($result, self::CREATE);
     }
 }

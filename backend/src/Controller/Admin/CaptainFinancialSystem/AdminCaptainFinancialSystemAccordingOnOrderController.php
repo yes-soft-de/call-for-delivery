@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
 
 /**
  * Create and fetch Captain's Financial System According On Order.
@@ -144,5 +145,73 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
         $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->getAllCaptainFinancialSystemAccordingOnOrder();
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: Update Captain's Financial System According On Order
+     * @Route("captainfinancialsystemaccordingonorderbyadmin", name="updateCaptainFinancialSystemAccordingOnOrderByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain's Financial System According On Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update Captain's Financial System According On Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="categoryName"),
+     *          @OA\Property(type="number", property="countKilometersFrom"),
+     *          @OA\Property(type="number", property="countKilometersTo"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="number", property="bounce"),
+     *          @OA\Property(type="number", property="bounceCountOrdersInMonth"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns Captain's Financial System According On Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="categoryName"),
+     *          @OA\Property(type="integer", property="countKilometersFrom"),
+     *          @OA\Property(type="integer", property="countKilometersTo"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="number", property="bounce"),
+     *          @OA\Property(type="number", property="bounceCountOrdersInMonth"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainFinancialSystemAccordingOnOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->updateCaptainFinancialSystemAccordingOnOrder($request);
+
+        return $this->response($result, self::CREATE);
     }
 }

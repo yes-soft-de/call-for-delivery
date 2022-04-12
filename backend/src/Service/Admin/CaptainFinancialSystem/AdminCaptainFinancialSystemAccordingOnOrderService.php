@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderManager;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateResponse;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
 
 class AdminCaptainFinancialSystemAccordingOnOrderService
 {
@@ -37,5 +38,12 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
         }
 
         return $response;
+    }
+    
+    public function updateCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest $request): ?AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderManager->updateCaptainFinancialSystemAccordingOnOrder($request);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $result);
     }
 }

@@ -391,3 +391,42 @@ App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest:
             - NotBlank: ~
         supplierName:
             - NotNull: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        categoryName:
+            - NotBlank: ~
+        countKilometersFrom:
+            - NotBlank: ~
+        countKilometersTo:
+            - NotBlank: ~
+        amount:
+            - NotBlank: ~
+            
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        countHours:
+            - NotBlank: ~
+        compensationForEveryOrder:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        countOrdersInMonth:
+            - NotBlank: ~
+        salary:
+            - NotBlank: ~
+        monthCompensation:
+            - NotBlank: ~
+        bounceMaxCountOrdersInMonth:
+            - NotBlank: ~
+        bounceMinCountOrdersInMonth:
+            - NotBlank: ~
