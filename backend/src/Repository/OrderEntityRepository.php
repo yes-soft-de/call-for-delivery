@@ -421,4 +421,36 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+    
+    public function getCountOrdersByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id) as countOrders')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
+    public function getDetailOrdersByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+        ->select('orderEntity.id, orderEntity.kilometer')
+
+        ->where('orderEntity.state = :state')
+        ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+      
+        ->andWhere('orderEntity.captainId = :captainId')
+        ->setParameter('captainId', $captainId)
+
+        ->getQuery()
+        ->getResult();
+    }
 }

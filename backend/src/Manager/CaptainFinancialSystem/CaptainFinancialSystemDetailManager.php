@@ -43,4 +43,22 @@ class CaptainFinancialSystemDetailManager
 
         return $captainFinancialSystemDetailEntity;
     }
+
+    public function getCaptainFinancialSystemDetailCurrent(int $userId): ?array
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId)->getId();
+      
+        $financialSystemDetail = $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
+        
+        if($financialSystemDetail) {
+            $financialSystemDetail['captainId'] = $captainId;
+        }
+      
+        return $financialSystemDetail;
+    }
+
+    public function getCaptainFinancialSystemDetailForAdmin(int $captainId): ?array
+    {      
+        return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
+    }
 }
