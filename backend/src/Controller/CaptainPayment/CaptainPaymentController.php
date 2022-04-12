@@ -33,7 +33,7 @@ class CaptainPaymentController extends BaseController
     
     /**
      * captain:Get all payments.
-     * @Route("captainpayments", name="getCaptainPayments", methods={"GET"})
+     * @Route("captainpayments", name="getCaptainPayments", methods={"POST"})
      * @IsGranted("ROLE_CAPTAIN")
      * @return JsonResponse
      *
