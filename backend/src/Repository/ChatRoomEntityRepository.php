@@ -8,6 +8,7 @@ use App\Entity\CaptainEntity;
 use App\Entity\ChatRoomEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SupplierProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -67,6 +68,35 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
            ->setParameter('usedAsImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
            ->setParameter('usedAsChat', ChatRoomConstant::ADMIN_CAPTAIN)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getChatRoomsWithSuppliers(): ?array
+    {
+        return $this->createQueryBuilder('chatRoom')
+            ->select('chatRoom.roomId', 'supplierProfileEntity.id as supplierProfileId, supplierProfileEntity.supplierName')
+            ->addSelect('imageEntity.imagePath')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'chatRoom.userId = supplierProfileEntity.user'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = supplierProfileEntity.id and imageEntity.usedAs = :usedAsImage and imageEntity.entityType = :entityType')
+
+            ->andWhere('chatRoom.usedAs = :usedAsChat')
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE)
+            ->setParameter('usedAsImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            ->setParameter('usedAsChat', ChatRoomConstant::ADMIN_SUPPLIER)
 
             ->getQuery()
             ->getResult();

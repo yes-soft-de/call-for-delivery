@@ -8,6 +8,7 @@ use App\Manager\ChatRoom\ChatRoomManager;
 use App\Response\ChatRoom\ChatRoomCaptainResponse;
 use App\Response\ChatRoom\ChatRoomResponse;
 use App\Response\ChatRoom\ChatRoomsStoreResponse;
+use App\Response\ChatRoom\ChatRoomSupplierResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -78,5 +79,22 @@ class ChatRoomService
         $item['baseURL'] = $baseURL;
 
         return $item;
+    }
+
+    public function getChatRoomsWithSuppliers(): array
+    {
+        $response = [];
+
+        $chatRooms = $this->chatRoomManager->getChatRoomsWithSuppliers();
+
+        foreach($chatRooms as $chatRoom) {
+            $chatRoom['roomId'] = $chatRoom['roomId']->toBase32();
+
+            $chatRoom['images'] = $this->uploadFileHelperService->getImageParams($chatRoom['imagePath']);
+
+            $response[] = $this->autoMapping->map("array", ChatRoomSupplierResponse::class, $chatRoom);
+        }
+
+        return $response;
     }
 }
