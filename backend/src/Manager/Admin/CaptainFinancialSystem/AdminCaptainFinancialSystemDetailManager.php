@@ -19,4 +19,9 @@ class AdminCaptainFinancialSystemDetailManager
     {      
         return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
     }
+
+    public function getLatestFinancialCaptainSystemDetails(int $captainId): ?array
+    {      
+        return $this->captainFinancialSystemDetailEntityRepository->getLatestFinancialCaptainSystemDetailsForAdmin($captainId);
+    }
 }

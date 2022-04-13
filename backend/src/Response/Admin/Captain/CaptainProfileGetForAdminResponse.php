@@ -89,4 +89,9 @@ class CaptainProfileGetForAdminResponse
      * @var string|null
      */
     public $roomId;
+
+    /**
+     * @var object|null
+     */
+    public $financialCaptainSystemDetails;
 }

@@ -43,4 +43,9 @@ class AdminCaptainFinancialSystemDetailService
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
+    
+    public function getLatestFinancialCaptainSystemDetails(int $captainId): ?array
+    {
+       return $this->adminCaptainFinancialSystemDetailManager->getLatestFinancialCaptainSystemDetails($captainId);
+    }
 }
