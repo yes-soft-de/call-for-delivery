@@ -31,10 +31,6 @@ class SupplierProfileEntity
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    #[ORM\OneToOne(targetEntity: SupplierCategoryEntity::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
-    private $supplierCategory;
-
     #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: ImageEntity::class)]
     private $images;
 
@@ -46,6 +42,9 @@ class SupplierProfileEntity
 
     #[ORM\Column(type: 'string', length: 20)]
     private $completeAccountStatus = SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED;
+
+    #[ORM\ManyToOne(targetEntity: SupplierCategoryEntity::class, inversedBy: 'supplierProfileEntities')]
+    private $supplierCategory;
 
     public function __construct()
     {
@@ -102,18 +101,6 @@ class SupplierProfileEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getSupplierCategory(): ?SupplierCategoryEntity
-    {
-        return $this->supplierCategory;
-    }
-
-    public function setSupplierCategory(?SupplierCategoryEntity $supplierCategory): self
-    {
-        $this->supplierCategory = $supplierCategory;
 
         return $this;
     }
@@ -198,6 +185,18 @@ class SupplierProfileEntity
     public function setCompleteAccountStatus(string $completeAccountStatus): self
     {
         $this->completeAccountStatus = $completeAccountStatus;
+
+        return $this;
+    }
+
+    public function getSupplierCategory(): ?SupplierCategoryEntity
+    {
+        return $this->supplierCategory;
+    }
+
+    public function setSupplierCategory(?SupplierCategoryEntity $supplierCategory): self
+    {
+        $this->supplierCategory = $supplierCategory;
 
         return $this;
     }
