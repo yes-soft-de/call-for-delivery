@@ -34,7 +34,7 @@ class AdminNotificationToUsersEntityRepository extends ServiceEntityRepository
             ->getResult();
      }
     
-    public function getAllNotificationsFromAdmin($userId, $appType): ?array
+    public function getAllNotificationsFromAdmin(int $userId, string $appType): ?array
      {          
         return $this->createQueryBuilder('adminNotification')
             ->select('adminNotification.id' ,'adminNotification.title', 'adminNotification.msg', 'adminNotification.createdAt', 'adminNotification.updatedAt')
