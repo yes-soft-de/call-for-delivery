@@ -1,0 +1,6 @@
+App\Entity\ChatRoomEntity:
+  supplierChatRoom_{1..5}:
+    userId: <current()>
+    usedAs: 5
+    roomId: '<uuid()>'
+    created_at: <(new \DateTime('Now'))>
