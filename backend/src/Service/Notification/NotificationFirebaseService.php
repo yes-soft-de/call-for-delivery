@@ -161,6 +161,10 @@ class NotificationFirebaseService
                 $user = $this->userService->getUserByStoreProfileId($request->getOtherUserID());
             }
 
+            if ($userType === NotificationTokenConstant::APP_TYPE_SUPPLIER) {
+                $user = $this->userService->getUserBySupplierProfileId($request->getOtherUserID());
+            }
+
             $token = $this->notificationTokensService->getTokenByUserId($user->getId());
        
             $devicesToken[] = $token->getToken();
