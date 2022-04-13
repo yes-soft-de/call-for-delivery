@@ -1,4 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/module_profile/model/store_balance_model.dart';
+import 'package:c4d/module_profile/request/captain_payments_request.dart';
+import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -62,5 +65,16 @@ class ProfileService {
 
   Future<List<Terms>?> getTerms() async {
     return await _manager.getTerms();
+  }
+    Future<DataModel> getCaptainPayments(CaptainPaymentRequest request) async {
+    CaptainPaymentsResponse? actionResponse = await _manager.getStoreBalance(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return CaptainBalanceModel.withData(actionResponse.data ?? []);
   }
 }
