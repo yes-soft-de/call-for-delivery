@@ -3,13 +3,13 @@
 namespace App\Controller\Notification;
 
 use App\AutoMapping;
+use App\Constant\User\UserRoleConstant;
 use App\Service\Notification\NotificationTokensService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
@@ -91,6 +91,10 @@ class NotificationTokensController extends BaseController
         if( $this->isGranted('ROLE_ADMIN') ) {
             $request->setAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
          }
+
+        if ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $request->setAppType(NotificationTokenConstant::APP_TYPE_SUPPLIER);
+        }
  
          $violations = $this->validator->validate($request);
          if (\count($violations) > 0) {
