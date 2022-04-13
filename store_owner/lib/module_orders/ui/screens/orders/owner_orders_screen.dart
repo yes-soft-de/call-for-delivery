@@ -205,7 +205,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                               title: S.current.warnning,
                               message:
                                   SubscriptionsStatusHelper.getStatusMessage(
-                                      status?.status))
+                                      status?.status ?? ''))
                           .show(context);
                     }
                   }
@@ -237,9 +237,18 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       ),
                       subtitle: Text(
                           SubscriptionsStatusHelper.getStatusMessage(
-                            status?.status,
+                            status?.status ?? '',
                           ),
                           style: TextStyle(color: Colors.white)),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.refresh,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          getInitData();
+                        },
+                      ),
                     ),
                   ),
                 ),

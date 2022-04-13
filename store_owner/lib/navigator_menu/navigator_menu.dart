@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -183,6 +184,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           CustomNavTile(
               icon: Icons.settings_rounded,
               onTap: () {
+                 GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
                 Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
               },
               title: S.current.settings),

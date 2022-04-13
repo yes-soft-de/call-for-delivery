@@ -2,7 +2,7 @@ import 'package:c4d/consts/balance_status.dart';
 import 'package:c4d/generated/l10n.dart';
 
 class SubscriptionsStatusHelper {
-  static String getStatusMessage(var status) {
+  static String getStatusMessage(String status) {
     switch (status) {
       case 'active':
         return S.current.active;
