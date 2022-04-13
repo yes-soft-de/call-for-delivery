@@ -1,30 +1,6 @@
 App\Entity\ChatRoomEntity:
-  captainOneChatRoom:
-    userId: 1
-    usedAs: 1
-    roomId: '<uuid()>'
-    created_at: <(new \DateTime('Now'))>
-
-  captainTwoChatRoom:
-    userId: 2
-    usedAs: 1
-    roomId: '<uuid()>'
-    created_at: <(new \DateTime('Now'))>
-
-  captainThreeChatRoom:
-    userId: 3
-    usedAs: 1
-    roomId: '<uuid()>'
-    created_at: <(new \DateTime('Now'))>
-
-  captainFourChatRoom:
-    userId: 4
-    usedAs: 1
-    roomId: '<uuid()>'
-    created_at: <(new \DateTime('Now'))>
-
-  captainFiveChatRoom:
-    userId: 5
+  captainChatRoom_{6..10}:
+    userId: <current()>
     usedAs: 1
     roomId: '<uuid()>'
     created_at: <(new \DateTime('Now'))>
