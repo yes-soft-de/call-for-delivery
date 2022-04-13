@@ -65,4 +65,9 @@ class UserService
     {
         return $this->userManager->getUserByStoreProfileId($storeProfileId);
     }
+
+    public function getUserBySupplierProfileId(int $supplierProfileId): ?UserEntity
+    {
+        return $this->userManager->getUserBySupplierProfileId($supplierProfileId);
+    }
 }

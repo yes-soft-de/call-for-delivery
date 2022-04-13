@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -134,6 +135,23 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
            
             ->setParameter('storeProfileId', $storeProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getUserBySupplierProfileId(int $supplierProfileId): ?UserEntity
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = userEntity.id')
+
+            ->andWhere('supplierProfileEntity.id = :supplierProfileId')
+            ->setParameter('supplierProfileId', $supplierProfileId)
 
             ->getQuery()
             ->getOneOrNullResult();

@@ -121,9 +121,15 @@ class SupplierProfileManager
         }
     }
 
-    public function getSupplierProfileByUserId(int $userId): ?SupplierProfileEntity
+    public function getSupplierProfileByUserId(int $userId): ?array
     {
-        return $this->supplierProfileEntityRepository->getSupplierProfileByUserId($userId);
+        $supplierProfile = $this->supplierProfileEntityRepository->getSupplierProfileByUserId($userId);
+
+        if ($supplierProfile) {
+            $supplierProfile['images'] = $this->imageManager->getImagesByItemIdAndEntityTypeAndImageAim($supplierProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_SUPPLIER_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+        }
+
+        return $supplierProfile;
     }
 
     public function createOrUpdateSupplierProfileImage(array $images, SupplierProfileEntity $supplierProfileEntity): array
@@ -147,7 +153,7 @@ class SupplierProfileManager
             return SupplierProfileConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
         }
 
-        $supplierProfile = $this->supplierProfileEntityRepository->getSupplierProfileByUserId($request->getUserId());
+        $supplierProfile = $this->supplierProfileEntityRepository->getSupplierProfileEntityByUserId($request->getUserId());
 
         if ($supplierProfile) {
             $supplierProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateRequest::class, SupplierProfileEntity::class, $request, $supplierProfile);

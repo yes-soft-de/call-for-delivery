@@ -63,13 +63,13 @@ class SupplierProfileService
         $supplierProfile = $this->supplierProfileManager->getSupplierProfileByUserId($userId);
 
         if ($supplierProfile !== null) {
-            $response = $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetResponse::class, $supplierProfile);;
-
-            $response->images = $this->customizeSupplierProfileImages($response->images->ToArray());
-
-            if ($supplierProfile->getSupplierCategory()) {
-                $response->supplierCategoryName = $supplierProfile->getSupplierCategory()->getName();
+            if ($supplierProfile['roomId']) {
+                $supplierProfile['roomId'] = $supplierProfile['roomId']->toBase32();
             }
+
+            $response = $this->autoMapping->map("array", SupplierProfileGetResponse::class, $supplierProfile);;
+
+            $response->images = $this->customizeSupplierProfileImages($response->images);
         }
 
         return $response;
