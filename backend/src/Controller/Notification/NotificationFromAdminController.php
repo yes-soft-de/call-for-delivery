@@ -110,4 +110,45 @@ class NotificationFromAdminController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * supplier: Get all notifications from admin.
+     * @Route("notificationsfromadminforsupplier", name="getAllNotificationsFromAdminForSupplier", methods={"GET"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Notification FROM ADMIN")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns notifications ",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *                  @OA\Items(
+     *                      @OA\Property(type="integer", property="id"),
+     *                      @OA\Property(type="string", property="title"),
+     *                      @OA\Property(type="string", property="msg"),
+     *                      @OA\Property(type="object", property="createdAt"),
+     *              )
+     *          )
+     *       )
+     *    )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllNotificationsFromAdminForSupplier(): JsonResponse
+    {
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_SUPPLIER);
+
+        return $this->response($result, self::FETCH);
+    }
 }

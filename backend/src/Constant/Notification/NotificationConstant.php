@@ -57,4 +57,6 @@ final class NotificationConstant
     const STORE = "store";
     
     const CAPTAIN = "captain";
+
+    const APP_TYPE_SUPPLIER = "suppliers";
 }

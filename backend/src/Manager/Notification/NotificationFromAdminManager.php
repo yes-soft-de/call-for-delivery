@@ -2,22 +2,18 @@
 
 namespace App\Manager\Notification;
 
-use App\AutoMapping;
 use App\Repository\AdminNotificationToUsersEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class NotificationFromAdminManager
 {
     private AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository)
+    public function __construct(AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository)
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
         $this->adminNotificationToUsersEntityRepository = $adminNotificationToUsersEntityRepository;
     }
 
-    public function getAllNotificationsFromAdmin($userId, $appType): ?array
+    public function getAllNotificationsFromAdmin(int $userId, string $appType): ?array
     {
         return $this->adminNotificationToUsersEntityRepository->getAllNotificationsFromAdmin($userId, $appType);
     }
