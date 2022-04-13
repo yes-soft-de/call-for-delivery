@@ -40,7 +40,7 @@ class AdminCaptainFinancialSystemDetailManager
         if(! $captainFinancialSystemDetailEntity) {
             return $captainFinancialSystemDetailEntity;
         }
-
+   
         $captainFinancialSystemDetailEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemDetailUpdateRequest::class, CaptainFinancialSystemDetailEntity::class, $request,  $captainFinancialSystemDetailEntity);
 
         $this->entityManager->flush();

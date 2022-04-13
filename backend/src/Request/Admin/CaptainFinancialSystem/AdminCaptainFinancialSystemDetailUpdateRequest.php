@@ -8,6 +8,8 @@ class AdminCaptainFinancialSystemDetailUpdateRequest
     private int $id;
 
     private bool $status;
+
+    private int $updatedBy;
     
 
     /**
@@ -26,6 +28,26 @@ class AdminCaptainFinancialSystemDetailUpdateRequest
     public function setId(int $id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of updatedBy
+     */ 
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
+
+    /**
+     * Set the value of updatedBy
+     *
+     * @return  self
+     */ 
+    public function setUpdatedBy(int $updatedBy)
+    {
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }

@@ -142,6 +142,8 @@ class AdminCaptainFinancialSystemDetailController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, AdminCaptainFinancialSystemDetailUpdateRequest::class, (object)$data);
 
+        $request->setUpdatedBy($this->getUserId());
+
         $violations = $this->validator->validate($request);
 
         if (\count($violations) > 0) {
@@ -150,7 +152,7 @@ class AdminCaptainFinancialSystemDetailController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminCaptainFinancialSystemDetailService->UpdateStatusCaptainFinancialSystemDetail($request);
+        $result = $this->adminCaptainFinancialSystemDetailService->updateStatusCaptainFinancialSystemDetail($request);
 
         return $this->response($result, self::UPDATE);
     }
