@@ -221,7 +221,7 @@ class NotificationFirebaseService
 
         if (! $request->getOtherUserId() && $request->getAppType() !== null) {
             // send notification for all captains or all store owners
-            $usersTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+            $usersTokens = $this->notificationTokensService->getUsersTokensByAppType($request->getAppType());
 
             if ($usersTokens) {
                 foreach ($usersTokens as $userToken) {
