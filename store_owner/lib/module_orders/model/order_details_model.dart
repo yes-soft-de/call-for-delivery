@@ -137,7 +137,7 @@ class OrderDetailsModel extends DataModel {
 
   bool _canRemove(DateTime date) {
     bool canRemove = true;
-    if (DateTime.now().difference(date).inMinutes < 30) {
+    if (DateTime.now().difference(date).inMinutes > 30) {
       canRemove = false;
     }
     return canRemove;

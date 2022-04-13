@@ -119,8 +119,8 @@ class BranchCardList extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Theme.of(context).backgroundColor,
-                blurRadius: 12,
-                spreadRadius: 2.5,
+                blurRadius: 5,
+                spreadRadius: 1,
                 offset: Offset(-0.5, 0))
           ]),
       child: Padding(

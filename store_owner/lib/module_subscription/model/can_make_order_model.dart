@@ -31,18 +31,18 @@ class CanMakeOrderModel extends DataModel {
     var alert = false;
     if (totalOrder >= 80.0) {
       _model.percentageOfOrdersConsumed = '80%';
-      totalOrder = 80.0;
+      totalOrder = 80;
       alert = _subscriptionAlert(totalOrder);
-    } else if (totalOrder >= 75.0) {
-      totalOrder = 75.0;
+    } else if (totalOrder >= 75) {
+      totalOrder = 75;
       alert = _subscriptionAlert(totalOrder);
       _model.percentageOfOrdersConsumed = '75%';
     } else if (totalOrder >= 40.0) {
-      totalOrder = 40.0;
+      totalOrder = 40;
       alert = _subscriptionAlert(totalOrder);
       _model.percentageOfOrdersConsumed = '40%';
     } else if (totalOrder >= 35.0) {
-      totalOrder = 35.0;
+      totalOrder = 35;
       alert = _subscriptionAlert(totalOrder);
       _model.percentageOfOrdersConsumed = '35%';
     } else {

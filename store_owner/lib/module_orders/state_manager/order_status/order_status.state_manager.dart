@@ -80,7 +80,20 @@ class OrderStatusStateManager {
   }
 
   void deleteOrder(int orderId, OrderDetailsScreenState screenState) {
+    screenState.canRemoveIt = false;
     _stateSubject.add(LoadingState(screenState));
-    _ordersService.deleteOrder(orderId);
+    _ordersService.deleteOrder(orderId).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.deleteSuccess)
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+      }
+    });
   }
 }

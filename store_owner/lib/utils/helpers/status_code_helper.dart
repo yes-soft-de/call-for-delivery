@@ -53,6 +53,10 @@ class StatusCodeHelper {
         return S.current.youSubscribedWithOffer;
       case '9453':
         return S.current.offerNotFoundRenew;
+      case '9206':
+        return S.current.youCannotDeleteOrder;
+      case '9202':
+        return S.current.youCannotDeleteOrderCaptainAccepted;
       case '-1':
         return S.current.dataDecodeError;
       default:

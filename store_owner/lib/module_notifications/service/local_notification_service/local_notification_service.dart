@@ -49,7 +49,7 @@ class LocalNotificationService {
       channelShowBadge: true,
       enableLights: true,
       enableVibration: true,
-      onlyAlertOnce: false,
+      onlyAlertOnce: true,
       category: 'Local',
     );
 

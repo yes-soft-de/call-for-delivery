@@ -173,7 +173,7 @@
     "activeCars": "السيارات المشغولة",
     "ordersMonth": "طلب / الشهر",
     "paymentHistory": "تاريخ الدفعات",
-    "completedOrders": " طلبات منتهية ",
+    "completedOrders": " طلبات مسلمة ",
     "latestUpdates": "اخر التحديثات",
     "myBalance": "رصيدي",
     "noImage": "لا يوجد صورة ، الرجاء اختيار صورة لإرفاقها مع الطلب",
@@ -531,7 +531,7 @@
     "captainPackageExtra": "عروض الكباتن الإضافية",
     "pending": "قيد الانتظار",
     "ongoing": "جارية",
-    "completed": "منتهية",
+    "completed": "مسلمة",
     "cancelled2": "ملغاة",
     "invalidMapLink": "وجهة غير صالحة",
     "distance": "المسافة",
@@ -563,7 +563,11 @@
     "orderTimeLine": "دورة حياة الطلب",
     "captainLocation": "موقع الكابتن",
     "captainNotInStore": "الكابتن ليس في المتجر",
-    "NotConfirmed": "لم يتم التأكد"
+    "NotConfirmed": "لم يتم التأكد",
+    "youCannotDeleteOrder": "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها",
+    "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
+    "youCannotDeleteOrderCaptainAccepted": "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"
+
 
 
 

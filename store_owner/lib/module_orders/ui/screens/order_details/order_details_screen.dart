@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
@@ -78,8 +79,22 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         floatingActionButton: Visibility(
             visible: canRemoveIt,
             child: FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
               onPressed: () {
-                deleteOrder();
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            deleteOrder();
+                          },
+                          content: S.current.areYouSureAboutDeleteOrder);
+                    });
               },
             )),
       ),
