@@ -177,7 +177,7 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
      * )
      *
      * @OA\Response(
-     *      response=201,
+     *      response=204,
      *      description="Returns Captain's Financial System According On Order",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -212,6 +212,6 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
 
         $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->updateCaptainFinancialSystemAccordingOnOrder($request);
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::UPDATE);
     }
 }

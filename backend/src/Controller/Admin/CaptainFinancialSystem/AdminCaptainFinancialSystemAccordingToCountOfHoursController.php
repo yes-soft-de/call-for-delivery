@@ -165,7 +165,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
      * )
      *
      * @OA\Response(
-     *      response=201,
+     *      response=204,
      *      description="Returns Captain's Financial System According To Count Of Hours",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -197,6 +197,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursController extends BaseC
 
         $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursService->updateCaptainFinancialSystemAccordingToCountOfHours($request);
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::UPDATE);
     }
 }
