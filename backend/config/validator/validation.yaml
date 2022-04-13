@@ -430,3 +430,10 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToC
             - NotBlank: ~
         bounceMinCountOrdersInMonth:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
