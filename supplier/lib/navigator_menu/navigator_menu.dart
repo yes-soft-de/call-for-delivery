@@ -1,16 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_about/about_routes.dart';
+import 'package:c4d/module_about/model/company_info_model.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:c4d/navigator_menu/custom_nav_tile.dart';
+import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/customIcon/mandob_icons_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// current last index is 19
 class NavigatorMenu extends StatefulWidget {
-  final Function(StatefulWidget) onTap;
-  final StatefulWidget currentPage;
   final double? width;
-  NavigatorMenu({this.width, required this.onTap, required this.currentPage});
+  final ProfileModel? profileModel;
+  final CompanyInfoModel? company;
+  NavigatorMenu({this.width = 275, this.profileModel, this.company});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -25,30 +33,44 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
   @override
   Widget build(BuildContext context) {
     var drawerHeader = SizedBox(
-      height: 150,
+      height: 215,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 75,
-              width: 75,
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Icon(
-                  MandobIcons.logo,
-                  size: 40,
-                  color: Colors.white,
-                ),
+            Container(
+              height: 125,
+              width: 125,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).backgroundColor,
+                        spreadRadius: 1.5,
+                        blurRadius: 6,
+                        offset: Offset(-0.2, 0))
+                  ]),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: CustomNetworkImage(
+                    height: double.maxFinite,
+                    width: double.maxFinite,
+                    imageSource: widget.profileModel?.image ?? ImageAsset.LOGO),
               ),
             ),
             SizedBox(
               height: 16,
             ),
             Text(
-              'dash',
+              widget.profileModel?.name ?? S.current.loading,
               style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Divider(
+              indent: 16,
+              endIndent: 16,
+              thickness: 2.5,
+              color: Theme.of(context).backgroundColor,
             ),
           ],
         ),
@@ -62,77 +84,108 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ? BorderRadius.horizontal(left: Radius.circular(25))
                 : BorderRadius.horizontal(right: Radius.circular(25))),
         child: CustomListView.custom(children: [
+          // personal info
           drawerHeader,
+          CustomNavTile(
+              icon: Icons.person,
+              onTap: () {
+                Navigator.of(context).pushNamed(ProfileRoutes.PROFILE_SCREEN);
+              },
+              title: S.current.myProfile),
+          CustomNavTile(
+              icon: Icons.account_balance_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
+              },
+              title: S.current.myBalance),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
+          // my work info
+//          CustomNavTile(
+//              icon: Icons.compare_arrows_rounded,
+//              onTap: () {
+//                Navigator.of(context)
+//                    .pushNamed(OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN);
+//              },
+//              title: S.current.myOrders),
+
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
+          // support
+//          CustomNavTile(
+//              icon: Icons.notifications_active_rounded,
+//              onTap: () {
+//                Navigator.of(context)
+//                    .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
+//              },
+//              title: S.current.notices),
+          Visibility(
+            visible: widget.company != null,
+            child: CustomNavTile(
+                icon: FontAwesomeIcons.whatsappSquare,
+                onTap: () {
+                  var url = 'https://wa.me/${widget.company?.whatsapp}';
+                  canLaunch(url).then((value) {
+                    if (value) {
+                      launch(url);
+                    }
+                  });
+                },
+                title: S.current.whatsapp),
+          ),
+          Visibility(
+            visible: widget.profileModel != null,
+            child: CustomNavTile(
+                icon: Icons.support_agent_rounded,
+                onTap: () {
+                  Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                      arguments: ChatArgument(
+                        userType: 'admin',
+                        support: true,
+                        roomID: widget.profileModel?.roomId ?? '',
+                      ));
+                },
+                title: S.current.directSupport),
+          ),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
+          // settings
+          CustomNavTile(
+              icon: Icons.settings_rounded,
+              onTap: () {
+                Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
+              },
+              title: S.current.settings),
+          CustomNavTile(
+              icon: Icons.privacy_tip_rounded,
+              onTap: () {},
+              title: S.current.privacyPolicy),
+          CustomNavTile(
+              icon: Icons.verified_user_rounded,
+              onTap: () {},
+              title: S.current.termsOfService),
+          Visibility(
+            visible: widget.company != null,
+            child: CustomNavTile(
+                icon: Icons.info,
+                onTap: () {
+                  Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY);
+                },
+                title: S.current.companyInfo),
+          )
         ]));
-  }
-
-  Widget customListTile(StatefulWidget page, String title, IconData icon,
-      [bool subtitle = false]) {
-    bool selected = page.runtimeType.toString() ==
-        widget.currentPage.runtimeType.toString();
-    double? size =
-        icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
-    if (size == 26 && subtitle) {
-      size = 20;
-    }
-
-    return Padding(
-      key: ValueKey(page.runtimeType),
-      padding: EdgeInsets.only(
-          left: subtitle ? 16.0 : 8.0, right: subtitle ? 16 : 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: selected ? Theme.of(context).primaryColor : null,
-            borderRadius: BorderRadius.circular(25)),
-        child: ListTile(
-          minLeadingWidth: subtitle ? 4 : null,
-          visualDensity: VisualDensity(vertical: -2),
-          onTap: () {
-            widget.onTap(page);
-            GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
-            setState(() {});
-          },
-          leading:
-              Icon(icon, color: selected ? Colors.white : null, size: size),
-          title: Text(
-            title,
-            style: TextStyle(
-                color: selected ? Colors.white : null,
-                fontSize: subtitle ? 14 : null),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget customExpansionTile(
-      {required StatefulWidget page,
-      required String title,
-      required IconData icon,
-      required List<Widget> children}) {
-    bool extended = false;
-    for (var i in children) {
-      if (i.key.toString() == '[<${page.runtimeType}>]') {
-        extended = true;
-        break;
-      }
-    }
-    double? size = icon.fontPackage == 'font_awesome_flutter' ? 22 : 26;
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          initiallyExpanded: extended,
-          title: Text(title),
-          leading: Icon(
-            icon,
-            size: size,
-          ),
-          children: children,
-        ),
-      ),
-    );
   }
 }
