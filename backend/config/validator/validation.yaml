@@ -442,3 +442,8 @@ App\Request\Order\AnnouncementOrderCreateRequest:
     properties:
         announcement:
             - NotBlank: ~
+
+App\Request\AnnouncementOrderDetails\AnnouncementOrderPriceOfferValueUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~

@@ -30,6 +30,12 @@ class AnnouncementOrderDetailsEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $priceOfferValue;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $priceOfferStatus;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +85,30 @@ class AnnouncementOrderDetailsEntity
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPriceOfferValue(): ?float
+    {
+        return $this->priceOfferValue;
+    }
+
+    public function setPriceOfferValue(?float $priceOfferValue): self
+    {
+        $this->priceOfferValue = $priceOfferValue;
+
+        return $this;
+    }
+
+    public function getPriceOfferStatus(): ?int
+    {
+        return $this->priceOfferStatus;
+    }
+
+    public function setPriceOfferStatus(?int $priceOfferStatus): self
+    {
+        $this->priceOfferStatus = $priceOfferStatus;
 
         return $this;
     }
