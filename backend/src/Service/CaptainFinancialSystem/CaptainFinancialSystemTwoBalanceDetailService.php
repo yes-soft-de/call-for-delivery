@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Admin\CaptainFinancialSystem;
+namespace App\Service\CaptainFinancialSystem;
 
 use App\AutoMapping;
-use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
+use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
 use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
-class AdminCaptainFinancialSystemTwoBalanceDetailService
+class CaptainFinancialSystemTwoBalanceDetailService
 {
     private OrderService $orderService;
     private AutoMapping $autoMapping;
@@ -18,14 +18,14 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function adminGetBalanceDetailWithSystemTwo(array $financialSystemDetail, int $captainId, float $sumPayments)
+    public function getBalanceDetailWithSystemTwo(array $financialSystemDetail, int $captainId, float $sumPayments)
      {
         //get Count Orders Within Thirty Days
         $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $financialSystemDetail['updatedAt']);
 
         $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments);
               
-        return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
+        return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
     }
 
     public function getCountOrdersByCaptainIdWithinThirtyDays(int $captainId, object $date): ?array
@@ -90,7 +90,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
              
             $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
           
-            $total = $sumPayments - $item['financialDues'];
+            $total = $item['financialDues'] - $sumPayments;
         }
 
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;

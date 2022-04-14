@@ -226,4 +226,9 @@ class OrderManager
     {
         return $this->orderRepository->getDetailOrdersByCaptainId($captainId);
     }    
+    
+    public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderRepository->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }    
 }

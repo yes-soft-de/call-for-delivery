@@ -12,6 +12,8 @@ use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateResponse;
 use App\AutoMapping;
+use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
+
 
 class AdminCaptainFinancialSystemDetailService
 {
@@ -30,11 +32,11 @@ class AdminCaptainFinancialSystemDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string
+    public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->adminCaptainFinancialSystemDetailManager->getCaptainFinancialSystemDetailForAdmin($captainId);
-       
+    
         if($financialSystemDetail) {
              //sum captain's payments
             $sumPayments = $this->captainPaymentService->getSumPayments($captainId);
@@ -44,12 +46,12 @@ class AdminCaptainFinancialSystemDetailService
             else {
                 $sumPayments = $sumPayments['sumPayments'];
             }
-           
+          
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne( $financialSystemDetail, $captainId, $sumPayments);
             }
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-                return $this->adminCaptainFinancialSystemTwoBalanceDetailService->getBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments);
+                return $this->adminCaptainFinancialSystemTwoBalanceDetailService->adminGetBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments);
             }
         }
 
