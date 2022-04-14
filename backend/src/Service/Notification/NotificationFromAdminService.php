@@ -8,8 +8,8 @@ use App\Response\Notification\NotificationFromAdminResponse;
 
 class NotificationFromAdminService
 {
-    private $autoMapping;
-    private $notificationFromAdminManager;
+    private AutoMapping $autoMapping;
+    private NotificationFromAdminManager $notificationFromAdminManager;
 
     public function __construct(AutoMapping $autoMapping, NotificationFromAdminManager $notificationFromAdminManager)
     {
@@ -17,14 +17,13 @@ class NotificationFromAdminService
         $this->notificationFromAdminManager = $notificationFromAdminManager;
     }
 
-    public function getAllNotificationsFromAdmin($userId, $appType): ?array
+    public function getAllNotificationsFromAdmin(int $userId, string $appType): ?array
     {
         $response = [];
 
         $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdmin($userId, $appType);
      
         foreach($notifications as $notification) {
-
             $response[] = $this->autoMapping->map("array", NotificationFromAdminResponse::class, $notification);
         }
 
