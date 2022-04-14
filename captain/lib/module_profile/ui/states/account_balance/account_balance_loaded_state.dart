@@ -90,7 +90,11 @@ class AccountBalanceLoaded extends States {
       ));
     });
     if (widgets.isEmpty) {
-      widgets.add(EmptyStateWidget(empty: S.current.homeDataEmpty, onRefresh: null, height: 100,));
+      widgets.add(EmptyStateWidget(
+        empty: S.current.homeDataEmpty,
+        onRefresh: null,
+        height: 100,
+      ));
     }
     return widgets;
   }

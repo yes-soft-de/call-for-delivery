@@ -18,5 +18,4 @@ class CaptainPaymentRequest {
     data['toDate'] = this.toDate;
     return data;
   }
-
 }

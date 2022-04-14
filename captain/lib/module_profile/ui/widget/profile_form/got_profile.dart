@@ -161,8 +161,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   image: widget.request.identity ?? ''),
                               ImageTile(
                                   title: S.current.mechanichLicence,
-                                  image:
-                                      widget.request.mechanicLicense ?? ''),
+                                  image: widget.request.mechanicLicense ?? ''),
                               ImageTile(
                                   title: S.current.driverLicence,
                                   image: widget.request.drivingLicence ?? ''),

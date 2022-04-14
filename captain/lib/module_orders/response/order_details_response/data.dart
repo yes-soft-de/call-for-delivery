@@ -57,47 +57,46 @@ class Data {
       this.rating,
       this.branchPhone,
       this.ratingComment,
-      this.storeId
-      });
+      this.storeId});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-      id: json['id'] as int?,
-      state: json['state'] as String?,
-      payment: json['payment'] as String?,
-      orderCost: json['orderCost'] as num?,
-      orderType: json['orderType'] as int?,
-      note: json['note'] as String?,
-      deliveryDate: json['deliveryDate'] == null
-          ? null
-          : DeliveryDate.fromJson(json['deliveryDate'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] == null
-          ? null
-          : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
-      storeOrderDetailsId: json['storeOrderDetailsId'] as int?,
-      destination: json['destination'] == null
-          ? null
-          : Destination.fromJson(json['destination'] as Map<String, dynamic>),
-      image: json['images'] == null
-          ? null
-          : Images.fromJson(json['images'] as Map<String, dynamic>),
-      recipientName: json['recipientName'] as String?,
-      recipientPhone: json['recipientPhone'] as String?,
-      detail: json['detail'] as String?,
-      storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
-      branchName: json['branchName'] as String?,
-      roomId: json['roomId'] as String?,
-      captainId: json['captainUserId']?.toString(),
-      phone: json['phone'] as String?,
-      storeOwnerName: json['storeOwnerName'] as String?,
-      rating: json['rating']?.toString(),
-      ratingComment: json['ratingComment'] as String?,
-      branchPhone: json['branchPhone'] as String?,
-      location: json['location'] == null
-          ? null
-          : Destination.fromJson(json['location'] as Map<String, dynamic>),
-      usedAs: json['usedAs'] as String?,
-      storeId: json['storeId'] as int?,
-    
+        id: json['id'] as int?,
+        state: json['state'] as String?,
+        payment: json['payment'] as String?,
+        orderCost: json['orderCost'] as num?,
+        orderType: json['orderType'] as int?,
+        note: json['note'] as String?,
+        deliveryDate: json['deliveryDate'] == null
+            ? null
+            : DeliveryDate.fromJson(
+                json['deliveryDate'] as Map<String, dynamic>),
+        createdAt: json['createdAt'] == null
+            ? null
+            : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
+        storeOrderDetailsId: json['storeOrderDetailsId'] as int?,
+        destination: json['destination'] == null
+            ? null
+            : Destination.fromJson(json['destination'] as Map<String, dynamic>),
+        image: json['images'] == null
+            ? null
+            : Images.fromJson(json['images'] as Map<String, dynamic>),
+        recipientName: json['recipientName'] as String?,
+        recipientPhone: json['recipientPhone'] as String?,
+        detail: json['detail'] as String?,
+        storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
+        branchName: json['branchName'] as String?,
+        roomId: json['roomId'] as String?,
+        captainId: json['captainUserId']?.toString(),
+        phone: json['phone'] as String?,
+        storeOwnerName: json['storeOwnerName'] as String?,
+        rating: json['rating']?.toString(),
+        ratingComment: json['ratingComment'] as String?,
+        branchPhone: json['branchPhone'] as String?,
+        location: json['location'] == null
+            ? null
+            : Destination.fromJson(json['location'] as Map<String, dynamic>),
+        usedAs: json['usedAs'] as String?,
+        storeId: json['storeId'] as int?,
       );
 
   Map<String, dynamic> toJson() => {

@@ -27,8 +27,7 @@ class AcceptOrderModel extends DataModel {
       required this.orderType,
       required this.state,
       this.empty,
-      this.error
-      });
+      this.error});
 
   final List<AcceptOrderModel> _models = [];
 

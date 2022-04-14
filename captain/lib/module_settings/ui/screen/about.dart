@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 
-
 @injectable
 class AboutScreen extends StatelessWidget {
   Future<String> getText(String lang) async {

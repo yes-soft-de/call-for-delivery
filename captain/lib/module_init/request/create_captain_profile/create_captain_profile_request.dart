@@ -42,7 +42,7 @@ class CreateCaptainProfileRequest {
 
   Map<String, dynamic> toJSON() {
     return {
-      'captainName':name,
+      'captainName': name,
       'image': image,
       'drivingLicence': drivingLicence,
       'age': age,

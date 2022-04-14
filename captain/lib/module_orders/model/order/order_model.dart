@@ -29,8 +29,8 @@ class OrderModel extends DataModel {
       required this.location,
       required this.distance,
       required this.paymentMethod});
-   List<OrderModel> _orders = [];
-   OrderModel.withData(OrdersResponse response) {
+  List<OrderModel> _orders = [];
+  OrderModel.withData(OrdersResponse response) {
     var data = response.data;
     data?.forEach((element) {
       // date formatter
@@ -61,7 +61,6 @@ class OrderModel extends DataModel {
           distance: S.current.destinationUnavailable,
           paymentMethod: element.payment ?? 'cash'));
     });
-
   }
 
   List<OrderModel> get data => _orders;

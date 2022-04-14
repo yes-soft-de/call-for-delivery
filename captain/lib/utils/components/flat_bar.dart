@@ -143,8 +143,9 @@ class _FilterBarState extends State<FilterBar> {
                   setState(() {});
                 },
                 left: initialOffset?.dx ?? 0,
-                duration:
-                    firstUse ? const Duration(milliseconds: 1) : animationDuration,
+                duration: firstUse
+                    ? const Duration(milliseconds: 1)
+                    : animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
                   height: itemSize.isEmpty
@@ -189,7 +190,7 @@ class _FilterBarState extends State<FilterBar> {
               key: _keys[element.index],
               onTap: () {
                 if (widget.currentIndex != element.index) {
-                end = false;
+                  end = false;
                 }
                 widget.currentIndex = element.index;
                 firstUse = false;

@@ -40,8 +40,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
           child: ListView(
-            physics:
-                const BouncingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
+            physics: const BouncingScrollPhysics(
+                parent: const AlwaysScrollableScrollPhysics()),
             children: [
               Container(
                 height: 16,
@@ -86,22 +86,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           underline: Container(),
                           icon: const Padding(
                             padding: EdgeInsets.all(4.0),
-                            child:  Icon(
+                            child: Icon(
                               Icons.arrow_drop_down_rounded,
                             ),
                           ),
                           items: const [
-                             DropdownMenuItem(
-                              child:  Text(
+                            DropdownMenuItem(
+                              child: Text(
                                 'العربية',
                                 style: TextStyle(),
                               ),
                               value: 'ar',
                             ),
-                             DropdownMenuItem(
-                              child:  Text(
+                            DropdownMenuItem(
+                              child: Text(
                                 'English',
-                                style:  TextStyle(),
+                                style: TextStyle(),
                               ),
                               value: 'en',
                             ),
@@ -118,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       trailing: const Padding(
                         padding: EdgeInsets.only(right: 10.0, left: 10.0),
-                        child:  Icon(
+                        child: Icon(
                           Icons.logout_rounded,
                         ),
                       ),

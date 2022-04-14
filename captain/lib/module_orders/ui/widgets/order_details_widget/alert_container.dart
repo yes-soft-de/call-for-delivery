@@ -15,13 +15,15 @@ class AlertContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25), color:background ?? Colors.amber),
+          borderRadius: BorderRadius.circular(25),
+          color: background ?? Colors.amber),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           title: Text(title,
-              style:  TextStyle(
-                  color: Colors.white, fontWeight: subtitle != null ? FontWeight.bold : null)),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: subtitle != null ? FontWeight.bold : null)),
           subtitle: Visibility(
             visible: subtitle != null,
             child: Text(

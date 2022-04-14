@@ -51,16 +51,14 @@ class InitAccountStateManager {
         _stateSubject.add(LoadingState(screenState));
         _initAccountService.createCaptainProfile(request).then((value) {
           if (value.hasError) {
-            _stateSubject.add(
-                InitAccountCaptainInitProfile(screenState));
+            _stateSubject.add(InitAccountCaptainInitProfile(screenState));
             screenState.showMessage(value.error, false);
           } else {
             _stateSubject.add(InitAccountStateProfileCreated(screenState));
           }
         });
       } else {
-        _stateSubject
-            .add(InitAccountCaptainInitProfile(screenState));
+        _stateSubject.add(InitAccountCaptainInitProfile(screenState));
         screenState.showMessage(S.current.errorUploadingImages, false);
       }
     });

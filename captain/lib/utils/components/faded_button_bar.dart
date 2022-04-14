@@ -44,10 +44,7 @@ class FadedButtonBar extends StatelessWidget {
               onPressed: onPressed,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  text,
-                  style:Theme.of(context).textTheme.button
-                ),
+                child: Text(text, style: Theme.of(context).textTheme.button),
               ),
             ),
           ),

@@ -8,7 +8,7 @@ class InitField extends StatelessWidget {
   final String hint;
   final bool last;
   final FormFieldValidator<String>? validator;
-  final bool number ; 
+  final bool number;
   final Function()? onChanged;
   const InitField(
       {Key? key,
@@ -19,8 +19,7 @@ class InitField extends StatelessWidget {
       this.last = false,
       this.validator,
       this.onChanged,
-      this.number = false
-      })
+      this.number = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,7 @@ class InitField extends StatelessWidget {
               ),
               Expanded(
                 child: CustomFormField(
-                  numbers:number,
+                  numbers: number,
                   controller: controller,
                   hintText: hint,
                   last: last,

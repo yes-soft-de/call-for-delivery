@@ -117,7 +117,8 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                                         '')
                                 .then((value) {
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                                  InitAccountRoutes.INIT_ACCOUNT_SCREEN, (route) => false);
+                                  InitAccountRoutes.INIT_ACCOUNT_SCREEN,
+                                  (route) => false);
                             });
                           } catch (e) {
                             getIt<AuthService>().logout();

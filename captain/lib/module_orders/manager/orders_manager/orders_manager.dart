@@ -29,13 +29,12 @@ class OrdersManager {
 
   Future<CompanyInfoResponse?> getCompanyInfo() => _repository.getCompanyInfo();
 
-
   Future<OrderActionResponse?> updateOrder(
           UpdateOrderRequest updateOrderRequest) =>
       _repository.updateOrderState(updateOrderRequest);
-    
+
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
-      Future<EnquiryResponse?> createChatRoom(int orderId) =>
+  Future<EnquiryResponse?> createChatRoom(int orderId) =>
       _repository.createChatRoom(orderId);
 }
