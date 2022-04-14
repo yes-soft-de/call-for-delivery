@@ -6,10 +6,12 @@ use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
@@ -440,5 +442,18 @@ class OrderService
     public function getDetailOrdersByCaptainId(int $captainId): array
     {
         return $this->orderManager->getDetailOrdersByCaptainId($captainId);
-    }   
+    }
+
+    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterAnnouncementOrdersBySupplier($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map('array', AnnouncementOrderFilterBySupplierResponse::class, $order);
+        }
+
+        return $response;
+    }
 }

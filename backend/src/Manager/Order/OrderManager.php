@@ -11,6 +11,7 @@ use App\Manager\AnnouncementOrderDetails\AnnouncementOrderDetailsManager;
 use App\Repository\OrderEntityRepository;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -249,5 +250,10 @@ class OrderManager
     public function getDetailOrdersByCaptainId(int $captainId): array
     {
         return $this->orderRepository->getDetailOrdersByCaptainId($captainId);
-    }    
+    }
+
+    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): ?array
+    {
+        return $this->orderRepository->filterAnnouncementOrdersBySupplier($request);
+    }
 }
