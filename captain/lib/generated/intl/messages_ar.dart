@@ -623,6 +623,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "planByHours": MessageLookupByLibrary.simpleMessage("وظيفية ساعية"),
+        "planByOrderCount":
+            MessageLookupByLibrary.simpleMessage("وظيفة حرة على حسب الطلبات"),
+        "planByOrders":
+            MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":

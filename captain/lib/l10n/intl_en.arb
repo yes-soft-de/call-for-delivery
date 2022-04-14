@@ -625,7 +625,11 @@
     "currentRating": "Your current rating by this store is",
     "branchPhone": "Branch Phone",
     "HisComment": "His Comment",
-    "collectedPaymentNote": "Collected payment note"
+    "collectedPaymentNote": "Collected payment note",
+    "planByHours": "Plan by hours",
+    "planByOrders": "Plan by orders",
+    "planByOrderCount": "Plan on order count"
+
 
 
 

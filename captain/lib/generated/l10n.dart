@@ -6279,6 +6279,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Plan by hours`
+  String get planByHours {
+    return Intl.message(
+      'Plan by hours',
+      name: 'planByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan by orders`
+  String get planByOrders {
+    return Intl.message(
+      'Plan by orders',
+      name: 'planByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan on order count`
+  String get planByOrderCount {
+    return Intl.message(
+      'Plan on order count',
+      name: 'planByOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

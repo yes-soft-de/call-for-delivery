@@ -633,6 +633,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "planByHours": MessageLookupByLibrary.simpleMessage("Plan by hours"),
+        "planByOrderCount":
+            MessageLookupByLibrary.simpleMessage("Plan on order count"),
+        "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":

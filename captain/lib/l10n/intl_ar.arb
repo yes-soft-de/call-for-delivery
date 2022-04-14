@@ -626,7 +626,10 @@
     "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
     "currentRating": "المتجر قيمك ب",
     "branchPhone": "رقم هاتف الفرع",
-    "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية"
+    "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية",
+    "planByHours": "وظيفية ساعية",
+    "planByOrders": "وظيفة حسب الطلبات",
+    "planByOrderCount": "وظيفة حرة على حسب الطلبات"
 
 
 
