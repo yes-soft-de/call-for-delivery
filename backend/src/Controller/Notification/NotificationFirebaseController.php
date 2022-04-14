@@ -3,6 +3,7 @@
 namespace App\Controller\Notification;
 
 use App\AutoMapping;
+use App\Constant\User\UserRoleConstant;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\Notification\NotificationFirebaseService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -82,6 +83,10 @@ class NotificationFirebaseController extends BaseController
         if( $this->isGranted('ROLE_OWNER') ) {
             $userType = NotificationTokenConstant::APP_TYPE_CAPTAIN;
          }
+
+        if ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $userType = NotificationTokenConstant::APP_TYPE_SUPPLIER;
+        }
 
         $response = $this->notificationFirebaseService->notificationNewChatByUserID($request, $userType);
 

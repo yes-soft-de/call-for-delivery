@@ -16,6 +16,7 @@ use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailService;
 
 class AdminCaptainService
 {
@@ -23,13 +24,15 @@ class AdminCaptainService
     private AdminCaptainManager $adminCaptainManager;
     private UploadFileHelperService $uploadFileHelperService;
     private ImageService $imageService;
+    private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService, AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainManager = $adminCaptainManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->imageService = $imageService;
+        $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -75,8 +78,10 @@ class AdminCaptainService
             if (empty($captainProfile['location'])) {
                 $captainProfile['location'] = null;
             }
-        }
 
+            $captainProfile['financialCaptainSystemDetails'] = $this->adminCaptainFinancialSystemDetailService->getLatestFinancialCaptainSystemDetails($captainProfileId);
+        }
+        
         return $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
     }
 

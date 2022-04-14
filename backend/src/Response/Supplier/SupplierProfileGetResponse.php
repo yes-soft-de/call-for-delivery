@@ -33,4 +33,8 @@ class SupplierProfileGetResponse
      * @var string|null
      */
     public $supplierCategoryName;
+
+    public bool $status;
+
+    public $roomId;
 }

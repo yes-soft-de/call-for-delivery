@@ -199,4 +199,9 @@ class UserManager
     {
         return $this->userRepository->getUserByStoreProfileId($storeProfileId);
     }
+
+    public function getUserBySupplierProfileId(int $supplierProfileId): ?UserEntity
+    {
+        return $this->userRepository->getUserBySupplierProfileId($supplierProfileId);
+    }
 }

@@ -114,4 +114,49 @@ class ChatRoomController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: get chat rooms with suppliers
+     * @Route("chatroomswithsuppliers", name="getChatRoomsWithSuppliers", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Chat Room")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns chat rooms info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *             @OA\Items(
+     *                  @OA\Property(type="integer", property="supplierProfileId"),
+     *                  @OA\Property(type="integer", property="supplierName"),
+     *                  @OA\Property(type="string", property="roomId"),
+     *                  @OA\Property(type="object", property="images",
+     *                    @OA\Property(type="string", property="imageURL"),
+     *                    @OA\Property(type="string", property="image"),
+     *                    @OA\Property(type="string", property="baseURL")
+     *                 )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getChatRoomsWithSuppliers(): JsonResponse
+    {
+        $result = $this->chatRoomService->getChatRoomsWithSuppliers();
+
+        return $this->response($result, self::FETCH);
+    }
 }

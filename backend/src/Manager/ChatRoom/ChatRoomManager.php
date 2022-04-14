@@ -66,4 +66,9 @@ class ChatRoomManager
     {
         return $this->chatRoomRepository->getChatRoomsWithCaptains();
     }
+
+    public function getChatRoomsWithSuppliers(): ?array
+    {
+        return $this->chatRoomRepository->getChatRoomsWithSuppliers();
+    }
 }
