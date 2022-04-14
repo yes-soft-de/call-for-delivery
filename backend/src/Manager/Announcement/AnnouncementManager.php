@@ -44,7 +44,6 @@ class AnnouncementManager
         $this->entityManager->flush();
 
         if (! empty($request->getImagesArray())) {
-//            $announcementEntity->setImages($this->createAnnouncementImages($request->getImages(), $announcementEntity));
             $this->createAnnouncementImages($request->getImagesArray(), $announcementEntity);
         }
 
@@ -93,5 +92,10 @@ class AnnouncementManager
         $this->entityManager->flush();
 
         return $announcementEntity;
+    }
+
+    public function getAnnouncementEntityById(int $announcementId): ?AnnouncementEntity
+    {
+        return $this->announcementEntityRepository->find($announcementId);
     }
 }

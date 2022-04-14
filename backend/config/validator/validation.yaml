@@ -437,3 +437,8 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdate
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Order\AnnouncementOrderCreateRequest:
+    properties:
+        announcement:
+            - NotBlank: ~
