@@ -1,3 +1,4 @@
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_users/repository/users_repository.dart';
 import 'package:c4d/module_users/response/action_response.dart';
@@ -16,6 +17,7 @@ class UsersManager {
 
   Future<UsersResponse?> getUsers(FilterUserRequest request) => _repository.getUsers(request);
   Future<ActionResponse?> updatePassword(UpdatePassRequest request) => _repository.updatePassword(request);
+  Future<ActionResponse?> sendNotification(SendNotificationRequest request) => _repository.sendNotification(request);
 
 
 }

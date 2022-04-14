@@ -439,7 +439,11 @@
     "changeOrderState": "Change order state",
     "orderUpdatedSuccessfully": "Order updated successfully",
     "restData": "Rest data",
-    "enterYourPassword": "Enter your password"
+    "enterYourPassword": "Enter your password",
+    "notificationsSentSuccessfully": "Notifications Sent Successfully",
+    "notificationMessage": "message",
+    "notificationTitle": "title",
+    "sendNotification": "Send notification"
 
 
 

@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_users/model/users_model.dart';
 import 'package:c4d/module_users/request/filter_user_request.dart';
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_users/service/users_service.dart';
 import 'package:c4d/module_users/ui/screen/users_screen.dart';
@@ -53,6 +54,23 @@ class UserStateManager {
         getUsers(screenState, screenState.request);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.passwordUpdatedSuccess)
+          ..show(screenState.context);
+      }
+    });
+  }
+  void sendNotification(UsersScreenState screenState , SendNotificationRequest request){
+    _stateSubject.add(LoadingState(screenState));
+    _service.sendNotification(request).then((value) {
+      if(value.hasError){
+        getUsers(screenState, screenState.request);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '')
+          ..show(screenState.context);
+      }
+      else{
+        getUsers(screenState, screenState.request);
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning, message: S.current.notificationsSentSuccessfully)
           ..show(screenState.context);
       }
     });

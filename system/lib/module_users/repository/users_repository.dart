@@ -1,4 +1,5 @@
 import 'package:c4d/consts/urls.dart';
+import 'package:c4d/module_users/request/send_notification_request.dart';
 import 'package:c4d/module_users/request/update_pass_request.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
@@ -31,6 +32,13 @@ class UsersRepository {
   Future<ActionResponse?> updatePassword(UpdatePassRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(Urls.UPDATE_USER_PASSWORD,request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+  Future<ActionResponse?> sendNotification(SendNotificationRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(Urls.SEND_NOTIFICATION,request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
