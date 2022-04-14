@@ -4229,6 +4229,336 @@ class S {
       args: [],
     );
   }
+
+  /// `Account activated`
+  String get accountActivated {
+    return Intl.message(
+      'Account activated',
+      name: 'accountActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account inActivated`
+  String get accountInActivated {
+    return Intl.message(
+      'Account inActivated',
+      name: 'accountInActivated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid input`
+  String get InvalidInput {
+    return Intl.message(
+      'Invalid input',
+      name: 'InvalidInput',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code`
+  String get countryCode {
+    return Intl.message(
+      'Code',
+      name: 'countryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update profile`
+  String get updateProfile {
+    return Intl.message(
+      'Update profile',
+      name: 'updateProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile updated successfully`
+  String get profileUpdatedSuccessfully {
+    return Intl.message(
+      'Profile updated successfully',
+      name: 'profileUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty field`
+  String get emptyField {
+    return Intl.message(
+      'Empty field',
+      name: 'emptyField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter phone number`
+  String get pleaseEnterValidPhoneNumber {
+    return Intl.message(
+      'Please enter phone number',
+      name: 'pleaseEnterValidPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid character`
+  String get pleaseEnterValidCountryCode {
+    return Intl.message(
+      'invalid character',
+      name: 'pleaseEnterValidCountryCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPasswordAgain {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write Password Again`
+  String get writePasswordAgain {
+    return Intl.message(
+      'Write Password Again',
+      name: 'writePasswordAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `whatsapp`
+  String get whatsapp {
+    return Intl.message(
+      'whatsapp',
+      name: 'whatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fax`
+  String get fax {
+    return Intl.message(
+      'fax',
+      name: 'fax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company info`
+  String get companyInfo {
+    return Intl.message(
+      'Company info',
+      name: 'companyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Launch our app`
+  String get launch {
+    return Intl.message(
+      'Launch our app',
+      name: 'launch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have somthing to deliver far from you dont wory just open our app`
+  String get lanchDescribtion {
+    return Intl.message(
+      'If you have somthing to deliver far from you dont wory just open our app',
+      name: 'lanchDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to book a car to deliver your package to your destenation`
+  String get bookACarDescribtion {
+    return Intl.message(
+      'You need to book a car to deliver your package to your destenation',
+      name: 'bookACarDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We will deliver your package for you in the fastest way and the best`
+  String get weDeliverDescribtion {
+    return Intl.message(
+      'We will deliver your package for you in the fastest way and the best',
+      name: 'weDeliverDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have the ability to deliver packages for us you are welcome`
+  String get lanchDescribtionCaptain {
+    return Intl.message(
+      'If you have the ability to deliver packages for us you are welcome',
+      name: 'lanchDescribtionCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can check the app for packages near you to deliver`
+  String get checkOrdersDescribtion {
+    return Intl.message(
+      'You can check the app for packages near you to deliver',
+      name: 'checkOrdersDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can accept your mission to deliver package`
+  String get acceptOrderDescribtion {
+    return Intl.message(
+      'You can accept your mission to deliver package',
+      name: 'acceptOrderDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After accepting your mission you will deliver package to the right destination`
+  String get deliverDescribtion {
+    return Intl.message(
+      'After accepting your mission you will deliver package to the right destination',
+      name: 'deliverDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After you doing your job your effort will be rewarded by earning money`
+  String get earnCashDescribtion {
+    return Intl.message(
+      'After you doing your job your effort will be rewarded by earning money',
+      name: 'earnCashDescribtion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending order`
+  String get pendingOrders {
+    return Intl.message(
+      'Pending order',
+      name: 'pendingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From date`
+  String get firstDate {
+    return Intl.message(
+      'From date',
+      name: 'firstDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To date`
+  String get endDate {
+    return Intl.message(
+      'To date',
+      name: 'endDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing Order`
+  String get onGoingOrder {
+    return Intl.message(
+      'Ongoing Order',
+      name: 'onGoingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get details {
+    return Intl.message(
+      'Details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing`
+  String get ongoing {
+    return Intl.message(
+      'Ongoing',
+      name: 'ongoing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message(
+      'Completed',
+      name: 'completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get cancelled2 {
+    return Intl.message(
+      'Cancelled',
+      name: 'cancelled2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Time Line`
+  String get orderTimeLine {
+    return Intl.message(
+      'Order Time Line',
+      name: 'orderTimeLine',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
