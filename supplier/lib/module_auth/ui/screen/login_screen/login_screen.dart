@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -33,12 +34,13 @@ class LoginScreenState extends State<LoginScreen> {
     if (mounted) setState(() {});
   }
 
-  int? returnToMainScreen;
-  bool? returnToPreviousScreen;
+  late bool canPop;
   @override
   void initState() {
+    canPop = Navigator.of(context).canPop();
     loadingSnapshot = AsyncSnapshot.nothing();
     _currentStates = LoginStateInit(this);
+
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       if (mounted) {
         setState(() {
@@ -59,46 +61,28 @@ class LoginScreenState extends State<LoginScreen> {
   dynamic args;
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null) {
-      if (args is bool) returnToPreviousScreen = args;
-      if (args is int) returnToMainScreen = args;
-    }
-    return WillPopScope(
-      onWillPop: () async {
-        // await Navigator.of(context)
-        //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-        return returnToMainScreen == null;
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
       },
-      child: GestureDetector(
-        onTap: () {
-          var focus = FocusScope.of(context);
-          if (focus.canRequestFocus) {
-            focus.unfocus();
-          }
-        },
-        child: Scaffold(
-          appBar: CustomMandoobAppBar.appBar(context,
-              title: S.of(context).login,
-              onTap: returnToMainScreen != null
-                  ? () {
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //     MainRoutes.MAIN_SCREEN, (route) => false);
-                    }
-                  : null),
-          body: FixedContainer(
-            child: loadingSnapshot.connectionState != ConnectionState.waiting
-                ? _currentStates.getUI(context)
-                : Stack(
-                    children: [
-                      _currentStates.getUI(context),
-                      Container(
-                        width: double.maxFinite,
-                        color: Colors.transparent.withOpacity(0.0),
-                      ),
-                    ],
-                  ),
-          ),
+      child: Scaffold(
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.of(context).login, canGoBack: canPop),
+        body: FixedContainer(
+          child: loadingSnapshot.connectionState != ConnectionState.waiting
+              ? _currentStates.getUI(context)
+              : Stack(
+                  children: [
+                    _currentStates.getUI(context),
+                    Container(
+                      width: double.maxFinite,
+                      color: Colors.transparent.withOpacity(0.0),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
@@ -115,22 +99,9 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void moveToNext() {
-    if (returnToMainScreen != null) {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,
-      //         arguments: returnToMainScreen)
-      //     .then((value) {
-      //   if (returnToMainScreen == 0) {
-      //     showDialog(
-      //         context: context, builder: (context) => getIt<FavouritScreen>());
-      //   }
-      // });
-    } else if (returnToPreviousScreen != null) {
-      Navigator.of(context).pop();
-    } else {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-    }
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        AuthPrefsHelper().getAccountStatusPhase(), (route) => false,
+        arguments: true);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.loginSuccess)
         .show(context);

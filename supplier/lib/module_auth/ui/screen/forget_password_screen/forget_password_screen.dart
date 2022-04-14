@@ -32,9 +32,12 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
     if (mounted) setState(() {});
   }
 
+  late bool canPop;
   @override
   void initState() {
     super.initState();
+    canPop = Navigator.of(context).canPop();
+
     loadingSnapshot = const AsyncSnapshot.nothing();
     _currentStates = ForgotStatePhoneCodeSent(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -66,8 +69,8 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomMandoobAppBar.appBar(context,
-            title: S.of(context).forgotPass, canGoBack: true),
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.of(context).forgotPass, canGoBack: canPop),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
               ? _currentStates.getUI(context)

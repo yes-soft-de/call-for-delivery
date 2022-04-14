@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -52,8 +54,8 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
     }
-    RegisterResponse? response = await _authManager.userTypeCheck(
-        'ROLE_CLIENT', loginResult.token ?? '');
+    RegisterResponse? response =
+        await _authManager.userTypeCheck('ROLE_SUPPLIER', loginResult.token ?? '');
     if (response?.statusCode != '201') {
       await logout();
       _authSubject.addError(
@@ -61,20 +63,20 @@ class AuthService {
       throw AuthorizationException(
           StatusCodeHelper.getStatusCodeMessages(response?.statusCode ?? '0'));
     }
-    RegisterResponse? responseVerify = await _authManager
-        .checkUserIfVerified(VerifyCodeRequest(userID: username));
+    // RegisterResponse? responseVerify = await _authManager
+    //     .checkUserIfVerified(VerifyCodeRequest(userID: username));
 
-    if (responseVerify?.statusCode != '200') {
-      _prefsHelper.setUsername(username);
-      _prefsHelper.setPassword(password);
-      _authSubject.add(AuthStatus.CODE_SENT);
-      throw AuthorizationException(
-          StatusCodeHelper.getStatusCodeMessages(response?.statusCode ?? '0'));
-    }
+    // if (responseVerify?.statusCode != '200') {
+    //   _prefsHelper.setUsername(username);
+    //   _prefsHelper.setPassword(password);
+    //   _authSubject.add(AuthStatus.CODE_SENT);
+    //   throw AuthorizationException(
+    //       StatusCodeHelper.getStatusCodeMessages(responseVerify?.statusCode ?? '0'));
+    // }
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
-    await updateCategoryFavorite();
+    await accountStatus();
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 
@@ -221,5 +223,23 @@ class AuthService {
     } else {
       loginApi(username, request.newPassword);
     }
+  }
+
+  Future<void> accountStatus() async {
+    var response = await _authManager.accountStatus();
+    if (response?.statusCode != '200') {
+      switch (response?.statusCode) {
+        // account not filled
+        case '9552':
+          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
+          break;
+        case '9553':
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+      }
+      return;
+    }
+    _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+    return;
   }
 }

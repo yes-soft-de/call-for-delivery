@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
@@ -27,13 +27,14 @@ class RegisterScreenState extends State<RegisterScreen> {
   late RegisterState _currentState;
   late AsyncSnapshot loadingSnapshot;
   late StreamSubscription _stateSubscription;
-  int? returnToMainScreen;
-  bool? returnToPreviousScreen;
   late bool flags = true;
   bool activeResend = false;
+  late bool canPop;
+
   @override
   void initState() {
     super.initState();
+    canPop = Navigator.of(context).canPop();
     loadingSnapshot = AsyncSnapshot.nothing();
     _currentState = RegisterStateInit(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -58,47 +59,35 @@ class RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
-      if (args is bool) returnToPreviousScreen = args;
-      if (args is int) returnToMainScreen = args;
       if (args is Map) {
         _currentState = RegisterStatePhoneCodeSent(this);
       }
     }
-    return WillPopScope(
-      onWillPop: () async {
-        // await Navigator.of(context)
-        //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-        return returnToMainScreen == null;
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
       },
-      child: GestureDetector(
-        onTap: () {
-          var focus = FocusScope.of(context);
-          if (focus.canRequestFocus) {
-            focus.unfocus();
-          }
-        },
-        child: Scaffold(
-          appBar: CustomMandoobAppBar.appBar(context,
-              title: S.of(context).register,
-              onTap: returnToMainScreen != null
-                  ? () {
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //     MainRoutes.MAIN_SCREEN, (route) => false);
-                    }
-                  : null),
-          body: FixedContainer(
-            child: loadingSnapshot.connectionState != ConnectionState.waiting
-                ? _currentState.getUI(context)
-                : Stack(
-                    children: [
-                      _currentState.getUI(context),
-                      Container(
-                        width: double.maxFinite,
-                        color: Colors.transparent.withOpacity(0.0),
-                      ),
-                    ],
-                  ),
-          ),
+      child: Scaffold(
+        appBar: CustomC4dAppBar.appBar(
+          context,
+          title: S.of(context).register,
+          canGoBack: canPop,
+        ),
+        body: FixedContainer(
+          child: loadingSnapshot.connectionState != ConnectionState.waiting
+              ? _currentState.getUI(context)
+              : Stack(
+                  children: [
+                    _currentState.getUI(context),
+                    Container(
+                      width: double.maxFinite,
+                      color: Colors.transparent.withOpacity(0.0),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
@@ -146,24 +135,10 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void moveToNext() {
-    if (returnToMainScreen != null) {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false,
-      //         arguments: returnToMainScreen)
-      //     .then((value) {
-      //   if (returnToMainScreen == 0) {
-      //     showDialog(
-      //         context: context, builder: (context) => getIt<FavouritScreen>());
-      //   }
-      // });
-    } else if (returnToPreviousScreen != null) {
-      Navigator.of(context).pop();
-    } else {
-      // Navigator.of(context)
-      //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
-    }
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(ProfileRoutes.INIT_ACCOUNT, (route) => false);
     CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.loginSuccess)
+            title: S.current.warnning, message: S.current.registerSuccess)
         .show(context);
   }
 
