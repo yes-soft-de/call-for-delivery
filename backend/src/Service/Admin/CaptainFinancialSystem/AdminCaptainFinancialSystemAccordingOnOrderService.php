@@ -46,4 +46,9 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
 
         return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $result);
     }
+    
+    public function getCaptainFinancialSystemAccordingOnOrder(): array
+    {
+       return $this->adminCaptainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
+    } 
 }

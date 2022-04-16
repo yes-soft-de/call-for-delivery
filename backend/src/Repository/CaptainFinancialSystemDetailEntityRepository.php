@@ -82,14 +82,6 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
         
                 return $query->getQuery()->getOneOrNullResult();     
             }
-        
-            if ($item['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
-                $query->addSelect('systemThree.categoryName', 'systemThree.countKilometersFrom', 'systemThree.countKilometersTo', 'systemThree.amount', 'systemThree.bounce', 'systemThree.bounceCountOrdersInMonth');
-                
-                $query->leftJoin(CaptainFinancialSystemAccordingOnOrderEntity::class, 'systemThree', Join::WITH, 'systemThree.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
-        
-                return $query->getQuery()->getOneOrNullResult();
-            }
         }
 
         return $query->getQuery()->getOneOrNullResult();
