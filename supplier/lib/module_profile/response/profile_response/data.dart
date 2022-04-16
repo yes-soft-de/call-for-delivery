@@ -1,4 +1,3 @@
-import 'package:c4d/module_profile/response/profile_response/date/date.dart';
 import 'images.dart';
 
 class Data {
