@@ -25,5 +25,15 @@ final class CaptainFinancialSystem
    
     const ADVANCE_PAYMENT_YES = true;
 
-    const  ADVANCE_PAYMENT_NO = false;
+    const ADVANCE_PAYMENT_NO = false;
+
+    const TARGET_SUCCESS = "success";
+
+    const TARGET_SUCCESS_AND_INCREASE = "successTheTargetAndIncrease";
+
+    const TARGET_NOT_ARRIVED = "notArrivedYet";
+
+    const TARGET_FAILED = "failed";
+
+    const TARGET_FAILED_SALARY = 12.86;
 }
