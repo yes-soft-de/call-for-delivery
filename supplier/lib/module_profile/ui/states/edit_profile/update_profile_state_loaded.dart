@@ -16,7 +16,6 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class UpdateProfileStateLoaded extends States {
@@ -37,7 +36,7 @@ class UpdateProfileStateLoaded extends States {
     _nameController.text = profileModel.name;
     networkImage = profileModel.image;
     imagePath = profileModel.imageUrl;
-//    categoryId = profileModel.c
+    categoryId = profileModel.categoryId;
   }
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -259,7 +258,7 @@ class UpdateProfileStateLoaded extends States {
       name: _nameController.text,
       phone: _countryController.text + _phoneController.text,
       image: imagePath,
-    supplierCategoryID:-1
+    supplierCategoryID:categoryId
     );
     screenState.saveProfile(profileRequest);
   }
@@ -281,7 +280,7 @@ class UpdateProfileStateLoaded extends States {
         name: _nameController.text,
         phone: _countryController.text + _phoneController.text,
         image: image,
-        supplierCategoryID:-1
+        supplierCategoryID:categoryId
       );
       screenState.saveProfile(profileRequest);
     });

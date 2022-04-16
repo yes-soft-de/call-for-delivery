@@ -11,12 +11,13 @@ class ProfileModel extends DataModel {
    String? categoryName;
 
   String? roomId;
+  int? categoryId;
   ProfileModel(
       {required this.image,
       required this.name,
     required  this.status,
       this.imageUrl,
-      required this.roomId,required this.phone,this.categoryName});
+      required this.roomId,required this.phone,this.categoryName , this.categoryId});
   late ProfileModel _profile;
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;
@@ -27,7 +28,7 @@ class ProfileModel extends DataModel {
         imageUrl: data?.images?[0].imageUrl,
         name: data?.name ?? S.current.unknown,
         status: data?.status ?? false,
-        roomId: data?.roomId);
+        roomId: data?.roomId , categoryId: data?.supplierCategoryId ?? -1);
   }
   ProfileModel get data => _profile;
 }

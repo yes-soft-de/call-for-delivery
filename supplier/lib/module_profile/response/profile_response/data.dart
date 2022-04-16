@@ -2,6 +2,7 @@ import 'images.dart';
 
 class Data {
   int? id;
+  int? supplierCategoryId;
   String? name;
  List<Images> ? images;
   String? phone;
@@ -9,7 +10,8 @@ class Data {
   String? roomId;
   String? supplierCategoryName;
   Data(
-      {this.id,
+      {this.supplierCategoryId,
+        this.id,
       this.images,
       this.phone,
       this.status,
@@ -27,6 +29,7 @@ class Data {
         status: json['status'] as bool?,
         supplierCategoryName: json['supplierCategoryName'] as String,
         roomId: json['roomId'] as String?,
+        supplierCategoryId: json['supplierCategoryId'] as int?,
       );
 
 }
