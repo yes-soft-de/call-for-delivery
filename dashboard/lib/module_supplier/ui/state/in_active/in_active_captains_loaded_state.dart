@@ -49,7 +49,7 @@ class InActiveSupplierLoadedState extends States {
   List<Widget> getCaptains(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in model ?? <InActiveModel>[]) {
-      if (!element.captainName.contains(search ?? '') && search != null) {
+      if (!element.supplierName.contains(search ?? '') && search != null) {
         continue;
       }
 
@@ -60,7 +60,7 @@ class InActiveSupplierLoadedState extends States {
           borderRadius: BorderRadius.circular(50),
           onTap: () {
             Navigator.of(context).pushNamed(SupplierRoutes.SUPPLIER_PROFILE,
-                arguments: element.captainID);
+                arguments: element.supplierID);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class InActiveSupplierLoadedState extends States {
                 ),
                 Expanded(
                   child: Text(
-                    element.captainName,
+                    element.supplierName,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),

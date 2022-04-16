@@ -747,6 +747,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),
+        "supplierUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث المورد بنجاح"),
         "suppliers": MessageLookupByLibrary.simpleMessage("الموردين"),
         "suppliersCategories":
             MessageLookupByLibrary.simpleMessage("فئات الموردين"),

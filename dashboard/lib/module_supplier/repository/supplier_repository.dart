@@ -41,7 +41,7 @@ class SupplierRepository {
   Future<SupplierProfileResponse?> getSupplierProfile(int id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-       '' + '$id',
+      Urls.GET_SUPPLIER_PROFILE+ '$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return SupplierProfileResponse.fromJson(response);
@@ -50,7 +50,7 @@ class SupplierRepository {
   Future<ActionResponse?> enableSupplier(EnableSupplierRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        Urls.ACTIVATE_CAPTAIN, request.toJson(),
+        Urls.ACTIVE_SUPPLIER, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

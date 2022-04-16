@@ -8,6 +8,7 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -140,13 +141,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.suppliersCategories,
                       Icons.category,
                       true),
-//                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
-//                      S.current.subCategories, FontAwesomeIcons.square, true),
-//                  customListTile(
-//                      getIt<CategoriesModule>().packagesScreen,
-//                      S.current.packages,
-//                      FontAwesomeIcons.wolfPackBattalion,
-//                      true),
+                  customListTile(getIt<SupplierModule>().inActiveSupplierScreen,
+                      S.current.inActiveSupplier, FontAwesomeIcons.square, true),
+                  customListTile(
+                      getIt<SupplierModule>().suppliersScreen,
+                      S.current.suppliers,
+                      FontAwesomeIcons.wolfPackBattalion,
+                      true),
 //                  customListTile(
 //                      getIt<CaptainsModule>().captainOffersScreen,
 //                      S.current.captainsOffer,

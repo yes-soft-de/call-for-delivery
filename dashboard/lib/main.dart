@@ -41,6 +41,8 @@ import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:lehttp_overrides/lehttp_overrides.dart';
 
+import 'module_supplier/supplier_module.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   timeago.setLocaleMessages('ar', timeago.ArMessages());
@@ -99,6 +101,7 @@ class MyApp extends StatefulWidget {
   final CaptainsModule _captainsModule;
   final PaymentsModule _paymentsModule;
   final SupplierCategoriesModule _supplierCategoriesModule;
+  final SupplierModule _supplierModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -116,7 +119,8 @@ class MyApp extends StatefulWidget {
       this._noticeModule,
       this._captainsModule,
       this._paymentsModule,
-      this._supplierCategoriesModule
+      this._supplierCategoriesModule,
+      this._supplierModule
       );
 
   @override

@@ -1,30 +1,25 @@
-import 'package:c4d/module_captain/request/enable_captain.dart';
+import 'package:c4d/module_supplier/model/porfile_model.dart';
+import 'package:c4d/module_supplier/ui/screen/supplier_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/model/porfile_model.dart';
-import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/custom_captain_profile_tile.dart';
-import 'package:c4d/module_captain/ui/widget/captain_profile/image_tile.dart';
-import 'package:c4d/module_captain/ui/widget/update_captain_widget.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
-import 'package:c4d/utils/global/screen_type.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
-class CaptainProfileLoadedState extends States {
-  final CaptainProfileScreenState screenState;
+class SupplierProfileLoadedState extends States {
+  final SupplierProfileScreenState screenState;
   final String? error;
   final bool empty;
-  final ProfileModel? model;
+  final ProfileSupplierModel? model;
 
-  CaptainProfileLoadedState(this.screenState, this.model,
+  SupplierProfileLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {
@@ -37,7 +32,7 @@ class CaptainProfileLoadedState extends States {
     if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
-          screenState.getCaptain();
+          screenState.getSupplier();
         },
         error: error,
       );
@@ -45,7 +40,7 @@ class CaptainProfileLoadedState extends States {
       return EmptyStateWidget(
           empty: S.current.emptyStaff,
           onRefresh: () {
-            screenState.getCaptain();
+            screenState.getSupplier();
           });
     }
     return StackedForm(
@@ -85,26 +80,15 @@ class CaptainProfileLoadedState extends States {
                           title: S.of(context).name,
                           subTitle: model?.name,
                           iconData: Icons.person_rounded),
-                      CustomListTile(
-                          title: S.of(context).age,
-                          subTitle: model?.age?.toString(),
-                          iconData: Icons.calendar_today_rounded),
+
                       CustomListTile(
                           title: S.of(context).phoneNumber,
                           subTitle: model?.phone,
                           iconData: Icons.phone),
                       CustomListTile(
-                          title: S.of(context).car,
-                          subTitle: model?.car,
-                          iconData: Icons.local_taxi_rounded),
-//                      CustomListTile(
-//                          title: S.of(context).createDate,
-//                          subTitle: model?.createDate,
-//                          iconData: Icons.timer_rounded),
-//                      CustomListTile(
-//                          title: S.of(context).status,
-//                          subTitle: model?.isOnline,
-//                          iconData: Icons.wifi_rounded),
+                          title: S.of(context).category,
+                          subTitle: model?.supplierCategoryName,
+                          iconData: Icons.category),
 
                       Container(
                         child: ListTileSwitch(
@@ -122,51 +106,26 @@ class CaptainProfileLoadedState extends States {
                                       color: Theme.of(context).primaryColor),
                                 )),
                             title: Text(
-                              S.of(context).captainStatus,
+                              S.of(context).status,
                               style: TextStyle(color: Colors.white),
                             ),
                             subtitle: Text(
-                              model?.status == 'active'
+                              model?.status ?? false
                                   ? S.current.captainStateActive
                                   : S.current.captainStateInactive,
                               style: TextStyle(color: Colors.white),
                             ),
-                            value: model?.status == 'active',
+                            value: model?.status ??false ,
                             onChanged: (v) {
                               if (v) {
-                                model?.status = 'active';
-                                screenState.enableCaptain('active');
+                                model?.status =true;
+                                screenState.enableCaptain(true);
                               } else {
-                                model?.status = 'inactive';
-                                screenState.enableCaptain('inactive');
+                                model?.status = false;
+                                screenState.enableCaptain(false);
                               }
                             }),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).primaryColorDark),
-                  child: Flex(
-                    direction: ScreenType.isMobile(context)
-                        ? Axis.vertical
-                        : Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ImageTile(
-                          title: S.current.identity,
-                          image: model?.identity ?? ''),
-                      ImageTile(
-                          title: S.current.mechanichLicence,
-                          image: model?.mechanicLicense ?? ''),
-                      ImageTile(
-                          title: S.current.driverLicence,
-                          image: model?.drivingLicence ?? ''),
                     ],
                   ),
                 ),
@@ -178,22 +137,23 @@ class CaptainProfileLoadedState extends States {
           ),
         ),
         label: S.current.update,
+        visible: true,
         onTap: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return Scaffold(
-                  appBar:
-                      CustomC4dAppBar.appBar(context, title: S.current.update),
-                  body: UpdateCaptainProfile(
-                    request: model,
-                    updateProfile: (request) {
-                      Navigator.of(context).pop();
-                      screenState.updateCaptainProfile(request);
-                    },
-                  ),
-                );
-              });
+//          showDialog(
+//              context: context,
+//              builder: (_) {
+//                return Scaffold(
+//                  appBar:
+//                      CustomC4dAppBar.appBar(context, title: S.current.update),
+//                  body: UpdateCaptainProfile(
+//                    request: model,
+//                    updateProfile: (request) {
+//                      Navigator.of(context).pop();
+//                      screenState.updateCaptainProfile(request);
+//                    },
+//                  ),
+//                );
+//              });
         });
   }
 }

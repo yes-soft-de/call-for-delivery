@@ -1,6 +1,8 @@
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
+import 'package:c4d/module_supplier/request/enable_supplier.dart';
+import 'package:c4d/module_supplier/state_manager/supplier_profile_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,16 +14,16 @@ import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/state_manager/captain_profile_state_manager.dart';
 
 @injectable
-class CaptainProfileScreen extends StatefulWidget {
-  final CaptainProfileStateManager _stateManager;
+class SupplierProfileScreen extends StatefulWidget {
+  final SupplierProfileStateManager _stateManager;
 
-  CaptainProfileScreen(this._stateManager);
+  SupplierProfileScreen(this._stateManager);
 
   @override
-  CaptainProfileScreenState createState() => CaptainProfileScreenState();
+  SupplierProfileScreenState createState() => SupplierProfileScreenState();
 }
 
-class CaptainProfileScreenState extends State<CaptainProfileScreen> {
+class SupplierProfileScreenState extends State<SupplierProfileScreen> {
   late States currentState;
 
   @override
@@ -34,13 +36,13 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     super.initState();
   }
 
-  void getCaptain() {
-//    widget._stateManager.getCaptainProfile(this, captainId);
+  void getSupplier() {
+    widget._stateManager.getSupplierProfile(this, captainId);
   }
 
-  void enableCaptain(String status) {
-//    widget._stateManager.acceptCaptainProfile(
-//        this, captainId, EnableCaptainRequest(id: captainId, status: status));
+  void enableCaptain(bool status) {
+    widget._stateManager.enableSupplier(
+        this, captainId, EnableSupplierRequest(id: captainId, status: status));
   }
 
   void updateCaptainProfile(UpdateCaptainRequest request) {
@@ -61,16 +63,12 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         captainId = arg;
-//        widget._stateManager.getCaptainProfile(this, captainId);
+        widget._stateManager.getSupplierProfile(this, captainId);
       }
     }
     return Scaffold(
       appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.profile, actions: [
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_TO_CAPTAIN,arguments: captainId);
-        }, icon: Icons.account_balance_rounded)
-      ]),
+          CustomC4dAppBar.appBar(context, title: S.current.profile),
       body: currentState.getUI(context),
     );
   }

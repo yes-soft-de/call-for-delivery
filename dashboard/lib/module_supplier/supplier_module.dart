@@ -1,35 +1,36 @@
-import 'package:c4d/module_captain/captains_routes.dart';
-import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
-import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
-import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
-import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
+import 'package:c4d/module_supplier/supplier_routes.dart';
+import 'package:c4d/module_supplier/ui/screen/supplier_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 
+import 'ui/screen/in_active_supplier_screen.dart';
+import 'ui/screen/supplier_list_screen.dart';
+import 'ui/screen/supplier_needs_support_screen.dart';
+
 
 @injectable
-class CaptainsModule extends YesModule {
+class SupplierModule extends YesModule {
 
-  final InActiveCaptainsScreen inActiveCaptains;
-  final CaptainsScreen captainsScreen;
-  final CaptainProfileScreen captainProfileScreen;
-  final CaptainsNeedsSupportScreen supportScreen;
+  final InActiveSupplierScreen inActiveSupplierScreen;
+  final SuppliersScreen suppliersScreen;
+  final SupplierProfileScreen supplierProfileScreen;
+  final SupplierNeedsSupportScreen supportScreen;
 
-  CaptainsModule(
-    this.inActiveCaptains,
-    this.captainsScreen,
-    this.captainProfileScreen,
+  SupplierModule(
+    this.inActiveSupplierScreen,
+    this.suppliersScreen,
+    this.supplierProfileScreen,
     this.supportScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      CaptainsRoutes.CAPTAINS: (context) => captainsScreen,
-      CaptainsRoutes.CAPTAIN_PROFILE: (context) => captainProfileScreen,
-      CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => inActiveCaptains,
-      CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
+      SupplierRoutes.SUPPLIERS: (context) => suppliersScreen,
+      SupplierRoutes.SUPPLIER_PROFILE: (context) => supplierProfileScreen,
+      SupplierRoutes.IN_ACTIVE_SUPPLIER: (context) => inActiveSupplierScreen,
+      SupplierRoutes.SUPPLIER_SUPPORT: (context) => supportScreen,
     };
   }
 }

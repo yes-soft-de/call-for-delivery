@@ -5659,6 +5659,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Supplier updated successfully`
+  String get supplierUpdatedSuccessfully {
+    return Intl.message(
+      'Supplier updated successfully',
+      name: 'supplierUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

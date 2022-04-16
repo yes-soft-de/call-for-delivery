@@ -572,7 +572,8 @@
     "inActiveSupplier": "الموردين غير المفعلة",
     "suppliers": "الموردين",
     "suppliersCategories": "فئات الموردين",
-    "categoryImage": "صورة التصنيف"
+    "categoryImage": "صورة التصنيف",
+    "supplierUpdatedSuccessfully": "تم تحديث المورد بنجاح"
 
 
 
