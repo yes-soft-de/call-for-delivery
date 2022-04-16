@@ -4,6 +4,8 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -136,6 +138,87 @@ class OrderController extends BaseController
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
         
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * store: create new announcement order by store
+     * @Route("announcementorder", name="createAnnouncementOrderByStoreOwner", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="create new announcement order request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="integer", property="announcement")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the new created announcement order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType"),
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9151"),
+     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *        )
+     *     )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createAnnouncementOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AnnouncementOrderCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->createAnnouncementOrder($request);
+
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+
         return $this->response($result, self::CREATE);
     }
     
@@ -811,5 +894,63 @@ class OrderController extends BaseController
         }
       
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * supplier: filter announcement orders.
+     * @Route("filterannouncementorders", name="filterAnnouncementOrdersBySupplier", methods={"POST"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="filter announcement orders of a supplier request",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="priceOfferStatus"),
+     *              @OA\Property(type="string", property="fromDate"),
+     *              @OA\Property(type="string", property="toDate")
+     *         )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return orders that meet the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="integer", property="announcementOrderDetailsId"),
+     *                  @OA\Property(type="integer", property="announcementId")
+     *               )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterAnnouncementOrdersBySupplier(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AnnouncementOrderFilterBySupplierRequest::class, (object) $data);
+
+        $request->setSupplierId($this->getUserId());
+
+        $response = $this->orderService->filterAnnouncementOrdersBySupplier($request);
+
+        return $this->response($response, self::FETCH);
     }
 }
