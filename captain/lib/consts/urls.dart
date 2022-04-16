@@ -122,7 +122,7 @@ class Urls {
   static const GET_CLIENTS_LIST = BASE_API + '/clientsprofile';
   static const GET_REPORT = BASE_API + '/countreport';
   static const GET_ACCOUNT_BALANCE_CAPTAIN =
-      BASE_API + '/captainfinancialaccountforadmin/';
+      BASE_API + '/v1/captainpayment/captainpayments';
   static const GET_ACCOUNT_BALANCE_DISTRO =
       BASE_API + '/representativefinancialaccountforadmin/';
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH =

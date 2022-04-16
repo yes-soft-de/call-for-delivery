@@ -7,7 +7,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
 import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state_orders_loaded.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
@@ -175,10 +174,11 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE);
+                  Navigator.of(context)
+                      .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
                 },
-                leading: const Icon(Icons.account_balance_rounded),
-                title: Text(S.of(context).myBalance),
+                leading: const Icon(Icons.payments_rounded),
+                title: Text(S.of(context).payments),
               ),
             ],
           ),

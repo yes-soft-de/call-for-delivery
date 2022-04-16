@@ -1,3 +1,5 @@
+import 'package:c4d/module_profile/request/captain_payments_request.dart';
+import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_init/response/create_profile_response/create_profile_response.dart';
@@ -24,4 +26,6 @@ class ProfileManager {
       _repository.changeCaptainStatus(isOnline);
 
   Future<List<Terms>?> getTerms() => _repository.getTerms();
+  Future<CaptainPaymentsResponse?> getStoreBalance(CaptainPaymentRequest request) => _repository.getStoreAccountBalance(request);
+
 }

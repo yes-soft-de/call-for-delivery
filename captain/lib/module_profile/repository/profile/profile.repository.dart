@@ -1,3 +1,5 @@
+import 'package:c4d/module_profile/request/captain_payments_request.dart';
+import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -67,5 +69,13 @@ class ProfileRepository {
     if (response == null) return null;
 
     return TermsResponse.fromJson(response).data;
+  }
+  Future<CaptainPaymentsResponse?> getStoreAccountBalance(CaptainPaymentRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.GET_ACCOUNT_BALANCE_CAPTAIN,request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainPaymentsResponse.fromJson(response);
   }
 }

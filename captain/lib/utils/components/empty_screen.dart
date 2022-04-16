@@ -8,13 +8,16 @@ import 'package:c4d/utils/images/images.dart';
 class EmptyStateWidget extends StatelessWidget {
   final String empty;
   final VoidCallback? onRefresh;
-  const EmptyStateWidget({required this.empty, required this.onRefresh});
+  final double? height;
+  const EmptyStateWidget(
+      {required this.empty, required this.onRefresh, this.height});
 
   @override
   Widget build(BuildContext context) {
     return FixedContainer(
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Flex(
@@ -45,20 +48,23 @@ class EmptyStateWidget extends StatelessWidget {
               Container(
                 height: 32,
               ),
-              Center(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 3),
-                      onPressed: onRefresh,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          S.of(context).refresh,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ))),
+              Visibility(
+                visible: onRefresh != null,
+                child: Center(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 3),
+                        onPressed: onRefresh,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            S.of(context).refresh,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ))),
+              ),
             ],
           ),
         ),
