@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_plan/ui/state/init_plan_state_loaded.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -17,9 +18,15 @@ class PlanScreen extends StatefulWidget {
 
 class PlanScreenState extends State<PlanScreen> {
   States? _currentState;
-  String? planID;
+  String? selectedPlan;
   @override
   void initState() {
+    _currentState = InitCaptainPlanLoadedState(
+      this,
+      financeByHours: null,
+      financeByOrder: null,
+      financeByOrderCount: null,
+    );
     widget._manager.stateSubject.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
@@ -39,7 +46,6 @@ class PlanScreenState extends State<PlanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.myBalance),
       body: _currentState?.getUI(context) ?? Container(),
     );
   }

@@ -206,10 +206,11 @@ class Urls {
       DOMAIN + '/v1/orderchatroom/createneworderchatroom';
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +
-      '/v1/captainfinancialsystemaccordingnorder/captainfinancialsystemaccordingnorder';
+      '/v1/captainfinancialsystemaccordingnorder/captainfinancialsystemaccordingonorder';
   static const GET_CAPTAIN_FINANCE_BY_HOURS = DOMAIN +
       '/v1/captainfinancialsystemaccordingtocountofhours/captainfinancialsystemaccordingtocountofhours';
   static const GET_CAPTAIN_FINANCE_BY_COUNT_ORDER = DOMAIN +
       '/v1/captainfinancialsystemaccordingntocountoforders/captainfinancialsystemaccordingtocountoforders';
-
+  static const CREATE_CAPTAIN_FINANCE = DOMAIN +
+      '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 }

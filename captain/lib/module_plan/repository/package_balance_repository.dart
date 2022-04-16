@@ -1,6 +1,8 @@
+import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
@@ -29,11 +31,22 @@ class PackageBalanceRepository {
     return CaptainFinanceByHoursResponse.fromJson(response);
   }
 
-  Future<CaptainFinanceByOrderCountResponse?> getCaptainFinanceByCountOrder() async {
+  Future<CaptainFinanceByOrderCountResponse?>
+      getCaptainFinanceByCountOrder() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_FINANCE_BY_COUNT_ORDER,
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_FINANCE_BY_COUNT_ORDER,
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainFinanceByOrderCountResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.CREATE_CAPTAIN_FINANCE, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }

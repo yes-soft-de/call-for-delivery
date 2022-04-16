@@ -2,10 +2,12 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
+import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/manager/captain_balance_manager.dart';
@@ -14,7 +16,7 @@ import 'package:c4d/module_plan/manager/captain_balance_manager.dart';
 class PlanService {
   final CaptainBalanceManager _manager;
   PlanService(this._manager);
-    Future<DataModel> getCaptainFinanceByOrder() async {
+  Future<DataModel> getCaptainFinanceByOrder() async {
     CaptainFinanceByOrderResponse? actionResponse =
         await _manager.getCaptainFinance();
     if (actionResponse == null) {
@@ -53,4 +55,15 @@ class PlanService {
     return CaptainFinanceByOrdersCountModel.withData(actionResponse);
   }
 
+  Future<DataModel> financeRequest(CaptainFinanceRequest request) async {
+    ActionResponse? actionResponse = await _manager.financeRequest(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

@@ -3,7 +3,11 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
+import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/ui/screen/plan_screen.dart';
+import 'package:c4d/module_plan/ui/widget/by_hours_widget.dart';
+import 'package:c4d/module_plan/ui/widget/by_order_count.dart';
+import 'package:c4d/module_plan/ui/widget/by_order_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -23,12 +27,16 @@ class InitCaptainPlanLoadedState extends States {
       : super(screenState);
   String? appBarTitle;
   int? _selectedPlanId;
-  String? _selectedPlanes;
   List<CaptainFinanceByOrderModel>? financeByOrder = [];
   List<CaptainFinanceByHoursModel>? financeByHours = [];
   List<CaptainFinanceByOrdersCountModel>? financeByOrderCount = [];
   String? error;
   String? empty;
+  List<String> packages = [
+    S.current.planByHours,
+    S.current.planByOrders,
+    S.current.planByOrderCount
+  ];
   @override
   Widget getUI(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -57,7 +65,7 @@ class InitCaptainPlanLoadedState extends States {
                     color: Theme.of(context).textTheme.button?.color,
                   ),
                   title: Text(
-                    S.current.chooseYourPackageHint + ' . ',
+                    S.current.planHint + ' . ',
                     style: Theme.of(context).textTheme.button,
                   ),
                 ),
@@ -82,20 +90,20 @@ class InitCaptainPlanLoadedState extends States {
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2(
-                        value: _selectedPlanes,
+                        value: screenState.selectedPlan,
                         items: _getCatagories(),
                         dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                         ),
-                        hint: Text(S.current.choosePackageCategories),
+                        hint: Text(S.current.chooseYourPlan),
                         onChanged: (String? value) {
-                          _selectedPlanes = value;
+                          screenState.selectedPlan = value;
                           _selectedPlanId = null;
                           empty = null;
                           error = null;
                           // get data
-                          screenState.manager
-                              .getFinance(screenState, _selectedPlanes ?? '');
+                          screenState.manager.getFinance(
+                              screenState, screenState.selectedPlan ?? '');
                           screenState.refresh();
                         }),
                   ),
@@ -145,12 +153,13 @@ class InitCaptainPlanLoadedState extends States {
             ),
             //package
             Visibility(
-              visible: _selectedPlanes != null,
+              visible: screenState.selectedPlan != null,
               child: ScalingWidget(
                 fade: true,
                 milliseconds: 1000,
                 child: SizedBox(
-                  height: 425,
+                  height: getHeight(),
+                  width: double.maxFinite,
                   child: ListView(
                     physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics()),
@@ -162,7 +171,8 @@ class InitCaptainPlanLoadedState extends States {
             ),
             // Submit Package
             Visibility(
-              visible: _selectedPlanId != null,
+              visible: _selectedPlanId != null ||
+                  screenState.selectedPlan == S.current.planByOrderCount,
               child: ScalingWidget(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
@@ -173,7 +183,15 @@ class InitCaptainPlanLoadedState extends States {
                           shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       )),
-                      onPressed: () {},
+                      onPressed: () {
+                        int index =
+                            packages.indexOf(screenState.selectedPlan!) + 1;
+                        screenState.manager.financeRequest(
+                            screenState,
+                            CaptainFinanceRequest(
+                                planId: _selectedPlanId,
+                                planType: index == 3 ? 0 : index));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
@@ -198,11 +216,6 @@ class InitCaptainPlanLoadedState extends States {
   }
 
   List<DropdownMenuItem<String>> _getCatagories() {
-    List<String> packages = [
-      S.current.planByHours,
-      S.current.planByOrders,
-      S.current.planByOrderCount
-    ];
     List<DropdownMenuItem<String>> dropDown = [];
     packages.forEach((element) {
       dropDown.add(DropdownMenuItem(
@@ -234,7 +247,15 @@ class InitCaptainPlanLoadedState extends States {
           screenState.refresh();
         },
         // specific widget
-        child: Container(),
+        child: FinanceByOrder(
+          amount: element.amount,
+          bounce: element.bounce,
+          bounceCountOrdersInMonth: element.bounceCountOrdersInMonth,
+          categoryName: element.categoryName,
+          countKilometersFrom: element.countKilometersFrom,
+          countKilometersTo: element.countKilometersTo,
+          active: element.id == _selectedPlanId,
+        ),
       );
     }).toList();
   }
@@ -257,7 +278,12 @@ class InitCaptainPlanLoadedState extends States {
           screenState.refresh();
         },
         // specific widget
-        child: Container(),
+        child: FinanceByHours(
+          compensationForEveryOrder: element.compensationForEveryOrder,
+          salary: element.salary,
+          countHours: element.countHours,
+          active: element.id == _selectedPlanId,
+        ),
       );
     }).toList();
   }
@@ -271,27 +297,36 @@ class InitCaptainPlanLoadedState extends States {
     }
     return financeByOrderCount!.map((element) {
       return GestureDetector(
-        onTap: () {
-          if (element.id == _selectedPlanId) {
-            _selectedPlanId = null;
-          } else {
-            _selectedPlanId = element.id;
-          }
-          screenState.refresh();
-        },
+        onTap: () {},
         // specific widget
-        child: Container(),
+        child: FinanceByCountOrder(
+          bounceMaxCountOrdersInMonth: element.bounceMaxCountOrdersInMonth,
+          bounceMinCountOrdersInMonth: element.bounceMinCountOrdersInMonth,
+          countOrdersInMonth: element.countOrdersInMonth,
+          monthCompensation: element.monthCompensation,
+          salary: element.salary,
+        ),
       );
     }).toList();
   }
 
   List<Widget> getPlanes() {
-    if (_selectedPlanes == S.current.planByOrders) {
+    if (screenState.selectedPlan == S.current.planByOrders) {
       return _getPlanByOrder();
-    } else if (_selectedPlanes == S.current.planByHours) {
+    } else if (screenState.selectedPlan == S.current.planByHours) {
       return _getPlanByHours();
     } else {
       return _getPlanByOrderCount();
+    }
+  }
+
+  double getHeight() {
+    if (screenState.selectedPlan == S.current.planByOrders) {
+      return 250;
+    } else if (screenState.selectedPlan == S.current.planByHours) {
+      return 135;
+    } else {
+      return 200;
     }
   }
 }
