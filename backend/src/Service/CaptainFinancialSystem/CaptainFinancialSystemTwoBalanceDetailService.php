@@ -59,7 +59,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
            
             $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
            
-            $total = $sumPayments - $item['financialDues'];
+            $total = $item['financialDues'] - $sumPayments;
         }
 
         if($countOrders > $financialSystemDetail['countOrdersInMonth']) {
@@ -75,20 +75,14 @@ class CaptainFinancialSystemTwoBalanceDetailService
             
             $item['financialDues'] = $item['salary'] + $item['monthCompensation'] + $item['bounce']; 
            
-            $total = $sumPayments - $item['financialDues'];
+            $total = $item['financialDues'] - $sumPayments;
         }
 
         if($countOrders < $financialSystemDetail['countOrdersInMonth']) {
-            //TODO this not completed ,we need more info
-             $item['salary'] = $financialSystemDetail['salary'];
            
-             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
-
-            //  $item['bounce'] = $countOverOrdersThanRequired * $financialSystemDetail['bounceMinCountOrdersInMonth']; 
-        
-             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_FAILED;
+            $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_FAILED;
              
-            $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
+            $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
           
             $total = $item['financialDues'] - $sumPayments;
         }

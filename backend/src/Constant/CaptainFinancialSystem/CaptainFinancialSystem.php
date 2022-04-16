@@ -34,4 +34,6 @@ final class CaptainFinancialSystem
     const TARGET_NOT_ARRIVED = "notArrivedYet";
 
     const TARGET_FAILED = "failed";
+
+    const TARGET_FAILED_SALARY = 12.86;
 }
