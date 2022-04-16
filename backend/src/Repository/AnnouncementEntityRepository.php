@@ -120,4 +120,27 @@ class AnnouncementEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * for display other announcements for the supplier
+     */
+    public function getOtherSuppliersAnnouncementBySupplier(int $supplierId): array
+    {
+        return $this->createQueryBuilder('announcementEntity')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = announcementEntity.supplier'
+            )
+
+            ->andWhere('supplierProfileEntity.user != :supplierId')
+            ->setParameter('supplierId', $supplierId)
+
+            ->orderBy('announcementEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

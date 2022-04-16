@@ -104,4 +104,12 @@ class AnnouncementManager
     {
         return $this->announcementEntityRepository->filterAnnouncementsBySupplier($request);
     }
+
+    /**
+     * for display other announcements for the supplier
+     */
+    public function getOtherSuppliersAnnouncementBySupplier(int $supplierId): array
+    {
+        return $this->announcementEntityRepository->getOtherSuppliersAnnouncementBySupplier($supplierId);
+    }
 }

@@ -12,6 +12,7 @@ use App\Request\Announcement\AnnouncementStatusUpdateRequest;
 use App\Request\Announcement\AnnouncementUpdateRequest;
 use App\Response\Announcement\AnnouncementCreateResponse;
 use App\Response\Announcement\AnnouncementFilterBySupplierResponse;
+use App\Response\Announcement\OtherAnnouncementsGetResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
 class AnnouncementService
@@ -87,5 +88,22 @@ class AnnouncementService
         } else {
             return null;
         }
+    }
+
+    public function getOtherSuppliersAnnouncementBySupplier(int $supplierId): array
+    {
+        $response = [];
+
+        $announcements = $this->announcementManager->getOtherSuppliersAnnouncementBySupplier($supplierId);
+
+        if ($announcements) {
+            foreach ($announcements as $key=>$value) {
+                $response[] = $this->autoMapping->map(AnnouncementEntity::class, OtherAnnouncementsGetResponse::class, $value);
+
+                $response[$key]->images = $this->customizeAnnouncementImages($response[$key]->images->toArray());
+            }
+        }
+
+        return $response;
     }
 }

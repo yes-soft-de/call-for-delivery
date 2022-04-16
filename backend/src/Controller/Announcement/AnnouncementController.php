@@ -333,4 +333,53 @@ class AnnouncementController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * Supplier: fetch other suppliers announcements
+     * @Route("otherannouncements", name="getOtherSuppliersAnnouncementsBySupplier", methods={"GET"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Announcement")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns other existing suppliers announcements info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="number", property="quantity"),
+     *                  @OA\Property(type="string", property="details"),
+     *                  @OA\Property(type="boolean", property="status"),
+     *                  @OA\Property(type="boolean", property="administrationStatus"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="boolean", property="updatedAt"),
+     *                  @OA\Property(type="object", property="images",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL"),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getOtherSuppliersAnnouncementBySupplier(): JsonResponse
+    {
+        $response = $this->announcementService->getOtherSuppliersAnnouncementBySupplier($this->getUserId());
+
+        return $this->response($response, self::FETCH);
+    }
 }
