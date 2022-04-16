@@ -418,7 +418,29 @@
     "recordNumber": "رقم السجل",
     "nationalAddress": "العنوان الوطني",
     "taxNumber": "الرقم الضريبي",
-    "captainRated": "تم تقييم الكابتن بنجاح"
+    "captainRated": "تم تقييم الكابتن بنجاح",
+    "accountActivated": "الحساب مفعل",
+    "accountInActivated": "الحساب غير مفعل",
+    "InvalidInput": "غير صالح",
+    "countryCode": "النداء",
+    "updateProfile": "تحديث الملف الشخصي",
+    "profileUpdatedSuccessfully": "تم تحديث الملف بنجاح",
+    "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
+    "pleaseEnterValidCountryCode": "ادخال خاطئ",
+    "emptyField": "حقل فارغ",
 
-
+    "confirmPasswordAgain": "تأكيد كلمة السر",
+    "writePasswordAgain": "ادخل كلمة المرور مجددا",
+    "whatsapp": "واتساب",
+    "fax": "فاكس",
+    "companyInfo": "معلومات الشركة",
+    "launch": "شغل تطبيقنا",
+    "lanchDescribtion": "إذا لديك غرض لتوصيله لمكان بعيد عنك لاتقلق افتح تطبيقنا",
+    "bookACarDescribtion": "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة",
+    "weDeliverDescribtion": "نحن سنوصل طردك عنك بأفضل وأسرع طريقة",
+    "lanchDescribtionCaptain": "إذا ملكت القدرة لتوصيل الطرود لأجلنا فأنت مرحب بك",
+    "checkOrdersDescribtion": "يمكنك تفقد الطرود القريبة منك لتوصيلها",
+    "acceptOrderDescribtion": "يمكنك الموافقة على مهمتك لتوصيل الطلبية",
+    "deliverDescribtion": "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة",
+    "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال"
 }

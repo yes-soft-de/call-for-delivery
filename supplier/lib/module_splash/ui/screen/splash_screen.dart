@@ -1,3 +1,6 @@
+import 'package:c4d/module_about/about_routes.dart';
+import 'package:c4d/module_about/hive/about_hive_helper.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -20,9 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      // _getNextRoute().then((route) {
-      //   Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-      // });
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
     });
     super.initState();
   }
@@ -31,12 +34,37 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        child: Image.asset(ImageAsset.LOGO,height: 150,width: 150,),
+        child: Center(
+          child: Image.asset(
+            ImageAsset.LOGO,
+            height: 150,
+            width: 150,
+          ),
+        ),
       ),
     );
   }
 
   Future<String> _getNextRoute() async {
-    return AuthorizationRoutes.LOGIN_SCREEN;
+    if (getIt<LocalizationService>().choosed()) {
+      return needForLogging(widget._authService.isLoggedIn);
+    } else {
+      return SettingRoutes.CHOOSE_LANGUAGE;
+    }
+  }
+
+  Future<String> needForLogging(bool login) async {
+    if (login) {
+      await getIt<AuthService>().accountStatus();
+      return AuthPrefsHelper().getAccountStatusPhase();
+    } else if (AboutHiveHelper().getWelcome()) {
+      return AuthorizationRoutes.LOGIN_SCREEN;
+    } else {
+      return welcomePage();
+    }
+  }
+
+  String welcomePage() {
+    return AboutRoutes.ROUTE_ABOUT;
   }
 }

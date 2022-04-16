@@ -43,7 +43,7 @@ class FadedButtonBar extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25))),
               onPressed: onPressed,
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   text,
                   style: TextStyle(fontSize: 16, color: Colors.white),

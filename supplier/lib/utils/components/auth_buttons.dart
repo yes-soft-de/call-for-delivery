@@ -10,10 +10,10 @@ class AuthButtons extends StatelessWidget {
   final bool? loading;
   AuthButtons(
       {required this.firstButtonTitle,
-      required this.secondButtonTitle,
-      this.firstButtonTab,
-      required this.secondButtonTab,
-      this.loading = false});
+        required this.secondButtonTitle,
+        this.firstButtonTab,
+        required this.secondButtonTab,
+        this.loading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,7 @@ class AuthButtons extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: firstButtonTab,
                   style: ElevatedButton.styleFrom(
-                    onSurface: Theme.of(context).primaryColor,
-                    elevation: 0,
+                    elevation: 1,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -55,44 +54,42 @@ class AuthButtons extends StatelessWidget {
                   child: Center(
                     child: loading!
                         ? CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).textTheme.button?.color ??
+                              Colors.white),
+                    )
                         : Text(
-                            firstButtonTitle,
-                            style: TextStyle(
-                              color: firstButtonTab != null
-                                  ? Colors.white
-                                  : Theme.of(context).disabledColor,
-                            ),
-                          ),
+                      firstButtonTitle,
+                      style: TextStyle(
+                        color: firstButtonTab != null
+                            ? Theme.of(context).textTheme.button?.color
+                            : Theme.of(context).disabledColor,
+                      ),
+                    ),
                   )),
             ),
           ),
-          Hider(
-            active: false,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 16.0, left: 16, bottom: 8.0, top: 8.0),
-              child: Container(
-                width: double.maxFinite,
-                height: 50,
-                child: ElevatedButton(
-                    onPressed: secondButtonTab,
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: Theme.of(context).backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 16.0, left: 16, bottom: 8.0, top: 8.0),
+            child: Container(
+              width: double.maxFinite,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: secondButtonTab,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 1,
+                    primary: Theme.of(context).colorScheme.secondaryContainer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    child: Center(
-                      child: Text(
-                        secondButtonTitle,
-                        style: TextStyle(),
-                      ),
-                    )),
-              ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      secondButtonTitle,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  )),
             ),
           ),
         ],

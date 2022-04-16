@@ -24,9 +24,20 @@ class SvgAsset {
   static const SUCCESS_SVG = ROOT + 'success.svg';
   static const LOGO_SVG = ROOT + 'logo.svg';
   static const ACHIEVEMENT_SVG = ROOT + 'achievement.svg';
+  static const WE_DELIVER = ROOT + 'we_deliver.svg';
+  static const LAUNCH_APP = ROOT + 'open_app.svg';
+  static const CHECK_ORDER = ROOT + 'check_order.svg';
+  static const ACCEPT_ORDER = ROOT + 'accept_order.svg';
+  static const DELIVER = ROOT + 'deliver.svg';
+  static const EARN_CASH = ROOT + 'earn_cash.svg';
+  static const SEARCHING_SVG = ROOT + 'searching.svg';
+  static const RATE_SVG = ROOT + 'rating.svg';
+  static const WAITING_SVG = ROOT + 'waiting.svg';
+  static const DELIVER_TO_CLIENT = ROOT + 'to_client.svg';
 }
 
 class LottieAsset {
   static const ROOT = 'assets/animations/';
   static const LOADING_CART = ROOT + 'cart_loading.json';
+  static const CREATED_SUCCESSFULLY = ROOT + 'register-success.json';
 }
