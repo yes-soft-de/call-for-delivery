@@ -556,4 +556,48 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
+                'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
+            ->addSelect('announcementOrderDetailsEntity.id as announcementOrderDetailsId', 'announcementOrderDetailsEntity.priceOfferValue', 'announcementOrderDetailsEntity.priceOfferStatus')
+            ->addSelect('announcementEntity.id as announcementId')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                AnnouncementOrderDetailsEntity::class,
+                'announcementOrderDetailsEntity',
+                Join::WITH,
+                'announcementOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                AnnouncementEntity::class,
+                'announcementEntity',
+                Join::WITH,
+                'announcementEntity.id = announcementOrderDetailsEntity.announcement'
+            )
+
+            ->andWhere('orderEntity.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

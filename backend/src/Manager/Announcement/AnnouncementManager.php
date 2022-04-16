@@ -10,6 +10,7 @@ use App\Manager\Image\ImageManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\AnnouncementEntityRepository;
 use App\Request\Announcement\AnnouncementCreateRequest;
+use App\Request\Announcement\AnnouncementFilterBySupplierRequest;
 use App\Request\Announcement\AnnouncementStatusUpdateRequest;
 use App\Request\Announcement\AnnouncementUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -97,5 +98,18 @@ class AnnouncementManager
     public function getAnnouncementEntityById(int $announcementId): ?AnnouncementEntity
     {
         return $this->announcementEntityRepository->find($announcementId);
+    }
+
+    public function filterAnnouncementsBySupplier(AnnouncementFilterBySupplierRequest $request): array
+    {
+        return $this->announcementEntityRepository->filterAnnouncementsBySupplier($request);
+    }
+
+    /**
+     * for display other announcements for the supplier
+     */
+    public function getOtherSuppliersAnnouncementBySupplier(int $supplierId): array
+    {
+        return $this->announcementEntityRepository->getOtherSuppliersAnnouncementBySupplier($supplierId);
     }
 }

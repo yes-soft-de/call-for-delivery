@@ -261,4 +261,9 @@ class OrderManager
     {
         return $this->orderRepository->filterAnnouncementOrdersBySupplier($request);
     }
+
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
+    {
+        return $this->orderRepository->getSpecificAnnouncementOrderByIdForSupplier($id);
+    }
 }
