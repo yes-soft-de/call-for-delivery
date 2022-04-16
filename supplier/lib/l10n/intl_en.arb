@@ -456,5 +456,14 @@
     "ongoing": "Ongoing",
     "completed": "Completed",
     "cancelled2": "Cancelled",
-    "orderTimeLine": "Order Time Line"
+    "orderTimeLine": "Order Time Line",
+
+    "notificationDeletedSuccess": "Notification deleted successfully",
+    "notificationsDeletedSuccess": "Notifications deleted successfully",
+    "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
+    "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
+    "sortedByLatest": "Sorted by latest",
+    "selected": "selected",
+    "notices": "notices",
+    "delete": "delete"
 }
