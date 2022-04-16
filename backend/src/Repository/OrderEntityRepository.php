@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
+use App\Entity\AnnouncementEntity;
+use App\Entity\AnnouncementOrderDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
@@ -13,6 +16,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use DateTime;
@@ -474,5 +478,73 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         ->getQuery()
         ->getOneOrNullResult();
+    }
+    
+    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.createdAt')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+            ->addSelect('announcementOrderDetailsEntity.id as announcementOrderDetailsId')
+            ->addSelect('announcementEntity.id as announcementId')
+
+            ->andWhere('orderEntity.orderType = :orderType')
+            ->setParameter('orderType', OrderTypeConstant::ORDER_TYPE_ADV)
+
+            ->leftJoin(
+                AnnouncementOrderDetailsEntity::class,
+                'announcementOrderDetailsEntity',
+                Join::WITH,
+                'announcementOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                AnnouncementEntity::class,
+                'announcementEntity',
+                Join::WITH,
+                'announcementEntity.id = announcementOrderDetailsEntity.announcement'
+            )
+
+            ->andWhere('announcementEntity.supplier = :supplierId')
+            ->setParameter('supplierId', $request->getSupplierId())
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                OrderLogsEntity::class,
+                'orderLogEntity',
+                Join::WITH,
+                'orderLogEntity.orderId = orderEntity.id'
+            )
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getPriceOfferStatus() !== null) {
+            $query->andWhere('announcementOrderDetailsEntity.priceOfferStatus = :priceOfferStatus');
+            $query->setParameter('priceOfferStatus', $request->getPriceOfferStatus());
+        }
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

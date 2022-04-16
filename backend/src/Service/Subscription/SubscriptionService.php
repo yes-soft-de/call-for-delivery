@@ -559,5 +559,10 @@ class SubscriptionService
         
     //     return null;
     // }
+
+    public function getStoreOwnerProfileStatus(int $storeOwnerId): string
+    {
+        return $this->storeOwnerProfileService->checkStoreStatus($storeOwnerId);
+    }
 }
  

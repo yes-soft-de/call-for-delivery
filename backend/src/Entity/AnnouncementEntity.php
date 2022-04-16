@@ -46,9 +46,13 @@ class AnnouncementEntity
     #[ORM\Column(type: 'boolean')]
     private $administrationStatus = true;
 
+    #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: AnnouncementOrderDetailsEntity::class)]
+    private $announcementOrderDetailsEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->announcementOrderDetailsEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,6 +182,36 @@ class AnnouncementEntity
     public function setAdministrationStatus(bool $administrationStatus): self
     {
         $this->administrationStatus = $administrationStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AnnouncementOrderDetailsEntity[]
+     */
+    public function getAnnouncementOrderDetailsEntities(): Collection
+    {
+        return $this->announcementOrderDetailsEntities;
+    }
+
+    public function addAnnouncementOrderDetailsEntity(AnnouncementOrderDetailsEntity $announcementOrderDetailsEntity): self
+    {
+        if (!$this->announcementOrderDetailsEntities->contains($announcementOrderDetailsEntity)) {
+            $this->announcementOrderDetailsEntities[] = $announcementOrderDetailsEntity;
+            $announcementOrderDetailsEntity->setAnnouncement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncementOrderDetailsEntity(AnnouncementOrderDetailsEntity $announcementOrderDetailsEntity): self
+    {
+        if ($this->announcementOrderDetailsEntities->removeElement($announcementOrderDetailsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($announcementOrderDetailsEntity->getAnnouncement() === $this) {
+                $announcementOrderDetailsEntity->setAnnouncement(null);
+            }
+        }
 
         return $this;
     }

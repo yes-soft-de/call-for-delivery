@@ -5,10 +5,13 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
+use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
@@ -72,10 +75,10 @@ class OrderService
      */
     public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
     {        
-        $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner()); 
+        $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner());
      
         if($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
-      
+
             return  $canCreateOrder;
         }
         
@@ -103,6 +106,40 @@ class OrderService
                 }
         }
         
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
+    }
+
+    public function createAnnouncementOrder(AnnouncementOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
+    {
+        $canCreateOrder = $this->subscriptionService->getStoreOwnerProfileStatus($request->getStoreOwner());
+
+        if($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $canCreateOrder;
+        }
+
+        $order = $this->orderManager->createAnnouncementOrder($request);
+
+        if($order) {
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ANNOUNCEMENT_ORDER_TITLE,
+                NotificationConstant::CREATE_ANNOUNCEMENT_ORDER_SUCCESS, $order->getId());
+
+            $this->orderLogsService->createOrderLogsRequest($order);
+            //create firebase notification to store
+            try{
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+            }
+            catch (\Exception $e){
+                error_log($e);
+            }
+            //create firebase notification to captains
+            try{
+                $this->notificationFirebaseService->notificationToCaptains($order->getId());
+            }
+            catch (\Exception $e){
+                error_log($e);
+            }
+        }
+
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
@@ -411,4 +448,17 @@ class OrderService
     {
         return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }   
+
+    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterAnnouncementOrdersBySupplier($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map('array', AnnouncementOrderFilterBySupplierResponse::class, $order);
+        }
+
+        return $response;
+    }
 }
