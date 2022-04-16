@@ -24,6 +24,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\RateEntity;
+use App\Entity\SupplierProfileEntity;
+
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method OrderEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -483,7 +485,14 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'announcementEntity.id = announcementOrderDetailsEntity.announcement'
             )
 
-            ->andWhere('announcementEntity.supplier = :supplierId')
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = announcementEntity.supplier'
+            )
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $request->getSupplierId())
 
             ->leftJoin(
