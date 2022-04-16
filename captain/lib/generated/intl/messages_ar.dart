@@ -59,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
+        "addWorkPackage":
+            MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
@@ -66,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allcity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
+        "amount": MessageLookupByLibrary.simpleMessage("الراتب"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -96,6 +99,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
             "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
         "bounce": MessageLookupByLibrary.simpleMessage("المكافأة"),
+        "bounceCountOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
+        "bounceMaxCountOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("حد التعويض الأعلى"),
+        "bounceMinCountOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("حد التعويض الأدنى"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
         "branchLocation": MessageLookupByLibrary.simpleMessage("موقع الفرع"),
@@ -120,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم قبول الطلب"),
         "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
             "حساب الكابتن غير مفعل الرجاء انتظار الإدارة لتفعيل الحساب"),
+        "captainFinance":
+            MessageLookupByLibrary.simpleMessage("باقات عمل الكابتن"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
@@ -138,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
+        "captainPayments":
+            MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
@@ -190,6 +203,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر حجم منشأتك"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح الاشتراكات الخاصة بنا وفق التصنيفات المناسبة لك"),
+        "chooseYourPlan":
+            MessageLookupByLibrary.simpleMessage("اختر الخطة المناسبة لك"),
         "chooseYourRateFromFiveStar": MessageLookupByLibrary.simpleMessage(
             "اختر التقييم المناسب من خمس نجوم"),
         "chooseYourSize":
@@ -211,6 +226,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "compensationForEveryOrder":
+            MessageLookupByLibrary.simpleMessage("التعويض عن كل طلب"),
         "completeTime": MessageLookupByLibrary.simpleMessage("مدة الإنجاز"),
         "completed": MessageLookupByLibrary.simpleMessage("منتهية"),
         "completedOrders":
@@ -239,8 +256,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
+        "countHours": MessageLookupByLibrary.simpleMessage("عدد الساعات"),
+        "countKilometersFrom":
+            MessageLookupByLibrary.simpleMessage("الحد الأدنى للكيلومترات"),
+        "countKilometersTo":
+            MessageLookupByLibrary.simpleMessage("الحد الأعلى للكيلومترات"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
+        "countOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
@@ -338,6 +362,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financeByHours":
+            MessageLookupByLibrary.simpleMessage("باقة حسب الساعات"),
+        "financeByOrders":
+            MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
+        "financeCountOrder":
+            MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -448,6 +478,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "minute": MessageLookupByLibrary.simpleMessage("دقيقة"),
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),
+        "monthCompensation":
+            MessageLookupByLibrary.simpleMessage("التعويض الشهري"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعا"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("الأكثر طلبا"),
@@ -625,9 +657,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
         "planByHours": MessageLookupByLibrary.simpleMessage("وظيفية ساعية"),
         "planByOrderCount":
-            MessageLookupByLibrary.simpleMessage("وظيفة حرة على حسب الطلبات"),
+            MessageLookupByLibrary.simpleMessage("وظيفة حرة على الطلب"),
         "planByOrders":
             MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
+        "planHint": MessageLookupByLibrary.simpleMessage(
+            "في هذه النافذة ستظهر شرائح خطط العمل المتاحة"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
@@ -744,6 +778,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
         "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
+        "salary": MessageLookupByLibrary.simpleMessage("الراتب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("السعودية"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),

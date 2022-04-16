@@ -629,7 +629,31 @@
     "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية",
     "planByHours": "وظيفية ساعية",
     "planByOrders": "وظيفة حسب الطلبات",
-    "planByOrderCount": "وظيفة حرة على حسب الطلبات"
+    "planByOrderCount": "وظيفة حرة على الطلب",
+    "planHint": "في هذه النافذة ستظهر شرائح خطط العمل المتاحة",
+    "chooseYourPlan": "اختر الخطة المناسبة لك",
+    "captainFinance": "باقات عمل الكابتن",
+    "financeByOrders": "باقة حسب الطلبات",
+    "financeByHours": "باقة حسب الساعات",
+    "financeCountOrder": "باقة على الطلب",
+    "bounceCountOrdersInMonth": "عدد الطلبات في الشهر",
+    "amount": "الراتب",
+    "countKilometersFrom": "الحد الأدنى للكيلومترات",
+    "countKilometersTo": "الحد الأعلى للكيلومترات",
+    "addWorkPackage": "إضافة باقة عمل",
+    "countHours": "عدد الساعات",
+    "compensationForEveryOrder": "التعويض عن كل طلب",
+    "countOrdersInMonth": "عدد الطلبات في الشهر",
+    "monthCompensation": "التعويض الشهري",
+    "bounceMaxCountOrdersInMonth": "حد التعويض الأعلى",
+    "bounceMinCountOrdersInMonth": "حد التعويض الأدنى",
+    "captainPayments": "دفعات الكابتن",
+    "salary": "الراتب",
+    "pleaseWaitAdminstrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة"
+
+
+
+
 
 
 

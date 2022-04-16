@@ -6309,6 +6309,206 @@ class S {
       args: [],
     );
   }
+
+  /// `In this screen you can see our work planes `
+  String get planHint {
+    return Intl.message(
+      'In this screen you can see our work planes ',
+      name: 'planHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please choose your plan`
+  String get chooseYourPlan {
+    return Intl.message(
+      'Please choose your plan',
+      name: 'chooseYourPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Finance`
+  String get captainFinance {
+    return Intl.message(
+      'Captain Finance',
+      name: 'captainFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by orders`
+  String get financeByOrders {
+    return Intl.message(
+      'Finance by orders',
+      name: 'financeByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance by hours`
+  String get financeByHours {
+    return Intl.message(
+      'Finance by hours',
+      name: 'financeByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance on order`
+  String get financeCountOrder {
+    return Intl.message(
+      'Finance on order',
+      name: 'financeCountOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders in month`
+  String get bounceCountOrdersInMonth {
+    return Intl.message(
+      'Orders in month',
+      name: 'bounceCountOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message(
+      'Amount',
+      name: 'amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum kilometers`
+  String get countKilometersFrom {
+    return Intl.message(
+      'Minimum kilometers',
+      name: 'countKilometersFrom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max kilometers`
+  String get countKilometersTo {
+    return Intl.message(
+      'Max kilometers',
+      name: 'countKilometersTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add work plan`
+  String get addWorkPackage {
+    return Intl.message(
+      'Add work plan',
+      name: 'addWorkPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count Hours`
+  String get countHours {
+    return Intl.message(
+      'Count Hours',
+      name: 'countHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compensation for every order`
+  String get compensationForEveryOrder {
+    return Intl.message(
+      'Compensation for every order',
+      name: 'compensationForEveryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count order in month`
+  String get countOrdersInMonth {
+    return Intl.message(
+      'Count order in month',
+      name: 'countOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Month compensation`
+  String get monthCompensation {
+    return Intl.message(
+      'Month compensation',
+      name: 'monthCompensation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce max count orders in month`
+  String get bounceMaxCountOrdersInMonth {
+    return Intl.message(
+      'Bounce max count orders in month',
+      name: 'bounceMaxCountOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bounce min count orders in month`
+  String get bounceMinCountOrdersInMonth {
+    return Intl.message(
+      'Bounce min count orders in month',
+      name: 'bounceMinCountOrdersInMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Payments`
+  String get captainPayments {
+    return Intl.message(
+      'Captain Payments',
+      name: 'captainPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salary`
+  String get salary {
+    return Intl.message(
+      'Salary',
+      name: 'salary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please wait administration to accept`
+  String get pleaseWaitAdministrationToAccept {
+    return Intl.message(
+      'Please wait administration to accept',
+      name: 'pleaseWaitAdministrationToAccept',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

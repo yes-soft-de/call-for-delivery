@@ -60,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
+        "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -67,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allcity": MessageLookupByLibrary.simpleMessage("All City"),
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "Your subscription already extended , You can\'t extend it again"),
+        "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
@@ -98,6 +100,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
             "You need to book a car to deliver your package to your destenation"),
         "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
+        "bounceCountOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("Orders in month"),
+        "bounceMaxCountOrdersInMonth": MessageLookupByLibrary.simpleMessage(
+            "Bounce max count orders in month"),
+        "bounceMinCountOrdersInMonth": MessageLookupByLibrary.simpleMessage(
+            "Bounce min count orders in month"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
         "branchLocation":
@@ -124,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order Accepted"),
         "captainAccountInActive": MessageLookupByLibrary.simpleMessage(
             "Captain Account In Active , Please wait the administration to activate your account"),
+        "captainFinance":
+            MessageLookupByLibrary.simpleMessage("Captain Finance"),
         "captainGotCash":
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
@@ -142,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account not activated yet please wait"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
+        "captainPayments":
+            MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
@@ -196,6 +208,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose your capacity"),
         "chooseYourPackageHint": MessageLookupByLibrary.simpleMessage(
             "Choose your desired package subscriptions based on your wanted category"),
+        "chooseYourPlan":
+            MessageLookupByLibrary.simpleMessage("Please choose your plan"),
         "chooseYourRateFromFiveStar": MessageLookupByLibrary.simpleMessage(
             "Choose your rate from five stars"),
         "chooseYourSize":
@@ -216,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Collected payment note"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "compensationForEveryOrder": MessageLookupByLibrary.simpleMessage(
+            "Compensation for every order"),
         "completeTime": MessageLookupByLibrary.simpleMessage("Completion Time"),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "completedOrders":
@@ -245,8 +261,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "countHours": MessageLookupByLibrary.simpleMessage("Count Hours"),
+        "countKilometersFrom":
+            MessageLookupByLibrary.simpleMessage("Minimum kilometers"),
+        "countKilometersTo":
+            MessageLookupByLibrary.simpleMessage("Max kilometers"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
+        "countOrdersInMonth":
+            MessageLookupByLibrary.simpleMessage("Count order in month"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
@@ -347,6 +370,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financeByHours":
+            MessageLookupByLibrary.simpleMessage("Finance by hours"),
+        "financeByOrders":
+            MessageLookupByLibrary.simpleMessage("Finance by orders"),
+        "financeCountOrder":
+            MessageLookupByLibrary.simpleMessage("Finance on order"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -459,6 +488,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "minute": MessageLookupByLibrary.simpleMessage("minute"),
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
+        "monthCompensation":
+            MessageLookupByLibrary.simpleMessage("Month compensation"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
@@ -637,6 +668,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "planByOrderCount":
             MessageLookupByLibrary.simpleMessage("Plan on order count"),
         "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
+        "planHint": MessageLookupByLibrary.simpleMessage(
+            "In this screen you can see our work planes "),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
@@ -679,6 +712,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please provide your address on our map"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
+        "pleaseWaitAdministrationToAccept":
+            MessageLookupByLibrary.simpleMessage(
+                "Please wait administration to accept"),
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
@@ -756,6 +792,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
         "sOrder": MessageLookupByLibrary.simpleMessage("order"),
+        "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
