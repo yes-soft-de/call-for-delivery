@@ -176,7 +176,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             child: CustomNavTile(
                 icon: Icons.info,
                 onTap: () {
-                  Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY);
+                  Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY,arguments: widget.company);
                 },
                 title: S.current.companyInfo),
           )
