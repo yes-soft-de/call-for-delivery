@@ -23,14 +23,19 @@ class Urls {
 
   static const REPORT_API = BASE_API + '/report';
   /* ------------------notifications------------------- */
-   static const NOTIFICATION_API = BASE_API + '/notificationtoken';
-   static const NOTIFICATIONNEWCHAT_API =
-      BASE_API + '/notificationnewchatbyuserid';
-  static const NEEDFORSUPPORT = BASE_API + '/updateneedsupport';
-  static const NEEDFORSUPPORT_ANYNAMOUS = BASE_API + '/anonymouschat';
-  static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
+  static const NOTIFICATION_API = DOMAIN + '/v1/notificationtoken/notificationtoken';
+  static const NOTIFICATIONNEWCHAT_API =
+      DOMAIN + '/v1/notificationfirbase/notificationnewchatbyuserid';
+
   static const NOTIFICATIONNEWCHAT_ANYN_API =
       BASE_API + '/notificationnewchatanonymous';
+
+  static const GET_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationsLocal';
+  static const GET_UPDATES =
+      DOMAIN + '/v1/notificationfromadmin/notificationsfromadminforsupplier';
+  static const DELETE_MY_NOTIFICATION =
+      DOMAIN + '/v1/notificationlocal/notificationLocal';
 
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
