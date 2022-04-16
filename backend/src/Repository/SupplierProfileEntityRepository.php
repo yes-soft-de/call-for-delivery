@@ -42,7 +42,7 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
             ->select('supplierProfileEntity.id', 'supplierProfileEntity.phone', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.completeAccountStatus', 'supplierProfileEntity.createdAt',
                 'supplierProfileEntity.status')
             ->addSelect('chatRoomEntity.roomId')
-            ->addSelect('supplierCategoryEntity.name as supplierCategoryName')
+            ->addSelect('supplierCategoryEntity.id as supplierCategoryId', 'supplierCategoryEntity.name as supplierCategoryName')
 
             ->andWhere('supplierProfileEntity.user = :userEntity')
             ->setParameter('userEntity', $userId)
