@@ -7,6 +7,7 @@ use App\Constant\Announcement\AnnouncementResultConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use App\Request\Announcement\AnnouncementCreateRequest;
+use App\Request\Announcement\AnnouncementFilterBySupplierRequest;
 use App\Request\Announcement\AnnouncementStatusUpdateRequest;
 use App\Request\Announcement\AnnouncementUpdateRequest;
 use App\Service\Announcement\AnnouncementService;
@@ -262,6 +263,73 @@ class AnnouncementController extends BaseController
         if ($response === AnnouncementResultConstant::ANNOUNCEMENT_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ANNOUNCEMENT_NOT_EXIST);
         }
+
+        return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Supplier: filter his/her announcements.
+     * @Route("filterannouncements", name="filterSupplierAnnouncementsBySupplier", methods={"POST"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Announcement")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update an announcement status request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="status"),
+     *          @OA\Property(type="string", property="administrationStatus")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the announcement info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="number", property="price"),
+     *                  @OA\Property(type="number", property="quantity"),
+     *                  @OA\Property(type="string", property="details"),
+     *                  @OA\Property(type="boolean", property="status"),
+     *                  @OA\Property(type="boolean", property="administrationStatus"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="boolean", property="updatedAt"),
+     *                  @OA\Property(type="object", property="images",
+     *                      @OA\Property(type="string", property="imageURL"),
+     *                      @OA\Property(type="string", property="image"),
+     *                      @OA\Property(type="string", property="baseURL"),
+     *                  )
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterAnnouncementsBySupplier(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AnnouncementFilterBySupplierRequest::class, (object)$data);
+
+        $request->setSupplierId($this->getUserId());
+
+        $response = $this->announcementService->filterAnnouncementsBySupplier($request);
 
         return $this->response($response, self::UPDATE);
     }
