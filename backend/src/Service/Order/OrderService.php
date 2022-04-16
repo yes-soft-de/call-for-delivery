@@ -11,6 +11,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\AnnouncementOrderByIdForSupplierGetResponse;
 use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
 use App\Response\Order\OrderResponse;
@@ -460,5 +461,16 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?AnnouncementOrderByIdForSupplierGetResponse
+    {
+        $order = $this->orderManager->getSpecificAnnouncementOrderByIdForSupplier($id);
+
+        if ($order) {
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+        }
+
+        return $this->autoMapping->map("array", AnnouncementOrderByIdForSupplierGetResponse::class, $order);
     }
 }

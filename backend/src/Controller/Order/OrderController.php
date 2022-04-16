@@ -953,4 +953,55 @@ class OrderController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * Supplier: Get announcement order details.
+     * @Route("announcementorder/{id}", name="getSpecificAnnouncementOrderForSupplier", methods={"GET"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the announcement order details",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="phone"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="integer", property="announcementOrderDetailsId"),
+     *                  @OA\Property(type="number", property="priceOfferValue"),
+     *                  @OA\Property(type="integer", property="priceOfferStatus"),
+     *                  @OA\Property(type="integer", property="announcementId"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="object", property="orderLogs")
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): JsonResponse
+    {
+        $result = $this->orderService->getSpecificAnnouncementOrderByIdForSupplier($id);
+
+        return $this->response($result, self::FETCH);
+    }
 }
