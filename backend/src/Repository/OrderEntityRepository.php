@@ -459,7 +459,29 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+    
+    public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate,string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
 
+        ->select('count(orderEntity.id) as countOrder')
+
+        ->where('orderEntity.state = :state')
+        ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+      
+        ->andWhere('orderEntity.captainId = :captainId')
+        ->setParameter('captainId', $captainId)
+
+        ->andWhere('orderEntity.createdAt >= :fromDate')
+        ->setParameter('fromDate', $fromDate)
+
+        ->andWhere('orderEntity.createdAt <= :toDate')
+        ->setParameter('toDate', $toDate)
+
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+    
     public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')

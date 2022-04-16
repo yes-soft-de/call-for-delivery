@@ -250,7 +250,12 @@ class OrderManager
     public function getDetailOrdersByCaptainId(int $captainId): array
     {
         return $this->orderRepository->getDetailOrdersByCaptainId($captainId);
-    }
+    }    
+    
+    public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderRepository->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }    
 
     public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): ?array
     {

@@ -442,7 +442,12 @@ class OrderService
     public function getDetailOrdersByCaptainId(int $captainId): array
     {
         return $this->orderManager->getDetailOrdersByCaptainId($captainId);
-    }
+    }   
+    
+    public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }   
 
     public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): array
     {

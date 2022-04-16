@@ -62,7 +62,7 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
         //TODO remove comments next time
         // $query->andWhere('captainFinancialSystemDetailEntity.status = :status');
         // $query->setParameter('status', CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE);
-        $item = $query->select('captainFinancialSystemDetailEntity.captainFinancialSystemType')->getQuery()->getOneOrNullResult();
+        $item = $query->addSelect('captainFinancialSystemDetailEntity.captainFinancialSystemType')->getQuery()->getOneOrNullResult();
        
         if($item) {
             if ($item['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
@@ -75,11 +75,11 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
             }
 
             if ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-            
+
                 $query->addSelect('systemTwo.countOrdersInMonth', 'systemTwo.salary', 'systemTwo.monthCompensation', 'systemTwo.bounceMaxCountOrdersInMonth', 'systemTwo.bounceMinCountOrdersInMonth');
                 
                 $query->leftJoin(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, 'systemTwo', Join::WITH, 'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
-        
+                      
                 return $query->getQuery()->getOneOrNullResult();     
             }
         
