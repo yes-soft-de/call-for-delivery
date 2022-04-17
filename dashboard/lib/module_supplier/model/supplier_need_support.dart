@@ -20,7 +20,7 @@ class SupplierNeedSupportModel extends DataModel {
     for (var element in data) {
       _model.add(SupplierNeedSupportModel(
         roomID: element.roomId ?? '-1',
-        image: element.image?.image ?? '',
+        image: element.images?[0].image ?? '',
         captainName: element.captainName ?? '',
         id: element.id?.toString() ?? '',
       ));

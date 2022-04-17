@@ -29,6 +29,8 @@ class AppTypeHelper {
         return 'stores';
       case AppTypeEnum.ALL:
         return 'all';
+      case AppTypeEnum.SUPPLIER:
+        return 'suppliers';
       default:
         return 'all';
     }

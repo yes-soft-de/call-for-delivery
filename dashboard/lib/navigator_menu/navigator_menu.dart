@@ -176,6 +176,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.stores, Icons.storefront_rounded, true),
                   customListTile(getIt<CaptainsModule>().supportScreen,
                       S.current.captains, FontAwesomeIcons.car, true),
+                  customListTile(getIt<SupplierModule>().supportScreen,
+                      S.current.suppliers, FontAwesomeIcons.car, true),
                 ],
                 page: widget.currentPage),
             customExpansionTile(

@@ -3,4 +3,5 @@ class SupplierRoutes {
   static const SUPPLIERS = '/suppliers';
   static const SUPPLIER_PROFILE = '/supplier_profile';
   static const SUPPLIER_SUPPORT = '/supplier_support';
+  static const SUPPLIER_ADS = '/supplier_ads';
 }

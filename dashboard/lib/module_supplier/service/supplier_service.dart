@@ -1,10 +1,13 @@
 import 'package:c4d/module_supplier/manager/supplier_manager.dart';
+import 'package:c4d/module_supplier/model/ads_model.dart';
 import 'package:c4d/module_supplier/model/inActiveModel.dart';
 import 'package:c4d/module_supplier/model/porfile_model.dart';
 import 'package:c4d/module_supplier/model/supplier_need_support.dart';
 import 'package:c4d/module_supplier/request/enable_supplier.dart';
+import 'package:c4d/module_supplier/request/filter_supplier_ads.dart';
 import 'package:c4d/module_supplier/request/update_supplier_request.dart';
 import 'package:c4d/module_supplier/response/in_active_supplier_response.dart';
+import 'package:c4d/module_supplier/response/supplier_ads_response/ads_response.dart';
 import 'package:c4d/module_supplier/response/supplier_profile_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -98,4 +101,18 @@ class SupplierService {
     if (_clients.data == null) return DataModel.empty();
     return SupplierNeedSupportModel.withData(_clients.data!);
   }
+
+  Future<DataModel> getSupplierAds(FilterSupplierAds request) async {
+    AdsResponse? _response = await _manager.getSupplierAds(request);
+    if (_response == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_response.statusCode));
+    }
+    if (_response.data == null) return DataModel.empty();
+    return SupplierAdsModel.withData(_response);
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:c4d/module_supplier/supplier_routes.dart';
+import 'package:c4d/module_supplier/ui/screen/supplier_ads_screen.dart';
 import 'package:c4d/module_supplier/ui/screen/supplier_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -16,12 +17,14 @@ class SupplierModule extends YesModule {
   final SuppliersScreen suppliersScreen;
   final SupplierProfileScreen supplierProfileScreen;
   final SupplierNeedsSupportScreen supportScreen;
+  final SupplierAdsScreen adsScreen;
 
   SupplierModule(
     this.inActiveSupplierScreen,
     this.suppliersScreen,
     this.supplierProfileScreen,
     this.supportScreen,
+      this.adsScreen
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
