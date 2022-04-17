@@ -19,4 +19,6 @@ final class ImageEntityTypeConstant
     const ENTITY_TYPE_SUPPLIER_PROFILE = 5;
 
     const ENTITY_TYPE_ANNOUNCEMENT = 6;
+
+    const ENTITY_TYPE_BID_ORDER = 7;
 }

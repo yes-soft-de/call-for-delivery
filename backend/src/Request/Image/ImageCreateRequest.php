@@ -4,6 +4,7 @@ namespace App\Request\Image;
 
 use App\Entity\AdminProfileEntity;
 use App\Entity\AnnouncementEntity;
+use App\Entity\BidOrderEntity;
 use App\Entity\SupplierProfileEntity;
 
 class ImageCreateRequest
@@ -30,6 +31,11 @@ class ImageCreateRequest
      * @var AnnouncementEntity|null
      */
     private $announcement;
+
+    /**
+     * @var BidOrderEntity|null
+     */
+    private $bidOrder;
 
     public function setImagePath(string $imagePath): void
     {
@@ -64,5 +70,10 @@ class ImageCreateRequest
     public function setAnnouncement(?AnnouncementEntity $announcement): void
     {
         $this->announcement = $announcement;
+    }
+
+    public function setBidOrder(?BidOrderEntity $bidOrder): void
+    {
+        $this->bidOrder = $bidOrder;
     }
 }
