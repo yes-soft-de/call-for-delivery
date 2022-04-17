@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "BalanceHint": MessageLookupByLibrary.simpleMessage(
+            "Here we are showing your balance status"),
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
@@ -38,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
+        "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
@@ -222,10 +225,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Max kilometers"),
         "countOngoingOrders":
             MessageLookupByLibrary.simpleMessage("Ongoing Orders"),
+        "countOrders": MessageLookupByLibrary.simpleMessage("Count orders"),
+        "countOrdersCompleted":
+            MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("Count order in month"),
+        "countOrdersMaxFromNineteen": MessageLookupByLibrary.simpleMessage(
+            "Count orders max from nineteen"),
+        "countOverOrdersThanRequired":
+            MessageLookupByLibrary.simpleMessage("Extra orders than required"),
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
@@ -244,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "dateFinancialCycleEnds":
+            MessageLookupByLibrary.simpleMessage("Date Financial cycle ends"),
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "dayCount": MessageLookupByLibrary.simpleMessage(
             "The number of days of validity of the package"),
@@ -306,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
+        "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
         "favoriteCategories":
@@ -320,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finance by orders"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("Finance on order"),
+        "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -414,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
         "monthCompensation":
             MessageLookupByLibrary.simpleMessage("Month compensation"),
+        "monthTargetSuccess":
+            MessageLookupByLibrary.simpleMessage("Monthly target"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
@@ -749,6 +765,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
         "supplierUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -775,6 +792,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
+        "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
@@ -846,6 +864,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
+        "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
+            "You cannot choose plan right now , please try again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(

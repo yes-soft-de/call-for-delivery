@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "BalanceHint": MessageLookupByLibrary.simpleMessage(
+            "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم"),
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
@@ -38,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
+        "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
@@ -222,10 +225,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحد الأعلى للكيلومترات"),
         "countOngoingOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
+        "countOrders": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "countOrdersCompleted":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
+        "countOrdersMaxFromNineteen": MessageLookupByLibrary.simpleMessage(
+            "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة"),
+        "countOverOrdersThanRequired":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات الإضافية"),
         "countProducts": MessageLookupByLibrary.simpleMessage("عدد المنتجات"),
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
         "countTodayOrder":
@@ -244,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
+        "dateFinancialCycleEnds":
+            MessageLookupByLibrary.simpleMessage("تاريخ انتهاء الدورة المالية"),
         "day": MessageLookupByLibrary.simpleMessage("يوم"),
         "dayCount":
             MessageLookupByLibrary.simpleMessage("عدد أيام صلاحية الباقة"),
@@ -306,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
+        "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
@@ -318,6 +331,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financialDues":
+            MessageLookupByLibrary.simpleMessage("المستحقات المالية"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -410,6 +425,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),
         "monthCompensation":
             MessageLookupByLibrary.simpleMessage("التعويض الشهري"),
+        "monthTargetSuccess":
+            MessageLookupByLibrary.simpleMessage("أهداف الشهر"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعا"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("الأكثر طلبا"),
@@ -745,6 +762,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew":
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),
         "supplierUpdatedSuccessfully":
@@ -771,6 +789,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
+        "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
@@ -845,6 +864,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "withoutTax": MessageLookupByLibrary.simpleMessage(
             "السعر غير شامل القيمة المضافة"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
+        "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(

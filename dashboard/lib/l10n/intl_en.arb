@@ -578,7 +578,23 @@
     "suppliers": "Suppliers",
     "suppliersCategories": "Supplier Categories",
     "categoryImage": "Category image",
-    "supplierUpdatedSuccessfully": "Supplier updated successfully"
+    "supplierUpdatedSuccessfully": "Supplier updated successfully",
+
+    "countOrders": "Count orders",
+    "countOrdersMaxFromNineteen": "Count orders max from nineteen",
+    "financialDues": "Profit",
+    "sumPayments": "Sum payments",
+    "countOverOrdersThanRequired": "Extra orders than required",
+    "monthTargetSuccess": "Monthly target",
+    "countOrdersCompleted": "Count orders completed",
+    "dateFinancialCycleEnds": "Date Financial cycle ends",
+    "achieved": "Achieved",
+    "failed": "Failed",
+    "youCannotChoosePlan": "You cannot choose plan right now , please try again",
+    "BalanceHint": "Here we are showing your balance status",
+    "total": "Total"
+
+
 
 
 
