@@ -103,6 +103,27 @@ class NoticeLoadedState extends States {
           ),
         );
       }
+      else if (currentIndex == 2 &&
+          (element.appType == 'suppliers' || element.appType == 'all')) {
+        widgets.add(
+          NoteCard(
+            title: element.title,
+            msg: element.msg,
+            edit: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return NoticeForm(
+                      request: element,
+                      onSave: (request) {
+                        screenState.updateNotice(request);
+                      },
+                    );
+                  });
+            },
+          ),
+        );
+      }
     }
 
     if (model != null) {
