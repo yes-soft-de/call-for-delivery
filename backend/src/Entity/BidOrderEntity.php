@@ -38,6 +38,9 @@ class BidOrderEntity
     #[ORM\JoinColumn(nullable: false)]
     private $storeOwnerProfile;
 
+    #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: ImageEntity::class)]
+    private $images;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -116,6 +119,36 @@ class BidOrderEntity
     public function setStoreOwnerProfile(?StoreOwnerProfileEntity $storeOwnerProfile): self
     {
         $this->storeOwnerProfile = $storeOwnerProfile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ImageEntity[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ImageEntity $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setBidOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ImageEntity $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getBidOrder() === $this) {
+                $image->setBidOrder(null);
+            }
+        }
 
         return $this;
     }

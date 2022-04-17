@@ -30,7 +30,7 @@ class BidOrderCreateRequest
     /**
      * @var array|null
      */
-    private $images;
+    private $imagesArray;
 
     public function getSupplierCategory(): int|SupplierCategoryEntity
     {
@@ -52,8 +52,8 @@ class BidOrderCreateRequest
         $this->storeOwnerProfile = $storeOwnerProfile;
     }
 
-    public function getImages(): ?array
+    public function getImagesArray(): ?array
     {
-        return $this->images;
+        return $this->imagesArray;
     }
 }

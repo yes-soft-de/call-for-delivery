@@ -8,7 +8,9 @@ use App\Entity\BidOrderEntity;
 use App\Manager\Image\ImageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
+use App\Repository\BidOrderEntityRepository;
 use App\Request\BidOrder\BidOrderCreateRequest;
+use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BidOrderManager
@@ -18,14 +20,17 @@ class BidOrderManager
     private SupplierCategoryManager $supplierCategoryManager;
     private StoreOwnerProfileManager $storeOwnerProfileManager;
     private ImageManager $imageManager;
+    private BidOrderEntityRepository $bidOrderEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierCategoryManager $supplierCategoryManager, StoreOwnerProfileManager $storeOwnerProfileManager, ImageManager $imageManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierCategoryManager $supplierCategoryManager, StoreOwnerProfileManager $storeOwnerProfileManager,
+                                ImageManager $imageManager, BidOrderEntityRepository $bidOrderEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->supplierCategoryManager = $supplierCategoryManager;
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
         $this->imageManager= $imageManager;
+        $this->bidOrderEntityRepository= $bidOrderEntityRepository;
     }
 
     public function createBidOrder(BidOrderCreateRequest $request): string|BidOrderEntity
@@ -45,8 +50,8 @@ class BidOrderManager
         $this->entityManager->persist($bidOrderEntity);
         $this->entityManager->flush();
 
-        if (! empty($request->getImages())) {
-            $this->createBidOrderImages($request->getImages(), $bidOrderEntity);
+        if (! empty($request->getImagesArray())) {
+            $this->createBidOrderImages($request->getImagesArray(), $bidOrderEntity);
         }
 
         return $bidOrderEntity;
@@ -55,5 +60,10 @@ class BidOrderManager
     public function createBidOrderImages(array $images, BidOrderEntity $bidOrderEntity): void
     {
         $this->imageManager->createBidOrderImages($images, $bidOrderEntity);
+    }
+
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
     }
 }

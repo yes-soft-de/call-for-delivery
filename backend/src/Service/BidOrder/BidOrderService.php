@@ -7,7 +7,9 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
 use App\Manager\BidOrder\BidOrderManager;
 use App\Request\BidOrder\BidOrderCreateRequest;
+use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use App\Response\BidOrder\BidOrderCreateResponse;
+use App\Response\BidOrder\BidOrderFilterBySupplierResponse;
 
 class BidOrderService
 {
@@ -29,5 +31,20 @@ class BidOrderService
         }
 
         return $this->autoMapping->map(BidOrderEntity::class, BidOrderCreateResponse::class, $bidOrderResult);
+    }
+
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->bidOrderManager->filterBidOrdersBySupplier($request);
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
     }
 }
