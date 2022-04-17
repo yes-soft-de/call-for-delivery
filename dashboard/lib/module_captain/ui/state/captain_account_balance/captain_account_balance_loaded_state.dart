@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -18,7 +19,13 @@ class AccountBalanceStateLoaded extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.myBalance),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.myBalance, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_TO_CAPTAIN,
+              arguments: screenState.captainID);
+        }, icon: Icons.account_balance_rounded),
+      ]),
       body: CustomListView.custom(
         children: [
           Padding(
