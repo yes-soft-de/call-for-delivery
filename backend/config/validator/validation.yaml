@@ -447,3 +447,10 @@ App\Request\AnnouncementOrderDetails\AnnouncementOrderPriceOfferValueUpdateReque
     properties:
         id:
             - NotBlank: ~
+
+App\Request\BidOrder\BidOrderCreateRequest:
+    properties:
+        supplierCategory:
+            - NotBlank: ~
+        storeOwnerProfile:
+            - NotBlank: ~
