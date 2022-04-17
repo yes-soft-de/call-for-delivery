@@ -15,6 +15,7 @@ class Urls {
   static const String BASE_API_COMPANY = DOMAIN + VERSION + '/company';
   static const String BASE_API_SUPPLIER_CATE = DOMAIN + VERSION_ADMIN + '/suppliercategory';
   static const String BASE_API_SUPPLIER = DOMAIN + VERSION_ADMIN + '/supplierprofile';
+  static const String BASE_API_ANNOUNCEMENT = DOMAIN + VERSION_ADMIN + '/announcement';
 
   static const String BASE_API_BRANCH_ADMIN =
       DOMAIN + VERSION_ADMIN + '/storeownerbranch';
@@ -165,4 +166,7 @@ class Urls {
   static const ACTIVE_SUPPLIER = BASE_API_SUPPLIER + '/supplierprofilestatus';
   static const GET_SUPPLIER_PROFILE = BASE_API_SUPPLIER + '/supplierprofilebyid/';
 
+  /*-----------------Supplier--announcement-----------------------------*/
+  static const GET_ANNOUNCEMENT = BASE_API_ANNOUNCEMENT + '/filterannouncement';
+  static const ACTIVE_ANNOUNCEMENT = BASE_API_ANNOUNCEMENT + '/announcementadministrationstatus';
 }
