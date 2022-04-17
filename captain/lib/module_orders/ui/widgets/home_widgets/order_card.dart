@@ -90,7 +90,7 @@ class OrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color:Theme.of(context).textTheme.button?.color),
+              color: Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
@@ -126,7 +126,8 @@ class OrderCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button?.color ?? Colors.white;
+    Color dividerColor =
+        Theme.of(context).textTheme.button?.color ?? Colors.white;
     return Divider(
       height: 8,
       thickness: 1.5,
@@ -239,7 +240,8 @@ class NearbyOrdersCard extends StatelessWidget {
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button?.color ?? Colors.white;
+    Color dividerColor =
+        Theme.of(context).textTheme.button?.color ?? Colors.white;
     return Divider(
       height: 8,
       thickness: 1.5,

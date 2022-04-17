@@ -29,8 +29,7 @@ class ProfileModel {
       this.age,
       this.isOnline,
       this.averageRating,
-      this.roomID
-      });
+      this.roomID});
 
   String? _error;
   bool _empty = false;
@@ -54,8 +53,7 @@ class ProfileModel {
         identity: data.identity?.imageUrl,
         isOnline: data.isOnline,
         averageRating: data.rate ?? 0,
-        roomID: data.roomID
-        );
+        roomID: data.roomID);
   }
   bool get hasError => _error != null;
   bool get empty => _empty;

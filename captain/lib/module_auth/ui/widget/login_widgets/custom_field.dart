@@ -70,12 +70,12 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
               Visibility(
                   visible: widget.preIcon != null,
                   child: SizedBox(
-                    width: 45,
-                    child: widget.preIcon ?? const SizedBox())),
+                      width: 45, child: widget.preIcon ?? const SizedBox())),
               Expanded(
                 child: Padding(
-                  padding:
-                      !clean ? const EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+                  padding: !clean
+                      ? const EdgeInsets.only(bottom: 8.0)
+                      : EdgeInsets.zero,
                   child: SizedBox(
                     height: widget.height,
                     child: TextFormField(

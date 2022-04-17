@@ -26,6 +26,7 @@ class ProfileManager {
       _repository.changeCaptainStatus(isOnline);
 
   Future<List<Terms>?> getTerms() => _repository.getTerms();
-  Future<CaptainPaymentsResponse?> getStoreBalance(CaptainPaymentRequest request) => _repository.getStoreAccountBalance(request);
-
+  Future<CaptainPaymentsResponse?> getStoreBalance(
+          CaptainPaymentRequest request) =>
+      _repository.getStoreAccountBalance(request);
 }

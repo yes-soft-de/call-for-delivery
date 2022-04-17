@@ -625,7 +625,32 @@
     "currentRating": "Your current rating by this store is",
     "branchPhone": "Branch Phone",
     "HisComment": "His Comment",
-    "collectedPaymentNote": "Collected payment note"
+    "collectedPaymentNote": "Collected payment note",
+    "planByHours": "Plan by hours",
+    "planByOrders": "Plan by orders",
+    "planByOrderCount": "Plan on order count",
+    "planHint": "In this screen you can see our work planes ",
+    "chooseYourPlan": "Please choose your plan",
+    "captainFinance": "Captain Finance",
+    "financeByOrders": "Finance by orders",
+    "financeByHours": "Finance by hours",
+    "financeCountOrder": "Finance on order",
+    "bounceCountOrdersInMonth": "Orders in month",
+    "amount": "Amount",
+    "countKilometersFrom": "Minimum kilometers",
+    "countKilometersTo": "Max kilometers",
+    "addWorkPackage": "Add work plan",
+    "countHours": "Count Hours",
+    "compensationForEveryOrder": "Compensation for every order",
+    "countOrdersInMonth": "Count order in month",
+    "monthCompensation": "Month compensation",
+    "bounceMaxCountOrdersInMonth": "Bounce max count orders in month",
+    "bounceMinCountOrdersInMonth": "Bounce min count orders in month",
+    "captainPayments": "Captain Payments",
+    "salary": "Salary",
+    "pleaseWaitAdministrationToAccept": "Please wait administration to accept"
+
+
 
 
 

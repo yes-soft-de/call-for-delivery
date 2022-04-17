@@ -66,8 +66,10 @@ class ProfileService {
   Future<List<Terms>?> getTerms() async {
     return await _manager.getTerms();
   }
-    Future<DataModel> getCaptainPayments(CaptainPaymentRequest request) async {
-    CaptainPaymentsResponse? actionResponse = await _manager.getStoreBalance(request);
+
+  Future<DataModel> getCaptainPayments(CaptainPaymentRequest request) async {
+    CaptainPaymentsResponse? actionResponse =
+        await _manager.getStoreBalance(request);
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }

@@ -42,7 +42,8 @@ class BillCard extends StatelessWidget {
                 Expanded(
                     child: CustomListTile(
                         title: S.of(context).orderPrice,
-                        subtitle: '${orderCost.toStringAsFixed(2)} ${S.of(context).sar}')),
+                        subtitle:
+                            '${orderCost.toStringAsFixed(2)} ${S.of(context).sar}')),
                 Expanded(
                     child: CustomListTile(
                   title: S.of(context).deliverPrice,

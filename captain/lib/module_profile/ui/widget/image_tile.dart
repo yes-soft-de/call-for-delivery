@@ -1,5 +1,6 @@
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
+
 class ImageTile extends StatelessWidget {
   final String title;
   final String image;

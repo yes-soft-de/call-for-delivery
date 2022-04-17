@@ -5,7 +5,11 @@ class OrderInvoiceRequest {
   int? isBilled;
   String? storeID;
   OrderInvoiceRequest(
-      {this.orderNumber, this.invoiceAmount, this.invoiceImage, this.isBilled,this.storeID});
+      {this.orderNumber,
+      this.invoiceAmount,
+      this.invoiceImage,
+      this.isBilled,
+      this.storeID});
 
   OrderInvoiceRequest.fromJson(dynamic json) {
     orderNumber = json['orderNumber'];

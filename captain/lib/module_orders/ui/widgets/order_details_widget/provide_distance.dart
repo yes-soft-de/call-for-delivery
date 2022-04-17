@@ -17,8 +17,7 @@ class ProvideDistance extends StatelessWidget {
       required this.controller2,
       this.payment = true,
       this.onChanged,
-     required this.thirdField
-      })
+      required this.thirdField})
       : super(key: key);
 
   @override
@@ -53,7 +52,7 @@ class ProvideDistance extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:8.0),
+                padding: const EdgeInsets.only(top: 8.0),
                 child: thirdField,
               )
             ],

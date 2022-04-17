@@ -1,5 +1,6 @@
 import 'package:c4d/module_init/init_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -55,8 +56,8 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           loginResult.statusCode ?? '0'));
     }
-    RegisterResponse? response =
-        await _authManager.userTypeCheck('ROLE_CAPTAIN', loginResult.token ?? '');
+    RegisterResponse? response = await _authManager.userTypeCheck(
+        'ROLE_CAPTAIN', loginResult.token ?? '');
     if (response?.statusCode != '201') {
       await logout();
       _authSubject.addError(
@@ -239,6 +240,11 @@ class AuthService {
         case '9103':
           _prefsHelper
               .setUserCompetedProfile(InitAccountRoutes.INIT_ACCOUNT_SCREEN);
+          break;
+        // captain plan
+        case '9104':
+          _prefsHelper
+              .setUserCompetedProfile(PlanRoutes.PLAN_ROUTE);
           break;
         default:
           _prefsHelper

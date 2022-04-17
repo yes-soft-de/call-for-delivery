@@ -37,7 +37,6 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
     widget._stateManager.deleteNotifications(this, notification);
   }
 
-
   void goToLogin() {
     Navigator.of(context)
         .pushNamed(AuthorizationRoutes.LOGIN_SCREEN, arguments: 3);

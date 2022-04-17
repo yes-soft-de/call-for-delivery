@@ -84,8 +84,8 @@ class UpdatesLoadedState extends States {
             return screenState.getNotices();
           },
           child: ListView(
-            physics:
-                const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             children: [
               Visibility(
                 visible: screenState.markerMode == false,
@@ -219,7 +219,7 @@ class UpdatesLoadedState extends States {
                           color: Colors.amber[100]),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child:  Icon(
+                        child: Icon(
                           Icons.notifications_active_rounded,
                           color: Colors.amber,
                         ),

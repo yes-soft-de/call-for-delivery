@@ -15,7 +15,8 @@ class Urls {
   static const UPDATE_PASSWORD = BASE_API + '/updatepassword';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
-  static const NOTIFICATION_API = DOMAIN + '/v1/notificationtoken/notificationtoken';
+  static const NOTIFICATION_API =
+      DOMAIN + '/v1/notificationtoken/notificationtoken';
   static const COMPANYINFO_API = BASE_API + '/companyinfoforuser';
   static const NOTIFICATIONNEWCHAT_API =
       BASE_API + '/v1/notificationfirbase/notificationnewchatbyuserid';
@@ -27,7 +28,8 @@ class Urls {
   static const CREATE_CAPTAIN_PROFILE =
       BASE_API + '/v1/captain/captainprofilupdate';
   static const CAPTAIN_ACTIVE_STATUS_API = BASE_API + '/captain';
-  static const CHANGE_CAPTAIN_PROFILE_STATUS_API = BASE_API + '/v1/captain/captainprofileupdateisonline';
+  static const CHANGE_CAPTAIN_PROFILE_STATUS_API =
+      BASE_API + '/v1/captain/captainprofileupdateisonline';
   static const ORDER_STATUS_API = BASE_API + '/v1/order/captainorder/';
   static const NEARBY_ORDERS_API = BASE_API + '/v1/order/closestorders';
   static const CAPTAIN_ACCEPTED_ORDERS_API =
@@ -198,7 +200,17 @@ class Urls {
       DOMAIN + '/v1/subscription/packagebalance';
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
-  static const FILTER_CAPTAIN_ORDERS_API = DOMAIN + '/v1/order/filterordersbycaptain';
-  static const CREATE_CHATROOM_BEFORE_ACCEPT = DOMAIN + '/v1/orderchatroom/createneworderchatroom';
-
+  static const FILTER_CAPTAIN_ORDERS_API =
+      DOMAIN + '/v1/order/filterordersbycaptain';
+  static const CREATE_CHATROOM_BEFORE_ACCEPT =
+      DOMAIN + '/v1/orderchatroom/createneworderchatroom';
+  /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
+  static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +
+      '/v1/captainfinancialsystemaccordingnorder/captainfinancialsystemaccordingonorder';
+  static const GET_CAPTAIN_FINANCE_BY_HOURS = DOMAIN +
+      '/v1/captainfinancialsystemaccordingtocountofhours/captainfinancialsystemaccordingtocountofhours';
+  static const GET_CAPTAIN_FINANCE_BY_COUNT_ORDER = DOMAIN +
+      '/v1/captainfinancialsystemaccordingntocountoforders/captainfinancialsystemaccordingtocountoforders';
+  static const CREATE_CAPTAIN_FINANCE = DOMAIN +
+      '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 }

@@ -50,7 +50,7 @@ class ProfileRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       Urls.CHANGE_CAPTAIN_PROFILE_STATUS_API,
-      {'isOnline': status ? '1': '0'},
+      {'isOnline': status ? '1' : '0'},
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );
 
@@ -70,10 +70,12 @@ class ProfileRepository {
 
     return TermsResponse.fromJson(response).data;
   }
-  Future<CaptainPaymentsResponse?> getStoreAccountBalance(CaptainPaymentRequest request) async {
+
+  Future<CaptainPaymentsResponse?> getStoreAccountBalance(
+      CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.GET_ACCOUNT_BALANCE_CAPTAIN,request.toJson(),
+        Urls.GET_ACCOUNT_BALANCE_CAPTAIN, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainPaymentsResponse.fromJson(response);
