@@ -6,10 +6,11 @@ import 'package:c4d/module_supplier/request/filter_supplier_ads.dart';
 import 'package:c4d/module_supplier/state_manager/supplier_ads_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class SupplierAdsScreen extends StatefulWidget {
   final SupplierAdsStateManager _stateManager;
-
 
   SupplierAdsScreen(this._stateManager);
 
@@ -24,7 +25,6 @@ class SupplierAdsScreenState extends State<SupplierAdsScreen> {
   void refresh() {
     if (mounted) setState(() {});
   }
-
 
   @override
   void initState() {
@@ -42,14 +42,15 @@ class SupplierAdsScreenState extends State<SupplierAdsScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         supplierProfileId = arg;
-        widget._stateManager.getSupplierAds(this, FilterSupplierAds(supplierProfileId: supplierProfileId));
+        widget._stateManager.getSupplierAds(
+            this, FilterSupplierAds(supplierProfileId: supplierProfileId));
       }
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.of(context).suppliers, icon: Icons.menu, onTap: () {
-            GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-          }),
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: _currentState.getUI(context),
     );
   }

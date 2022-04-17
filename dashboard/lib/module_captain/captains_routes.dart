@@ -4,4 +4,5 @@ class CaptainsRoutes {
   static const CAPTAINS = '/captains';
   static const CAPTAIN_PROFILE = '/captain_profile';
   static const CAPTAIN_SUPPORT = '/captains_support';
+  static const CAPTAIN_BALANCE = '/captains_balance';
 }
