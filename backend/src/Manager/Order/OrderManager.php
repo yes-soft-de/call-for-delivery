@@ -261,4 +261,9 @@ class OrderManager
     {
         return $this->orderRepository->filterAnnouncementOrdersBySupplier($request);
     }
+
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+    {
+        return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    }
 }

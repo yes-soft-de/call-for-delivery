@@ -49,6 +49,6 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
     
     public function getCaptainFinancialSystemAccordingOnOrder(): array
     {
-       return $this->adminCaptainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
+       return $this->adminCaptainFinancialSystemAccordingOnOrderManager->getCaptainFinancialSystemAccordingOnOrder();
     } 
 }

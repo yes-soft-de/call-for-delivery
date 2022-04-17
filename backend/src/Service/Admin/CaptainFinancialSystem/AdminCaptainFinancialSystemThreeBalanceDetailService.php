@@ -18,41 +18,72 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function getBalanceDetailWithSystemThree(array $financialSystemDetails, int $captainId, float $sumPayments)
+    public function getBalanceDetailWithSystemThree(array $financialSystemDetails, array $financialSystemThreeDetails, int $captainId, float $sumPayments) : array
     {
-        $countOrdersCompletedInCategory = 0;
-          //get Count Orders
-          $countOrders = $this->orderService->getCountOrdersByCaptainId($captainId);
-          //get Orders Details
-          $detailsOrders = $this->orderService->getDetailOrdersByCaptainId($captainId);
-          foreach ($detailsOrders as $detailOrder) {
-            foreach ($financialSystemDetails as $financialSystemDetail) {
-                if($detailOrder['kilometer'] >= $financialSystemDetail->getCountKilometersFrom() && $detailOrder['kilometer'] <= $financialSystemDetail->getCountKilometersTo()) {
-                    $detailOrder['amount'] = $financialSystemDetail->getAmount();
-                    $detailOrder['bounce'] = $financialSystemDetail->getBounce();
-                    $detailOrder['bounceCountOrdersInMonth'] = $financialSystemDetail->getBounceCountOrdersInMonth();
-                    $detailOrder['categoryName'] = $financialSystemDetail->getCategoryName();
-                    $detailOrder['countOrdersCompletedInCategory'] = $countOrdersCompletedInCategory + 1;
+        $date = $financialSystemDetails['updatedAt'];
+        $fromDate = $date->format('Y-m-d');
+        $toDate = $date->modify('+30 day')->format('Y-m-d');
+      
+        $financialAccountDetails = [];
+
+        foreach ($financialSystemThreeDetails as $financialSystemThreeDetail) {
+             
+                //get the number of orders arranged according to the categories of the financial system
+                $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $fromDate, $toDate);
+               //Amount payable to the captain in the absence of a bounce
+                $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
+               //cont Order Completed
+                $financialSystemThreeDetail['contOrderCompleted'] = $countOrders['countOrder'];
+                //If the category offers bonus
+                if($financialSystemThreeDetail['bounceCountOrdersInMonth']) {
+                    //Remaining number of orders to get the bounce    
+                    $financialSystemThreeDetail['countOfOrdersLeft'] = $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'] ;
+                    //Motivational message
+                    $financialSystemThreeDetail['message'] = CaptainFinancialSystem::COUNT_REMAINING_ORDER." ".$financialSystemThreeDetail['countOfOrdersLeft']." ".CaptainFinancialSystem::FOR_BOUNCE." ".$financialSystemThreeDetail['bounce'];
+                    //If the captain's achieve the order number of orders to get the bounce
+                    if($financialSystemThreeDetail['contOrderCompleted'] >= $financialSystemThreeDetail['bounceCountOrdersInMonth']) {
+                        $financialSystemThreeDetail['captainBounce'] = $financialSystemThreeDetail['bounce'];
+                        //Amount owed to the captain with bonus
+                        $financialSystemThreeDetail['captainTotalCategory'] = $financialSystemThreeDetail['bounce'] +  $financialSystemThreeDetail['captainTotalCategory'];
+                        //A congratulatory message
+                        $financialSystemThreeDetail['message'] = CaptainFinancialSystem::CAPTAIN_GOT_BOUNCE_ADMIN." ".$financialSystemThreeDetail['bounce'];
+                    }
                 }
+
+                $financialAccountDetails[] = $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingOnOrderBalanceDetailResponse::class,  $financialSystemThreeDetail);
             }
-            $arr[] = $detailOrder;
-          }
-          dd ($arr);       
+         
+          $finalFinancialAccount = $this->getFinalFinancialAccount($sumPayments, $financialAccountDetails);
+          
+          return [
+            "financialAccountDetails" => $financialAccountDetails ,
+            "finalFinancialAccount" => $finalFinancialAccount
+        ];
+    }
+
+    public function getCountOrdersByFinancialSystemThree(int $captainId, array $financialSystemThreeDetail, $fromDate, $toDate)
+    {
+        return $this->orderService->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+    }
+
+    public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails): array
+    {
+        $finalFinancialAccount = [];
+
+        $finalFinancialAccount['financialDues'] = array_sum(array_map(fn ($financialAccountDetail) => $financialAccountDetail->captainTotalCategory, $financialAccountDetails));
+         
+        $finalFinancialAccount['sumPayments'] = $sumPayments;
        
+        $total = $sumPayments - $finalFinancialAccount['financialDues'];
        
-       
-        // $total = $sumPayments - $financialSystemDetail['financialDues'];
+        $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+    
+        if($total <= 0 ) {
+            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+        }
 
+        $finalFinancialAccount['total'] = abs($total);
 
-
-        // $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
-        
-        // if($total <= 0 ) {
-        //     $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
-        // }
-
-        // $financialSystemDetail['total'] = abs($total);
-
-        // return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingOnOrderBalanceDetailResponse::class, $financialSystemDetail);
+        return $finalFinancialAccount;
     }
 }

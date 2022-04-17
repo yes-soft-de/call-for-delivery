@@ -45,32 +45,13 @@ class CaptainFinancialSystemAccordingOnOrderEntityRepository extends ServiceEnti
         }
     }
 
-    // /**
-    //  * @return CaptainFinancialSystemAccordingOnOrderEntity[] Returns an array of CaptainFinancialSystemAccordingOnOrderEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCaptainFinancialSystemAccordingOnOrder(): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('CaptainFinancialSystemAccordingOnOrderEntity')
+            ->select('CaptainFinancialSystemAccordingOnOrderEntity.id', 'CaptainFinancialSystemAccordingOnOrderEntity.categoryName', 'CaptainFinancialSystemAccordingOnOrderEntity.countKilometersFrom', 'CaptainFinancialSystemAccordingOnOrderEntity.countKilometersTo', 'CaptainFinancialSystemAccordingOnOrderEntity.amount', 'CaptainFinancialSystemAccordingOnOrderEntity.bounce', 'CaptainFinancialSystemAccordingOnOrderEntity.bounceCountOrdersInMonth')
+            
             ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?CaptainFinancialSystemAccordingOnOrderEntity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

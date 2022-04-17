@@ -460,5 +460,10 @@ class OrderService
         }
 
         return $response;
-    }
+    } 
+    
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    } 
 }
