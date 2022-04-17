@@ -196,4 +196,50 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
+  /* UPDATE */
+  Future<DataModel> updateCaptainFinanceByOrder(
+      CreateCaptainFinanceByOrderRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.updateCaptainFinanceByOrder(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateCaptainFinanceByHour(
+      CreateCaptainFinanceByHoursRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.updateCaptainFinanceByHour(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateCaptainFinanceByOrderCounts(
+      CreateCaptainFinanceByCountOrderRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.updateCaptainFinanceByOrderCounts(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
 }

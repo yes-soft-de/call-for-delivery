@@ -42,6 +42,16 @@ class PaymentsManager {
   Future<ActionResponse?> createCaptainFinanceByOrderCounts(
           CreateCaptainFinanceByCountOrderRequest request) =>
       _paymentsRepository.createCaptainFinanceByOrderCounts(request);
+       /* UPDATE */
+  Future<ActionResponse?> updateCaptainFinanceByOrder(
+          CreateCaptainFinanceByOrderRequest request) =>
+      _paymentsRepository.updateCaptainFinanceByOrder(request);
+  Future<ActionResponse?> updateCaptainFinanceByHour(
+          CreateCaptainFinanceByHoursRequest request) =>
+      _paymentsRepository.updateCaptainFinanceByHour(request);
+  Future<ActionResponse?> updateCaptainFinanceByOrderCounts(
+          CreateCaptainFinanceByCountOrderRequest request) =>
+      _paymentsRepository.updateCaptainFinanceByOrderCounts(request);
 
   /* ---------------------------------- CAPTAIN PAYMENTS --------------------------------------- */
   Future<CaptainPaymentsResponse?> getAccountBalance(int captainId) async =>

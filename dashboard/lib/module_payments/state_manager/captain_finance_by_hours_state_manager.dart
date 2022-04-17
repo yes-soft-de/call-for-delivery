@@ -1,7 +1,5 @@
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
-import 'package:c4d/module_payments/model/store_balance_model.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
-import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/service/payments_service.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.dart';
 import 'package:c4d/module_payments/ui/state/captain_finance/captain_fianance_by_hours_state.dart';
@@ -57,6 +55,26 @@ class CaptainFinanceByHoursStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.addPackageSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void updateFinance(CaptainFinanceByHoursScreenState screenState,
+      CreateCaptainFinanceByHoursRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _storePaymentsService.updateCaptainFinanceByHour(request).then((value) {
+      if (value.hasError) {
+        getFinances(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getFinances(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: value.error ?? S.current.updatePackageSuccessfully)
             .show(screenState.context);
       }
     });

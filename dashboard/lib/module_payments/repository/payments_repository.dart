@@ -136,4 +136,34 @@ class PaymentsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+   /* UPDATE */
+  Future<ActionResponse?> updateCaptainFinanceByOrder(
+      CreateCaptainFinanceByOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDERS, request.toJsonWithID(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateCaptainFinanceByHour(
+      CreateCaptainFinanceByHoursRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.GET_CAPTAIN_FINANCE_BY_HOURS, request.toJsonWithID(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateCaptainFinanceByOrderCounts(
+      CreateCaptainFinanceByCountOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS, request.toJsonWithID(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }
