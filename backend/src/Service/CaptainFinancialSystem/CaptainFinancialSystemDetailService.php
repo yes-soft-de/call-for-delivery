@@ -13,6 +13,8 @@ use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOneBalanceDetailService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwoBalanceDetailService;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThreeBalanceDetailService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemAccordingOnOrderService;
 
 class CaptainFinancialSystemDetailService
 {
@@ -21,14 +23,18 @@ class CaptainFinancialSystemDetailService
     private CaptainPaymentService $captainPaymentService;
     private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService;
     private CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService;
+    private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService;
+    private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->autoMapping = $autoMapping;
         $this->captainPaymentService = $captainPaymentService;
         $this->captainFinancialSystemOneBalanceDetailService = $captainFinancialSystemOneBalanceDetailService;
         $this->captainFinancialSystemTwoBalanceDetailService = $captainFinancialSystemTwoBalanceDetailService;
+        $this->captainFinancialSystemThreeBalanceDetailService = $captainFinancialSystemThreeBalanceDetailService;
+        $this->captainFinancialSystemAccordingOnOrderService = $captainFinancialSystemAccordingOnOrderService;
     }
 
     public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailResponse|string
@@ -42,7 +48,7 @@ class CaptainFinancialSystemDetailService
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 
-    public function getBalanceDetailForCaptain(int $userId):CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
+    public function getBalanceDetailForCaptain(int $userId):CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
@@ -64,6 +70,13 @@ class CaptainFinancialSystemDetailService
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 return $this->captainFinancialSystemTwoBalanceDetailService->getBalanceDetailWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments);
+            }
+
+            if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
+              
+                $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
+                       
+                return $this->captainFinancialSystemThreeBalanceDetailService->getBalanceDetailWithSystemThree($financialSystemDetail, $choseFinancialSystemDetails, $financialSystemDetail['captainId'], $sumPayments);
             }
         }
 
