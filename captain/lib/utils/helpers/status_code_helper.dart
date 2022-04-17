@@ -37,6 +37,8 @@ class StatusCodeHelper {
         return S.current.captainAccountInActive;
       case '9306':
         return S.current.storeCarsFinished;
+      case '9602':
+        return S.current.youCannotChoosePlan;
       case '-1':
         return S.current.dataDecodeError;
       default:

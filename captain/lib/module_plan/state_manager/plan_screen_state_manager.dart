@@ -124,7 +124,8 @@ class PlanScreenStateManager {
         ));
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.pleaseWaitAdministrationToAccept)
+                title: S.current.warnning,
+                message: S.current.pleaseWaitAdministrationToAccept)
             .show(screenState.context);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);
