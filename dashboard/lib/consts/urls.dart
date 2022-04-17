@@ -122,6 +122,8 @@ class Urls {
       BASE_API_CHAT_ROM + '/chatroomswithstores';
   static const GET_CHAT_ROOMS_CAPTAINS =
       BASE_API_CHAT_ROM + '/chatroomswithcaptains';
+  static const GET_CHAT_ROOMS_SUPPLIER =
+      BASE_API_CHAT_ROM + '/chatroomswithsuppliers';
 
   /*-------------------captainsOffer--------------*/
   static const GET_CAPTAIN_OFFERS =

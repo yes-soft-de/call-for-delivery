@@ -69,7 +69,7 @@ class SupplierRepository {
 
   Future<SupplierNeedSupportResponse?> getSupplierSupport() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_CAPTAINS,
+    dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_SUPPLIER,
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return SupplierNeedSupportResponse.fromJson(response);
