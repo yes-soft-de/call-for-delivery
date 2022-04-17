@@ -4,6 +4,7 @@ namespace App\Controller\CompanyInfo;
 
 use App\AutoMapping;
 use App\Constant\CompanyInfo\CompanyInfoConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
 use App\Request\CompanyInfo\CompanyInfoCreateRequest;
 use App\Request\CompanyInfo\CompanyInfoUpdateRequest;
@@ -240,6 +241,7 @@ class CompanyInfoController extends BaseController
 
     /**
      * @Route("companyinfoforuser", name="getCompanyInfoForUser", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      * @return JsonResponse
      *
      * @OA\Tag(name="Company Info")
@@ -279,11 +281,14 @@ class CompanyInfoController extends BaseController
     {
         $result = [];
 
-        if ($this->isGranted('ROLE_OWNER')) {
+        if ($this->isGranted(UserRoleConstant::ROLE_OWNER)) {
             $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_STORE_OWNER, $this->getUserId());
 
-        } elseif ($this->isGranted('ROLE_CAPTAIN')) {
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_CAPTAIN)) {
             $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_CAPTAIN, $this->getUserId());
+
+        } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
+            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_SUPPLIER, $this->getUserId());
         }
 
         return $this->response($result, self::FETCH);

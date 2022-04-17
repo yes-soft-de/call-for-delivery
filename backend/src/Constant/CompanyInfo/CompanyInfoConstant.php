@@ -11,4 +11,6 @@ final class CompanyInfoConstant
     const COMPANY_INFO_REQUIRED_BY_STORE_OWNER = "companyInfoRequiredByStoreOwner";
 
     const COMPANY_INFO_REQUIRED_BY_CAPTAIN = "companyInfoRequiredByCaptain";
+
+    const COMPANY_INFO_REQUIRED_BY_SUPPLIER = "companyInfoRequiredBySupplier";
 }

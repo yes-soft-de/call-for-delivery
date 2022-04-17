@@ -24,6 +24,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\RateEntity;
+use App\Entity\SupplierProfileEntity;
+
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method OrderEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -505,7 +507,14 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'announcementEntity.id = announcementOrderDetailsEntity.announcement'
             )
 
-            ->andWhere('announcementEntity.supplier = :supplierId')
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = announcementEntity.supplier'
+            )
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $request->getSupplierId())
 
             ->leftJoin(
@@ -574,5 +583,49 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         ->getQuery()
         ->getOneOrNullResult();
+    }
+    
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
+                'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
+            ->addSelect('announcementOrderDetailsEntity.id as announcementOrderDetailsId', 'announcementOrderDetailsEntity.priceOfferValue', 'announcementOrderDetailsEntity.priceOfferStatus')
+            ->addSelect('announcementEntity.id as announcementId')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                AnnouncementOrderDetailsEntity::class,
+                'announcementOrderDetailsEntity',
+                Join::WITH,
+                'announcementOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                AnnouncementEntity::class,
+                'announcementEntity',
+                Join::WITH,
+                'announcementEntity.id = announcementOrderDetailsEntity.announcement'
+            )
+
+            ->andWhere('orderEntity.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

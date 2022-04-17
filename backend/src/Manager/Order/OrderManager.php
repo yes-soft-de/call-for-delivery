@@ -266,4 +266,9 @@ class OrderManager
     {
         return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
+    
+    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
+    {
+        return $this->orderRepository->getSpecificAnnouncementOrderByIdForSupplier($id);
+    }
 }
