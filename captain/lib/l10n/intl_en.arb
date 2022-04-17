@@ -648,7 +648,20 @@
     "bounceMinCountOrdersInMonth": "Bounce min count orders in month",
     "captainPayments": "Captain Payments",
     "salary": "Salary",
-    "pleaseWaitAdministrationToAccept": "Please wait administration to accept"
+    "pleaseWaitAdministrationToAccept": "Please wait administration to accept",
+    "countOrders": "Count orders",
+    "countOrdersMaxFromNineteen": "Count orders max from nineteen",
+    "financialDues": "Profit",
+    "sumPayments": "Sum payments",
+    "countOverOrdersThanRequired": "Extra orders than required",
+    "monthTargetSuccess": "Monthly target",
+    "countOrdersCompleted": "Count orders completed",
+    "dateFinancialCycleEnds": "Date Financial cycle ends",
+    "achieved": "Achieved",
+    "failed": "Failed",
+    "youCannotChoosePlan": "You cannot choose plan right now , please try again"
+
+
 
 
 
