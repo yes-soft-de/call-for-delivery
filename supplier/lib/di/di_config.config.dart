@@ -66,20 +66,20 @@ import '../module_notifications/service/fire_notification_service/fire_notificat
     as _i40;
 import '../module_notifications/service/local_notification_service/local_notification_service.dart'
     as _i7;
-import '../module_orders/hive/order_hive_helper.dart' as _i12;
-import '../module_orders/manager/orders_manager/orders_manager.dart' as _i30;
-import '../module_orders/orders_module.dart' as _i76;
-import '../module_orders/repository/order_repository/order_repository.dart'
+import '../module_bid_orders/hive/order_hive_helper.dart' as _i12;
+import '../module_bid_orders/manager/orders_manager/orders_manager.dart' as _i30;
+import '../module_bid_orders/bid_orders_module.dart' as _i76;
+import '../module_bid_orders/repository/order_repository/order_repository.dart'
     as _i29;
-import '../module_orders/service/orders/orders.service.dart' as _i58;
-import '../module_orders/state_manager/order_logs_state_manager.dart' as _i68;
-import '../module_orders/state_manager/order_time_line_state_manager.dart'
+import '../module_bid_orders/service/orders/orders.service.dart' as _i58;
+import '../module_bid_orders/state_manager/order_logs_state_manager.dart' as _i68;
+import '../module_bid_orders/state_manager/order_time_line_state_manager.dart'
     as _i69;
-import '../module_orders/state_manager/owner_orders/owner_orders.state_manager.dart'
+import '../module_bid_orders/state_manager/owner_orders/owner_orders.state_manager.dart'
     as _i59;
-import '../module_orders/ui/screens/order_logs_screen.dart' as _i74;
-import '../module_orders/ui/screens/order_time_line_screen.dart' as _i75;
-import '../module_orders/ui/screens/orders/owner_orders_screen.dart' as _i70;
+import '../module_bid_orders/ui/screens/order_logs_screen.dart' as _i74;
+import '../module_bid_orders/ui/screens/order_time_line_screen.dart' as _i75;
+import '../module_bid_orders/ui/screens/orders/owner_orders_screen.dart' as _i70;
 import '../module_profile/manager/category/category_manager.dart' as _i35;
 import '../module_profile/manager/profile/profile.manager.dart' as _i45;
 import '../module_profile/module_profile.dart' as _i71;

@@ -3,7 +3,7 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_my_notifications/model/notification_model.dart';
-import 'package:c4d/module_orders/service/orders/orders.service.dart';
+import 'package:c4d/module_bid_orders/service/orders/orders.service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

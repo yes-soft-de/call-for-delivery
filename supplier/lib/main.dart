@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
 import 'package:c4d/module_my_notifications/my_notifications_module.dart';
-import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_bid_orders/bid_orders_module.dart';
 import 'package:c4d/module_profile/module_profile.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
@@ -87,7 +87,7 @@ class MyApp extends StatefulWidget {
   final SettingsModule _settingsModule;
   final ChatModule _chatModule;
   final AboutModule _aboutModule;
-  final OrdersModule _ordersModule;
+  final BidOrdersModule _ordersModule;
   final ProfileModule _profileModule;
   final MyNotificationsModule _myNotificationsModule;
   MyApp(

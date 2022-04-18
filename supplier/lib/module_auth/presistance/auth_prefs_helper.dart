@@ -1,4 +1,4 @@
-import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -41,7 +41,7 @@ class AuthPrefsHelper {
   }
 
   String getAccountStatusPhase() {
-    return box.get('account status') ?? OrdersRoutes.OWNER_ORDERS_SCREEN;
+    return box.get('account status') ?? BidOrdersRoutes.OWNER_ORDERS_SCREEN;
   }
 
   bool isSignedIn() {
