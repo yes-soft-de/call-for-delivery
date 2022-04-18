@@ -162,6 +162,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("UnActive"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("Captain total category"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
@@ -255,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are sure about subscribe with this offer"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "Confirm with yes and no if captain reach you"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
@@ -267,6 +271,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum kilometers"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("Max kilometers"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("Count orders left"),
         "countOrders": MessageLookupByLibrary.simpleMessage("Count orders"),
         "countOrdersCompleted":
             MessageLookupByLibrary.simpleMessage("Count orders completed"),

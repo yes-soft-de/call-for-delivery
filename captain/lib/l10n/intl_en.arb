@@ -659,7 +659,10 @@
     "dateFinancialCycleEnds": "Date Financial cycle ends",
     "achieved": "Achieved",
     "failed": "Failed",
-    "youCannotChoosePlan": "You cannot choose plan right now , please try again"
+    "youCannotChoosePlan": "You cannot choose plan right now , please try again",
+    "captainTotalCategory": "Captain total category",
+    "contOrderCompleted": "Count orders completed",
+    "countOfOrdersLeft": "Count orders left"
 
 
 

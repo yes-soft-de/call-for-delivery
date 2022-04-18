@@ -158,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("نشط"),
         "captainStateInactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("عدد المراحل المحققة"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),
@@ -251,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المسلمة"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("لوحة التحكم"),
@@ -262,6 +266,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحد الأدنى للكيلومترات"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("الحد الأعلى للكيلومترات"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المتبقية"),
         "countOrders": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
         "countOrdersCompleted":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),

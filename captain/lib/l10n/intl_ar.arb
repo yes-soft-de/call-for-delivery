@@ -660,7 +660,10 @@
     "dateFinancialCycleEnds": "تاريخ انتهاء الدورة المالية",
     "achieved": "الهدف محقق",
     "failed": "الهدف غير محقق",
-    "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"
+    "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا",
+    "captainTotalCategory": "عدد المراحل المحققة",
+    "contOrderCompleted": "عدد الطلبات المسلمة",
+    "countOfOrdersLeft": "عدد الطلبات المتبقية"
 
 
 

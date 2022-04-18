@@ -6619,6 +6619,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain total category`
+  String get captainTotalCategory {
+    return Intl.message(
+      'Captain total category',
+      name: 'captainTotalCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders completed`
+  String get contOrderCompleted {
+    return Intl.message(
+      'Count orders completed',
+      name: 'contOrderCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders left`
+  String get countOfOrdersLeft {
+    return Intl.message(
+      'Count orders left',
+      name: 'countOfOrdersLeft',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
