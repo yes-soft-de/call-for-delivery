@@ -4559,6 +4559,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Notification deleted successfully`
+  String get notificationDeletedSuccess {
+    return Intl.message(
+      'Notification deleted successfully',
+      name: 'notificationDeletedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications deleted successfully`
+  String get notificationsDeletedSuccess {
+    return Intl.message(
+      'Notifications deleted successfully',
+      name: 'notificationsDeletedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting selected notifications`
+  String get areYouSureAboutDeleteSelectedNotifications {
+    return Intl.message(
+      'Are you sure about deleting selected notifications',
+      name: 'areYouSureAboutDeleteSelectedNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting this notification`
+  String get areYouSureAboutDeleteThisNotification {
+    return Intl.message(
+      'Are you sure about deleting this notification',
+      name: 'areYouSureAboutDeleteThisNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorted by latest`
+  String get sortedByLatest {
+    return Intl.message(
+      'Sorted by latest',
+      name: 'sortedByLatest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected`
+  String get selected {
+    return Intl.message(
+      'selected',
+      name: 'selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `notices`
+  String get notices {
+    return Intl.message(
+      'notices',
+      name: 'notices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delete`
+  String get delete {
+    return Intl.message(
+      'delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

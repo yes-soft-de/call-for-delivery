@@ -3,6 +3,7 @@ import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/model/company_info_model.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
@@ -33,7 +34,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
   @override
   Widget build(BuildContext context) {
     var drawerHeader = SizedBox(
-      height: 215,
+      height: 220,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -92,13 +93,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 Navigator.of(context).pushNamed(ProfileRoutes.PROFILE_SCREEN);
               },
               title: S.current.myProfile),
-          CustomNavTile(
-              icon: Icons.account_balance_rounded,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
-              },
-              title: S.current.myBalance),
+//          CustomNavTile(
+//              icon: Icons.account_balance_rounded,
+//              onTap: () {
+//                Navigator.of(context)
+//                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
+//              },
+//              title: S.current.myBalance),
           Divider(
             indent: 32,
             endIndent: 32,
@@ -113,21 +114,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
 //                    .pushNamed(OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN);
 //              },
 //              title: S.current.myOrders),
-
-          Divider(
-            indent: 32,
-            endIndent: 32,
-            thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
-          ),
           // support
-//          CustomNavTile(
-//              icon: Icons.notifications_active_rounded,
-//              onTap: () {
-//                Navigator.of(context)
-//                    .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
-//              },
-//              title: S.current.notices),
+          CustomNavTile(
+              icon: Icons.notifications_active_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
+              },
+              title: S.current.notices),
           Visibility(
             visible: widget.company != null,
             child: CustomNavTile(

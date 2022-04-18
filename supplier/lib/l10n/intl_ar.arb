@@ -442,5 +442,14 @@
     "checkOrdersDescribtion": "يمكنك تفقد الطرود القريبة منك لتوصيلها",
     "acceptOrderDescribtion": "يمكنك الموافقة على مهمتك لتوصيل الطلبية",
     "deliverDescribtion": "بعد الموافقة على المهمة الموكلة إليك يجب عليك توصيل الطلبية للوجهة الصحيحة",
-    "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال"
+    "earnCashDescribtion": "بعد اتمامك المهمة ستكافئ جهودك بالمال",
+
+    "notificationDeletedSuccess": "تم حذف الإشعار بنجاح",
+    "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
+    "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
+    "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
+    "sortedByLatest": "من الأقدم للأحدث",
+    "selected": "تحديد",
+    "notices": "تحديثات",
+    "delete": "حذف"
 }
