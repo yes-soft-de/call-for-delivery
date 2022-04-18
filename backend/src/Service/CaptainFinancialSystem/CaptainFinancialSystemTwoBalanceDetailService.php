@@ -18,25 +18,22 @@ class CaptainFinancialSystemTwoBalanceDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function getBalanceDetailWithSystemTwo(array $financialSystemDetail, int $captainId, float $sumPayments)
+    public function getBalanceDetailWithSystemTwo(array $financialSystemDetail, int $captainId, float $sumPayments, array $date)
      {
         //get Count Orders Within Thirty Days
-        $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $financialSystemDetail['updatedAt']);
+        $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $date);
 
-        $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments);
+        $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date);
               
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
     }
 
-    public function getCountOrdersByCaptainIdWithinThirtyDays(int $captainId, object $date): ?array
-    {
-        $fromDate = $date->format('Y-m-d');
-        $toDate = $date->modify('+30 day')->format('Y-m-d');
-     
-        return $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    public function getCountOrdersByCaptainIdWithinThirtyDays(int $captainId, array $date): ?array
+    {     
+        return $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
     }
 
-    public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments): ?array
+    public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date): ?array
     {
         $item = [];
         $item['salary'] = 0;
@@ -47,7 +44,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
         $item['total'] = 0;
         $item['countOrdersCompleted'] = $countOrders;
         $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_NOT_ARRIVED;
-        $item['dateFinancialCycleEnds'] = $financialSystemDetail['updatedAt']->format('Y-m-d');
+        $item['dateFinancialCycleEnds'] = $date['toDate'];
         $item['sumPayments'] = $sumPayments;
 
         if($countOrders === $financialSystemDetail['countOrdersInMonth']) {

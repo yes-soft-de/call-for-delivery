@@ -18,18 +18,14 @@ class CaptainFinancialSystemThreeBalanceDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function getBalanceDetailWithSystemThree(array $financialSystemDetails, array $financialSystemThreeDetails, int $captainId, float $sumPayments) : array
-    {
-        $date = $financialSystemDetails['updatedAt'];
-        $fromDate = $date->format('Y-m-d');
-        $toDate = $date->modify('+30 day')->format('Y-m-d');
-      
+    public function getBalanceDetailWithSystemThree(array $financialSystemThreeDetails, int $captainId, float $sumPayments, array $date) : array
+    {      
         $financialAccountDetails = [];
 
         foreach ($financialSystemThreeDetails as $financialSystemThreeDetail) {
              
                 //get the number of orders arranged according to the categories of the financial system
-                $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $fromDate, $toDate);
+                $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $date['fromDate'], $date['toDate']);
                //Amount payable to the captain in the absence of a bounce
                 $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
                //cont Order Completed

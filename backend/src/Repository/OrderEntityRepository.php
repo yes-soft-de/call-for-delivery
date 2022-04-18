@@ -444,7 +444,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     
-    public function getDetailOrdersByCaptainId(int $captainId): array
+    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')
 
@@ -456,6 +456,12 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->andWhere('orderEntity.captainId = :captainId')
         ->setParameter('captainId', $captainId)
 
+        ->andWhere('orderEntity.createdAt >= :fromDate')
+        ->setParameter('fromDate', $fromDate)
+
+        ->andWhere('orderEntity.createdAt <= :toDate')
+        ->setParameter('toDate', $toDate)
+        
         ->getQuery()
         ->getResult();
     }

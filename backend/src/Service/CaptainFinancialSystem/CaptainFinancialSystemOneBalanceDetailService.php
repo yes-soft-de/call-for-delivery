@@ -18,13 +18,13 @@ class CaptainFinancialSystemOneBalanceDetailService
         $this->autoMapping = $autoMapping;
     }
 
-    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
+    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     {
         $countOrdersMaxFromNineteen = 0;
         //get Count Orders
-        $countOrders = $this->orderService->getCountOrdersByCaptainId($captainId);
+        $countOrders = $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         //get Orders Details
-        $detailsOrders = $this->orderService->getDetailOrdersByCaptainId($captainId);
+        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
            if($detailOrder['kilometer'] > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
@@ -32,11 +32,11 @@ class CaptainFinancialSystemOneBalanceDetailService
            }
         }
 
-        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrders'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
+        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrder'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
     
         $financialSystemDetail['sumPayments'] = $sumPayments;
              
-        $financialSystemDetail['countOrders'] = $countOrders['countOrders'];
+        $financialSystemDetail['countOrders'] = $countOrders['countOrder'];
 
         $financialSystemDetail['countOrdersMaxFromNineteen'] = $countOrdersMaxFromNineteen;
 
