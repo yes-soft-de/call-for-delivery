@@ -9,6 +9,7 @@ use App\Controller\BaseController;
 use App\Request\BidOrder\BidOrderCreateRequest;
 use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use App\Service\BidOrder\BidOrderService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -170,6 +171,43 @@ class BidOrderController extends BaseController
         $request->setSupplierId($this->getUserId());
 
         $result = $this->bidOrderService->filterBidOrdersBySupplier($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * supplier: get bid order details by id for supplier
+     * @Route("bidorderbyidforsupplier/{id}", name="getBidOrderByIdForSupplier", methods={"GET"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Bid Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the bid order details info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\BidOrder\BidOrderByIdForSupplierGetResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getBidOrderByIdForSupplier(int $id): JsonResponse
+    {
+        $result = $this->bidOrderService->getBidOrderByIdForSupplier($id);
 
         return $this->response($result, self::FETCH);
     }

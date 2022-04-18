@@ -71,4 +71,9 @@ class BidOrderManager
     {
         return $this->bidOrderEntityRepository->find($id);
     }
+
+    public function getBidOrderByIdForSupplier(int $id): ?BidOrderEntity
+    {
+        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($id);
+    }
 }
