@@ -3,6 +3,7 @@ class Urls {
   static const String BASE_API = DOMAIN + '/v1/supplier';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String BASE_API_CATEGORY = DOMAIN + '/v1/suppliercategory';
+  static const String BASE_API_ADS = DOMAIN + '/v1/announcement';
 
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
@@ -43,5 +44,9 @@ class Urls {
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
   static const GET_CATEGORIES = BASE_API_CATEGORY + '/activesuppliercategories';
 
+/*---------------ADS-------------*/
+  static const GET_ADS = BASE_API_ADS+ '/announcement';
+  static const CREATE_ADS = BASE_API_ADS+ '/announcement';
+  static const ACTIVATE_ADS = BASE_API_ADS+ '/announcementstatus';
 
 }
