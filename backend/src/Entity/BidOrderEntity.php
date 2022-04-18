@@ -41,9 +41,13 @@ class BidOrderEntity
     #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: ImageEntity::class)]
     private $images;
 
+    #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: PriceOfferEntity::class)]
+    private $priceOfferEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->priceOfferEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +151,36 @@ class BidOrderEntity
             // set the owning side to null (unless already changed)
             if ($image->getBidOrder() === $this) {
                 $image->setBidOrder(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PriceOfferEntity[]
+     */
+    public function getPriceOfferEntities(): Collection
+    {
+        return $this->priceOfferEntities;
+    }
+
+    public function addPriceOfferEntity(PriceOfferEntity $priceOfferEntity): self
+    {
+        if (!$this->priceOfferEntities->contains($priceOfferEntity)) {
+            $this->priceOfferEntities[] = $priceOfferEntity;
+            $priceOfferEntity->setBidOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceOfferEntity(PriceOfferEntity $priceOfferEntity): self
+    {
+        if ($this->priceOfferEntities->removeElement($priceOfferEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($priceOfferEntity->getBidOrder() === $this) {
+                $priceOfferEntity->setBidOrder(null);
             }
         }
 

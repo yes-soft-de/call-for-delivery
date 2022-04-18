@@ -454,3 +454,10 @@ App\Request\BidOrder\BidOrderCreateRequest:
             - NotBlank: ~
         storeOwnerProfile:
             - NotBlank: ~
+
+App\Request\PriceOffer\PriceOfferCreateRequest:
+    properties:
+        bidOrder:
+            - NotBlank: ~
+        priceOfferValue:
+            - NotBlank: ~
