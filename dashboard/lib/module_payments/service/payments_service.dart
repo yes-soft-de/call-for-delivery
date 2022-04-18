@@ -205,7 +205,7 @@ class PaymentsService {
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (actionResponse.statusCode != '201') {
+    if (actionResponse.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
@@ -220,7 +220,7 @@ class PaymentsService {
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (actionResponse.statusCode != '201') {
+    if (actionResponse.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
@@ -235,7 +235,7 @@ class PaymentsService {
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (actionResponse.statusCode != '201') {
+    if (actionResponse.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }

@@ -78,7 +78,7 @@ class CaptainFinanceByOrderCountStateManager {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.addPackageSuccessfully)
+                message: value.error ?? S.current.updatePackageSuccessfully)
             .show(screenState.context);
       }
     });
