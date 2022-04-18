@@ -36,4 +36,12 @@ final class CaptainFinancialSystem
     const TARGET_FAILED = "failed";
 
     const TARGET_FAILED_SALARY = 12.86;
+
+    const COUNT_REMAINING_ORDER = "The count of remaining orders";
+
+    const FOR_BOUNCE = "for a bonus";
+
+    const CONGRATULATIONS_CAPTAIN= "congratulations, you got the bonus";
+
+    const CAPTAIN_GOT_BOUNCE_ADMIN= "captain's got the bonus";
 }

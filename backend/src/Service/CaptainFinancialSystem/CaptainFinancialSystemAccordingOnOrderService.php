@@ -30,4 +30,9 @@ class CaptainFinancialSystemAccordingOnOrderService
 
         return $response;
     }
+
+    public function getCaptainFinancialSystemAccordingOnOrder(): array
+    {
+       return $this->captainFinancialSystemAccordingOnOrderManager->getCaptainFinancialSystemAccordingOnOrder();
+    }
 }

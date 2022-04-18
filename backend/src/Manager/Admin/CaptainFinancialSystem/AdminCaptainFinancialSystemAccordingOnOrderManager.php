@@ -50,4 +50,9 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
 
         return $captainFinancialSystemAccordingOnOrderEntity;
     }
+
+    public function getCaptainFinancialSystemAccordingOnOrder(): ?array
+    {
+        return $this->captainFinancialSystemAccordingOnOrderEntityRepository->getCaptainFinancialSystemAccordingOnOrder();
+    }
 }

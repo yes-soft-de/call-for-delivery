@@ -247,9 +247,9 @@ class OrderManager
         return $this->orderRepository->getCountOrdersByCaptainId($captainId);
     }    
     
-    public function getDetailOrdersByCaptainId(int $captainId): array
+    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
-        return $this->orderRepository->getDetailOrdersByCaptainId($captainId);
+        return $this->orderRepository->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }    
     
     public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
@@ -262,6 +262,11 @@ class OrderManager
         return $this->orderRepository->filterAnnouncementOrdersBySupplier($request);
     }
 
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+    {
+        return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    }
+    
     public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
     {
         return $this->orderRepository->getSpecificAnnouncementOrderByIdForSupplier($id);

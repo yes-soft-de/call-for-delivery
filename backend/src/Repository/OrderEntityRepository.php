@@ -444,7 +444,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     
-    public function getDetailOrdersByCaptainId(int $captainId): array
+    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')
 
@@ -456,6 +456,12 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->andWhere('orderEntity.captainId = :captainId')
         ->setParameter('captainId', $captainId)
 
+        ->andWhere('orderEntity.createdAt >= :fromDate')
+        ->setParameter('fromDate', $fromDate)
+
+        ->andWhere('orderEntity.createdAt <= :toDate')
+        ->setParameter('toDate', $toDate)
+        
         ->getQuery()
         ->getResult();
     }
@@ -556,7 +562,35 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+    
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->createQueryBuilder('orderEntity')
 
+        ->select('count(orderEntity.id) as countOrder')
+
+        ->where('orderEntity.state = :state')
+        ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+      
+        ->andWhere('orderEntity.captainId = :captainId')
+        ->setParameter('captainId', $captainId)
+
+        ->andWhere('orderEntity.createdAt >= :fromDate')
+        ->setParameter('fromDate', $fromDate)
+
+        ->andWhere('orderEntity.createdAt <= :toDate')
+        ->setParameter('toDate', $toDate)
+
+        ->andWhere('orderEntity.kilometer >= :countKilometersFrom')
+        ->setParameter('countKilometersFrom', $countKilometersFrom)
+
+        ->andWhere('orderEntity.kilometer <= :countKilometersTo')
+        ->setParameter('countKilometersTo', $countKilometersTo)
+
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+    
     public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
     {
         return $this->createQueryBuilder('orderEntity')
