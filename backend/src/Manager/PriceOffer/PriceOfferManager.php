@@ -7,6 +7,7 @@ use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidOrder\BidOrderManager;
 use App\Manager\Supplier\SupplierProfileManager;
+use App\Repository\PriceOfferEntityRepository;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,13 +18,15 @@ class PriceOfferManager
     private EntityManagerInterface $entityManager;
     private BidOrderManager $bidOrderManager;
     private SupplierProfileManager $supplierProfileManager;
+    private PriceOfferEntityRepository $priceOfferEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidOrderManager $bidOrderManager, SupplierProfileManager $supplierProfileManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidOrderManager $bidOrderManager, SupplierProfileManager $supplierProfileManager, PriceOfferEntityRepository $priceOfferEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->bidOrderManager = $bidOrderManager;
         $this->supplierProfileManager = $supplierProfileManager;
+        $this->priceOfferEntityRepository = $priceOfferEntityRepository;
     }
 
     public function createPriceOffer(PriceOfferCreateRequest $request): PriceOfferEntity
@@ -46,5 +49,10 @@ class PriceOfferManager
         $this->entityManager->flush();
 
         return $priceOfferEntity;
+    }
+
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
+    {
+        return $this->priceOfferEntityRepository->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
     }
 }

@@ -18,4 +18,18 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PriceOfferEntity::class);
     }
+
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
+    {
+        return $this->createQueryBuilder('priceOfferEntity')
+            ->select('priceOfferEntity.id', 'priceOfferEntity.createdAt', 'priceOfferEntity.updatedAt', 'priceOfferEntity.priceOfferValue', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.offerDeadline')
+
+            ->andWhere('priceOfferEntity.bidOrder = :bidOrderId')
+            ->setParameter('bidOrderId', $bidOrderId)
+
+            ->orderBy('priceOfferEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
