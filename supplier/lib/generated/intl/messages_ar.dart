@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتمكن الخادم من العثور على طلبك"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
+        "acceptOffer": MessageLookupByLibrary.simpleMessage("العروض ألمقبولة"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "يمكنك الموافقة على مهمتك لتوصيل الطلبية"),
@@ -318,6 +319,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddress": MessageLookupByLibrary.simpleMessage("نقطة الاستلام"),
         "myAddressHint": MessageLookupByLibrary.simpleMessage("حدد عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("رصيدي"),
+        "myOffers": MessageLookupByLibrary.simpleMessage("عروضي"),
         "myOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
@@ -423,6 +425,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
+        "pendingOffer": MessageLookupByLibrary.simpleMessage("العروض المنتظرة"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
         "phoneIsRequired":
@@ -513,6 +516,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
+        "rejectOffer": MessageLookupByLibrary.simpleMessage("العروض المرفوضة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
         "renewOldPlan":

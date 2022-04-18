@@ -191,6 +191,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
   color: "#fafafa"
-  image: assets/images/logo.jpg
+  image: assets/images/logo.png
   color_dark: "#303030"
-  image_dark: assets/images/logo.jpg
+  image_dark: assets/images/logo.png

@@ -465,5 +465,10 @@
     "sortedByLatest": "Sorted by latest",
     "selected": "selected",
     "notices": "notices",
-    "delete": "delete"
+    "delete": "delete",
+
+    "rejectOffer": "Reject offer",
+    "pendingOffer": "pending offer",
+    "acceptOffer": "accept offer",
+    "myOffers": "my offers"
 }

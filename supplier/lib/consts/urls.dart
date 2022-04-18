@@ -1,9 +1,11 @@
 class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
-  static const String BASE_API = DOMAIN + '/v1/supplier';
-  static const String BASE_API_USER = DOMAIN + '/v1/user';
-  static const String BASE_API_CATEGORY = DOMAIN + '/v1/suppliercategory';
+  static const String VERSION = '/v1';
+  static const String BASE_API = DOMAIN + VERSION+'/supplier';
+  static const String BASE_API_USER = DOMAIN +VERSION +'/user';
+  static const String BASE_API_CATEGORY = DOMAIN + VERSION+'/suppliercategory';
   static const String BASE_API_ADS = DOMAIN + '/v1/announcement';
+  static const String BASE_API_BID_ORDER = DOMAIN + VERSION+'/bidorder';
 
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
@@ -48,5 +50,9 @@ class Urls {
   static const GET_ADS = BASE_API_ADS+ '/announcement';
   static const CREATE_ADS = BASE_API_ADS+ '/announcement';
   static const ACTIVATE_ADS = BASE_API_ADS+ '/announcementstatus';
+
+
+  /*---------------BID ORDER-------------*/
+  static const GET_BID_ORDER = BASE_API_BID_ORDER+ '/filterbidordersbysupplier';
 
 }
