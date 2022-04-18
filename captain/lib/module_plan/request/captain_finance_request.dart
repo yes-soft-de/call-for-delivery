@@ -12,8 +12,8 @@ class CaptainFinanceRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['captainFinancialSystemType'] = planId;
-    data['captainFinancialSystemId'] = planType;
+    data['captainFinancialSystemType'] = planType;
+    data['captainFinancialSystemId'] = planId;
     return data;
   }
 }

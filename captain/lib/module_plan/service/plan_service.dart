@@ -5,10 +5,12 @@ import 'package:c4d/module_plan/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/financial_account_detail.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/helpers/translating.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -79,6 +81,20 @@ class PlanService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
+    if (actionResponse.data?.financialAccountDetails != null) {
+      actionResponse.data?.financialAccountDetails =
+          await getTranslated(actionResponse);
+    }
     return CaptainAccountBalanceModel.withData(actionResponse);
+  }
+
+  Future<List<FinancialAccountDetail>?> getTranslated(
+      CaptainAccountBalanceResponse actionResponse) async {
+    var translated = <FinancialAccountDetail>[];
+    translated = actionResponse.data!.financialAccountDetails!;
+    for (var element in translated) {
+      element.message = await Trans.translateService(element.message ?? '');
+    }
+    return translated;
   }
 }

@@ -183,8 +183,7 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(PlanRoutes.BALANCE_ROUTE);
+                  Navigator.of(context).pushNamed(PlanRoutes.BALANCE_ROUTE);
                 },
                 leading: const Icon(Icons.account_balance_rounded),
                 title: Text(S.of(context).myBalance),

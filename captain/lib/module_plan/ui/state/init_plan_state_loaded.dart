@@ -189,8 +189,8 @@ class InitCaptainPlanLoadedState extends States {
                         screenState.manager.financeRequest(
                             screenState,
                             CaptainFinanceRequest(
-                                planId: _selectedPlanId,
-                                planType: index == 3 ? 0 : index));
+                                planId: index == 3 ? 0 : _selectedPlanId,
+                                planType: index));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),

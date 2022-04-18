@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
+import 'package:c4d/module_plan/ui/widget/account_balance_details.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
@@ -98,15 +99,45 @@ class AccountBalanceStateLoaded extends States {
     );
   }
 
+  Widget countOrderDetails(BuildContext context) {
+    var data = <Widget>[];
+    balance?.orderCountsDetails?.forEach((e) {
+      data.add(AccountBalanceDetailsCard(
+        active: false,
+        amount: e.amount,
+        bounce: e.bounce,
+        bounceCountOrdersInMonth: e.bounceCountOrdersInMonth,
+        categoryName: e.categoryName,
+        captainTotalCategory: e.captainTotalCategory,
+        contOrderCompleted: e.contOrderCompleted,
+        countKilometersFrom: e.countKilometersFrom,
+        countKilometersTo: e.countKilometersTo,
+        countOfOrdersLeft: e.countOfOrdersLeft,
+        message: e.message,
+      ));
+    });
+    return Visibility(
+      visible: balance?.orderCountsDetails != null,
+      child: SizedBox(
+        height: 408,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: data,
+        ),
+      ),
+    );
+  }
+
   Widget balanceDetails(BuildContext context) {
     return Flex(
       direction: Axis.vertical,
       children: [
+        countOrderDetails(context),
         CustomTile(FontAwesomeIcons.boxes, S.current.countOrders, null,
-            stringValue: balance?.countOrders.toString()),
+            stringValue: balance?.countOrders?.toString()),
         CustomTile(
             FontAwesomeIcons.road, S.current.countOrdersMaxFromNineteen, null,
-            stringValue: balance?.countOrdersMaxFromNineteen.toString()),
+            stringValue: balance?.countOrdersMaxFromNineteen?.toString()),
         CustomTile(FontAwesomeIcons.road, S.current.compensationForEveryOrder,
             balance?.compensationForEveryOrder),
         CustomTile(

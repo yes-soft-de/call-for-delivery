@@ -21,9 +21,11 @@ class AccountBalanceStateManager {
     stateSubject.add(LoadingState(screenState));
     _planService.getCaptainAccountBalance().then((value) {
       if (value.hasError) {
-        stateSubject.add(ErrorState(screenState, onPressed: () {
-          getAccountBalance(screenState);
-        }, title: S.current.myBalance));
+        stateSubject.add(
+          ErrorState(screenState, onPressed: () {
+            getAccountBalance(screenState);
+          }, title: S.current.myBalance, error: value.error),
+        );
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
             emptyMessage: S.current.homeDataEmpty,
@@ -32,7 +34,7 @@ class AccountBalanceStateManager {
         }));
       } else {
         value as CaptainAccountBalanceModel;
-        stateSubject.add(AccountBalanceStateLoaded(screenState,value.data));
+        stateSubject.add(AccountBalanceStateLoaded(screenState, value.data));
       }
     });
   }

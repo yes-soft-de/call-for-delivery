@@ -233,8 +233,7 @@ class AuthService {
       switch (response?.statusCode) {
         // account created
         case '9102':
-          _prefsHelper
-              .setUserCompetedProfile(PlanRoutes.PLAN_ROUTE);
+          _prefsHelper.setUserCompetedProfile(PlanRoutes.PLAN_ROUTE);
           break;
         // account not filled
         case '9103':
@@ -243,7 +242,8 @@ class AuthService {
           break;
         // captain plan
         case '9104':
-          _prefsHelper.setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
+          _prefsHelper
+              .setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           break;
         default:
           _prefsHelper

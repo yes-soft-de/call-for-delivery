@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -34,7 +35,7 @@ class InitAccountStateProfileCreated extends States {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (r) => false);
+                      PlanRoutes.PLAN_ROUTE, (r) => false);
                 }),
           )
         ],

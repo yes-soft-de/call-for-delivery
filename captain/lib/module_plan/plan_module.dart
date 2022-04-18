@@ -12,7 +12,6 @@ class PlanModule extends YesModule {
     YesModule.RoutesMap.addAll({
       PlanRoutes.PLAN_ROUTE: (context) => _planScreen,
       PlanRoutes.BALANCE_ROUTE: (context) => accountBalanceScreen,
-
     });
   }
 }
