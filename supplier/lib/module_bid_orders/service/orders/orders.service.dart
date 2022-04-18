@@ -28,7 +28,7 @@ class OrdersService {
     return OrderModel.withData(response);
   }
 
-  Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
+  Future<DataModel> getMyOrdersFilter(FilterBidOrderRequest request) async {
     OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {

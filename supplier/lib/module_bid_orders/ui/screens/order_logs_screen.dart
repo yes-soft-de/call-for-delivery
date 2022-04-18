@@ -45,8 +45,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    ordersFilter = FilterOrderRequest(
-        state: 'pending',
+    ordersFilter = FilterBidOrderRequest(
         fromDate:
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());
@@ -65,7 +64,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     super.dispose();
   }
 
-  late FilterOrderRequest ordersFilter;
+  late FilterBidOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
@@ -89,7 +88,6 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         .toIso8601String();
                 ordersFilter.toDate = DateTime.now().toIso8601String();
                 currentIndex = 0;
-                ordersFilter.state = 'pending';
                 getOrders();
               }, icon: Icons.restart_alt_rounded)
             ]),
@@ -231,13 +229,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               ],
               onItemSelected: (index) {
                 if (index == 0) {
-                  ordersFilter.state = 'pending';
                 } else if (index == 1) {
-                  ordersFilter.state = 'ongoing';
                 } else if (index == 3) {
-                  ordersFilter.state = 'cancelled';
                 } else {
-                  ordersFilter.state = 'delivered';
                 }
                 currentIndex = index;
                 getOrders();

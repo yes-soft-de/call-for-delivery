@@ -1,13 +1,14 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_bid_orders/model/order/order_model.dart';
+import 'package:c4d/module_bid_orders/ui/screens/orders/my_offer_order_screen.dart';
 import 'package:c4d/module_bid_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
-class OrdersListStateOrdersLoaded extends States {
+class OfferOrdersListStateLoaded extends States {
   final List<OrderModel> orders;
-  final OwnerOrdersScreenState screenState;
-  OrdersListStateOrdersLoaded(
+  final OfferOrdersScreenState screenState;
+  OfferOrdersListStateLoaded(
     this.screenState, {
     required this.orders,
   }) : super(screenState) {

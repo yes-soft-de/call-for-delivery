@@ -1,3 +1,4 @@
+import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_bid_orders/request/order_filter_request.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
@@ -35,10 +36,10 @@ class OrderRepository {
     return OrdersResponse.fromJson(response);
   }
 
-  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) async {
+  Future<OrdersResponse?> getMyOrdersFilter(FilterBidOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-      '',
+      Urls.GET_BID_ORDER,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );

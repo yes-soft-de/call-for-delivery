@@ -1,4 +1,5 @@
 import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
+import 'package:c4d/module_main_navigation/nav_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -234,12 +235,12 @@ class AuthService {
           _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
         case '9553':
-          _prefsHelper.setUserCompetedProfile(BidOrdersRoutes.OWNER_ORDERS_SCREEN);
+          _prefsHelper.setUserCompetedProfile(NavRoutes.ROUTE_NAV);
           break;
       }
       return;
     }
-    _prefsHelper.setUserCompetedProfile(BidOrdersRoutes.OWNER_ORDERS_SCREEN);
+    _prefsHelper.setUserCompetedProfile(NavRoutes.ROUTE_NAV);
     return;
   }
 }

@@ -14,10 +14,4 @@ class OrdersResponse {
             ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
-
-  Map<String, dynamic> toJson() => {
-        'status_code': statusCode,
-        'msg': msg,
-        'Data': data?.map((e) => e.toJson()).toList(),
-      };
 }

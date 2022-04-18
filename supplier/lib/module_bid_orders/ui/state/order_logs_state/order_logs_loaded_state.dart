@@ -32,14 +32,7 @@ class OrderLogsLoadedState extends States {
                   BidOrdersRoutes.ORDER_STATUS_SCREEN,
                   arguments: element.id);
             },
-            child: OwnerOrderCard(
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              createdDate: element.createdDate,
-              deliveryDate: element.deliveryDate,
-              orderCost:element.orderCost,
-              note: element.note,
-            ),
+            child: Container(),
           ),
         ),
       ));

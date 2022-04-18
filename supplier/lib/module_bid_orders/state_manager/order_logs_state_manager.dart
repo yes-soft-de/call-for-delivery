@@ -22,7 +22,7 @@ class OrderLogsStateManager {
   OrderLogsStateManager(this._myOrdersService);
 
   void getOrdersFilters(
-      OrderLogsScreenState screenState, FilterOrderRequest request,
+      OrderLogsScreenState screenState, FilterBidOrderRequest request,
       [bool loading = true]) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
