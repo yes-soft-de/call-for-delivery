@@ -58,4 +58,15 @@ class BidOrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getBidOrderByIdForSupplier(int $id): ?BidOrderEntity
+    {
+        return $this->createQueryBuilder('bidOrderEntity')
+
+            ->andWhere('bidOrderEntity.id = :bidOrderId')
+            ->setParameter('bidOrderId', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
