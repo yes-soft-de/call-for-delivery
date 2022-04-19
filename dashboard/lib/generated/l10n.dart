@@ -5829,6 +5829,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Update date`
+  String get updateDate {
+    return Intl.message(
+      'Update date',
+      name: 'updateDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive plan`
+  String get inactivePlan {
+    return Intl.message(
+      'Inactive plan',
+      name: 'inactivePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated by`
+  String get updatedBy {
+    return Intl.message(
+      'Updated by',
+      name: 'updatedBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refuse`
+  String get refuse {
+    return Intl.message(
+      'Refuse',
+      name: 'refuse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance request`
+  String get FinanceRequest {
+    return Intl.message(
+      'Finance request',
+      name: 'FinanceRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activated plan`
+  String get activatedPlan {
+    return Intl.message(
+      'Activated plan',
+      name: 'activatedPlan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

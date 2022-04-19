@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم"),
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "FinanceRequest": MessageLookupByLibrary.simpleMessage("طلب خطة عمل"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
@@ -41,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
         "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
+        "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
@@ -384,6 +386,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الموردين غير المفعلة"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "هذا المتجر غير مُفعل حتى الآن"),
+        "inactivePlan": MessageLookupByLibrary.simpleMessage("الخطة غير مفعلة"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "سنقوم بأرسال كود تحقق الى رقمك"),
@@ -647,6 +650,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
+        "refuse": MessageLookupByLibrary.simpleMessage("رفض"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),
         "registerHint":
             MessageLookupByLibrary.simpleMessage("اسم مستخدم أو رقم هاتف"),
@@ -811,6 +815,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateDate": MessageLookupByLibrary.simpleMessage("تاريخ التعديل"),
         "updateOfferSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل العرض بنجاح"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
@@ -825,6 +830,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
+        "updatedBy":
+            MessageLookupByLibrary.simpleMessage("تم تعديل الحالة من قبل"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
         "uploadImageIfyouHave":

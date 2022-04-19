@@ -589,7 +589,14 @@
     "total": "الإجمالي",
     "captainTotalCategory": "عدد المراحل المحققة",
     "contOrderCompleted": "عدد الطلبات المسلمة",
-    "countOfOrdersLeft": "عدد الطلبات المتبقية"
+    "countOfOrdersLeft": "عدد الطلبات المتبقية",
+    "updateDate": "تاريخ التعديل",
+    "inactivePlan": "الخطة غير مفعلة",
+    "updatedBy": "تم تعديل الحالة من قبل",
+    "refuse": "رفض",
+    "FinanceRequest": "طلب خطة عمل",
+    "activatedPlan": "الخطة مفعلة"
+
 
 
 
