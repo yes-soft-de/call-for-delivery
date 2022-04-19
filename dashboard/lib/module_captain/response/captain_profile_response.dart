@@ -53,7 +53,7 @@ class Data {
   ImageUrl? mechanicLicense;
   ImageUrl? identity;
   CreateDate? createDate;
-
+  FinancialSystemCaptainDetails? financialSystemCaptainDetails;
   Data(
       {this.id,
       this.captainID,
@@ -76,7 +76,8 @@ class Data {
       this.vacationStatus,
       this.mechanicLicense,
       this.identity,
-      this.createDate});
+      this.createDate,
+      this.financialSystemCaptainDetails});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -101,6 +102,11 @@ class Data {
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
+    financialSystemCaptainDetails =
+        json['financialCaptainSystemDetails'] != null
+            ? FinancialSystemCaptainDetails.fromJson(
+                json['financialCaptainSystemDetails'])
+            : null;
     mechanicLicense = json['mechanicLicense'] != null
         ? ImageUrl.fromJson(json['mechanicLicense'])
         : null;
@@ -256,5 +262,32 @@ class Timezone {
       map['location'] = location?.toJson();
     }
     return map;
+  }
+}
+
+class FinancialSystemCaptainDetails {
+  int? id;
+  CreateDate? createDate;
+  CreateDate? updateDate;
+  int? captainFinancialSystemType;
+  bool? status;
+  String? updatedBy;
+  num? countHours;
+  num? compensationForEveryOrder;
+  num? salary;
+  FinancialSystemCaptainDetails.fromJson(dynamic json) {
+    id = json['id'];
+    captainFinancialSystemType = json['captainFinancialSystemType'];
+    status = json['status'];
+    updatedBy = json['updatedBy'];
+    countHours = json['countHours'];
+    compensationForEveryOrder = json['compensationForEveryOrder'];
+    salary = json['salary'];
+    createDate = json['createdAt'] != null
+        ? CreateDate.fromJson(json['createdAt'])
+        : null;
+    updateDate = json['updatedAt'] != null
+        ? CreateDate.fromJson(json['updatedAt'])
+        : null;
   }
 }

@@ -77,4 +77,24 @@ class CaptainProfileStateManager {
       }
     });
   }
+
+   void captainFinanceStatusPlan(CaptainProfileScreenState screenState,
+      int captainId, EnableCaptainRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _captainsService.captainFinancePlanStatus(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error.toString())
+            .show(screenState.context);
+        getCaptainProfile(screenState, captainId);
+      } else {
+        getCaptainProfile(screenState, captainId);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.captainUpdatedSuccessfully)
+            .show(screenState.context);
+        getIt<GlobalStateManager>().updateList();
+      }
+    });
+  }
 }

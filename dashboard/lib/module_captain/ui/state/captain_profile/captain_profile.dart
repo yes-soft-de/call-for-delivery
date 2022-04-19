@@ -1,5 +1,5 @@
 import 'package:c4d/module_captain/request/enable_captain.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -78,7 +78,7 @@ class CaptainProfileLoadedState extends States {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).primaryColorDark),
+                      color: Theme.of(context).colorScheme.primary),
                   child: Column(
                     children: [
                       CustomListTile(
@@ -97,15 +97,64 @@ class CaptainProfileLoadedState extends States {
                           title: S.of(context).car,
                           subTitle: model?.car,
                           iconData: Icons.local_taxi_rounded),
-//                      CustomListTile(
-//                          title: S.of(context).createDate,
-//                          subTitle: model?.createDate,
-//                          iconData: Icons.timer_rounded),
-//                      CustomListTile(
-//                          title: S.of(context).status,
-//                          subTitle: model?.isOnline,
-//                          iconData: Icons.wifi_rounded),
-
+                      Container(
+                        child: ListTile(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return Scaffold(
+                                    appBar: CustomC4dAppBar.appBar(context,
+                                        title: S.current.FinanceRequest),
+                                    body: CaptainFinanceInfo(
+                                      details: model!.captainFinance!,
+                                      requestStatus: (status) {
+                                        Navigator.of(context).pop();
+                                        screenState.enableCaptainFinance(
+                                            EnableCaptainRequest(
+                                          id: model?.captainFinance?.id,
+                                          status: status,
+                                        ));
+                                      },
+                                    ),
+                                  );
+                                });
+                          },
+                          leading: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                    Icons.account_balance_wallet_rounded,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              )),
+                          title: Text(
+                            S.of(context).captainFinance,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            getCaptainType(model
+                                ?.captainFinance?.captainFinancialSystemType),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: PhysicalModel(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              elevation: 5,
+                              shape: BoxShape.circle,
+                              child: Icon(
+                                Icons.circle,
+                                color: model?.captainFinance?.status == true
+                                    ? Colors.green
+                                    : Colors.red,
+                                size: 30,
+                              )),
+                        ),
+                      ),
                       Container(
                         child: ListTileSwitch(
                             switchActiveColor: Colors.green,
@@ -151,7 +200,7 @@ class CaptainProfileLoadedState extends States {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).primaryColorDark),
+                      color: Theme.of(context).colorScheme.primary),
                   child: Flex(
                     direction: ScreenType.isMobile(context)
                         ? Axis.vertical
@@ -195,5 +244,16 @@ class CaptainProfileLoadedState extends States {
                 );
               });
         });
+  }
+
+  String getCaptainType(int? captainFinancialSystemType) {
+    if (captainFinancialSystemType == null) {
+      return S.current.unknown;
+    } else {
+      if (captainFinancialSystemType == 1) return S.current.financeByHours;
+      if (captainFinancialSystemType == 2) return S.current.financeByOrders;
+      if (captainFinancialSystemType == 3) return S.current.financeCountOrder;
+      return S.current.unknown;
+    }
   }
 }

@@ -115,4 +115,12 @@ class CaptainsRepository {
     if (response == null) return null;
     return CaptainAccountBalanceResponse.fromJson(response);
   }
+  Future<ActionResponse?> captainFinanceStatus(EnableCaptainRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.UPDATE_CAPTAIN_FINANCE_PLAN, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

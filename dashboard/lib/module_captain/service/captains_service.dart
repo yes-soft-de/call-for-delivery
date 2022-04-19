@@ -155,7 +155,8 @@ class CaptainsService {
     if (_clients.data == null) return DataModel.empty();
     return CaptainNeedSupportModel.withData(_clients.data!);
   }
-    Future<DataModel> getCaptainAccountBalance(int captainID) async {
+
+  Future<DataModel> getCaptainAccountBalance(int captainID) async {
     CaptainAccountBalanceResponse? actionResponse =
         await _manager.getCaptainAccountBalance(captainID);
     if (actionResponse == null) {
@@ -166,5 +167,18 @@ class CaptainsService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return CaptainAccountBalanceModel.withData(actionResponse);
+  }
+
+  Future<DataModel> captainFinancePlanStatus(EnableCaptainRequest request) async {
+    ActionResponse? actionResponse = await _manager.captainFinancePlanStatus(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
   }
 }
