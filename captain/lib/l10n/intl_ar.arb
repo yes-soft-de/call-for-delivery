@@ -649,7 +649,23 @@
     "bounceMinCountOrdersInMonth": "حد التعويض الأدنى",
     "captainPayments": "دفعات الكابتن",
     "salary": "الراتب",
-    "pleaseWaitAdminstrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة"
+    "pleaseWaitAdminstrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة",
+    "countOrders": "عدد الطلبات",
+    "countOrdersMaxFromNineteen": "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة",
+    "financialDues": "المستحقات المالية",
+    "sumPayments": "مجموع الدفعات",
+    "countOverOrdersThanRequired": "عدد الطلبات الإضافية",
+    "monthTargetSuccess": "أهداف الشهر",
+    "countOrdersCompleted": "عدد الطلبات المنجزة",
+    "dateFinancialCycleEnds": "تاريخ انتهاء الدورة المالية",
+    "achieved": "الهدف محقق",
+    "failed": "الهدف غير محقق",
+    "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا",
+    "captainTotalCategory": "عدد المراحل المحققة",
+    "contOrderCompleted": "عدد الطلبات المسلمة",
+    "countOfOrdersLeft": "عدد الطلبات المتبقية"
+
+
 
 
 

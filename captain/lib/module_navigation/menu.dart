@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -179,6 +180,13 @@ class MenuScreen extends StatelessWidget {
                 },
                 leading: const Icon(Icons.payments_rounded),
                 title: Text(S.of(context).payments),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(PlanRoutes.BALANCE_ROUTE);
+                },
+                leading: const Icon(Icons.account_balance_rounded),
+                title: Text(S.of(context).myBalance),
               ),
             ],
           ),

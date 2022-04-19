@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
+        "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
@@ -161,6 +162,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("UnActive"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("Captain total category"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
@@ -254,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are sure about subscribe with this offer"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "Confirm with yes and no if captain reach you"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
@@ -266,10 +271,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum kilometers"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("Max kilometers"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("Count orders left"),
+        "countOrders": MessageLookupByLibrary.simpleMessage("Count orders"),
+        "countOrdersCompleted":
+            MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("Count order in month"),
+        "countOrdersMaxFromNineteen": MessageLookupByLibrary.simpleMessage(
+            "Count orders max from nineteen"),
+        "countOverOrdersThanRequired":
+            MessageLookupByLibrary.simpleMessage("Extra orders than required"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("Create new order"),
@@ -287,6 +301,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "dateFinancialCycleEnds":
+            MessageLookupByLibrary.simpleMessage("Date Financial cycle ends"),
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "dear": MessageLookupByLibrary.simpleMessage("Dear"),
@@ -363,6 +379,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraCaptain": MessageLookupByLibrary.simpleMessage("Extra captain"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
+        "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
         "favoriteCategories":
@@ -376,6 +393,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finance by orders"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("Finance on order"),
+        "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -490,6 +508,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
         "monthCompensation":
             MessageLookupByLibrary.simpleMessage("Month compensation"),
+        "monthTargetSuccess":
+            MessageLookupByLibrary.simpleMessage("Monthly target"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
@@ -898,6 +918,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
         "sumBalance": MessageLookupByLibrary.simpleMessage("Sum Balance"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsFromCompany":
             MessageLookupByLibrary.simpleMessage("Total Payments From Company"),
         "sumPaymentsToCompany":
@@ -1000,6 +1021,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
+            "You cannot choose plan right now , please try again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),

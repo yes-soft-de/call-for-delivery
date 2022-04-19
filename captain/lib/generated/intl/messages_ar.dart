@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
+        "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
         "active": MessageLookupByLibrary.simpleMessage("مفعل"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
@@ -157,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("نشط"),
         "captainStateInactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("عدد المراحل المحققة"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),
@@ -250,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المسلمة"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("لوحة التحكم"),
@@ -261,10 +266,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحد الأدنى للكيلومترات"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("الحد الأعلى للكيلومترات"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المتبقية"),
+        "countOrders": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "countOrdersCompleted":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
+        "countOrdersMaxFromNineteen": MessageLookupByLibrary.simpleMessage(
+            "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة"),
+        "countOverOrdersThanRequired":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات الإضافية"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
@@ -280,6 +294,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
+        "dateFinancialCycleEnds":
+            MessageLookupByLibrary.simpleMessage("تاريخ انتهاء الدورة المالية"),
         "day": MessageLookupByLibrary.simpleMessage("يوم"),
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
         "dear": MessageLookupByLibrary.simpleMessage("عزيزنا"),
@@ -357,6 +373,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraCaptain": MessageLookupByLibrary.simpleMessage("كابتن إضافي"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
+        "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
@@ -368,6 +385,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financialDues":
+            MessageLookupByLibrary.simpleMessage("المستحقات المالية"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -480,6 +499,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),
         "monthCompensation":
             MessageLookupByLibrary.simpleMessage("التعويض الشهري"),
+        "monthTargetSuccess":
+            MessageLookupByLibrary.simpleMessage("أهداف الشهر"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعا"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("الأكثر طلبا"),
@@ -887,6 +908,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumBalance": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsFromCompany":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات من الشركة"),
         "sumPaymentsToCompany":
@@ -993,6 +1015,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),

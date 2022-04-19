@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
+
 class CaptainFinanceByOrderModel extends DataModel {
   late int id;
   late String categoryName;

@@ -6509,6 +6509,146 @@ class S {
       args: [],
     );
   }
+
+  /// `Count orders`
+  String get countOrders {
+    return Intl.message(
+      'Count orders',
+      name: 'countOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders max from nineteen`
+  String get countOrdersMaxFromNineteen {
+    return Intl.message(
+      'Count orders max from nineteen',
+      name: 'countOrdersMaxFromNineteen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get financialDues {
+    return Intl.message(
+      'Profit',
+      name: 'financialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sum payments`
+  String get sumPayments {
+    return Intl.message(
+      'Sum payments',
+      name: 'sumPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra orders than required`
+  String get countOverOrdersThanRequired {
+    return Intl.message(
+      'Extra orders than required',
+      name: 'countOverOrdersThanRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly target`
+  String get monthTargetSuccess {
+    return Intl.message(
+      'Monthly target',
+      name: 'monthTargetSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders completed`
+  String get countOrdersCompleted {
+    return Intl.message(
+      'Count orders completed',
+      name: 'countOrdersCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date Financial cycle ends`
+  String get dateFinancialCycleEnds {
+    return Intl.message(
+      'Date Financial cycle ends',
+      name: 'dateFinancialCycleEnds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Achieved`
+  String get achieved {
+    return Intl.message(
+      'Achieved',
+      name: 'achieved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed`
+  String get failed {
+    return Intl.message(
+      'Failed',
+      name: 'failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot choose plan right now , please try again`
+  String get youCannotChoosePlan {
+    return Intl.message(
+      'You cannot choose plan right now , please try again',
+      name: 'youCannotChoosePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain total category`
+  String get captainTotalCategory {
+    return Intl.message(
+      'Captain total category',
+      name: 'captainTotalCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders completed`
+  String get contOrderCompleted {
+    return Intl.message(
+      'Count orders completed',
+      name: 'contOrderCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count orders left`
+  String get countOfOrdersLeft {
+    return Intl.message(
+      'Count orders left',
+      name: 'countOfOrdersLeft',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

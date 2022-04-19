@@ -123,11 +123,12 @@ class PlanScreenStateManager {
           financeByOrderCount: null,
         ));
       } else {
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.pleaseWaitAdministrationToAccept)
-            .show(screenState.context);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.pleaseWaitAdministrationToAccept)
+            .show(screenState.context);
       }
     });
   }
