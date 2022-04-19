@@ -3,6 +3,7 @@
 namespace App\Manager\BidOrder;
 
 use App\AutoMapping;
+use App\Constant\BidOrder\BidOrderOpenToPriceOfferStatusConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
 use App\Manager\Image\ImageManager;
@@ -47,6 +48,8 @@ class BidOrderManager
 
         $bidOrderEntity = $this->autoMapping->map(BidOrderCreateRequest::class, BidOrderEntity::class, $request);
 
+        $bidOrderEntity->setOpenToPriceOffer(BidOrderOpenToPriceOfferStatusConstant::BID_ORDER_OPEN_TO_PRICE_OFFER);
+
         $this->entityManager->persist($bidOrderEntity);
         $this->entityManager->flush();
 
@@ -62,9 +65,16 @@ class BidOrderManager
         $this->imageManager->createBidOrderImages($images, $bidOrderEntity);
     }
 
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
+    }
+
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
     }
 
     public function getBidOrderEntityByBidOrderId(int $id): ?BidOrderEntity
@@ -72,8 +82,8 @@ class BidOrderManager
         return $this->bidOrderEntityRepository->find($id);
     }
 
-    public function getBidOrderByIdForSupplier(int $id): ?BidOrderEntity
+    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): ?array
     {
-        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($id);
+        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId, $supplierId);
     }
 }

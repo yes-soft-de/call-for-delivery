@@ -22,4 +22,15 @@ class BidOrderByIdForSupplierGetResponse
      *     @OA\Items(type="object"))
      */
     public $images;
+
+    public int $priceOfferId;
+
+    public float $priceOfferValue;
+
+    public string $priceOfferStatus;
+
+    /**
+     * @var DateTime|null
+     */
+    public $offerDeadline;
 }

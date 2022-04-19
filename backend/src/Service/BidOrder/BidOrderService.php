@@ -37,6 +37,7 @@ class BidOrderService
         return $this->autoMapping->map(BidOrderEntity::class, BidOrderCreateResponse::class, $bidOrderResult);
     }
 
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         $response = [];
@@ -52,26 +53,30 @@ class BidOrderService
         return $response;
     }
 
-    public function getBidOrderByIdForSupplier(int $id)
+    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse
     {
-        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($id);
+        $response = [];
 
-        $response = $this->autoMapping->map(BidOrderEntity::class, BidOrderByIdForSupplierGetResponse::class, $bidOrder);
+        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId, $supplierId);
 
-        if ($response) {
-            $response->images = $this->customizeBidOrderImages($response->images->toArray());
+        if ($bidOrder) {
+            $response = $this->autoMapping->map("array", BidOrderByIdForSupplierGetResponse::class, $bidOrder);
+
+            if ($response) {
+                $response->images = $this->customizeBidOrderImages($response->images);
+            }
         }
 
         return $response;
     }
 
-    public function customizeBidOrderImages(array $imageEntitiesArray): ?array
+    public function customizeBidOrderImages(array $imagesArray): ?array
     {
         $response = [];
 
-        if (! empty($imageEntitiesArray)) {
-            foreach ($imageEntitiesArray as $imageEntity) {
-                $response[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+        if (! empty($imagesArray)) {
+            foreach ($imagesArray as $image) {
+                $response[] = $this->uploadFileHelperService->getImageParams($image);
             }
 
             return $response;
@@ -79,5 +84,21 @@ class BidOrderService
         } else {
             return null;
         }
+    }
+
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->bidOrderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
     }
 }

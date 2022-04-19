@@ -119,7 +119,7 @@ class BidOrderController extends BaseController
     }
 
     /**
-     * supplier: filter bid orders
+     * supplier: filter bid orders which the supplier had not provide a price offer for any one of them yet.
      * @Route("filterbidordersbysupplier", name="filterBidOrdersBySupplier", methods={"POST"})
      * @IsGranted("ROLE_SUPPLIER")
      * @param Request $request
@@ -150,11 +150,7 @@ class BidOrderController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="title"),
-     *                  @OA\Property(type="string", property="description"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="object", property="updatedAt")
+     *                  ref=@Model(type="App\Response\BidOrder\BidOrderFilterBySupplierResponse")
      *              )
      *      )
      *   )
@@ -207,7 +203,62 @@ class BidOrderController extends BaseController
      */
     public function getBidOrderByIdForSupplier(int $id): JsonResponse
     {
-        $result = $this->bidOrderService->getBidOrderByIdForSupplier($id);
+        $result = $this->bidOrderService->getBidOrderByIdForSupplier($id, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * supplier: filter bid orders which the supplier had provided a price offer for each one of them.
+     * @Route("filterbidorderswithpriceoffersbysupplier", name="filterBidOrdersWithPriceOffersBySupplier", methods={"POST"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Bid Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="priceOfferStatus"),
+     *          @OA\Property(type="boolean", property="openToPriceOffer")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the bid orders info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\BidOrder\BidOrderFilterBySupplierResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterBidOrdersThatHavePriceOffersBySupplier(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, BidOrderFilterBySupplierRequest::class, (object)$data);
+
+        $request->setSupplierId($this->getUserId());
+
+        $result = $this->bidOrderService->filterBidOrdersThatHavePriceOffersBySupplier($request);
 
         return $this->response($result, self::FETCH);
     }
