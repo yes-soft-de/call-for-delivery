@@ -229,7 +229,8 @@ class BidOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
-     *          @OA\Property(type="integer", property="priceOfferStatus")
+     *          @OA\Property(type="integer", property="priceOfferStatus"),
+     *          @OA\Property(type="boolean", property="openToPriceOffer")
      *      )
      * )
      *

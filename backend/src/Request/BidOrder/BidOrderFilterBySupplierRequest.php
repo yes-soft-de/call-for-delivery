@@ -21,6 +21,11 @@ class BidOrderFilterBySupplierRequest
      */
     private $priceOfferStatus;
 
+    /**
+     * @var bool|null
+     */
+    private $openToPriceOffer;
+
     public function getSupplierId(): int
     {
         return $this->supplierId;
@@ -44,5 +49,10 @@ class BidOrderFilterBySupplierRequest
     public function getPriceOfferStatus(): ?string
     {
         return $this->priceOfferStatus;
+    }
+
+    public function getOpenToPriceOffer(): ?bool
+    {
+        return $this->openToPriceOffer;
     }
 }

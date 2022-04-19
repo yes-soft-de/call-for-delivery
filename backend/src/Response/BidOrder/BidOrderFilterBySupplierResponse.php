@@ -21,4 +21,9 @@ class BidOrderFilterBySupplierResponse
     public DateTime $createdAt;
 
     public DateTime $updatedAt;
+
+    /**
+     * @var bool|null
+     */
+    public $openToPriceOffer;
 }

@@ -120,10 +120,7 @@ class BidOrderEntityRepository extends ServiceEntityRepository
     public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         $query = $this->createQueryBuilder('bidOrderEntity')
-            ->select('bidOrderEntity.id', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt')
-
-            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
-            ->setParameter('openToPriceOfferStatus', 1)
+            ->select('bidOrderEntity.id', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt', 'bidOrderEntity.openToPriceOffer')
 
             ->leftJoin(
                 SupplierProfileEntity::class,
@@ -149,6 +146,11 @@ class BidOrderEntityRepository extends ServiceEntityRepository
         if ($request->getPriceOfferStatus()) {
             $query->andWhere('priceOfferEntity.priceOfferStatus = :offerStatus');
             $query->setParameter('offerStatus', $request->getPriceOfferStatus());
+        }
+
+        if ($request->getOpenToPriceOffer() !== null) {
+            $query->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOffer');
+            $query->setParameter('openToPriceOffer', $request->getOpenToPriceOffer());
         }
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
