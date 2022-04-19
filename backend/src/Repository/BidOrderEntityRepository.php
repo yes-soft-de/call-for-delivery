@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\BidOrderEntity;
+use App\Entity\PriceOfferEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use DateTime;
@@ -23,10 +24,14 @@ class BidOrderEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, BidOrderEntity::class);
     }
 
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         $query = $this->createQueryBuilder('bidOrderEntity')
             ->select('bidOrderEntity.id', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt')
+
+            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->setParameter('openToPriceOfferStatus', 1)
 
             ->leftJoin(
                 SupplierProfileEntity::class,
@@ -39,6 +44,15 @@ class BidOrderEntityRepository extends ServiceEntityRepository
             ->setParameter('supplierId', $request->getSupplierId())
 
             ->orderBy('bidOrderEntity.id', 'DESC');
+
+        //---- Check if bid order is among the orders which the supplier had made a previous offer for it
+        $bidOrderIds = $this->getBidOrderIdsBySupplierIdAndThatHavePriceOffers($request->getSupplierId());
+
+        if (! empty($bidOrderIds)) {
+            $query->andWhere('bidOrderEntity.id NOT IN (:bidOrderIds)');
+            $query->setParameter('bidOrderIds', $bidOrderIds);
+        }
+        //---- End checking block
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('bidOrderEntity.createdAt >= :createdAt');
@@ -68,5 +82,37 @@ class BidOrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    // This function returns array of bid orders Ids that the supplier had made a price offer for them
+    public function getBidOrderIdsBySupplierIdAndThatHavePriceOffers(int $supplierId): array
+    {
+        return $this->createQueryBuilder('bidOrderEntity')
+            ->select('bidOrderEntity.id')
+
+            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->setParameter('openToPriceOfferStatus', 1)
+
+            ->leftJoin(
+                PriceOfferEntity::class,
+                'priceOfferEntity',
+                Join::WITH,
+                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+            )
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
+            )
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
+            ->setParameter('supplierId', $supplierId)
+
+            ->orderBy('bidOrderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

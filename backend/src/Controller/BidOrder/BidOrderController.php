@@ -119,7 +119,7 @@ class BidOrderController extends BaseController
     }
 
     /**
-     * supplier: filter bid orders
+     * supplier: filter bid orders which the supplier had not provide a price offer for any one of them yet.
      * @Route("filterbidordersbysupplier", name="filterBidOrdersBySupplier", methods={"POST"})
      * @IsGranted("ROLE_SUPPLIER")
      * @param Request $request
