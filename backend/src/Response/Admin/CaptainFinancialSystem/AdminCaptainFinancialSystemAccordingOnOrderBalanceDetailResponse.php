@@ -33,4 +33,6 @@ class AdminCaptainFinancialSystemAccordingOnOrderBalanceDetailResponse
     public float|null $total;
 
     public bool|null $advancePayment;
+
+    public float $amountForStore;
 }

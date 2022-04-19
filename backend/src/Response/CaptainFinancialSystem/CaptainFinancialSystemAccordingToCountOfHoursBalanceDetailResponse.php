@@ -19,4 +19,6 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public float|null $total;
 
     public bool $advancePayment;
+    
+    public float $amountForStore;
 }
