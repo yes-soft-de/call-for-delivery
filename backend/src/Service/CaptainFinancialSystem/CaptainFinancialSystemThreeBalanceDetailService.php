@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingOnOrderBalanceDetailResponse;
 use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Order\OrderTypeConstant;
 
 class CaptainFinancialSystemThreeBalanceDetailService
 {
@@ -49,7 +50,7 @@ class CaptainFinancialSystemThreeBalanceDetailService
                 $financialAccountDetails[] = $this->autoMapping->map('array', CaptainFinancialSystemAccordingOnOrderBalanceDetailResponse::class,  $financialSystemThreeDetail);
             }
          
-          $finalFinancialAccount = $this->getFinalFinancialAccount($sumPayments, $financialAccountDetails);
+          $finalFinancialAccount = $this->getFinalFinancialAccount($sumPayments, $financialAccountDetails, $captainId, $date);
           
           return [
             "financialAccountDetails" => $financialAccountDetails ,
@@ -62,10 +63,11 @@ class CaptainFinancialSystemThreeBalanceDetailService
         return $this->orderService->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
     }
 
-    public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails): array
+    public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails, int $captainId, array $date): array
     {
         $finalFinancialAccount = [];
-
+        $finalFinancialAccount['amountForStore'] = 0;
+        
         $finalFinancialAccount['financialDues'] = array_sum(array_map(fn ($financialAccountDetail) => $financialAccountDetail->captainTotalCategory, $financialAccountDetails));
          
         $finalFinancialAccount['sumPayments'] = $sumPayments;
@@ -79,7 +81,16 @@ class CaptainFinancialSystemThreeBalanceDetailService
         }
 
         $finalFinancialAccount['total'] = abs($total);
-
+       
+        //get Orders Details On Specific Date
+        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        foreach($detailsOrders as $orderDetail) {
+            
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+                $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
+            }
+        }
+ 
         return $finalFinancialAccount;
     }
 }

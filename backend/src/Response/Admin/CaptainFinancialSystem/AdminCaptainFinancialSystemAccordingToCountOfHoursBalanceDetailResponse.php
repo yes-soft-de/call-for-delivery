@@ -19,4 +19,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public float|null $total;
 
     public bool $advancePayment;
+
+    public float|null $amountForStore;
 }

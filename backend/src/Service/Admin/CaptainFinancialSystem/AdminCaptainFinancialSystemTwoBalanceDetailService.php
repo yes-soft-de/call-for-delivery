@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
 use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Order\OrderTypeConstant;
 
 class AdminCaptainFinancialSystemTwoBalanceDetailService
 {
@@ -22,8 +23,11 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
      {
         //get Count Orders Within Thirty Days
         $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $date);
+       
+        //get Orders Details On Specific Date
+        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
-        $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date);
+        $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date, $detailsOrders);
               
         return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
     }
@@ -33,7 +37,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         return $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
     }
 
-    public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date): ?array
+    public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date, array $detailsOrders): ?array
     {
         $item = [];
         $item['salary'] = 0;
@@ -46,6 +50,8 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_NOT_ARRIVED;
         $item['dateFinancialCycleEnds'] = $date['toDate'];
         $item['sumPayments'] = $sumPayments;
+        //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
+        $item['amountForStore'] = 0;
 
         if($countOrders === $financialSystemDetail['countOrdersInMonth']) {
             $item['salary'] = $financialSystemDetail['salary'];
@@ -91,6 +97,13 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         }
 
         $item['total'] = abs($total);
+
+        foreach($detailsOrders as $orderDetail) {
+            
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+                $item['amountForStore'] += $orderDetail['captainOrderCost'];
+            }
+        }
 
         return $item;
     }

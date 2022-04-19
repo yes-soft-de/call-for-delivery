@@ -448,7 +448,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
 
-        ->select('orderEntity.id, orderEntity.kilometer')
+        ->select('orderEntity.id, orderEntity.kilometer', 'orderEntity.payment', 'orderEntity.captainOrderCost')
 
         ->where('orderEntity.state = :state')
         ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)

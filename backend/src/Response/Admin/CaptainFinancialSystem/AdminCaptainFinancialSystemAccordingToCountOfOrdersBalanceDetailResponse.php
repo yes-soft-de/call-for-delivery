@@ -25,4 +25,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float $advancePayment;
 
     public float $sumPayments;
+    
+    public float $amountForStore;
 }

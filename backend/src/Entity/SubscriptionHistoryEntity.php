@@ -28,6 +28,9 @@ class SubscriptionHistoryEntity
 
     #[ORM\OneToOne(targetEntity: SubscriptionEntity::class, cascade: ['persist', 'remove'])]
     private $subscription;
+    
+    #[ORM\Column(type: 'boolean', length: 100, nullable: true)]
+    private $flag;
 
     public function getId(): ?int
     {
@@ -90,6 +93,18 @@ class SubscriptionHistoryEntity
     public function setSubscription(?SubscriptionEntity $subscription): self
     {
         $this->subscription = $subscription;
+
+        return $this;
+    }
+    
+    public function getFlag(): ?bool
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?bool $flag): self
+    {
+        $this->flag = $flag;
 
         return $this;
     }
