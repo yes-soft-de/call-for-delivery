@@ -203,7 +203,7 @@ class BidOrderController extends BaseController
      */
     public function getBidOrderByIdForSupplier(int $id): JsonResponse
     {
-        $result = $this->bidOrderService->getBidOrderByIdForSupplier($id);
+        $result = $this->bidOrderService->getBidOrderByIdForSupplier($id, $this->getUserId());
 
         return $this->response($result, self::FETCH);
     }

@@ -53,26 +53,30 @@ class BidOrderService
         return $response;
     }
 
-    public function getBidOrderByIdForSupplier(int $id)
+    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse
     {
-        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($id);
+        $response = [];
 
-        $response = $this->autoMapping->map(BidOrderEntity::class, BidOrderByIdForSupplierGetResponse::class, $bidOrder);
+        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId, $supplierId);
 
-        if ($response) {
-            $response->images = $this->customizeBidOrderImages($response->images->toArray());
+        if ($bidOrder) {
+            $response = $this->autoMapping->map("array", BidOrderByIdForSupplierGetResponse::class, $bidOrder);
+
+            if ($response) {
+                $response->images = $this->customizeBidOrderImages($response->images);
+            }
         }
 
         return $response;
     }
 
-    public function customizeBidOrderImages(array $imageEntitiesArray): ?array
+    public function customizeBidOrderImages(array $imagesArray): ?array
     {
         $response = [];
 
-        if (! empty($imageEntitiesArray)) {
-            foreach ($imageEntitiesArray as $imageEntity) {
-                $response[] = $this->uploadFileHelperService->getImageParams($imageEntity->getImagePath());
+        if (! empty($imagesArray)) {
+            foreach ($imagesArray as $image) {
+                $response[] = $this->uploadFileHelperService->getImageParams($image);
             }
 
             return $response;
