@@ -44,6 +44,9 @@ class BidOrderEntity
     #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: PriceOfferEntity::class)]
     private $priceOfferEntities;
 
+    #[ORM\Column(type: 'boolean')]
+    private $openToPriceOffer = true;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -183,6 +186,18 @@ class BidOrderEntity
                 $priceOfferEntity->setBidOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOpenToPriceOffer(): ?bool
+    {
+        return $this->openToPriceOffer;
+    }
+
+    public function setOpenToPriceOffer(bool $openToPriceOffer): self
+    {
+        $this->openToPriceOffer = $openToPriceOffer;
 
         return $this;
     }
