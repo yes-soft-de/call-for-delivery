@@ -72,6 +72,9 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainFinancialSystemDetailEntity::class)]
     private $captainFinancialSystemDetailEntity;
 
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainPaymentToCompanyEntity::class)]
+    private $captainPaymentToCompanyEntity;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -79,6 +82,7 @@ class CaptainEntity
         $this->OrderLogsEntity = new ArrayCollection();
         $this->captainPaymentEntity = new ArrayCollection();
         $this->captainFinancialSystemDetailEntity = new ArrayCollection();
+        $this->captainPaymentToCompanyEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,6 +402,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainFinancialSystemDetailEntity->getCaptain() === $this) {
                 $captainFinancialSystemDetailEntity->setCaptain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainPaymentToCompanyEntity>
+     */
+    public function getCaptainPaymentToCompanyEntity(): Collection
+    {
+        return $this->captainPaymentToCompanyEntity;
+    }
+
+    public function addCaptainPaymentToCompanyEntity(CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity): self
+    {
+        if (!$this->captainPaymentToCompanyEntity->contains($captainPaymentToCompanyEntity)) {
+            $this->captainPaymentToCompanyEntity[] = $captainPaymentToCompanyEntity;
+            $captainPaymentToCompanyEntity->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainPaymentToCompanyEntity(CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity): self
+    {
+        if ($this->captainPaymentToCompanyEntity->removeElement($captainPaymentToCompanyEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainPaymentToCompanyEntity->getCaptain() === $this) {
+                $captainPaymentToCompanyEntity->setCaptain(null);
             }
         }
 
