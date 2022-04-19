@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Main\MainMessageConstant;
 use App\Controller\BaseController;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
+use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
 use App\Service\PriceOffer\PriceOfferService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -127,5 +128,61 @@ class PriceOfferController extends BaseController
         $response = $this->priceOfferService->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * store owner: update a price offer status by store owner.
+     * @Route("priceofferstatus", name="updatePriceOfferStatusByStoreOwner", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Price Offer")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update price offer status request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="priceOfferStatus")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated successfully message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\PriceOffer\PriceOfferUpdateResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updatePriceOfferStatusByStoreOwner(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, PriceOfferStatusUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+        if(\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->priceOfferService->updatePriceOfferStatusByStoreOwner($request);
+
+        return $this->response($response, self::UPDATE);
     }
 }

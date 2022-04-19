@@ -86,4 +86,19 @@ class BidOrderManager
     {
         return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId, $supplierId);
     }
+
+    public function updateBidOrderToBeClosedForPriceOffer(int $bidOrderId): ?BidOrderEntity
+    {
+        $bidOrderEntity = $this->bidOrderEntityRepository->find($bidOrderId);
+
+        if (! $bidOrderEntity) {
+            return $bidOrderEntity;
+        }
+
+        $bidOrderEntity->setOpenToPriceOffer(BidOrderOpenToPriceOfferStatusConstant::BID_ORDER_CLOSED_TO_PRICE_OFFER);
+
+        $this->entityManager->flush();
+
+        return $bidOrderEntity;
+    }
 }

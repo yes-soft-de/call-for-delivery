@@ -32,4 +32,20 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllPricesOffersOfBidOrderExceptedOne(int $bidOrderId, int $exceptedPriceOfferId): array
+    {
+        return $this->createQueryBuilder('priceOfferEntity')
+
+            ->andWhere('priceOfferEntity.bidOrder = :bidOrderId')
+            ->setParameter('bidOrderId', $bidOrderId)
+
+            ->andWhere('priceOfferEntity.id != :priceOfferId')
+            ->setParameter('priceOfferId', $exceptedPriceOfferId)
+
+            ->orderBy('priceOfferEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
