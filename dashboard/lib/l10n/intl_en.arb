@@ -592,7 +592,10 @@
     "failed": "Failed",
     "youCannotChoosePlan": "You cannot choose plan right now , please try again",
     "BalanceHint": "Here we are showing your balance status",
-    "total": "Total"
+    "total": "Total",
+    "captainTotalCategory": "Captain total category",
+    "contOrderCompleted": "Count orders completed",
+    "countOfOrdersLeft": "Count orders left"
 
 
 

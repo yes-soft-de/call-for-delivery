@@ -137,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("غير فعال"),
         "captainStatus": MessageLookupByLibrary.simpleMessage("حساب الكابتن"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("عدد المراحل المحققة"),
         "captainUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الكابتن بنجاح"),
         "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),
@@ -210,6 +212,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل تريد حذف هذا الفرع"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المسلمة"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
@@ -223,6 +227,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحد الأدنى للكيلومترات"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("الحد الأعلى للكيلومترات"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المتبقية"),
         "countOngoingOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "countOrders": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),

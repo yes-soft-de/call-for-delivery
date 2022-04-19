@@ -586,7 +586,11 @@
     "failed": "الهدف غير محقق",
     "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا",
     "BalanceHint": "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم",
-    "total": "الإجمالي"
+    "total": "الإجمالي",
+    "captainTotalCategory": "عدد المراحل المحققة",
+    "contOrderCompleted": "عدد الطلبات المسلمة",
+    "countOfOrdersLeft": "عدد الطلبات المتبقية"
+
 
 
 

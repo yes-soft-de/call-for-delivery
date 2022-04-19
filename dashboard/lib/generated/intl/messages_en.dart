@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateInactive":
             MessageLookupByLibrary.simpleMessage("InActive"),
         "captainStatus": MessageLookupByLibrary.simpleMessage("Account Status"),
+        "captainTotalCategory":
+            MessageLookupByLibrary.simpleMessage("Captain total category"),
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Captain updated successfully"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
@@ -210,6 +212,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm deletion of this branch"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "contOrderCompleted":
+            MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
@@ -223,6 +227,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum kilometers"),
         "countKilometersTo":
             MessageLookupByLibrary.simpleMessage("Max kilometers"),
+        "countOfOrdersLeft":
+            MessageLookupByLibrary.simpleMessage("Count orders left"),
         "countOngoingOrders":
             MessageLookupByLibrary.simpleMessage("Ongoing Orders"),
         "countOrders": MessageLookupByLibrary.simpleMessage("Count orders"),
