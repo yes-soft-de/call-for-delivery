@@ -1,3 +1,6 @@
+import 'package:c4d/module_captain/response/captain_account_balance_response/final_financial_account.dart';
+import 'package:c4d/module_captain/response/captain_account_balance_response/financial_account_detail.dart';
+
 class Data {
   num? countOrders;
   num? countOrdersMaxFromNineteen;
@@ -13,7 +16,8 @@ class Data {
   String? monthTargetSuccess;
   num? countOrdersCompleted;
   String? dateFinancialCycleEnds;
-
+  List<FinancialAccountDetail>? financialAccountDetails;
+  FinalFinancialAccount? finalFinancialAccount;
   Data(
       {this.countOrders,
       this.countOrdersMaxFromNineteen,
@@ -28,7 +32,9 @@ class Data {
       this.countOverOrdersThanRequired,
       this.dateFinancialCycleEnds,
       this.monthCompensation,
-      this.monthTargetSuccess});
+      this.monthTargetSuccess,
+      this.finalFinancialAccount,
+      this.financialAccountDetails});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         countOrders: json['countOrders'] as num?,
@@ -46,6 +52,15 @@ class Data {
         dateFinancialCycleEnds: json['dateFinancialCycleEnds'] as String?,
         monthCompensation: json['monthCompensation'] as num?,
         monthTargetSuccess: json['monthTargetSuccess'] as String?,
+        financialAccountDetails:
+            (json['financialAccountDetails'] as List<dynamic>?)
+                ?.map((e) =>
+                    FinancialAccountDetail.fromJson(e as Map<String, dynamic>))
+                .toList(),
+        finalFinancialAccount: json['finalFinancialAccount'] == null
+            ? null
+            : FinalFinancialAccount.fromJson(
+                json['finalFinancialAccount'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
