@@ -16,6 +16,11 @@ class BidOrderFilterBySupplierRequest
 
     private int $supplierId;
 
+    /**
+     * @var string|null
+     */
+    private $priceOfferStatus;
+
     public function getSupplierId(): int
     {
         return $this->supplierId;
@@ -34,5 +39,10 @@ class BidOrderFilterBySupplierRequest
     public function getToDate(): ?string
     {
         return $this->toDate;
+    }
+
+    public function getPriceOfferStatus(): ?string
+    {
+        return $this->priceOfferStatus;
     }
 }

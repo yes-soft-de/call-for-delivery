@@ -81,4 +81,20 @@ class BidOrderService
             return null;
         }
     }
+
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->bidOrderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
+    }
 }

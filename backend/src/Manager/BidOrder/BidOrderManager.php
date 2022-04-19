@@ -71,6 +71,12 @@ class BidOrderManager
         return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
     }
 
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
+    }
+
     public function getBidOrderEntityByBidOrderId(int $id): ?BidOrderEntity
     {
         return $this->bidOrderEntityRepository->find($id);
