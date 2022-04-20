@@ -45,4 +45,11 @@ class PriceOfferService
 
         return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferUpdateResponse::class, $priceOfferResult);
     }
+
+    public function updatePriceOfferStatusBySupplier(PriceOfferStatusUpdateRequest $request): ?PriceOfferUpdateResponse
+    {
+        $priceOfferResult = $this->priceOfferManager->updatePriceOfferStatusBySupplier($request);
+
+        return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferUpdateResponse::class, $priceOfferResult);
+    }
 }

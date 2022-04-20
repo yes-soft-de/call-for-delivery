@@ -23,14 +23,9 @@ class BidOrderByIdForSupplierGetResponse
      */
     public $images;
 
-    public int $priceOfferId;
-
-    public float $priceOfferValue;
-
-    public string $priceOfferStatus;
-
     /**
-     * @var DateTime|null
+     * @OA\Property(type="array", property="priceOfferEntities",
+     *     @OA\Items(type="object"))
      */
-    public $offerDeadline;
+    public $priceOfferEntities;
 }
