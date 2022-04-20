@@ -103,4 +103,22 @@ class PriceOfferManager
             $this->entityManager->flush();
         }
     }
+
+    public function updatePriceOfferStatusBySupplier(PriceOfferStatusUpdateRequest $request): ?PriceOfferEntity
+    {
+        $priceOfferEntity = $this->priceOfferEntityRepository->find($request->getId());
+
+        if (! $priceOfferEntity) {
+            return $priceOfferEntity;
+        }
+
+        if ($request->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_CONFIRMED_STATUS) {
+            // supplier confirmed the price offer status after the acceptance of the store owner
+            $priceOfferEntity = $this->autoMapping->mapToObject(PriceOfferStatusUpdateRequest::class, PriceOfferEntity::class, $request, $priceOfferEntity);
+
+            $this->entityManager->flush();
+
+            return $priceOfferEntity;
+        }
+    }
 }
