@@ -121,15 +121,15 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captainFinance,
                 icon: Icons.account_balance_rounded,
                 children: [
-                  customListTile(getIt<PaymentsModule>().financeByOrderScreen,
-                      S.current.financeByOrders, FontAwesomeIcons.box, true),
                   customListTile(getIt<PaymentsModule>().financeByHoursScreen,
                       S.current.financeByHours, FontAwesomeIcons.clock, true),
                   customListTile(
                       getIt<PaymentsModule>().financeByCountOrderScreen,
-                      S.current.financeCountOrder,
+                      S.current.financeByOrders,
                       FontAwesomeIcons.boxes,
                       true),
+                  customListTile(getIt<PaymentsModule>().financeByOrderScreen,
+                      S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
             customExpansionTile(
@@ -141,8 +141,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.suppliersCategories,
                       Icons.category,
                       true),
-                  customListTile(getIt<SupplierModule>().inActiveSupplierScreen,
-                      S.current.inActiveSupplier, FontAwesomeIcons.square, true),
+                  customListTile(
+                      getIt<SupplierModule>().inActiveSupplierScreen,
+                      S.current.inActiveSupplier,
+                      FontAwesomeIcons.square,
+                      true),
                   customListTile(
                       getIt<SupplierModule>().suppliersScreen,
                       S.current.suppliers,

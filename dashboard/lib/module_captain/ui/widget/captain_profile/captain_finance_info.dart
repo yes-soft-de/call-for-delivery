@@ -44,6 +44,20 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
                     stringValue: widget.details.updatedBy),
                 CustomTile(Icons.timer, S.current.countHours,
                     widget.details.countHours),
+                CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersInMonth,
+                    null,stringValue:widget.details.countOrdersInMonth?.toString()),
+                CustomTile(
+                    Icons.card_giftcard_rounded,
+                    S.current.monthCompensation,
+                    widget.details.monthCompensation),
+                CustomTile(
+                    FontAwesomeIcons.boxes,
+                    S.current.bounceMaxCountOrdersInMonth,
+                    widget.details.bounceMaxCountOrdersInMonth),
+                CustomTile(
+                    FontAwesomeIcons.boxes,
+                    S.current.bounceMinCountOrdersInMonth,
+                    widget.details.bounceMinCountOrdersInMonth),
                 CustomTile(
                     Icons.money_rounded,
                     S.current.compensationForEveryOrder,

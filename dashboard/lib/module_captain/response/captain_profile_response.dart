@@ -275,6 +275,10 @@ class FinancialSystemCaptainDetails {
   num? countHours;
   num? compensationForEveryOrder;
   num? salary;
+  num? countOrdersInMonth;
+  num? monthCompensation;
+  num? bounceMaxCountOrdersInMonth;
+  num? bounceMinCountOrdersInMonth;
   FinancialSystemCaptainDetails.fromJson(dynamic json) {
     id = json['id'];
     captainFinancialSystemType = json['captainFinancialSystemType'];
@@ -289,5 +293,9 @@ class FinancialSystemCaptainDetails {
     updateDate = json['updatedAt'] != null
         ? CreateDate.fromJson(json['updatedAt'])
         : null;
+    countOrdersInMonth = json['countOrdersInMonth'];
+    monthCompensation = json['monthCompensation'];
+    bounceMaxCountOrdersInMonth = json['bounceMaxCountOrdersInMonth'];
+    bounceMinCountOrdersInMonth = json['bounceMinCountOrdersInMonth'];
   }
 }

@@ -91,7 +91,11 @@ class ProfileModel extends DataModel {
             '   ' +
             DateFormat.yMd()
                 .format(DateHelper.convert(finance?.updateDate?.timestamp)),
-        updatedBy: finance?.updatedBy);
+        updatedBy: finance?.updatedBy,
+        bounceMaxCountOrdersInMonth: finance?.bounceMaxCountOrdersInMonth,
+        bounceMinCountOrdersInMonth: finance?.bounceMinCountOrdersInMonth,
+        countOrdersInMonth: finance?.countOrdersInMonth,
+        monthCompensation: finance?.monthCompensation);
   }
 }
 
@@ -105,6 +109,10 @@ class OrderCountsSystemDetails {
   num? countHours;
   num? compensationForEveryOrder;
   num? salary;
+  num? countOrdersInMonth;
+  num? monthCompensation;
+  num? bounceMaxCountOrdersInMonth;
+  num? bounceMinCountOrdersInMonth;
   OrderCountsSystemDetails({
     required this.id,
     required this.createDate,
@@ -115,5 +123,9 @@ class OrderCountsSystemDetails {
     required this.countHours,
     required this.compensationForEveryOrder,
     required this.salary,
+    required this.bounceMaxCountOrdersInMonth,
+    required this.bounceMinCountOrdersInMonth,
+    required this.monthCompensation,
+    required this.countOrdersInMonth,
   });
 }
