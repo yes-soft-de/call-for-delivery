@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
+import 'package:c4d/module_main_navigation/nav_routes.dart';
 import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/init_account.state_manager.dart';
-import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_loaded.dart';
-import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_state_loading.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -37,7 +36,7 @@ class InitAccountScreenState extends State<InitAccountScreen> {
 
   void moveNext() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
+        NavRoutes.ROUTE_NAV, (route) => false);
   }
 
   void initProfile(ProfileRequest request,List<SupplierCategoryModel> categories) {

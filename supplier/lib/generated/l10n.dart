@@ -4639,6 +4639,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Reject offer`
+  String get rejectOffer {
+    return Intl.message(
+      'Reject offer',
+      name: 'rejectOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pending offer`
+  String get pendingOffer {
+    return Intl.message(
+      'pending offer',
+      name: 'pendingOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `accept offer`
+  String get acceptOffer {
+    return Intl.message(
+      'accept offer',
+      name: 'acceptOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `my offers`
+  String get myOffers {
+    return Intl.message(
+      'my offers',
+      name: 'myOffers',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -451,5 +451,10 @@
     "sortedByLatest": "من الأقدم للأحدث",
     "selected": "تحديد",
     "notices": "تحديثات",
-    "delete": "حذف"
+    "delete": "حذف",
+
+    "rejectOffer": "العروض المرفوضة",
+    "pendingOffer": "العروض المنتظرة",
+    "acceptOffer": "العروض ألمقبولة",
+    "myOffers": "عروضي"
 }

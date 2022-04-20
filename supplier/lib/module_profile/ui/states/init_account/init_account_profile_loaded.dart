@@ -4,7 +4,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
-import 'package:c4d/module_orders/ui/widgets/label_text.dart';
+import 'package:c4d/module_bid_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/ui/screen/init_account_screen.dart';
