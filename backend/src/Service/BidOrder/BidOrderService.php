@@ -5,12 +5,14 @@ namespace App\Service\BidOrder;
 use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
+use App\Entity\PriceOfferEntity;
 use App\Manager\BidOrder\BidOrderManager;
 use App\Request\BidOrder\BidOrderCreateRequest;
 use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use App\Response\BidOrder\BidOrderByIdForSupplierGetResponse;
 use App\Response\BidOrder\BidOrderCreateResponse;
 use App\Response\BidOrder\BidOrderFilterBySupplierResponse;
+use App\Response\PriceOffer\PriceOfferForSupplierGetResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
 class BidOrderService
@@ -57,13 +59,16 @@ class BidOrderService
     {
         $response = [];
 
-        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId, $supplierId);
+        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId);
 
         if ($bidOrder) {
-            $response = $this->autoMapping->map("array", BidOrderByIdForSupplierGetResponse::class, $bidOrder);
+            $response = $this->autoMapping->map(BidOrderEntity::class, BidOrderByIdForSupplierGetResponse::class, $bidOrder);
 
             if ($response) {
-                $response->images = $this->customizeBidOrderImages($response->images);
+                // get only prices offers of the supplier which made for the bid order
+                $response->priceOfferEntities = $this->filterAngGetPricesOffersBySupplierId($response->priceOfferEntities->toArray(), $supplierId);
+                // get each image of the order images as an object contain image URL, base URL, and full image URL
+                $response->images = $this->customizeBidOrderImages($response->images->toArray());
             }
         }
 
@@ -76,7 +81,25 @@ class BidOrderService
 
         if (! empty($imagesArray)) {
             foreach ($imagesArray as $image) {
-                $response[] = $this->uploadFileHelperService->getImageParams($image);
+                $response[] = $this->uploadFileHelperService->getImageParams($image->getImagePath());
+            }
+
+            return $response;
+
+        } else {
+            return null;
+        }
+    }
+
+    public function filterAngGetPricesOffersBySupplierId(array $pricesOffersEntities, int $supplierId): ?array
+    {
+        $response = [];
+
+        if (! empty($pricesOffersEntities)) {
+            foreach ($pricesOffersEntities as $pricesOfferEntity) {
+                if ($pricesOfferEntity->getSupplierProfile()->getUser()->getId() === $supplierId) {
+                    $response[] = $this->autoMapping->map(PriceOfferEntity::class, PriceOfferForSupplierGetResponse::class, $pricesOfferEntity);
+                }
             }
 
             return $response;
