@@ -22,7 +22,7 @@ use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
 class CaptainPaymentToCompanyController extends BaseController
 {
     private AutoMapping $autoMapping;
-    private CaptainPaymentService $captainPaymentService;
+    private CaptainPaymentToCompanyService $captainPaymentToCompanyService;
 
     public function __construct(SerializerInterface $serializer, CaptainPaymentToCompanyService $captainPaymentToCompanyService, AutoMapping $autoMapping)
     {
