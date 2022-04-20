@@ -53,7 +53,7 @@ class BidOrderService
         return $response;
     }
 
-    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse
+    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse|array
     {
         $response = [];
 

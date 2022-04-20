@@ -9,6 +9,7 @@ use App\Manager\BidOrder\BidOrderManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\PriceOfferEntityRepository;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
+use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -54,5 +55,52 @@ class PriceOfferManager
     public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
     {
         return $this->priceOfferEntityRepository->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
+    }
+
+    public function updatePriceOfferStatusByStoreOwner(PriceOfferStatusUpdateRequest $request): ?PriceOfferEntity
+    {
+        $priceOfferEntity = $this->priceOfferEntityRepository->find($request->getId());
+
+        if (! $priceOfferEntity) {
+            return $priceOfferEntity;
+        }
+
+        if ($request->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_REFUSED_STATUS) {
+            // store owner refused the offer, so update its status to be refused
+            $priceOfferEntity = $this->autoMapping->mapToObject(PriceOfferStatusUpdateRequest::class, PriceOfferEntity::class, $request, $priceOfferEntity);
+
+            $this->entityManager->flush();
+
+            return $priceOfferEntity;
+
+        } elseif ($request->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_ACCEPTED_STATUS) {
+            // store owner accepted the offer,
+            // firstly, update the offer status
+            $priceOfferEntity = $this->autoMapping->mapToObject(PriceOfferStatusUpdateRequest::class, PriceOfferEntity::class, $request, $priceOfferEntity);
+
+            $this->entityManager->flush();
+
+            // then, update the status of the other offers (for the same order) to be refused
+            $this->updateAllPricesOffersStatusExceptTheAcceptedOne($request->getId(), $priceOfferEntity->getBidOrder()->getId());
+
+            // thirdly, set the order to be closed for further price offers
+            $this->bidOrderManager->updateBidOrderToBeClosedForPriceOffer($priceOfferEntity->getBidOrder()->getId());
+
+            return $priceOfferEntity;
+        }
+    }
+
+    // This function update the status of all prices offers of a bid order except the accepted offer
+    public function updateAllPricesOffersStatusExceptTheAcceptedOne(int $acceptedPriceOfferId, int $bidOrderId)
+    {
+        $pricesOffersEntities = $this->priceOfferEntityRepository->getAllPricesOffersOfBidOrderExceptedOne($bidOrderId, $acceptedPriceOfferId);
+
+        if (! empty($pricesOffersEntities)) {
+            foreach ($pricesOffersEntities as $priceOfferEntity) {
+                    $priceOfferEntity->setPriceOfferStatus(PriceOfferStatusConstant::PRICE_OFFER_REFUSED_STATUS);
+            }
+
+            $this->entityManager->flush();
+        }
     }
 }

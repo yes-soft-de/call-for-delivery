@@ -3,9 +3,12 @@
 namespace App\Service\PriceOffer;
 
 use App\AutoMapping;
+use App\Entity\PriceOfferEntity;
 use App\Manager\PriceOffer\PriceOfferManager;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
+use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
 use App\Response\PriceOffer\PriceOfferByBidOrderIdGetForStoreOwnerResponse;
+use App\Response\PriceOffer\PriceOfferUpdateResponse;
 
 class PriceOfferService
 {
@@ -34,5 +37,12 @@ class PriceOfferService
         }
 
         return $response;
+    }
+
+    public function updatePriceOfferStatusByStoreOwner(PriceOfferStatusUpdateRequest $request): ?PriceOfferUpdateResponse
+    {
+        $priceOfferResult = $this->priceOfferManager->updatePriceOfferStatusByStoreOwner($request);
+
+        return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferUpdateResponse::class, $priceOfferResult);
     }
 }

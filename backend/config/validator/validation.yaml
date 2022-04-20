@@ -461,3 +461,10 @@ App\Request\PriceOffer\PriceOfferCreateRequest:
             - NotBlank: ~
         priceOfferValue:
             - NotBlank: ~
+
+App\Request\PriceOffer\PriceOfferStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        priceOfferStatus:
+            - NotBlank: ~
