@@ -80,6 +80,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentEntity::class)]
     private $storeOwnerPaymentEntity;
 
+    #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentFromCompanyEntity::class)]
+    private $storeOwnerPaymentFromCompanyEntity;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -88,6 +91,7 @@ class StoreOwnerProfileEntity
         $this->subscriptionCaptainOffer = new ArrayCollection();
         $this->OrderLogsEntity = new ArrayCollection();
         $this->storeOwnerPaymentEntity = new ArrayCollection();
+        $this->storeOwnerPaymentFromCompanyEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -461,6 +465,36 @@ class StoreOwnerProfileEntity
             // set the owning side to null (unless already changed)
             if ($storeOwnerPaymentEntity->getStore() === $this) {
                 $storeOwnerPaymentEntity->setStore(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StoreOwnerPaymentFromCompanyEntity>
+     */
+    public function getStoreOwnerPaymentFromCompanyEntity(): Collection
+    {
+        return $this->storeOwnerPaymentFromCompanyEntity;
+    }
+
+    public function addStoreOwnerPaymentFromCompanyEntity(StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompanyEntity): self
+    {
+        if (!$this->storeOwnerPaymentFromCompanyEntity->contains($storeOwnerPaymentFromCompanyEntity)) {
+            $this->storeOwnerPaymentFromCompanyEntity[] = $storeOwnerPaymentFromCompanyEntity;
+            $storeOwnerPaymentFromCompanyEntity->setStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOwnerPaymentFromCompanyEntity(StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompanyEntity): self
+    {
+        if ($this->storeOwnerPaymentFromCompanyEntity->removeElement($storeOwnerPaymentFromCompanyEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOwnerPaymentFromCompanyEntity->getStore() === $this) {
+                $storeOwnerPaymentFromCompanyEntity->setStore(null);
             }
         }
 
