@@ -193,7 +193,7 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
      *           @OA\Items(
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="number", property="amount"),
-     *              @OA\Property(type="object", property="date"),
+     *              @OA\Property(type="object", property="createdAt"),
      *              @OA\Property(type="integer", property="storeId"),
      *              @OA\Property(type="string", property="storeOwnerName"),
      *              @OA\Property(type="string", property="note"),
