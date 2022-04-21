@@ -18,6 +18,7 @@ class Data {
   String? dateFinancialCycleEnds;
   List<FinancialAccountDetail>? financialAccountDetails;
   FinalFinancialAccount? finalFinancialAccount;
+  num? amountForStore;
   Data(
       {this.countOrders,
       this.countOrdersMaxFromNineteen,
@@ -34,7 +35,9 @@ class Data {
       this.monthCompensation,
       this.monthTargetSuccess,
       this.finalFinancialAccount,
-      this.financialAccountDetails});
+      this.financialAccountDetails,
+      this.amountForStore
+      });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         countOrders: json['countOrders'] as num?,
@@ -52,6 +55,7 @@ class Data {
         dateFinancialCycleEnds: json['dateFinancialCycleEnds'] as String?,
         monthCompensation: json['monthCompensation'] as num?,
         monthTargetSuccess: json['monthTargetSuccess'] as String?,
+        amountForStore: json['amountForStore'] as num?,
         financialAccountDetails:
             (json['financialAccountDetails'] as List<dynamic>?)
                 ?.map((e) =>
