@@ -2,6 +2,9 @@
 
 namespace App\Response\Supplier;
 
+use DateTime;
+use OpenApi\Annotations as OA;
+
 class SupplierProfileGetResponse
 {
     /**
@@ -20,14 +23,12 @@ class SupplierProfileGetResponse
     public $phone;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"), nullable=true)
      */
     public $images;
 
-    /**
-     * @var object|null
-     */
-    public $createdAt;
+    public DateTime $createdAt;
 
     /**
      * @var string|null
@@ -41,5 +42,28 @@ class SupplierProfileGetResponse
 
     public bool $status;
 
+    /**
+     * @var string|null
+     */
     public $roomId;
+
+    /**
+     * @OA\Property(type="object", property="location", nullable=true)
+     */
+    public $location;
+
+    /**
+     * @var string|null
+     */
+    public $bankName;
+
+    /**
+     * @var string|null
+     */
+    public $bankAccountNumber;
+
+    /**
+     * @var string|null
+     */
+    public $stcPay;
 }

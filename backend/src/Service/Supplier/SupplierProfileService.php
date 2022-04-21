@@ -56,7 +56,7 @@ class SupplierProfileService
         }
     }
 
-    public function getSupplierProfileByUserId(int $userId)
+    public function getSupplierProfileByUserId(int $userId): array|SupplierProfileGetResponse
     {
         $response = [];
 

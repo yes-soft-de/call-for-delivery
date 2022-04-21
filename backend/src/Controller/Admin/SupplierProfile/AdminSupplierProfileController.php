@@ -10,6 +10,7 @@ use App\Request\Admin\SupplierProfile\SupplierProfileFilterByAdminRequest;
 use App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\SupplierProfile\SupplierProfileUpdateByAdminRequest;
 use App\Service\Admin\SupplierProfile\AdminSupplierProfileService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
@@ -145,20 +146,10 @@ class AdminSupplierProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="204"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="object", property="user",
-     *                  @OA\Property(type="string", property="id"),
-     *                  @OA\Property(type="string", property="userId"),
-     *                  @OA\Property(type="array", property="roles",
-     *                      @OA\Items()
-     *                  )
-     *              ),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="boolean", property="status"),
-     *              @OA\Property(type="string", property="supplierCategoryName")
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\SupplierProfile\SupplierProfileGetByAdminResponse")
+     *              )
      *          )
      *      )
      * )
@@ -203,7 +194,11 @@ class AdminSupplierProfileController extends BaseController
      *              @OA\Items(
      *                  @OA\Property(type="string", property="image")
      *              )
-     *          )
+     *          ),
+     *          @OA\Property(type="object", property="location"),
+     *          @OA\Property(type="string", property="bankName"),
+     *          @OA\Property(type="string", property="bankAccountNumber"),
+     *          @OA\Property(type="string", property="stcPay")
      *      )
      * )
      *
@@ -281,26 +276,7 @@ class AdminSupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code", example="204"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="object", property="user",
-     *                  @OA\Property(type="string", property="id"),
-     *                  @OA\Property(type="string", property="userId"),
-     *                  @OA\Property(type="array", property="roles",
-     *                      @OA\Items()
-     *                  )
-     *              ),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="boolean", property="status"),
-     *              @OA\Property(type="string", property="supplierCategoryName"),
-     *              @OA\Property(type="array", property="images",
-     *                  @OA\Items(
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  )
-     *              )
+     *              ref=@Model(type="App\Response\Admin\SupplierProfile\SupplierProfileGetByAdminResponse")
      *          )
      *      )
      * )

@@ -22,6 +22,26 @@ class SupplierProfileUpdateByAdminRequest
      */
     private $images;
 
+    /**
+     * @var object|null
+     */
+    private $location;
+
+    /**
+     * @var string|null
+     */
+    private $bankName;
+
+    /**
+     * @var string|null
+     */
+    private $bankAccountNumber;
+
+    /**
+     * @var string|null
+     */
+    private $stcPay;
+
     public function getId(): int
     {
         return $this->id;

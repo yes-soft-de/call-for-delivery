@@ -8,6 +8,7 @@ use App\Controller\BaseController;
 use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Service\Supplier\SupplierProfileService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -115,7 +116,11 @@ class SupplierProfileController extends BaseController
      *                  @OA\Property(type="string", property="image")
      *              )
      *          ),
-     *          @OA\Property(type="integer", property="supplierCategory")
+     *          @OA\Property(type="integer", property="supplierCategory"),
+     *          @OA\Property(type="object", property="location"),
+     *          @OA\Property(type="string", property="bankName"),
+     *          @OA\Property(type="string", property="bankAccountNumber"),
+     *          @OA\Property(type="string", property="stcPay")
      *      )
      * )
      *
@@ -194,21 +199,7 @@ class SupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="array", property="images",
-     *                  @OA\Items(
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  )
-     *              ),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="string", property="supplierCategoryName"),
-     *              @OA\Property(type="integer", property="supplierCategoryId"),
-     *              @OA\Property(type="boolean", property="status"),
-     *              @OA\Property(type="string", property="roomId")
+     *              ref=@Model(type="App\Response\Supplier\SupplierProfileGetResponse")
      *          )
      *      )
      * )
