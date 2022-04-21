@@ -468,3 +468,10 @@ App\Request\PriceOffer\PriceOfferStatusUpdateRequest:
             - NotBlank: ~
         priceOfferStatus:
             - NotBlank: ~
+
+App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest:
+    properties:
+        carModel:
+            - NotBlank: ~
+        deliveryCost:
+            - NotBlank: ~
