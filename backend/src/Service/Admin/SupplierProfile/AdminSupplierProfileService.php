@@ -48,7 +48,7 @@ class AdminSupplierProfileService
             foreach ($suppliersProfiles as $key => $value) {
                 $response[] = $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetByAdminResponse::class, $value);
 
-                $response[$key]->user = $this->getSpecificUserFields($response[$key]->user);
+                $response[$key]->user = $this->getSpecificUserFields($value->getUser());
 
                 $response[$key]->images = $this->customizeSupplierProfileImages($response[$key]->images->toArray());
 
@@ -107,7 +107,7 @@ class AdminSupplierProfileService
         if ($supplierProfile) {
             $response = $this->autoMapping->map(SupplierProfileEntity::class, SupplierProfileGetByAdminResponse::class, $supplierProfile);
 
-            $response->user = $this->getSpecificUserFields($response->user);
+            $response->user = $this->getSpecificUserFields($supplierProfile->getUser());
 
             $response->images = $this->customizeSupplierProfileImages($response->images->toArray());
 

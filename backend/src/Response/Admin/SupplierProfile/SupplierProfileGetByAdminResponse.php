@@ -2,15 +2,15 @@
 
 namespace App\Response\Admin\SupplierProfile;
 
-use App\Entity\SupplierCategoryEntity;
-use App\Entity\UserEntity;
+use DateTime;
+use OpenApi\Annotations as OA;
 
 class SupplierProfileGetByAdminResponse
 {
     public int $id;
 
     /**
-     * @var UserEntity|array
+     * @OA\Property(type="object", property="user")
      */
     public $user;
 
@@ -22,16 +22,37 @@ class SupplierProfileGetByAdminResponse
     public $phone;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"), nullable=true)
      */
     public $images;
 
     public bool $status;
 
-    public object $createdAt;
+    public DateTime $createdAt;
 
     /**
      * @var string|null
      */
     public $supplierCategoryName;
+
+    /**
+     * @OA\Property(type="object", property="location", nullable=true)
+     */
+    public $location;
+
+    /**
+     * @var string|null
+     */
+    public $bankName;
+
+    /**
+     * @var string|null
+     */
+    public $bankAccountNumber;
+
+    /**
+     * @var string|null
+     */
+    public $stcPay;
 }
