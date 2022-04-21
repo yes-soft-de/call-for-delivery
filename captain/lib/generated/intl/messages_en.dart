@@ -1023,6 +1023,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
+            "You cannot choose new plan , because you have a running one"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),

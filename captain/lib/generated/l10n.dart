@@ -6649,6 +6649,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You cannot choose new plan , because you have a running one`
+  String get youHaveFinanceAccount {
+    return Intl.message(
+      'You cannot choose new plan , because you have a running one',
+      name: 'youHaveFinanceAccount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
