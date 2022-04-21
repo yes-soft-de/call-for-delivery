@@ -24,6 +24,11 @@ class BidOrderByIdForSupplierGetResponse
     public $images;
 
     /**
+     * @var bool|null
+     */
+    public $openToPriceOffer;
+
+    /**
      * @OA\Property(type="array", property="priceOfferEntities",
      *     @OA\Items(type="object"))
      */
