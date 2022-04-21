@@ -39,6 +39,8 @@ class StatusCodeHelper {
         return S.current.storeCarsFinished;
       case '9602':
         return S.current.youCannotChoosePlan;
+      case '9601':
+        return S.current.youCannotChoosePlan;
       case '-1':
         return S.current.dataDecodeError;
       default:

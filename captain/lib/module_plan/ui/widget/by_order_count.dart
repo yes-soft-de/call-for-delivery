@@ -8,13 +8,15 @@ class FinanceByCountOrder extends StatelessWidget {
   final num bounceMinCountOrdersInMonth;
   final num bounceMaxCountOrdersInMonth;
   final num monthCompensation;
+  final bool active;
   const FinanceByCountOrder(
       {Key? key,
       required this.countOrdersInMonth,
       required this.salary,
       required this.bounceMinCountOrdersInMonth,
       required this.bounceMaxCountOrdersInMonth,
-      required this.monthCompensation})
+      required this.monthCompensation,
+      required this.active})
       : super(key: key);
 
   @override
@@ -24,13 +26,23 @@ class FinanceByCountOrder extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width - 32,
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: active ? null : Theme.of(context).scaffoldBackgroundColor,
+          gradient: active
+              ? LinearGradient(colors: [
+                  Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                  Theme.of(context).colorScheme.primary,
+                ])
+              : null,
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
               blurRadius: 5,
               spreadRadius: 1,
-              color: Theme.of(context).backgroundColor,
+              color: active
+                  ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
+                  : Theme.of(context).backgroundColor,
               offset: const Offset(-1, 0),
             )
           ],
@@ -71,7 +83,9 @@ class FinanceByCountOrder extends StatelessWidget {
             width: 200,
             child: Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: active ? Colors.white : null),
             ),
           ),
           const SizedBox(
@@ -80,7 +94,8 @@ class FinanceByCountOrder extends StatelessWidget {
           Text(
             subtitle,
             style: TextStyle(
-                color: Colors.green.shade600, fontWeight: FontWeight.bold),
+                color: active ? Colors.white : Colors.green.shade600,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),
