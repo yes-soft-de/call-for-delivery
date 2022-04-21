@@ -664,7 +664,8 @@
     "captainTotalCategory": "عدد المراحل المحققة",
     "contOrderCompleted": "عدد الطلبات المسلمة",
     "countOfOrdersLeft": "عدد الطلبات المتبقية",
-    "youHaveFinanceAccount": "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية"
+    "youHaveFinanceAccount": "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية",
+    "amountForStore": "المبالغ المخصصة للمتاجر"
 
 
 

@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amount": MessageLookupByLibrary.simpleMessage("الراتب"),
+        "amountForStore":
+            MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),

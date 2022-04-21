@@ -663,7 +663,9 @@
     "captainTotalCategory": "Captain total category",
     "contOrderCompleted": "Count orders completed",
     "countOfOrdersLeft": "Count orders left",
-    "youHaveFinanceAccount": "You cannot choose new plan , because you have a running one"
+    "youHaveFinanceAccount": "You cannot choose new plan , because you have a running one",
+    "amountForStore": "Amount for store"
+
 
 
 

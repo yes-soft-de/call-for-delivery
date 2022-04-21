@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "Your subscription already extended , You can\'t extend it again"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
+        "amountForStore":
+            MessageLookupByLibrary.simpleMessage("Amount for store"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
