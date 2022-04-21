@@ -98,7 +98,6 @@ class AdminDeliveryCarController extends BaseController
      * admin: get all delivery cars for admin
      * @Route("deliverycarsforadmin", name="fetchAllDeliveryCarsByAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Delivery Car")
@@ -126,7 +125,7 @@ class AdminDeliveryCarController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllDeliveryCarsForAdmin(Request $request): JsonResponse
+    public function getAllDeliveryCarsForAdmin(): JsonResponse
     {
         $result = $this->adminDeliveryCarService->getAllDeliveryCarsForAdmin();
 
