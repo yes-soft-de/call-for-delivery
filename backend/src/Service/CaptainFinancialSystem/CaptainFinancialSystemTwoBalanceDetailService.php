@@ -4,36 +4,31 @@ namespace App\Service\CaptainFinancialSystem;
 
 use App\AutoMapping;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
-use App\Service\Order\OrderService;
+use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemTwoBalanceDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
-
+use DateTime;
 class CaptainFinancialSystemTwoBalanceDetailService
 {
-    private OrderService $orderService;
+    private CaptainFinancialSystemTwoBalanceDetailManager $captainFinancialSystemTwoBalanceDetailManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, OrderService $orderService)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemTwoBalanceDetailManager $captainFinancialSystemTwoBalanceDetailManager)
     {
-        $this->orderService = $orderService;
+        $this->captainFinancialSystemTwoBalanceDetailManager = $captainFinancialSystemTwoBalanceDetailManager;
         $this->autoMapping = $autoMapping;
     }
 
     public function getBalanceDetailWithSystemTwo(array $financialSystemDetail, int $captainId, float $sumPayments, array $date)
      {
         //get Count Orders Within Thirty Days
-        $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $date);
+        $countOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
         //get Orders Details On Specific Date
-        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        $detailsOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date, $detailsOrders);
               
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
-    }
-
-    public function getCountOrdersByCaptainIdWithinThirtyDays(int $captainId, array $date): ?array
-    {     
-        return $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
     }
 
     public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date, array $detailsOrders): ?array
@@ -106,4 +101,58 @@ class CaptainFinancialSystemTwoBalanceDetailService
 
         return $item;
     }
+
+    public function getFinancialDuesWithSystemTwo(array $financialSystemDetail, int $captainId, array $date)
+    {
+       //get Count Orders Within Thirty Days
+       $countOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
+       //get Orders Details On Specific Date
+       $detailsOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+
+       return $this->getFinancialDues($countOrders['countOrder'], $financialSystemDetail, $date, $detailsOrders);             
+   }
+
+   
+   public function getFinancialDues(int $countOrders, array $financialSystemDetail, array $date, array $detailsOrders): ?array
+   {
+       $item = [];
+       $item['salary'] = 0;
+       $item['financialDues'] = 0;
+       //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
+       $item['amountForStore'] = 0;
+      
+       if($countOrders === $financialSystemDetail['countOrdersInMonth']) {
+           $item['salary'] = $financialSystemDetail['salary'];
+          
+           $item['financialDues'] = $financialSystemDetail['salary'] + $financialSystemDetail['monthCompensation']; 
+       }
+
+       if($countOrders > $financialSystemDetail['countOrdersInMonth']) {
+            $item['salary'] = $financialSystemDetail['salary'];
+            
+            $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
+
+            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'];
+
+            $item['bounce'] = $item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'];   
+        
+            $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;   
+            
+            $item['financialDues'] = $item['salary'] + $item['monthCompensation'] + $item['bounce']; 
+        }
+
+       if($countOrders < $financialSystemDetail['countOrdersInMonth']) {
+            
+           $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY;          
+       }
+      
+       foreach($detailsOrders as $orderDetail) {
+           
+           if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+               $item['amountForStore'] += $orderDetail['captainOrderCost'];
+           }
+       }
+
+       return $item;
+   }
 }
