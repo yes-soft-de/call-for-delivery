@@ -121,7 +121,7 @@ class BidOrderEntityRepository extends ServiceEntityRepository
     public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         $query = $this->createQueryBuilder('bidOrderEntity')
-            ->select('bidOrderEntity.id', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt', 'bidOrderEntity.openToPriceOffer')
+            ->select('DISTINCT(bidOrderEntity.id) as id', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt', 'bidOrderEntity.openToPriceOffer')
 
             ->leftJoin(
                 SupplierProfileEntity::class,
@@ -145,8 +145,10 @@ class BidOrderEntityRepository extends ServiceEntityRepository
             ->orderBy('bidOrderEntity.id', 'DESC');
 
         if ($request->getPriceOfferStatus()) {
-            $query->andWhere('priceOfferEntity.priceOfferStatus = :offerStatus');
-            $query->setParameter('offerStatus', $request->getPriceOfferStatus());
+            $pricesOffersIdsArray = $this->getLastPriceOfferIdsArrayBySupplierIdAndPriceOfferStatus($request->getSupplierId(), $request->getPriceOfferStatus());
+
+            $query->andWhere('priceOfferEntity.id IN (:pricesOffersIdsArray)');
+            $query->setParameter('pricesOffersIdsArray', $pricesOffersIdsArray);
         }
 
         if ($request->getOpenToPriceOffer() !== null) {
@@ -171,5 +173,40 @@ class BidOrderEntityRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    // This function return last id of the price offer which made by the supplier and its status equal specific one
+    public function getLastPriceOfferIdsArrayBySupplierIdAndPriceOfferStatus(int $supplierID, string $status): array
+    {
+        return $this->createQueryBuilder('bidOrderEntity')
+            ->select('priceOfferEntity.id')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.supplierCategory = bidOrderEntity.supplierCategory'
+            )
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
+            ->setParameter('supplierId', $supplierID)
+
+            ->leftJoin(
+                PriceOfferEntity::class,
+                'priceOfferEntity',
+                Join::WITH,
+                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+            )
+
+            ->andWhere('priceOfferEntity.supplierProfile = supplierProfileEntity.id')
+
+            ->andWhere('priceOfferEntity.priceOfferStatus = :offerStatus')
+            ->setParameter('offerStatus', $status)
+
+            ->orderBy('priceOfferEntity.id', 'DESC')
+            ->setMaxResults(1)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }
