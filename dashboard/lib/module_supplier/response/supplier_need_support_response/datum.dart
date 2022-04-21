@@ -4,17 +4,16 @@ class DatumSupplier {
   int? id;
   String? captainName;
   String? roomId;
-  List<ImageUrl> ? images;
+  ImageUrl? images;
   DatumSupplier({this.id, this.captainName, this.roomId, this.images});
 
   factory DatumSupplier.fromJson(Map<String, dynamic> json) => DatumSupplier(
-      id: json['supplierProfileId'] as int?,
-      captainName: json['supplierName'] as String?,
-      roomId: json['roomId'] as String?,
-      images: (json['images'] as List<dynamic>?)
-      ?.map((e) => ImageUrl.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  );
+        id: json['supplierProfileId'] as int?,
+        captainName: json['supplierName'] as String?,
+        roomId: json['roomId'] as String?,
+        images:
+            (json['images'] != null) ? ImageUrl.fromJson(json['images']) : null,
+      );
 
   Map<String, dynamic> toJson() => {
         'captainProfileId': id,

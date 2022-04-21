@@ -153,8 +153,10 @@ class ImageUrl {
   ImageUrl({this.image, this.imageURL, this.baseURL});
 
   ImageUrl.fromJson(dynamic json) {
-    image = json['image'];
-    imageURL = json['imageURL'];
-    baseURL = json['baseURL'];
+    if (json != null) {
+      image = json['image'];
+      imageURL = json['imageURL'];
+      baseURL = json['baseURL'];
+    }
   }
 }
