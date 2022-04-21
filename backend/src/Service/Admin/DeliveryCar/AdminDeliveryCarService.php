@@ -25,4 +25,17 @@ class AdminDeliveryCarService
 
         return $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForAdminResponse::class, $deliveryCarEntity);
     }
+
+    public function getAllDeliveryCarsForAdmin(): array
+    {
+        $response = [];
+
+        $deliveryCarsEntities = $this->adminDeliveryCarManager->getAllDeliveryCarsForAdmin();
+
+        foreach ($deliveryCarsEntities as $deliveryCarsEntity) {
+            $response[] = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForAdminResponse::class, $deliveryCarsEntity);
+        }
+
+        return $response;
+    }
 }

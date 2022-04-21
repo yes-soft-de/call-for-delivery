@@ -93,4 +93,43 @@ class AdminDeliveryCarController extends BaseController
 
         return $this->response($result, self::CREATE);
     }
+
+    /**
+     * admin: get all delivery cars for admin
+     * @Route("deliverycarsforadmin", name="fetchAllDeliveryCarsByAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Delivery Car")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns all delivery cars info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\DeliveryCar\DeliveryCarGetForAdminResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllDeliveryCarsForAdmin(Request $request): JsonResponse
+    {
+        $result = $this->adminDeliveryCarService->getAllDeliveryCarsForAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
 }

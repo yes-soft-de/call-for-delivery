@@ -30,4 +30,9 @@ class AdminDeliveryCarManager
 
         return $deliveryCarEntity;
     }
+
+    public function getAllDeliveryCarsForAdmin(): array
+    {
+        return $this->deliveryCarEntityRepository->findAll();
+    }
 }
