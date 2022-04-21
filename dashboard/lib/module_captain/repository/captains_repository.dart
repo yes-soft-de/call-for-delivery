@@ -3,6 +3,7 @@ import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
+import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
@@ -105,5 +106,13 @@ class CaptainsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainNeedSupportResponse.fromJson(response);
+  }
+   /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
+  Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_ACCOUNT_BALANCE+'/id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainAccountBalanceResponse.fromJson(response);
   }
 }

@@ -573,7 +573,26 @@
     "suppliers": "الموردين",
     "suppliersCategories": "فئات الموردين",
     "categoryImage": "صورة التصنيف",
-    "supplierUpdatedSuccessfully": "تم تحديث المورد بنجاح"
+    "supplierUpdatedSuccessfully": "تم تحديث المورد بنجاح",
+    "countOrders": "عدد الطلبات",
+    "countOrdersMaxFromNineteen": "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة",
+    "financialDues": "المستحقات المالية",
+    "sumPayments": "مجموع الدفعات",
+    "countOverOrdersThanRequired": "عدد الطلبات الإضافية",
+    "monthTargetSuccess": "أهداف الشهر",
+    "countOrdersCompleted": "عدد الطلبات المنجزة",
+    "dateFinancialCycleEnds": "تاريخ انتهاء الدورة المالية",
+    "achieved": "الهدف محقق",
+    "failed": "الهدف غير محقق",
+    "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا",
+    "BalanceHint": "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم",
+    "total": "الإجمالي",
+    "captainTotalCategory": "عدد المراحل المحققة",
+    "contOrderCompleted": "عدد الطلبات المسلمة",
+    "countOfOrdersLeft": "عدد الطلبات المتبقية"
+
+
+
 
 
 

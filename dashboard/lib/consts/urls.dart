@@ -13,9 +13,12 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/package';
   static const String BASE_API_PACKAGE = DOMAIN + VERSION + '/package';
   static const String BASE_API_COMPANY = DOMAIN + VERSION + '/company';
-  static const String BASE_API_SUPPLIER_CATE = DOMAIN + VERSION_ADMIN + '/suppliercategory';
-  static const String BASE_API_SUPPLIER = DOMAIN + VERSION_ADMIN + '/supplierprofile';
-  static const String BASE_API_ANNOUNCEMENT = DOMAIN + VERSION_ADMIN + '/announcement';
+  static const String BASE_API_SUPPLIER_CATE =
+      DOMAIN + VERSION_ADMIN + '/suppliercategory';
+  static const String BASE_API_SUPPLIER =
+      DOMAIN + VERSION_ADMIN + '/supplierprofile';
+  static const String BASE_API_ANNOUNCEMENT =
+      DOMAIN + VERSION_ADMIN + '/announcement';
 
   static const String BASE_API_BRANCH_ADMIN =
       DOMAIN + VERSION_ADMIN + '/storeownerbranch';
@@ -48,6 +51,8 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/captainpayment';
   static const BASE_CAPTAIN_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/captainpayments';
+  static const BASE_CAPTAIN_ACCOUNT_BALANCE =
+      DOMAIN + VERSION_ADMIN + '/captainfinancialsystemdetail';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -156,19 +161,26 @@ class Urls {
   static const GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS +
           '/captainfinancialsystemaccordingtocountofordersbyadmin';
+  static const GET_CAPTAIN_ACCOUNT_BALANCE =
+      BASE_CAPTAIN_ACCOUNT_BALANCE +
+          '/captainbalancedetailforcaptainspecific';
 
   /*-----------------Supplier--Categories---------------*/
-  static const GET_SUPPLIER_CATEGORIES = BASE_API_SUPPLIER_CATE + '/suppliercategories';
-  static const CREATE_SUPPLIER_CATEGORY = BASE_API_SUPPLIER_CATE + '/suppliercategory';
-  static const ENABLE_SUPPLIER_CATEGORY = BASE_API_SUPPLIER_CATE + '/suppliercategorystatus';
-
+  static const GET_SUPPLIER_CATEGORIES =
+      BASE_API_SUPPLIER_CATE + '/suppliercategories';
+  static const CREATE_SUPPLIER_CATEGORY =
+      BASE_API_SUPPLIER_CATE + '/suppliercategory';
+  static const ENABLE_SUPPLIER_CATEGORY =
+      BASE_API_SUPPLIER_CATE + '/suppliercategorystatus';
 
   /*-----------------Supplier-------------------------------*/
   static const GET_SUPPLIERS = BASE_API_SUPPLIER + '/filtersuppliersprofiles';
   static const ACTIVE_SUPPLIER = BASE_API_SUPPLIER + '/supplierprofilestatus';
-  static const GET_SUPPLIER_PROFILE = BASE_API_SUPPLIER + '/supplierprofilebyid/';
+  static const GET_SUPPLIER_PROFILE =
+      BASE_API_SUPPLIER + '/supplierprofilebyid/';
 
   /*-----------------Supplier--announcement-----------------------------*/
   static const GET_ANNOUNCEMENT = BASE_API_ANNOUNCEMENT + '/filterannouncement';
-  static const ACTIVE_ANNOUNCEMENT = BASE_API_ANNOUNCEMENT + '/announcementadministrationstatus';
+  static const ACTIVE_ANNOUNCEMENT =
+      BASE_API_ANNOUNCEMENT + '/announcementadministrationstatus';
 }

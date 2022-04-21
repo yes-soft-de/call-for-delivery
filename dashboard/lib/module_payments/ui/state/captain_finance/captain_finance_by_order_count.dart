@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
+import 'package:c4d/module_payments/ui/widget/finance_by_orders_count.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -65,6 +66,29 @@ class CaptainFinanceByOrderCountLoadedState extends States {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                Align(
+                  alignment: AlignmentDirectional.topEnd,
+                  child: IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return FinanceByOrderCountForm(
+                              request: element,
+                              onSave: (request) {
+                                request.id = element.id;
+                                screenState.stateManager
+                                    .updateFinance(screenState, request);
+                              },
+                            );
+                          });
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
                 horizontalsTile(S.current.countOrdersInMonth,
                     FixedNumber.getFixedNumber(element.countOrdersInMonth)),
                 horizontalsTile(

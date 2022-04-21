@@ -68,8 +68,9 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       appBar:
           CustomC4dAppBar.appBar(context, title: S.current.profile, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_TO_CAPTAIN,arguments: captainId);
-        }, icon: Icons.account_balance_rounded)
+          Navigator.of(context)
+              .pushNamed(CaptainsRoutes.CAPTAIN_BALANCE, arguments: captainId);
+        }, icon: Icons.account_balance_rounded),
       ]),
       body: currentState.getUI(context),
     );
