@@ -1,15 +1,16 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
 import 'package:c4d/module_bid_orders/model/order/order_model.dart';
-import 'package:c4d/module_bid_orders/ui/screens/orders/my_offer_order_screen.dart';
+import 'package:c4d/module_bid_orders/ui/screens/orders/ongoing_order_screen.dart';
+import 'package:c4d/module_bid_orders/ui/screens/orders/open_orders_screen.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/bid_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
-class OfferOrdersListStateLoaded extends States {
+class OnGoingOrdersStateLoaded extends States {
   final List<OrderModel> orders;
-  final OfferOrdersScreenState screenState;
-  OfferOrdersListStateLoaded(
+  final OnGoingOrdersScreenState screenState;
+  OnGoingOrdersStateLoaded(
     this.screenState, {
     required this.orders,
   }) : super(screenState) {
@@ -29,7 +30,7 @@ class OfferOrdersListStateLoaded extends States {
           onTap: () {
             Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments: element.id);
           },
-          child:BidOrderCard(element,true),
+          child:BidOrderCard(element,false),
         ),
       ));
     });

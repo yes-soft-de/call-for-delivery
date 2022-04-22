@@ -9,11 +9,13 @@ class OrderModel extends DataModel {
   late String description;
   late String createdDate;
   late String title;
+  late bool openToPriceOffer;
   OrderModel({
     required this.description,
     required this.title,
     required this.createdDate,
     required this.id,
+    required this.openToPriceOffer
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -30,7 +32,8 @@ class OrderModel extends DataModel {
           description: element.description ?? S.current.unknown,
           createdDate: create,
           id: element.id ?? -1,
-          title: element.title ?? '',));
+          title: element.title ??  S.current.unknown,
+          openToPriceOffer: element.openToPriceOffer ?? false));
     });
   }
   List<OrderModel> get data => _orders;

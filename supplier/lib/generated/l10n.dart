@@ -4679,6 +4679,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `open`
+  String get open {
+    return Intl.message(
+      'open',
+      name: 'open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add your offer`
+  String get addYourOffer {
+    return Intl.message(
+      'Add your offer',
+      name: 'addYourOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price {
+    return Intl.message(
+      'Price',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dead Line`
+  String get deadLine {
+    return Intl.message(
+      'Dead Line',
+      name: 'deadLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer log`
+  String get offerLog {
+    return Intl.message(
+      'Offer log',
+      name: 'offerLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting to accept your offer`
+  String get pendingOfferMsg {
+    return Intl.message(
+      'Waiting to accept your offer',
+      name: 'pendingOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store reject your offer`
+  String get rejectOfferMsg {
+    return Intl.message(
+      'Store reject your offer',
+      name: 'rejectOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store accept your offer`
+  String get acceptOfferMsg {
+    return Intl.message(
+      'Store accept your offer',
+      name: 'acceptOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmed`
+  String get confirmed {
+    return Intl.message(
+      'Confirmed',
+      name: 'confirmed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

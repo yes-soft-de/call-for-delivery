@@ -1,30 +1,30 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_bid_orders/request/order_filter_request.dart';
-import 'package:c4d/module_bid_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
+import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
+import 'package:c4d/module_bid_orders/state_manager/owner_orders/open_orders.state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class OwnerOrdersScreen extends StatefulWidget {
-  final OwnerOrdersStateManager _stateManager;
+class OpenOrdersScreen extends StatefulWidget {
+  final OpenOrdersStateManager _stateManager;
 
-  OwnerOrdersScreen(this._stateManager);
+  OpenOrdersScreen(this._stateManager);
 
   @override
-  OwnerOrdersScreenState createState() => OwnerOrdersScreenState();
+  OpenOrdersScreenState createState() => OpenOrdersScreenState();
 }
 
-class OwnerOrdersScreenState extends State<OwnerOrdersScreen> {
+class OpenOrdersScreenState extends State<OpenOrdersScreen> {
   late States _currentState;
   StreamSubscription? _stateSubscription;
-  StreamSubscription? _globalStateManager;
 
 
-  Future<void> getMyOrdersFilter([loading = true]) async {
-    widget._stateManager.getOrdersFilters(
-        this, FilterBidOrderRequest(), loading);
+
+ void getOpenOrdersFilters() async {
+    widget._stateManager.getOpenOrdersFilters(
+        this, FilterOpenBidOrderRequest());
   }
 
   bool featureFlag = true;
@@ -38,21 +38,20 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen> {
         setState(() {});
       }
     });
-    getMyOrdersFilter();
+    getOpenOrdersFilters();
   }
 
   String? orderFilter;
 
   @override
   Widget build(BuildContext context) {
-    return  Center(child: Container(child: _currentState.getUI(context)));
+    return  Container(child: _currentState.getUI(context));
   }
 
 
   @override
   void dispose() {
     _stateSubscription?.cancel();
-    _globalStateManager?.cancel();
     super.dispose();
   }
 

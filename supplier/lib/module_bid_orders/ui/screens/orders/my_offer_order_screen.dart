@@ -4,8 +4,9 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_bid_orders/request/order_filter_request.dart';
-import 'package:c4d/module_bid_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
+import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/state_manager/owner_orders/my_offer.state_manager.dart';
+import 'package:c4d/module_bid_orders/state_manager/owner_orders/open_orders.state_manager.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class OfferOrdersScreen extends StatefulWidget {
-  final OwnerOrdersStateManager _stateManager;
+  final MyOffersStateManager _stateManager;
 
   OfferOrdersScreen(this._stateManager);
 
@@ -24,11 +25,12 @@ class OfferOrdersScreen extends StatefulWidget {
 class OfferOrdersScreenState extends State<OfferOrdersScreen> {
   late States _currentState;
   StreamSubscription? _stateSubscription;
+  bool openToPriceOfferD = true;
 
 
   Future<void> getMyOrdersFilter([loading = true]) async {
-    widget._stateManager.getOfferOrdersFilters(
-        this, FilterBidOrderRequest(), loading);
+    widget._stateManager.getMyOfferFilters(
+        this, FilterOrderOfferRequest(openToPriceOffer: openToPriceOfferD,priceOfferStatus: orderFilter));
   }
 
   bool featureFlag = true;
@@ -45,7 +47,7 @@ class OfferOrdersScreenState extends State<OfferOrdersScreen> {
     getMyOrdersFilter();
   }
 
-  String? orderFilter;
+  String orderFilter='pending';
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -70,11 +72,14 @@ class OfferOrdersScreenState extends State<OfferOrdersScreen> {
           onItemSelected: (index) {
             if (index == 0) {
               orderFilter = 'pending';
+              openToPriceOfferD=true;
             } else  if (index == 1){
-              orderFilter = 'accpet';
+              orderFilter = 'accpeted';
+              openToPriceOfferD=false;
             }
-            else  if (index == 1){
-              orderFilter = 'reject';
+            else  if (index == 2){
+              orderFilter = 'refused';
+              openToPriceOfferD=true;
             }
             currentIndex = index;
             getMyOrdersFilter();
