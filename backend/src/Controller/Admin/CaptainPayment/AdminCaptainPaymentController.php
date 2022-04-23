@@ -74,6 +74,8 @@ class AdminCaptainPaymentController extends BaseController
      *            @OA\Property(type="number", property="amount"),
      *            @OA\Property(type="object", property="createdAt"),
      *            @OA\Property(type="string", property="note"),
+     *            @OA\Property(type="string", property="captainFinancialDuesId"),
+     *            @OA\Property(type="string", property="status"),
      *      )
      *   )
      * )
