@@ -40,7 +40,7 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
 
   void enableCaptain(String status) {
     widget._stateManager.acceptCaptainProfile(
-        this, captainId, EnableCaptainRequest(id: captainId, status: status));
+        this, captainId, EnableCaptainRequest(id: captainId, status: status),false);
   }
   void enableCaptainFinance(EnableCaptainRequest request) {
     widget._stateManager.captainFinanceStatusPlan(

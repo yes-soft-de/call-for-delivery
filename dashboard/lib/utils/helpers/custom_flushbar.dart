@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomFlushBarHelper {
   static Flushbar createSuccess(
@@ -47,5 +48,26 @@ class CustomFlushBarHelper {
       flushbarStyle: FlushbarStyle.FLOATING,
       margin: EdgeInsets.all(8),
     );
+  }
+
+  static showSnackSuccess(State screenState, String message, bool loading) {
+    if (loading) {
+      createSuccess(
+              title: S.current.warnning,
+              message: S.current.storeUpdatedSuccessfully)
+          .show(screenState.context);
+    } else {
+      Fluttertoast.showToast(msg: message);
+    }
+  }
+
+  static showSnackFailed(State screenState, String message, bool loading) {
+    if (loading) {
+      createError(
+              title: S.current.warnning, message: message)
+          .show(screenState.context);
+    } else {
+      Fluttertoast.showToast(msg: message);
+    }
   }
 }

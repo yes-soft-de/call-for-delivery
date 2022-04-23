@@ -22,7 +22,7 @@ class CaptainProfileLoadedState extends States {
   final CaptainProfileScreenState screenState;
   final String? error;
   final bool empty;
-  final ProfileModel? model;
+  ProfileModel? model;
 
   CaptainProfileLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
@@ -184,9 +184,11 @@ class CaptainProfileLoadedState extends States {
                             onChanged: (v) {
                               if (v) {
                                 model?.status = 'active';
+                                screenState.refresh();
                                 screenState.enableCaptain('active');
                               } else {
                                 model?.status = 'inactive';
+                                screenState.refresh();
                                 screenState.enableCaptain('inactive');
                               }
                             }),

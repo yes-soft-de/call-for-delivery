@@ -30,7 +30,7 @@ class CaptainCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -55,6 +55,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
   @override
   Widget build(BuildContext context) {
     return StackedForm(
+      visible: MediaQuery.of(context).viewInsets.bottom == 0,
         child: Form(
           key: _key,
           child: Container(

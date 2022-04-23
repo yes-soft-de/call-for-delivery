@@ -22,8 +22,11 @@ class CaptainProfileStateManager {
 
   CaptainProfileStateManager(this._captainsService);
 
-  void getCaptainProfile(CaptainProfileScreenState screenState, int captainId) {
-    _stateSubject.add(LoadingState(screenState));
+  void getCaptainProfile(CaptainProfileScreenState screenState, int captainId,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _captainsService.getCaptainProfile(captainId).then((value) {
       if (value.hasError) {
         _stateSubject.add(
@@ -39,20 +42,20 @@ class CaptainProfileStateManager {
   }
 
   void acceptCaptainProfile(CaptainProfileScreenState screenState,
-      int captainId, EnableCaptainRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+      int captainId, EnableCaptainRequest request,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
     _captainsService.enableCaptain(request).then((value) {
       if (value.hasError) {
-        CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
-        getCaptainProfile(screenState, captainId);
+        CustomFlushBarHelper.showSnackFailed(
+            screenState, value.error.toString(), loading);
+        getCaptainProfile(screenState, captainId, loading);
       } else {
-        getCaptainProfile(screenState, captainId);
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.captainUpdatedSuccessfully)
-            .show(screenState.context);
+        CustomFlushBarHelper.showSnackSuccess(
+            screenState, S.current.captainUpdatedSuccessfully, loading);
+        getCaptainProfile(screenState, captainId, loading);
         getIt<GlobalStateManager>().updateList();
       }
     });
@@ -78,7 +81,7 @@ class CaptainProfileStateManager {
     });
   }
 
-   void captainFinanceStatusPlan(CaptainProfileScreenState screenState,
+  void captainFinanceStatusPlan(CaptainProfileScreenState screenState,
       int captainId, EnableCaptainRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _captainsService.captainFinancePlanStatus(request).then((value) {
