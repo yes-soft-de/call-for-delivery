@@ -104,6 +104,10 @@ class SupplierProfileManager
 
             $request->setSupplierCategory($this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
 
+            if ($request->getAllSupplierCategories()) {
+                $request->setSupplierCategories($this->supplierCategoryManager->getAllActiveSupplierCategoriesIDs());
+            }
+
             if (! empty($request->getImages())) {
                 $request->setImages($this->createOrUpdateSupplierProfileImage($request->getImages(), $supplierProfileEntity));
             }
@@ -171,5 +175,10 @@ class SupplierProfileManager
         }
 
         return true;
+    }
+
+    public function getSupplierCategoriesNamesBySupplierCategoriesIDs(array $supplierCategoriesIDs): array
+    {
+        return $this->supplierCategoryManager->getSupplierCategoriesNamesBySupplierCategoriesIDs($supplierCategoriesIDs);
     }
 }

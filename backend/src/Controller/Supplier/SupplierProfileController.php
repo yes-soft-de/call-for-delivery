@@ -120,7 +120,12 @@ class SupplierProfileController extends BaseController
      *          @OA\Property(type="object", property="location"),
      *          @OA\Property(type="string", property="bankName"),
      *          @OA\Property(type="string", property="bankAccountNumber"),
-     *          @OA\Property(type="string", property="stcPay")
+     *          @OA\Property(type="string", property="stcPay"),
+     *          @OA\Property(type="array", property="supplierCategories",
+     *              @OA\Items(type="integer")
+     *          ),
+     *          @OA\Property(type="bool", property="allSupplierCategories",
+     *              description="takes 'true' when we want to store all supplier categories in supplierCategories field.")
      *      )
      * )
      *

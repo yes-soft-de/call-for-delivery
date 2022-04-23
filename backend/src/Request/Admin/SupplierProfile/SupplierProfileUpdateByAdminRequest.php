@@ -42,6 +42,17 @@ class SupplierProfileUpdateByAdminRequest
      */
     private $stcPay;
 
+    /**
+     * @var array|null
+     */
+    private $supplierCategories;
+
+    /**
+     * takes 'true' when we want to store all supplier categories in supplierCategories field.
+     * @var bool|null
+     */
+    private $allSupplierCategories;
+
     public function getId(): int
     {
         return $this->id;
@@ -68,5 +79,20 @@ class SupplierProfileUpdateByAdminRequest
     public function getImages(): ?array
     {
         return $this->images;
+    }
+
+    public function getSupplierCategories(): ?array
+    {
+        return $this->supplierCategories;
+    }
+
+    public function setSupplierCategories(?array $supplierCategories): void
+    {
+        $this->supplierCategories = $supplierCategories;
+    }
+
+    public function getAllSupplierCategories(): ?bool
+    {
+        return $this->allSupplierCategories;
     }
 }
