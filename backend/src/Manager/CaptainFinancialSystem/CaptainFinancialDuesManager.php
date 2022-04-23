@@ -50,8 +50,6 @@ class CaptainFinancialDuesManager
     
     public function getCaptainFinancialDuesByUserId(int $userId): array
     {
-        // $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
-
         return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserId($userId);
     } 
 

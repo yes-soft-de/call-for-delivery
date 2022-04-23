@@ -4,18 +4,18 @@ namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderBalanceDetailResponse;
-use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
+use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemThreeBalanceDetailManager;
 
 class AdminCaptainFinancialSystemThreeBalanceDetailService
 {
-    private OrderService $orderService;
+    private AdminCaptainFinancialSystemThreeBalanceDetailManager $adminCaptainFinancialSystemThreeBalanceDetailManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, OrderService $orderService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailManager $adminCaptainFinancialSystemThreeBalanceDetailManager)
     {
-        $this->orderService = $orderService;
+        $this->adminCaptainFinancialSystemThreeBalanceDetailManager = $adminCaptainFinancialSystemThreeBalanceDetailManager;
         $this->autoMapping = $autoMapping;
     }
 
@@ -60,7 +60,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
 
     public function getCountOrdersByFinancialSystemThree(int $captainId, array $financialSystemThreeDetail, $fromDate, $toDate)
     {
-        return $this->orderService->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+        return $this->adminCaptainFinancialSystemThreeBalanceDetailManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
     }
 
     public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails, int $captainId, array $date): array
@@ -82,7 +82,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
 
         $finalFinancialAccount['total'] = abs($total);
         //get Orders Details On Specific Date
-        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        $detailsOrders = $this->adminCaptainFinancialSystemThreeBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         foreach($detailsOrders as $orderDetail) {
             
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {

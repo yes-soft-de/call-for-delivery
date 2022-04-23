@@ -4,18 +4,18 @@ namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
-use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
+use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemTwoBalanceDetailManager;
 
 class AdminCaptainFinancialSystemTwoBalanceDetailService
 {
-    private OrderService $orderService;
+    private AdminCaptainFinancialSystemTwoBalanceDetailManager $adminCaptainFinancialSystemTwoBalanceDetailManager;
     private AutoMapping $autoMapping;
 
-    public function __construct(AutoMapping $autoMapping, OrderService $orderService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainFinancialSystemTwoBalanceDetailManager $adminCaptainFinancialSystemTwoBalanceDetailManager)
     {
-        $this->orderService = $orderService;
+        $this->adminCaptainFinancialSystemTwoBalanceDetailManager = $adminCaptainFinancialSystemTwoBalanceDetailManager;
         $this->autoMapping = $autoMapping;
     }
 
@@ -25,7 +25,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $date);
        
         //get Orders Details On Specific Date
-        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        $detailsOrders = $this->adminCaptainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date, $detailsOrders);
               
@@ -34,7 +34,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
 
     public function getCountOrdersByCaptainIdWithinThirtyDays(int $captainId, array $date): ?array
     {     
-        return $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        return $this->adminCaptainFinancialSystemTwoBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
     }
 
     public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date, array $detailsOrders): ?array

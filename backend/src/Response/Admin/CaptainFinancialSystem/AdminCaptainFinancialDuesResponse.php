@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Response\CaptainFinancialSystem;
+namespace App\Response\Admin\CaptainFinancialSystem;
 
 use DateTime;
 
-class CaptainFinancialDuesResponse
+class AdminCaptainFinancialDuesResponse
 {
     public int $id;
     
@@ -19,4 +19,8 @@ class CaptainFinancialDuesResponse
     public DateTime $startDate;
 
     public DateTime $endDate;
+
+    public int $captainId;
+    
+    public string $captainName;
 }

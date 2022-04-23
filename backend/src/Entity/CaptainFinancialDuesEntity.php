@@ -24,6 +24,12 @@ class CaptainFinancialDuesEntity
 
     #[ORM\Column(type: 'date')]
     private $endDate;
+    
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $amountForStore;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $statusAmountForStore;
 
     #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'captainFinancialDuesEntity')]
     private $captain;
@@ -57,6 +63,18 @@ class CaptainFinancialDuesEntity
         return $this;
     }
 
+    public function getStatusAmountForStore(): ?float
+    {
+        return $this->statusAmountForStore;
+    }
+
+    public function setStatusAmountForStore(float $statusAmountForStore): self
+    {
+        $this->statusAmountForStore = $statusAmountForStore;
+
+        return $this;
+    }
+
     public function getStartDate()
     {
         return $this->startDate;
@@ -77,6 +95,18 @@ class CaptainFinancialDuesEntity
     public function setEndDate($endDate): self
     {
         $this->endDate = new \DateTime($endDate);
+
+        return $this;
+    }
+
+    public function getAmountForStore(): ?float
+    {
+        return $this->amountForStore;
+    }
+
+    public function setAmountForStore(float $amountForStore): self
+    {
+        $this->amountForStore = $amountForStore;
 
         return $this;
     }

@@ -99,6 +99,8 @@ class CaptainFinancialDuesService
 
         $request->setAmount($financialDues['financialDues']);
         $request->setStatus($status);
+        $request->setAmountForStore($financialDues['amountForStore']);
+        $request->setStatusAmountForStore($status);
         $request->setStartDate($date['fromDate']);
         $request->setEndDate($date['toDate']);
         $request->setCaptain($captainId);
@@ -109,6 +111,7 @@ class CaptainFinancialDuesService
     public function updateCaptainFinancialDuesAmount(CaptainFinancialDuesEntity $captainFinancialDues, array $financialDues)
     {
         $captainFinancialDues->setAmount($financialDues['financialDues']);
+        $captainFinancialDues->setAmountForStore($financialDues['amountForStore']);
         
         return $this->captainFinancialDuesManager->updateCaptainFinancialDues($captainFinancialDues);
     }

@@ -51,7 +51,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate')
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore')
             ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
             
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
@@ -59,6 +59,26 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
 
             ->setParameter('userId', $userId)
+            
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+            
+            ->getQuery()
+
+            ->getResult();
+    }
+
+    public function getCaptainFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore')
+            ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
+            
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
+
+            ->andWhere('captainFinancialDuesEntity.captain = :captainId')
+
+            ->setParameter('captainId', $captainId)
             
             ->orderBy('captainFinancialDuesEntity.id', 'DESC')
             

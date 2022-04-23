@@ -10,6 +10,10 @@ class CreateCaptainFinancialDuesRequest
 
    private int $status;
 
+   private float $amountForStore;
+
+   private int $statusAmountForStore;
+
    private int|CaptainEntity $captain;
 
    private DateTime $startDate;
@@ -112,6 +116,46 @@ class CreateCaptainFinancialDuesRequest
    public function setEndDate($endDate)
    {
       $this->endDate = $endDate;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of amountForStore
+    */ 
+   public function getAmountForStore()
+   {
+      return $this->amountForStore;
+   }
+
+   /**
+    * Set the value of amountForStore
+    *
+    * @return  self
+    */ 
+   public function setAmountForStore($amountForStore)
+   {
+      $this->amountForStore = $amountForStore;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of statusAmountForStore
+    */ 
+   public function getStatusAmountForStore()
+   {
+      return $this->statusAmountForStore;
+   }
+
+   /**
+    * Set the value of statusAmountForStore
+    *
+    * @return  self
+    */ 
+   public function setStatusAmountForStore($statusAmountForStore)
+   {
+      $this->statusAmountForStore = $statusAmountForStore;
 
       return $this;
    }
