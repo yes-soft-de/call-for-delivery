@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\BidOrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\PriceOfferEntity;
+use App\Entity\SupplierCategoryEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use DateTime;
@@ -35,11 +36,20 @@ class BidOrderEntityRepository extends ServiceEntityRepository
             ->setParameter('openToPriceOfferStatus', 1)
 
             ->leftJoin(
+                SupplierCategoryEntity::class,
+                'supplierCategoryEntity',
+                Join::WITH,
+                'supplierCategoryEntity.id = bidOrderEntity.supplierCategory'
+            )
+
+            ->leftJoin(
                 SupplierProfileEntity::class,
                 'supplierProfileEntity',
                 Join::WITH,
-                'supplierProfileEntity.supplierCategory = bidOrderEntity.supplierCategory'
+                'supplierCategoryEntity.id IN (:supCategory)'
             )
+
+            ->setParameter('supCategory', $this->getSupplierCategoriesBySupplierId($request->getSupplierId()))
 
             ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $request->getSupplierId())
@@ -48,7 +58,6 @@ class BidOrderEntityRepository extends ServiceEntityRepository
 
         //---- Check if bid order is among the orders which the supplier had made a previous offer for it
         $bidOrderIds = $this->getBidOrderIdsBySupplierIdAndThatHavePriceOffers($request->getSupplierId());
-
         if (! empty($bidOrderIds)) {
             $query->andWhere('bidOrderEntity.id NOT IN (:bidOrderIds)');
             $query->setParameter('bidOrderIds', $bidOrderIds);
@@ -208,5 +217,29 @@ class BidOrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    public function getSupplierCategoriesBySupplierId(int $supplierId): array
+    {
+        $query = $this->createQueryBuilder('bidOrder')
+            ->select('DISTINCT(supplierProfileEntity.supplierCategories)')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = :userId'
+            )
+
+            ->setParameter('userId', $supplierId)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        if (empty($query)) {
+            return $query;
+        }
+
+        return json_decode($query[0]);
     }
 }
