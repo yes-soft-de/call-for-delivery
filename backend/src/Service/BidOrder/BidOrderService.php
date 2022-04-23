@@ -117,8 +117,32 @@ class BidOrderService
         $orders = $this->bidOrderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
 
         if ($orders) {
+            // if the price offer status filter is set, then we have to filter the orders here in the Service layer
+            if ($request->getPriceOfferStatus()) {
+                $orders = $this->filterBidOrdersAccordingToLastPriceOfferStatus($orders, $request->getPriceOfferStatus());
+            }
+
             foreach ($orders as $order) {
+
                 $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
+    }
+
+    // This function filter the orders according to the last offer status of each order
+    public function filterBidOrdersAccordingToLastPriceOfferStatus(array $bidOrders, string $priceOfferStatus): array
+    {
+        $response = [];
+
+        foreach ($bidOrders as $bidOrder) {
+            $pricesOffer = $this->bidOrderManager->getLastPriceOfferByBidOrderId($bidOrder['id']);
+
+            if (! empty($pricesOffer)) {
+                if ($pricesOffer['priceOfferStatus'] === $priceOfferStatus) {
+                    $response[] = $bidOrder;
+                }
             }
         }
 

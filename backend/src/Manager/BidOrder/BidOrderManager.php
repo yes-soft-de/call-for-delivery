@@ -77,6 +77,11 @@ class BidOrderManager
         return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
     }
 
+    public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
+    {
+        return $this->bidOrderEntityRepository->getLastPriceOfferByBidOrderId($bidOrderId);
+    }
+
     public function getBidOrderEntityByBidOrderId(int $id): ?BidOrderEntity
     {
         return $this->bidOrderEntityRepository->find($id);
