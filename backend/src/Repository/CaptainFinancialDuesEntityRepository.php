@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\CaptainEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method CaptainFinancialDuesEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,32 +47,23 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return CaptainFinancialDuesEntity[] Returns an array of CaptainFinancialDuesEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCaptainFinancialDuesByUserId(int $userId): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-    /*
-    public function findOneBySomeField($value): ?CaptainFinancialDuesEntity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate')
+            ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
+            
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+
+            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
+
+            ->setParameter('userId', $userId)
+            
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+            
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+            ->getResult();
     }
-    */
 }
