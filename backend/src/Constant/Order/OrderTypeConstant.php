@@ -6,7 +6,7 @@ final class OrderTypeConstant
 {
     const ORDER_TYPE_NORMAL = 1;
 
-    const ORDER_TYPE_ADV = 2;
+    const ORDER_TYPE_BID = 2;
    
     const ORDER_PAYMENT_CARD = "card";
    

@@ -28,16 +28,16 @@ class BidOrderService
         $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
-    public function createBidOrder(BidOrderCreateRequest $request): string|BidOrderCreateResponse
-    {
-        $bidOrderResult = $this->bidOrderManager->createBidOrder($request);
-
-        if ($bidOrderResult === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
-            return StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS;
-        }
-
-        return $this->autoMapping->map(BidOrderEntity::class, BidOrderCreateResponse::class, $bidOrderResult);
-    }
+//    public function createBidOrder(BidOrderCreateRequest $request): string|BidOrderCreateResponse
+//    {
+//        $bidOrderResult = $this->bidOrderManager->createBidOrder($request);
+//
+//        if ($bidOrderResult === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+//            return StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS;
+//        }
+//
+//        return $this->autoMapping->map(BidOrderEntity::class, BidOrderCreateResponse::class, $bidOrderResult);
+//    }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array

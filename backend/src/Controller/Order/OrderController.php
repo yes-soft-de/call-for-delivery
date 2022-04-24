@@ -4,7 +4,7 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
@@ -138,87 +138,6 @@ class OrderController extends BaseController
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
         
-        return $this->response($result, self::CREATE);
-    }
-
-    /**
-     * store: create new announcement order by store
-     * @Route("announcementorder", name="createAnnouncementOrderByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Order")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="create new announcement order request",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="payment"),
-     *          @OA\Property(type="string", property="note"),
-     *          @OA\Property(type="integer", property="announcement")
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns the new created announcement order",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *               @OA\Property(type="integer", property="id"),
-     *               @OA\Property(type="string", property="payment"),
-     *               @OA\Property(type="number", property="orderCost"),
-     *               @OA\Property(type="string", property="note"),
-     *               @OA\Property(type="object", property="deliveryDate"),
-     *               @OA\Property(type="string", property="state"),
-     *               @OA\Property(type="integer", property="orderType"),
-     *      )
-     *   )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return error.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9151"),
-     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
-     *        )
-     *     )
-     *
-     * @Security(name="Bearer")
-     */
-    public function createAnnouncementOrder(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, AnnouncementOrderCreateRequest::class, (object)$data);
-
-        $request->setStoreOwner($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->orderService->createAnnouncementOrder($request);
-
-        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
-        }
-
         return $this->response($result, self::CREATE);
     }
     
@@ -1003,5 +922,90 @@ class OrderController extends BaseController
         $result = $this->orderService->getSpecificAnnouncementOrderByIdForSupplier($id);
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store: Create new bid order
+     * @Route("bidorder", name="createBidOrderByStoreOwner", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="create a new bid order request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="orderCost"),
+     *          @OA\Property(type="string", property="title"),
+     *          @OA\Property(type="number", property="description"),
+     *          @OA\Property(type="string", property="supplierCategory"),
+     *          @OA\Property(type="string", property="images")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the new bid order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9151"),
+     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *        )
+     *     )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createBidOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, BidOrderCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->createBidOrder($request);
+
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+
+        return $this->response($result, self::CREATE);
     }
 }

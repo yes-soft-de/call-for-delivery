@@ -5,7 +5,7 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
-use App\Request\Order\AnnouncementOrderCreateRequest;
+use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
@@ -113,7 +113,7 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
-    public function createAnnouncementOrder(AnnouncementOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
+    public function createBidOrder(BidOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
     {
         $canCreateOrder = $this->subscriptionService->getStoreOwnerProfileStatus($request->getStoreOwner());
 
@@ -121,7 +121,7 @@ class OrderService
             return $canCreateOrder;
         }
 
-        $order = $this->orderManager->createAnnouncementOrder($request);
+        $order = $this->orderManager->createBidOrder($request);
 
         if($order) {
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ANNOUNCEMENT_ORDER_TITLE,

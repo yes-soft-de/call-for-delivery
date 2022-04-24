@@ -497,7 +497,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('announcementEntity.id as announcementId')
 
             ->andWhere('orderEntity.orderType = :orderType')
-            ->setParameter('orderType', OrderTypeConstant::ORDER_TYPE_ADV)
+            ->setParameter('orderType', OrderTypeConstant::ORDER_TYPE_BID)
 
             ->leftJoin(
                 AnnouncementOrderDetailsEntity::class,

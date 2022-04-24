@@ -8,9 +8,10 @@ use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Manager\AnnouncementOrderDetails\AnnouncementOrderDetailsManager;
+use App\Manager\BidOrder\BidOrderManager;
 use App\Repository\OrderEntityRepository;
+use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
-use App\Request\Order\AnnouncementOrderCreateRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
@@ -32,9 +33,10 @@ class OrderManager
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
    private AnnouncementOrderDetailsManager $announcementOrderDetailsManager;
+   private BidOrderManager $bidOrderManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, AnnouncementOrderDetailsManager $announcementOrderDetailsManager)
+                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, AnnouncementOrderDetailsManager $announcementOrderDetailsManager, BidOrderManager $bidOrderManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -43,6 +45,7 @@ class OrderManager
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
       $this->announcementOrderDetailsManager = $announcementOrderDetailsManager;
+      $this->bidOrderManager = $bidOrderManager;
     }
     
     /**
@@ -69,22 +72,22 @@ class OrderManager
        return $orderEntity;
     }
 
-    public function createAnnouncementOrder(AnnouncementOrderCreateRequest $request): OrderEntity
+    public function createBidOrder(BidOrderCreateRequest $request): OrderEntity
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
         $request->setStoreOwner($storeOwner);
 
-        $orderEntity = $this->autoMapping->map(AnnouncementOrderCreateRequest::class, OrderEntity::class, $request);
+        $orderEntity = $this->autoMapping->map(BidOrderCreateRequest::class, OrderEntity::class, $request);
 
         $orderEntity->setCreatedAt(new DateTime());
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
-        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_ADV);
+        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
 
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();
 
-        $this->announcementOrderDetailsManager->createAnnouncementOrderDetails($request, $orderEntity);
+        $this->bidOrderManager->createBidOrder($request, $orderEntity);
 
         return $orderEntity;
     }
