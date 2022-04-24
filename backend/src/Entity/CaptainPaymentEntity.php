@@ -28,6 +28,9 @@ class CaptainPaymentEntity
     #[ORM\JoinColumn(nullable: false)]
     private $captain;
 
+    #[ORM\ManyToOne(targetEntity: CaptainFinancialDuesEntity::class, inversedBy: 'captainPaymentEntities')]
+    private $captainFinancialDues;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class CaptainPaymentEntity
     public function setCaptain(?CaptainEntity $captain): self
     {
         $this->captain = $captain;
+
+        return $this;
+    }
+
+    public function getCaptainFinancialDues(): ?CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDues;
+    }
+
+    public function setCaptainFinancialDues(?CaptainFinancialDuesEntity $captainFinancialDues): self
+    {
+        $this->captainFinancialDues = $captainFinancialDues;
 
         return $this;
     }

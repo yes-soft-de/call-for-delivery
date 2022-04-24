@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CaptainFinancialDuesEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CaptainFinancialDuesEntityRepository::class)]
@@ -33,6 +35,14 @@ class CaptainFinancialDuesEntity
 
     #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'captainFinancialDuesEntity')]
     private $captain;
+
+    #[ORM\OneToMany(mappedBy: 'captainFinancialDues', targetEntity: CaptainPaymentEntity::class)]
+    private $captainPaymentEntities;
+
+    public function __construct()
+    {
+        $this->captainPaymentEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,36 @@ class CaptainFinancialDuesEntity
     public function setCaptain(?CaptainEntity $captain): self
     {
         $this->captain = $captain;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainPaymentEntity>
+     */
+    public function getCaptainPaymentEntities(): Collection
+    {
+        return $this->captainPaymentEntities;
+    }
+
+    public function addCaptainPaymentEntity(CaptainPaymentEntity $captainPaymentEntity): self
+    {
+        if (!$this->captainPaymentEntities->contains($captainPaymentEntity)) {
+            $this->captainPaymentEntities[] = $captainPaymentEntity;
+            $captainPaymentEntity->setCaptainFinancialDues($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainPaymentEntity(CaptainPaymentEntity $captainPaymentEntity): self
+    {
+        if ($this->captainPaymentEntities->removeElement($captainPaymentEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainPaymentEntity->getCaptainFinancialDues() === $this) {
+                $captainPaymentEntity->setCaptainFinancialDues(null);
+            }
+        }
 
         return $this;
     }

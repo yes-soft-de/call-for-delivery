@@ -37,14 +37,18 @@ class AdminCaptainPaymentManager
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
         }
 
+        $captainFinancialDuesEntity = $this->adminCaptainFinancialDuesManager->getCaptainFinancialDuesById($request->getCaptainFinancialDuesId());
+
         $request->setCaptain($captain);
 
         $captainPaymentEntity = $this->autoMapping->map(AdminCaptainPaymentCreateRequest::class, CaptainPaymentEntity::class, $request);
+        $captainPaymentEntity->setCaptainFinancialDues($captainFinancialDuesEntity);
 
         $this->entityManager->persist($captainPaymentEntity);
         $this->entityManager->flush();
 
-        $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($request->getCaptainFinancialDuesId(), $request->getStatus());
+        $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($captainFinancialDuesEntity, $request->getStatus());
+       
         return $captainPaymentEntity;
     }
 
