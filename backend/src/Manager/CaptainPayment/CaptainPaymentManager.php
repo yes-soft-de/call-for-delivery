@@ -23,4 +23,14 @@ class CaptainPaymentManager
     {
         return $this->captainPaymentEntityRepository->getSumPayments($captainId);
     }
+
+    public function getPaymentsByCaptainFinancialDues(int $captainFinancialDues): ?array
+    {
+        return $this->captainPaymentEntityRepository->getPaymentsByCaptainFinancialDues($captainFinancialDues);
+    }
+
+    public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDues): ?array
+    {
+        return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues);
+    }
 }

@@ -23,4 +23,8 @@ class AdminCaptainFinancialDuesResponse
     public int $captainId;
     
     public string $captainName;
+
+    public array $paymentsToCaptain;
+
+    public array $total;
 }

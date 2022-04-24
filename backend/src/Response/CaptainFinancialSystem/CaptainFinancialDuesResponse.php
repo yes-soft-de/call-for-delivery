@@ -19,4 +19,8 @@ class CaptainFinancialDuesResponse
     public DateTime $startDate;
 
     public DateTime $endDate;
+    
+    public array $paymentsFromCompany;
+    
+    public array $total;
 }

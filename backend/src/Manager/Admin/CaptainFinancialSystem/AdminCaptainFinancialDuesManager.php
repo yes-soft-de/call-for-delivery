@@ -22,13 +22,22 @@ class AdminCaptainFinancialDuesManager
         return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByCaptainId($captainId);
     } 
     
-    public function updateCaptainFinancialDuesStatus(int $id, int $status): CaptainFinancialDuesEntity
+    public function updateCaptainFinancialDuesStatus(CaptainFinancialDuesEntity $captainFinancialDuesEntity, int $status): CaptainFinancialDuesEntity
     {
-        $captainFinancialDuesEntity = $this->captainFinancialDuesRepository->find($id);
         $captainFinancialDuesEntity->setStatus($status);
 
         $this->entityManager->flush();
 
         return $captainFinancialDuesEntity;
+    } 
+    
+    public function getCaptainFinancialDuesById(int $id): CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDuesRepository->find($id);
+    } 
+    
+    public function getSumCaptainFinancialDuesById(int $id): array
+    {
+        return $this->captainFinancialDuesRepository->getSumCaptainFinancialDuesById($id);
     } 
 }

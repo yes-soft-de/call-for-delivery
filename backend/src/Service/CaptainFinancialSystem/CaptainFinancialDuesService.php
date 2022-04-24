@@ -15,6 +15,7 @@ use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
+use App\Service\CaptainPayment\CaptainPaymentService;
 
 class CaptainFinancialDuesService
 {
@@ -26,8 +27,9 @@ class CaptainFinancialDuesService
     private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
     private CaptainFinancialDuesManager $captainFinancialDuesManager;
     private AutoMapping $autoMapping;
+    private CaptainPaymentService $captainPaymentService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesManager $captainFinancialDuesManager)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesManager $captainFinancialDuesManager, CaptainPaymentService $captainPaymentService)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->captainFinancialSystemOneBalanceDetailService = $captainFinancialSystemOneBalanceDetailService;
@@ -37,6 +39,7 @@ class CaptainFinancialDuesService
         $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
         $this->captainFinancialDuesManager = $captainFinancialDuesManager;
         $this->autoMapping = $autoMapping;
+        $this->captainPaymentService = $captainPaymentService;
     }
 
     public function captainFinancialDues(int $userId)
@@ -124,9 +127,36 @@ class CaptainFinancialDuesService
 
         foreach ($captainFinancialDues as $captainFinancialDue) {
 
+            $captainFinancialDue['paymentsFromCompany'] = $this->captainPaymentService->getPaymentsByCaptainFinancialDues($captainFinancialDue['id']);
+          
+            $captainFinancialDue['total'] = $this->getCaptainFinancialTotal($captainFinancialDue['id']);
+
             $response[] = $this->autoMapping->map('array', CaptainFinancialDuesResponse::class, $captainFinancialDue);
         }
 
         return $response;
+    }
+
+    public function getCaptainFinancialTotal(int $captainFinancialDueId): array
+    {
+        $captainFinancialDues = [];
+        
+        $sumCaptainFinancialDues = $this->captainFinancialDuesManager->getSumCaptainFinancialDuesById($captainFinancialDueId);
+        
+        $sumPaymentsToCaptain = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDueId);
+   
+        $total = $sumCaptainFinancialDues['sumCaptainFinancialDues'] - $sumPaymentsToCaptain['sumPaymentsToCaptain'];
+       
+        $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+    
+        if($total <= 0 ) {
+            $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+        }
+       
+        $captainFinancialDues['sumCaptainFinancialDues'] =  $sumCaptainFinancialDues['sumCaptainFinancialDues'];
+        $captainFinancialDues['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPaymentsToCaptain'];
+        $captainFinancialDues['total'] = abs($total);
+
+        return $captainFinancialDues;
     }
 }

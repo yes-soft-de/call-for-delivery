@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use DateTime;
 use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
+use App\Entity\CaptainFinancialDuesEntity;
 
 /**
  * @method CaptainPaymentEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -108,6 +109,32 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
 
             ->where('captainPaymentEntity.captain = :captainId')
             ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getPaymentsByCaptainFinancialDues(int $captainFinancialDues): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+
+            ->select('captainPaymentEntity.id', 'captainPaymentEntity.amount', 'captainPaymentEntity.createdAt', 'captainPaymentEntity.note')
+
+            ->where('captainPaymentEntity.captainFinancialDues = :captainFinancialDues')
+            ->setParameter('captainFinancialDues', $captainFinancialDues)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDues): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+
+            ->select('sum(captainPaymentEntity.amount) as sumPaymentsToCaptain')
+
+            ->where('captainPaymentEntity.captainFinancialDues = :captainFinancialDues')
+            ->setParameter('captainFinancialDues', $captainFinancialDues)
 
             ->getQuery()
             ->getOneOrNullResult();

@@ -9,6 +9,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
+use App\Entity\CaptainPaymentEntity;
 
 /**
  * @method CaptainFinancialDuesEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -85,5 +86,22 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getQuery()
 
             ->getResult();
+    }
+
+    public function getSumCaptainFinancialDuesById(int $id): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->select('sum( captainFinancialDuesEntity.amount) as sumCaptainFinancialDues')
+
+            ->andWhere('captainFinancialDuesEntity.id = :id')
+
+            ->setParameter('id', $id)
+            
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+            
+            ->getQuery()
+
+            ->getOneOrNullResult();
     }
 }
