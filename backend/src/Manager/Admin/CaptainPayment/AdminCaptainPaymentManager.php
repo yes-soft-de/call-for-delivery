@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
+use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 
 class AdminCaptainPaymentManager
 {
@@ -17,13 +18,15 @@ class AdminCaptainPaymentManager
     private EntityManagerInterface $entityManager;
     private CaptainPaymentEntityRepository $captainPaymentEntityRepository;
     private CaptainManager $captainManager;
+    private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentEntityRepository $captainPaymentEntityRepository, CaptainManager $captainManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentEntityRepository $captainPaymentEntityRepository, CaptainManager $captainManager, AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->captainPaymentEntityRepository = $captainPaymentEntityRepository;
         $this->captainManager = $captainManager;
+        $this->adminCaptainFinancialDuesManager = $adminCaptainFinancialDuesManager;
     }
 
     public function createCaptainPayment(AdminCaptainPaymentCreateRequest $request): CaptainPaymentEntity|string
@@ -41,6 +44,7 @@ class AdminCaptainPaymentManager
         $this->entityManager->persist($captainPaymentEntity);
         $this->entityManager->flush();
 
+        $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($request->getCaptainFinancialDuesId(), $request->getStatus());
         return $captainPaymentEntity;
     }
 

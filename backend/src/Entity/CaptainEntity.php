@@ -75,6 +75,9 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainPaymentToCompanyEntity::class)]
     private $captainPaymentToCompanyEntity;
 
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainFinancialDuesEntity::class)]
+    private $captainFinancialDuesEntity;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -83,6 +86,7 @@ class CaptainEntity
         $this->captainPaymentEntity = new ArrayCollection();
         $this->captainFinancialSystemDetailEntity = new ArrayCollection();
         $this->captainPaymentToCompanyEntity = new ArrayCollection();
+        $this->captainFinancialDuesEntity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -432,6 +436,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainPaymentToCompanyEntity->getCaptain() === $this) {
                 $captainPaymentToCompanyEntity->setCaptain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDuesEntity>
+     */
+    public function getCaptainFinancialDuesEntity(): Collection
+    {
+        return $this->captainFinancialDuesEntity;
+    }
+
+    public function addCaptainFinancialDuesEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity): self
+    {
+        if (!$this->captainFinancialDuesEntity->contains($captainFinancialDuesEntity)) {
+            $this->captainFinancialDuesEntity[] = $captainFinancialDuesEntity;
+            $captainFinancialDuesEntity->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDuesEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity): self
+    {
+        if ($this->captainFinancialDuesEntity->removeElement($captainFinancialDuesEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDuesEntity->getCaptain() === $this) {
+                $captainFinancialDuesEntity->setCaptain(null);
             }
         }
 

@@ -4,19 +4,19 @@ namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
-use App\Service\Order\OrderService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
+use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemOneBalanceDetailManager;
 
 class AdminCaptainFinancialSystemOneBalanceDetailService
 {
-    private OrderService $orderService;
     private AutoMapping $autoMapping;
+    private AdminCaptainFinancialSystemOneBalanceDetailManager $adminCaptainFinancialSystemOneBalanceDetailManager;
 
-    public function __construct(AutoMapping $autoMapping, OrderService $orderService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainFinancialSystemOneBalanceDetailManager $adminCaptainFinancialSystemOneBalanceDetailManager)
     {
-        $this->orderService = $orderService;
         $this->autoMapping = $autoMapping;
+        $this->adminCaptainFinancialSystemOneBalanceDetailManager = $adminCaptainFinancialSystemOneBalanceDetailManager;
     }
 
     public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
@@ -25,9 +25,9 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $amountForStore = 0;
         //get Count Orders On Specific Date
-        $countOrders = $this->orderService->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        $countOrders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         //get Orders Details On Specific Date
-        $detailsOrders = $this->orderService->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        $detailsOrders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
            if($detailOrder['kilometer'] > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {

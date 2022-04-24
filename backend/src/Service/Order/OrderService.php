@@ -44,6 +44,7 @@ use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 
 class OrderService
 {
@@ -56,8 +57,9 @@ class OrderService
     private OrderChatRoomService $orderChatRoomService;
     private OrderLogsService $orderLogsService;
     private NotificationFirebaseService $notificationFirebaseService;
+    private CaptainFinancialDuesService $captainFinancialDuesService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -68,6 +70,7 @@ class OrderService
        $this->orderChatRoomService = $orderChatRoomService;
        $this->orderLogsService = $orderLogsService;
        $this->notificationFirebaseService = $notificationFirebaseService;
+       $this->captainFinancialDuesService = $captainFinancialDuesService;
     }
 
     /**
@@ -284,6 +287,11 @@ class OrderService
         if($order) {
             if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
                 $this->createOrderChatRoomOrUpdateCurrent($order);
+            }
+            
+            if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                
+                $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
             }
 
             //create Notification Local for store
