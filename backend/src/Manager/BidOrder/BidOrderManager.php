@@ -72,11 +72,11 @@ class BidOrderManager
 //        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
 //    }
 
-    // This function filter bid orders which have price offers made by the supplier (who request the filter).
-    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
-    }
+//    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+//    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
+//    }
 
     public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
     {
@@ -88,10 +88,10 @@ class BidOrderManager
         return $this->bidOrderEntityRepository->find($id);
     }
 
-    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
-    {
-        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId);
-    }
+//    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
+//    {
+//        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId);
+//    }
 
     public function updateBidOrderToBeClosedForPriceOffer(int $bidOrderId): ?BidOrderEntity
     {

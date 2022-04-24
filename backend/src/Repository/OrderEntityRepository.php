@@ -766,4 +766,91 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    public function getOrderByIdForSupplier(int $orderId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.orderType', 'orderEntity.noteCaptainOrderCost', 'orderEntity.note', 'orderEntity.state', 'orderEntity.createdAt', 'orderEntity.captainOrderCost',
+                'orderEntity.updatedAt', 'orderEntity.dateCaptainArrived', 'orderEntity.deliveryDate', 'orderEntity.isCaptainArrived', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.kilometer')
+            ->addSelect('bidOrderEntity.id as bidOrderId')
+
+            ->leftJoin(
+                BidOrderEntity::class,
+                'bidOrderEntity',
+                Join::WITH,
+                'bidOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getPricesOffersByBidOrderId(int $bidOrderId, int $supplierId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
+
+            ->leftJoin(
+                BidOrderEntity::class,
+                'bidOrderEntity',
+                Join::WITH,
+                'bidOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                PriceOfferEntity::class,
+                'priceOfferEntity',
+                Join::WITH,
+                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+            )
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
+            )
+
+            ->andWhere('bidOrderEntity.id = :bidOrderId')
+            ->setParameter('bidOrderId', $bidOrderId)
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
+            ->setParameter('supplierId', $supplierId)
+
+            ->orderBy('priceOfferEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getBidOrderImagesByBidOrderId(int $bidOrderId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('imageEntity.imagePath')
+
+            ->leftJoin(
+                BidOrderEntity::class,
+                'bidOrderEntity',
+                Join::WITH,
+                'bidOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.bidOrder = bidOrderEntity.id'
+            )
+
+            ->andWhere('bidOrderEntity.id = :bidOrderId')
+            ->setParameter('bidOrderId', $bidOrderId)
+
+            ->orderBy('imageEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }

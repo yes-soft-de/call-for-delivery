@@ -83,16 +83,16 @@ class BidOrderEntityRepository extends ServiceEntityRepository
 //        return $query->getQuery()->getResult();
 //    }
 
-    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
-    {
-        return $this->createQueryBuilder('bidOrderEntity')
-
-            ->andWhere('bidOrderEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
-
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+//    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
+//    {
+//        return $this->createQueryBuilder('bidOrderEntity')
+//
+//            ->andWhere('bidOrderEntity.id = :bidOrderId')
+//            ->setParameter('bidOrderId', $bidOrderId)
+//
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
 //    // This function returns array of bid orders Ids that the supplier had made a price offer for them
 //    public function getBidOrderIdsBySupplierIdAndThatHavePriceOffers(int $supplierId): array

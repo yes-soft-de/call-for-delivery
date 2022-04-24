@@ -281,4 +281,19 @@ class OrderManager
     {
         return $this->orderRepository->filterBidOrdersBySupplier($request);
     }
+
+    public function getOrderByIdForSupplier(int $orderId, int $supplierId): ?array
+    {
+        $order = $this->orderRepository->getOrderByIdForSupplier($orderId);
+
+        if ($order) {
+            if ($order['bidOrderId']) {
+                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidOrderId'], $supplierId);
+
+                $order['bidOrderImages'] = $this->orderRepository->getBidOrderImagesByBidOrderId($order['bidOrderId']);
+            }
+        }
+
+        return $order;
+    }
 }

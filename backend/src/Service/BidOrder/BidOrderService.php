@@ -6,7 +6,6 @@ use App\AutoMapping;
 use App\Entity\BidOrderEntity;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidOrder\BidOrderManager;
-use App\Response\BidOrder\BidOrderByIdForSupplierGetResponse;
 use App\Response\PriceOffer\PriceOfferForSupplierGetResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
@@ -50,59 +49,59 @@ class BidOrderService
 //        return $response;
 //    }
 
-    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse|array
-    {
-        $response = [];
+//    public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): OrderByIdForSupplierGetResponse|array
+//    {
+//        $response = [];
+//
+//        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId);
+//
+//        if ($bidOrder) {
+//            $response = $this->autoMapping->map(BidOrderEntity::class, OrderByIdForSupplierGetResponse::class, $bidOrder);
+//
+//            if ($response) {
+//                // get only prices offers of the supplier which made for the bid order
+//                $response->priceOfferEntities = $this->filterAngGetPricesOffersBySupplierId($response->priceOfferEntities->toArray(), $supplierId);
+//                // get each image of the order images as an object contain image URL, base URL, and full image URL
+//                $response->images = $this->customizeBidOrderImages($response->images->toArray());
+//            }
+//        }
+//
+//        return $response;
+//    }
 
-        $bidOrder = $this->bidOrderManager->getBidOrderByIdForSupplier($bidOrderId);
+//    public function customizeBidOrderImages(array $imagesArray): ?array
+//    {
+//        $response = [];
+//
+//        if (! empty($imagesArray)) {
+//            foreach ($imagesArray as $image) {
+//                $response[] = $this->uploadFileHelperService->getImageParams($image->getImagePath());
+//            }
+//
+//            return $response;
+//
+//        } else {
+//            return null;
+//        }
+//    }
 
-        if ($bidOrder) {
-            $response = $this->autoMapping->map(BidOrderEntity::class, BidOrderByIdForSupplierGetResponse::class, $bidOrder);
-
-            if ($response) {
-                // get only prices offers of the supplier which made for the bid order
-                $response->priceOfferEntities = $this->filterAngGetPricesOffersBySupplierId($response->priceOfferEntities->toArray(), $supplierId);
-                // get each image of the order images as an object contain image URL, base URL, and full image URL
-                $response->images = $this->customizeBidOrderImages($response->images->toArray());
-            }
-        }
-
-        return $response;
-    }
-
-    public function customizeBidOrderImages(array $imagesArray): ?array
-    {
-        $response = [];
-
-        if (! empty($imagesArray)) {
-            foreach ($imagesArray as $image) {
-                $response[] = $this->uploadFileHelperService->getImageParams($image->getImagePath());
-            }
-
-            return $response;
-
-        } else {
-            return null;
-        }
-    }
-
-    public function filterAngGetPricesOffersBySupplierId(array $pricesOffersEntities, int $supplierId): ?array
-    {
-        $response = [];
-
-        if (! empty($pricesOffersEntities)) {
-            foreach ($pricesOffersEntities as $pricesOfferEntity) {
-                if ($pricesOfferEntity->getSupplierProfile()->getUser()->getId() === $supplierId) {
-                    $response[] = $this->autoMapping->map(PriceOfferEntity::class, PriceOfferForSupplierGetResponse::class, $pricesOfferEntity);
-                }
-            }
-
-            return $response;
-
-        } else {
-            return null;
-        }
-    }
+//    public function filterAngGetPricesOffersBySupplierId(array $pricesOffersEntities, int $supplierId): ?array
+//    {
+//        $response = [];
+//
+//        if (! empty($pricesOffersEntities)) {
+//            foreach ($pricesOffersEntities as $pricesOfferEntity) {
+//                if ($pricesOfferEntity->getSupplierProfile()->getUser()->getId() === $supplierId) {
+//                    $response[] = $this->autoMapping->map(PriceOfferEntity::class, PriceOfferForSupplierGetResponse::class, $pricesOfferEntity);
+//                }
+//            }
+//
+//            return $response;
+//
+//        } else {
+//            return null;
+//        }
+//    }
 
 //    // This function filter bid orders which have price offers made by the supplier (who request the filter).
 //    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array

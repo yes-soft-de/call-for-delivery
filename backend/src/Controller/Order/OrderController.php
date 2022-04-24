@@ -1063,4 +1063,41 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * supplier: get bid order details by id for supplier
+     * @Route("orderbyidforsupplier/{id}", name="getOrderByIdForSupplier", methods={"GET"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the bid order details info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Order\OrderByIdForSupplierGetResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getOrderByIdForSupplier(int $id): JsonResponse
+    {
+        $result = $this->orderService->getOrderByIdForSupplier($id, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
 }

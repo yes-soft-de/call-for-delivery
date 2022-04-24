@@ -12,6 +12,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\AnnouncementOrderByIdForSupplierGetResponse;
 use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
@@ -502,5 +503,39 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function getOrderByIdForSupplier(int $bidOrderId, int $supplierId): OrderByIdForSupplierGetResponse|array
+    {
+        $response = [];
+
+        $bidOrder = $this->orderManager->getOrderByIdForSupplier($bidOrderId, $supplierId);
+
+        if ($bidOrder) {//dd($bidOrder);
+            $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
+
+            if ($response) {
+                // get each image of the order images as an object contain image URL, base URL, and full image URL
+                $response->bidOrderImages = $this->customizeBidOrderImages($response->bidOrderImages);
+            }
+        }
+
+        return $response;
+    }
+
+    public function customizeBidOrderImages(array $imagesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imagesArray)) {
+            foreach ($imagesArray as $image) {
+                $response[] = $this->uploadFileHelperService->getImageParams($image);
+            }
+
+            return $response;
+
+        } else {
+            return null;
+        }
     }
 }
