@@ -5,12 +5,14 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\AnnouncementOrderByIdForSupplierGetResponse;
 use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
@@ -40,7 +42,6 @@ use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Response\Order\OrderUpdateCaptainArrivedResponse;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Service\Notification\NotificationFirebaseService;
-use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -485,5 +486,21 @@ class OrderService
         }
 
         return $this->autoMapping->map("array", AnnouncementOrderByIdForSupplierGetResponse::class, $order);
+    }
+
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterBidOrdersBySupplier($request);
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
     }
 }

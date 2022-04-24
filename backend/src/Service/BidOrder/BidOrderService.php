@@ -3,15 +3,10 @@
 namespace App\Service\BidOrder;
 
 use App\AutoMapping;
-use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidOrder\BidOrderManager;
-use App\Request\BidOrder\BidOrderCreateRequest;
-use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use App\Response\BidOrder\BidOrderByIdForSupplierGetResponse;
-use App\Response\BidOrder\BidOrderCreateResponse;
-use App\Response\BidOrder\BidOrderFilterBySupplierResponse;
 use App\Response\PriceOffer\PriceOfferForSupplierGetResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
@@ -39,21 +34,21 @@ class BidOrderService
 //        return $this->autoMapping->map(BidOrderEntity::class, BidOrderCreateResponse::class, $bidOrderResult);
 //    }
 
-    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        $response = [];
-
-        $orders = $this->bidOrderManager->filterBidOrdersBySupplier($request);
-
-        if ($orders) {
-            foreach ($orders as $order) {
-                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
-            }
-        }
-
-        return $response;
-    }
+//    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+//    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        $response = [];
+//
+//        $orders = $this->bidOrderManager->filterBidOrdersBySupplier($request);
+//
+//        if ($orders) {
+//            foreach ($orders as $order) {
+//                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+//            }
+//        }
+//
+//        return $response;
+//    }
 
     public function getBidOrderByIdForSupplier(int $bidOrderId, int $supplierId): BidOrderByIdForSupplierGetResponse|array
     {
@@ -109,27 +104,27 @@ class BidOrderService
         }
     }
 
-    // This function filter bid orders which have price offers made by the supplier (who request the filter).
-    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        $response = [];
-
-        $orders = $this->bidOrderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
-
-        if ($orders) {
-            // if the price offer status filter is set, then we have to filter the orders here in the Service layer
-            if ($request->getPriceOfferStatus()) {
-                $orders = $this->filterBidOrdersAccordingToLastPriceOfferStatus($orders, $request->getPriceOfferStatus());
-            }
-
-            foreach ($orders as $order) {
-
-                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
-            }
-        }
-
-        return $response;
-    }
+//    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+//    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        $response = [];
+//
+//        $orders = $this->bidOrderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
+//
+//        if ($orders) {
+//            // if the price offer status filter is set, then we have to filter the orders here in the Service layer
+//            if ($request->getPriceOfferStatus()) {
+//                $orders = $this->filterBidOrdersAccordingToLastPriceOfferStatus($orders, $request->getPriceOfferStatus());
+//            }
+//
+//            foreach ($orders as $order) {
+//
+//                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+//            }
+//        }
+//
+//        return $response;
+//    }
 
     // This function filter the orders according to the last offer status of each order
     public function filterBidOrdersAccordingToLastPriceOfferStatus(array $bidOrders, string $priceOfferStatus): array

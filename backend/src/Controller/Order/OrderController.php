@@ -4,6 +4,7 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
@@ -20,6 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -1007,5 +1009,58 @@ class OrderController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * supplier: filter bid orders which the supplier had not provide a price offer for any one of them yet.
+     * @Route("filterbidordersbysupplier", name="filterBidOrdersBySupplier", methods={"POST"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the bid orders info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\BidOrderFilterBySupplierResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterBidOrdersBySupplier(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, BidOrderFilterBySupplierRequest::class, (object)$data);
+
+        $request->setSupplierId($this->getUserId());
+
+        $result = $this->orderService->filterBidOrdersBySupplier($request);
+
+        return $this->response($result, self::FETCH);
     }
 }

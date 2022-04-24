@@ -6,16 +6,20 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\AnnouncementEntity;
 use App\Entity\AnnouncementOrderDetailsEntity;
+use App\Entity\BidOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
+use App\Entity\PriceOfferEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
+use App\Entity\SupplierCategoryEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
@@ -633,5 +637,133 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id')
+            ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.createdAt', 'bidOrderEntity.updatedAt')
+
+            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->setParameter('openToPriceOfferStatus', 1)
+
+            ->leftJoin(
+                BidOrderEntity::class,
+                'bidOrderEntity',
+                Join::WITH,
+                'bidOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                SupplierCategoryEntity::class,
+                'supplierCategoryEntity',
+                Join::WITH,
+                'supplierCategoryEntity.id = bidOrderEntity.supplierCategory'
+            )
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierCategoryEntity.id IN (:supCategory)'
+            )
+
+            ->setParameter('supCategory', $this->getSupplierCategoriesBySupplierId($request->getSupplierId()))
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
+            ->setParameter('supplierId', $request->getSupplierId())
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        //---- Check if bid order is among the orders which the supplier had made a previous offer for it
+        $bidOrderIds = $this->getBidOrderIdsBySupplierIdAndThatHavePriceOffers($request->getSupplierId());
+        if (! empty($bidOrderIds)) {
+            $query->andWhere('bidOrderEntity.id NOT IN (:bidOrderIds)');
+            $query->setParameter('bidOrderIds', $bidOrderIds);
+        }
+        //---- End checking block
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('bidOrderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('bidOrderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('bidOrderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('bidOrderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function getSupplierCategoriesBySupplierId(int $supplierId): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('DISTINCT(supplierProfileEntity.supplierCategories)')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = :userId'
+            )
+
+            ->setParameter('userId', $supplierId)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        if (empty($query)) {
+            return $query;
+        }
+
+        return json_decode($query[0]);
+    }
+
+    // This function returns array of bid orders Ids that the supplier had made a price offer for them
+    public function getBidOrderIdsBySupplierIdAndThatHavePriceOffers(int $supplierId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('DISTINCT(bidOrderEntity.id)')
+
+            ->leftJoin(
+                BidOrderEntity::class,
+                'bidOrderEntity',
+                Join::WITH,
+                'bidOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->setParameter('openToPriceOfferStatus', 1)
+
+            ->leftJoin(
+                PriceOfferEntity::class,
+                'priceOfferEntity',
+                Join::WITH,
+                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+            )
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
+            )
+
+            ->andWhere('supplierProfileEntity.user = :supplierId')
+            ->setParameter('supplierId', $supplierId)
+
+            ->orderBy('bidOrderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

@@ -12,7 +12,6 @@ use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Repository\BidOrderEntityRepository;
 use App\Request\Order\BidOrderCreateRequest;
-use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BidOrderManager
@@ -67,11 +66,11 @@ class BidOrderManager
         $this->imageManager->createBidOrderImages($images, $bidOrderEntity);
     }
 
-    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
-    }
+//    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+//    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
+//    }
 
     // This function filter bid orders which have price offers made by the supplier (who request the filter).
     public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Response\BidOrder;
+namespace App\Response\Order;
 
 use DateTime;
 
 class BidOrderFilterBySupplierResponse
 {
     public int $id;
+
+    public int $bidOrderId;
 
     /**
      * @var string|null

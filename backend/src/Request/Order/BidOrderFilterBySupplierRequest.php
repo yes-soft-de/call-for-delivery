@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\BidOrder;
+namespace App\Request\Order;
 
 class BidOrderFilterBySupplierRequest
 {

@@ -10,6 +10,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Manager\AnnouncementOrderDetails\AnnouncementOrderDetailsManager;
 use App\Manager\BidOrder\BidOrderManager;
 use App\Repository\OrderEntityRepository;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
@@ -273,5 +274,11 @@ class OrderManager
     public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
     {
         return $this->orderRepository->getSpecificAnnouncementOrderByIdForSupplier($id);
+    }
+
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        return $this->orderRepository->filterBidOrdersBySupplier($request);
     }
 }
