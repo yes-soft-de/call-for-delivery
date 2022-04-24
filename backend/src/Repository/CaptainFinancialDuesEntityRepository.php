@@ -88,14 +88,11 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getSumCaptainFinancialDuesAndsumPaymentsToCaptainBycaptainFinancialDueId(int $id): array
+    public function getSumCaptainFinancialDuesById(int $id): array
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
             ->select('sum( captainFinancialDuesEntity.amount) as sumCaptainFinancialDues')
-            ->addSelect('sum( captainPaymentEntity.amount) as sumPaymentsToCaptain')
-            
-            ->leftJoin(CaptainPaymentEntity::class, 'captainPaymentEntity', Join::WITH, 'captainPaymentEntity.captainFinancialDues = captainFinancialDuesEntity.id')
 
             ->andWhere('captainFinancialDuesEntity.id = :id')
 

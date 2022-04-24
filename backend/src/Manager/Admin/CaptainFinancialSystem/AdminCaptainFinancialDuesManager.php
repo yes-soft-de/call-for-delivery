@@ -36,8 +36,8 @@ class AdminCaptainFinancialDuesManager
         return $this->captainFinancialDuesRepository->find($id);
     } 
     
-    public function getSumCaptainFinancialDuesAndsumPaymentsToCaptainBycaptainFinancialDueId(int $id): array
+    public function getSumCaptainFinancialDuesById(int $id): array
     {
-        return $this->captainFinancialDuesRepository->getSumCaptainFinancialDuesAndsumPaymentsToCaptainBycaptainFinancialDueId($id);
+        return $this->captainFinancialDuesRepository->getSumCaptainFinancialDuesById($id);
     } 
 }

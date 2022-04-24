@@ -139,16 +139,22 @@ class CaptainFinancialDuesService
 
     public function getCaptainFinancialTotal(int $captainFinancialDueId): array
     {
-        $captainFinancialDues = $this->captainFinancialDuesManager->getSumCaptainFinancialDuesAndsumPaymentsToCaptainBycaptainFinancialDueId($captainFinancialDueId);
-
-        $total = $captainFinancialDues['sumCaptainFinancialDues'] - $captainFinancialDues['sumPaymentsToCaptain'];
+        $captainFinancialDues = [];
+        
+        $sumCaptainFinancialDues = $this->captainFinancialDuesManager->getSumCaptainFinancialDuesById($captainFinancialDueId);
+        
+        $sumPaymentsToCaptain = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDueId);
+   
+        $total = $sumCaptainFinancialDues['sumCaptainFinancialDues'] - $sumPaymentsToCaptain['sumPaymentsToCaptain'];
        
         $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
         if($total <= 0 ) {
             $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
-
+       
+        $captainFinancialDues['sumCaptainFinancialDues'] =  $sumCaptainFinancialDues['sumCaptainFinancialDues'];
+        $captainFinancialDues['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPaymentsToCaptain'];
         $captainFinancialDues['total'] = abs($total);
 
         return $captainFinancialDues;
