@@ -67,6 +67,10 @@ class SupplierProfileService
                 $supplierProfile['roomId'] = $supplierProfile['roomId']->toBase32();
             }
 
+            if (! empty($supplierProfile['supplierCategories'])) {
+                $supplierProfile['supplierCategories'] = $this->supplierProfileManager->getSupplierCategoriesNamesBySupplierCategoriesIDs($supplierProfile['supplierCategories']);
+            }
+
             $response = $this->autoMapping->map("array", SupplierProfileGetResponse::class, $supplierProfile);;
 
             $response->images = $this->customizeSupplierProfileImages($response->images);

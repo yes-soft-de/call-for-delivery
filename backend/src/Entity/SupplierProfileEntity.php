@@ -58,6 +58,9 @@ class SupplierProfileEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $stcPay;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $supplierCategories = [];
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -257,6 +260,18 @@ class SupplierProfileEntity
     public function setStcPay(?string $stcPay): self
     {
         $this->stcPay = $stcPay;
+
+        return $this;
+    }
+
+    public function getSupplierCategories(): ?array
+    {
+        return $this->supplierCategories;
+    }
+
+    public function setSupplierCategories(?array $supplierCategories): self
+    {
+        $this->supplierCategories = $supplierCategories;
 
         return $this;
     }

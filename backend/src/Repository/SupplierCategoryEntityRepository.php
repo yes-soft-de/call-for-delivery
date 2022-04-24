@@ -70,4 +70,32 @@ class SupplierCategoryEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllActiveSupplierCategoriesIDs(): array
+    {
+        return $this->createQueryBuilder('supplierCategoryEntity')
+            ->select('supplierCategoryEntity.id')
+
+            ->andWhere('supplierCategoryEntity.status = :status')
+            ->setParameter('status', SupplierCategoryStatusConstant::ACTIVE_SUPPLIER_CATEGORY_STATUS)
+
+            ->orderBy('supplierCategoryEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    public function getSupplierCategoriesNamesBySupplierCategoriesIDs(array $supplierCategoriesIDs): array
+    {
+        return $this->createQueryBuilder('supplierCategoryEntity')
+            ->select('supplierCategoryEntity.id', 'supplierCategoryEntity.name')
+
+            ->andWhere('supplierCategoryEntity.id IN (:supplierCategoriesIDs)')
+            ->setParameter('supplierCategoriesIDs', $supplierCategoriesIDs)
+
+            ->orderBy('supplierCategoryEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

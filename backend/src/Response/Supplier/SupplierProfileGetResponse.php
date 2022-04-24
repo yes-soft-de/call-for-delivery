@@ -66,4 +66,10 @@ class SupplierProfileGetResponse
      * @var string|null
      */
     public $stcPay;
+
+    /**
+     * @OA\Property(type="array", property="supplierCategories",
+     *     @OA\Items(type="object"), nullable=true)
+     */
+    public $supplierCategories;
 }
