@@ -98,8 +98,6 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->setParameter('id', $id)
             
-            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
-            
             ->getQuery()
 
             ->getOneOrNullResult();
