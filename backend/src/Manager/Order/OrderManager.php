@@ -13,7 +13,6 @@ use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
-use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -259,21 +258,11 @@ class OrderManager
     public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderRepository->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
-    }    
-
-    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): ?array
-    {
-        return $this->orderRepository->filterAnnouncementOrdersBySupplier($request);
     }
 
     public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
     {
         return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-    }
-    
-    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?array
-    {
-        return $this->orderRepository->getSpecificAnnouncementOrderByIdForSupplier($id);
     }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
@@ -295,5 +284,16 @@ class OrderManager
         }
 
         return $order;
+    }
+
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        return $this->orderRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
+    }
+
+    public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
+    {
+        return $this->orderRepository->getLastPriceOfferByBidOrderId($bidOrderId);
     }
 }
