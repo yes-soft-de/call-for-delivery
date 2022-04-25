@@ -6,6 +6,12 @@ final class OrderStateConstant
 {
     const ORDER_STATE_NOT_PAID = "not paid";
 
+    /**
+     * this is the first status of the bid order, not pending
+     * when a price offer is accepted, then the status of the bid order become pending
+     */
+    const ORDER_STATE_INITIALIZED = "initialized";
+
     const ORDER_STATE_PENDING = "pending";
 
     const ORDER_STATE_ON_WAY = "on way to pick order";
