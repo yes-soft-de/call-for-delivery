@@ -4,11 +4,9 @@ namespace App\Manager\BidOrder;
 
 use App\AutoMapping;
 use App\Constant\BidOrder\BidOrderOpenToPriceOfferStatusConstant;
-use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Image\ImageManager;
-use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Repository\BidOrderEntityRepository;
 use App\Request\Order\BidOrderCreateRequest;
@@ -19,17 +17,15 @@ class BidOrderManager
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
     private SupplierCategoryManager $supplierCategoryManager;
-    private StoreOwnerProfileManager $storeOwnerProfileManager;
     private ImageManager $imageManager;
     private BidOrderEntityRepository $bidOrderEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierCategoryManager $supplierCategoryManager, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                ImageManager $imageManager, BidOrderEntityRepository $bidOrderEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierCategoryManager $supplierCategoryManager, ImageManager $imageManager,
+                                BidOrderEntityRepository $bidOrderEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->supplierCategoryManager = $supplierCategoryManager;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
         $this->imageManager= $imageManager;
         $this->bidOrderEntityRepository= $bidOrderEntityRepository;
     }
