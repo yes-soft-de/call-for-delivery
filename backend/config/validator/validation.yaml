@@ -456,7 +456,7 @@ App\Request\BidOrder\BidOrderCreateRequest:
     properties:
         supplierCategory:
             - NotBlank: ~
-        storeOwnerProfile:
+        storeOwner:
             - NotBlank: ~
 
 App\Request\PriceOffer\PriceOfferCreateRequest:

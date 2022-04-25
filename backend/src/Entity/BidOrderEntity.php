@@ -35,7 +35,7 @@ class BidOrderEntity
     private $supplierCategory;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $storeOwnerProfile;
 
     #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: ImageEntity::class)]
@@ -46,6 +46,10 @@ class BidOrderEntity
 
     #[ORM\Column(type: 'boolean')]
     private $openToPriceOffer = true;
+
+    #[ORM\OneToOne(targetEntity: OrderEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $orderId;
 
     public function __construct()
     {
@@ -198,6 +202,18 @@ class BidOrderEntity
     public function setOpenToPriceOffer(bool $openToPriceOffer): self
     {
         $this->openToPriceOffer = $openToPriceOffer;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?OrderEntity
+    {
+        return $this->orderId;
+    }
+
+    public function setOrderId(OrderEntity $orderId): self
+    {
+        $this->orderId = $orderId;
 
         return $this;
     }

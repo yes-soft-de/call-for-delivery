@@ -6,12 +6,12 @@ use App\AutoMapping;
 use App\Constant\BidOrder\BidOrderOpenToPriceOfferStatusConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\BidOrderEntity;
+use App\Entity\OrderEntity;
 use App\Manager\Image\ImageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Repository\BidOrderEntityRepository;
-use App\Request\BidOrder\BidOrderCreateRequest;
-use App\Request\BidOrder\BidOrderFilterBySupplierRequest;
+use App\Request\Order\BidOrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BidOrderManager
@@ -34,20 +34,21 @@ class BidOrderManager
         $this->bidOrderEntityRepository= $bidOrderEntityRepository;
     }
 
-    public function createBidOrder(BidOrderCreateRequest $request): string|BidOrderEntity
+    public function createBidOrder(BidOrderCreateRequest $request, OrderEntity $orderEntity): string|BidOrderEntity
     {
-        $storeOwnerProfileEntity = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
-        $request->setStoreOwnerProfile($storeOwnerProfileEntity);
-
-        if ($storeOwnerProfileEntity->getStatus() !== StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS) {
-            return StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS;
-        }
+//        $storeOwnerProfileEntity = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
+//        $request->setStoreOwnerProfile($storeOwnerProfileEntity);
+//
+//        if ($storeOwnerProfileEntity->getStatus() !== StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS) {
+//            return StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS;
+//        }
 
         $supplierCategoryEntity = $this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory());
         $request->setSupplierCategory($supplierCategoryEntity);
 
         $bidOrderEntity = $this->autoMapping->map(BidOrderCreateRequest::class, BidOrderEntity::class, $request);
 
+        $bidOrderEntity->setOrderId($orderEntity);
         $bidOrderEntity->setOpenToPriceOffer(BidOrderOpenToPriceOfferStatusConstant::BID_ORDER_OPEN_TO_PRICE_OFFER);
 
         $this->entityManager->persist($bidOrderEntity);
@@ -65,17 +66,17 @@ class BidOrderManager
         $this->imageManager->createBidOrderImages($images, $bidOrderEntity);
     }
 
-    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
-    }
+//    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+//    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
+//    }
 
-    // This function filter bid orders which have price offers made by the supplier (who request the filter).
-    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
-    {
-        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
-    }
+//    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+//    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+//    {
+//        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
+//    }
 
     public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
     {
@@ -87,10 +88,10 @@ class BidOrderManager
         return $this->bidOrderEntityRepository->find($id);
     }
 
-    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
-    {
-        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId);
-    }
+//    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
+//    {
+//        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId);
+//    }
 
     public function updateBidOrderToBeClosedForPriceOffer(int $bidOrderId): ?BidOrderEntity
     {

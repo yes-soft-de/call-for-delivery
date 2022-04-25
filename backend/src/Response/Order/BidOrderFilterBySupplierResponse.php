@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Response\BidOrder;
+namespace App\Response\Order;
 
 use DateTime;
 
 class BidOrderFilterBySupplierResponse
 {
     public int $id;
+
+    public string $state;
+
+    public int $bidOrderId;
 
     /**
      * @var string|null
@@ -20,7 +24,10 @@ class BidOrderFilterBySupplierResponse
 
     public DateTime $createdAt;
 
-    public DateTime $updatedAt;
+    /**
+     * @var DateTime|null
+     */
+    public $updatedAt;
 
     /**
      * @var bool|null

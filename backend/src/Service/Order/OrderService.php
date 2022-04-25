@@ -5,14 +5,14 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
-use App\Request\Order\AnnouncementOrderCreateRequest;
-use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
+use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
-use App\Response\Order\AnnouncementOrderByIdForSupplierGetResponse;
-use App\Response\Order\AnnouncementOrderFilterBySupplierResponse;
+use App\Response\Order\OrderByIdForSupplierGetResponse;
+use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
@@ -40,7 +40,6 @@ use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Response\Order\OrderUpdateCaptainArrivedResponse;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Service\Notification\NotificationFirebaseService;
-use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -113,7 +112,7 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
-    public function createAnnouncementOrder(AnnouncementOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
+    public function createBidOrder(BidOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
     {
         $canCreateOrder = $this->subscriptionService->getStoreOwnerProfileStatus($request->getStoreOwner());
 
@@ -121,7 +120,7 @@ class OrderService
             return $canCreateOrder;
         }
 
-        $order = $this->orderManager->createAnnouncementOrder($request);
+        $order = $this->orderManager->createBidOrder($request);
 
         if($order) {
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ANNOUNCEMENT_ORDER_TITLE,
@@ -456,34 +455,99 @@ class OrderService
     public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
-    }   
-
-    public function filterAnnouncementOrdersBySupplier(AnnouncementOrderFilterBySupplierRequest $request): array
-    {
-        $response = [];
-
-        $orders = $this->orderManager->filterAnnouncementOrdersBySupplier($request);
-
-        foreach ($orders as $order) {
-            $response[] = $this->autoMapping->map('array', AnnouncementOrderFilterBySupplierResponse::class, $order);
-        }
-
-        return $response;
-    } 
+    }
     
     public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
     {
         return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-    } 
+    }
 
-    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): ?AnnouncementOrderByIdForSupplierGetResponse
+    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
-        $order = $this->orderManager->getSpecificAnnouncementOrderByIdForSupplier($id);
+        $response = [];
 
-        if ($order) {
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+        $orders = $this->orderManager->filterBidOrdersBySupplier($request);
+
+        if ($orders) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
         }
 
-        return $this->autoMapping->map("array", AnnouncementOrderByIdForSupplierGetResponse::class, $order);
+        return $response;
+    }
+
+    public function getOrderByIdForSupplier(int $bidOrderId, int $supplierId): OrderByIdForSupplierGetResponse|array
+    {
+        $response = [];
+
+        $bidOrder = $this->orderManager->getOrderByIdForSupplier($bidOrderId, $supplierId);
+
+        if ($bidOrder) {//dd($bidOrder);
+            $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
+
+            if ($response) {
+                // get each image of the order images as an object contain image URL, base URL, and full image URL
+                $response->bidOrderImages = $this->customizeBidOrderImages($response->bidOrderImages);
+            }
+        }
+
+        return $response;
+    }
+
+    public function customizeBidOrderImages(array $imagesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imagesArray)) {
+            foreach ($imagesArray as $image) {
+                $response[] = $this->uploadFileHelperService->getImageParams($image);
+            }
+
+            return $response;
+
+        } else {
+            return null;
+        }
+    }
+
+    // This function filter bid orders which have price offers made by the supplier (who request the filter).
+    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterBidOrdersThatHavePriceOffersBySupplier($request);
+
+        if ($orders) {
+            // if the price offer status filter is set, then we have to filter the orders here in the Service layer
+            if ($request->getPriceOfferStatus()) {
+                $orders = $this->filterBidOrdersAccordingToLastPriceOfferStatus($orders, $request->getPriceOfferStatus());
+            }
+
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+            }
+        }
+
+        return $response;
+    }
+
+    // This function filter the orders according to the last offer status of each order
+    public function filterBidOrdersAccordingToLastPriceOfferStatus(array $bidOrders, string $priceOfferStatus): array
+    {
+        $response = [];
+
+        foreach ($bidOrders as $bidOrder) {
+            $pricesOffer = $this->orderManager->getLastPriceOfferByBidOrderId($bidOrder['bidOrderId']);
+
+            if (! empty($pricesOffer)) {
+                if ($pricesOffer['priceOfferStatus'] === $priceOfferStatus) {
+                    $response[] = $bidOrder;
+                }
+            }
+        }
+
+        return $response;
     }
 }
