@@ -72,4 +72,16 @@ class ImageEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllBidOrderImages()
+    {
+        return $this->createQueryBuilder('imageEntity')
+
+            ->andWhere('imageEntity.bidOrder IS NOT NULL')
+
+            ->orderBy('imageEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
