@@ -274,4 +274,10 @@ class SubscriptionManager
        
         return $subscriptionEntity;
     }
+    
+    public function getSubscriptionsByUserID(int $userId): ?array
+    {
+
+        return $this->subscribeRepository->getSubscriptionsByUserID($userId);
+    }
 }

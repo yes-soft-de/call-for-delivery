@@ -58,4 +58,18 @@ class AdminStoreOwnerPaymentService
 
         return $response;
     }
+
+    public function getStorePaymentsBySubscriptionId(int $subscriptionId): array
+    {
+        $response = [];
+
+        $payments = $this->adminStoreOwnerPaymentManager->getStorePaymentsBySubscriptionId($subscriptionId);
+
+        foreach ($payments as $payment) {
+           
+            $response[] = $this->autoMapping->map('array', AdminStoreOwnerPaymentResponse::class, $payment);
+        }
+
+        return $response;
+    }
 }

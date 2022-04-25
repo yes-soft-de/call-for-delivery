@@ -65,4 +65,19 @@ class StoreOwnerPaymentEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function  getStorePaymentsBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerPaymentEntity')
+           
+            ->addSelect('storeOwnerPaymentEntity.id', 'storeOwnerPaymentEntity.amount', 'storeOwnerPaymentEntity.date', 'storeOwnerPaymentEntity.note')
+           
+            ->andWhere('storeOwnerPaymentEntity.subscription = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->orderBy('storeOwnerPaymentEntity.id', 'DESC')
+            
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -77,4 +77,9 @@ class AdminStoreOwnerPaymentManager
     {
         return $this->storeOwnerPaymentEntityRepository->getAllStorePayments($storeId);
     }
+
+    public function getStorePaymentsBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->storeOwnerPaymentEntityRepository->getStorePaymentsBySubscriptionId($subscriptionId);
+    }
 }

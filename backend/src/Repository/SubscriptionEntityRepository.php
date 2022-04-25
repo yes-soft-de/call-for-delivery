@@ -182,4 +182,42 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+
+    public function getSubscriptionsSpecificStoreForAdmin(int $storeId): array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+            ->andWhere('subscription.storeOwner = :storeId')
+
+            ->setParameter('storeId', $storeId)
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+
+            ->getQuery()
+
+            ->getResult();
+    }
+
+    public function getSubscriptionsByUserID(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('IDENTITY( subscription.package)')
+            ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+
+            ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+
+            ->andWhere('subscription.storeOwner = storeOwnerProfileEntity.id')
+
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+
+            ->getResult();
+    }
 }

@@ -19,6 +19,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Main\MainErrorConstant;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
  * @Route("v1/subscription/")
@@ -365,5 +366,41 @@ class SubscriptionController extends BaseController
         $result = $this->subscriptionService->updateHasExtraAndType($subscriptionExtraId);
         
         return $this->response($result, self::UPDATE);
+    }
+    
+    /**
+     * store:get subscriptions with payments.
+     * @Route("subscriptionswithpayment", name="getSubscriptionsWithPayments", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     * 
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns subscriptions with payments",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *             ref=@Model(type="App\Response\Subscription\StoreSubscriptionResponse")
+     *      )
+     *    )
+     *  ) 
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSubscriptionsWithPayments(): JsonResponse
+    {
+        $result = $this->subscriptionService->getSubscriptionsWithPayments($this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }
