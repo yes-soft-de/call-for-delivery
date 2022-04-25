@@ -28,6 +28,9 @@ class StoreOwnerPaymentEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
+    #[ORM\ManyToOne(targetEntity: SubscriptionEntity::class, inversedBy: 'storeOwnerPaymentEntities')]
+    private $subscription;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class StoreOwnerPaymentEntity
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getSubscription(): ?SubscriptionEntity
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?SubscriptionEntity $subscription): self
+    {
+        $this->subscription = $subscription;
 
         return $this;
     }

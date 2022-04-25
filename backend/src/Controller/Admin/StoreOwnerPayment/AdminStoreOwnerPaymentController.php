@@ -60,6 +60,8 @@ class AdminStoreOwnerPaymentController extends BaseController
      *          @OA\Property(type="number", property="amount"),
      *          @OA\Property(type="integer", property="store"),
      *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="integer", property="subscriptionId"),
+     *          @OA\Property(type="integer", property="subscriptionFlag"),
      *      )
      * )
      *

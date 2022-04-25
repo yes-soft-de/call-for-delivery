@@ -260,4 +260,18 @@ class SubscriptionManager
     {
         return $this->subscribeRepository->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
     }
+  
+    public function getSubscriptionById(int $id): ?SubscriptionEntity
+    {
+        return $this->subscribeRepository->find($id);
+    }
+
+    public function updateSubscriptionFlag(SubscriptionEntity $subscriptionEntity, int $flag): ?SubscriptionEntity
+    {        
+        $subscriptionEntity->setFlag($flag);
+
+        $this->entityManager->flush();   
+       
+        return $subscriptionEntity;
+    }
 }
