@@ -32,11 +32,10 @@ class OrderManager
    private StoreOwnerProfileManager $storeOwnerProfileManager;
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
-   private AnnouncementOrderDetailsManager $announcementOrderDetailsManager;
    private BidOrderManager $bidOrderManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, AnnouncementOrderDetailsManager $announcementOrderDetailsManager, BidOrderManager $bidOrderManager)
+                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidOrderManager $bidOrderManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -44,7 +43,6 @@ class OrderManager
       $this->storeOwnerProfileManager = $storeOwnerProfileManager;
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
-      $this->announcementOrderDetailsManager = $announcementOrderDetailsManager;
       $this->bidOrderManager = $bidOrderManager;
     }
     
@@ -81,7 +79,7 @@ class OrderManager
 
         $orderEntity->setCreatedAt(new DateTime());
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
-        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_INITIALIZED);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
 
         $this->entityManager->persist($orderEntity);
@@ -277,7 +275,7 @@ class OrderManager
 
         if ($order) {
             if ($order['bidOrderId']) {
-                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidOrderId'], $supplierId);
+                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderIdAndSupplierId($order['bidOrderId'], $supplierId);
 
                 $order['bidOrderImages'] = $this->orderRepository->getBidOrderImagesByBidOrderId($order['bidOrderId']);
             }
@@ -295,5 +293,48 @@ class OrderManager
     public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
     {
         return $this->orderRepository->getLastPriceOfferByBidOrderId($bidOrderId);
+    }
+
+    // this function will be used when a supplier confirm an acceptance of a store owner for specific bid order
+    // then, the state of the order will be updated from 'initialized' to 'pending'
+    public function updateBidOrderStateToPendingBySupplier(int $orderId): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if (! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function getOrderTypeByOrderId(int $orderId): int
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if ($orderEntity === null) {
+            return 0;
+        }
+
+        return $orderEntity->getOrderType();
+    }
+
+    public function getSpecificBidOrderForStore(int $id): ?array
+    {
+        $order = $this->orderRepository->getSpecificBidOrderForStore($id);
+
+        if ($order) {
+            if ($order['bidOrderId']) {
+                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidOrderId']);
+
+                $order['bidOrderImages'] = $this->orderRepository->getBidOrderImagesByBidOrderId($order['bidOrderId']);
+            }
+        }
+
+        return $order;
     }
 }

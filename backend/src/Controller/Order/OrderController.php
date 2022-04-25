@@ -757,11 +757,11 @@ class OrderController extends BaseController
         return $this->response($response, self::UPDATE);
     }
 
-     /**
+    /**
      * store: order cancel.
      * @Route("ordercancel/{id}", name="orderCancel", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -772,7 +772,7 @@ class OrderController extends BaseController
      *      description="token to be passed as a header",
      *      required=true
      * )
-     * 
+     *
      * @OA\Response(
      *      response=204,
      *      description="Return order.",
@@ -796,7 +796,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="msg", description="can not remove it, The captain received the order"),
      *      )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function orderCancel(int $id): JsonResponse
@@ -1042,6 +1042,46 @@ class OrderController extends BaseController
         $request->setSupplierId($this->getUserId());
 
         $result = $this->orderService->filterBidOrdersThatHavePriceOffersBySupplier($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store:Get specific bid order for store
+     * @Route("storebidorder/{id}", name="getSpecificBidOrderByIdForStore", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\BidOrderForStoreOwnerGetResponse")
+     *
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificBidOrderForStore(int $id): JsonResponse
+    {
+        $result = $this->orderService->getSpecificBidOrderForStore($id);
 
         return $this->response($result, self::FETCH);
     }
