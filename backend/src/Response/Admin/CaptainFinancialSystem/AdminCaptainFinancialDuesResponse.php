@@ -26,7 +26,7 @@ class AdminCaptainFinancialDuesResponse
     public string $captainName;
    
     /**
-     * @OA\Property(type="array", property="paymentsFromCompany",
+     * @OA\Property(type="array", property="paymentsToCaptain",
      *     @OA\Items(type="object"))
      */
     public array $paymentsToCaptain;
