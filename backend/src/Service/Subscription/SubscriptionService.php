@@ -22,6 +22,7 @@ use App\Service\Subscription\SubscriptionCaptainOfferService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
 use App\Response\Subscription\StoreSubscriptionResponse;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
 class SubscriptionService
 {
@@ -578,11 +579,32 @@ class SubscriptionService
        foreach ($subscriptions as $subscription) {
 
             $subscription['paymentsFromStore'] = $this->storeOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
+     
+            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost']);
          
             $response[] = $this->autoMapping->map("array", StoreSubscriptionResponse::class, $subscription);
         }
 
         return $response;
+    }
+    
+    public function getTotal(array $payments, float $packageCost): array
+    {
+        $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
+      
+        $item['packageCost'] = $packageCost;
+      
+        $total = $item['sumPayments'] - $packageCost;
+       
+        $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+    
+        if($total <= 0 ) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+        }
+
+        $item['total'] = abs($total);
+        
+        return  $item;
     }
 }
  

@@ -189,7 +189,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost')
             ->andWhere('subscription.storeOwner = :storeId')
 
             ->setParameter('storeId', $storeId)
@@ -207,7 +207,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost')
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
