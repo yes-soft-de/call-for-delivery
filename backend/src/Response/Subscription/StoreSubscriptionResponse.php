@@ -31,14 +31,13 @@ class StoreSubscriptionResponse
     public array $paymentsFromStore;
     
     /**
-     * @OA\Property(type="array", property="total",
-     *     @OA\Items(type="object",
+     * @OA\Property(type="object", property="total",
      *              @OA\Property(type="number", property="total"),
      *              @OA\Property(type="number", property="packageCost"),
      *              @OA\Property(type="number", property="sumPayments"),
      *              @OA\Property(type="string", property="advancePayment"),
      * 
-     * ))
+     * )
      */
     public array $total;
 }
