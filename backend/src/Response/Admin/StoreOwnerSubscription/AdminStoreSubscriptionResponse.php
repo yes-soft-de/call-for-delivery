@@ -31,7 +31,7 @@ class AdminStoreSubscriptionResponse
     public array $paymentsFromStore;
 
     /**
-     * @OA\Property(type="array", property="total",
+     * @OA\Property(type="object", property="total",
      *              @OA\Property(type="number", property="total"),
      *              @OA\Property(type="number", property="packageCost"),
      *              @OA\Property(type="number", property="sumPayments"),
