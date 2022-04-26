@@ -292,6 +292,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "currentRating": MessageLookupByLibrary.simpleMessage("المتجر قيمك ب"),
         "customer": MessageLookupByLibrary.simpleMessage("الزبون"),
+        "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
+        "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
@@ -387,8 +389,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
+        "financeStatus": MessageLookupByLibrary.simpleMessage("حالة الدورة"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "financialDues":
             MessageLookupByLibrary.simpleMessage("المستحقات المالية"),
+        "financialDuesCycle":
+            MessageLookupByLibrary.simpleMessage("الدورة المالية"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -913,9 +922,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumBalance": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
+        "sumCaptainFinancialDues":
+            MessageLookupByLibrary.simpleMessage("مستحقات الكابتن"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsFromCompany":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات من الشركة"),
+        "sumPaymentsToCaptainFinance":
+            MessageLookupByLibrary.simpleMessage("المدفوعات للكابتن"),
         "sumPaymentsToCompany":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات إلى الشركة"),
         "sureForDelete": MessageLookupByLibrary.simpleMessage(

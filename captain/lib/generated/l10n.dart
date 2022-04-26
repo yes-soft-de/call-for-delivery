@@ -6669,6 +6669,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Finance dues cycle`
+  String get financialDuesCycle {
+    return Intl.message(
+      'Finance dues cycle',
+      name: 'financialDuesCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain dues`
+  String get sumCaptainFinancialDues {
+    return Intl.message(
+      'Captain dues',
+      name: 'sumCaptainFinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments to captain`
+  String get sumPaymentsToCaptainFinance {
+    return Intl.message(
+      'Payments to captain',
+      name: 'sumPaymentsToCaptainFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get financeStatus {
+    return Intl.message(
+      'Status',
+      name: 'financeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid`
+  String get financePaid {
+    return Intl.message(
+      'Paid',
+      name: 'financePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get financeUnPaid {
+    return Intl.message(
+      'Unpaid',
+      name: 'financeUnPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partly paid`
+  String get financePartlyPaid {
+    return Intl.message(
+      'Partly paid',
+      name: 'financePartlyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cycle start`
+  String get cycleStart {
+    return Intl.message(
+      'Cycle start',
+      name: 'cycleStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cycle end`
+  String get cycleEnd {
+    return Intl.message(
+      'Cycle end',
+      name: 'cycleEnd',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

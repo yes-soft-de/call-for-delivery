@@ -665,7 +665,18 @@
     "contOrderCompleted": "عدد الطلبات المسلمة",
     "countOfOrdersLeft": "عدد الطلبات المتبقية",
     "youHaveFinanceAccount": "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية",
-    "amountForStore": "المبالغ المخصصة للمتاجر"
+    "amountForStore": "المبالغ المخصصة للمتاجر",
+    "financialDuesCycle": "الدورة المالية",
+    "sumCaptainFinancialDues": "مستحقات الكابتن",
+    "sumPaymentsToCaptainFinance": "المدفوعات للكابتن",
+    "financeStatus": "حالة الدورة",
+    "financePaid": "تم التسديد",
+    "financeUnPaid": "لم يتم التسديد",
+    "financePartlyPaid": "تم التسديد جزئيا",
+    "cycleStart": "بداية الدورة",
+    "cycleEnd": "نهاية الدورة"
+
+
 
 
 

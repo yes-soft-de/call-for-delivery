@@ -664,7 +664,16 @@
     "contOrderCompleted": "Count orders completed",
     "countOfOrdersLeft": "Count orders left",
     "youHaveFinanceAccount": "You cannot choose new plan , because you have a running one",
-    "amountForStore": "Amount for store"
+    "amountForStore": "Amount for store",
+    "financialDuesCycle": "Finance dues cycle",
+    "sumCaptainFinancialDues": "Captain dues",
+    "sumPaymentsToCaptainFinance": "Payments to captain",
+    "financeStatus": "Status",
+    "financePaid": "Paid",
+    "financeUnPaid": "Unpaid",
+    "financePartlyPaid": "Partly paid",
+    "cycleStart": "Cycle start",
+    "cycleEnd": "Cycle end"
 
 
 
