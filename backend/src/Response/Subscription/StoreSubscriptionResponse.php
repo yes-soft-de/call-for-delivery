@@ -35,7 +35,7 @@ class StoreSubscriptionResponse
      *              @OA\Property(type="number", property="total"),
      *              @OA\Property(type="number", property="packageCost"),
      *              @OA\Property(type="number", property="sumPayments"),
-     *              @OA\Property(type="string", property="advancePayment"),
+     *              @OA\Property(type="boolean", property="advancePayment"),
      * 
      * )
      */
