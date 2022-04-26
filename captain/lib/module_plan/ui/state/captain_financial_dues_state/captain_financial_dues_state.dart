@@ -1,14 +1,11 @@
 import 'dart:ui';
-
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_financial_dues.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
-import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +16,7 @@ class CaptainFinancialDuesStateLoaded extends States {
       : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.myBalance, actions: []),
-      body: CustomListView.custom(children: getDues()),
-    );
+    return CustomListView.custom(children: getDues());
   }
 
   List<Widget> getDues() {

@@ -24,14 +24,15 @@ class AccountBalanceStateManager {
         stateSubject.add(
           ErrorState(screenState, onPressed: () {
             getAccountBalance(screenState);
-          }, title: S.current.myBalance, error: value.error),
+
+          },hasAppbar: false, title: S.current.myBalance, error: value.error),
         );
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
             emptyMessage: S.current.homeDataEmpty,
             title: S.current.myBalance, onPressed: () {
           getAccountBalance(screenState);
-        }));
+        },hasAppbar: false));
       } else {
         value as CaptainAccountBalanceModel;
         stateSubject.add(AccountBalanceStateLoaded(screenState, value.data));

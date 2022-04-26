@@ -1,11 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
 import 'package:c4d/module_plan/ui/widget/account_balance_details.dart';
-import 'package:c4d/module_plan/ui/widget/custom_text_button.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -20,42 +17,38 @@ class AccountBalanceStateLoaded extends States {
   int currentIndex = 0;
   @override
   Widget getUI(BuildContext context) {
-    return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.myBalance, actions: []),
-      body: CustomListView.custom(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).backgroundColor,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.info_rounded),
-                      title: Text(S.current.myBalanceHint),
+    return CustomListView.custom(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).backgroundColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.info_rounded),
+                    title: Text(S.current.myBalanceHint),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 16.0, left: 16),
+                    child: Divider(
+                      thickness: 2,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 16.0, left: 16),
-                      child: Divider(
-                        thickness: 2,
-                      ),
-                    ),
-                    balanceDetails(context),
-                  ],
-                ),
+                  ),
+                  balanceDetails(context),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -176,4 +169,6 @@ class AccountBalanceStateLoaded extends States {
       ],
     );
   }
+
 }
+

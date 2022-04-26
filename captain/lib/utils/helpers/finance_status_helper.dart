@@ -15,7 +15,7 @@ class FinanceHelper {
     }
   }
 
-  static Color getFinanceStatusColor(int status) {
+  static Color? getFinanceStatusColor(int status) {
     switch (status) {
       case 1:
         return Colors.green;
@@ -24,7 +24,7 @@ class FinanceHelper {
       case 3:
         return Colors.purple;
       default:
-        return Colors.grey[600]!;
+        return null;
     }
   }
 }

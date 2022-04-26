@@ -25,17 +25,19 @@ class CaptainFinancialDuesStateManager {
         stateSubject.add(
           ErrorState(screenState, onPressed: () {
             getAccountBalance(screenState);
-          }, title: S.current.myBalance, error: value.error),
+          }, title: S.current.myBalance, error: value.error, hasAppbar: false),
         );
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
             emptyMessage: S.current.homeDataEmpty,
+            hasAppbar: false,
             title: S.current.myBalance, onPressed: () {
           getAccountBalance(screenState);
         }));
       } else {
         value as CaptainFinancialDuesModel;
-        stateSubject.add(CaptainFinancialDuesStateLoaded(screenState, value.data));
+        stateSubject
+            .add(CaptainFinancialDuesStateLoaded(screenState, value.data));
       }
     });
   }
