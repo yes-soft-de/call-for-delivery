@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SubscriptionEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubscriptionEntityRepository::class)]
@@ -36,6 +38,17 @@ class SubscriptionEntity
 
     #[ORM\ManyToOne(targetEntity: SubscriptionCaptainOfferEntity::class, inversedBy: 'subscriptionEntitie')]
     private $subscriptionCaptainOffer;
+ 
+    #[ORM\Column(type: 'integer', length: 100, nullable: true)]
+    private $flag;
+
+    #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: StoreOwnerPaymentEntity::class)]
+    private $storeOwnerPaymentEntities;
+
+    public function __construct()
+    {
+        $this->storeOwnerPaymentEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +147,48 @@ class SubscriptionEntity
     public function setSubscriptionCaptainOffer(?SubscriptionCaptainOfferEntity $subscriptionCaptainOffer): self
     {
         $this->subscriptionCaptainOffer = $subscriptionCaptainOffer;
+
+        return $this;
+    }
+    
+    public function getFlag(): ?int
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?int $flag): self
+    {
+        $this->flag = $flag;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StoreOwnerPaymentEntity>
+     */
+    public function getStoreOwnerPaymentEntities(): Collection
+    {
+        return $this->storeOwnerPaymentEntities;
+    }
+
+    public function addStoreOwnerPaymentEntity(StoreOwnerPaymentEntity $storeOwnerPaymentEntity): self
+    {
+        if (!$this->storeOwnerPaymentEntities->contains($storeOwnerPaymentEntity)) {
+            $this->storeOwnerPaymentEntities[] = $storeOwnerPaymentEntity;
+            $storeOwnerPaymentEntity->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOwnerPaymentEntity(StoreOwnerPaymentEntity $storeOwnerPaymentEntity): self
+    {
+        if ($this->storeOwnerPaymentEntities->removeElement($storeOwnerPaymentEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOwnerPaymentEntity->getSubscription() === $this) {
+                $storeOwnerPaymentEntity->setSubscription(null);
+            }
+        }
 
         return $this;
     }

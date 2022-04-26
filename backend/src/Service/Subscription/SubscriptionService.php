@@ -20,6 +20,9 @@ use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
 use App\Service\Subscription\SubscriptionCaptainOfferService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
+use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
+use App\Response\Subscription\StoreSubscriptionResponse;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
 class SubscriptionService
 {
@@ -27,13 +30,15 @@ class SubscriptionService
     private SubscriptionManager $subscriptionManager;
     private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
     private StoreOwnerProfileService $storeOwnerProfileService;
+    private StoreOwnerPaymentService $storeOwnerPaymentService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService, StoreOwnerProfileService $storeOwnerProfileService)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService, StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
+        $this->storeOwnerPaymentService = $storeOwnerPaymentService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -563,6 +568,43 @@ class SubscriptionService
     public function getStoreOwnerProfileStatus(int $storeOwnerId): string
     {
         return $this->storeOwnerProfileService->checkStoreStatus($storeOwnerId);
+    }
+    
+    public function getSubscriptionsWithPayments(int $userId): array
+    {
+       $response = [];
+
+       $subscriptions = $this->subscriptionManager->getSubscriptionsByUserID($userId);
+
+       foreach ($subscriptions as $subscription) {
+
+            $subscription['paymentsFromStore'] = $this->storeOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
+     
+            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost']);
+         
+            $response[] = $this->autoMapping->map("array", StoreSubscriptionResponse::class, $subscription);
+        }
+
+        return $response;
+    }
+    
+    public function getTotal(array $payments, float $packageCost): array
+    {
+        $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
+      
+        $item['packageCost'] = $packageCost;
+      
+        $total = $item['sumPayments'] - $packageCost;
+       
+        $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+    
+        if($total <= 0 ) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+        }
+
+        $item['total'] = abs($total);
+        
+        return  $item;
     }
 }
  
