@@ -23,7 +23,7 @@ class AdminStoreSubscriptionResponse
     public int $flag;
     
     /**
-     * @OA\Property(type="array", property="paymentsFromCompany",
+     * @OA\Property(type="array", property="paymentsFromStore",
      *     @OA\Items(type="object",
      *              ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse"),
      * ))
