@@ -3,6 +3,7 @@
 namespace App\Service\Order;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
@@ -11,6 +12,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\Order\BidOrderForStoreOwnerGetResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
@@ -273,11 +275,15 @@ class OrderService
 
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
     {
-        if($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
-            $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId()); 
-     
-            if($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
-                return  $canAcceptOrder;
+        if ($this->orderManager->getOrderTypeByOrderId($request->getId()) === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+            // Following if block will be executed only when the order is of type 1,
+            // otherwise, we will mover to update statement directly
+            if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
+
+                if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
+                    return $canAcceptOrder;
+                }
             }
         }
 
@@ -549,5 +555,24 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function getSpecificBidOrderForStore(int $id): ?BidOrderForStoreOwnerGetResponse
+    {
+        $order = $this->orderManager->getSpecificBidOrderForStore($id);
+
+        if ($order) {
+            $order['attention'] = $order['noteCaptainOrderCost'];
+
+            $order['bidOrderImages'] =  $this->customizeBidOrderImages($order['bidOrderImages']);
+
+            if($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+            }
+
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+        }
+
+        return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
     }
 }

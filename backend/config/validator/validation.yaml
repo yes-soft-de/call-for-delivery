@@ -452,7 +452,7 @@ App\Request\AnnouncementOrderDetails\AnnouncementOrderPriceOfferValueUpdateReque
         id:
             - NotBlank: ~
 
-App\Request\BidOrder\BidOrderCreateRequest:
+App\Request\Order\BidOrderCreateRequest:
     properties:
         supplierCategory:
             - NotBlank: ~

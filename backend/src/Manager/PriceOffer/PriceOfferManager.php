@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidOrder\BidOrderManager;
+use App\Manager\Order\OrderManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\PriceOfferEntityRepository;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
@@ -19,14 +20,17 @@ class PriceOfferManager
     private EntityManagerInterface $entityManager;
     private BidOrderManager $bidOrderManager;
     private SupplierProfileManager $supplierProfileManager;
+    private OrderManager $orderManager;
     private PriceOfferEntityRepository $priceOfferEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidOrderManager $bidOrderManager, SupplierProfileManager $supplierProfileManager, PriceOfferEntityRepository $priceOfferEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidOrderManager $bidOrderManager, SupplierProfileManager $supplierProfileManager, OrderManager $orderManager,
+                                PriceOfferEntityRepository $priceOfferEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->bidOrderManager = $bidOrderManager;
         $this->supplierProfileManager = $supplierProfileManager;
+        $this->orderManager = $orderManager;
         $this->priceOfferEntityRepository = $priceOfferEntityRepository;
     }
 
@@ -88,6 +92,9 @@ class PriceOfferManager
 
             return $priceOfferEntity;
         }
+
+        // note: we can add new elseif section, which will be used when the store want to re-open the order for prices offers
+        // and that's happen when supplier didn't confirmed the acceptance of a store owner for a price offer
     }
 
     // This function update the status of all prices offers of a bid order except the accepted offer
@@ -117,6 +124,9 @@ class PriceOfferManager
             $priceOfferEntity = $this->autoMapping->mapToObject(PriceOfferStatusUpdateRequest::class, PriceOfferEntity::class, $request, $priceOfferEntity);
 
             $this->entityManager->flush();
+
+            // then, we update order status from 'initialized' to 'pending'
+            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidOrder()->getOrderId()->getId());
 
             return $priceOfferEntity;
         }
