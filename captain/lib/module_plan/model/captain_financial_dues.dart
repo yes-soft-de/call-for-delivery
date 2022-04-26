@@ -34,11 +34,11 @@ class CaptainFinancialDuesModel extends DataModel {
       _data.add(CaptainFinancialDuesModel(
           amount: element.amount ?? 0,
           amountForStore: element.amountForStore ?? 0,
-          endDate: DateFormat.yMEd()
+          endDate: DateFormat.yMd()
               .format(DateHelper.convert(element.endDate?.timestamp)),
           id: element.id ?? -1,
           paymentsFromCompany: getPayments(element.paymentsFromCompany ?? []),
-          startDate: DateFormat.yMEd()
+          startDate: DateFormat.yMd()
               .format(DateHelper.convert(element.startDate?.timestamp)),
           status: element.status ?? 0,
           statusAmountForStore: element.statusAmountForStore ?? 0,

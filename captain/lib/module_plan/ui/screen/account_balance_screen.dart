@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_plan/state_manager/account_balance_state_manager.dart';
+import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,10 +39,21 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
     refresh();
   }
 
+  PageController pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _currentState?.getUI(context) ?? Container(),
+    return PageView(
+      controller: pageController,
+      onPageChanged: (index) {
+        pageController.animateToPage(index,
+            duration: const Duration(milliseconds: 350), curve: Curves.linear);
+      },
+      children: [
+        Scaffold(
+          body: _currentState?.getUI(context) ?? Container(),
+        ),
+        getIt<CaptainFinancialDuesScreen>()
+      ],
     );
   }
 }
