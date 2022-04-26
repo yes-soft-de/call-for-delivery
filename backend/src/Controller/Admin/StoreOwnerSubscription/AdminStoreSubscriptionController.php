@@ -48,7 +48,7 @@ class AdminStoreSubscriptionController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *             ref=@Model(type="App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService")
+     *             ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse"),
      *      )
      *    )
      *  ) 

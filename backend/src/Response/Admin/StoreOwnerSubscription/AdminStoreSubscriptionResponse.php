@@ -3,7 +3,7 @@
 namespace App\Response\Admin\StoreOwnerSubscription;
 
 use OpenApi\Annotations as OA;
-
+use Nelmio\ApiDocBundle\Annotation\Model;
 use DateTime;
 
 class AdminStoreSubscriptionResponse
@@ -24,7 +24,9 @@ class AdminStoreSubscriptionResponse
     
     /**
      * @OA\Property(type="array", property="paymentsFromCompany",
-     *     @OA\Items(type="object"))
+     *     @OA\Items(type="object",
+     *              ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse"),
+     * ))
      */
     public array $paymentsFromStore;
 }
