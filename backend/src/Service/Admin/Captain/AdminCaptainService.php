@@ -138,7 +138,7 @@ class AdminCaptainService
 
             } else {
                 // There is already an image, then update it
-                $this->updateCaptainImage($request->getImages(), $driverLicenceImage);
+                $this->updateCaptainImage($request->getDrivingLicence(), $driverLicenceImage);
             }
         }
 
@@ -152,7 +152,7 @@ class AdminCaptainService
 
             } else {
                 // There is already an image, then update it
-                $this->updateCaptainImage($request->getImages(), $identityImage);
+                $this->updateCaptainImage($request->getIdentity(), $identityImage);
             }
         }
 
@@ -166,7 +166,7 @@ class AdminCaptainService
 
             } else {
                 // There is already an image, then update it
-                $this->updateCaptainImage($request->getImages(), $mechanicalLicenceImage);
+                $this->updateCaptainImage($request->getMechanicLicense(), $mechanicalLicenceImage);
             }
         }
     }
