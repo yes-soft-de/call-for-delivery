@@ -295,6 +295,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
+        "currentFinancialDuesCycle":
+            MessageLookupByLibrary.simpleMessage("Current cycle"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "currentRating": MessageLookupByLibrary.simpleMessage(
             "Your current rating by this store is"),
@@ -401,10 +403,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("Partly paid"),
         "financeStatus": MessageLookupByLibrary.simpleMessage("Status"),
+        "financeStoreStatus":
+            MessageLookupByLibrary.simpleMessage("Finance order status"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
         "financialDuesCycle":
             MessageLookupByLibrary.simpleMessage("Finance dues cycle"),
+        "financialDuesCycles":
+            MessageLookupByLibrary.simpleMessage("Financial dues cycles"),
+        "financialDuesDetails":
+            MessageLookupByLibrary.simpleMessage("Financial dues details"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

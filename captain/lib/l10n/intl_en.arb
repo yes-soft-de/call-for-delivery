@@ -673,7 +673,15 @@
     "financeUnPaid": "Unpaid",
     "financePartlyPaid": "Partly paid",
     "cycleStart": "Cycle start",
-    "cycleEnd": "Cycle end"
+    "cycleEnd": "Cycle end",
+    "financialDuesCycles": "Financial dues cycles",
+    "currentFinancialDuesCycle": "Current cycle",
+    "financialDuesDetails": "Financial dues details",
+    "financeStoreStatus": "Finance order status"
+
+
+
+
 
 
 

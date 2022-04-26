@@ -6759,6 +6759,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Financial dues cycles`
+  String get financialDuesCycles {
+    return Intl.message(
+      'Financial dues cycles',
+      name: 'financialDuesCycles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current cycle`
+  String get currentFinancialDuesCycle {
+    return Intl.message(
+      'Current cycle',
+      name: 'currentFinancialDuesCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial dues details`
+  String get financialDuesDetails {
+    return Intl.message(
+      'Financial dues details',
+      name: 'financialDuesDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance order status`
+  String get financeStoreStatus {
+    return Intl.message(
+      'Finance order status',
+      name: 'financeStoreStatus',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

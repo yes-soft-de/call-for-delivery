@@ -289,6 +289,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
+        "currentFinancialDuesCycle":
+            MessageLookupByLibrary.simpleMessage("الدورة الحالية"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "currentRating": MessageLookupByLibrary.simpleMessage("المتجر قيمك ب"),
         "customer": MessageLookupByLibrary.simpleMessage("الزبون"),
@@ -393,11 +395,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
         "financeStatus": MessageLookupByLibrary.simpleMessage("حالة الدورة"),
+        "financeStoreStatus":
+            MessageLookupByLibrary.simpleMessage("حالة مستحقات المتاجر"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "financialDues":
             MessageLookupByLibrary.simpleMessage("المستحقات المالية"),
         "financialDuesCycle":
             MessageLookupByLibrary.simpleMessage("الدورة المالية"),
+        "financialDuesCycles":
+            MessageLookupByLibrary.simpleMessage("الدورات المالية"),
+        "financialDuesDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل الدورة المالية"),
         "finishOrderProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
