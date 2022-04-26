@@ -50,13 +50,14 @@ class FireNotificationService {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           Logger().info('FireNotificationService', 'onMessage: $message');
-          SchedulerBinding.instance?.addPostFrameCallback(
-            (_) {
-              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                  message.data['navigate_route'].toString(),
-                  arguments: message.data['argument']);
-            },
-          );
+          // SchedulerBinding.instance?.addPostFrameCallback(
+          //   (_) {
+          //     Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+          //         message.data['navigate_route'].toString(),
+          //         arguments: message.data['argument']);
+          //   },
+          // );
+          _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           _onNotificationReceived.add(message);

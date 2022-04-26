@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_profile/model/store_balance_model.dart';
+import 'package:c4d/module_profile/model/captain_balance_model.dart';
 import 'package:c4d/module_profile/ui/screen/account_balance_screen.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/empty_screen.dart';

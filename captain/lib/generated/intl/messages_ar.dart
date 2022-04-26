@@ -277,8 +277,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
-        "countOrdersMaxFromNineteen": MessageLookupByLibrary.simpleMessage(
-            "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة"),
+        "countOrdersMaxFromNineteen":
+            MessageLookupByLibrary.simpleMessage("الطلبات التي تجاوزت ١٩ كم"),
         "countOverOrdersThanRequired":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات الإضافية"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),

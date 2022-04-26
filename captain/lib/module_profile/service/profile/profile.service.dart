@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_profile/model/store_balance_model.dart';
+import 'package:c4d/module_profile/model/captain_balance_model.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';

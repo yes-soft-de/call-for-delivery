@@ -651,7 +651,7 @@
     "salary": "الراتب",
     "pleaseWaitAdministrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة",
     "countOrders": "عدد الطلبات",
-    "countOrdersMaxFromNineteen": "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة",
+    "countOrdersMaxFromNineteen": "الطلبات التي تجاوزت ١٩ كم",
     "financialDues": "المستحقات المالية",
     "sumPayments": "مجموع الدفعات",
     "countOverOrdersThanRequired": "عدد الطلبات الإضافية",

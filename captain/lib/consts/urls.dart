@@ -215,4 +215,6 @@ class Urls {
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
   static const GET_CAPTAIN_ACCOUNT_BALANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainbalancedetail';
+  static const GET_CAPTAIN_FINANCIAL_DUES =
+      DOMAIN + '/v1/captainfinancialdues/captainfinancialdues';
 }

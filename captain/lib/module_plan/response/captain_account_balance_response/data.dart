@@ -36,8 +36,7 @@ class Data {
       this.monthTargetSuccess,
       this.finalFinancialAccount,
       this.financialAccountDetails,
-      this.amountForStore
-      });
+      this.amountForStore});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         countOrders: json['countOrders'] as num?,

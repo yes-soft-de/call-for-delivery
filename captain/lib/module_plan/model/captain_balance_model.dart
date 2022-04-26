@@ -18,6 +18,7 @@ class CaptainAccountBalanceModel extends DataModel {
   late String? dateFinancialCycleEnds;
   List<OrderCountsSystemDetails>? orderCountsDetails;
   late num? amountForStore;
+  late List<PaymentModel> paymentsToClient;
   CaptainAccountBalanceModel(
       {required this.advancePayment,
       required this.compensationForEveryOrder,
@@ -34,7 +35,8 @@ class CaptainAccountBalanceModel extends DataModel {
       required this.dateFinancialCycleEnds,
       required this.monthTargetSuccess,
       this.orderCountsDetails,
-      required this.amountForStore});
+      required this.amountForStore,
+      required this.paymentsToClient});
   late CaptainAccountBalanceModel _data;
   CaptainAccountBalanceModel.withData(CaptainAccountBalanceResponse response) {
     var element = response.data;
@@ -70,7 +72,8 @@ class CaptainAccountBalanceModel extends DataModel {
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
-          amountForStore: element?.amountForStore ?? 0);
+          amountForStore: element?.amountForStore ?? 0,
+          paymentsToClient: getPayments());
     } else {
       _data = CaptainAccountBalanceModel(
         advancePayment: element?.advancePayment,
@@ -88,10 +91,16 @@ class CaptainAccountBalanceModel extends DataModel {
         monthCompensation: element?.monthCompensation,
         monthTargetSuccess: element?.monthTargetSuccess,
         amountForStore: element?.amountForStore ?? 0,
+        paymentsToClient: getPayments(),
       );
     }
   }
   CaptainAccountBalanceModel get data => _data;
+  List<PaymentModel> getPayments() {
+    List<PaymentModel> payments = [];
+
+    return payments;
+  }
 }
 
 class OrderCountsSystemDetails {
@@ -117,4 +126,16 @@ class OrderCountsSystemDetails {
     required this.countOfOrdersLeft,
     required this.message,
   });
+}
+
+class PaymentModel {
+  int id;
+  DateTime paymentDate;
+  num amount;
+  String? note;
+  PaymentModel(
+      {required this.id,
+      required this.paymentDate,
+      required this.amount,
+      this.note});
 }
