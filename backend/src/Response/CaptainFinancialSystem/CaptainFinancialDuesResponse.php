@@ -3,6 +3,7 @@
 namespace App\Response\CaptainFinancialSystem;
 
 use DateTime;
+use OpenApi\Annotations as OA;
 
 class CaptainFinancialDuesResponse
 {
@@ -20,7 +21,15 @@ class CaptainFinancialDuesResponse
 
     public DateTime $endDate;
     
+    /**
+     * @OA\Property(type="array", property="paymentsFromCompany",
+     *     @OA\Items(type="object"))
+     */
     public array $paymentsFromCompany;
     
+     /**
+     * @OA\Property(type="array", property="total",
+     *     @OA\Items(type="object"))
+     */
     public array $total;
 }

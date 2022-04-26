@@ -4,8 +4,8 @@ namespace App\Controller\Order;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Order\AnnouncementOrderCreateRequest;
-use App\Request\Order\AnnouncementOrderFilterBySupplierRequest;
+use App\Request\Order\BidOrderFilterBySupplierRequest;
+use App\Request\Order\BidOrderCreateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -138,87 +139,6 @@ class OrderController extends BaseController
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
         
-        return $this->response($result, self::CREATE);
-    }
-
-    /**
-     * store: create new announcement order by store
-     * @Route("announcementorder", name="createAnnouncementOrderByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Order")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="create new announcement order request",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="payment"),
-     *          @OA\Property(type="string", property="note"),
-     *          @OA\Property(type="integer", property="announcement")
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *      response=201,
-     *      description="Returns the new created announcement order",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *               @OA\Property(type="integer", property="id"),
-     *               @OA\Property(type="string", property="payment"),
-     *               @OA\Property(type="number", property="orderCost"),
-     *               @OA\Property(type="string", property="note"),
-     *               @OA\Property(type="object", property="deliveryDate"),
-     *               @OA\Property(type="string", property="state"),
-     *               @OA\Property(type="integer", property="orderType"),
-     *      )
-     *   )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return error.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9151"),
-     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
-     *        )
-     *     )
-     *
-     * @Security(name="Bearer")
-     */
-    public function createAnnouncementOrder(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $request = $this->autoMapping->map(stdClass::class, AnnouncementOrderCreateRequest::class, (object)$data);
-
-        $request->setStoreOwner($this->getUserId());
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->orderService->createAnnouncementOrder($request);
-
-        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
-        }
-
         return $this->response($result, self::CREATE);
     }
     
@@ -897,8 +817,93 @@ class OrderController extends BaseController
     }
 
     /**
-     * supplier: filter announcement orders.
-     * @Route("filterannouncementorders", name="filterAnnouncementOrdersBySupplier", methods={"POST"})
+     * store: Create new bid order
+     * @Route("bidorder", name="createBidOrderByStoreOwner", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="create a new bid order request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="orderCost"),
+     *          @OA\Property(type="string", property="title"),
+     *          @OA\Property(type="number", property="description"),
+     *          @OA\Property(type="string", property="supplierCategory"),
+     *          @OA\Property(type="string", property="images")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the new bid order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9151"),
+     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *        )
+     *     )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createBidOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, BidOrderCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->createBidOrder($request);
+
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * supplier: filter bid orders which the supplier had not provide a price offer for any one of them yet.
+     * @Route("filterbidordersbysupplier", name="filterBidOrdersBySupplier", methods={"POST"})
      * @IsGranted("ROLE_SUPPLIER")
      * @param Request $request
      * @return JsonResponse
@@ -912,51 +917,46 @@ class OrderController extends BaseController
      *      required=true
      * )
      *
-     * @OA\RequestBody (
-     *        description="filter announcement orders of a supplier request",
-     *        @OA\JsonContent(
-     *              @OA\Property(type="integer", property="priceOfferStatus"),
-     *              @OA\Property(type="string", property="fromDate"),
-     *              @OA\Property(type="string", property="toDate")
-     *         )
+     * @OA\RequestBody(
+     *      description="filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
      * )
      *
      * @OA\Response(
-     *      response=200,
-     *      description="Return orders that meet the filtering options",
+     *      response=201,
+     *      description="Returns the bid orders info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="string", property="storeOwnerName"),
-     *                  @OA\Property(type="integer", property="announcementOrderDetailsId"),
-     *                  @OA\Property(type="integer", property="announcementId")
-     *               )
-     *          )
+     *                  ref=@Model(type="App\Response\Order\BidOrderFilterBySupplierResponse")
+     *              )
      *      )
+     *   )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function filterAnnouncementOrdersBySupplier(Request $request): JsonResponse
+    public function filterBidOrdersBySupplier(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, AnnouncementOrderFilterBySupplierRequest::class, (object) $data);
+        $request = $this->autoMapping->map(stdClass::class, BidOrderFilterBySupplierRequest::class, (object)$data);
 
         $request->setSupplierId($this->getUserId());
 
-        $response = $this->orderService->filterAnnouncementOrdersBySupplier($request);
+        $result = $this->orderService->filterBidOrdersBySupplier($request);
 
-        return $this->response($response, self::FETCH);
+        return $this->response($result, self::FETCH);
     }
 
     /**
-     * Supplier: Get announcement order details.
-     * @Route("announcementorder/{id}", name="getSpecificAnnouncementOrderForSupplier", methods={"GET"})
+     * supplier: get bid order details by id for supplier
+     * @Route("orderbyidforsupplier/{id}", name="getOrderByIdForSupplier", methods={"GET"})
      * @IsGranted("ROLE_SUPPLIER")
      * @param int $id
      * @return JsonResponse
@@ -971,36 +971,77 @@ class OrderController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=200,
-     *      description="Returns the announcement order details",
+     *      response=201,
+     *      description="Returns the bid order details info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="payment"),
-     *                  @OA\Property(type="number", property="orderCost"),
-     *                  @OA\Property(type="string", property="note"),
-     *                  @OA\Property(type="object", property="deliveryDate"),
-     *                  @OA\Property(type="string", property="state"),
-     *                  @OA\Property(type="integer", property="orderType"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="storeOwnerName"),
-     *                  @OA\Property(type="integer", property="announcementOrderDetailsId"),
-     *                  @OA\Property(type="number", property="priceOfferValue"),
-     *                  @OA\Property(type="integer", property="priceOfferStatus"),
-     *                  @OA\Property(type="integer", property="announcementId"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="object", property="orderLogs")
-     *       )
-     *    )
+     *              ref=@Model(type="App\Response\Order\OrderByIdForSupplierGetResponse")
+     *          )
+     *      )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function getSpecificAnnouncementOrderByIdForSupplier(int $id): JsonResponse
+    public function getOrderByIdForSupplier(int $id): JsonResponse
     {
-        $result = $this->orderService->getSpecificAnnouncementOrderByIdForSupplier($id);
+        $result = $this->orderService->getOrderByIdForSupplier($id, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * supplier: filter bid orders which the supplier had provided a price offer for each one of them.
+     * @Route("filterbidorderswithpriceoffersbysupplier", name="filterBidOrdersWithPriceOffersBySupplier", methods={"POST"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="priceOfferStatus"),
+     *          @OA\Property(type="boolean", property="openToPriceOffer")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the bid orders info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\BidOrderFilterBySupplierResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterBidOrdersThatHavePriceOffersBySupplier(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, BidOrderFilterBySupplierRequest::class, (object)$data);
+
+        $request->setSupplierId($this->getUserId());
+
+        $result = $this->orderService->filterBidOrdersThatHavePriceOffersBySupplier($request);
 
         return $this->response($result, self::FETCH);
     }

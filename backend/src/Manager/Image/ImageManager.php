@@ -226,4 +226,9 @@ class ImageManager
 
         return $response;
     }
+
+    public function getAllBidOrderImages()
+    {
+        return $this->imageEntityRepository->getAllBidOrderImages();
+    }
 }
