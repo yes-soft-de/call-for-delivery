@@ -479,3 +479,12 @@ App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest:
             - NotBlank: ~
         deliveryCost:
             - NotBlank: ~
+
+App\Request\Admin\User\UserIdUpdateRequest:
+    properties:
+        currentUserId:
+            - NotBlank: ~
+        newUserId:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
