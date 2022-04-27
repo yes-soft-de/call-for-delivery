@@ -2,6 +2,8 @@
 
 namespace App\Response\Admin\SupplierProfile;
 
+use DateTime;
+
 class SupplierProfileStatusUpdateByAdminResponse
 {
     public int $id;
@@ -18,5 +20,5 @@ class SupplierProfileStatusUpdateByAdminResponse
      */
     public $status;
 
-    public object $createdAt;
+    public DateTime $createdAt;
 }

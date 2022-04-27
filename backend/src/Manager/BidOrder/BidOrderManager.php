@@ -62,32 +62,10 @@ class BidOrderManager
         $this->imageManager->createBidOrderImages($images, $bidOrderEntity);
     }
 
-//    // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-//    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
-//    {
-//        return $this->bidOrderEntityRepository->filterBidOrdersBySupplier($request);
-//    }
-
-//    // This function filter bid orders which have price offers made by the supplier (who request the filter).
-//    public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
-//    {
-//        return $this->bidOrderEntityRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
-//    }
-
-    public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
-    {
-        return $this->bidOrderEntityRepository->getLastPriceOfferByBidOrderId($bidOrderId);
-    }
-
     public function getBidOrderEntityByBidOrderId(int $id): ?BidOrderEntity
     {
         return $this->bidOrderEntityRepository->find($id);
     }
-
-//    public function getBidOrderByIdForSupplier(int $bidOrderId): ?BidOrderEntity
-//    {
-//        return $this->bidOrderEntityRepository->getBidOrderByIdForSupplier($bidOrderId);
-//    }
 
     public function updateBidOrderToBeClosedForPriceOffer(int $bidOrderId): ?BidOrderEntity
     {
