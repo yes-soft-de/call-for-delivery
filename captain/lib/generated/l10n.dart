@@ -1111,6 +1111,16 @@ class S {
   }
 
   /// `order`
+  String get orderWithoutDef {
+    return Intl.message(
+      'order',
+      name: 'orderWithoutDef',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order`
   String get sOrder {
     return Intl.message(
       'order',

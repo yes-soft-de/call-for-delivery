@@ -106,6 +106,7 @@
     "deliverTo": "Deliver To",
     "whatsappWithCaptain": "Captain",
     "order": "Order",
+    "orderWithoutDef": "order",
     "sOrder": "order",
     "home": "Home",
     "branch01": "Branch 01",

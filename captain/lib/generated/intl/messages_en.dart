@@ -642,6 +642,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can know your order status in this interface"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
+        "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),

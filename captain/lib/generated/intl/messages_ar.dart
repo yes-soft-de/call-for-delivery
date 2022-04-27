@@ -530,7 +530,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddressHint": MessageLookupByLibrary.simpleMessage("اكتب عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "myBalanceHint": MessageLookupByLibrary.simpleMessage(
-            "هنا نستعرض تفاصيل الحساب المالي الخاص بهذا المستخدم"),
+            "هنا نستعرض تفاصيل الورة المالية الخاص بهذا المستخدم"),
         "myLocation": MessageLookupByLibrary.simpleMessage("موقعي"),
         "myLocationDescribtion": MessageLookupByLibrary.simpleMessage(
             "اضغط على العلامة لتذهب لموقعك"),
@@ -592,7 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
-        "order": MessageLookupByLibrary.simpleMessage("الطلب "),
+        "order": MessageLookupByLibrary.simpleMessage("الطلب"),
         "orderAverage": MessageLookupByLibrary.simpleMessage(
             "بالمئة من عدد الطلبيات المسموحة"),
         "orderAverage35": MessageLookupByLibrary.simpleMessage(
@@ -635,6 +635,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
         "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
+        "orderWithoutDef": MessageLookupByLibrary.simpleMessage("طلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
