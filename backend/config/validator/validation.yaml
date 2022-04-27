@@ -331,8 +331,6 @@ App\Request\Supplier\SupplierProfileUpdateRequest:
     properties:
         supplierName:
             - NotBlank: ~
-        supplierCategory:
-            - NotBlank: ~
 
 App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest:
     properties:
