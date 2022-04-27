@@ -90,4 +90,18 @@ class ImageController extends BaseController
 
         return $this->response($response, self::FETCH);
     }
+
+    /**
+     * @Route("deleteimagebyid/{id}", name="deleteImageById", methods={"DELETE"})
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Image Test")
+     */
+    public function deleteImageById(int $id): JsonResponse
+    {
+        $response = $this->imageService->deleteImageById($id);
+
+        return $this->response($response, self::DELETE);
+    }
 }
