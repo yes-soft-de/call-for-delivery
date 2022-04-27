@@ -231,4 +231,22 @@ class ImageManager
     {
         return $this->imageEntityRepository->getAllBidOrderImages();
     }
+
+    public function getAllImages(): array
+    {
+        return $this->imageEntityRepository->findAll();
+    }
+
+    public function deleteImageById(int $id): ?ImageEntity
+    {
+        $image = $this->imageEntityRepository->find($id);
+        //dd($image);
+        if ($image) {
+            $this->entityManager->remove($image);
+
+            $this->entityManager->flush();
+        }
+
+        return $image;
+    }
 }

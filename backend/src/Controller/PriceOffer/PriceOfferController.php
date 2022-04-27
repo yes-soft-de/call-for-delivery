@@ -241,4 +241,31 @@ class PriceOfferController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * @Route("deleteallpricesoffers", name="deleteAllPricesOffers", methods={"DELETE"})
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Price Offer")
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated successfully message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\PriceOffer\PriceOfferDeleteResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteAllPricesOffers(): JsonResponse
+    {
+        $response = $this->priceOfferService->deleteAllPricesOffers();
+
+        return $this->response($response, self::DELETE);
+    }
 }
