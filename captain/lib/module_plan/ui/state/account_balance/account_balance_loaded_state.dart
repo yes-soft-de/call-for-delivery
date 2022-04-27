@@ -129,7 +129,7 @@ class AccountBalanceStateLoaded extends States {
       direction: Axis.vertical,
       children: [
         countOrderDetails(context),
-        CustomTile(FontAwesomeIcons.boxes, S.current.countOrders, null,
+        CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersCompleted, null,
             stringValue: balance?.countOrders?.toString()),
         CustomTile(
             FontAwesomeIcons.road, S.current.countOrdersMaxFromNineteen, null,
@@ -137,7 +137,7 @@ class AccountBalanceStateLoaded extends States {
         CustomTile(FontAwesomeIcons.road, S.current.compensationForEveryOrder,
             balance?.compensationForEveryOrder),
         CustomTile(
-            FontAwesomeIcons.moneyBill, S.current.total, balance?.salary),
+            FontAwesomeIcons.moneyBill, S.current.salary, balance?.salary),
         CustomTile(FontAwesomeIcons.coins, S.current.financialDues,
             balance?.financialDues),
         CustomTile(Icons.payments, S.current.sumPayments, balance?.sumPayments),
@@ -155,9 +155,9 @@ class AccountBalanceStateLoaded extends States {
             balance?.countOrdersCompleted),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
             balance?.amountForStore ?? 0),
-        CustomTile(
-            FontAwesomeIcons.calendar, S.current.dateFinancialCycleEnds, null,
-            stringValue: balance?.dateFinancialCycleEnds),
+        // CustomTile(
+        //     FontAwesomeIcons.calendar, S.current.dateFinancialCycleEnds, null,
+        //     stringValue: balance?.dateFinancialCycleEnds),
         const Padding(
           padding: EdgeInsets.only(right: 16.0, left: 16),
           child: Divider(

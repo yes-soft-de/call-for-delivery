@@ -73,6 +73,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: active ? Colors.white : null),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0)
@@ -84,12 +86,6 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                         dashRadius: 25,
                       ),
                     ),
-                    horizontalsTile(S.current.bounceCountOrdersInMonth,
-                        FixedNumber.getFixedNumber(bounceCountOrdersInMonth)),
-                    horizontalsTile(
-                        S.current.amount,
-                        FixedNumber.getFixedNumber(amount) +
-                            ' ${S.current.sar}'),
                     horizontalsTile(
                         S.current.countKilometersFrom,
                         FixedNumber.getFixedNumber(countKilometersFrom) +
@@ -99,19 +95,29 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                         FixedNumber.getFixedNumber(countKilometersTo) +
                             ' ${S.current.km}'),
                     horizontalsTile(
+                        S.current.amount,
+                        FixedNumber.getFixedNumber(amount) +
+                            ' ${S.current.sar}'),
+                    horizontalsTile(
+                        S.current.bounceCountOrdersInMonth,
+                        FixedNumber.getFixedNumber(bounceCountOrdersInMonth) +
+                            ' ${S.current.order.substring(2)}'),
+                    horizontalsTile(
                         S.current.bounce,
                         FixedNumber.getFixedNumber(bounce) +
                             ' ${S.current.sar}'),
-                    horizontalsTile(S.current.captainTotalCategory,
-                        FixedNumber.getFixedNumber(captainTotalCategory)),
                     horizontalsTile(
                         S.current.contOrderCompleted,
                         FixedNumber.getFixedNumber(contOrderCompleted) +
-                            ' ${S.current.order}'),
+                            ' ${S.current.order.substring(2)}'),
                     horizontalsTile(
                         S.current.countOfOrdersLeft,
                         FixedNumber.getFixedNumber(countOfOrdersLeft) +
-                            ' ${S.current.order}'),
+                            ' ${S.current.order.substring(2)}'),
+                    horizontalsTile(
+                        S.current.captainTotalCategory,
+                        FixedNumber.getFixedNumber(captainTotalCategory) +
+                            ' ${S.current.sar}'),
                   ],
                 ),
               ),
@@ -147,7 +153,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
               title,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: active ? Colors.white : null),
+                  color: active ? Colors.white : null,
+                  fontSize: 14),
             ),
           ),
           const SizedBox(
