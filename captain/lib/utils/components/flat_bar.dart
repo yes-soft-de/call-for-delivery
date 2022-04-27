@@ -117,6 +117,8 @@ class _FilterBarState extends State<FilterBar> {
     if (myLocalChanges != Localizations.localeOf(context).languageCode) {
       myLocalChanges = Localizations.localeOf(context).languageCode;
       _reset();
+    } else if (curserNotInPlace()) {
+      _reset();
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -231,6 +233,17 @@ class _FilterBarState extends State<FilterBar> {
   }
 
   List<Size> itemSize = [];
+  bool curserNotInPlace() {
+    RenderBox render = _keys[widget.currentIndex]
+        .currentContext
+        ?.findRenderObject() as RenderBox;
+    var correctOffset = render.localToGlobal(Offset.fromDirection(1, -16));
+    correctOffset = Offset(correctOffset.dx, correctOffset.dx);
+    if (correctOffset == initialOffset) {
+      return false;
+    }
+    return true;
+  }
 }
 
 class FilterItem {
