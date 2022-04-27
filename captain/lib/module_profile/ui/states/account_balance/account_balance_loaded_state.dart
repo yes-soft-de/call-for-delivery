@@ -68,21 +68,24 @@ class AccountBalanceLoaded extends States {
                     const SizedBox(
                       width: 16,
                     ),
-                    IconButton(
-                        splashRadius: 15,
-                        onPressed: () {
-                          showDialog(
-                              context: screenState.context,
-                              builder: (context) {
-                                return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    content: S
-                                        .current.areYouSureToDeleteThisPayment);
-                              });
-                        },
-                        icon: const Icon(Icons.delete)),
+                    Visibility(
+                      visible: false,
+                      child: IconButton(
+                          splashRadius: 15,
+                          onPressed: () {
+                            showDialog(
+                                context: screenState.context,
+                                builder: (context) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      content: S
+                                          .current.areYouSureToDeleteThisPayment);
+                                });
+                          },
+                          icon: const Icon(Icons.delete)),
+                    ),
                   ],
                 ),
               ),
