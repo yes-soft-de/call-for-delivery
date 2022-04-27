@@ -85,4 +85,21 @@ class ImageService implements ImageServiceInterface
     {
         return $this->imageManager->getOneImageByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
     }
+
+    public function getAllImages(): array
+    {
+        $response = [];
+
+        $images = $this->imageManager->getAllImages();
+
+        foreach ($images as $key=>$value) {
+            $response[$key][] = $this->autoMapping->map(ImageEntity::class, ImageGetResponse::class, $value);
+
+            if ($value->getBidDetails()) {
+                $response[$key]['bidDetailsId'] = $value->getBidDetails()->getId();
+            }
+        }
+
+        return $response;
+    }
 }

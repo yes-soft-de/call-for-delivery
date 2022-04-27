@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
  * @Route("v1/image/")
@@ -59,6 +60,33 @@ class ImageController extends BaseController
     public function getImagesByItemIdAndEntityTypeAndImageAim(int $itemId, int $entityType, int $usedAs): JsonResponse
     {
         $response = $this->imageService->getImagesByItemIdAndEntityTypeAndImageAim($itemId, $entityType, $usedAs);
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * @Route("fetchallimages", name="getAllImages", methods={"GET"})
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Image Test")
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns the images info which meet the passed parameters",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Image\ImageGetResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function getAllImages(): JsonResponse
+    {
+        $response = $this->imageService->getAllImages();
 
         return $this->response($response, self::FETCH);
     }
