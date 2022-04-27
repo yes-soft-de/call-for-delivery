@@ -101,7 +101,7 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                     horizontalsTile(
                         S.current.bounceCountOrdersInMonth,
                         FixedNumber.getFixedNumber(bounceCountOrdersInMonth) +
-                            ' ${S.current.order.substring(2)}'),
+                            ' ${S.current.orderWithoutDef}'),
                     horizontalsTile(
                         S.current.bounce,
                         FixedNumber.getFixedNumber(bounce) +
@@ -109,11 +109,11 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                     horizontalsTile(
                         S.current.contOrderCompleted,
                         FixedNumber.getFixedNumber(contOrderCompleted) +
-                            ' ${S.current.order.substring(2)}'),
+                            ' ${S.current.orderWithoutDef}'),
                     horizontalsTile(
                         S.current.countOfOrdersLeft,
                         FixedNumber.getFixedNumber(countOfOrdersLeft) +
-                            ' ${S.current.order.substring(2)}'),
+                            ' ${S.current.orderWithoutDef}'),
                     horizontalsTile(
                         S.current.captainTotalCategory,
                         FixedNumber.getFixedNumber(captainTotalCategory) +

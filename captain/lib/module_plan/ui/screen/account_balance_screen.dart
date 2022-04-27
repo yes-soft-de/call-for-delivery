@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/state_manager/account_balance_state_manager.dart';
 import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -49,6 +50,15 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.myBalance,
+          actions: [
+            Visibility(
+              visible: false,
+              child: CustomC4dAppBar.actionIcon(context, onTap: () {
+                Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE,
+                    arguments: S.current.updateProfile);
+              }, icon: Icons.balance_rounded),
+            )
+          ],
           bottom: PreferredSize(
               child: FilterBar(
                 cursorRadius: BorderRadius.circular(25),
