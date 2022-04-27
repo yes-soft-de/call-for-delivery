@@ -70,11 +70,7 @@ class AdminSupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code", example="204"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="boolean", property="status")
+     *              ref=@Model(type="App\Response\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminResponse")
      *          )
      *      )
      * )
@@ -188,7 +184,6 @@ class AdminSupplierProfileController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
      *          @OA\Property(type="string", property="supplierName"),
-     *          @OA\Property(type="integer", property="supplierCategory"),
      *          @OA\Property(type="string", property="phone"),
      *          @OA\Property(type="array", property="images",
      *              @OA\Items(
@@ -214,11 +209,7 @@ class AdminSupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code", example="204"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="boolean", property="status")
+     *              ref=@Model(type="App\Response\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminResponse")
      *          )
      *      )
      * )

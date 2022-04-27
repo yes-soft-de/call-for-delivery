@@ -2,6 +2,8 @@
 
 namespace App\Response\Supplier;
 
+use DateTime;
+
 class SupplierProfileUpdateResponse
 {
     /**
@@ -20,7 +22,7 @@ class SupplierProfileUpdateResponse
     public $phone;
 
     /**
-     * @var object|null
+     * @var DateTime|null
      */
     public $createdAt;
 }

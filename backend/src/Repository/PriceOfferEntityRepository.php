@@ -19,13 +19,13 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, PriceOfferEntity::class);
     }
 
-    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array
     {
         return $this->createQueryBuilder('priceOfferEntity')
             ->select('priceOfferEntity.id', 'priceOfferEntity.createdAt', 'priceOfferEntity.updatedAt', 'priceOfferEntity.priceOfferValue', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.offerDeadline')
 
-            ->andWhere('priceOfferEntity.bidOrder = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
+            ->andWhere('priceOfferEntity.bidDetails = :bidDetails')
+            ->setParameter('bidDetails', $bidDetailsId)
 
             ->orderBy('priceOfferEntity.id', 'DESC')
 
@@ -33,12 +33,12 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getAllPricesOffersOfBidOrderExceptedOne(int $bidOrderId, int $exceptedPriceOfferId): array
+    public function getAllPricesOffersOfBidOrderExceptedOne(int $bidDetails, int $exceptedPriceOfferId): array
     {
         return $this->createQueryBuilder('priceOfferEntity')
 
-            ->andWhere('priceOfferEntity.bidOrder = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
+            ->andWhere('priceOfferEntity.bidDetails = :bidDetails')
+            ->setParameter('bidDetails', $bidDetails)
 
             ->andWhere('priceOfferEntity.id != :priceOfferId')
             ->setParameter('priceOfferId', $exceptedPriceOfferId)

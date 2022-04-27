@@ -3,7 +3,6 @@
 namespace App\Manager\Supplier;
 
 use App\AutoMapping;
-use App\Constant\Captain\CaptainConstant;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
@@ -102,7 +101,7 @@ class SupplierProfileManager
         } else {
             $request->setUser($supplierProfileEntity->getUser());
 
-            $request->setSupplierCategory($this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
+            //$request->setSupplierCategory($this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
 
             if ($request->getAllSupplierCategories()) {
                 $request->setSupplierCategories($this->supplierCategoryManager->getAllActiveSupplierCategoriesIDs());

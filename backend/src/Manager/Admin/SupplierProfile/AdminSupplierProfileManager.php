@@ -60,8 +60,6 @@ class AdminSupplierProfileManager
             return SupplierProfileConstant::SUPPLIER_PROFILE_NOT_EXIST;
         }
 
-        $request->setSupplierCategory($this->adminSupplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory()));
-
         if ($request->getAllSupplierCategories()) {
             $request->setSupplierCategories($this->adminSupplierCategoryManager->getAllActiveSupplierCategoriesIDs());
         }

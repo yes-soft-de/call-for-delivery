@@ -44,8 +44,8 @@ class ImageEntity
     #[ORM\ManyToOne(targetEntity: AnnouncementEntity::class, inversedBy: 'images')]
     private $announcement;
 
-    #[ORM\ManyToOne(targetEntity: BidOrderEntity::class, inversedBy: 'images')]
-    private $bidOrder;
+    #[ORM\ManyToOne(targetEntity: BidDetailsEntity::class, inversedBy: 'images')]
+    private $bidDetails;
 
     public function getId(): ?int
     {
@@ -160,14 +160,14 @@ class ImageEntity
         return $this;
     }
 
-    public function getBidOrder(): ?BidOrderEntity
+    public function getBidDetails(): ?BidDetailsEntity
     {
-        return $this->bidOrder;
+        return $this->bidDetails;
     }
 
-    public function setBidOrder(?BidOrderEntity $bidOrder): self
+    public function setBidDetails(?BidDetailsEntity $bidDetails): self
     {
-        $this->bidOrder = $bidOrder;
+        $this->bidDetails = $bidDetails;
 
         return $this;
     }

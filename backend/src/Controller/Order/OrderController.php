@@ -5,7 +5,7 @@ namespace App\Controller\Order;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
-use App\Request\Order\BidOrderCreateRequest;
+use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -880,7 +880,7 @@ class OrderController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, BidOrderCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, BidDetailsCreateRequest::class, (object)$data);
 
         $request->setStoreOwner($this->getUserId());
 

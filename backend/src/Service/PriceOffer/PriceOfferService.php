@@ -26,11 +26,11 @@ class PriceOfferService
         $this->priceOfferManager->createPriceOffer($request);
     }
 
-    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array
     {
         $response = [];
 
-        $priceOffers = $this->priceOfferManager->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
+        $priceOffers = $this->priceOfferManager->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
 
         foreach ($priceOffers as $priceOffer) {
             $response[] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $priceOffer);

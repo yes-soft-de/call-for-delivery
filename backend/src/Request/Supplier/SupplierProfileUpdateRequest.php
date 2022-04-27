@@ -11,8 +11,6 @@ class SupplierProfileUpdateRequest
 
     private string $supplierName;
 
-    private int|SupplierCategoryEntity $supplierCategory;
-
     /**
      * @var string|null
      */
@@ -68,16 +66,6 @@ class SupplierProfileUpdateRequest
     public function setUser(UserEntity|int $user): void
     {
         $this->user = $user;
-    }
-
-    public function getSupplierCategory(): int|SupplierCategoryEntity
-    {
-        return $this->supplierCategory;
-    }
-
-    public function setSupplierCategory(int|SupplierCategoryEntity $supplierCategory): void
-    {
-        $this->supplierCategory = $supplierCategory;
     }
 
     public function setImages(?array $images): void

@@ -24,12 +24,8 @@ class SupplierCategoryEntity
     #[ORM\Column(type: 'boolean')]
     private $status = false;
 
-    #[ORM\OneToMany(mappedBy: 'supplierCategory', targetEntity: SupplierProfileEntity::class)]
-    private $supplierProfileEntities;
-
     public function __construct()
     {
-        $this->supplierProfileEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,36 +65,6 @@ class SupplierCategoryEntity
     public function setStatus(bool $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SupplierProfileEntity[]
-     */
-    public function getSupplierProfileEntities(): Collection
-    {
-        return $this->supplierProfileEntities;
-    }
-
-    public function addSupplierProfileEntity(SupplierProfileEntity $supplierProfileEntity): self
-    {
-        if (!$this->supplierProfileEntities->contains($supplierProfileEntity)) {
-            $this->supplierProfileEntities[] = $supplierProfileEntity;
-            $supplierProfileEntity->setSupplierCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSupplierProfileEntity(SupplierProfileEntity $supplierProfileEntity): self
-    {
-        if ($this->supplierProfileEntities->removeElement($supplierProfileEntity)) {
-            // set the owning side to null (unless already changed)
-            if ($supplierProfileEntity->getSupplierCategory() === $this) {
-                $supplierProfileEntity->setSupplierCategory(null);
-            }
-        }
 
         return $this;
     }

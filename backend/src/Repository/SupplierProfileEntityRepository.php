@@ -42,7 +42,6 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
             ->select('supplierProfileEntity.id', 'supplierProfileEntity.phone', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.completeAccountStatus', 'supplierProfileEntity.createdAt',
                 'supplierProfileEntity.status', 'supplierProfileEntity.location', 'supplierProfileEntity.bankName', 'supplierProfileEntity.bankAccountNumber', 'supplierProfileEntity.stcPay', 'supplierProfileEntity.supplierCategories')
             ->addSelect('chatRoomEntity.roomId')
-            ->addSelect('supplierCategoryEntity.id as supplierCategoryId', 'supplierCategoryEntity.name as supplierCategoryName')
 
             ->andWhere('supplierProfileEntity.user = :userEntity')
             ->setParameter('userEntity', $userId)
@@ -52,13 +51,6 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
                 'chatRoomEntity',
                 Join::WITH,
                 'chatRoomEntity.userId = supplierProfileEntity.user'
-            )
-
-            ->leftJoin(
-                SupplierCategoryEntity::class,
-                'supplierCategoryEntity',
-                Join::WITH,
-                'supplierCategoryEntity.id = supplierProfileEntity.supplierCategory'
             )
 
             ->getQuery()
