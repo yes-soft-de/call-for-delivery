@@ -110,7 +110,7 @@ class CaptainsRepository {
    /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
   Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_ACCOUNT_BALANCE+'/id',
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_ACCOUNT_BALANCE+'/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainAccountBalanceResponse.fromJson(response);

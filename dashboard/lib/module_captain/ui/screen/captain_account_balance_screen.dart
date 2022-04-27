@@ -14,7 +14,8 @@ class CaptainAccountBalanceScreen extends StatefulWidget {
   State<StatefulWidget> createState() => CaptainAccountBalanceScreenState();
 }
 
-class CaptainAccountBalanceScreenState extends State<CaptainAccountBalanceScreen> {
+class CaptainAccountBalanceScreenState
+    extends State<CaptainAccountBalanceScreen> {
   States? _currentState;
   String? selectedPlan;
   @override
@@ -44,6 +45,8 @@ class CaptainAccountBalanceScreenState extends State<CaptainAccountBalanceScreen
     if (args != null && flage) {
       if (args is int) {
         captainID = args;
+        flage = false;
+        widget._manager.getAccountBalance(this, captainID);
       }
     }
     return Scaffold(
