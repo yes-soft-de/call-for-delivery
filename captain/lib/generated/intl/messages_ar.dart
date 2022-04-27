@@ -69,7 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allcity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
-        "amount": MessageLookupByLibrary.simpleMessage("الراتب"),
+        "amount":
+            MessageLookupByLibrary.simpleMessage("سعرالطلب ضمن المدى المحدد"),
         "amountForStore":
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
@@ -103,7 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
         "bounce": MessageLookupByLibrary.simpleMessage("المكافأة"),
         "bounceCountOrdersInMonth":
-            MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
+            MessageLookupByLibrary.simpleMessage("مكافأة شهرية عند توصيل"),
         "bounceMaxCountOrdersInMonth":
             MessageLookupByLibrary.simpleMessage("حد التعويض الأعلى"),
         "bounceMinCountOrdersInMonth":
@@ -161,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStateActive": MessageLookupByLibrary.simpleMessage("نشط"),
         "captainStateInactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
         "captainTotalCategory":
-            MessageLookupByLibrary.simpleMessage("عدد المراحل المحققة"),
+            MessageLookupByLibrary.simpleMessage("المستحقات ضمن هذه الفئة"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),
@@ -279,8 +280,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الطلبات في الشهر"),
         "countOrdersMaxFromNineteen":
             MessageLookupByLibrary.simpleMessage("الطلبات التي تجاوزت ١٩ كم"),
-        "countOverOrdersThanRequired":
-            MessageLookupByLibrary.simpleMessage("عدد الطلبات الإضافية"),
+        "countOverOrdersThanRequired": MessageLookupByLibrary.simpleMessage(
+            "عدد الطلبات الإضافية المنجزة"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
