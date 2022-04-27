@@ -105,14 +105,14 @@ class CaptainAccountBalanceModel extends DataModel {
 
 class OrderCountsSystemDetails {
   String categoryName;
-  int countKilometersFrom;
-  int countKilometersTo;
-  double amount;
-  double bounce;
-  int bounceCountOrdersInMonth;
-  int captainTotalCategory;
-  int contOrderCompleted;
-  int countOfOrdersLeft;
+  num countKilometersFrom;
+  num countKilometersTo;
+  num amount;
+  num bounce;
+  num bounceCountOrdersInMonth;
+  num captainTotalCategory;
+  num contOrderCompleted;
+  num countOfOrdersLeft;
   String message;
   OrderCountsSystemDetails({
     required this.categoryName,
