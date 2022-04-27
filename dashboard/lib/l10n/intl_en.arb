@@ -595,7 +595,15 @@
     "total": "Total",
     "captainTotalCategory": "Captain total category",
     "contOrderCompleted": "Count orders completed",
-    "countOfOrdersLeft": "Count orders left"
+    "countOfOrdersLeft": "Count orders left",
+    "updateDate": "Update date",
+    "inactivePlan": "Inactive plan",
+    "updatedBy": "Updated by",
+    "refuse": "Refuse",
+    "FinanceRequest": "Finance request",
+    "activatedPlan": "Activated plan"
+
+
 
 
 

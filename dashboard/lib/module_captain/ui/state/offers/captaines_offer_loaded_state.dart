@@ -14,7 +14,7 @@ class CaptainOffersLoadedState extends States {
   final CaptainOffersScreenState screenState;
   final String? error;
   final bool empty;
-  final List<CaptainsOffersModel>? model;
+  List<CaptainsOffersModel>? model;
 
   CaptainOffersLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
@@ -101,6 +101,8 @@ class CaptainOffersLoadedState extends States {
                 });
           },
           onEnable: (status) {
+            element.status = status;
+            screenState.refresh();
             screenState.enableCaptainOffer(
                 EnableOfferRequest(id: element.id, status: status), false);
           },

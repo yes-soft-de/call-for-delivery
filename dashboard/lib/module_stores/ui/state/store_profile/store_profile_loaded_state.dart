@@ -76,6 +76,7 @@ class StoreProfileLoadedState extends States {
                     ActiveStoreRequest(id: profile!.id, status: 'inactive'),
                     false);
               }
+              screenState.refresh();
             }),
       ),
       CustomListTile(

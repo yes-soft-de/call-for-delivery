@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
             "Here we are showing your balance status"),
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "FinanceRequest":
+            MessageLookupByLibrary.simpleMessage("Finance request"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
@@ -41,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
         "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
+        "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
@@ -387,6 +390,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("inActive Supplier"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
+        "inactivePlan": MessageLookupByLibrary.simpleMessage("Inactive plan"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "We will send a verification code to your number"),
@@ -650,6 +654,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
+        "refuse": MessageLookupByLibrary.simpleMessage("Refuse"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registerHint":
             MessageLookupByLibrary.simpleMessage("username or phone number"),
@@ -815,6 +820,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateDate": MessageLookupByLibrary.simpleMessage("Update date"),
         "updateOfferSuccessfully":
             MessageLookupByLibrary.simpleMessage("offer updated successfully"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
@@ -828,6 +834,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment updated successfully"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
+        "updatedBy": MessageLookupByLibrary.simpleMessage("Updated by"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
         "uploadImageIfyouHave":

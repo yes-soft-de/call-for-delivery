@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
@@ -21,6 +22,7 @@ class ProfileModel extends DataModel {
   num? salary;
   num? bounce;
   String? createDate;
+  OrderCountsSystemDetails? captainFinance;
   ProfileModel(
       {required this.id,
       this.image,
@@ -38,12 +40,14 @@ class ProfileModel extends DataModel {
       this.status,
       this.bounce,
       this.salary,
-      this.createDate});
+      this.createDate,
+      this.captainFinance});
 
   ProfileModel? _models;
 
   ProfileModel.withData(Data data) : super.withData() {
     _models = ProfileModel(
+        captainFinance: getOrderCounts(data.financialSystemCaptainDetails),
         id: data.id ?? -1,
         image: data.image?.image,
         name: data.captainName,
@@ -68,4 +72,60 @@ class ProfileModel extends DataModel {
   }
 
   ProfileModel get data => _models ?? ProfileModel(id: -1);
+  OrderCountsSystemDetails getOrderCounts(
+      FinancialSystemCaptainDetails? finance) {
+    return OrderCountsSystemDetails(
+        captainFinancialSystemType: finance?.captainFinancialSystemType,
+        compensationForEveryOrder: finance?.compensationForEveryOrder,
+        countHours: finance?.countHours,
+        createDate: DateFormat.jm()
+                .format(DateHelper.convert(finance?.createDate?.timestamp)) +
+            '   ' +
+            DateFormat.yMd()
+                .format(DateHelper.convert(finance?.createDate?.timestamp)),
+        id: finance?.id,
+        salary: finance?.salary,
+        status: finance?.status,
+        updateDate: DateFormat.jm()
+                .format(DateHelper.convert(finance?.updateDate?.timestamp)) +
+            '   ' +
+            DateFormat.yMd()
+                .format(DateHelper.convert(finance?.updateDate?.timestamp)),
+        updatedBy: finance?.updatedBy,
+        bounceMaxCountOrdersInMonth: finance?.bounceMaxCountOrdersInMonth,
+        bounceMinCountOrdersInMonth: finance?.bounceMinCountOrdersInMonth,
+        countOrdersInMonth: finance?.countOrdersInMonth,
+        monthCompensation: finance?.monthCompensation);
+  }
+}
+
+class OrderCountsSystemDetails {
+  int? id;
+  String? createDate;
+  String? updateDate;
+  int? captainFinancialSystemType;
+  bool? status;
+  String? updatedBy;
+  num? countHours;
+  num? compensationForEveryOrder;
+  num? salary;
+  num? countOrdersInMonth;
+  num? monthCompensation;
+  num? bounceMaxCountOrdersInMonth;
+  num? bounceMinCountOrdersInMonth;
+  OrderCountsSystemDetails({
+    required this.id,
+    required this.createDate,
+    required this.updateDate,
+    required this.captainFinancialSystemType,
+    required this.status,
+    required this.updatedBy,
+    required this.countHours,
+    required this.compensationForEveryOrder,
+    required this.salary,
+    required this.bounceMaxCountOrdersInMonth,
+    required this.bounceMinCountOrdersInMonth,
+    required this.monthCompensation,
+    required this.countOrdersInMonth,
+  });
 }

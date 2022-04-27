@@ -51,7 +51,7 @@ class CaptainFinanceByCountOrderScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).financeCountOrder, icon: Icons.menu, onTap: () {
+          title: S.of(context).financeByOrders, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

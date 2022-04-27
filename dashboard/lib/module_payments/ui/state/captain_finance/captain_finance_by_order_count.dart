@@ -48,72 +48,97 @@ class CaptainFinanceByOrderCountLoadedState extends States {
     var context = screenState.context;
     model?.forEach((element) {
       widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 5,
-                spreadRadius: 1,
-                color: Theme.of(context).backgroundColor,
-                offset: Offset(-1, 0),
-              )
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: IconButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return FinanceByOrderCountForm(
-                              request: element,
-                              onSave: (request) {
-                                request.id = element.id;
-                                screenState.stateManager
-                                    .updateFinance(screenState, request);
-                              },
-                            );
-                          });
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: Theme.of(context).colorScheme.primary,
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        color: Theme.of(context).backgroundColor,
+                        offset: Offset(-1, 0),
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        horizontalsTile(
+                            S.current.countOrdersInMonth,
+                            FixedNumber.getFixedNumber(
+                                element.countOrdersInMonth)),
+                        horizontalsTile(
+                            S.current.salary,
+                            FixedNumber.getFixedNumber(element.salary) +
+                                ' ${S.current.sar}'),
+                        horizontalsTile(
+                            S.current.bounceMinCountOrdersInMonth,
+                            FixedNumber.getFixedNumber(
+                                    element.bounceMinCountOrdersInMonth) +
+                                ' ${S.current.sar}'),
+                        horizontalsTile(
+                            S.current.bounceMaxCountOrdersInMonth,
+                            FixedNumber.getFixedNumber(
+                                    element.bounceMaxCountOrdersInMonth) +
+                                ' ${S.current.sar}'),
+                        horizontalsTile(
+                            S.current.monthCompensation,
+                            FixedNumber.getFixedNumber(
+                                    element.monthCompensation) +
+                                ' ${S.current.sar}'),
+                      ],
                     ),
                   ),
                 ),
-                horizontalsTile(S.current.countOrdersInMonth,
-                    FixedNumber.getFixedNumber(element.countOrdersInMonth)),
-                horizontalsTile(
-                    S.current.salary,
-                    FixedNumber.getFixedNumber(element.salary) +
-                        ' ${S.current.sar}'),
-                horizontalsTile(
-                    S.current.bounceMinCountOrdersInMonth,
-                    FixedNumber.getFixedNumber(
-                            element.bounceMinCountOrdersInMonth) +
-                        ' ${S.current.sar}'),
-                horizontalsTile(
-                    S.current.bounceMaxCountOrdersInMonth,
-                    FixedNumber.getFixedNumber(
-                            element.bounceMaxCountOrdersInMonth) +
-                        ' ${S.current.sar}'),
-                horizontalsTile(
-                    S.current.monthCompensation,
-                    FixedNumber.getFixedNumber(element.monthCompensation) +
-                        ' ${S.current.sar}'),
-              ],
-            ),
-          ),
-        ),
-      ));
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5,
+                          spreadRadius: 1,
+                          color: Theme.of(context).backgroundColor,
+                          offset: Offset(-1, 0),
+                        )
+                      ],
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FinanceByOrderCountForm(
+                                request: element,
+                                onSave: (request) {
+                                  request.id = element.id;
+                                  screenState.stateManager
+                                      .updateFinance(screenState, request);
+                                },
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )));
     });
     widgets.add(SizedBox(
       height: 75,
@@ -127,7 +152,7 @@ class CaptainFinanceByOrderCountLoadedState extends States {
       child: Row(
         children: [
           SizedBox(
-            width: 200,
+            width: 190,
             child: Text(
               title,
               style: TextStyle(fontWeight: FontWeight.bold),

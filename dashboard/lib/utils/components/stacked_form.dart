@@ -10,7 +10,7 @@ class StackedForm extends StatelessWidget {
       {required this.child,
       required this.label,
       required this.onTap,
-      this.visible = false});
+      this.visible = true});
 
   @override
   Widget build(BuildContext context) {

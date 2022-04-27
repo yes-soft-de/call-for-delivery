@@ -1,6 +1,6 @@
 class EnableCaptainRequest {
   int? id;
-  String? status;
+  dynamic status;
 
   EnableCaptainRequest({this.id, this.status});
 

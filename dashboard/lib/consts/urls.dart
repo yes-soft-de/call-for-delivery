@@ -164,6 +164,9 @@ class Urls {
   static const GET_CAPTAIN_ACCOUNT_BALANCE =
       BASE_CAPTAIN_ACCOUNT_BALANCE +
           '/captainbalancedetailforcaptainspecific';
+          static const UPDATE_CAPTAIN_FINANCE_PLAN =
+      BASE_CAPTAIN_ACCOUNT_BALANCE +
+          '/captainfinancialsystemdetailstatus';
 
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =

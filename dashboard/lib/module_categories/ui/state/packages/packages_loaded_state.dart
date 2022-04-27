@@ -16,7 +16,7 @@ import 'package:c4d/utils/components/fixed_container.dart';
 class PackagesLoadedState extends States {
   final PackagesScreenState screenState;
   final List<PackagesCategoryModel>? categories;
-  final List<PackagesModel>? packages;
+  List<PackagesModel>? packages;
   final String? error;
   final bool empty;
 
@@ -153,6 +153,8 @@ class PackagesLoadedState extends States {
               });
         },
         enablePackage: (status) {
+          element.status = status;
+          screenState.refresh();
           screenState.enablePackage(
               ActivePackageRequest(status: status, id: element.id), false);
         },
