@@ -9,7 +9,7 @@ class OrderByIdForSupplierGetResponse
 {
     public int $id;
 
-    public int $bidOrderId;
+    public int $bidDetailsId;
 
     public string $state;
 
@@ -41,10 +41,10 @@ class OrderByIdForSupplierGetResponse
     public $updatedAt;
 
     /**
-     * @OA\Property(type="array", property="bidOrderImages",
+     * @OA\Property(type="array", property="bidDetailsImages",
      *     @OA\Items(type="object"))
      */
-    public $bidOrderImages;
+    public $bidDetailsImages;
 
     /**
      * @var bool|null

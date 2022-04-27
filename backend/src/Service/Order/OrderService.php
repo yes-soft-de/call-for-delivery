@@ -7,7 +7,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
-use App\Request\Order\BidOrderCreateRequest;
+use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -114,7 +114,7 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
-    public function createBidOrder(BidOrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
+    public function createBidOrder(BidDetailsCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
     {
         $canCreateOrder = $this->subscriptionService->getStoreOwnerProfileStatus($request->getStoreOwner());
 
@@ -484,18 +484,18 @@ class OrderService
         return $response;
     }
 
-    public function getOrderByIdForSupplier(int $bidOrderId, int $supplierId): OrderByIdForSupplierGetResponse|array
+    public function getOrderByIdForSupplier(int $orderId, int $supplierId): OrderByIdForSupplierGetResponse|array
     {
         $response = [];
 
-        $bidOrder = $this->orderManager->getOrderByIdForSupplier($bidOrderId, $supplierId);
+        $bidOrder = $this->orderManager->getOrderByIdForSupplier($orderId, $supplierId);
 
-        if ($bidOrder) {//dd($bidOrder);
+        if ($bidOrder) {
             $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
 
             if ($response) {
                 // get each image of the order images as an object contain image URL, base URL, and full image URL
-                $response->bidOrderImages = $this->customizeBidOrderImages($response->bidOrderImages);
+                $response->bidDetailsImages = $this->customizeBidOrderImages($response->bidDetailsImages);
             }
         }
 
@@ -564,7 +564,7 @@ class OrderService
         if ($order) {
             $order['attention'] = $order['noteCaptainOrderCost'];
 
-            $order['bidOrderImages'] =  $this->customizeBidOrderImages($order['bidOrderImages']);
+            $order['bidDetailsImages'] =  $this->customizeBidOrderImages($order['bidDetailsImages']);
 
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();

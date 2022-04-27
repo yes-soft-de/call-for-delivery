@@ -9,7 +9,7 @@ class BidOrderForStoreOwnerGetResponse
 {
     public int $id;
 
-    public int $bidOrderId;
+    public int $bidDetailsId;
 
     /**
      * @var string|null
@@ -87,10 +87,10 @@ class BidOrderForStoreOwnerGetResponse
     public $branchName;
 
     /**
-     * @OA\Property(type="array", property="bidOrderImages",
+     * @OA\Property(type="array", property="bidDetailsImages",
      *     @OA\Items(type="object"), nullable=true)
      */
-    public $bidOrderImages;
+    public $bidDetailsImages;
 
     /**
      * @var int|null

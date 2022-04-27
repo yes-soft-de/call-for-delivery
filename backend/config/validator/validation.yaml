@@ -450,7 +450,7 @@ App\Request\AnnouncementOrderDetails\AnnouncementOrderPriceOfferValueUpdateReque
         id:
             - NotBlank: ~
 
-App\Request\Order\BidOrderCreateRequest:
+App\Request\Order\BidDetailsCreateRequest:
     properties:
         supplierCategory:
             - NotBlank: ~
@@ -459,7 +459,7 @@ App\Request\Order\BidOrderCreateRequest:
 
 App\Request\PriceOffer\PriceOfferCreateRequest:
     properties:
-        bidOrder:
+        bidDetails:
             - NotBlank: ~
         priceOfferValue:
             - NotBlank: ~

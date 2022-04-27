@@ -14,9 +14,9 @@ class PriceOfferEntity
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: BidOrderEntity::class, inversedBy: 'priceOfferEntities')]
+    #[ORM\ManyToOne(targetEntity: BidDetailsEntity::class, inversedBy: 'priceOfferEntities')]
     #[ORM\JoinColumn(nullable: false)]
-    private $bidOrder;
+    private $bidDetails;
 
     #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -44,14 +44,14 @@ class PriceOfferEntity
         return $this->id;
     }
 
-    public function getBidOrder(): ?BidOrderEntity
+    public function getBidDetails(): ?BidDetailsEntity
     {
-        return $this->bidOrder;
+        return $this->bidDetails;
     }
 
-    public function setBidOrder(?BidOrderEntity $bidOrder): self
+    public function setBidDetails(?BidDetailsEntity $bidDetails): self
     {
-        $this->bidOrder = $bidOrder;
+        $this->bidDetails = $bidDetails;
 
         return $this;
     }

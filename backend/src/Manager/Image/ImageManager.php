@@ -8,7 +8,7 @@ use App\Constant\Image\ImageResultConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\AnnouncementEntity;
-use App\Entity\BidOrderEntity;
+use App\Entity\BidDetailsEntity;
 use App\Entity\ImageEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Repository\ImageEntityRepository;
@@ -208,7 +208,7 @@ class ImageManager
         return $imageEntity;
     }
 
-    public function createBidOrderImages(array $images, BidOrderEntity $bidOrderEntity): array
+    public function createBidDetailsImages(array $images, BidDetailsEntity $bidDetailsEntity): array
     {
         $response = [];
 
@@ -218,8 +218,8 @@ class ImageManager
             $request->setImagePath($image['image']);
             $request->setEntityType(ImageEntityTypeConstant::ENTITY_TYPE_BID_ORDER);
             $request->setUsedAs(ImageUseAsConstant::IMAGE_USE_AS_ORDER_IMAGE);
-            $request->setItemId($bidOrderEntity->getId());
-            $request->setBidOrder($bidOrderEntity);
+            $request->setItemId($bidDetailsEntity->getId());
+            $request->setBidDetails($bidDetailsEntity);
 
             $response[] = $this->create($request);
         }

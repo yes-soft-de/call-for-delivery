@@ -3,7 +3,8 @@
 namespace App\Manager\Eraser;
 
 use App\Constant\Eraser\EraserResultConstant;
-use App\Entity\BidOrderEntity;
+use App\Entity\BidDetailsEntity;
+use App\Entity\OrderEntity;
 use App\Entity\PriceOfferEntity;
 use App\Manager\Image\ImageManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,10 +42,25 @@ class EraserManager
                 ->getResult();
 
             // finally remove all bid orders (from BidOrderEntity only)
-            $this->entityManager->getRepository(BidOrderEntity::class)->createQueryBuilder('bidOrderEntity')
+            $this->entityManager->getRepository(BidDetailsEntity::class)->createQueryBuilder('bidDetailsEntity')
                 ->delete()
                 ->getQuery()
                 ->getResult();
+
+            // remove related orders from OrderEntity
+//            $orders = $this->entityManager->getRepository(OrderEntity::class)->createQueryBuilder('orderEntity')
+//                ->andWhere('orderEntity.orderType = :orderType')
+//                ->setParameter('orderType', 2)
+//                ->getQuery()
+//                ->getResult();
+//
+//            if ($orders) {
+//                foreach ($orders as $order) {dd($order);
+//                    $this->entityManager->remove($order);
+//                }
+//
+//                $this->entityManager->flush();
+//            }
 
             return EraserResultConstant::BID_ORDERS_IMAGES_PRICE_OFFERS_DELETE_RESULT;
 
