@@ -8,6 +8,7 @@ use App\Manager\PriceOffer\PriceOfferManager;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
 use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
 use App\Response\PriceOffer\PriceOfferByBidOrderIdGetForStoreOwnerResponse;
+use App\Response\PriceOffer\PriceOfferDeleteResponse;
 use App\Response\PriceOffer\PriceOfferUpdateResponse;
 
 class PriceOfferService
@@ -51,5 +52,12 @@ class PriceOfferService
         $priceOfferResult = $this->priceOfferManager->updatePriceOfferStatusBySupplier($request);
 
         return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferUpdateResponse::class, $priceOfferResult);
+    }
+
+    public function deleteAllPricesOffers(): PriceOfferDeleteResponse
+    {
+        $pricesOffers = $this->priceOfferManager->deleteAllPricesOffers();
+
+        return $this->autoMapping->map("array", PriceOfferDeleteResponse::class, $pricesOffers);
     }
 }

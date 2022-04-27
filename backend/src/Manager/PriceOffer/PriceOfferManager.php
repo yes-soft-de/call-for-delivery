@@ -131,4 +131,19 @@ class PriceOfferManager
             return $priceOfferEntity;
         }
     }
+
+    public function deleteAllPricesOffers(): array
+    {
+        $pricesOffers = $this->priceOfferEntityRepository->findAll();
+
+        if ($pricesOffers) {
+            foreach ($pricesOffers as $pricesOffer) {
+                $this->entityManager->remove($pricesOffer);
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $pricesOffers;
+    }
 }
