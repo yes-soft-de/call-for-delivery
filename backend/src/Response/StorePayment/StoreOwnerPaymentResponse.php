@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Response\StoreOwnerPayment;
+namespace App\Response\StorePayment;
+
 use OpenApi\Annotations as OA;
 
 class StoreOwnerPaymentResponse

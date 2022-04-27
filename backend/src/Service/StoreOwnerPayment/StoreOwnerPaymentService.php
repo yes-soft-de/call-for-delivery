@@ -4,7 +4,7 @@ namespace App\Service\StoreOwnerPayment;
 
 use App\AutoMapping;
 use App\Manager\StoreOwnerPayment\StoreOwnerPaymentManager;
-use App\Response\StoreOwnerPayment\StoreOwnerPaymentResponse;
+use App\Response\StorePayment\StoreOwnerPaymentResponse;
 
 class StoreOwnerPaymentService
 {
