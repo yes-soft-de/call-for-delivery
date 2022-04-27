@@ -433,7 +433,7 @@
     "remainingAmountForStore": "المبلغ المتبقي للمتجر",
     "sumPaymentsForStore": "إجمالي الدفعات",
     "storeAvailable": "المتجر متوفر",
-    "storesInActive": "المتاجر الغير متاحة",
+    "storesInActive": "المتاجر الغير مفعلة",
     "storesList": "قائمة المتاجر",
     "addStore": "أضف متجر",
     "updateStore": "تعديل المتجر",

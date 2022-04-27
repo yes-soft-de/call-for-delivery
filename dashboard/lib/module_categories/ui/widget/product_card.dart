@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:c4d/utils/customIcon/mandob_icons_icons.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 
 class ProductComponent extends StatelessWidget {
@@ -95,7 +94,7 @@ class ProductComponent extends StatelessWidget {
                             Row(
                               children: [
                                 Icon(
-                                  MandobIcons.discount,
+                                  Icons.percent_rounded,
                                   size: 15,
                                   color: discount == '0'
                                       ? Colors.red

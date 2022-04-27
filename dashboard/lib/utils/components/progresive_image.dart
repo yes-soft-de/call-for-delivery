@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/customIcon/mandob_icons_icons.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:c4d/consts/urls.dart';
@@ -42,7 +41,7 @@ class CustomNetworkImage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Icon(
-                    MandobIcons.logo,
+                    Icons.delivery_dining_rounded,
                     size: 30,
                   ),
                 ),
@@ -129,7 +128,7 @@ class CustomNetworkImage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Icon(
-                      MandobIcons.logo,
+                      Icons.delivery_dining_rounded,
                       size: 30,
                     ),
                   ),

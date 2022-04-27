@@ -761,7 +761,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
         "storesActive": MessageLookupByLibrary.simpleMessage("المتاجر الفعالة"),
         "storesInActive":
-            MessageLookupByLibrary.simpleMessage("المتاجر الغير متاحة"),
+            MessageLookupByLibrary.simpleMessage("المتاجر الغير مفعلة"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),
         "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
