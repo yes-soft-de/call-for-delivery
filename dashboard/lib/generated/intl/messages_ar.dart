@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا"),
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
+        "addCars": MessageLookupByLibrary.simpleMessage("أضف سيارة"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تحديث"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
@@ -151,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
+        "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),
         "cartAttention": MessageLookupByLibrary.simpleMessage(
@@ -293,6 +295,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
+        "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
+        "deliveryCarsCost":
+            MessageLookupByLibrary.simpleMessage("أجرة التوصيل"),
         "description": MessageLookupByLibrary.simpleMessage("وصف"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),

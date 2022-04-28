@@ -621,6 +621,10 @@
     "paymentToCaptain": "Payment To Captain",
     "makePayment": "Make Payment",
     "currentFinancialCycle": "Current Cycle",
+   "deliveryCars": "Delivery cars",
+    "addCars": "Add cars",
+    "deliveryCarsCost": "Delivery Cars Cost",
+    "carModel": "Car Model",
     "profit": "Profit"
 
 

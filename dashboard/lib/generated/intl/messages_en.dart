@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sorry your request for add branch faild please try again"),
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
+        "addCars": MessageLookupByLibrary.simpleMessage("Add cars"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
@@ -151,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
+        "carModel": MessageLookupByLibrary.simpleMessage("Car Model"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
         "cartAttention": MessageLookupByLibrary.simpleMessage(
@@ -293,6 +295,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("captain on his way to you"),
+        "deliveryCars": MessageLookupByLibrary.simpleMessage("Delivery cars"),
+        "deliveryCarsCost":
+            MessageLookupByLibrary.simpleMessage("Delivery Cars Cost"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
