@@ -54,8 +54,6 @@ class CaptainFinancialSystemTwoBalanceDetailService
 
             $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
          
-            $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
-
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS;
            
             $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
