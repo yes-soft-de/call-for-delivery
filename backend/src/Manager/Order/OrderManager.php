@@ -7,8 +7,9 @@ use App\Constant\Order\OrderResultConstant;
 use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
-use App\Manager\AnnouncementOrderDetails\AnnouncementOrderDetailsManager;
+use App\Entity\OrderLogsEntity;
 use App\Manager\BidDetails\BidDetailsManager;
+use App\Manager\OrderLogs\OrderLogsManager;
 use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -17,6 +18,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Request\OrderLogs\OrderLogsCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Captain\CaptainManager;
@@ -33,9 +35,10 @@ class OrderManager
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
    private BidDetailsManager $bidDetailsManager;
+   private OrderLogsManager $orderLogsManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager)
+                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager, OrderLogsManager $orderLogsManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -44,6 +47,7 @@ class OrderManager
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
       $this->bidDetailsManager = $bidDetailsManager;
+      $this->orderLogsManager = $orderLogsManager;
     }
     
     /**
@@ -297,7 +301,7 @@ class OrderManager
 
     // this function will be used when a supplier confirm an acceptance of a store owner for specific bid order
     // then, the state of the order will be updated from 'initialized' to 'pending'
-    public function updateBidOrderStateToPendingBySupplier(int $orderId): ?OrderEntity
+    public function updateBidOrderStateToPendingBySupplier(int $orderId, string $deliveryDate): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($orderId);
 
@@ -306,8 +310,12 @@ class OrderManager
         }
 
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setDeliveryDate($deliveryDate);
 
         $this->entityManager->flush();
+
+        // insert new order log
+        $this->createOrderLog($orderEntity);
 
         return $orderEntity;
     }
@@ -336,5 +344,28 @@ class OrderManager
         }
 
         return $order;
+    }
+
+    public function createOrderLog(OrderEntity $orderEntity): ?OrderLogsEntity
+    {
+        $request = new OrderLogsCreateRequest();
+
+        $request->setOrderId($orderEntity);
+        $request->setStoreOwnerProfile($orderEntity->getStoreOwner());
+        $request->setOrderState($orderEntity->getState());
+        $request->setCaptainProfile($orderEntity->getCaptainId());
+        $request->setIsCaptainArrived($orderEntity->getIsCaptainArrived());
+
+        $storeOrderDetails = $this->storeOrderDetailsManager->getOrderDetailsByOrderId($orderEntity->getId());
+
+        if ($storeOrderDetails) {
+            $branch = $storeOrderDetails->getBranch();
+
+            if($branch) {
+                $request->setStoreOwnerBranch($branch);
+            }
+        }
+
+        return $this->orderLogsManager->createOrderLogs($request);
     }
 }

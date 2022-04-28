@@ -66,7 +66,7 @@ class StoreOrderDetailsManager
         return $request;
     }
 
-    public function getOrderDetailsByOrderId(int $orderId): StoreOrderDetailsEntity
+    public function getOrderDetailsByOrderId(int $orderId): ?StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' =>$orderId]);
     }

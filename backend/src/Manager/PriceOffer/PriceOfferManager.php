@@ -126,7 +126,7 @@ class PriceOfferManager
             $this->entityManager->flush();
 
             // then, we update order status from 'initialized' to 'pending'
-            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId());
+            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getOfferDeadline()->format('Y-m-d H:i:s'));
 
             return $priceOfferEntity;
         }
