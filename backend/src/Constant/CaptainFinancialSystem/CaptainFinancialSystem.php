@@ -27,13 +27,17 @@ final class CaptainFinancialSystem
 
     const ADVANCE_PAYMENT_NO = false;
 
-    const TARGET_SUCCESS = "success";
+    // const TARGET_SUCCESS = "success";
+    const TARGET_SUCCESS = "حققت الهدف";
 
-    const TARGET_SUCCESS_AND_INCREASE = "successTheTargetAndIncrease";
+    // const TARGET_SUCCESS_AND_INCREASE = "successTheTargetAndIncrease";
+    const TARGET_SUCCESS_AND_INCREASE = "حققت الهدف و زيادة";
 
-    const TARGET_NOT_ARRIVED = "notArrivedYet";
+    // const TARGET_NOT_ARRIVED = "notArrivedYet";
+    const TARGET_NOT_ARRIVED = "لم تصل للهدف بعد";
 
-    const TARGET_FAILED = "failed";
+    // const TARGET_FAILED = "failed";
+    const TARGET_FAILED = "لم تحقق الهدف";
 
     const TARGET_FAILED_SALARY = 12.86;
 

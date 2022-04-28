@@ -4,6 +4,7 @@ namespace App\Manager\CaptainPayment;
 
 use App\Repository\CaptainPaymentEntityRepository;
 use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
+use DateTime;
 
 class CaptainPaymentManager
 {
@@ -32,5 +33,10 @@ class CaptainPaymentManager
     public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDues): ?array
     {
         return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues);
+    }
+    
+    public function getSumPaymentsToCaptainByCaptainIdAndDate(dateTime $fromDate, dateTime $toDate, int $captainId): ?array
+    {      
+        return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
     }
 }

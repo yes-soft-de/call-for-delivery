@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Manager\CaptainPayment\CaptainPaymentManager;
 use App\Response\CaptainPayment\CaptainPaymentResponse;
 use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
+use DateTime;
 
 class CaptainPaymentService
 {
@@ -45,5 +46,10 @@ class CaptainPaymentService
     public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDues): array
     {
         return $this->captainPaymentManager->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues);
+    }
+
+    public function getSumPaymentsToCaptainByCaptainIdAndDate(dateTime $fromDate, dateTime $toDate, int $captainId): ?array
+    {      
+        return $this->captainPaymentManager->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
     }
 }

@@ -46,12 +46,14 @@ class CaptainFinancialSystemTwoBalanceDetailService
         $item['sumPayments'] = $sumPayments;
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $item['amountForStore'] = 0;
-       
+    
         if($countOrders === $financialSystemDetail['countOrdersInMonth']) {
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
 
+            $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
+         
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS;
            
             $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
@@ -63,6 +65,8 @@ class CaptainFinancialSystemTwoBalanceDetailService
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
+
+            $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
 
             $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'];
 
@@ -79,6 +83,8 @@ class CaptainFinancialSystemTwoBalanceDetailService
            
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_FAILED;
              
+            $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
+
             $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
           
             $total = $item['financialDues'] - $sumPayments;

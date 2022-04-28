@@ -27,4 +27,6 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float $sumPayments;
 
     public float $amountForStore;
+
+    public int $countOrdersInMonth;
 }
