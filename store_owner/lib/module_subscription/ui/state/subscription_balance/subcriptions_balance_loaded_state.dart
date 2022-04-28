@@ -143,7 +143,7 @@ class SubscriptionBalanceLoadedState extends States {
                         ),
                         title: Text(
                           SubscriptionsStatusHelper.getStatusMessage(
-                              balance.status),
+                              balance.status ?? ''),
                           
                         )),
                   ),

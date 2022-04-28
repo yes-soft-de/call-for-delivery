@@ -26,6 +26,7 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -195,6 +196,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                     if (status?.canCreateOrder == true) {
                       Navigator.of(context)
                           .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
+                    } else if (status?.status == S.current.inactiveStore) {
+                      Fluttertoast.showToast(msg: S.current.inactiveStore);
                     } else {
                       Navigator.of(context)
                           .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
@@ -202,7 +205,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                               title: S.current.warnning,
                               message:
                                   SubscriptionsStatusHelper.getStatusMessage(
-                                      status?.status))
+                                      status?.status ?? ''))
                           .show(context);
                     }
                   }
@@ -234,9 +237,18 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       ),
                       subtitle: Text(
                           SubscriptionsStatusHelper.getStatusMessage(
-                            status?.status,
+                            status?.status ?? '',
                           ),
                           style: TextStyle(color: Colors.white)),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.refresh,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          getInitData();
+                        },
+                      ),
                     ),
                   ),
                 ),

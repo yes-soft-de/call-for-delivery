@@ -2,12 +2,12 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_profile/manager/profile/profile.manager.dart';
-import 'package:c4d/module_profile/model/activity_model/activity_model.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:c4d/module_profile/model/store_balance_model.dart';
 import 'package:c4d/module_profile/prefs_helper/profile_prefs_helper.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
-import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_profile/response/profile_response/profile_response.dart';
+import 'package:c4d/module_profile/response/store_payments_response/store_payments_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -55,5 +55,17 @@ class ProfileService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> getStorePayments() async {
+    StorePaymentsResponse? actionResponse = await _manager.getStoreBalance();
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return StoreBalanceModel.withData(actionResponse.data ?? []);
   }
 }

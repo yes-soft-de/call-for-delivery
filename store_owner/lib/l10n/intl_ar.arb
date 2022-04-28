@@ -566,7 +566,8 @@
     "NotConfirmed": "لم يتم التأكد",
     "youCannotDeleteOrder": "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها",
     "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
-    "youCannotDeleteOrderCaptainAccepted": "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"
+    "youCannotDeleteOrderCaptainAccepted": "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن",
+    "inactiveStore": "متجرك غير مفعل الرجاء انتظار التفعيل من قبل الإدارة"
 
 
 
