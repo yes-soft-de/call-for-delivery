@@ -30,7 +30,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We need to access your gellary to capture photo to your profile or order</string>
+	<string>We need to access your camera to capture photo to your profile or order</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need to access your current location to calculate customer distance to you </string>
 	<key>NSPhotoLibraryUsageDescription</key>
