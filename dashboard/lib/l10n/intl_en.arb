@@ -620,7 +620,9 @@
     "currentFinancialCycleHint": "In these windows we are showing you current financial details for cycle date",
     "paymentToCaptain": "Payment To Captain",
     "makePayment": "Make Payment",
-    "currentFinancialCycle": "Current Cycle"
+    "currentFinancialCycle": "Current Cycle",
+    "profit": "Profit"
+
 
 
 

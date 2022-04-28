@@ -661,6 +661,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no profile data available"),
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
+        "profit": MessageLookupByLibrary.simpleMessage("Profit"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
