@@ -1,13 +1,13 @@
 class FinancialAccountDetail {
   String? categoryName;
-  int? countKilometersFrom;
-  int? countKilometersTo;
-  double? amount;
-  double? bounce;
-  int? bounceCountOrdersInMonth;
-  int? captainTotalCategory;
-  int? contOrderCompleted;
-  int? countOfOrdersLeft;
+  num? countKilometersFrom;
+  num? countKilometersTo;
+  num? amount;
+  num? bounce;
+  num? bounceCountOrdersInMonth;
+  num? captainTotalCategory;
+  num? contOrderCompleted;
+  num? countOfOrdersLeft;
   String? message;
 
   FinancialAccountDetail({
@@ -26,14 +26,14 @@ class FinancialAccountDetail {
   factory FinancialAccountDetail.fromJson(Map<String, dynamic> json) {
     return FinancialAccountDetail(
       categoryName: json['categoryName'] as String?,
-      countKilometersFrom: json['countKilometersFrom'] as int?,
-      countKilometersTo: json['countKilometersTo'] as int?,
-      amount: (json['amount'] as num?)?.toDouble(),
-      bounce: (json['bounce'] as num?)?.toDouble(),
-      bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as int?,
-      captainTotalCategory: json['captainTotalCategory'] as int?,
-      contOrderCompleted: json['contOrderCompleted'] as int?,
-      countOfOrdersLeft: json['countOfOrdersLeft'] as int?,
+      countKilometersFrom: json['countKilometersFrom'] as num?,
+      countKilometersTo: json['countKilometersTo'] as num?,
+      amount: json['amount'] as num?,
+      bounce: json['bounce'] as num?,
+      bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as num?,
+      captainTotalCategory: json['captainTotalCategory'] as num?,
+      contOrderCompleted: json['contOrderCompleted'] as num?,
+      countOfOrdersLeft: json['countOfOrdersLeft'] as num?,
       message: json['message'] as String?,
     );
   }

@@ -44,8 +44,9 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
                     stringValue: widget.details.updatedBy),
                 CustomTile(Icons.timer, S.current.countHours,
                     widget.details.countHours),
-                CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersInMonth,
-                    null,stringValue:widget.details.countOrdersInMonth?.toString()),
+                CustomTile(
+                    FontAwesomeIcons.boxes, S.current.countOrdersInMonth, null,
+                    stringValue: widget.details.countOrdersInMonth?.toString()),
                 CustomTile(
                     Icons.card_giftcard_rounded,
                     S.current.monthCompensation,
@@ -136,9 +137,13 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
             ),
             Container(
                 height: 55,
-                width: 175,
+                width: 130,
                 color: Theme.of(context).backgroundColor,
-                child: Center(child: Text(text))),
+                child: Center(
+                    child: Text(
+                  text,
+                  style: TextStyle(fontSize: 14),
+                ))),
             SizedBox(
               width: 4,
             ),

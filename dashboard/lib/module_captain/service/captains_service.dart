@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
+import 'package:c4d/module_captain/model/captain_financial_dues.dart';
 import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
@@ -10,6 +11,7 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
+import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
@@ -169,8 +171,10 @@ class CaptainsService {
     return CaptainAccountBalanceModel.withData(actionResponse);
   }
 
-  Future<DataModel> captainFinancePlanStatus(EnableCaptainRequest request) async {
-    ActionResponse? actionResponse = await _manager.captainFinancePlanStatus(request);
+  Future<DataModel> captainFinancePlanStatus(
+      EnableCaptainRequest request) async {
+    ActionResponse? actionResponse =
+        await _manager.captainFinancePlanStatus(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -180,5 +184,18 @@ class CaptainsService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> getCaptainFinancialDues(int captainID) async {
+    CaptainFinancialDuesResponse? actionResponse =
+        await _manager.getCaptainFinancialDues(captainID);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return CaptainFinancialDuesModel.withData(actionResponse);
   }
 }

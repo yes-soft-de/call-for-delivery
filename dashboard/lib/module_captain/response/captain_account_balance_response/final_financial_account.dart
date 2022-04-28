@@ -1,8 +1,8 @@
 class FinalFinancialAccount {
-  int? financialDues;
-  int? sumPayments;
+  num? financialDues;
+  num? sumPayments;
   bool? advancePayment;
-  int? total;
+  num? total;
 
   FinalFinancialAccount({
     this.financialDues,
@@ -13,10 +13,10 @@ class FinalFinancialAccount {
 
   factory FinalFinancialAccount.fromJson(Map<String, dynamic> json) {
     return FinalFinancialAccount(
-      financialDues: json['financialDues'] as int?,
-      sumPayments: json['sumPayments'] as int?,
+      financialDues: json['financialDues'] as num?,
+      sumPayments: json['sumPayments'] as num?,
       advancePayment: json['advancePayment'] as bool?,
-      total: json['total'] as int?,
+      total: json['total'] as num?,
     );
   }
 
