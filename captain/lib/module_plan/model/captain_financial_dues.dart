@@ -45,16 +45,22 @@ class CaptainFinancialDuesModel extends DataModel {
           total: Total(
               advancePayment: element.total?.advancePayment,
               sumCaptainFinancialDues:
-              element.total?.sumCaptainFinancialDues ?? 0,
+                  element.total?.sumCaptainFinancialDues ?? 0,
               sumPaymentsToCaptain: element.total?.sumPaymentsToCaptain ?? 0,
               total: element.total?.total ?? 0)));
     });
   }
   List<CaptainFinancialDuesModel> get data => _data;
 
-  List<PaymentModel> getPayments(List<PaymentsFromCompany> payments) {
+  List<PaymentModel> getPayments(List<PaymentsFromCompany> p) {
     List<PaymentModel> payments = [];
-
+    p.forEach((element) {
+      payments.add(PaymentModel(
+          note: element.note,
+          amount: element.amount ?? 0,
+          id: element.id ?? -1,
+          paymentDate: DateHelper.convert(element.createdAt?.timestamp)));
+    });
     return payments;
   }
 }
