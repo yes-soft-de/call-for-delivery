@@ -38,10 +38,10 @@ class BidDetailsEntity
     #[ORM\JoinColumn(nullable: true)]
     private $storeOwnerProfile;
 
-    #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: ImageEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'bidDetails', targetEntity: ImageEntity::class)]
     private $images;
 
-    #[ORM\OneToMany(mappedBy: 'bidOrder', targetEntity: PriceOfferEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'bidDetails', targetEntity: PriceOfferEntity::class)]
     private $priceOfferEntities;
 
     #[ORM\Column(type: 'boolean')]

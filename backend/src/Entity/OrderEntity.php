@@ -70,6 +70,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderLogsEntity::class)]
     private $OrderLogsEntity;
 
+    #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: BidDetailsEntity::class, cascade: ['persist', 'remove'])]
+    private $bidDetailsEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -346,6 +349,23 @@ class OrderEntity
                 $orderLogsEntity->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBidDetailsEntity(): ?BidDetailsEntity
+    {
+        return $this->bidDetailsEntity;
+    }
+
+    public function setBidDetailsEntity(BidDetailsEntity $bidDetailsEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($bidDetailsEntity->getOrderId() !== $this) {
+            $bidDetailsEntity->setOrderId($this);
+        }
+
+        $this->bidDetailsEntity = $bidDetailsEntity;
 
         return $this;
     }

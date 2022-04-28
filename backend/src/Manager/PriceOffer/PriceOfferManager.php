@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidDetails\BidDetailsManager;
+use App\Manager\DeliveryCar\DeliveryCarManager;
 use App\Manager\Order\OrderManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\PriceOfferEntityRepository;
@@ -22,15 +23,17 @@ class PriceOfferManager
     private SupplierProfileManager $supplierProfileManager;
     private OrderManager $orderManager;
     private PriceOfferEntityRepository $priceOfferEntityRepository;
+    private DeliveryCarManager $deliveryCarManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidDetailsManager $bidDetailsManager, SupplierProfileManager $supplierProfileManager, OrderManager $orderManager,
-                                PriceOfferEntityRepository $priceOfferEntityRepository)
+                                DeliveryCarManager $deliveryCarManager, PriceOfferEntityRepository $priceOfferEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->bidDetailsManager = $bidDetailsManager;
         $this->supplierProfileManager = $supplierProfileManager;
         $this->orderManager = $orderManager;
+        $this->deliveryCarManager = $deliveryCarManager;
         $this->priceOfferEntityRepository = $priceOfferEntityRepository;
     }
 
@@ -43,6 +46,10 @@ class PriceOfferManager
         // Set the supplier profile entity in the create request
         $supplierProfileEntity = $this->supplierProfileManager->getSupplierProfileEntityBySupplierId($request->getSupplierProfile());
         $request->setSupplierProfile($supplierProfileEntity);
+
+        // Set the delivery car entity in the create request
+        $deliveryCar = $this->deliveryCarManager->getDeliveryCarEntityById($request->getDeliveryCar());
+        $request->setDeliveryCar($deliveryCar);
 
         // now create the price offer
         $priceOfferEntity = $this->autoMapping->map(PriceOfferCreateRequest::class, PriceOfferEntity::class, $request);
@@ -126,7 +133,7 @@ class PriceOfferManager
             $this->entityManager->flush();
 
             // then, we update order status from 'initialized' to 'pending'
-            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId());
+            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getOfferDeadline()->format('Y-m-d H:i:s'));
 
             return $priceOfferEntity;
         }

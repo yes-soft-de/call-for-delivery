@@ -3,6 +3,7 @@
 namespace App\Request\PriceOffer;
 
 use App\Entity\BidDetailsEntity;
+use App\Entity\DeliveryCarEntity;
 use App\Entity\SupplierProfileEntity;
 
 class PriceOfferCreateRequest
@@ -23,6 +24,11 @@ class PriceOfferCreateRequest
      * @var string|null
      */
     private $offerDeadline;
+
+    /**
+     * @var int|DeliveryCarEntity
+     */
+    private $deliveryCar;
 
     public function getBidDetails(): BidDetailsEntity|int
     {
@@ -47,5 +53,15 @@ class PriceOfferCreateRequest
     public function getOfferDeadline(): ?string
     {
         return $this->offerDeadline;
+    }
+
+    public function getDeliveryCar(): DeliveryCarEntity|int
+    {
+        return $this->deliveryCar;
+    }
+
+    public function setDeliveryCar(DeliveryCarEntity|int $deliveryCar): void
+    {
+        $this->deliveryCar = $deliveryCar;
     }
 }

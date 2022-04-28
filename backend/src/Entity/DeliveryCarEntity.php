@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DeliveryCarEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -30,6 +32,14 @@ class DeliveryCarEntity
 
     #[ORM\Column(type: 'string', length: 255)]
     private $carModel;
+
+    #[ORM\OneToMany(mappedBy: 'deliveryCar', targetEntity: PriceOfferEntity::class)]
+    private $priceOfferEntities;
+
+    public function __construct()
+    {
+        $this->priceOfferEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,6 +102,36 @@ class DeliveryCarEntity
     public function setCarModel(string $carModel): self
     {
         $this->carModel = $carModel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PriceOfferEntity[]
+     */
+    public function getPriceOfferEntities(): Collection
+    {
+        return $this->priceOfferEntities;
+    }
+
+    public function addPriceOfferEntity(PriceOfferEntity $priceOfferEntity): self
+    {
+        if (!$this->priceOfferEntities->contains($priceOfferEntity)) {
+            $this->priceOfferEntities[] = $priceOfferEntity;
+            $priceOfferEntity->setDeliveryCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceOfferEntity(PriceOfferEntity $priceOfferEntity): self
+    {
+        if ($this->priceOfferEntities->removeElement($priceOfferEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($priceOfferEntity->getDeliveryCar() === $this) {
+                $priceOfferEntity->setDeliveryCar(null);
+            }
+        }
 
         return $this;
     }

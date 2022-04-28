@@ -58,7 +58,8 @@ class PriceOfferController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="bidDetails"),
      *          @OA\Property(type="number", property="priceOfferValue"),
-     *          @OA\Property(type="string", property="offerDeadline")
+     *          @OA\Property(type="string", property="offerDeadline"),
+     *          @OA\Property(type="integer", property="deliveryCar")
      *      )
      * )
      *
@@ -243,14 +244,22 @@ class PriceOfferController extends BaseController
     }
 
     /**
-     * @Route("deleteallpricesoffers", name="deleteAllPricesOffers", methods={"DELETE"})
+     * @Route("deleteallpricesoffers", name="deleteAllPricesOffersBySuperAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @return JsonResponse
      *
      * @OA\Tag(name="Price Offer")
      *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
      * @OA\Response(
-     *      response=204,
-     *      description="Returns updated successfully message",
+     *      response=401,
+     *      description="Returns deleted prices offers info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),

@@ -2,6 +2,7 @@
 
 namespace App\Manager\DeliveryCar;
 
+use App\Entity\DeliveryCarEntity;
 use App\Repository\DeliveryCarEntityRepository;
 
 class DeliveryCarManager
@@ -16,5 +17,10 @@ class DeliveryCarManager
     public function getAllDeliveryCarsForSupplier(): array
     {
         return $this->deliveryCarEntityRepository->findAll();
+    }
+
+    public function getDeliveryCarEntityById(int $id): ?DeliveryCarEntity
+    {
+        return $this->deliveryCarEntityRepository->find($id);
     }
 }

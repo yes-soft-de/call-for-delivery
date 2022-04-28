@@ -3,10 +3,12 @@
 namespace App\Service\PriceOffer;
 
 use App\AutoMapping;
+use App\Entity\DeliveryCarEntity;
 use App\Entity\PriceOfferEntity;
 use App\Manager\PriceOffer\PriceOfferManager;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
 use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
+use App\Response\DeliveryCar\DeliveryCarForStoreOwnerGetResponse;
 use App\Response\PriceOffer\PriceOfferByBidOrderIdGetForStoreOwnerResponse;
 use App\Response\PriceOffer\PriceOfferDeleteResponse;
 use App\Response\PriceOffer\PriceOfferUpdateResponse;
@@ -33,8 +35,10 @@ class PriceOfferService
 
         $priceOffers = $this->priceOfferManager->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
 
-        foreach ($priceOffers as $priceOffer) {
-            $response[] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $priceOffer);
+        foreach ($priceOffers as $key=>$value) {
+            $response[$key] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $value);
+
+            $response[$key]->deliveryCar = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarForStoreOwnerGetResponse::class, $value['deliveryCar']);
         }
 
         return $response;
