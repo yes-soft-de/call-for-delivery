@@ -77,9 +77,20 @@ class ProfileStateInit extends States {
                                 iconData: Icons.phone),
                             CustomListTile(
                                 title: S.of(context).category,
-                                subTitle:profileModel.categoryName,
+                                subTitle:getCategoryName(),
                                 iconData: Icons.category),
-
+                            CustomListTile(
+                                title: S.of(context).bankName,
+                                subTitle: profileModel.bankName,
+                                iconData: Icons.account_balance_rounded),
+                            CustomListTile(
+                                title: S.of(context).bankAccountNumber,
+                                subTitle: profileModel.bankAccount,
+                                iconData: Icons.credit_card_rounded),
+                            CustomListTile(
+                                title: S.of(context).stcPayCode,
+                                subTitle: profileModel.stc,
+                                iconData: Icons.credit_card_rounded),
                             CustomListTile(
                                 title: S.of(context).myStatus,
                                 subTitle: profileModel.status ?'active':'inActive',
@@ -95,9 +106,19 @@ class ProfileStateInit extends States {
             ),
             label: S.current.updateProfile,
             onTap: () {
-              screenState.states =
-                  UpdateProfileStateLoaded(screenState, profileModel);
-              screenState.refresh();
+              screenState.getCategories(profileModel);
+//              screenState.states =
+//                  UpdateProfileStateLoaded(screenState, profileModel);
+//              screenState.refresh();
             }));
+  }
+
+
+  String getCategoryName(){
+    String allName ='';
+    profileModel.categories.forEach((element) {
+       allName += element.name +', ';
+    });
+    return allName;
   }
 }

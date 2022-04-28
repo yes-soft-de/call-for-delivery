@@ -483,5 +483,10 @@
     "pendingOfferMsg": "Waiting to accept your offer",
     "rejectOfferMsg": "Store reject your offer",
     "acceptOfferMsg": "Store accept your offer",
-    "confirmed": "Confirmed"
+    "confirmed": "Confirmed",
+    "selectYourCategory": "Select your category",
+    "bankNameHint": "Bimo",
+    "eg": "eg",
+    "locationPref": "This location is shown to Captains",
+    "locationSelected": "Your location selected"
 }

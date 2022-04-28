@@ -65,6 +65,7 @@ class InitAccountStateManager {
         }));
       }else {
         value as SupplierCategoryModel;
+        value.data.insert(0,SupplierCategoryModel(id: 0,name: S.current.all));
         _stateSubject.add(InitAccountStateProfileLoaded(screenState,value.data));
       }
     });

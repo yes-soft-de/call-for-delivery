@@ -253,7 +253,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i59.EditProfileStateManager>(() => _i59.EditProfileStateManager(
       get<_i26.ImageUploadService>(),
       get<_i48.ProfileService>(),
-      get<_i23.AuthService>()));
+      get<_i23.AuthService>(),
+      get<_i38.CategoryService>()));
   gh.factory<_i60.InitAccountStateManager>(() => _i60.InitAccountStateManager(
       get<_i48.ProfileService>(),
       get<_i23.AuthService>(),

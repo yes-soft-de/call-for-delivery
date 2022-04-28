@@ -5,11 +5,14 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
+import 'package:c4d/module_profile/service/category/category_service.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
 import 'package:c4d/module_profile/ui/states/edit_profile/profile_state_loaded.dart';
+import 'package:c4d/module_profile/ui/states/edit_profile/update_profile_state_loaded.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -21,12 +24,14 @@ class EditProfileStateManager {
 
   final ImageUploadService _imageUploadService;
   final ProfileService _profileService;
+  final CategoryService _categoryService;
   final AuthService _authService;
 
   EditProfileStateManager(
     this._imageUploadService,
     this._profileService,
     this._authService,
+      this._categoryService
   );
   final _stateSubject = PublishSubject<States>();
   Stream<States> get stateStream => _stateSubject.stream;
@@ -64,6 +69,27 @@ class EditProfileStateManager {
                 title: S.current.warnning,
                 message: S.current.profileUpdatedSuccessfully)
             .show(screenState.context);
+      }
+    });
+  }
+
+  void getCategories(ProfileScreenState screenState,ProfileModel model) {
+    _stateSubject.add(LoadingState(screenState));
+    _categoryService.getCategories().then((value) {
+      if (value.isEmpty) {
+        _stateSubject.add(EmptyState(screenState,
+            emptyMessage: S.current.category,
+            title: S.current.account,
+            onPressed: () {}));
+      } else if (value.hasError) {
+        _stateSubject.add(ErrorState(screenState,
+            error: value.error, title: S.current.account, onPressed: () {
+              getCategories(screenState,model);
+            }));
+      }else {
+        value as SupplierCategoryModel;
+        value.data.insert(0,SupplierCategoryModel(id: 0,name: S.current.all));
+        _stateSubject.add(UpdateProfileStateLoaded(screenState,model,value.data,));
       }
     });
   }

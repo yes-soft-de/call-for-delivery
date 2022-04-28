@@ -1,3 +1,4 @@
+import 'package:c4d/module_theme/map_style.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -28,6 +29,7 @@ class AppThemeDataService {
         errorContainer: Colors.red[100],
         primary: Colors.grey[900]);
     if (dark == true) {
+      mapStyle(dark);
       return ThemeData(
           brightness: Brightness.dark,
           colorScheme: darkScheme,
@@ -76,6 +78,7 @@ class AppThemeDataService {
             ),
           ));
     }
+    mapStyle(dark);
     return ThemeData(
         brightness: Brightness.light,
         //       primaryColor: PrimaryColor,
@@ -103,5 +106,17 @@ class AppThemeDataService {
     }
     var activeTheme = await getActiveTheme();
     _darkModeSubject.add(activeTheme);
+  }
+
+  void mapStyle(bool darkMode) {
+    String darkStyle = MapStyle.darkStyle;
+
+    String lightStyle = '''[]''';
+
+    if (darkMode) {
+      _preferencesHelper.setMapStyle(darkStyle);
+    } else {
+      _preferencesHelper.setMapStyle(lightStyle);
+    }
   }
 }

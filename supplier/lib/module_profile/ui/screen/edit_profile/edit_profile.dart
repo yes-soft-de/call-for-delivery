@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   States? states;
+  List<String> selectedCategoryName =[];
+  List<int> selectedCategoryID =[];
 
   void saveProfile(ProfileRequest request) {
     widget._stateManager.updateProfile(this, request);
@@ -24,6 +27,9 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   void getProfile() {
     widget._stateManager.getProfile(this);
+  }
+  void getCategories(ProfileModel model) {
+    widget._stateManager.getCategories(this,model);
   }
 
   void refresh() {
