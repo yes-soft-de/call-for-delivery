@@ -662,7 +662,11 @@
     "youCannotChoosePlan": "You cannot choose plan right now , please try again",
     "captainTotalCategory": "Captain total category",
     "contOrderCompleted": "Count orders completed",
-    "countOfOrdersLeft": "Count orders left"
+    "countOfOrdersLeft": "Count orders left",
+    "youHaveFinanceAccount": "You cannot choose new plan , because you have a running one",
+    "amountForStore": "Amount for store"
+
+
 
 
 

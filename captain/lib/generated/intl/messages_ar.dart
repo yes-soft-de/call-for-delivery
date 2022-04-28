@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amount": MessageLookupByLibrary.simpleMessage("الراتب"),
+        "amountForStore":
+            MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -725,6 +727,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتزويدنا بموقع التسليم على الخارطة"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
+        "pleaseWaitAdministrationToAccept":
+            MessageLookupByLibrary.simpleMessage(
+                "الرجاء انتظار الإدارة الموافقة على الخطط المختارة"),
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
@@ -1017,6 +1022,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
+        "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),

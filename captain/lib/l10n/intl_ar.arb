@@ -649,7 +649,7 @@
     "bounceMinCountOrdersInMonth": "حد التعويض الأدنى",
     "captainPayments": "دفعات الكابتن",
     "salary": "الراتب",
-    "pleaseWaitAdminstrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة",
+    "pleaseWaitAdministrationToAccept": "الرجاء انتظار الإدارة الموافقة على الخطط المختارة",
     "countOrders": "عدد الطلبات",
     "countOrdersMaxFromNineteen": "عدد الطلبات التي تجاوزت ١٩ كم مسافة مقطوعة",
     "financialDues": "المستحقات المالية",
@@ -663,7 +663,9 @@
     "youCannotChoosePlan": "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا",
     "captainTotalCategory": "عدد المراحل المحققة",
     "contOrderCompleted": "عدد الطلبات المسلمة",
-    "countOfOrdersLeft": "عدد الطلبات المتبقية"
+    "countOfOrdersLeft": "عدد الطلبات المتبقية",
+    "youHaveFinanceAccount": "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية",
+    "amountForStore": "المبالغ المخصصة للمتاجر"
 
 
 

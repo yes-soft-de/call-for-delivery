@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "Your subscription already extended , You can\'t extend it again"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
+        "amountForStore":
+            MessageLookupByLibrary.simpleMessage("Amount for store"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
@@ -1023,6 +1025,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
+            "You cannot choose new plan , because you have a running one"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),

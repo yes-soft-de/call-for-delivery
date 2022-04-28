@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
 import 'package:c4d/module_plan/ui/widget/account_balance_details.dart';
+import 'package:c4d/module_plan/ui/widget/custom_text_button.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
@@ -19,7 +21,70 @@ class AccountBalanceStateLoaded extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.myBalance),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.myBalance, actions: [
+        Visibility(
+          visible: false,
+          child: CustomC4dAppBar.actionIcon(context, onTap: () {
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // buttons
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                // renew new subscription
+                                CustomTextButton(
+                                  label: S.current.renewNewPlan,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushNamed(
+                                        PlanRoutes.PLAN_ROUTE,
+                                        arguments: S.current.renewNewPlan);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // close button
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder()),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  S.current.close,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              )),
+                        ),
+                      )
+                    ],
+                  );
+                });
+          }, icon: Icons.restart_alt_rounded),
+        )
+      ]),
       body: CustomListView.custom(
         children: [
           Padding(
@@ -157,6 +222,8 @@ class AccountBalanceStateLoaded extends States {
             stringValue: balance?.monthTargetSuccess),
         CustomTile(Icons.checklist_rounded, S.current.countOrdersCompleted,
             balance?.countOrdersCompleted),
+        CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
+            balance?.amountForStore ?? 0),
         CustomTile(
             FontAwesomeIcons.calendar, S.current.dateFinancialCycleEnds, null,
             stringValue: balance?.dateFinancialCycleEnds),

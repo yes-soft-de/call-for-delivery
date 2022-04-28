@@ -17,6 +17,7 @@ class CaptainAccountBalanceModel extends DataModel {
   late num? countOrdersCompleted;
   late String? dateFinancialCycleEnds;
   List<OrderCountsSystemDetails>? orderCountsDetails;
+  late num? amountForStore;
   CaptainAccountBalanceModel(
       {required this.advancePayment,
       required this.compensationForEveryOrder,
@@ -32,7 +33,8 @@ class CaptainAccountBalanceModel extends DataModel {
       required this.countOverOrdersThanRequired,
       required this.dateFinancialCycleEnds,
       required this.monthTargetSuccess,
-      this.orderCountsDetails});
+      this.orderCountsDetails,
+      required this.amountForStore});
   late CaptainAccountBalanceModel _data;
   CaptainAccountBalanceModel.withData(CaptainAccountBalanceResponse response) {
     var element = response.data;
@@ -67,23 +69,26 @@ class CaptainAccountBalanceModel extends DataModel {
           countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
-          monthTargetSuccess: element?.monthTargetSuccess);
+          monthTargetSuccess: element?.monthTargetSuccess,
+          amountForStore: element?.amountForStore ?? 0);
     } else {
       _data = CaptainAccountBalanceModel(
-          advancePayment: element?.advancePayment,
-          compensationForEveryOrder: element?.compensationForEveryOrder,
-          countOrders: element?.countOrders,
-          countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,
-          financialDues: element?.financialDues,
-          salary: element?.salary,
-          sumPayments: element?.sumPayments,
-          total: element?.total,
-          bounce: element?.bounce,
-          countOrdersCompleted: element?.countOrdersCompleted,
-          countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
-          dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
-          monthCompensation: element?.monthCompensation,
-          monthTargetSuccess: element?.monthTargetSuccess);
+        advancePayment: element?.advancePayment,
+        compensationForEveryOrder: element?.compensationForEveryOrder,
+        countOrders: element?.countOrders,
+        countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,
+        financialDues: element?.financialDues,
+        salary: element?.salary,
+        sumPayments: element?.sumPayments,
+        total: element?.total,
+        bounce: element?.bounce,
+        countOrdersCompleted: element?.countOrdersCompleted,
+        countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
+        dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
+        monthCompensation: element?.monthCompensation,
+        monthTargetSuccess: element?.monthTargetSuccess,
+        amountForStore: element?.amountForStore ?? 0,
+      );
     }
   }
   CaptainAccountBalanceModel get data => _data;

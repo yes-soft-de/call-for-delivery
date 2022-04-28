@@ -99,11 +99,11 @@ class PlanScreenStateManager {
 
   void getFinance(PlanScreenState screenState, String selectedPlan) {
     if (selectedPlan == S.current.planByOrders) {
-      return getFinanceCaptainByOrder(screenState);
+      return getFinanceCaptainByOrderCount(screenState);
     } else if (selectedPlan == S.current.planByHours) {
       return getFinanceCaptainByHours(screenState);
     } else {
-      return getFinanceCaptainByOrderCount(screenState);
+      return getFinanceCaptainByOrder(screenState);
     }
   }
 

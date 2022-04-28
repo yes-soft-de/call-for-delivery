@@ -238,14 +238,7 @@ class InitCaptainPlanLoadedState extends States {
     }
     return financeByOrder!.map((element) {
       return GestureDetector(
-        onTap: () {
-          if (element.id == _selectedPlanId) {
-            _selectedPlanId = null;
-          } else {
-            _selectedPlanId = element.id;
-          }
-          screenState.refresh();
-        },
+        onTap: () {},
         // specific widget
         child: FinanceByOrder(
           amount: element.amount,
@@ -297,9 +290,17 @@ class InitCaptainPlanLoadedState extends States {
     }
     return financeByOrderCount!.map((element) {
       return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          if (element.id == _selectedPlanId) {
+            _selectedPlanId = null;
+          } else {
+            _selectedPlanId = element.id;
+          }
+          screenState.refresh();
+        },
         // specific widget
         child: FinanceByCountOrder(
+          active: _selectedPlanId == element.id,
           bounceMaxCountOrdersInMonth: element.bounceMaxCountOrdersInMonth,
           bounceMinCountOrdersInMonth: element.bounceMinCountOrdersInMonth,
           countOrdersInMonth: element.countOrdersInMonth,
@@ -312,21 +313,21 @@ class InitCaptainPlanLoadedState extends States {
 
   List<Widget> getPlanes() {
     if (screenState.selectedPlan == S.current.planByOrders) {
-      return _getPlanByOrder();
+      return _getPlanByOrderCount();
     } else if (screenState.selectedPlan == S.current.planByHours) {
       return _getPlanByHours();
     } else {
-      return _getPlanByOrderCount();
+      return _getPlanByOrder();
     }
   }
 
   double getHeight() {
     if (screenState.selectedPlan == S.current.planByOrders) {
-      return 250;
+      return 200;
     } else if (screenState.selectedPlan == S.current.planByHours) {
       return 135;
     } else {
-      return 200;
+      return 250;
     }
   }
 }
