@@ -290,9 +290,9 @@ class OrderManager
         return $this->orderRepository->filterBidOrdersThatHavePriceOffersBySupplier($request);
     }
 
-    public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
+    public function getLastPriceOfferByBidDetailsId(int $bidDetailsId): array
     {
-        return $this->orderRepository->getLastPriceOfferByBidOrderId($bidOrderId);
+        return $this->orderRepository->getLastPriceOfferByBidDetailsId($bidDetailsId);
     }
 
     // this function will be used when a supplier confirm an acceptance of a store owner for specific bid order

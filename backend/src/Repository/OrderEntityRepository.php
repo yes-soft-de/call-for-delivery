@@ -736,20 +736,20 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('DISTINCT(orderEntity.id) as id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
-            ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.title', 'bidOrderEntity.openToPriceOffer')
+            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.openToPriceOffer')
 
             ->leftJoin(
                 BidDetailsEntity::class,
-                'bidOrderEntity',
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->leftJoin(
                 PriceOfferEntity::class,
                 'priceOfferEntity',
                 Join::WITH,
-                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
             )
 
             ->leftJoin(
@@ -762,52 +762,52 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $request->getSupplierId())
 
-            ->orderBy('bidOrderEntity.id', 'DESC');
+            ->orderBy('bidDetailsEntity.id', 'DESC');
 
         if ($request->getOpenToPriceOffer() !== null) {
-            $query->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOffer');
+            $query->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOffer');
             $query->setParameter('openToPriceOffer', $request->getOpenToPriceOffer());
         }
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('bidOrderEntity.createdAt >= :createdAt');
+            $query->andWhere('bidDetailsEntity.createdAt >= :createdAt');
             $query->setParameter('createdAt', $request->getFromDate());
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('bidOrderEntity.createdAt <= :createdAt');
+            $query->andWhere('bidDetailsEntity.createdAt <= :createdAt');
             $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('bidOrderEntity.createdAt >= :fromDate');
+            $query->andWhere('bidDetailsEntity.createdAt >= :fromDate');
             $query->setParameter('fromDate', $request->getFromDate());
 
-            $query->andWhere('bidOrderEntity.createdAt <= :toDate');
+            $query->andWhere('bidDetailsEntity.createdAt <= :toDate');
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
 
         return $query->getQuery()->getResult();
     }
 
-    public function getLastPriceOfferByBidOrderId(int $bidOrderId): array
+    public function getLastPriceOfferByBidDetailsId(int $bidDetailsId): array
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('priceOfferEntity.id', 'priceOfferEntity.priceOfferStatus')
 
             ->leftJoin(
                 BidDetailsEntity::class,
-                'bidOrderEntity',
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('bidOrderEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
+            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
+            ->setParameter('bidDetailsId', $bidDetailsId)
 
             ->leftJoin(
                 PriceOfferEntity::class,
                 'priceOfferEntity',
                 Join::WITH,
-                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
             )
 
             ->orderBy('priceOfferEntity.id', 'DESC')

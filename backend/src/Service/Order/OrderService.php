@@ -545,7 +545,7 @@ class OrderService
         $response = [];
 
         foreach ($bidOrders as $bidOrder) {
-            $pricesOffer = $this->orderManager->getLastPriceOfferByBidOrderId($bidOrder['bidOrderId']);
+            $pricesOffer = $this->orderManager->getLastPriceOfferByBidDetailsId($bidOrder['bidDetailsId']);
 
             if (! empty($pricesOffer)) {
                 if ($pricesOffer['priceOfferStatus'] === $priceOfferStatus) {
