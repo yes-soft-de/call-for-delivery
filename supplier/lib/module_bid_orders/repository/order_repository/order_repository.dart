@@ -2,6 +2,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
@@ -55,6 +56,19 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.ADD_OFFER,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> confirmOffer(ConfirmOfferRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.CONFIRM_OFFER,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

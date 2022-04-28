@@ -4,11 +4,13 @@ import 'package:c4d/module_bid_orders/model/order_details/offer_model.dart';
 import 'package:c4d/utils/helpers/offer_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OfferCard extends StatelessWidget {
   final OfferModel model;
+  final Function confirmOffer;
 
-  OfferCard(this.model);
+  OfferCard( {required this.model ,required this.confirmOffer});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,19 @@ class OfferCard extends StatelessWidget {
                 ),
               ],
             ),
-            subtitle:Text(OfferStatusHelper.getOfferStatusMsg(model.priceOfferStatus),style: TextStyle(color: OfferStatusHelper.getOfferStatusColor(model.priceOfferStatus)),)
+            subtitle:Text(OfferStatusHelper.getOfferStatusMsg(model.priceOfferStatus),style: TextStyle(color: OfferStatusHelper.getOfferStatusColor(model.priceOfferStatus)),),
+            trailing:model.priceOfferStatus ==OfferStatusEnum.ACCEPTED?  InkWell(
+              onTap: confirmOffer(),
+              child: Card(
+                color: Colors.green.shade900,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Icon(FontAwesomeIcons.check,color: Colors.white,),
+                ),),
+            ):Container(),
           ),
         ),
       ),

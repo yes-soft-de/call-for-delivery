@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_orders/model/order_details/order_details_model.dart';
+import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/ui/screens/orders/order_details_screen.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/offer_card.dart';
 import 'package:c4d/module_profile/ui/widget/init_field/init_field.dart';
@@ -213,7 +214,9 @@ class OrderDetailsStateLoaded extends States {
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return OfferCard(model.offers[index]);
+                  return OfferCard(model: model.offers[index],confirmOffer: (){
+                    screenState.confirmOffer(ConfirmOfferRequest(id:model.offers[index].id,priceOfferStatus:'accepted'));
+                  },);
                 },
                 itemCount: model.offers.length,
                 shrinkWrap: true,

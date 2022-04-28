@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
+import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/state_manager/order_details_state_manager.dart';
 import 'package:c4d/module_bid_orders/state_manager/owner_orders/open_orders.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -26,6 +27,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   AddOfferRequest? addOfferRequest;
    int orderId = -1;
+   bool onGoing = false;
 
 
   var today = DateTime.now();
@@ -46,7 +48,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
        bidOrder: orderId
      ));
    }
-
+  void confirmOffer(ConfirmOfferRequest request){
+    widget._stateManager.confirmOffer(this,request,orderId);
+  }
   @override
   void initState() {
     super.initState();
@@ -63,12 +67,15 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-  var  args = ModalRoute.of(context)?.settings.arguments;
+  var  args = ModalRoute.of(context)?.settings.arguments as Map;
     if (args != null && orderId == -1) {
-      if (args is int) {
-        orderId = args;
-        widget._stateManager.getOrderDetails(this, orderId);
-       }
+        orderId = args['id'] as int;
+        onGoing = args['onGoing'] as bool;
+        if(onGoing)
+          widget._stateManager.getOnGoingOrderDetails(this, orderId);
+
+        else widget._stateManager.getOrderDetails(this, orderId);
+
     }
     return  Scaffold(
       appBar: CustomC4dAppBar.appBar(context, title:S.of(context).orderNumber+ ' '+orderId.toString()+'#',canGoBack: true),

@@ -4,7 +4,9 @@ import 'package:c4d/generated/l10n.dart';
 
 class StatusHelper {
   static OrderStatusEnum getStatusEnum(String? status) {
-    if (status == 'pending') {
+    if (status == 'initialized') {
+      return OrderStatusEnum.INITIALIZED;
+    }else if (status == 'pending') {
       return OrderStatusEnum.WAITING;
     } else if (status == 'on way to pick order') {
       return OrderStatusEnum.GOT_CAPTAIN;
@@ -22,6 +24,8 @@ class StatusHelper {
 
   static String getStatusString(OrderStatusEnum? status) {
     switch (status) {
+      case OrderStatusEnum.INITIALIZED:
+        return 'initialized';
       case OrderStatusEnum.WAITING:
         return 'pending';
       case OrderStatusEnum.IN_STORE:

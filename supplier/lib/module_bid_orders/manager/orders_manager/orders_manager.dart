@@ -1,6 +1,7 @@
 import 'package:c4d/module_bid_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
@@ -26,4 +27,7 @@ class OrdersManager {
 
   Future<ActionResponse?> addNewOffer(AddOfferRequest offerRequest) =>
       _repository.addNewOffer(offerRequest);
+
+  Future<ActionResponse?> confirmOffer(ConfirmOfferRequest offerRequest) =>
+      _repository.confirmOffer(offerRequest);
 }

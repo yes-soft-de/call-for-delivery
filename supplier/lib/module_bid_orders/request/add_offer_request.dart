@@ -7,7 +7,7 @@ class AddOfferRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['bidOrder'] = this.bidOrder;
+    data['bidDetails'] = this.bidOrder;
     data['priceOfferValue'] = this.priceOfferValue;
     data['offerDeadline'] = this.offerDeadline;
 
