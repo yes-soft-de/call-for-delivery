@@ -196,6 +196,9 @@ class CaptainsService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
     return CaptainFinancialDuesModel.withData(actionResponse);
   }
 }

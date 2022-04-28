@@ -62,31 +62,34 @@ class CaptainAccountBalanceScreenState
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.accountBalance,
           bottom: PreferredSize(
-              child: FilterBar(
-                cursorRadius: BorderRadius.circular(25),
-                animationDuration: const Duration(milliseconds: 350),
-                backgroundColor: Theme.of(context).backgroundColor,
-                currentIndex: currentIndex,
-                borderRadius: BorderRadius.circular(25),
-                floating: true,
-                height: 40,
-                cursorColor: Theme.of(context).colorScheme.primary,
-                items: [
-                  FilterItem(label: S.current.currentFinancialCycle),
-                  FilterItem(label: S.current.financialDuesCycles),
-                ],
-                onItemSelected: (index) {
-                  currentIndex = index;
-                  pageController.animateToPage(index,
-                      duration: const Duration(milliseconds: 350),
-                      curve: Curves.linear);
-                  setState(() {});
-                },
-                selectedContent: Theme.of(context).textTheme.button!.color!,
-                unselectedContent:
-                    Theme.of(context).textTheme.headline6!.color!,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:8.0),
+                child: FilterBar(
+                  cursorRadius: BorderRadius.circular(25),
+                  animationDuration: const Duration(milliseconds: 350),
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  currentIndex: currentIndex,
+                  borderRadius: BorderRadius.circular(25),
+                  floating: true,
+                  height: 40,
+                  cursorColor: Theme.of(context).colorScheme.primary,
+                  items: [
+                    FilterItem(label: S.current.currentFinancialCycle),
+                    FilterItem(label: S.current.financialDuesCycles),
+                  ],
+                  onItemSelected: (index) {
+                    currentIndex = index;
+                    pageController.animateToPage(index,
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.linear);
+                    setState(() {});
+                  },
+                  selectedContent: Theme.of(context).textTheme.button!.color!,
+                  unselectedContent:
+                      Theme.of(context).textTheme.headline6!.color!,
+                ),
               ),
-              preferredSize: const Size.fromHeight(40))),
+              preferredSize: const Size.fromHeight(48))),
       body: PageView(
         controller: pageController,
         onPageChanged: (index) {
