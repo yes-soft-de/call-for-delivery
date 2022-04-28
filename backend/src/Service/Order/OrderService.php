@@ -491,6 +491,8 @@ class OrderService
         $bidOrder = $this->orderManager->getOrderByIdForSupplier($orderId, $supplierId);
 
         if ($bidOrder) {
+            $bidOrder['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($bidOrder['id']);
+
             $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
 
             if ($response) {
