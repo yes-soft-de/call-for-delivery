@@ -67,8 +67,6 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
                     context: context,
                     builder: (context) {
                       return StatefulBuilder(builder: (context, setState) {
-                        print('refresh');
-
                         return AlertDialog(
                           scrollable: true,
                           shape: RoundedRectangleBorder(
@@ -207,7 +205,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
       direction: Axis.vertical,
       children: [
         CustomTile(
-            Icons.account_balance_rounded, S.current.salary, model.amount),
+            Icons.account_balance_rounded, S.current.profit, model.amount),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
             model.amountForStore),
         CustomTile(FontAwesomeIcons.store, S.current.financeStoreStatus, null,
