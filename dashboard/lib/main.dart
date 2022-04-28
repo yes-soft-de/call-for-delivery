@@ -4,6 +4,7 @@ import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
+import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
@@ -102,6 +103,7 @@ class MyApp extends StatefulWidget {
   final PaymentsModule _paymentsModule;
   final SupplierCategoriesModule _supplierCategoriesModule;
   final SupplierModule _supplierModule;
+  final CarsModule _carsModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -120,7 +122,8 @@ class MyApp extends StatefulWidget {
       this._captainsModule,
       this._paymentsModule,
       this._supplierCategoriesModule,
-      this._supplierModule
+      this._supplierModule,
+      this._carsModule
       );
 
   @override

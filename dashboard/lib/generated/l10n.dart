@@ -6079,6 +6079,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Delivery cars`
+  String get deliveryCars {
+    return Intl.message(
+      'Delivery cars',
+      name: 'deliveryCars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add cars`
+  String get addCars {
+    return Intl.message(
+      'Add cars',
+      name: 'addCars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery Cars Cost`
+  String get deliveryCarsCost {
+    return Intl.message(
+      'Delivery Cars Cost',
+      name: 'deliveryCarsCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Car Model`
+  String get carModel {
+    return Intl.message(
+      'Car Model',
+      name: 'carModel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

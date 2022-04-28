@@ -20,6 +20,10 @@ class Urls {
   static const String BASE_API_ANNOUNCEMENT =
       DOMAIN + VERSION_ADMIN + '/announcement';
 
+  static const String BASE_API_DELIVERY_CAR =
+      DOMAIN + VERSION_ADMIN + '/deliverycar';
+
+
   static const String BASE_API_BRANCH_ADMIN =
       DOMAIN + VERSION_ADMIN + '/storeownerbranch';
   static const String BASE_API_NOTICE_ADMIN =
@@ -187,4 +191,11 @@ class Urls {
   static const GET_ANNOUNCEMENT = BASE_API_ANNOUNCEMENT + '/filterannouncement';
   static const ACTIVE_ANNOUNCEMENT =
       BASE_API_ANNOUNCEMENT + '/announcementadministrationstatus';
+
+
+  /*-----------------cars_delivery-----------------------------*/
+  static const GET_DELIVERY_CARS = BASE_API_DELIVERY_CAR + '/deliverycarsforadmin';
+  static const ADD_DELIVERY_CARS =
+      BASE_API_DELIVERY_CAR + '/deliverycar';
+
 }
