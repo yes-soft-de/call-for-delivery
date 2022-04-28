@@ -36,7 +36,7 @@ class PriceOfferEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    #[ORM\Column(type: 'date', nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $offerDeadline;
 
     public function getId(): ?int
