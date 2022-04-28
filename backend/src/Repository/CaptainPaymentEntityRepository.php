@@ -140,7 +140,7 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     
-    public function getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, int $captainId): ?array
+    public function getSumPaymentsToCaptainByCaptainIdAndDate(dateTime $fromDate, dateTime $toDate, int $captainId): ?array
     {
         return $this->createQueryBuilder('captainPaymentEntity')
 

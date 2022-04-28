@@ -89,15 +89,15 @@ class AdminCaptainFinancialSystemDetailService
     {
         $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
      
-           //Sum Captain's Payments
-           $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($date['fromDate'], $date['toDate'], $captainId);
-           if($sumPayments['sumPaymentsToCaptain'] === null) {
-               $sumPayments = 0;
-           }
-           else {
-               $sumPayments = $sumPayments['sumPaymentsToCaptain'];
-           }
+        //Sum Captain's Payments
+        $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($date['fromDate'], $date['toDate'], $captainId);
+        if($sumPayments['sumPaymentsToCaptain'] === null) {
+            $sumPayments = 0;
+        }
+        else {
+            $sumPayments = $sumPayments['sumPaymentsToCaptain'];
+        }
 
-           return $sumPayments;
+        return $sumPayments;
     }
 }
