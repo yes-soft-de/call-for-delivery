@@ -57,15 +57,7 @@ class CaptainFinancialSystemDetailService
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
         if($financialSystemDetail) {
-             //sum captain's payments
-            $sumPayments = $this->captainPaymentService->getSumPayments($financialSystemDetail['captainId']);
-       
-            if($sumPayments['sumPayments'] === null) {
-                $sumPayments = 0;
-            }
-            else {
-                $sumPayments = $sumPayments['sumPayments'];
-            }
+            $sumPayments = $this->getSumPayments($financialSystemDetail['captainId']);
            
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
@@ -89,5 +81,21 @@ class CaptainFinancialSystemDetailService
         }
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+    }
+
+    public function getSumPayments($captainId): float 
+    {
+        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+     
+           //Sum Captain's Payments
+           $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($date['fromDate'], $date['toDate'], $captainId);
+           if($sumPayments['sumPaymentsToCaptain'] === null) {
+               $sumPayments = 0;
+           }
+           else {
+               $sumPayments = $sumPayments['sumPaymentsToCaptain'];
+           }
+
+           return $sumPayments;
     }
 }

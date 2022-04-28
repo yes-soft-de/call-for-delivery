@@ -46,4 +46,9 @@ class CaptainPaymentService
     {
         return $this->captainPaymentManager->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues);
     }
+
+    public function getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, int $captainId): ?array
+    {      
+        return $this->captainPaymentManager->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
+    }
 }
