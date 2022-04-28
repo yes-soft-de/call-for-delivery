@@ -472,5 +472,11 @@
     "acceptOfferMsg": "المتجر قبل عرضك",
     "confirmed": "مُأكد",
     "firstDate": "من تاريخ",
-    "endDate": "إلى تاريخ"
+    "endDate": "إلى تاريخ",
+    "selectYourCategory": "أختر تصنيفك",
+    "eg": "مثال",
+    "bankNameHint": "الراجحي",
+    "locationPref": "هذا الموقع يظهر للكباتن",
+    "locationSelected": "تم تحديد الموقع بنجاح"
+
 }

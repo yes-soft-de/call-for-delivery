@@ -5,7 +5,7 @@ class Urls {
   static const String BASE_API_USER = DOMAIN +VERSION +'/user';
   static const String BASE_API_CATEGORY = DOMAIN + VERSION+'/suppliercategory';
   static const String BASE_API_ADS = DOMAIN + '/v1/announcement';
-  static const String BASE_API_BID_ORDER = DOMAIN + VERSION+'/bidorder';
+  static const String BASE_API_BID_ORDER = DOMAIN + VERSION+'/order';
   static const String BASE_API_OFFER = DOMAIN + VERSION+'/priceoffer';
 
   static const String IMAGES_ROOT = DOMAIN + '/upload/';

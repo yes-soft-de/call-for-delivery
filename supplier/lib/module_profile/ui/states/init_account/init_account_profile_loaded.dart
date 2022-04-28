@@ -7,18 +7,23 @@ import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
+import 'package:c4d/module_profile/response/profile_response/loaction.dart';
 import 'package:c4d/module_profile/ui/screen/init_account_screen.dart';
 import 'package:c4d/module_profile/ui/states/init_account/init_account_profile_state_loading.dart';
+import 'package:c4d/module_profile/ui/widget/choose_location_widget.dart';
 import 'package:c4d/module_profile/ui/widget/init_field/init_field.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
+import 'package:c4d/utils/components/google_map_widget.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/types/gf_checkbox_type.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class InitAccountStateProfileLoaded extends States {
@@ -41,9 +46,18 @@ class InitAccountStateProfileLoaded extends States {
   final _phoneController = TextEditingController();
   final _countryController = TextEditingController();
 
+  final _bankNameController = TextEditingController();
+  final _bankAccountNumberController = TextEditingController();
+  final _stcController = TextEditingController();
+
+  bool allCategories = false;
+
   String? imagePath;
   Uint8List? imageBytes;
+  LatLng? profileLoc;
+  var namesCategories =<String>[];
 
+  var selectedItemsIndex = <dynamic>[];
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   @override
@@ -52,7 +66,7 @@ class InitAccountStateProfileLoaded extends States {
     return StackedForm(
       onTap: () {
         if (key.currentState?.validate() == true
-            && imagePath != null
+            && imagePath != null && profileLoc != null
         ) {
           screenState.currentState = InitAccountStateLoading(
               screenState, S.current.uploadingAndSubmitting);
@@ -70,8 +84,13 @@ class InitAccountStateProfileLoaded extends States {
             ProfileRequest profileRequest = ProfileRequest(
               name: _nameController.text,
               phone: _countryController.text + _phoneController.text,
-              supplierCategoryID: screenState.categoryID,
+              supplierCategories: catIdSelected(selectedItemsIndex),
               image: image,
+              allSupplierCategories: allCategories,
+              bankAccountNumber: _bankAccountNumberController.text,
+              bankName: _bankNameController.text,
+              stcPay: _stcController.text,
+              location: GeoJson(lat: profileLoc?.latitude,lon: profileLoc?.longitude)
             );
             screenState.initProfile(profileRequest,categories);
           });
@@ -79,7 +98,12 @@ class InitAccountStateProfileLoaded extends States {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: S.current.noImage)
               .show(context);
-        } else {
+        }else if (profileLoc == null) {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: S.current.chooseLocation)
+              .show(context);
+        }
+        else {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning,
                   message: S.current.pleaseCompleteTheForm)
@@ -135,57 +159,56 @@ class InitAccountStateProfileLoaded extends States {
               ),
 
               //category
-
-              Column(
-                children: [
-                  ListTile(
-                    title: LabelText(S.of(context).category),
-                    subtitle: Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).backgroundColor),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton2(
-                              value: screenState.categoryID,
-                              items: _getCategories(),
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              hint: Text(S.current.category),
-                              onChanged: (int? value) {
-                                screenState.categoryID = value;
-                                screenState.refresh();
-                              }),
-                        ),
-                      ),
-                    ),
+              Container(
+                child: GFMultiSelect(
+                  dropdownButton: Container(),
+                  items: catName(categories),
+                  onSelect: (value) {
+                    selectedItemsIndex = value;
+                    print('selected $selectedItemsIndex ');
+                  },
+                  dropdownTitleTileText: S.of(context).selectYourCategory,
+                  dropdownTitleTileColor: Theme.of(context).backgroundColor,
+                  dropdownTitleTileMargin: EdgeInsets.only(
+                      top: 22, left: 18, right: 18, bottom: 5),
+                  dropdownTitleTilePadding: EdgeInsets.all(10),
+                  dropdownUnderlineBorder: const BorderSide(
+                      color: Colors.transparent, width: 2),
+                  dropdownTitleTileBorder:
+                  Border.all(color: Colors.grey.shade300, width: 1),
+                  dropdownTitleTileBorderRadius: BorderRadius.circular(12),
+                  expandedIcon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.black54,
                   ),
-                ],
-              ),
+                  collapsedIcon: const Icon(
+                    Icons.keyboard_arrow_up,
+                    color: Colors.black54,
+                  ),
+                  dropdownTitleTileTextStyle: const TextStyle(
+                      fontSize: 14, color: Colors.black54),
+                  padding: const EdgeInsets.all(6),
+                  margin: const EdgeInsets.all(6),
+                  type: GFCheckboxType.circle,
+                  activeBgColor:Theme.of(context).primaryColor,
+                  inactiveBorderColor: Colors.grey,
+                  activeIcon: Icon(Icons.check,color: Colors.white,),
+                  dropdownBgColor: Theme.of(context).scaffoldBackgroundColor,
 
-              // supplier name
+                ),
+              ),
+              //name
               InitField(
                 icon: Icons.storefront_outlined,
                 controller: _nameController,
                 title: S.current.name,
                 hint:   S.current.nameHint,
-                onChanged: () {
-                  screenState.refresh();
-                },
-                validator: (String? v) {
-                  if (v == null) return S.current.nameIsRequired;
-                },
               ),
               // phone number
               Padding(
                 padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
                 child: Text(
-                  S.of(context).phoneNumber +
-                      ' ' +
-                      '(${S.current.phoneNumber})',
+                  S.of(context).phoneNumber,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -258,6 +281,91 @@ class InitAccountStateProfileLoaded extends States {
                 ],
               ),
 
+
+             Padding(
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 85, right: 85, top: 8),
+              child: Text(
+               S.of(context).chooseLocation,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding:
+                  const EdgeInsets.only(bottom: 0.0, right: 16.0, left: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).backgroundColor,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.location_on,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).backgroundColor,
+                    ),
+                    child: TextButton(
+                     child: Text(  profileLoc != null ?S.of(context).locationSelected :S.of(context).locationPref),
+                      onPressed: (){
+                       showDialog(context: context,
+                           builder: (_){
+                         return ChooseLocation(saveLocation: (lo){
+                           print('lastLoca');
+                           profileLoc = lo;
+                           screenState.refresh();
+                         },lastLocation: profileLoc,);
+                       });
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+              // bankName
+              InitField(
+                icon: Icons.account_balance_rounded,
+                controller: _bankNameController,
+                title: S.current.bankName,
+                hint: S.current.eg + ' : ' + S.current.bankNameHint,
+              ),
+              // bankNumber
+              InitField(
+                icon: Icons.password_rounded,
+                controller: _bankAccountNumberController,
+                title: S.current.bankAccountNumber,
+                last: true,
+                hint: S.current.eg + ' : ' + 'xxxxxxxxxxxxxx',
+              ),
+               InitField(
+                icon: Icons.storefront_outlined,
+                controller: _stcController,
+                title: S.current.stcPayCode,
+                hint:   S.current.stcPayCode,
+                 last: true,
+              ),
+
               SizedBox(
                 height: 75,
               ),
@@ -269,17 +377,22 @@ class InitAccountStateProfileLoaded extends States {
     );
   }
 
-  List<DropdownMenuItem<int>> _getCategories() {
-    var categoryDropDown = <DropdownMenuItem<int>>[];
-    categories.forEach((element) {
-      categoryDropDown.add(DropdownMenuItem(
-        child: Text(
-          element.name,
-          overflow: TextOverflow.ellipsis,
-        ),
-        value: element.id,
-      ));
+  List<String> catName(List<SupplierCategoryModel> categories){
+     namesCategories = <String>[];
+     categories.forEach((element) {
+       namesCategories.add(element.name);
     });
-    return categoryDropDown;
+    return namesCategories;
+  }
+
+  List<int> catIdSelected(List<dynamic> selectedItemsIndex){
+    var supplierCatIds = <int>[];
+    selectedItemsIndex.forEach((element) {
+      supplierCatIds.add(categories[element].id);
+    });
+    if(supplierCatIds.contains(0)){
+      allCategories = true;
+    }
+    return supplierCatIds;
   }
 }

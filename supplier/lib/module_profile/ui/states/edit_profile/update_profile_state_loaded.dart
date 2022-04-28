@@ -4,9 +4,12 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
+import 'package:c4d/module_profile/response/profile_response/loaction.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
+import 'package:c4d/module_profile/ui/widget/choose_location_widget.dart';
 import 'package:c4d/module_profile/ui/widget/init_field/init_field.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -15,13 +18,16 @@ import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multiselect/multiselect.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class UpdateProfileStateLoaded extends States {
   final ProfileScreenState screenState;
   final ProfileModel profileModel;
-  UpdateProfileStateLoaded(this.screenState, this.profileModel)
+  final List<SupplierCategoryModel> categories;
+  UpdateProfileStateLoaded(this.screenState, this.profileModel ,this.categories)
       : super(screenState) {
     var number = profileModel.phone;
     if (number == S.current.unknown) number = '';
@@ -36,21 +42,35 @@ class UpdateProfileStateLoaded extends States {
     _nameController.text = profileModel.name;
     networkImage = profileModel.image;
     imagePath = profileModel.imageUrl;
-    categoryId = profileModel.categoryId;
+    _bankNameController.text = profileModel.bankName;
+    _bankAccountNumberController.text = profileModel.bankAccount;
+    _stcController.text = profileModel.stc;
+    profLocation = profileModel.location;
+    selectedCategory = profileModel.categories;
+    screenState.selectedCategoryName =[];
+    screenState.selectedCategoryName = gecatName();
   }
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _countryController = TextEditingController();
 
+  final _bankNameController = TextEditingController();
+  final _bankAccountNumberController = TextEditingController();
+  final _stcController = TextEditingController();
 
+
+  List<CategoryModel>? selectedCategory;
   String? imagePath;
   String? networkImage;
   Uint8List? imageBytes;
-  int? categoryId;
+  LatLng? profLocation;
+
+//  int? categoryId;
 
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   @override
   Widget getUI(BuildContext context) {
+
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return WillPopScope(
       onWillPop: () async {
@@ -117,6 +137,50 @@ class UpdateProfileStateLoaded extends States {
                           ),
                         ),
                       ),
+
+                      SizedBox(height: 20,),
+                      //category
+                      Container(
+                        height: 60,
+                        margin: EdgeInsetsDirectional.only(start: 20,end: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).backgroundColor
+
+                        ),
+                        child:DropDownMultiSelect(
+                          onChanged: (List<String> x) {
+                            screenState.selectedCategoryName = x;
+                            print(screenState.selectedCategoryName);
+                          },
+                          options:catName(),
+                          selectedValues: screenState.selectedCategoryName,
+                          whenEmpty: S.of(context).selectYourCategory,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+//                            alignLabelWithHint: true,
+                            filled: true,
+                            hintText: screenState.selectedCategoryName.isNotEmpty ? '': S.of(context).selectYourCategory,
+                            fillColor: Colors.transparent,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            contentPadding: EdgeInsetsDirectional.all(16),
+                          ),
+                          childBuilder: (name){
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.all(10),
+                              child: Text(getSelectedName(name)),
+                            );
+                          },
+                        ),
+                      ),
+
                       // store name
                       InitField(
                         icon: Icons.storefront_outlined,
@@ -206,6 +270,83 @@ class UpdateProfileStateLoaded extends States {
                           ),
                         ],
                       ),
+                      // bankName
+                      InitField(
+                        icon: Icons.account_balance_rounded,
+                        controller: _bankNameController,
+                        title: S.current.bankName,
+                        hint: S.current.eg + ' : ' + S.current.bankNameHint,
+                      ),
+                      // bankNumber
+                      InitField(
+                        icon: Icons.password_rounded,
+                        controller: _bankAccountNumberController,
+                        title: S.current.bankAccountNumber,
+                        last: true,
+                        hint: S.current.eg + ' : ' + 'xxxxxxxxxxxxxx',
+                      ),
+                      // location
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 85, right: 85, top: 8),
+                              child: Text(
+                                S.of(context).chooseLocation,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                  const EdgeInsets.only(bottom: 0.0, right: 16.0, left: 16.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Theme.of(context).backgroundColor,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).disabledColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Theme.of(context).backgroundColor,
+                                    ),
+                                    child: TextButton(
+                                      child: Text(  profLocation != null ?S.of(context).locationSelected :S.of(context).locationPref),
+                                      onPressed: (){
+                                        showDialog(context: context,
+                                            builder: (_){
+                                              return ChooseLocation(saveLocation: (lo){
+                                                print('lastLoca');
+                                                profLocation = lo;
+                                                screenState.refresh();
+                                              },lastLocation: profLocation,);
+                                            });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         height: 75,
                       ),
@@ -235,30 +376,17 @@ class UpdateProfileStateLoaded extends States {
     );
   }
 
-  List<DropdownMenuItem<String>> _getSizes(BuildContext context) {
-    var sizeDropdowns = <DropdownMenuItem<String>>[];
-    sizeDropdowns.add(DropdownMenuItem(
-      child: Text(S.of(context).smallLessThan20Employee),
-      value: '1-20',
-    ));
-    sizeDropdowns.add(DropdownMenuItem(
-      child: Text(S.of(context).mediumMoreThan20EmployeesLessThan100),
-      value: '21-100',
-    ));
-    sizeDropdowns.add(DropdownMenuItem(
-      child: Text(S.of(context).largeMoreThan100Employees),
-      value: '+100',
-    ));
-
-    return sizeDropdowns;
-  }
-
   void saveWithoutImageUpload() {
     ProfileRequest profileRequest = ProfileRequest(
       name: _nameController.text,
       phone: _countryController.text + _phoneController.text,
       image: imagePath,
-    supplierCategoryID:categoryId
+        stcPay: _stcController.text,
+        bankName: _bankNameController.text,
+        bankAccountNumber: _bankAccountNumberController.text,
+        supplierCategories: getIdsSelected(),
+        location: GeoJson(lat: profLocation?.latitude,lon: profLocation?.longitude),
+      allSupplierCategories: false
     );
     screenState.saveProfile(profileRequest);
   }
@@ -280,9 +408,56 @@ class UpdateProfileStateLoaded extends States {
         name: _nameController.text,
         phone: _countryController.text + _phoneController.text,
         image: image,
-        supplierCategoryID:categoryId
+        stcPay: _stcController.text,
+          bankName: _bankNameController.text,
+          bankAccountNumber: _bankAccountNumberController.text,
+          supplierCategories: getIdsSelected(),
+          location: GeoJson(lat: profLocation?.latitude,lon: profLocation?.longitude),allSupplierCategories: false
       );
       screenState.saveProfile(profileRequest);
     });
+  }
+
+  List<String> catName(){
+   var namesCategories = <String>[];
+    categories.forEach((element) {
+      namesCategories.add(element.name);
+    });
+    return namesCategories;
+  }
+
+  List<String> gecatName(){
+    profileModel.categories.forEach((element) {
+      screenState.selectedCategoryName.add(element.name);
+    });
+    return screenState.selectedCategoryName;
+  }
+  List<int> gecatID(){
+
+    profileModel.categories.forEach((element) {
+      screenState.selectedCategoryID.add(element.id);
+    });
+    return screenState.selectedCategoryID;
+  }
+  String getSelectedName(List<String> names){
+   String allName = '';
+   names.forEach((element) {
+      allName += element+', ';
+    });
+    return allName;
+  }
+
+
+  List<int>  getIdsSelected(){
+    screenState.selectedCategoryName.forEach((selectedName) {
+      categories.forEach((cat) {
+        if(cat.name == selectedName){
+          print('in Side');
+          screenState.selectedCategoryID.add(cat.id);
+        }
+
+      });
+    });
+    return screenState.selectedCategoryID;
   }
 }

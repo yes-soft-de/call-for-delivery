@@ -4779,6 +4779,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Select your category`
+  String get selectYourCategory {
+    return Intl.message(
+      'Select your category',
+      name: 'selectYourCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bimo`
+  String get bankNameHint {
+    return Intl.message(
+      'Bimo',
+      name: 'bankNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `eg`
+  String get eg {
+    return Intl.message(
+      'eg',
+      name: 'eg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This location is shown to Captains`
+  String get locationPref {
+    return Intl.message(
+      'This location is shown to Captains',
+      name: 'locationPref',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your location selected`
+  String get locationSelected {
+    return Intl.message(
+      'Your location selected',
+      name: 'locationSelected',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

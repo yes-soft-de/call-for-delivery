@@ -8,7 +8,9 @@ import 'package:c4d/module_profile/model/category_model/category_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/init_account.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -26,7 +28,8 @@ class InitAccountScreen extends StatefulWidget {
 class InitAccountScreenState extends State<InitAccountScreen> {
   late StreamSubscription _streamSubscription;
   late States currentState;
-  int? categoryID;
+  Completer<GoogleMapController> controller = Completer();
+  late CustomInfoWindowController customInfoWindowController;
 
   void refresh() {
     if (mounted) {
