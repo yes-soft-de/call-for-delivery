@@ -465,6 +465,8 @@ App\Request\PriceOffer\PriceOfferCreateRequest:
             - NotBlank: ~
         offerDeadline:
             - NotBlank: ~
+        deliveryCar:
+            - NotBlank: ~
 
 App\Request\PriceOffer\PriceOfferStatusUpdateRequest:
     properties:

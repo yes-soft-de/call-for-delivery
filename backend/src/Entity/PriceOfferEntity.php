@@ -39,6 +39,9 @@ class PriceOfferEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $offerDeadline;
 
+    #[ORM\ManyToOne(targetEntity: DeliveryCarEntity::class, inversedBy: 'priceOfferEntities')]
+    private $deliveryCar;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,6 +127,18 @@ class PriceOfferEntity
     public function setOfferDeadline(?\DateTimeInterface $offerDeadline): self
     {
         $this->offerDeadline = $offerDeadline;
+
+        return $this;
+    }
+
+    public function getDeliveryCar(): ?DeliveryCarEntity
+    {
+        return $this->deliveryCar;
+    }
+
+    public function setDeliveryCar(?DeliveryCarEntity $deliveryCar): self
+    {
+        $this->deliveryCar = $deliveryCar;
 
         return $this;
     }
