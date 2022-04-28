@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>C4d</string>
+	<string>C4d Stores</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,15 +30,14 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We need to access your gellary to capture photo to your profile</string>
+	<string>We need to access your camera to capture photo to your profile or order</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need to access your current location to deliver order to you </string>
+	<string>We need to access your current location to calculate customer distance to you </string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need to access your gellary to pick photo to your profile</string>
+	<string>We need to access your gellary to pick photo to your profile or order</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

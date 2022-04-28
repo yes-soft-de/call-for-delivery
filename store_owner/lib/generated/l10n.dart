@@ -5709,6 +5709,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Your store inactive , please wait until be activated by the administration`
+  String get inactiveStore {
+    return Intl.message(
+      'Your store inactive , please wait until be activated by the administration',
+      name: 'inactiveStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

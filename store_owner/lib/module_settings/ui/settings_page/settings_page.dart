@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -32,11 +35,21 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool loading = false;
-
+  bool actionMade = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.of(context).settings),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.of(context).settings,
+          onTap: Platform.isIOS
+              ? () {
+                  if (actionMade) {
+                    Navigator.of(context).pop();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                }
+              : null),
       body: FixedContainer(
         child: Padding(
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
@@ -108,6 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ],
                           onChanged: (newLang) {
+                            actionMade = true;
                             widget._localizationService
                                 .setLanguage(newLang.toString());
                           }),
