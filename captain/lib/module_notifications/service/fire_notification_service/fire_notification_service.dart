@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -9,6 +10,7 @@ import 'package:c4d/module_notifications/repository/notification_repo.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:flutter/material.dart';
+import 'package:soundpool/soundpool.dart';
 
 @injectable
 class FireNotificationService {
@@ -50,20 +52,26 @@ class FireNotificationService {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           Logger().info('FireNotificationService', 'onMessage: $message');
-          // SchedulerBinding.instance?.addPostFrameCallback(
-          //   (_) {
-          //     Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-          //         message.data['navigate_route'].toString(),
-          //         arguments: message.data['argument']);
-          //   },
-          // );
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          _onNotificationReceived.add(message);
+          SchedulerBinding.instance?.addPostFrameCallback(
+            (_) {
+              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                  message.data['navigate_route'].toString(),
+                  arguments: message.data['argument']);
+            },
+          );
         });
         FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
       } catch (e) {
+        Soundpool pool = Soundpool.fromOptions();
+        var sound = await rootBundle
+            .load('assets/sounds/receive_message.mp3')
+            .then((ByteData soundData) {
+          return pool.load(soundData);
+        });
+        pool.play(sound);
         print(e.toString());
       }
     }
