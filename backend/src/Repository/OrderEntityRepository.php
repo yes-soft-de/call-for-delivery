@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\BidDetailsEntity;
+use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
@@ -668,7 +669,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getPricesOffersByBidOrderIdAndSupplierId(int $bidDetailsId, int $supplierId): array
     {
         return $this->createQueryBuilder('orderEntity')
-            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
+            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.priceOfferValue', 'deliveryCarEntity as deliveryCar')
 
             ->leftJoin(
                 BidDetailsEntity::class,
@@ -689,6 +690,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'supplierProfileEntity',
                 Join::WITH,
                 'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
+            )
+
+            ->leftJoin(
+                DeliveryCarEntity::class,
+                'deliveryCarEntity',
+                Join::WITH,
+                'deliveryCarEntity.id = priceOfferEntity.deliveryCar'
             )
 
             ->andWhere('bidDetailsEntity.id = :bidDetailsId')

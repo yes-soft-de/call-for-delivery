@@ -4,6 +4,7 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
+use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
@@ -12,6 +13,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
@@ -492,6 +494,14 @@ class OrderService
 
         if ($bidOrder) {
             $bidOrder['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($bidOrder['id']);
+
+            // here we retrieve the delivery car info for each price offer
+            if ($bidOrder['pricesOffers']) {
+                foreach ($bidOrder['pricesOffers'] as $key=>$value) {
+                    $bidOrder['pricesOffers'][$key]['deliveryCar'] = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForSupplierResponse::class, $value['deliveryCar']);
+                }
+            }
+            //----end retrieving delivery cars info
 
             $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
 
