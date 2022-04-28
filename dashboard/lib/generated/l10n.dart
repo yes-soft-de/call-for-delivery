@@ -5889,6 +5889,196 @@ class S {
       args: [],
     );
   }
+
+  /// `Amount for store`
+  String get amountForStore {
+    return Intl.message(
+      'Amount for store',
+      name: 'amountForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance dues cycle`
+  String get financialDuesCycle {
+    return Intl.message(
+      'Finance dues cycle',
+      name: 'financialDuesCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain dues`
+  String get sumCaptainFinancialDues {
+    return Intl.message(
+      'Captain dues',
+      name: 'sumCaptainFinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments to captain`
+  String get sumPaymentsToCaptainFinance {
+    return Intl.message(
+      'Payments to captain',
+      name: 'sumPaymentsToCaptainFinance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get financeStatus {
+    return Intl.message(
+      'Status',
+      name: 'financeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid`
+  String get financePaid {
+    return Intl.message(
+      'Paid',
+      name: 'financePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get financeUnPaid {
+    return Intl.message(
+      'Unpaid',
+      name: 'financeUnPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partly paid`
+  String get financePartlyPaid {
+    return Intl.message(
+      'Partly paid',
+      name: 'financePartlyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cycle start`
+  String get cycleStart {
+    return Intl.message(
+      'Cycle start',
+      name: 'cycleStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cycle end`
+  String get cycleEnd {
+    return Intl.message(
+      'Cycle end',
+      name: 'cycleEnd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial dues cycles`
+  String get financialDuesCycles {
+    return Intl.message(
+      'Financial dues cycles',
+      name: 'financialDuesCycles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current cycle`
+  String get currentFinancialDuesCycle {
+    return Intl.message(
+      'Current cycle',
+      name: 'currentFinancialDuesCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial dues details`
+  String get financialDuesDetails {
+    return Intl.message(
+      'Financial dues details',
+      name: 'financialDuesDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance order status`
+  String get financeStoreStatus {
+    return Intl.message(
+      'Finance order status',
+      name: 'financeStoreStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account balance`
+  String get accountBalance {
+    return Intl.message(
+      'Account balance',
+      name: 'accountBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In these windows we are showing you current financial details for cycle date`
+  String get currentFinancialCycleHint {
+    return Intl.message(
+      'In these windows we are showing you current financial details for cycle date',
+      name: 'currentFinancialCycleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment To Captain`
+  String get paymentToCaptain {
+    return Intl.message(
+      'Payment To Captain',
+      name: 'paymentToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make Payment`
+  String get makePayment {
+    return Intl.message(
+      'Make Payment',
+      name: 'makePayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Cycle`
+  String get currentFinancialCycle {
+    return Intl.message(
+      'Current Cycle',
+      name: 'currentFinancialCycle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

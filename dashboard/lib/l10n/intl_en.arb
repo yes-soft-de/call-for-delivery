@@ -601,7 +601,31 @@
     "updatedBy": "Updated by",
     "refuse": "Refuse",
     "FinanceRequest": "Finance request",
-    "activatedPlan": "Activated plan"
+    "activatedPlan": "Activated plan",
+    "amountForStore": "Amount for store",
+    "financialDuesCycle": "Finance dues cycle",
+    "sumCaptainFinancialDues": "Captain dues",
+    "sumPaymentsToCaptainFinance": "Payments to captain",
+    "financeStatus": "Status",
+    "financePaid": "Paid",
+    "financeUnPaid": "Unpaid",
+    "financePartlyPaid": "Partly paid",
+    "cycleStart": "Cycle start",
+    "cycleEnd": "Cycle end",
+    "financialDuesCycles": "Financial dues cycles",
+    "currentFinancialDuesCycle": "Current cycle",
+    "financialDuesDetails": "Financial dues details",
+    "financeStoreStatus": "Finance order status",
+    "accountBalance": "Account balance",
+    "currentFinancialCycleHint": "In these windows we are showing you current financial details for cycle date",
+    "paymentToCaptain": "Payment To Captain",
+    "makePayment": "Make Payment",
+    "currentFinancialCycle": "Current Cycle"
+
+
+
+
+
 
 
 

@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountAlreadyExist":
             MessageLookupByLibrary.simpleMessage("This account already exist"),
+        "accountBalance":
+            MessageLookupByLibrary.simpleMessage("Account balance"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
         "accountNotExist":
@@ -69,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
+        "amountForStore":
+            MessageLookupByLibrary.simpleMessage("Amount for store"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -258,7 +262,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
+        "currentFinancialCycle":
+            MessageLookupByLibrary.simpleMessage("Current Cycle"),
+        "currentFinancialCycleHint": MessageLookupByLibrary.simpleMessage(
+            "In these windows we are showing you current financial details for cycle date"),
+        "currentFinancialDuesCycle":
+            MessageLookupByLibrary.simpleMessage("Current cycle"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
+        "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
@@ -342,7 +354,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finance by orders"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("Finance on order"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("Partly paid"),
+        "financeStatus": MessageLookupByLibrary.simpleMessage("Status"),
+        "financeStoreStatus":
+            MessageLookupByLibrary.simpleMessage("Finance order status"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
+        "financialDuesCycle":
+            MessageLookupByLibrary.simpleMessage("Finance dues cycle"),
+        "financialDuesCycles":
+            MessageLookupByLibrary.simpleMessage("Financial dues cycles"),
+        "financialDuesDetails":
+            MessageLookupByLibrary.simpleMessage("Financial dues details"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -426,6 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginSuccess": MessageLookupByLibrary.simpleMessage(
             "Your account has been logged successfully"),
+        "makePayment": MessageLookupByLibrary.simpleMessage("Make Payment"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mechanichLicence":
@@ -564,6 +590,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment created successfully"),
+        "paymentToCaptain":
+            MessageLookupByLibrary.simpleMessage("Payment To Captain"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -776,9 +804,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "sumCaptainFinancialDues":
+            MessageLookupByLibrary.simpleMessage("Captain dues"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
+        "sumPaymentsToCaptainFinance":
+            MessageLookupByLibrary.simpleMessage("Payments to captain"),
         "supplierUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Supplier updated successfully"),
         "suppliers": MessageLookupByLibrary.simpleMessage("Suppliers"),
