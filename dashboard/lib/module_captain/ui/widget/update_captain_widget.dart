@@ -1,7 +1,8 @@
 import 'dart:typed_data';
-
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
+import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/effect/checked.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -43,6 +44,9 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
   String? networkImageIdentity;
   Uint8List? imageBytesIdentity;
 
+  String? imagePathDriving;
+  String? networkImageDriving;
+  Uint8List? imageBytesDriving;
   @override
   Widget build(BuildContext context) {
     return StackedForm(
@@ -50,6 +54,43 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
           key: _key,
           child: CustomListView
               .custom(padding: EdgeInsets.only(right: 16, left: 16), children: [
+            //  image profile
+            SizedBox(
+              height: 200,
+              child: InkWell(
+                onTap: () {
+                  ImagePicker.platform
+                      .getImage(source: ImageSource.gallery, imageQuality: 70)
+                      .then((value) async {
+                    if (value != null) {
+                      imageBytes = await value.readAsBytes();
+                      imagePath = await uploadImage(value.path);
+                      networkImage = null;
+                      setState(() {});
+                    }
+                  });
+                },
+                child: Checked(
+                    checked: imagePath != null,
+                    checkedWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: imageBytes != null
+                            ? Image.memory(
+                                imageBytes ?? Uint8List(0),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                networkImage ?? '',
+                                fit: BoxFit.cover,
+                              )),
+                    child: Center(
+                        child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ))),
+              ),
+            ),
+
             //name
             Padding(
               padding: const EdgeInsets.only(
@@ -80,7 +121,6 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               hintText: S.current.age,
               numbers: true,
             ),
-
             //car
             Padding(
               padding: const EdgeInsets.only(
@@ -95,7 +135,6 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               controller: _carController,
               hintText: S.current.car,
             ),
-
             //phone
             Padding(
               padding: const EdgeInsets.only(
@@ -112,7 +151,6 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               numbers: true,
               phone: true,
             ),
-
             //Bankname
             Padding(
               padding: const EdgeInsets.only(
@@ -143,8 +181,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               hintText: S.current.bankAccountNumber,
               numbers: true,
             ),
-
-            //  image
+            //  driver licence
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -161,8 +198,9 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                       .getImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
-                      imageBytes = await value.readAsBytes();
-                      imagePath = value.path;
+                      imageBytesDriving = await value.readAsBytes();
+                      imagePathDriving = await uploadImage(value.path);
+                      networkImageDriving = null;
                       setState(() {});
                     }
                   });
@@ -187,7 +225,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                     ))),
               ),
             ),
-
+            // mechanic
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -205,7 +243,9 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                       .then((value) async {
                     if (value != null) {
                       imageBytesMechanich = await value.readAsBytes();
-                      imagePathMechanich = value.path;
+                      imagePathMechanich = await uploadImage(value.path);
+                      ;
+                      networkImageMechanich = null;
                       setState(() {});
                     }
                   });
@@ -229,7 +269,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                     ))),
               ),
             ),
-
+// identity
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -247,7 +287,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                       .then((value) async {
                     if (value != null) {
                       imageBytesIdentity = await value.readAsBytes();
-                      imagePathIdentity = value.path;
+                      imagePathIdentity = await uploadImage(value.path);
+                      networkImageIdentity = null;
                       setState(() {});
                     }
                   });
@@ -272,37 +313,6 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                     ))),
               ),
             ),
-
-//                Padding(
-//                  padding: const EdgeInsets.only(
-//                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-//                  child: Text(
-//                    S.current.bounce,
-//                    style: TextStyle(fontWeight: FontWeight.bold),
-//                    textAlign: TextAlign.start,
-//                  ),
-//                ),
-//                CustomFormField(
-//                  controller: _bounceController,
-//                  hintText: S.current.bounce,
-//                  validator: false,
-//                  numbers: true,
-//                ),
-//
-//                Padding(
-//                  padding: const EdgeInsets.only(
-//                      left: 12.0, bottom: 8, right: 12, top: 16.0),
-//                  child: Text(
-//                    S.current.salary,
-//                    style: TextStyle(fontWeight: FontWeight.bold),
-//                    textAlign: TextAlign.start,
-//                  ),
-//                ),
-//                CustomFormField(
-//                  controller: _salaryController,
-//                  hintText: S.current.salary,
-//                  numbers: true,
-//                ),
             SizedBox(
               height: 100,
             ),
@@ -317,13 +327,14 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               bankAccountNumber: _bankAccountNumberController.text,
               bankName: _bankNameController.text,
               age: _ageController.text,
-              bounce: double.parse(_bounceController.text),
+              bounce: double.tryParse(_bounceController.text) ?? 0,
               captainName: _nameController.text,
               car: _carController.text,
-              identity: widget.request!.identity ?? '',
-              images: widget.request!.image ?? '',
+              identity: imagePathIdentity,
+              images: imagePath,
+              drivingLicence: imagePathDriving,
+              mechanicLicense: imagePathMechanich,
               isOnline: widget.request!.isOnline ?? false,
-              mechanicLicense: widget.request!.mechanicLicense ?? '',
             ));
           } else {
             CustomFlushBarHelper.createError(
@@ -344,14 +355,43 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
     _bankNameController.text = widget.request!.bankName ?? '';
     _bankAccountNumberController.text = widget.request!.bankNumber ?? '';
 
-    networkImageMechanich = widget.request!.mechanicLicense ?? '';
-    imagePathMechanich = widget.request!.mechanicLicense ?? '';
-
-    imagePathIdentity = widget.request!.identity ?? '';
-    networkImageIdentity = widget.request!.identity ?? '';
-
-    networkImage = widget.request!.drivingLicence ?? '';
-    imagePath = widget.request!.drivingLicence ?? '';
+    // network image
+    networkImageIdentity = widget.request?.identity;
+    networkImage = widget.request?.image;
+    networkImageMechanich = widget.request?.mechanicLicense;
+    networkImageDriving = widget.request?.drivingLicence;
+    // image path
+    if (widget.request?.image != null) {
+      imagePath = getPath(widget.request?.image);
+    }
+    if (widget.request?.identity != null) {
+      imagePathIdentity = getPath(widget.request?.identity);
+    }
+    if (widget.request?.mechanicLicense != null) {
+      imagePathMechanich = getPath(widget.request?.mechanicLicense);
+    }
+    if (widget.request?.drivingLicence != null) {
+      imagePathDriving = getPath(widget.request?.drivingLicence);
+    }
     super.initState();
+  }
+
+  String? getPath(String? image) {
+    if (image == null) {
+      return null;
+    }
+    try {
+      var path = image.split('/upload/').last;
+      return path;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String?> uploadImage(String path) async {
+    var imagePath = await getIt<ImageUploadService>().uploadImage(path);
+    setState(() {
+    });
+    return imagePath;
   }
 }

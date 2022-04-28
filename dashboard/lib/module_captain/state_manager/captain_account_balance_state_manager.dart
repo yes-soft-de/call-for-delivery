@@ -23,7 +23,7 @@ class AccountBalanceStateManager {
       if (value.hasError) {
         stateSubject.add(ErrorState(screenState, onPressed: () {
           getAccountBalance(screenState,captainID);
-        }, title: S.current.myBalance));
+        }, title: S.current.myBalance,error: value.error),);
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
             emptyMessage: S.current.homeDataEmpty,

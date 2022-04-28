@@ -16,6 +16,7 @@ class UpdateCaptainRequest {
   bool? isOnline;
   num? salary;
   num? bounce;
+  String? drivingLicence;
 
   UpdateCaptainRequest(
       {required this.id,
@@ -32,7 +33,8 @@ class UpdateCaptainRequest {
       this.identity,
       this.isOnline,
       this.salary,
-      this.bounce});
+      this.bounce,
+      this.drivingLicence});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -46,6 +48,7 @@ class UpdateCaptainRequest {
     map['stcPay'] = stcPay;
     map['images'] = images;
     map['mechanicLicense'] = mechanicLicense;
+    map['drivingLicence'] = drivingLicence;
     map['identity'] = identity;
     map['isOnline'] = isOnline;
     map['salary'] = salary;

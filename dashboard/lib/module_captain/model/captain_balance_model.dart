@@ -13,10 +13,13 @@ class CaptainAccountBalanceModel extends DataModel {
   late num? monthCompensation;
   late num? countOverOrdersThanRequired;
   late num? bounce;
+  late num amountForStore;
   late String? monthTargetSuccess;
   late num? countOrdersCompleted;
   late String? dateFinancialCycleEnds;
   List<OrderCountsSystemDetails>? orderCountsDetails;
+  late num? ordersInMonth;
+
   CaptainAccountBalanceModel(
       {required this.advancePayment,
       required this.compensationForEveryOrder,
@@ -32,7 +35,10 @@ class CaptainAccountBalanceModel extends DataModel {
       required this.countOverOrdersThanRequired,
       required this.dateFinancialCycleEnds,
       required this.monthTargetSuccess,
-      this.orderCountsDetails});
+      this.orderCountsDetails,
+      required this.amountForStore,
+      required this.ordersInMonth
+      });
   late CaptainAccountBalanceModel _data;
   CaptainAccountBalanceModel.withData(CaptainAccountBalanceResponse response) {
     var element = response.data;
@@ -67,7 +73,7 @@ class CaptainAccountBalanceModel extends DataModel {
           countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
-          monthTargetSuccess: element?.monthTargetSuccess);
+          monthTargetSuccess: element?.monthTargetSuccess, amountForStore: element?.amountForStore ?? 0, ordersInMonth: element?.countOrdersInMonth);
     } else {
       _data = CaptainAccountBalanceModel(
           advancePayment: element?.advancePayment,
@@ -83,7 +89,8 @@ class CaptainAccountBalanceModel extends DataModel {
           countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
-          monthTargetSuccess: element?.monthTargetSuccess);
+          monthTargetSuccess: element?.monthTargetSuccess, amountForStore: element?.amountForStore ?? 0, 
+          ordersInMonth: element?.countOrdersInMonth ?? 0);
     }
   }
   CaptainAccountBalanceModel get data => _data;
@@ -91,14 +98,14 @@ class CaptainAccountBalanceModel extends DataModel {
 
 class OrderCountsSystemDetails {
   String categoryName;
-  int countKilometersFrom;
-  int countKilometersTo;
-  double amount;
-  double bounce;
-  int bounceCountOrdersInMonth;
-  int captainTotalCategory;
-  int contOrderCompleted;
-  int countOfOrdersLeft;
+  num countKilometersFrom;
+  num countKilometersTo;
+  num amount;
+  num bounce;
+  num bounceCountOrdersInMonth;
+  num captainTotalCategory;
+  num contOrderCompleted;
+  num countOfOrdersLeft;
   String message;
   OrderCountsSystemDetails({
     required this.categoryName,

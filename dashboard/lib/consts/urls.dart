@@ -53,6 +53,8 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/captainpayments';
   static const BASE_CAPTAIN_ACCOUNT_BALANCE =
       DOMAIN + VERSION_ADMIN + '/captainfinancialsystemdetail';
+  static const BASE_CAPTAIN_ACCOUNT_BALANCE_DUES =
+      DOMAIN  +'/v1/captainfinancialduesforadmin';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -162,12 +164,11 @@ class Urls {
       BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS +
           '/captainfinancialsystemaccordingtocountofordersbyadmin';
   static const GET_CAPTAIN_ACCOUNT_BALANCE =
-      BASE_CAPTAIN_ACCOUNT_BALANCE +
-          '/captainbalancedetailforcaptainspecific';
-          static const UPDATE_CAPTAIN_FINANCE_PLAN =
-      BASE_CAPTAIN_ACCOUNT_BALANCE +
-          '/captainfinancialsystemdetailstatus';
-
+      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
+  static const UPDATE_CAPTAIN_FINANCE_PLAN =
+      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
+  static const GET_CAPTAIN_FINANCE_DUES =
+      BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';
