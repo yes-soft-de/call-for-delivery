@@ -1,5 +1,8 @@
 import 'package:c4d/module_bid_orders/repository/order_repository/order_repository.dart';
-import 'package:c4d/module_bid_orders/request/order_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
+import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
+import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -12,20 +15,15 @@ class OrdersManager {
     this._repository,
   );
 
-//  Future<ActionResponse?> addNewOrder(CreateOrderRequest orderRequest) =>
-//      _repository.addNewOrder(orderRequest);
+  Future<OrdersResponse?> getOpenOrders(FilterOpenBidOrderRequest request) =>
+      _repository.getOpenOrder(request);
 
-//  Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
-//      _repository.getOrderDetails(orderId);
+  Future<OrdersResponse?> getMyOfferOrder(FilterOrderOfferRequest request) =>
+      _repository.getMyOfferOrder(request);
 
-  Future<OrdersResponse?> getMyOrders() => _repository.getMyOrders();
-  Future<OrdersResponse?> getMyOrdersFilter(FilterBidOrderRequest request) =>
-      _repository.getMyOrdersFilter(request);
+  Future<OrderDetailsResponse?> getOrderDetails(int id) =>
+      _repository.getOrderDetails(id);
 
-  // Future<Map> getOrder(int orderId) => _repository.getOrder(orderId);
-
-  Future<ActionResponse?> deleteOrder(int orderId) =>
-      _repository.deleteOrder(orderId);
-
-
+  Future<ActionResponse?> addNewOffer(AddOfferRequest offerRequest) =>
+      _repository.addNewOffer(offerRequest);
 }

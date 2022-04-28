@@ -52,7 +52,7 @@ class CustomC4dAppBar {
                           offset: Offset(-0.2, 0))
                     ],
                     color: buttonBackground ??
-                        Theme.of(context).scaffoldBackgroundColor,
+                        Theme.of(context).primaryColor,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -60,7 +60,7 @@ class CustomC4dAppBar {
                         color: colorIcon ??
                             (isDark
                                 ? null
-                                : Theme.of(context).colorScheme.primary)),
+                                : Theme.of(context).scaffoldBackgroundColor)),
                   ),
                 ),
               ),
@@ -99,13 +99,13 @@ class CustomC4dAppBar {
                   offset: Offset(-0.2, 0))
             ],
             color:
-            buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
+            buttonBackground ?? Theme.of(context).primaryColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(icon,
                 color: colorIcon ??
-                    (isDark ? null : Theme.of(context).colorScheme.primary)),
+                    (isDark ? null : Theme.of(context).scaffoldBackgroundColor)),
           ),
         ),
       ),

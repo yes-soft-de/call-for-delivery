@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/state_manager/update_state_manager.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -66,6 +68,9 @@ class UpdateScreenState extends State<UpdateScreen> {
         }
       },
       child: Scaffold(
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.current.notices,
+            canGoBack: true),
         body: FixedContainer(child: currentState.getUI(context)),
       ),
     );

@@ -470,5 +470,18 @@
     "rejectOffer": "Reject offer",
     "pendingOffer": "pending offer",
     "acceptOffer": "accept offer",
-    "myOffers": "my offers"
+    "myOffers": "my offers",
+
+    "close": "Close",
+    "open": "open",
+    "addYourOffer": "Add your offer",
+    "price": "Price",
+    "deadLine": "Dead Line",
+    "offerLog": "Offer log",
+
+
+    "pendingOfferMsg": "Waiting to accept your offer",
+    "rejectOfferMsg": "Store reject your offer",
+    "acceptOfferMsg": "Store accept your offer",
+    "confirmed": "Confirmed"
 }

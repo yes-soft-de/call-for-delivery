@@ -1,12 +1,14 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
 import 'package:c4d/module_bid_orders/model/order/order_model.dart';
-import 'package:c4d/module_bid_orders/ui/screens/orders/owner_orders_screen.dart';
+import 'package:c4d/module_bid_orders/ui/screens/orders/open_orders_screen.dart';
+import 'package:c4d/module_bid_orders/ui/widgets/bid_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class OrdersListStateOrdersLoaded extends States {
   final List<OrderModel> orders;
-  final OwnerOrdersScreenState screenState;
+  final OpenOrdersScreenState screenState;
   OrdersListStateOrdersLoaded(
     this.screenState, {
     required this.orders,
@@ -21,17 +23,13 @@ class OrdersListStateOrdersLoaded extends States {
     var context = screenState.context;
     List<Widget> widgets = [];
     orders.forEach((element) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-
-            },
-            child: Container(child: Text('All Data Done '),),
-          ),
+      widgets.add(Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments: element.id);
+          },
+          child:BidOrderCard(element,true),
         ),
       ));
     });

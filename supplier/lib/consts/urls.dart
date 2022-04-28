@@ -6,6 +6,7 @@ class Urls {
   static const String BASE_API_CATEGORY = DOMAIN + VERSION+'/suppliercategory';
   static const String BASE_API_ADS = DOMAIN + '/v1/announcement';
   static const String BASE_API_BID_ORDER = DOMAIN + VERSION+'/bidorder';
+  static const String BASE_API_OFFER = DOMAIN + VERSION+'/priceoffer';
 
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
@@ -52,7 +53,13 @@ class Urls {
   static const ACTIVATE_ADS = BASE_API_ADS+ '/announcementstatus';
 
 
-  /*---------------BID ORDER-------------*/
-  static const GET_BID_ORDER = BASE_API_BID_ORDER+ '/filterbidordersbysupplier';
+  /*---------------BID ORDER-OFFER------------*/
+  static const GET_OPEN_BID_ORDER = BASE_API_BID_ORDER+ '/filterbidordersbysupplier';
+  static const ORDER_DETAILS = BASE_API_BID_ORDER+ '/bidorderbyidforsupplier/';
+
+  static const GET_BID_ORDER_OFFER = BASE_API_BID_ORDER+ '/filterbidorderswithpriceoffersbysupplier';
+
+  static const ADD_OFFER = BASE_API_OFFER+ '/priceoffer';
+  static const CONFIRM_OFFER = BASE_API_OFFER+ '/priceofferstatusbysupplier';
 
 }

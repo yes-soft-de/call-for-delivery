@@ -456,5 +456,21 @@
     "rejectOffer": "العروض المرفوضة",
     "pendingOffer": "العروض المنتظرة",
     "acceptOffer": "العروض ألمقبولة",
-    "myOffers": "عروضي"
+    "myOffers": "عروضي",
+
+    "close": "مغلق",
+    "open": "مفتوح",
+    "addYourOffer": "أضف عرضك",
+    "price": "السعر",
+    "deadLine": "تاريخ التسليم",
+    "offerLog": "سجل العروض",
+    "onGoingOrder": "الطلبات الجارية",
+
+
+    "pendingOfferMsg": "بإنتظار قبول عرضك",
+    "rejectOfferMsg": "المتجر رفض عرضك",
+    "acceptOfferMsg": "المتجر قبل عرضك",
+    "confirmed": "مُأكد",
+    "firstDate": "من تاريخ",
+    "endDate": "إلى تاريخ"
 }

@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
-import 'package:c4d/module_bid_orders/request/order_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
 import 'package:c4d/module_bid_orders/state_manager/order_logs_state_manager.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -45,11 +46,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    ordersFilter = FilterBidOrderRequest(
+    ordersFilter = FilterOrderOfferRequest(
         fromDate:
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-        toDate: DateTime.now().toIso8601String());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
+        toDate: DateTime.now().toIso8601String(),openToPriceOffer: false);
+    widget._stateManager.getMyOfferOrdersFilters(this, ordersFilter);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -64,9 +65,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     super.dispose();
   }
 
-  late FilterBidOrderRequest ordersFilter;
+  late FilterOrderOfferRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    widget._stateManager.getMyOfferOrdersFilters(this, ordersFilter);
   }
 
   @override
@@ -220,18 +221,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               height: 40,
               cursorColor: Theme.of(context).colorScheme.primary,
               items: [
-                FilterItem(
-                  label: S.current.pending,
-                ),
-                FilterItem(label: S.current.ongoing),
-                FilterItem(label: S.current.completed),
-                FilterItem(label: S.current.cancelled2),
+                FilterItem(label: S.current.acceptOffer),
+                FilterItem(label: S.current.rejectOffer),
               ],
               onItemSelected: (index) {
                 if (index == 0) {
+                  ordersFilter.priceOfferStatus ='accepted';
                 } else if (index == 1) {
-                } else if (index == 3) {
-                } else {
+                  ordersFilter.priceOfferStatus ='refused';
                 }
                 currentIndex = index;
                 getOrders();

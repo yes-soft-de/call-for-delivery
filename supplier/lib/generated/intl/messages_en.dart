@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOffer": MessageLookupByLibrary.simpleMessage("accept offer"),
+        "acceptOfferMsg":
+            MessageLookupByLibrary.simpleMessage("Store accept your offer"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
         "acceptOrderDescribtion": MessageLookupByLibrary.simpleMessage(
             "You can accept your mission to deliver package"),
@@ -54,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
+        "addYourOffer": MessageLookupByLibrary.simpleMessage("Add your offer"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -145,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -159,6 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
@@ -177,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("day"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
+        "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "delete": MessageLookupByLibrary.simpleMessage("delete"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
@@ -369,9 +375,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
+        "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
+        "open": MessageLookupByLibrary.simpleMessage("open"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
@@ -439,6 +447,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "pendingOffer": MessageLookupByLibrary.simpleMessage("pending offer"),
+        "pendingOfferMsg": MessageLookupByLibrary.simpleMessage(
+            "Waiting to accept your offer"),
         "pendingOrders": MessageLookupByLibrary.simpleMessage("Pending order"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phoneIsRequired":
@@ -487,6 +497,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "price": MessageLookupByLibrary.simpleMessage("Price"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -532,6 +543,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "Register Success, Setup my profile"),
         "rejectOffer": MessageLookupByLibrary.simpleMessage("Reject offer"),
+        "rejectOfferMsg":
+            MessageLookupByLibrary.simpleMessage("Store reject your offer"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
         "renewOldPlan":

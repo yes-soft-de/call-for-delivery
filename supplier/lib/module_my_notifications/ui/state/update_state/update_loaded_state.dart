@@ -22,61 +22,6 @@ class UpdatesLoadedState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Visibility(
-        visible: screenState.markerMode,
-        child: ScalingWidget(
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {
-              List<String> notifications = [];
-              model.forEach((element) {
-                if (element.marked) {
-                  notifications.add(element.id.toString());
-                }
-              });
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CustomAlertDialog(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          screenState.deleteNotifications(notifications);
-                        },
-                        content: S.current
-                            .areYouSureAboutDeleteSelectedNotifications);
-                  });
-            },
-            child: Icon(Icons.delete_rounded),
-          ),
-        ),
-      ),
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.notices,
-          canGoBack: true,
-          onTap: screenState.markerMode ? () {} : null,
-          widget: screenState.markerMode
-              ? Checkbox(
-                  value: markAll,
-                  onChanged: (bool? check) {
-                    markAll = check ?? false;
-                    model.forEach((element) {
-                      element.marked = check ?? false;
-                    });
-                    screenState.refresh();
-                  })
-              : null,
-          actions: [
-            Visibility(
-              visible: screenState.markerMode,
-              child: CustomC4dAppBar.actionIcon(context, onTap: () {
-                screenState.markerMode = false;
-                model.forEach((element) {
-                  element.marked = false;
-                });
-                screenState.refresh();
-              }, icon: Icons.close_rounded),
-            )
-          ]),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: RefreshIndicator(

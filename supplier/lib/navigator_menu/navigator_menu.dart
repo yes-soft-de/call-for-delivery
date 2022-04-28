@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/model/company_info_model.dart';
+import 'package:c4d/module_bid_orders/bid_orders_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
@@ -93,13 +94,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 Navigator.of(context).pushNamed(ProfileRoutes.PROFILE_SCREEN);
               },
               title: S.current.myProfile),
-//          CustomNavTile(
-//              icon: Icons.account_balance_rounded,
-//              onTap: () {
-//                Navigator.of(context)
-//                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
-//              },
-//              title: S.current.myBalance),
+          CustomNavTile(
+              icon: Icons.account_balance_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(BidOrdersRoutes.ORDER_LOG);
+              },
+              title: S.current.offerLog),
           Divider(
             indent: 32,
             endIndent: 32,
