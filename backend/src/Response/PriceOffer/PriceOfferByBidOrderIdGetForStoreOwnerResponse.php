@@ -3,6 +3,7 @@
 namespace App\Response\PriceOffer;
 
 use DateTime;
+use OpenApi\Annotations as OA;
 
 class PriceOfferByBidOrderIdGetForStoreOwnerResponse
 {
@@ -17,4 +18,9 @@ class PriceOfferByBidOrderIdGetForStoreOwnerResponse
     public string $priceOfferStatus;
 
     public DateTime $offerDeadline;
+
+    /**
+     * @OA\Property(type="object", property="deliveryCar", nullable=true)
+     */
+    public $deliveryCar;
 }

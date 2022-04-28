@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\DeliveryCarEntity;
 use App\Entity\PriceOfferEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,7 +24,15 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
     public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array
     {
         return $this->createQueryBuilder('priceOfferEntity')
-            ->select('priceOfferEntity.id', 'priceOfferEntity.createdAt', 'priceOfferEntity.updatedAt', 'priceOfferEntity.priceOfferValue', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.offerDeadline')
+            ->select('priceOfferEntity.id', 'priceOfferEntity.createdAt', 'priceOfferEntity.updatedAt', 'priceOfferEntity.priceOfferValue', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.offerDeadline',
+                'deliveryCarEntity as deliveryCar')
+
+            ->leftJoin(
+                DeliveryCarEntity::class,
+                'deliveryCarEntity',
+                Join::WITH,
+                'deliveryCarEntity.id = priceOfferEntity.deliveryCar'
+            )
 
             ->andWhere('priceOfferEntity.bidDetails = :bidDetails')
             ->setParameter('bidDetails', $bidDetailsId)
