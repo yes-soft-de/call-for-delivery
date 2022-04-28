@@ -56,4 +56,10 @@ class OrderByIdForSupplierGetResponse
      *     @OA\Items(type="object"))
      */
     public $pricesOffers;
+
+    /**
+     * @OA\Property(type="array", property="orderLogs",
+     *     @OA\Items(type="object"))
+     */
+    public $orderLogs;
 }
