@@ -5,7 +5,7 @@ namespace App\Request\Order;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SupplierCategoryEntity;
 
-class BidOrderCreateRequest
+class BidDetailsCreateRequest
 {
     /**
      * @var string|null

@@ -3,12 +3,17 @@
 namespace App\Response\Image;
 
 use DateTime;
+use OpenApi\Annotations as OA;
 
 class ImageGetResponse
 {
     public int $id;
 
-    public array $image;
+    /**
+     * @OA\Property(type="array", property="image",
+     *     @OA\Items(type="object"))
+     */
+    public $image;
 
     public int $entityType;
 
@@ -19,4 +24,6 @@ class ImageGetResponse
     public datetime $createdAt;
 
     public datetime $updatedAt;
+
+    public int $bidDetailsId;
 }

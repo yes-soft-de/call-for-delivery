@@ -4,7 +4,10 @@ namespace App\Response\Image;
 
 class ImageCreateResponse
 {
-    public int $id;
+    /**
+     * @var int|null
+     */
+    public $id;
 
     public string $imagePath;
 

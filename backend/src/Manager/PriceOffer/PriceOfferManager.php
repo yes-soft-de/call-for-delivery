@@ -5,7 +5,7 @@ namespace App\Manager\PriceOffer;
 use App\AutoMapping;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Entity\PriceOfferEntity;
-use App\Manager\BidOrder\BidOrderManager;
+use App\Manager\BidDetails\BidDetailsManager;
 use App\Manager\Order\OrderManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\PriceOfferEntityRepository;
@@ -18,17 +18,17 @@ class PriceOfferManager
 {
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
-    private BidOrderManager $bidOrderManager;
+    private BidDetailsManager $bidDetailsManager;
     private SupplierProfileManager $supplierProfileManager;
     private OrderManager $orderManager;
     private PriceOfferEntityRepository $priceOfferEntityRepository;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidOrderManager $bidOrderManager, SupplierProfileManager $supplierProfileManager, OrderManager $orderManager,
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidDetailsManager $bidDetailsManager, SupplierProfileManager $supplierProfileManager, OrderManager $orderManager,
                                 PriceOfferEntityRepository $priceOfferEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
-        $this->bidOrderManager = $bidOrderManager;
+        $this->bidDetailsManager = $bidDetailsManager;
         $this->supplierProfileManager = $supplierProfileManager;
         $this->orderManager = $orderManager;
         $this->priceOfferEntityRepository = $priceOfferEntityRepository;
@@ -37,8 +37,8 @@ class PriceOfferManager
     public function createPriceOffer(PriceOfferCreateRequest $request): PriceOfferEntity
     {
         // Set the bid order entity in the create request
-        $bidOrderEntity = $this->bidOrderManager->getBidOrderEntityByBidOrderId($request->getBidOrder());
-        $request->setBidOrder($bidOrderEntity);
+        $bidDetailsEntity = $this->bidDetailsManager->getBidDetailsEntityByBidOrderId($request->getBidDetails());
+        $request->setBidDetails($bidDetailsEntity);
 
         // Set the supplier profile entity in the create request
         $supplierProfileEntity = $this->supplierProfileManager->getSupplierProfileEntityBySupplierId($request->getSupplierProfile());
@@ -56,9 +56,9 @@ class PriceOfferManager
         return $priceOfferEntity;
     }
 
-    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): array
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array
     {
-        return $this->priceOfferEntityRepository->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
+        return $this->priceOfferEntityRepository->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
     }
 
     public function updatePriceOfferStatusByStoreOwner(PriceOfferStatusUpdateRequest $request): ?PriceOfferEntity
@@ -85,10 +85,10 @@ class PriceOfferManager
             $this->entityManager->flush();
 
             // then, update the status of the other offers (for the same order) to be refused
-            $this->updateAllPricesOffersStatusExceptTheAcceptedOne($request->getId(), $priceOfferEntity->getBidOrder()->getId());
+            $this->updateAllPricesOffersStatusExceptTheAcceptedOne($request->getId(), $priceOfferEntity->getBidDetails()->getId());
 
             // thirdly, set the order to be closed for further price offers
-            $this->bidOrderManager->updateBidOrderToBeClosedForPriceOffer($priceOfferEntity->getBidOrder()->getId());
+            $this->bidDetailsManager->updateBidDetailsToBeClosedForPriceOffer($priceOfferEntity->getBidDetails()->getId());
 
             return $priceOfferEntity;
         }
@@ -98,9 +98,9 @@ class PriceOfferManager
     }
 
     // This function update the status of all prices offers of a bid order except the accepted offer
-    public function updateAllPricesOffersStatusExceptTheAcceptedOne(int $acceptedPriceOfferId, int $bidOrderId)
+    public function updateAllPricesOffersStatusExceptTheAcceptedOne(int $acceptedPriceOfferId, int $bidDetailsId)
     {
-        $pricesOffersEntities = $this->priceOfferEntityRepository->getAllPricesOffersOfBidOrderExceptedOne($bidOrderId, $acceptedPriceOfferId);
+        $pricesOffersEntities = $this->priceOfferEntityRepository->getAllPricesOffersOfBidOrderExceptedOne($bidDetailsId, $acceptedPriceOfferId);
 
         if (! empty($pricesOffersEntities)) {
             foreach ($pricesOffersEntities as $priceOfferEntity) {
@@ -126,9 +126,24 @@ class PriceOfferManager
             $this->entityManager->flush();
 
             // then, we update order status from 'initialized' to 'pending'
-            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidOrder()->getOrderId()->getId());
+            $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId());
 
             return $priceOfferEntity;
         }
+    }
+
+    public function deleteAllPricesOffers(): array
+    {
+        $pricesOffers = $this->priceOfferEntityRepository->findAll();
+
+        if ($pricesOffers) {
+            foreach ($pricesOffers as $pricesOffer) {
+                $this->entityManager->remove($pricesOffer);
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $pricesOffers;
     }
 }

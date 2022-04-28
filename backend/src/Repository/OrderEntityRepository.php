@@ -3,8 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
-use App\Constant\Order\OrderTypeConstant;
-use App\Entity\BidOrderEntity;
+use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
@@ -522,23 +521,23 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
-            ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.title', 'bidOrderEntity.openToPriceOffer', 'bidOrderEntity.description')
+            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.openToPriceOffer', 'bidDetailsEntity.description')
 
-            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferStatus')
             ->setParameter('openToPriceOfferStatus', 1)
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->leftJoin(
                 SupplierCategoryEntity::class,
                 'supplierCategoryEntity',
                 Join::WITH,
-                'supplierCategoryEntity.id = bidOrderEntity.supplierCategory'
+                'supplierCategoryEntity.id = bidDetailsEntity.supplierCategory'
             )
 
             ->leftJoin(
@@ -558,24 +557,24 @@ class OrderEntityRepository extends ServiceEntityRepository
         //---- Check if bid order is among the orders which the supplier had made a previous offer for it
         $bidOrderIds = $this->getBidOrderIdsBySupplierIdAndThatHavePriceOffers($request->getSupplierId());
         if (! empty($bidOrderIds)) {
-            $query->andWhere('bidOrderEntity.id NOT IN (:bidOrderIds)');
+            $query->andWhere('bidDetailsEntity.id NOT IN (:bidOrderIds)');
             $query->setParameter('bidOrderIds', $bidOrderIds);
         }
         //---- End checking block
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('bidOrderEntity.createdAt >= :createdAt');
+            $query->andWhere('bidDetailsEntity.createdAt >= :createdAt');
             $query->setParameter('createdAt', $request->getFromDate());
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('bidOrderEntity.createdAt <= :createdAt');
+            $query->andWhere('bidDetailsEntity.createdAt <= :createdAt');
             $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('bidOrderEntity.createdAt >= :fromDate');
+            $query->andWhere('bidDetailsEntity.createdAt >= :fromDate');
             $query->setParameter('fromDate', $request->getFromDate());
 
-            $query->andWhere('bidOrderEntity.createdAt <= :toDate');
+            $query->andWhere('bidDetailsEntity.createdAt <= :toDate');
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
 
@@ -610,23 +609,23 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getBidOrderIdsBySupplierIdAndThatHavePriceOffers(int $supplierId): array
     {
         return $this->createQueryBuilder('orderEntity')
-            ->select('DISTINCT(bidOrderEntity.id)')
+            ->select('DISTINCT(bidDetailsEntity.id)')
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('bidOrderEntity.openToPriceOffer = :openToPriceOfferStatus')
+            ->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferStatus')
             ->setParameter('openToPriceOfferStatus', 1)
 
             ->leftJoin(
                 PriceOfferEntity::class,
                 'priceOfferEntity',
                 Join::WITH,
-                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
             )
 
             ->leftJoin(
@@ -639,7 +638,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $supplierId)
 
-            ->orderBy('bidOrderEntity.id', 'DESC')
+            ->orderBy('bidDetailsEntity.id', 'DESC')
 
             ->getQuery()
             ->getSingleColumnResult();
@@ -650,13 +649,13 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.orderType', 'orderEntity.noteCaptainOrderCost', 'orderEntity.note', 'orderEntity.state', 'orderEntity.createdAt', 'orderEntity.captainOrderCost',
                 'orderEntity.updatedAt', 'orderEntity.dateCaptainArrived', 'orderEntity.deliveryDate', 'orderEntity.isCaptainArrived', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.kilometer')
-            ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.openToPriceOffer')
+            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.openToPriceOffer')
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->andWhere('orderEntity.id = :orderId')
@@ -666,23 +665,23 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getPricesOffersByBidOrderIdAndSupplierId(int $bidOrderId, int $supplierId): array
+    public function getPricesOffersByBidOrderIdAndSupplierId(int $bidDetailsId, int $supplierId): array
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->leftJoin(
                 PriceOfferEntity::class,
                 'priceOfferEntity',
                 Join::WITH,
-                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
             )
 
             ->leftJoin(
@@ -692,8 +691,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
             )
 
-            ->andWhere('bidOrderEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
+            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
+            ->setParameter('bidDetailsId', $bidDetailsId)
 
             ->andWhere('supplierProfileEntity.user = :supplierId')
             ->setParameter('supplierId', $supplierId)
@@ -704,27 +703,27 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getBidOrderImagesByBidOrderId(int $bidOrderId): array
+    public function getBidDetailsImagesByBidDetailsId(int $bidDetailsId): array
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('imageEntity.imagePath')
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->leftJoin(
                 ImageEntity::class,
                 'imageEntity',
                 Join::WITH,
-                'imageEntity.bidOrder = bidOrderEntity.id'
+                'imageEntity.bidDetails = bidDetailsEntity.id'
             )
 
-            ->andWhere('bidOrderEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
+            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
+            ->setParameter('bidDetailsId', $bidDetailsId)
 
             ->orderBy('imageEntity.id', 'DESC')
 
@@ -740,7 +739,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.title', 'bidOrderEntity.openToPriceOffer')
 
             ->leftJoin(
-                BidOrderEntity::class,
+                BidDetailsEntity::class,
                 'bidOrderEntity',
                 Join::WITH,
                 'bidOrderEntity.orderId = orderEntity.id'
@@ -795,7 +794,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('priceOfferEntity.id', 'priceOfferEntity.priceOfferStatus')
 
             ->leftJoin(
-                BidOrderEntity::class,
+                BidDetailsEntity::class,
                 'bidOrderEntity',
                 Join::WITH,
                 'bidOrderEntity.orderId = orderEntity.id'
@@ -828,15 +827,15 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId')
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
-            ->addSelect('bidOrderEntity.id as bidOrderId', 'bidOrderEntity.title', 'bidOrderEntity.description', 'bidOrderEntity.openToPriceOffer')
+            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.description', 'bidDetailsEntity.openToPriceOffer')
             ->addSelect('supplierCategoryEntity.id as supplierCategoryId', 'supplierCategoryEntity.name as supplierCategoryName')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = orderEntity.captainId')
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
-            ->leftJoin(BidOrderEntity::class, 'bidOrderEntity', Join::WITH, 'bidOrderEntity.orderId = orderEntity.id')
-            ->leftJoin(SupplierCategoryEntity::class, 'supplierCategoryEntity', Join::WITH, 'supplierCategoryEntity.id = bidOrderEntity.supplierCategory')
+            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
+            ->leftJoin(SupplierCategoryEntity::class, 'supplierCategoryEntity', Join::WITH, 'supplierCategoryEntity.id = bidDetailsEntity.supplierCategory')
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
@@ -851,20 +850,20 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
 
             ->leftJoin(
-                BidOrderEntity::class,
-                'bidOrderEntity',
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
                 Join::WITH,
-                'bidOrderEntity.orderId = orderEntity.id'
+                'bidDetailsEntity.orderId = orderEntity.id'
             )
 
             ->leftJoin(
                 PriceOfferEntity::class,
                 'priceOfferEntity',
                 Join::WITH,
-                'priceOfferEntity.bidOrder = bidOrderEntity.id'
+                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
             )
 
-            ->andWhere('bidOrderEntity.id = :bidOrderId')
+            ->andWhere('bidDetailsEntity.id = :bidOrderId')
             ->setParameter('bidOrderId', $bidOrderId)
 
             ->orderBy('priceOfferEntity.id', 'DESC')

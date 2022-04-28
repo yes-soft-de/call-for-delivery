@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Constant\BidOrder;
+namespace App\Constant\BidDetails;
 
-final class BidOrderOpenToPriceOfferStatusConstant
+final class BidDetailsOpenToPriceOfferStatusConstant
 {
     const BID_ORDER_OPEN_TO_PRICE_OFFER = true;
 

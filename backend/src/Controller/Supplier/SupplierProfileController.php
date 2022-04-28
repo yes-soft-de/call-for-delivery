@@ -116,7 +116,6 @@ class SupplierProfileController extends BaseController
      *                  @OA\Property(type="string", property="image")
      *              )
      *          ),
-     *          @OA\Property(type="integer", property="supplierCategory"),
      *          @OA\Property(type="object", property="location"),
      *          @OA\Property(type="string", property="bankName"),
      *          @OA\Property(type="string", property="bankAccountNumber"),
@@ -136,10 +135,7 @@ class SupplierProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="supplierName"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="object", property="createdAt")
+     *              ref=@Model(type="App\Response\Supplier\SupplierProfileUpdateResponse")
      *          )
      *      )
      * )

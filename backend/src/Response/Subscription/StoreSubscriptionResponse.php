@@ -25,7 +25,7 @@ class StoreSubscriptionResponse
     /**
      * @OA\Property(type="array", property="paymentsFromStore",
      *     @OA\Items(type="object",
-     *              ref=@Model(type="App\Response\StoreOwnerPayment\StoreOwnerPaymentResponse"),
+     *              ref=@Model(type="App\Response\StorePayment\StoreOwnerPaymentResponse"),
      * ))
      */
     public array $paymentsFromStore;

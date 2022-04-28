@@ -56,7 +56,7 @@ class PriceOfferController extends BaseController
      * @OA\RequestBody(
      *      description="create price offer request",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="bidOrder"),
+     *          @OA\Property(type="integer", property="bidDetails"),
      *          @OA\Property(type="number", property="priceOfferValue"),
      *          @OA\Property(type="string", property="offerDeadline")
      *      )
@@ -94,10 +94,10 @@ class PriceOfferController extends BaseController
     }
 
     /**
-     * store owner: get price offers by bid order id for store owner.
-     * @Route("priceoffersbybidorderidforstore/{bidOrderId}", name="getPriceOffersByBidOrderIdForStoreOwner", methods={"GET"})
+     * store owner: get price offers by bid details id for store owner.
+     * @Route("priceoffersbybidorderidforstore/{bidDetailsId}", name="getPriceOffersByBidDetailsIdForStoreOwner", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
-     * @param int $bidOrderId
+     * @param int $bidDetailsId
      * @return JsonResponse
      *
      * @OA\Tag(name="Price Offer")
@@ -123,9 +123,9 @@ class PriceOfferController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidOrderId): JsonResponse
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): JsonResponse
     {
-        $response = $this->priceOfferService->getPriceOffersByBidOrderIdForStoreOwner($bidOrderId);
+        $response = $this->priceOfferService->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
 
         return $this->response($response, self::FETCH);
     }
@@ -240,5 +240,32 @@ class PriceOfferController extends BaseController
         $response = $this->priceOfferService->updatePriceOfferStatusBySupplier($request);
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * @Route("deleteallpricesoffers", name="deleteAllPricesOffers", methods={"DELETE"})
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Price Offer")
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated successfully message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\PriceOffer\PriceOfferDeleteResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteAllPricesOffers(): JsonResponse
+    {
+        $response = $this->priceOfferService->deleteAllPricesOffers();
+
+        return $this->response($response, self::DELETE);
     }
 }

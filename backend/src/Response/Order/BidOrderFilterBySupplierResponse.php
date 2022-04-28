@@ -10,7 +10,7 @@ class BidOrderFilterBySupplierResponse
 
     public string $state;
 
-    public int $bidOrderId;
+    public int $bidDetailsId;
 
     /**
      * @var string|null

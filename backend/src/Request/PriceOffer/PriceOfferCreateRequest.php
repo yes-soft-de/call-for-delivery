@@ -2,15 +2,15 @@
 
 namespace App\Request\PriceOffer;
 
-use App\Entity\BidOrderEntity;
+use App\Entity\BidDetailsEntity;
 use App\Entity\SupplierProfileEntity;
 
 class PriceOfferCreateRequest
 {
     /**
-     * @var int|BidOrderEntity
+     * @var int|BidDetailsEntity
      */
-    private $bidOrder;
+    private $bidDetails;
 
     /**
      * @var int|SupplierProfileEntity
@@ -24,14 +24,14 @@ class PriceOfferCreateRequest
      */
     private $offerDeadline;
 
-    public function getBidOrder(): BidOrderEntity|int
+    public function getBidDetails(): BidDetailsEntity|int
     {
-        return $this->bidOrder;
+        return $this->bidDetails;
     }
 
-    public function setBidOrder(BidOrderEntity|int $bidOrder): void
+    public function setBidDetails(BidDetailsEntity|int $bidDetails): void
     {
-        $this->bidOrder = $bidOrder;
+        $this->bidDetails = $bidDetails;
     }
 
     public function getSupplierProfile(): SupplierProfileEntity|int

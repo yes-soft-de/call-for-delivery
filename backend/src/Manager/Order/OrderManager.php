@@ -8,10 +8,10 @@ use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Manager\AnnouncementOrderDetails\AnnouncementOrderDetailsManager;
-use App\Manager\BidOrder\BidOrderManager;
+use App\Manager\BidDetails\BidDetailsManager;
 use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
-use App\Request\Order\BidOrderCreateRequest;
+use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
@@ -32,10 +32,10 @@ class OrderManager
    private StoreOwnerProfileManager $storeOwnerProfileManager;
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
-   private BidOrderManager $bidOrderManager;
+   private BidDetailsManager $bidDetailsManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidOrderManager $bidOrderManager)
+                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -43,7 +43,7 @@ class OrderManager
       $this->storeOwnerProfileManager = $storeOwnerProfileManager;
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
-      $this->bidOrderManager = $bidOrderManager;
+      $this->bidDetailsManager = $bidDetailsManager;
     }
     
     /**
@@ -70,12 +70,12 @@ class OrderManager
        return $orderEntity;
     }
 
-    public function createBidOrder(BidOrderCreateRequest $request): OrderEntity
+    public function createBidOrder(BidDetailsCreateRequest $request): OrderEntity
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
         $request->setStoreOwner($storeOwner);
 
-        $orderEntity = $this->autoMapping->map(BidOrderCreateRequest::class, OrderEntity::class, $request);
+        $orderEntity = $this->autoMapping->map(BidDetailsCreateRequest::class, OrderEntity::class, $request);
 
         $orderEntity->setCreatedAt(new DateTime());
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
@@ -85,7 +85,7 @@ class OrderManager
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();
 
-        $this->bidOrderManager->createBidOrder($request, $orderEntity);
+        $this->bidDetailsManager->createBidDetails($request, $orderEntity);
 
         return $orderEntity;
     }
@@ -274,10 +274,10 @@ class OrderManager
         $order = $this->orderRepository->getOrderByIdForSupplier($orderId);
 
         if ($order) {
-            if ($order['bidOrderId']) {
-                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderIdAndSupplierId($order['bidOrderId'], $supplierId);
+            if ($order['bidDetailsId']) {
+                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderIdAndSupplierId($order['bidDetailsId'], $supplierId);
 
-                $order['bidOrderImages'] = $this->orderRepository->getBidOrderImagesByBidOrderId($order['bidOrderId']);
+                $order['bidDetailsImages'] = $this->orderRepository->getBidDetailsImagesByBidDetailsId($order['bidDetailsId']);
             }
         }
 
@@ -328,10 +328,10 @@ class OrderManager
         $order = $this->orderRepository->getSpecificBidOrderForStore($id);
 
         if ($order) {
-            if ($order['bidOrderId']) {
-                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidOrderId']);
+            if ($order['bidDetailsId']) {
+                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidDetailsId']);
 
-                $order['bidOrderImages'] = $this->orderRepository->getBidOrderImagesByBidOrderId($order['bidOrderId']);
+                $order['bidDetailsImages'] = $this->orderRepository->getBidDetailsImagesByBidDetailsId($order['bidDetailsId']);
             }
         }
 

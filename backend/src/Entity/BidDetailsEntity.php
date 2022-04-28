@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\BidOrderEntityRepository;
+use App\Repository\BidDetailsEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: BidOrderEntityRepository::class)]
-class BidOrderEntity
+#[ORM\Entity(repositoryClass: BidDetailsEntityRepository::class)]
+class BidDetailsEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -146,7 +146,7 @@ class BidOrderEntity
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            $image->setBidOrder($this);
+            $image->setBidDetails($this);
         }
 
         return $this;
@@ -156,8 +156,8 @@ class BidOrderEntity
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getBidOrder() === $this) {
-                $image->setBidOrder(null);
+            if ($image->getBidDetails() === $this) {
+                $image->setBidDetails(null);
             }
         }
 
@@ -176,7 +176,7 @@ class BidOrderEntity
     {
         if (!$this->priceOfferEntities->contains($priceOfferEntity)) {
             $this->priceOfferEntities[] = $priceOfferEntity;
-            $priceOfferEntity->setBidOrder($this);
+            $priceOfferEntity->setBidDetails($this);
         }
 
         return $this;
@@ -186,8 +186,8 @@ class BidOrderEntity
     {
         if ($this->priceOfferEntities->removeElement($priceOfferEntity)) {
             // set the owning side to null (unless already changed)
-            if ($priceOfferEntity->getBidOrder() === $this) {
-                $priceOfferEntity->setBidOrder(null);
+            if ($priceOfferEntity->getBidDetails() === $this) {
+                $priceOfferEntity->setBidDetails(null);
             }
         }
 

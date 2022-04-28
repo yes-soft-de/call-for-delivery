@@ -10,8 +10,6 @@ class SupplierProfileUpdateByAdminRequest
 
     private string $supplierName;
 
-    private int|SupplierCategoryEntity $supplierCategory;
-
     /**
      * @var string|null
      */
@@ -56,16 +54,6 @@ class SupplierProfileUpdateByAdminRequest
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getSupplierCategory(): int|SupplierCategoryEntity
-    {
-        return $this->supplierCategory;
-    }
-
-    public function setSupplierCategory(int|SupplierCategoryEntity $supplierCategory): void
-    {
-        $this->supplierCategory = $supplierCategory;
     }
 
     public function setImages(?array $images): void

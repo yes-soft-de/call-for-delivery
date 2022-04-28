@@ -31,11 +31,13 @@ class SupplierProfileGetResponse
     public DateTime $createdAt;
 
     /**
+     * Will be removed when front doesn't depend on it
      * @var string|null
      */
     public $supplierCategoryName;
 
     /**
+     * Will be removed when front doesn't depend on it
      * @var int|null
      */
     public $supplierCategoryId;
