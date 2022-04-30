@@ -11,4 +11,10 @@ final class OrderTypeConstant
     const ORDER_PAYMENT_CARD = "card";
    
     const ORDER_PAYMENT_CASH= "cash";
+
+    const ORDER_PAID_TO_PROVIDER_YES = 1;
+
+    const ORDER_PAID_TO_PROVIDER_NO = 2;
+
+    const ORDER_PAID_TO_PROVIDER_PARTIALLY= 3;
 }

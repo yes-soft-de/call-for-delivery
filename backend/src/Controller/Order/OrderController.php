@@ -515,6 +515,7 @@ class OrderController extends BaseController
      *              @OA\Property(type="number", property="kilometer"),
      *              @OA\Property(type="number", property="captainOrderCost"),
      *              @OA\Property(type="string", property="noteCaptainOrderCost"),
+     *              @OA\Property(type="integer", property="paidToProvider"),
      *         ),
      *      ),
      *
@@ -530,6 +531,7 @@ class OrderController extends BaseController
      *              @OA\Property(type="integer", property="kilometer"),
      *              @OA\Property(type="number", property="captainOrderCost"),
      *              @OA\Property(type="string", property="noteCaptainOrderCost"),
+     *              @OA\Property(type="integer", property="paidToProvider"),
      *              )
      *      )
      * )

@@ -13,4 +13,6 @@ class OrderUpdateByCaptainResponse
     public float|null $captainOrderCost;
 
     public string|null $noteCaptainOrderCost;
+
+    public int|null $paidToProvider;
 }
