@@ -4,6 +4,7 @@ import 'package:c4d/module_subscription/response/captain_offers_response/captain
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
+import 'package:c4d/module_subscription/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -32,4 +33,6 @@ class SubscriptionsManager {
       await _repository.getCaptainOffers();
   Future<ActionResponse?> subscribeToCaptainOffer(int id) async =>
       await _repository.subscribeToCaptainOffer(id);
+  Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance() async =>
+      await _repository.getSubscriptionsFinance();
 }
