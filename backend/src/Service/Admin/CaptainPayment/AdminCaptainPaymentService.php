@@ -72,7 +72,7 @@ class AdminCaptainPaymentService
        
         $sumPayments = $this->adminCaptainPaymentManager->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues->getId());
        
-        if($captainFinancialDues->getAmount() > 0) {
+        if( $captainFinancialDues->getAmount() > 0) {
                 
             if( $sumPayments['sumPaymentsToCaptain'] === null || $sumPayments['sumPaymentsToCaptain'] === 0) {
 
@@ -88,10 +88,10 @@ class AdminCaptainPaymentService
                 return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus($captainFinancialDues, CaptainFinancialDues::FINANCIAL_DUES_PARTIALLY_PAID);
     
             }
-            //for future
-            // if( $sumPayments['sumPaymentsToCaptain'] > $captainFinancialDues->getAmount()) {
-            //     return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus();
-            // }
+           
+            if( $sumPayments['sumPaymentsToCaptain'] > $captainFinancialDues->getAmount()) {
+                return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus($captainFinancialDues, CaptainFinancialDues::FINANCIAL_DUES_PAID);
+            }
         }
         
         return $captainFinancialDues;
