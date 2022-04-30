@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -77,11 +79,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
-            onTap:orderInfo.state != OrderStatusEnum.CANCELLED ? () {
-              Navigator.of(context).pushNamed(
-                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
-                  arguments: orderInfo.id);
-            } : null,
+            onTap: orderInfo.state != OrderStatusEnum.CANCELLED
+                ? () {
+                    Navigator.of(context).pushNamed(
+                        OrdersRoutes.OWNER_TIME_LINE_SCREEN,
+                        arguments: orderInfo.id);
+                  }
+                : null,
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
