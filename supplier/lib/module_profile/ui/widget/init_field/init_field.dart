@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class InitField extends StatelessWidget {
   final IconData icon;
-  final String title;
+  final String? title;
   final TextEditingController controller;
   final String hint;
   final bool last;
@@ -12,7 +12,7 @@ class InitField extends StatelessWidget {
   const InitField(
       {Key? key,
       required this.icon,
-      required this.title,
+       this.title,
       required this.controller,
       required this.hint,
       this.last = false,
@@ -30,7 +30,7 @@ class InitField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 85, right: 85, top: 8),
             child: Text(
-              title,
+              title??'',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
