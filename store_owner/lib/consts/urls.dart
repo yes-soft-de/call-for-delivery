@@ -218,6 +218,8 @@ class Urls {
       DOMAIN + '/v1/notificationlocal/notificationLocal';
   static const GET_SUBSCRIPTION_BALANCE =
       DOMAIN + '/v1/subscription/packagebalance';
+  static const GET_SUBSCRIPTIONS_FINANCE =
+      DOMAIN + '/v1/subscription/subscriptionswithpayment';
   static const RATING_CAPTAIN = DOMAIN + '/v1/rating/ratingbystore';
   static const COMPANY_API = DOMAIN + '/v1/company/companyinfoforuser';
   static const CAPTAIN_OFFERS = DOMAIN + '/v1/captainoffer/captainoffers';
@@ -227,6 +229,5 @@ class Urls {
       DOMAIN + '/v1/orderchatroom/orderchatroomsforstorebeforeorderaccepted';
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
-  static const GET_STORE_PAYMENTS =
-      DOMAIN + '/v1/storepayment/storepayment';
+  static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
 }
