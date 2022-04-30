@@ -92,7 +92,10 @@ class OwnerOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
-                    title: S.current.cost, subtitle: FixedNumber.getFixedNumber(orderCost) + ' ' + S.current.sar),
+                    title: S.current.cost,
+                    subtitle: FixedNumber.getFixedNumber(orderCost) +
+                        ' ' +
+                        S.current.sar),
                 Icon(
                   Icons.arrow_circle_left_outlined,
                   color: Theme.of(context).textTheme.button?.color,

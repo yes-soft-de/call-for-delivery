@@ -193,7 +193,7 @@ class OrderChatRoomsLoadedState extends States {
                           Text(
                             S.current.enquiryAboutOrder +
                                 ' #${element.orderId}',
-                                maxLines: 2,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],

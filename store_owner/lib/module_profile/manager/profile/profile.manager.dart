@@ -18,6 +18,6 @@ class ProfileManager {
   Future<ActionResponse?> updateProfile(ProfileRequest profileRequest) =>
       _repository.updateProfile(profileRequest);
   Future<ProfileResponse?> getOwnerProfile() => _repository.getOwnerProfile();
-  Future<StorePaymentsResponse?> getStoreBalance() => _repository.getStoreAccountBalance();
-  
+  Future<StorePaymentsResponse?> getStoreBalance() =>
+      _repository.getStoreAccountBalance();
 }
