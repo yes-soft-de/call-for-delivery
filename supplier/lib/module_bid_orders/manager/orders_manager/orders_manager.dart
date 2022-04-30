@@ -3,6 +3,7 @@ import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
 import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
+import 'package:c4d/module_bid_orders/response/cars/cars_response.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -18,6 +19,9 @@ class OrdersManager {
 
   Future<OrdersResponse?> getOpenOrders(FilterOpenBidOrderRequest request) =>
       _repository.getOpenOrder(request);
+
+  Future<CarsResponse?> getDeliveryCar() =>
+      _repository.getDeliveryCar();
 
   Future<OrdersResponse?> getMyOfferOrder(FilterOrderOfferRequest request) =>
       _repository.getMyOfferOrder(request);
