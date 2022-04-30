@@ -55,7 +55,7 @@ class Urls {
 
   /*---------------BID ORDER-OFFER------------*/
   static const GET_OPEN_BID_ORDER = BASE_API_BID_ORDER+ '/filterbidordersbysupplier';
-  static const ORDER_DETAILS = BASE_API_BID_ORDER+ '/bidorderbyidforsupplier/';
+  static const ORDER_DETAILS = BASE_API_BID_ORDER+ '/orderbyidforsupplier/';
 
   static const GET_BID_ORDER_OFFER = BASE_API_BID_ORDER+ '/filterbidorderswithpriceoffersbysupplier';
 

@@ -5,6 +5,7 @@ import 'package:c4d/module_bid_orders/model/order/order_model.dart';
 import 'package:c4d/module_bid_orders/model/order_details/order_details_model.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
+import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
@@ -71,6 +72,16 @@ class OrdersService {
     ActionResponse? response = await _ordersManager.addNewOffer(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> confirmOffer(ConfirmOfferRequest request) async {
+    ActionResponse? response = await _ordersManager.confirmOffer(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

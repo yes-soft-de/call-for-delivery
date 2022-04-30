@@ -6,14 +6,11 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_bid_orders/model/order/order_model.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
-import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
 import 'package:c4d/module_bid_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_bid_orders/ui/screens/orders/my_offer_order_screen.dart';
-import 'package:c4d/module_bid_orders/ui/screens/orders/order_details_screen.dart';
-import 'package:c4d/module_bid_orders/ui/screens/orders/open_orders_screen.dart';
+
 import 'package:c4d/module_bid_orders/ui/state/offer_orders/offer_order_state_loaded.dart';
-import 'package:c4d/module_bid_orders/ui/state/open_orders/orders.state.dart';
-import 'package:c4d/utils/helpers/firestore_helper.dart';
+
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

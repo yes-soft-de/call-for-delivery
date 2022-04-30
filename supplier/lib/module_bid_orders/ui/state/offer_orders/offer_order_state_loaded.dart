@@ -27,7 +27,7 @@ class OfferOrdersListStateLoaded extends States {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments: element.id);
+            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments:{'id' : element.id ,'onGoing':false} );
           },
           child:BidOrderCard(element,true),
         ),

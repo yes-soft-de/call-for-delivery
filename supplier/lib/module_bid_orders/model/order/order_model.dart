@@ -1,21 +1,28 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 
 class OrderModel extends DataModel {
   late int id;
+  late int bidDetailsId;
   late String description;
   late String createdDate;
   late String title;
   late bool openToPriceOffer;
+  late OrderStatusEnum orderState;
+
   OrderModel({
     required this.description,
     required this.title,
     required this.createdDate,
     required this.id,
-    required this.openToPriceOffer
+    required this.openToPriceOffer,
+    required this.bidDetailsId,
+    required this.orderState
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -33,7 +40,11 @@ class OrderModel extends DataModel {
           createdDate: create,
           id: element.id ?? -1,
           title: element.title ??  S.current.unknown,
-          openToPriceOffer: element.openToPriceOffer ?? false));
+          openToPriceOffer: element.openToPriceOffer ?? false,
+        bidDetailsId: element.bidDetailsId ?? -1,
+        orderState: StatusHelper.getStatusEnum(element.state)
+
+      ));
     });
   }
   List<OrderModel> get data => _orders;

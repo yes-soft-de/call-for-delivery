@@ -1,4 +1,5 @@
 enum OrderStatusEnum {
+  INITIALIZED,
   WAITING,
   GOT_CAPTAIN,
   IN_STORE,
