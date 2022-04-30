@@ -477,6 +477,8 @@
     "eg": "مثال",
     "bankNameHint": "الراجحي",
     "locationPref": "هذا الموقع يظهر للكباتن",
-    "locationSelected": "تم تحديد الموقع بنجاح"
+    "locationSelected": "تم تحديد الموقع بنجاح",
+    "selectTheDeliveryCar": "أختر سيارة التوصيل"
+
 
 }

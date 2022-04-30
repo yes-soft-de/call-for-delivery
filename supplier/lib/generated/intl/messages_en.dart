@@ -587,6 +587,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selectTheDeliveryCar":
+            MessageLookupByLibrary.simpleMessage("Select The delivery car"),
         "selectYourCategory":
             MessageLookupByLibrary.simpleMessage("Select your category"),
         "selected": MessageLookupByLibrary.simpleMessage("selected"),

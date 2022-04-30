@@ -4829,6 +4829,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Select The delivery car`
+  String get selectTheDeliveryCar {
+    return Intl.message(
+      'Select The delivery car',
+      name: 'selectTheDeliveryCar',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -7,6 +7,7 @@ class Urls {
   static const String BASE_API_ADS = DOMAIN + '/v1/announcement';
   static const String BASE_API_BID_ORDER = DOMAIN + VERSION+'/order';
   static const String BASE_API_OFFER = DOMAIN + VERSION+'/priceoffer';
+  static const String BASE_API_DELIVERY_CAR = DOMAIN + VERSION+'/deliverycar';
 
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
@@ -61,5 +62,11 @@ class Urls {
 
   static const ADD_OFFER = BASE_API_OFFER+ '/priceoffer';
   static const CONFIRM_OFFER = BASE_API_OFFER+ '/priceofferstatusbysupplier';
+
+
+  /*----------------delivery Car-------*/
+  static const GET_CARS = BASE_API_DELIVERY_CAR+ '/deliverycars';
+
+
 
 }
