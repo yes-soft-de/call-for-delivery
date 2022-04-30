@@ -6,7 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/store_subscriptions_screen.dart';
-import 'package:c4d/module_subscription/ui/state/captain_financial_dues_state/store_subscriptions_state.dart';
+import 'package:c4d/module_subscription/ui/state/subscriptions_finance/store_subscriptions_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

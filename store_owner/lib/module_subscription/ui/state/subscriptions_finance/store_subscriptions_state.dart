@@ -29,9 +29,9 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(context).pushNamed(
-                  ProfileRoutes.ACCOUNT_BALANCE_SCREEN,
-                  arguments: element);
+              // Navigator.of(context).pushNamed(
+              //     ProfileRoutes.ACCOUNT_BALANCE_SCREEN,
+              //     arguments: element);
             },
             child: Container(
               decoration: BoxDecoration(

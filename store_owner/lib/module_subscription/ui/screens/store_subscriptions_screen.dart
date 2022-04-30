@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/state_manager/store_subscriptions_finance_state_manager.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -41,6 +43,7 @@ class StoreSubscriptionsFinanceScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomC4dAppBar.appBar(context, title: S.current.myBalance),
       body: _currentState?.getUI(context) ?? Container(),
     );
   }
