@@ -20,7 +20,7 @@ class StoreSubscriptionResponse
 
     public string|null $note;
 
-    public int $flag;
+    public int|null $flag;
 
     /**
      * @OA\Property(type="array", property="paymentsFromStore",

@@ -55,4 +55,6 @@ class SpecificOrderForCaptainResponse
     public array|null $orderLogs;
 
     public $storeId;
+
+    public int|null $paidToProvider;
 }

@@ -94,4 +94,6 @@ class OrderByIdGetForAdminResponse
      * @var string|null $phone
      */
     public $phone;
+
+    public int|null $paidToProvider;
 }

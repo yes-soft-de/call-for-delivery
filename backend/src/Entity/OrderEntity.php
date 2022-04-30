@@ -73,6 +73,9 @@ class OrderEntity
     #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: BidDetailsEntity::class, cascade: ['persist', 'remove'])]
     private $bidDetailsEntity;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $paidToProvider;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -366,6 +369,18 @@ class OrderEntity
         }
 
         $this->bidDetailsEntity = $bidDetailsEntity;
+
+        return $this;
+    }
+
+    public function getPaidToProvider(): ?int
+    {
+        return $this->paidToProvider;
+    }
+
+    public function setPaidToProvider(?int $paidToProvider): self
+    {
+        $this->paidToProvider = $paidToProvider;
 
         return $this;
     }

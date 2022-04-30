@@ -53,4 +53,6 @@ class OrdersResponse
     public float|null $captainOrderCost;
     
     public array|null $orderLogs;
+
+    public int|null $paidToProvider;
 }

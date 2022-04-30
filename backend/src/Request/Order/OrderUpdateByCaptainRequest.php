@@ -16,6 +16,9 @@ class OrderUpdateByCaptainRequest
     
     private $noteCaptainOrderCost;
 
+    private int|null $paidToProvider;
+
+
     /**
      * Get the value of id
      */ 
@@ -112,6 +115,26 @@ class OrderUpdateByCaptainRequest
     public function setNoteCaptainOrderCost($noteCaptainOrderCost)
     {
         $this->noteCaptainOrderCost = $noteCaptainOrderCost;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of paidToProvider
+     */ 
+    public function getPaidToProvider()
+    {
+        return $this->paidToProvider;
+    }
+
+    /**
+     * Set the value of paidToProvider
+     *
+     * @return  self
+     */ 
+    public function setPaidToProvider($paidToProvider)
+    {
+        $this->paidToProvider = $paidToProvider;
 
         return $this;
     }
