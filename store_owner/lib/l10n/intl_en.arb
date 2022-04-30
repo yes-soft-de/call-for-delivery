@@ -568,7 +568,11 @@
     "youCannotDeleteOrder": "You can't delete order, You exceeded time limit",
     "areYouSureAboutDeleteOrder": "Are sure about deleting this order ? ",
     "youCannotDeleteOrderCaptainAccepted": "You can't delete order, captain accepted this order",
-    "inactiveStore": "Your store inactive , please wait until be activated by the administration"
+    "inactiveStore": "Your store inactive , please wait until be activated by the administration",
+    "packageCost": "Package cost",
+    "sumPayments": "Sum payments"
+
+
 
 
 

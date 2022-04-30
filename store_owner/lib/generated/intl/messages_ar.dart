@@ -517,6 +517,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراكات"),
         "packageExtend":
             MessageLookupByLibrary.simpleMessage("تمديد اضطراري للاشتراك"),
         "packageExtendedSuccessfully":
@@ -759,6 +760,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew":
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات من المندوب"),
         "sumPaymentsFromCompany":

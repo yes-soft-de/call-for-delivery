@@ -524,6 +524,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("Package cost"),
         "packageExtend": MessageLookupByLibrary.simpleMessage(
             "Temporary subscription extend"),
         "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -764,6 +765,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("Total Payments From Captain"),
         "sumPaymentsFromCompany":

@@ -5719,6 +5719,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Package cost`
+  String get packageCost {
+    return Intl.message(
+      'Package cost',
+      name: 'packageCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sum payments`
+  String get sumPayments {
+    return Intl.message(
+      'Sum payments',
+      name: 'sumPayments',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
