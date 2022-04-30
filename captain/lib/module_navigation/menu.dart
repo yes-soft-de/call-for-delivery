@@ -121,6 +121,21 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.of(context).pushNamed(PlanRoutes.BALANCE_ROUTE);
+                },
+                leading: const Icon(Icons.account_balance_rounded),
+                title: Text(S.of(context).myBalance),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
+                },
+                leading: const Icon(Icons.payments_rounded),
+                title: Text(S.of(context).payments),
+              ),
+              ListTile(
+                onTap: () {
                   Navigator.of(context).pushNamed(OrdersRoutes.ORDER_LOGS);
                 },
                 leading: const Icon(Icons.history),
@@ -172,21 +187,6 @@ class MenuScreen extends StatelessWidget {
                 },
                 leading: const Icon(Icons.privacy_tip),
                 title: Text(S.of(context).privacyPolicy),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
-                },
-                leading: const Icon(Icons.payments_rounded),
-                title: Text(S.of(context).payments),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).pushNamed(PlanRoutes.BALANCE_ROUTE);
-                },
-                leading: const Icon(Icons.account_balance_rounded),
-                title: Text(S.of(context).myBalance),
               ),
             ],
           ),
