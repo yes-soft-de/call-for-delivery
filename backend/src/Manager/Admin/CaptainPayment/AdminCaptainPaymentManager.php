@@ -71,4 +71,9 @@ class AdminCaptainPaymentManager
     {
         return $this->captainPaymentEntityRepository->getAllCaptainPayments($captainId);
     }
+
+    public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDuesId): ?array
+    {
+        return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDuesId);
+    }
 }

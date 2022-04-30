@@ -7,6 +7,7 @@ use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Entity\CaptainFinancialDuesEntity;
 
 class AdminCaptainFinancialDuesService
 {
@@ -60,5 +61,10 @@ class AdminCaptainFinancialDuesService
         $captainFinancialDues['total'] = abs($total);
 
         return $captainFinancialDues;
+    }
+
+    public function updateCaptainFinancialDuesStatus(CaptainFinancialDuesEntity $captainFinancialDue, int $status)
+    {
+        return $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($captainFinancialDue, $status); 
     }
 }
