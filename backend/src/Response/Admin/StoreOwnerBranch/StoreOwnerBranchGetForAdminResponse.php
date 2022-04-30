@@ -22,4 +22,9 @@ class StoreOwnerBranchGetForAdminResponse
      * @var bool|null
      */
     public $isActive;
+
+    /**
+     * @var string|null
+     */
+    public $branchPhone;
 }

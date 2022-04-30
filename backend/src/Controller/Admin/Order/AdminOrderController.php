@@ -7,6 +7,7 @@ use App\Controller\BaseController;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -200,11 +201,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="storeOwnerName"),
-     *                  @OA\Property(type="string", property="branchName"),
-     *                  @OA\Property(type="string", property="captainName"),
-     *                  @OA\Property(type="object", property="createdAt")
+     *                  ref=@Model(type="App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse")
      *              )
      *      )
      *   )
@@ -219,6 +216,97 @@ class AdminOrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, CaptainNotArrivedOrderFilterByAdminRequest::class, (object)$data);
 
         $result = $this->adminOrderService->filterCaptainNotArrivedOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter bid orders by admin
+     * @Route("filterbidordersbyadmin", name="filterBidOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="boolean", property="openToPriceOffer")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\BidOrderGetForAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterStoreBidOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterStoreBidOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: get specific bid order by id
+     * @Route("bidorderbyidforadmin/{id}", name="getSpecificBidOrderByIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns order information",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="objecy", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\BidOrderGetForAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificBidOrderByIdForAdmin(int $id): JsonResponse
+    {
+        $result = $this->adminOrderService->getSpecificBidOrderByIdForAdmin($id);
 
         return $this->response($result, self::FETCH);
     }

@@ -456,6 +456,8 @@ App\Request\Order\BidDetailsCreateRequest:
             - NotBlank: ~
         storeOwner:
             - NotBlank: ~
+        branch:
+            - NotBlank: ~
 
 App\Request\PriceOffer\PriceOfferCreateRequest:
     properties:

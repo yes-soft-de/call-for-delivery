@@ -2,6 +2,7 @@
 
 namespace App\Request\Order;
 
+use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SupplierCategoryEntity;
 
@@ -42,10 +43,10 @@ class BidDetailsCreateRequest
      */
     private $supplierCategory;
 
-//    /**
-//     * @var int|StoreOwnerProfileEntity
-//     */
-//    private $storeOwnerProfile;
+    /**
+     * @var int|StoreOwnerBranchEntity
+     */
+    private $branch;
 
     /**
      * @var array|null
@@ -62,15 +63,15 @@ class BidDetailsCreateRequest
         $this->supplierCategory = $supplierCategory;
     }
 
-//    public function getStoreOwnerProfile(): int|StoreOwnerProfileEntity
-//    {
-//        return $this->storeOwnerProfile;
-//    }
-//
-//    public function setStoreOwnerProfile(int|StoreOwnerProfileEntity $storeOwnerProfile): void
-//    {
-//        $this->storeOwnerProfile = $storeOwnerProfile;
-//    }
+    public function getBranch(): int|StoreOwnerBranchEntity
+    {
+        return $this->branch;
+    }
+
+    public function setBranch(int|StoreOwnerBranchEntity $branch)
+    {
+        $this->branch = $branch;
+    }
 
     public function getImagesArray(): ?array
     {

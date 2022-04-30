@@ -2,21 +2,23 @@
 
 namespace App\Response\Admin\Order;
 
+use DateTime;
+
 class CaptainNotArrivedOrderFilterResponse
 {
     public int $id;
 
-    public object $createdAt;
+    public DateTime $createdAt;
 
     public string $storeOwnerName;
 
     /**
      * @var string|null
      */
-    public ?string $branchName;
+    public $branchName;
 
     /**
      * @var string|null
      */
-    public ?string $captainName;
+    public $captainName;
 }
