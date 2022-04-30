@@ -11,16 +11,21 @@ use App\Response\Admin\CaptainPayment\AdminCaptainPaymentResponse;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Entity\CaptainFinancialDuesEntity;
 
 class AdminCaptainPaymentService
 {
     private AutoMapping $autoMapping;
     private AdminCaptainPaymentManager $adminCaptainPaymentManager;
+    private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainPaymentManager $adminCaptainPaymentManager)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainPaymentManager $adminCaptainPaymentManager, AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainPaymentManager = $adminCaptainPaymentManager;
+        $this->adminCaptainFinancialDuesService = $adminCaptainFinancialDuesService;
     }
 
     public function createCaptainPayment(AdminCaptainPaymentCreateRequest $request): AdminCaptainPaymentCreateResponse|string
@@ -37,10 +42,12 @@ class AdminCaptainPaymentService
     public function deleteCaptainPayment($id): AdminCaptainPaymentDeleteResponse|string
     {
         $payment = $this->adminCaptainPaymentManager->deleteCaptainPayment($id);
-       
+      
         if($payment ===  PaymentConstant::PAYMENT_NOT_EXISTS) {
             return $payment;
         }
+
+        $this->updateCaptainFinancialDuesStatus($payment->getCaptainFinancialDues());
        
         return $this->autoMapping->map(CaptainPaymentEntity::class, AdminCaptainPaymentDeleteResponse::class, $payment);
     }
@@ -57,5 +64,36 @@ class AdminCaptainPaymentService
         }
 
         return $response;
+    }
+
+    public function updateCaptainFinancialDuesStatus(CaptainFinancialDuesEntity $captainFinancialDues): CaptainFinancialDuesEntity
+    {
+        $sumPayments = [];
+       
+        $sumPayments = $this->adminCaptainPaymentManager->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDues->getId());
+       
+        if($captainFinancialDues->getAmount() > 0) {
+                
+            if( $sumPayments['sumPaymentsToCaptain'] === null || $sumPayments['sumPaymentsToCaptain'] === 0) {
+
+                return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus($captainFinancialDues, CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+            }
+
+            if( $sumPayments['sumPaymentsToCaptain'] === $captainFinancialDues->getAmount()) {
+
+                return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus($captainFinancialDues, CaptainFinancialDues::FINANCIAL_DUES_PAID);
+            }
+    
+            if( $sumPayments['sumPaymentsToCaptain'] < $captainFinancialDues->getAmount()) {
+                return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus($captainFinancialDues, CaptainFinancialDues::FINANCIAL_DUES_PARTIALLY_PAID);
+    
+            }
+            //for future
+            // if( $sumPayments['sumPaymentsToCaptain'] > $captainFinancialDues->getAmount()) {
+            //     return $this->adminCaptainFinancialDuesService->updateCaptainFinancialDuesStatus();
+            // }
+        }
+        
+        return $captainFinancialDues;
     }
 }
