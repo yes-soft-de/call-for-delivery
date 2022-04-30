@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
@@ -878,5 +879,62 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function filterStoreBidOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.state', 'orderEntity.orderType', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt',
+                'bidDetailsEntity as bidOrderDetails')
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('orderEntity.orderType = :orderType')
+            ->setParameter('orderType', OrderTypeConstant::ORDER_TYPE_BID)
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getStoreOwnerProfileId()) {
+            $query->andWhere('orderEntity.storeOwner = :storeOwner');
+            $query->setParameter('storeOwner', $request->getStoreOwnerProfileId());
+        }
+
+        if ($request->getOpenToPriceOffer() !== null) {
+            $query->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOffer');
+            $query->setParameter('openToPriceOffer', $request->getOpenToPriceOffer());
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+        }
+
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state IN (:statesArray)');
+            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+        }
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

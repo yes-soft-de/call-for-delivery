@@ -40,4 +40,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterCaptainNotArrivedOrdersByAdmin($request);
     }
+
+    public function filterStoreBidOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterStoreBidOrdersByAdmin($request);
+    }
 }

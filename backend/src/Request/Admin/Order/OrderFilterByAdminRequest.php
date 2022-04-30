@@ -25,6 +25,11 @@ class OrderFilterByAdminRequest
     private $storeOwnerProfileId;
 
     /**
+     * @var bool|null
+     */
+    private $openToPriceOffer;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -54,5 +59,13 @@ class OrderFilterByAdminRequest
     public function getStoreOwnerProfileId(): ?int
     {
         return $this->storeOwnerProfileId;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getOpenToPriceOffer(): ?bool
+    {
+        return $this->openToPriceOffer;
     }
 }
