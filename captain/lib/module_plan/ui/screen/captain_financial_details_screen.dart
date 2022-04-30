@@ -87,7 +87,10 @@ class CaptainFinancialDuesDetailsScreenState
         fade: true,
         child: ListTile(
           leading: Icon(icon),
-          title: Text(text,style: const TextStyle(fontSize: 14),),
+          title: Text(
+            text,
+            style: const TextStyle(fontSize: 14),
+          ),
           trailing: Container(
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),
@@ -181,20 +184,17 @@ class CaptainFinancialDuesDetailsScreenState
                   : null,
               leading: const Icon(Icons.credit_card_rounded),
               title: Text(S.current.paymentAmount),
-              subtitle: Text(element.amount.toStringAsFixed(1)),
+              subtitle: Text(FixedNumber.getFixedNumber(element.amount) +' ${S.current.sar}'),
               trailing: SizedBox(
-                width: 150,
-                child: Row(
-                  children: [
+                child:
                     Text(DateFormat('yyyy/M/dd').format(element.paymentDate)),
-                  ],
-                ),
               ),
             )),
       ));
     });
     if (widgets.isNotEmpty) {
-      widgets.add(
+      widgets.insert(
+        0,
         const Padding(
           padding: EdgeInsets.only(right: 16.0, left: 16),
           child: Divider(

@@ -66,6 +66,7 @@ class AccountBalanceStateLoaded extends States {
         milliseconds: 1250,
         fade: true,
         child: ListTile(
+          horizontalTitleGap: 0,
           leading: Icon(icon),
           title: Text(text),
           trailing: Container(
@@ -84,6 +85,7 @@ class AccountBalanceStateLoaded extends States {
                     '${FixedNumber.getFixedNumber(value ?? 0)} ${currency ? S.current.sar : S.current.sOrder}',
                 style: const TextStyle(
                   color: Colors.white,
+                  fontSize: 14
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -129,6 +131,8 @@ class AccountBalanceStateLoaded extends States {
       direction: Axis.vertical,
       children: [
         countOrderDetails(context),
+        CustomTile(FontAwesomeIcons.boxes, S.current.countOrders, null,
+            stringValue: balance?.ordersInMonth?.toString()),
         CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersCompleted, null,
             stringValue: balance?.countOrders?.toString()),
         CustomTile(

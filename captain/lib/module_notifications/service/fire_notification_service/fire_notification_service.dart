@@ -10,6 +10,8 @@ import 'package:c4d/module_notifications/repository/notification_repo.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:flutter/material.dart';
+import 'package:sound_mode/sound_mode.dart';
+import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'package:soundpool/soundpool.dart';
 
 @injectable
@@ -65,13 +67,6 @@ class FireNotificationService {
         });
         FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
       } catch (e) {
-        Soundpool pool = Soundpool.fromOptions();
-        var sound = await rootBundle
-            .load('assets/sounds/receive_message.mp3')
-            .then((ByteData soundData) {
-          return pool.load(soundData);
-        });
-        pool.play(sound);
         print(e.toString());
       }
     }
@@ -79,6 +74,16 @@ class FireNotificationService {
 
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
     _onNotificationReceived.add(message);
+    Soundpool pool = Soundpool.fromOptions();
+    var sound = await rootBundle
+        .load('assets/sounds/receive_message.mp3')
+        .then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
+    if (ringerStatus == RingerModeStatus.normal) {
+      pool.play(sound);
+    }
     return Future<void>.value();
   }
 }
