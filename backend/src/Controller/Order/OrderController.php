@@ -841,7 +841,12 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="title"),
      *          @OA\Property(type="number", property="description"),
      *          @OA\Property(type="string", property="supplierCategory"),
-     *          @OA\Property(type="string", property="images")
+     *          @OA\Property(type="array", property="imagesArray",
+     *              @OA\Items(type="object",
+     *                  @OA\Property(type="string", property="image")
+     *              )
+     *          ),
+     *          @OA\Property(type="integer", property="branch")
      *      )
      * )
      *

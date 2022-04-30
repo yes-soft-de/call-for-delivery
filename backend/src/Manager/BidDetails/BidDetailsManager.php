@@ -7,6 +7,7 @@ use App\Constant\BidDetails\BidDetailsOpenToPriceOfferStatusConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Image\ImageManager;
+use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
 use App\Repository\BidDetailsEntityRepository;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -19,25 +20,23 @@ class BidDetailsManager
     private SupplierCategoryManager $supplierCategoryManager;
     private ImageManager $imageManager;
     private BidDetailsEntityRepository $bidDetailsEntityRepository;
+    private StoreOwnerBranchManager $storeOwnerBranchManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SupplierCategoryManager $supplierCategoryManager, ImageManager $imageManager,
-                                BidDetailsEntityRepository $bidDetailsEntityRepository)
+                                StoreOwnerBranchManager $storeOwnerBranchManager, BidDetailsEntityRepository $bidDetailsEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->supplierCategoryManager = $supplierCategoryManager;
         $this->imageManager= $imageManager;
+        $this->storeOwnerBranchManager= $storeOwnerBranchManager;
         $this->bidDetailsEntityRepository= $bidDetailsEntityRepository;
     }
 
     public function createBidDetails(BidDetailsCreateRequest $request, OrderEntity $orderEntity): string|BidDetailsEntity
     {
-//        $storeOwnerProfileEntity = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
-//        $request->setStoreOwnerProfile($storeOwnerProfileEntity);
-//
-//        if ($storeOwnerProfileEntity->getStatus() !== StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS) {
-//            return StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS;
-//        }
+        $storeOwnerBranchEntity = $this->storeOwnerBranchManager->getBranchById($request->getBranch());
+        $request->setBranch($storeOwnerBranchEntity);
 
         $supplierCategoryEntity = $this->supplierCategoryManager->getSupplierCategoryEntityByCategoryId($request->getSupplierCategory());
         $request->setSupplierCategory($supplierCategoryEntity);
