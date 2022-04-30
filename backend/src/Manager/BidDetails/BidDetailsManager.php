@@ -80,4 +80,13 @@ class BidDetailsManager
 
         return $bidDetailsEntity;
     }
+
+    public function updateBidDetailsSourceDestination(BidDetailsEntity $bidDetailsEntity, array $sourceDestination): BidDetailsEntity
+    {
+        $bidDetailsEntity->setSourceDestination($sourceDestination);
+
+        $this->entityManager->flush();
+
+        return $bidDetailsEntity;
+    }
 }
