@@ -138,6 +138,7 @@ dev_dependencies:
   # Feature Descovery
   feature_discovery: ^0.14.1
   lehttp_overrides: ^1.0.2
+  sound_mode: ^2.0.2
 
 flutter_icons:
   android: true
