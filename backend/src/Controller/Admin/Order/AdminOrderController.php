@@ -273,4 +273,41 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: get specific bid order by id
+     * @Route("bidorderbyidforadmin/{id}", name="getSpecificBidOrderByIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns order information",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="objecy", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\BidOrderGetForAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificBidOrderByIdForAdmin(int $id): JsonResponse
+    {
+        $result = $this->adminOrderService->getSpecificBidOrderByIdForAdmin($id);
+
+        return $this->response($result, self::FETCH);
+    }
 }

@@ -45,4 +45,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterStoreBidOrdersByAdmin($request);
     }
+
+    public function getSpecificBidOrderByIdForAdmin(int $id): ?array
+    {
+        return $this->orderEntityRepository->getSpecificBidOrderByIdForAdmin($id);
+    }
 }

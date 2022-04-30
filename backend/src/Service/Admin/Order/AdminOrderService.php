@@ -3,13 +3,18 @@
 namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
+use App\Entity\BidDetailsEntity;
+use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
+use App\Response\Admin\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
+use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\OrderLogs\OrderLogsService;
 
@@ -112,5 +117,53 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    public function getSpecificBidOrderByIdForAdmin(int $id): ?BidOrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->getSpecificBidOrderByIdForAdmin($id);
+
+        if ($order) {
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderIdForAdmin($id);
+
+            // get bid details info
+            $order['bidDetails'] = $this->autoMapping->map(BidDetailsEntity::class, BidDetailsGetForAdminResponse::class, $order['bidOrderDetails']);
+
+            $order['bidDetails']->supplierCategoryId = $order['bidOrderDetails']->getSupplierCategory()->getId();
+            $order['bidDetails']->supplierCategoryName = $order['bidOrderDetails']->getSupplierCategory()->getName();
+
+            // handle images
+            $order['bidDetails']->images = $this->customizeBidOrderImages($order['bidDetails']->images->ToArray());
+
+            // get branch info
+            $order['storeOwnerBranchId'] = $order['bidOrderDetails']->getBranch()->getId();
+            $order['storeOwnerBranchName'] = $order['bidOrderDetails']->getBranch()->getName();
+            $order['storeOwnerBranchPhone'] = $order['bidOrderDetails']->getBranch()->getBranchPhone();
+            $order['storeOwnerBranchLocation'] = $order['bidOrderDetails']->getBranch()->getLocation();
+
+            // get store info
+            $order['storeOwnerProfileId'] = $order['bidOrderDetails']->getBranch()->getStoreOwner()->getId();
+            $order['storeOwnerId'] = $order['bidOrderDetails']->getBranch()->getStoreOwner()->getStoreOwnerId();
+            $order['storeOwnerName'] = $order['bidOrderDetails']->getBranch()->getStoreOwner()->getStoreOwnerName();
+            $order['storeOwnerPhone'] = $order['bidOrderDetails']->getBranch()->getStoreOwner()->getPhone();
+        }
+
+        return $this->autoMapping->map("array", BidOrderByIdGetForAdminResponse::class, $order);
+    }
+
+    public function customizeBidOrderImages(array $imagesArray): ?array
+    {
+        $response = [];
+
+        if (! empty($imagesArray)) {
+            foreach ($imagesArray as $image) {
+                $response[] = $this->uploadFileHelperService->getImageParams($image->getImagePath());
+            }
+
+            return $response;
+
+        } else {
+            return null;
+        }
     }
 }

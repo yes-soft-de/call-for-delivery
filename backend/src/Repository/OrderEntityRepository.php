@@ -937,4 +937,32 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getSpecificBidOrderByIdForAdmin(int $id): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
+                'orderEntity.dateCaptainArrived', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'bidDetailsEntity as bidOrderDetails', 'IDENTITY(orderEntity.captainId) as captainUserId',
+                'captainEntity.captainName', 'captainEntity.phone')
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->andWhere('orderEntity.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
