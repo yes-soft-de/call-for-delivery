@@ -39,10 +39,14 @@ class StoreOwnerBranchEntity
     #[ORM\OneToMany(mappedBy: 'storeOwnerBranch', targetEntity: OrderLogsEntity::class)]
     private $orderLogsEntity;
 
+    #[ORM\OneToMany(mappedBy: 'branch', targetEntity: BidDetailsEntity::class)]
+    private $bidDetailsEntities;
+
     public function __construct()
     {
         $this->storeOrderDetailsEntities = new ArrayCollection();
         $this->orderLogsEntity = new ArrayCollection();
+        $this->bidDetailsEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +180,36 @@ class StoreOwnerBranchEntity
             // set the owning side to null (unless already changed)
             if ($orderLogsEntity->getStoreOwnerBranch() === $this) {
                 $orderLogsEntity->setStoreOwnerBranch(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BidDetailsEntity[]
+     */
+    public function getBidDetailsEntities(): Collection
+    {
+        return $this->bidDetailsEntities;
+    }
+
+    public function addBidDetailsEntity(BidDetailsEntity $bidDetailsEntity): self
+    {
+        if (!$this->bidDetailsEntities->contains($bidDetailsEntity)) {
+            $this->bidDetailsEntities[] = $bidDetailsEntity;
+            $bidDetailsEntity->setBranch($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBidDetailsEntity(BidDetailsEntity $bidDetailsEntity): self
+    {
+        if ($this->bidDetailsEntities->removeElement($bidDetailsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($bidDetailsEntity->getBranch() === $this) {
+                $bidDetailsEntity->setBranch(null);
             }
         }
 

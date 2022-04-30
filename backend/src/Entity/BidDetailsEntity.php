@@ -51,6 +51,12 @@ class BidDetailsEntity
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $sourceDestination = [];
+
+    #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'bidDetailsEntities')]
+    private $branch;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -214,6 +220,30 @@ class BidDetailsEntity
     public function setOrderId(OrderEntity $orderId): self
     {
         $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    public function getSourceDestination(): ?array
+    {
+        return $this->sourceDestination;
+    }
+
+    public function setSourceDestination(?array $sourceDestination): self
+    {
+        $this->sourceDestination = $sourceDestination;
+
+        return $this;
+    }
+
+    public function getBranch(): ?StoreOwnerBranchEntity
+    {
+        return $this->branch;
+    }
+
+    public function setBranch(?StoreOwnerBranchEntity $branch): self
+    {
+        $this->branch = $branch;
 
         return $this;
     }
