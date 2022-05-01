@@ -28,6 +28,8 @@ class OrderDetailsModel extends DataModel {
   int? captainID;
   String? branchPhone;
   late bool? isCaptainArrived;
+  late num? kilometer;
+  late num? paidToProvider;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -58,7 +60,9 @@ class OrderDetailsModel extends DataModel {
       required this.branchPhone,
       required this.attention,
       required this.captainOrderCost,
-      required this.orderLogs});
+      required this.orderLogs,
+      required this.kilometer,
+      required this.paidToProvider});
 
   late OrderDetailsModel _orders;
 
@@ -106,7 +110,9 @@ class OrderDetailsModel extends DataModel {
         distance: null,
         attention: element?.attention,
         captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs));
+        orderLogs: _getOrderLogs(element?.orderLogs),
+        kilometer: element?.kilometer,
+        paidToProvider: element?.paidToProvider);
 
     _orders.distance = _distance(_orders, location);
   }
