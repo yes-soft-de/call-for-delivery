@@ -5739,6 +5739,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Account Balance`
+  String get accountBalance {
+    return Intl.message(
+      'Account Balance',
+      name: 'accountBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all your subscriptions financial information with included all payments `
+  String get balanceHint {
+    return Intl.message(
+      'Here you find all your subscriptions financial information with included all payments ',
+      name: 'balanceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance Subscription Details`
+  String get financeSubscriptionDetails {
+    return Intl.message(
+      'Finance Subscription Details',
+      name: 'financeSubscriptionDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order`
+  String get sOrder {
+    return Intl.message(
+      'order',
+      name: 'sOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

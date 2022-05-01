@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountActivated": MessageLookupByLibrary.simpleMessage("الحساب مفعل"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
+        "accountBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountInActivated":
@@ -78,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
+        "balanceHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد قائمة بالاشتراكات التي قمت بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيتها"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
@@ -308,6 +311,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("فاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financeSubscriptionDetails":
+            MessageLookupByLibrary.simpleMessage("التفاصيل المالية للاشتراك"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -667,6 +672,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("السعودية"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),

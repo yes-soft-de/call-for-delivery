@@ -570,7 +570,12 @@
     "youCannotDeleteOrderCaptainAccepted": "You can't delete order, captain accepted this order",
     "inactiveStore": "Your store inactive , please wait until be activated by the administration",
     "packageCost": "Package cost",
-    "sumPayments": "Sum payments"
+    "sumPayments": "Sum payments",
+    "accountBalance": "Account Balance",
+    "balanceHint": "Here you find all your subscriptions financial information with included all payments ",
+    "financeSubscriptionDetails": "Finance Subscription Details",
+    "sOrder": "order"
+
 
 
 
