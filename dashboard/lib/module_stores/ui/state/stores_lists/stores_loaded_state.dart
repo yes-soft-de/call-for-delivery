@@ -113,31 +113,6 @@ class StoresLoadedState extends States {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(
-                        screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
-                        arguments: element.id);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(screenState.context)
-                          .backgroundColor
-                          .withOpacity(0.2),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.business_center,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                InkWell(
-                  onTap: () {
                     showDialog(
                         barrierDismissible: false,
                         context: screenState.context,
