@@ -525,6 +525,7 @@ class OrderService
                     $response[$key]['priceOfferValue'] = $value->getPriceOfferValue();
                     $response[$key]['priceOfferStatus'] = $value->getPriceOfferStatus();
                     $response[$key]['transportationCount'] = $value->getTransportationCount();
+                    $response[$key]['offerDeadline'] = $value->getOfferDeadline();
                 }
             }
 
