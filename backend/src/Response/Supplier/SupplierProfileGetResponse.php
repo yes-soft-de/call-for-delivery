@@ -74,4 +74,9 @@ class SupplierProfileGetResponse
      *     @OA\Items(type="object"), nullable=true)
      */
     public $supplierCategories;
+
+    /**
+     * @var float|null
+     */
+    public $profitMargin;
 }

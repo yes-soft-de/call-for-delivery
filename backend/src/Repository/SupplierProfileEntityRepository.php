@@ -39,7 +39,7 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
     public function getSupplierProfileByUserId(int $userId): ?array
     {
         return $this->createQueryBuilder('supplierProfileEntity')
-            ->select('supplierProfileEntity.id', 'supplierProfileEntity.phone', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.completeAccountStatus', 'supplierProfileEntity.createdAt',
+            ->select('supplierProfileEntity.id', 'supplierProfileEntity.phone', 'supplierProfileEntity.supplierName', 'supplierProfileEntity.completeAccountStatus', 'supplierProfileEntity.createdAt', 'supplierProfileEntity.profitMargin',
                 'supplierProfileEntity.status', 'supplierProfileEntity.location', 'supplierProfileEntity.bankName', 'supplierProfileEntity.bankAccountNumber', 'supplierProfileEntity.stcPay', 'supplierProfileEntity.supplierCategories')
             ->addSelect('chatRoomEntity.roomId')
 

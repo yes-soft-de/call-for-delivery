@@ -58,6 +58,9 @@ class SupplierProfileEntity
     #[ORM\Column(type: 'json', nullable: true)]
     private $supplierCategories = [];
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $profitMargin;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -257,6 +260,18 @@ class SupplierProfileEntity
     public function setSupplierCategories(?array $supplierCategories): self
     {
         $this->supplierCategories = $supplierCategories;
+
+        return $this;
+    }
+
+    public function getProfitMargin(): ?float
+    {
+        return $this->profitMargin;
+    }
+
+    public function setProfitMargin(?float $profitMargin): self
+    {
+        $this->profitMargin = $profitMargin;
 
         return $this;
     }

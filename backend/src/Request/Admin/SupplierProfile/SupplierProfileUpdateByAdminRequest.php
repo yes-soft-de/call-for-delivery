@@ -51,6 +51,11 @@ class SupplierProfileUpdateByAdminRequest
      */
     private $allSupplierCategories;
 
+    /**
+     * @var float|null
+     */
+    private $profitMargin;
+
     public function getId(): int
     {
         return $this->id;
