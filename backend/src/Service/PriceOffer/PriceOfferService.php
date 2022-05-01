@@ -37,8 +37,6 @@ class PriceOfferService
 
         foreach ($priceOffers as $key=>$value) {
             $response[$key] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $value);
-
-            $response[$key]->deliveryCar = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarForStoreOwnerGetResponse::class, $value['deliveryCar']);
         }
 
         return $response;
