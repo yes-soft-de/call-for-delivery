@@ -56,5 +56,5 @@ class OrdersResponse
 
     public int|null $paidToProvider;
 
-    public float|null $kilometer;
+    public int|null $kilometer;
 }
