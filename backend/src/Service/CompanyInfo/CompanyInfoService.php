@@ -48,12 +48,12 @@ class CompanyInfoService
     {
         $companyInfoResult = $this->companyInfoManager->getCompanyInfo();
 
-        return $this->autoMapping->map('array', CompanyInfoGetResponse::class, $companyInfoResult);
+        return $this->autoMapping->map(CompanyInfoEntity::class, CompanyInfoGetResponse::class, $companyInfoResult);
     }
 
-    public function getCompanyInfoForUser(string $requiredByUserType, string $userId): ?CompanyInfoForUserGetResponse
+    public function getCompanyInfoForUser(string $requiredByUserType): ?CompanyInfoForUserGetResponse
     {
-        $companyInfoResult = $this->companyInfoManager->getCompanyInfoForUser($requiredByUserType, $userId);
+        $companyInfoResult = $this->companyInfoManager->getCompanyInfoForUser($requiredByUserType);
 
         return $this->autoMapping->map('array', CompanyInfoForUserGetResponse::class, $companyInfoResult);
     }

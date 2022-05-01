@@ -27,6 +27,16 @@ class CompanyInfoUpdateRequest
     private float $minKilometerBonus;
 
     /**
+     * @var float|null
+     */
+    private $supplierProfitMargin;
+
+    /**
+     * @var float|null
+     */
+    private $storeProfitMargin;
+
+    /**
      * @return int
      */
     public function getId(): int

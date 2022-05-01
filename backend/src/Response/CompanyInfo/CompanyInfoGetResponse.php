@@ -58,4 +58,14 @@ class CompanyInfoGetResponse
      * @var float|null $minKilometerBonus
      */
     public $minKilometerBonus;
+
+    /**
+     * @var float|null
+     */
+    public $supplierProfitMargin;
+
+    /**
+     * @var float|null
+     */
+    public $storeProfitMargin;
 }

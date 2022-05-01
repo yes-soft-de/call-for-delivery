@@ -9,6 +9,7 @@ use App\Controller\BaseController;
 use App\Request\CompanyInfo\CompanyInfoCreateRequest;
 use App\Request\CompanyInfo\CompanyInfoUpdateRequest;
 use App\Service\CompanyInfo\CompanyInfoService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -62,9 +63,11 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="email"),
      *          @OA\Property(type="string", property="bankName"),
      *          @OA\Property(type="string", property="stc"),
-     *          @OA\Property(type="float", property="kilometers"),
-     *          @OA\Property(type="float", property="maxKilometerBonus"),
-     *          @OA\Property(type="float", property="minKilometerBonus")
+     *          @OA\Property(type="number", property="kilometers"),
+     *          @OA\Property(type="number", property="maxKilometerBonus"),
+     *          @OA\Property(type="number", property="minKilometerBonus"),
+     *          @OA\Property(type="number", property="storeProfitMargin"),
+     *          @OA\Property(type="number", property="supplierProfitMargin")
      *      )
      * )
      *
@@ -75,17 +78,7 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="phoneTwo"),
-     *                  @OA\Property(type="string", property="whatsapp"),
-     *                  @OA\Property(type="string", property="fax"),
-     *                  @OA\Property(type="string", property="email"),
-     *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc"),
-     *                  @OA\Property(type="float", property="kilometers"),
-     *                  @OA\Property(type="float", property="maxKilometerBonus"),
-     *                  @OA\Property(type="float", property="minKilometerBonus")
+     *                  ref=@Model(type="App\Response\CompanyInfo\CompanyInfoGetResponse")
      *          )
      *      )
      * )
@@ -129,9 +122,11 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="email"),
      *          @OA\Property(type="string", property="bankName"),
      *          @OA\Property(type="string", property="stc"),
-     *          @OA\Property(type="float", property="kilometers"),
-     *          @OA\Property(type="float", property="maxKilometerBonus"),
-     *          @OA\Property(type="float", property="minKilometerBonus")
+     *          @OA\Property(type="number", property="kilometers"),
+     *          @OA\Property(type="number", property="maxKilometerBonus"),
+     *          @OA\Property(type="number", property="minKilometerBonus"),
+     *          @OA\Property(type="number", property="storeProfitMargin"),
+     *          @OA\Property(type="number", property="supplierProfitMargin")
      *      )
      * )
      *
@@ -142,17 +137,7 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="phoneTwo"),
-     *                  @OA\Property(type="string", property="whatsapp"),
-     *                  @OA\Property(type="string", property="fax"),
-     *                  @OA\Property(type="string", property="email"),
-     *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc"),
-     *                  @OA\Property(type="float", property="kilometers"),
-     *                  @OA\Property(type="float", property="maxKilometerBonus"),
-     *                  @OA\Property(type="float", property="minKilometerBonus")
+     *                  ref=@Model(type="App\Response\CompanyInfo\CompanyInfoGetResponse")
      *          )
      *      )
      * )
@@ -215,17 +200,7 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="phoneTwo"),
-     *                  @OA\Property(type="string", property="whatsapp"),
-     *                  @OA\Property(type="string", property="fax"),
-     *                  @OA\Property(type="string", property="email"),
-     *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc"),
-     *                  @OA\Property(type="float", property="kilometers"),
-     *                  @OA\Property(type="float", property="maxKilometerBonus"),
-     *                  @OA\Property(type="float", property="minKilometerBonus")
+     *                  ref=@Model(type="App\Response\CompanyInfo\CompanyInfoGetResponse")
      *          )
      *      )
      * )
@@ -260,17 +235,7 @@ class CompanyInfoController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="phoneTwo"),
-     *                  @OA\Property(type="string", property="whatsapp"),
-     *                  @OA\Property(type="string", property="fax"),
-     *                  @OA\Property(type="string", property="email"),
-     *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="stc"),
-     *                  @OA\Property(type="float", property="kilometers"),
-     *                  @OA\Property(type="float", property="maxKilometerBonus"),
-     *                  @OA\Property(type="float", property="minKilometerBonus")
+     *                  ref=@Model(type="App\Response\CompanyInfo\CompanyInfoForUserGetResponse")
      *          )
      *      )
      * )
@@ -282,13 +247,13 @@ class CompanyInfoController extends BaseController
         $result = [];
 
         if ($this->isGranted(UserRoleConstant::ROLE_OWNER)) {
-            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_STORE_OWNER, $this->getUserId());
+            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_STORE_OWNER);
 
         } elseif ($this->isGranted(UserRoleConstant::ROLE_CAPTAIN)) {
-            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_CAPTAIN, $this->getUserId());
+            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_CAPTAIN);
 
         } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
-            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_SUPPLIER, $this->getUserId());
+            $result = $this->companyInfoService->getCompanyInfoForUser(CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_SUPPLIER);
         }
 
         return $this->response($result, self::FETCH);
