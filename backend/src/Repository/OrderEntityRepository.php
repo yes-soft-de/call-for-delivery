@@ -651,7 +651,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.orderType', 'orderEntity.noteCaptainOrderCost', 'orderEntity.note', 'orderEntity.state', 'orderEntity.createdAt', 'orderEntity.captainOrderCost',
                 'orderEntity.updatedAt', 'orderEntity.dateCaptainArrived', 'orderEntity.deliveryDate', 'orderEntity.isCaptainArrived', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.kilometer')
-            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.openToPriceOffer')
+            ->addSelect('bidDetailsEntity as bidDetails')
 
             ->leftJoin(
                 BidDetailsEntity::class,
@@ -836,15 +836,13 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId')
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
-            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.description', 'bidDetailsEntity.openToPriceOffer')
-            ->addSelect('supplierCategoryEntity.id as supplierCategoryId', 'supplierCategoryEntity.name as supplierCategoryName')
+            ->addSelect('bidDetailsEntity as bidDetails')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = orderEntity.captainId')
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-            ->leftJoin(SupplierCategoryEntity::class, 'supplierCategoryEntity', Join::WITH, 'supplierCategoryEntity.id = bidDetailsEntity.supplierCategory')
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)

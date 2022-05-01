@@ -273,19 +273,9 @@ class OrderManager
         return $this->orderRepository->filterBidOrdersBySupplier($request);
     }
 
-    public function getOrderByIdForSupplier(int $orderId, int $supplierId): ?array
+    public function getOrderByIdForSupplier(int $orderId): ?array
     {
-        $order = $this->orderRepository->getOrderByIdForSupplier($orderId);
-
-        if ($order) {
-            if ($order['bidDetailsId']) {
-                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderIdAndSupplierId($order['bidDetailsId'], $supplierId);
-
-                $order['bidDetailsImages'] = $this->orderRepository->getBidDetailsImagesByBidDetailsId($order['bidDetailsId']);
-            }
-        }
-
-        return $order;
+        return $this->orderRepository->getOrderByIdForSupplier($orderId);
     }
 
     // This function filter bid orders which have price offers made by the supplier (who request the filter).
@@ -333,17 +323,7 @@ class OrderManager
 
     public function getSpecificBidOrderForStore(int $id): ?array
     {
-        $order = $this->orderRepository->getSpecificBidOrderForStore($id);
-
-        if ($order) {
-            if ($order['bidDetailsId']) {
-                $order['pricesOffers'] = $this->orderRepository->getPricesOffersByBidOrderId($order['bidDetailsId']);
-
-                $order['bidDetailsImages'] = $this->orderRepository->getBidDetailsImagesByBidDetailsId($order['bidDetailsId']);
-            }
-        }
-
-        return $order;
+        return $this->orderRepository->getSpecificBidOrderForStore($id);
     }
 
     public function createOrderLog(OrderEntity $orderEntity): ?OrderLogsEntity
