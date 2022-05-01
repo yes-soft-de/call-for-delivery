@@ -25,7 +25,7 @@ class PriceOfferEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('priceOfferEntity')
             ->select('priceOfferEntity.id', 'priceOfferEntity.createdAt', 'priceOfferEntity.updatedAt', 'priceOfferEntity.priceOfferValue', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.offerDeadline',
-                'deliveryCarEntity.id as deliveryCarId', 'deliveryCarEntity.deliveryCost', 'deliveryCarEntity.carModel', 'deliveryCarEntity.details')
+                'priceOfferEntity.transportationCount', 'deliveryCarEntity.id as deliveryCarId', 'deliveryCarEntity.deliveryCost', 'deliveryCarEntity.carModel', 'deliveryCarEntity.details')
 
             ->Join(
                 DeliveryCarEntity::class,

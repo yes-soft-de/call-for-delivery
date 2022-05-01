@@ -19,6 +19,11 @@ class PriceOfferByBidOrderIdGetForStoreOwnerResponse
 
     public DateTime $offerDeadline;
 
+    /**
+     * @var int|null
+     */
+    public $transportationCount;
+
     public int $deliveryCarId;
 
     public string $carModel;
@@ -29,4 +34,9 @@ class PriceOfferByBidOrderIdGetForStoreOwnerResponse
      * @var string|null
      */
     public $details;
+
+    /**
+     * @var float|null
+     */
+    public $totalDeliveryCost;
 }

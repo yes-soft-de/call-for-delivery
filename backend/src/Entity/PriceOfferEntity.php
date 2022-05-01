@@ -42,6 +42,9 @@ class PriceOfferEntity
     #[ORM\ManyToOne(targetEntity: DeliveryCarEntity::class, inversedBy: 'priceOfferEntities')]
     private $deliveryCar;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $transportationCount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +142,18 @@ class PriceOfferEntity
     public function setDeliveryCar(?DeliveryCarEntity $deliveryCar): self
     {
         $this->deliveryCar = $deliveryCar;
+
+        return $this;
+    }
+
+    public function getTransportationCount(): ?int
+    {
+        return $this->transportationCount;
+    }
+
+    public function setTransportationCount(?int $transportationCount): self
+    {
+        $this->transportationCount = $transportationCount;
 
         return $this;
     }
