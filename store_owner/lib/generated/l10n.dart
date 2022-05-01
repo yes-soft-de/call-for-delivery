@@ -5779,6 +5779,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Cost received from captain`
+  String get orderCostHandedByCaptain {
+    return Intl.message(
+      'Cost received from captain',
+      name: 'orderCostHandedByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

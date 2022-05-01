@@ -574,7 +574,9 @@
     "accountBalance": "Account Balance",
     "balanceHint": "Here you find all your subscriptions financial information with included all payments ",
     "financeSubscriptionDetails": "Finance Subscription Details",
-    "sOrder": "order"
+    "sOrder": "order",
+    "orderCostHandedByCaptain": "Cost received from captain"
+
 
 
 

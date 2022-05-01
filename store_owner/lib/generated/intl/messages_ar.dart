@@ -477,6 +477,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
+        "orderCostHandedByCaptain":
+            MessageLookupByLibrary.simpleMessage("المبلغ المقبوض من الكابتن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":

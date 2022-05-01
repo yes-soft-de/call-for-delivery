@@ -484,6 +484,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
+        "orderCostHandedByCaptain":
+            MessageLookupByLibrary.simpleMessage("Cost received from captain"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
