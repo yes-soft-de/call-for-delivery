@@ -88,6 +88,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).recipientName),
                   subtitle: CustomFormField(
+                    validator: false,
                     hintText: S.of(context).nameHint,
                     onTap: () {},
                     controller: screenState.receiptNameController,
@@ -149,6 +150,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
+                    validator: false,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
@@ -167,6 +169,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
                   subtitle: CustomFormField(
+                    validator:false,
                     maxLines: 3,
                     hintText: S.of(context).orderDetailHint,
                     controller: screenState.orderDetailsController,
@@ -176,6 +179,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderPrice),
                   subtitle: CustomFormField(
+                    validator:false,
                     hintText: S.of(context).orderCostWithDeliveryCost,
                     onTap: () {},
                     numbers: true,
