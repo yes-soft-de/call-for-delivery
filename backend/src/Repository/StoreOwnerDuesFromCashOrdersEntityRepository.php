@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method StoreOwnerDuesFromCashOrdersEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,32 +47,26 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         }
     }
 
-    // /**
-    //  * @return StoreOwnerDuesFromCashOrdersEntity[] Returns an array of StoreOwnerDuesFromCashOrdersEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function filterStoreOwnerDuesFromCashOrders(int $storeId, string $fromDate, string $toDate): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
+    
+            ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+           
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
+            
+            ->andWhere('storeOwnerDuesFromCashOrders.store = :store')
+            ->setParameter('store', $storeId)
+           
+            ->andWhere('storeOwnerDuesFromCashOrders.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+           
+            ->andWhere('storeOwnerDuesFromCashOrders.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+            
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?StoreOwnerDuesFromCashOrdersEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
