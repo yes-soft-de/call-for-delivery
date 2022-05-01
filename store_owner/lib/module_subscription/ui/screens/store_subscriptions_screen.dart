@@ -43,7 +43,7 @@ class StoreSubscriptionsFinanceScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.myBalance),
+      appBar: CustomC4dAppBar.appBar(context, title: S.current.accountBalance),
       body: _currentState?.getUI(context) ?? Container(),
     );
   }

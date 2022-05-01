@@ -1,7 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/store_subscriptions_screen.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -21,6 +23,21 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
   List<Widget> getDues() {
     var context = screenState.context;
     List<Widget> widgets = [];
+    widgets.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Theme.of(context).colorScheme.primary),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            S.current.balanceHint,
+            style: Theme.of(context).textTheme.button,
+          ),
+        ),
+      ),
+    ));
     dues?.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
@@ -29,9 +46,9 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              // Navigator.of(context).pushNamed(
-              //     ProfileRoutes.ACCOUNT_BALANCE_SCREEN,
-              //     arguments: element);
+              Navigator.of(context).pushNamed(
+                  SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
+                  arguments: element);
             },
             child: Container(
               decoration: BoxDecoration(
@@ -154,6 +171,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
         ),
       ));
     });
+
     return widgets;
   }
 
