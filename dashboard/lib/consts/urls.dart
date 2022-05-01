@@ -198,4 +198,8 @@ class Urls {
   static const ADD_DELIVERY_CARS =
       BASE_API_DELIVERY_CAR + '/deliverycar';
 
+  /*-----------------------------bid order----------------------------*/
+  static const GET_BID_ORDER = BASE_API_ORDER+ '/filterbidordersbyadmin';
+  static const GET_BID_ORDER_DETAILS = BASE_API_ORDER+ '/bidorderbyidforadmin/';
+
 }

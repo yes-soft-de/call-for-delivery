@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/module_bid_order/bid_order_module.dart';
 import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
@@ -104,6 +105,7 @@ class MyApp extends StatefulWidget {
   final SupplierCategoriesModule _supplierCategoriesModule;
   final SupplierModule _supplierModule;
   final CarsModule _carsModule;
+  final BidOrderModule _bidOrderModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -123,7 +125,8 @@ class MyApp extends StatefulWidget {
       this._paymentsModule,
       this._supplierCategoriesModule,
       this._supplierModule,
-      this._carsModule
+      this._carsModule,
+      this._bidOrderModule
       );
 
   @override
