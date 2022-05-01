@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتمكن الخادم من العثور على طلبك"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
+        "acceptOfferMsg":
+            MessageLookupByLibrary.simpleMessage("المتجر قبل عرضك"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
@@ -82,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
         "bestStore": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "bidOrder": MessageLookupByLibrary.simpleMessage("طلبات المناقصات"),
         "bill": MessageLookupByLibrary.simpleMessage("الفاتورة"),
         "birthDate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
         "birthDateHint":
@@ -220,6 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل تريد حذف هذا الفرع"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المسلمة"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
@@ -282,6 +286,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dayCount":
             MessageLookupByLibrary.simpleMessage("عدد أيام صلاحية الباقة"),
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
+        "deadLine": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
         "deleteBranchSuccess":
@@ -313,6 +318,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "editProfile":
+            MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال :"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
@@ -454,6 +461,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "makePayment": MessageLookupByLibrary.simpleMessage("تسجيل دفعة"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
+        "manageBranch": MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mechanichLicence": MessageLookupByLibrary.simpleMessage("رخصة السير"),
         "mediumMoreThan20EmployeesLessThan100":
@@ -513,9 +521,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
+        "open": MessageLookupByLibrary.simpleMessage("مفتوح"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
@@ -601,6 +611,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
         "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
+        "pendingOfferMsg":
+            MessageLookupByLibrary.simpleMessage("بإنتظار قبول عرضك"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
         "phone2": MessageLookupByLibrary.simpleMessage("رقم الهاتف 2"),
@@ -649,6 +661,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -692,6 +705,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
+        "rejectOfferMsg":
+            MessageLookupByLibrary.simpleMessage("المتجر رفض عرضك"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للمتجر"),
         "renewNewPlan":
@@ -782,6 +797,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
+        "storeOrders": MessageLookupByLibrary.simpleMessage("طلبات المتجر"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePayments":
             MessageLookupByLibrary.simpleMessage("قائمة الدفعات للمتجر"),
@@ -813,6 +829,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("المدفوعات للكابتن"),
+        "supplierOffer": MessageLookupByLibrary.simpleMessage("عروض الموردين"),
         "supplierUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المورد بنجاح"),
         "suppliers": MessageLookupByLibrary.simpleMessage("الموردين"),

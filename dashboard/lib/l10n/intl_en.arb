@@ -625,19 +625,23 @@
     "addCars": "Add cars",
     "deliveryCarsCost": "Delivery Cars Cost",
     "carModel": "Car Model",
-    "profit": "Profit"
+    "profit": "Profit",
+
+    "price": "Price",
+    "deadLine": "Dead Line",
+    "offerLog": "Offer log",
 
 
+    "pendingOfferMsg": "Waiting to accept your offer",
+    "rejectOfferMsg": "Store reject your offer",
+    "acceptOfferMsg": "Store accept your offer",
+    "confirmed": "Confirmed",
 
-
-
-
-
-
-
-
-
-
-
+    "open": "Open",
+    "supplierOffer": "Supplier offer",
+    "bidOrder": "Bid order",
+    "editProfile": "Edit store profile",
+    "manageBranch": "Manage branch",
+    "storeOrders": "Store orders"
 
 }
