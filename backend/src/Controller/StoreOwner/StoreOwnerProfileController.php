@@ -8,6 +8,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -192,25 +193,7 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="object", property="images",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL"),
-     *              ),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="storeCategoryId"),
-     *              @OA\Property(type="object", property="openingTime"),
-     *              @OA\Property(type="object", property="closingTime"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="number", property="commission"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="string", property="employeeCount"),
-     *               @OA\Property(type="string", property="roomId"),
+     *              ref=@Model(type="App\Response\StoreOwner\StoreOwnerProfileResponse")
      *      )
      *   )
      * )
@@ -303,36 +286,7 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="storeOwnerId"),
-     *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="object", property="images",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="roomID"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="storeCategoryId"),
-     *              @OA\Property(type="string", property="employeeCount"),
-     *              @OA\Property(type="object", property="openingTime"),
-     *              @OA\Property(type="object", property="closingTime"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="number", property="commission"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="array", property="branches",
-     *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="branchId"),
-     *                      @OA\Property(type="object", property="location"),
-     *                      @OA\Property(type="string", property="name"),
-     *                      @OA\Property(type="string", property="city"),
-     *                      @OA\Property(type="boolean", property="isActive"),
-     *                  ),
-     *               @OA\Property(type="string", property="roomId"),
-     *              ),
+     *              ref=@Model(type="App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse")
      *      )
      *   )
      * )
@@ -469,7 +423,7 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="string", property="bankAccountNumber"),
      *          @OA\Property(type="string", property="stcPay"),
      *          @OA\Property(type="string", property="employeeCount"),
-     *          @OA\Property(type="number", property="commission")
+     *          @OA\Property(type="number", property="profitMargin")
      *      )
      * )
      *

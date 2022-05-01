@@ -29,6 +29,11 @@ class StoreOwnerProfileUpdateByAdminRequest
     private $employeeCount;
 
     /**
+     * @var float|null
+     */
+    private $profitMargin;
+
+    /**
      * @return int
      */
     public function getId()

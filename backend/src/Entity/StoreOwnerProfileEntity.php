@@ -83,6 +83,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentFromCompanyEntity::class)]
     private $storeOwnerPaymentFromCompanyEntity;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $profitMargin;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -497,6 +500,18 @@ class StoreOwnerProfileEntity
                 $storeOwnerPaymentFromCompanyEntity->setStore(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfitMargin(): ?float
+    {
+        return $this->profitMargin;
+    }
+
+    public function setProfitMargin(?float $profitMargin): self
+    {
+        $this->profitMargin = $profitMargin;
 
         return $this;
     }

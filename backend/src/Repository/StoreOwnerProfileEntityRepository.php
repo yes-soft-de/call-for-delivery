@@ -27,7 +27,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('profile')
 
             ->select('profile.id', 'profile.storeOwnerName', 'profile.images', 'profile.status', 'profile.phone', 'profile.openingTime', 'profile.closingTime', 'profile.storeCategoryId', 'profile.commission',
-                'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount', 'profile.city', 'profile.storeCategoryId', 'profile.storeCategoryId')
+                'profile.bankName', 'profile.bankAccountNumber', 'profile.stcPay', 'profile.employeeCount', 'profile.city', 'profile.storeCategoryId', 'profile.storeCategoryId', 'profile.profitMargin')
             ->addSelect('chatRoomEntity.roomId')
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = profile.storeOwnerId')
@@ -96,7 +96,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('storeOwnerProfile')
             ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
                 'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
-                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images')
+                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images', 'storeOwnerProfile.profitMargin')
             ->addSelect('chatRoomEntity.roomId')
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = storeOwnerProfile.storeOwnerId')
