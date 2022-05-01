@@ -55,4 +55,6 @@ class OrdersResponse
     public array|null $orderLogs;
 
     public int|null $paidToProvider;
+
+    public float|null $kilometer;
 }
