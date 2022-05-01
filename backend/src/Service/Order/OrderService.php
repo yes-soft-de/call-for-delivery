@@ -49,6 +49,7 @@ use DateTime;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
+use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 
 class OrderService
 {
@@ -63,8 +64,9 @@ class OrderService
     private NotificationFirebaseService $notificationFirebaseService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
+    private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -77,6 +79,7 @@ class OrderService
        $this->notificationFirebaseService = $notificationFirebaseService;
        $this->captainFinancialDuesService = $captainFinancialDuesService;
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
+       $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
     }
 
     /**
@@ -302,8 +305,11 @@ class OrderService
             if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                 
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
+              
+                //Save the price of the order in cash in case the captain does not pay the store
                 if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                     $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
+                    $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
                 }
             }
 
