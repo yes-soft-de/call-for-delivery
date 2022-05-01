@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CaptainAmountFromOrderCashEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CaptainAmountFromOrderCashEntityRepository::class)]
 //The cash is with the captain from orders
@@ -28,6 +29,7 @@ class CaptainAmountFromOrderCashEntity
     #[ORM\Column(type: 'integer')]
     private $flag;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 

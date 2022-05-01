@@ -48,6 +48,7 @@ use App\Response\Order\OrderCancelResponse;
 use DateTime;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
+use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 
 class OrderService
 {
@@ -61,8 +62,9 @@ class OrderService
     private OrderLogsService $orderLogsService;
     private NotificationFirebaseService $notificationFirebaseService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
+    private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -74,6 +76,7 @@ class OrderService
        $this->orderLogsService = $orderLogsService;
        $this->notificationFirebaseService = $notificationFirebaseService;
        $this->captainFinancialDuesService = $captainFinancialDuesService;
+       $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
     }
 
     /**
@@ -299,6 +302,9 @@ class OrderService
             if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                 
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
+                if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                    $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
+                }
             }
 
             //create Notification Local for store
