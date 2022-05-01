@@ -492,3 +492,12 @@ App\Request\Admin\User\UserIdUpdateRequest:
             - NotBlank: ~
         password:
             - NotBlank: ~
+
+App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilterGetRequest:
+    properties:
+        captainId:
+            - NotBlank: ~
+        fromDate:
+            - NotBlank: ~
+        toDate:
+            - NotBlank: ~

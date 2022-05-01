@@ -3,10 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\CaptainAmountFromOrderCashEntity;
+use App\Entity\CaptainEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+
 
 /**
  * @method CaptainAmountFromOrderCashEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,32 +48,26 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return CaptainAmountFromOrderCashEntity[] Returns an array of CaptainAmountFromOrderCashEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function filterCaptainAmountFromOrderCash(int $captainId, string $fromDate, string $toDate): ?array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('captainAmountFromOrderCash')
+    
+            ->select('IDENTITY (captainAmountFromOrderCash.orderId) as orderId')
+            ->addSelect('captainAmountFromOrderCash.id', 'captainAmountFromOrderCash.amount', 'captainAmountFromOrderCash.flag', 'captainAmountFromOrderCash.createdAt')
+            ->addSelect('captainEntity.captainName')
+           
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainAmountFromOrderCash.captain')
+            
+            ->andWhere('captainAmountFromOrderCash.captain = :captainId')
+            ->setParameter('captainId', $captainId)
+           
+            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+           
+            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+            
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CaptainAmountFromOrderCashEntity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
