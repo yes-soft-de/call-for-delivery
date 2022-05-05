@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
+import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/text_reader.dart';
@@ -92,7 +93,22 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           return CustomAlertDialog(
               onPressed: () {
                 Navigator.of(context).pop();
-                widget.stateManager.updateOrder(request, this);
+                if (request.orderCost != null && request.state == 'delivered') {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (_) {
+                        return CustomAlertDialogForCash(
+                            onPressed: (paid) {
+                              Navigator.of(context).pop();
+                              request.paid = paid ? 1 : 2;
+                              widget.stateManager.updateOrder(request, this);
+                            },
+                            content: S.of(context).confirmUpdateOrderStatus);
+                      });
+                } else {
+                  widget.stateManager.updateOrder(request, this);
+                }
               },
               content: S.of(context).confirmUpdateOrderStatus);
         });
