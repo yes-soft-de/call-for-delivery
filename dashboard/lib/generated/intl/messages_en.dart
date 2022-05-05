@@ -348,6 +348,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Can not remove it, Exceeded time allowed"),
         "exitWarning":
             MessageLookupByLibrary.simpleMessage("Please press again to exit"),
+        "expirationData":
+            MessageLookupByLibrary.simpleMessage("Expiration Data"),
+        "expiredSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Expired Subscriptions"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
@@ -372,6 +376,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "financeStatus": MessageLookupByLibrary.simpleMessage("Status"),
         "financeStoreStatus":
             MessageLookupByLibrary.simpleMessage("Finance order status"),
+        "financeSubscriptionDetails": MessageLookupByLibrary.simpleMessage(
+            "Finance Subscription Details"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
         "financialDuesCycle":
@@ -579,6 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "package": MessageLookupByLibrary.simpleMessage("Package"),
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("Packages categories\'s"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("Package Cost"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package info"),
         "packageName": MessageLookupByLibrary.simpleMessage("Package name"),
         "packages": MessageLookupByLibrary.simpleMessage("Packages"),
@@ -821,6 +828,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscriptionDate":
+            MessageLookupByLibrary.simpleMessage("Subscription Date"),
+        "subscriptionInactive":
+            MessageLookupByLibrary.simpleMessage("Subscription Inactive"),
+        "subscriptionStatus":
+            MessageLookupByLibrary.simpleMessage("Subscription Status"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "successRenew": MessageLookupByLibrary.simpleMessage(

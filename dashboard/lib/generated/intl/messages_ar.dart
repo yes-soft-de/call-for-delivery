@@ -347,6 +347,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
         "exitWarning": MessageLookupByLibrary.simpleMessage(
             "اضغط مرة اخرى للخروج من التطبيق"),
+        "expirationData":
+            MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
+        "expiredSubscriptions":
+            MessageLookupByLibrary.simpleMessage("الاشتراك منتهي"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
@@ -369,6 +373,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "financeStatus": MessageLookupByLibrary.simpleMessage("حالة الدورة"),
         "financeStoreStatus":
             MessageLookupByLibrary.simpleMessage("حالة مستحقات المتاجر"),
+        "financeSubscriptionDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل الاشتراك"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "financialDues":
             MessageLookupByLibrary.simpleMessage("المستحقات المالية"),
@@ -577,6 +583,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("تصنيفات الباقات"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراك"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الباقة"),
         "packageName": MessageLookupByLibrary.simpleMessage("اسم الباقة"),
         "packages": MessageLookupByLibrary.simpleMessage("الباقات"),
@@ -817,6 +824,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscriptionDate":
+            MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
+        "subscriptionInactive":
+            MessageLookupByLibrary.simpleMessage("الاشتراك غير مفعل"),
+        "subscriptionStatus":
+            MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":

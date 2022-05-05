@@ -31,6 +31,16 @@ class PaymentsRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> paymentFromStore(
+      CreateStorePaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.CREATE_STORE_PAYMENTS, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<StorePaymentsResponse?> getStorePayments(int id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_STORE_PAYMENTS + '/$id',
@@ -40,6 +50,15 @@ class PaymentsRepository {
   }
 
   Future<ActionResponse?> deleteStorePayments(String id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.CREATE_STORE_PAYMENTS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteFromStorePayments(String id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.delete(
         Urls.CREATE_STORE_PAYMENTS + '/$id',
@@ -136,7 +155,8 @@ class PaymentsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-   /* UPDATE */
+
+  /* UPDATE */
   Future<ActionResponse?> updateCaptainFinanceByOrder(
       CreateCaptainFinanceByOrderRequest request) async {
     var token = await _authService.getToken();

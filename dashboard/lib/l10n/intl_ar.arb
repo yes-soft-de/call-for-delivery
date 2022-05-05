@@ -636,5 +636,14 @@
     "bidOrder": "طلبات المناقصات",
     "editProfile": "تعديل معلومات المتجر",
     "manageBranch": "إدارة الأفرع",
-    "storeOrders": "طلبات المتجر"
+    "storeOrders": "طلبات المتجر",
+    "financeSubscriptionDetails": "تفاصيل الاشتراك",
+    "subscriptionDate": "تاريخ الاشتراك",
+    "expirationData": "تاريخ الانتهاء",
+    "subscriptionStatus": "حالة الاشتراك",
+    "packageCost": "تكلفة الاشتراك",
+    "subscriptionInactive": "الاشتراك غير مفعل",
+    "expiredSubscriptions": "الاشتراك منتهي"
+
+
 }

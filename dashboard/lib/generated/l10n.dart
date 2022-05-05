@@ -6259,6 +6259,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Finance Subscription Details`
+  String get financeSubscriptionDetails {
+    return Intl.message(
+      'Finance Subscription Details',
+      name: 'financeSubscriptionDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Date`
+  String get subscriptionDate {
+    return Intl.message(
+      'Subscription Date',
+      name: 'subscriptionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration Data`
+  String get expirationData {
+    return Intl.message(
+      'Expiration Data',
+      name: 'expirationData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Status`
+  String get subscriptionStatus {
+    return Intl.message(
+      'Subscription Status',
+      name: 'subscriptionStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Cost`
+  String get packageCost {
+    return Intl.message(
+      'Package Cost',
+      name: 'packageCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Inactive`
+  String get subscriptionInactive {
+    return Intl.message(
+      'Subscription Inactive',
+      name: 'subscriptionInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expired Subscriptions`
+  String get expiredSubscriptions {
+    return Intl.message(
+      'Expired Subscriptions',
+      name: 'expiredSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

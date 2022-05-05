@@ -23,7 +23,6 @@ class Urls {
   static const String BASE_API_DELIVERY_CAR =
       DOMAIN + VERSION_ADMIN + '/deliverycar';
 
-
   static const String BASE_API_BRANCH_ADMIN =
       DOMAIN + VERSION_ADMIN + '/storeownerbranch';
   static const String BASE_API_NOTICE_ADMIN =
@@ -58,7 +57,9 @@ class Urls {
   static const BASE_CAPTAIN_ACCOUNT_BALANCE =
       DOMAIN + VERSION_ADMIN + '/captainfinancialsystemdetail';
   static const BASE_CAPTAIN_ACCOUNT_BALANCE_DUES =
-      DOMAIN  +'/v1/captainfinancialduesforadmin';
+      DOMAIN + '/v1/captainfinancialduesforadmin';
+  static const BASE_STORE_SUBSCRIPTIONS_FINANCE =
+      DOMAIN +VERSION_ADMIN + '/captainfinancialduesforadmin';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -153,6 +154,8 @@ class Urls {
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
+  static const GET_STORE_SUBSCRIPTIONS_FINANCE = BASE_STORE_SUBSCRIPTIONS_FINANCE + '/storepayments';
+
   /*------------------------CAPTAIN PAYMENTS------------------------*/
   static const CREATE_CAPTAIN_PAYMENTS =
       BASE_CAPTAIN_PAYMENT + '/captainpayment';
@@ -192,14 +195,13 @@ class Urls {
   static const ACTIVE_ANNOUNCEMENT =
       BASE_API_ANNOUNCEMENT + '/announcementadministrationstatus';
 
-
   /*-----------------cars_delivery-----------------------------*/
-  static const GET_DELIVERY_CARS = BASE_API_DELIVERY_CAR + '/deliverycarsforadmin';
-  static const ADD_DELIVERY_CARS =
-      BASE_API_DELIVERY_CAR + '/deliverycar';
+  static const GET_DELIVERY_CARS =
+      BASE_API_DELIVERY_CAR + '/deliverycarsforadmin';
+  static const ADD_DELIVERY_CARS = BASE_API_DELIVERY_CAR + '/deliverycar';
 
   /*-----------------------------bid order----------------------------*/
-  static const GET_BID_ORDER = BASE_API_ORDER+ '/filterbidordersbyadmin';
-  static const GET_BID_ORDER_DETAILS = BASE_API_ORDER+ '/bidorderbyidforadmin/';
-
+  static const GET_BID_ORDER = BASE_API_ORDER + '/filterbidordersbyadmin';
+  static const GET_BID_ORDER_DETAILS =
+      BASE_API_ORDER + '/bidorderbyidforadmin/';
 }
