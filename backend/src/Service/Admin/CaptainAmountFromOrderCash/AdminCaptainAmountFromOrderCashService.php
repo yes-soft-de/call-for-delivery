@@ -37,20 +37,20 @@ class AdminCaptainAmountFromOrderCashService
             $detail[] = $this->autoMapping->map("array", CaptainAmountFromOrderCashResponse::class, $captainAmountFromOrderCash);
         }
 
-        $total = $this->getTotal($sumAmountWithCaptain, $request->getCaptainId());
+        $total = $this->getTotal($sumAmountWithCaptain, $request->getCaptainId(), $request->getFromDate(), $request->getToDate());
 
         return ['detail' => $detail, 'total' => $total];
     }
 
-    public function getTotal($sumAmountWithCaptain, $captainId): array
+    public function getTotal(float $sumAmountWithCaptain, int $captainId, string $fromDate, string $toDate): array
     {
-        $sumPaymentsFromCaptain = $this->adminCaptainPaymentToCompanyService->getSumPaymentsToCompany($captainId);
+        $sumPaymentsToCaptain = $this->adminCaptainPaymentToCompanyService->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
        
         $item['sumAmountWithCaptain'] = $sumAmountWithCaptain;
 
-        $item['sumPaymentsFromCaptain'] = $sumPaymentsFromCaptain['sumPayments'];
+        $item['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPayments'];
 
-        $total = $sumAmountWithCaptain - $item['sumPaymentsFromCaptain'];
+        $total = $sumAmountWithCaptain - $item['sumPaymentsToCaptain'];
     
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
 

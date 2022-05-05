@@ -35,14 +35,14 @@ class AdminStoreOwnerDuesFromCashOrdersService
             $detail[] = $this->autoMapping->map("array", StoreOwnerDuesFromCashOrdersResponse::class, $storeOwnerDuesFromCashOrders);
         }
 
-        $total = $this->getTotal($sumAmountStorOwnerDues, $request->getStoreId());
+        $total = $this->getTotal($sumAmountStorOwnerDues, $request->getStoreId(), $request->getFromDate(), $request->getToDate());
 
         return ['detail' => $detail, 'total' => $total];
     }
     
-    public function getTotal($sumAmountStorOwnerDues, $storeId): array
+    public function getTotal(float $sumAmountStorOwnerDues, int $storeId, string $fromDate, string $toDate): array
     {
-        $sumPaymentsFromCompany = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeId);
+        $sumPaymentsFromCompany = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeId, $fromDate, $toDate);
 
         $item['sumAmountStorOwnerDues'] = $sumAmountStorOwnerDues;
 
