@@ -375,6 +375,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حالة مستحقات المتاجر"),
         "financeSubscriptionDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الاشتراك"),
+        "financeSubscriptions":
+            MessageLookupByLibrary.simpleMessage("نفقات الاشتراكات"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "financialDues":
             MessageLookupByLibrary.simpleMessage("المستحقات المالية"),

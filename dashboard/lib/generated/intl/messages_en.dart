@@ -378,6 +378,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finance order status"),
         "financeSubscriptionDetails": MessageLookupByLibrary.simpleMessage(
             "Finance Subscription Details"),
+        "financeSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Finance Subscriptions"),
         "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "financialDues": MessageLookupByLibrary.simpleMessage("Profit"),
         "financialDuesCycle":

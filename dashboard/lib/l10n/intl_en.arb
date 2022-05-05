@@ -649,7 +649,9 @@
     "subscriptionStatus": "Subscription Status",
     "packageCost": "Package Cost",
     "subscriptionInactive": "Subscription Inactive",
-    "expiredSubscriptions": "Expired Subscriptions"
+    "expiredSubscriptions": "Expired Subscriptions",
+    "financeSubscriptions": "Finance Subscriptions"
+
 
 
 }

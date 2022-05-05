@@ -6329,6 +6329,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Finance Subscriptions`
+  String get financeSubscriptions {
+    return Intl.message(
+      'Finance Subscriptions',
+      name: 'financeSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
