@@ -602,6 +602,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
             "للأسف فشلت عملية الدفع الرجاء ، إعادة المحاولة"),
+        "paymentFromStore":
+            MessageLookupByLibrary.simpleMessage("دفعة من المتجر"),
         "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
@@ -834,6 +836,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراك غير مفعل"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
+        "subscriptionsFinanceDetailsHint": MessageLookupByLibrary.simpleMessage(
+            "في هذه النافذة نستعرض التفاصيل المالية للاشتراك الحالي في التاريخ"),
         "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
         "successCreateOrder":

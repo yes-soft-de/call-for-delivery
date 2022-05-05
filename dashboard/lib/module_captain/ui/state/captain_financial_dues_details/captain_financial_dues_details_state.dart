@@ -110,8 +110,10 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
                                               status: (num.tryParse(_amount.text
                                                               .trim()) ??
                                                           0) >=
-                                                      model.total
-                                                          .sumCaptainFinancialDues
+                                                      (model.total
+                                                              .sumCaptainFinancialDues -
+                                                          model.total
+                                                              .sumPaymentsToCaptain)
                                                   ? 1
                                                   : 3,
                                               captainFinancialDuesId: model.id,

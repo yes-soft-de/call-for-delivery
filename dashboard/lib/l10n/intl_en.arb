@@ -652,7 +652,10 @@
     "expiredSubscriptions": "Expired Subscriptions",
     "financeSubscriptions": "Finance Subscriptions",
     "subscriptionActive": "Activated",
-    "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments "
+    "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments ",
+    "subscriptionsFinanceDetailsHint": "Here you find all financial details included in this subscription with date",
+    "paymentFromStore": "Payment From Store"
+
 
 
 

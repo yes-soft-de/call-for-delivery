@@ -6359,6 +6359,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Here you find all financial details included in this subscription with date`
+  String get subscriptionsFinanceDetailsHint {
+    return Intl.message(
+      'Here you find all financial details included in this subscription with date',
+      name: 'subscriptionsFinanceDetailsHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment From Store`
+  String get paymentFromStore {
+    return Intl.message(
+      'Payment From Store',
+      name: 'paymentFromStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

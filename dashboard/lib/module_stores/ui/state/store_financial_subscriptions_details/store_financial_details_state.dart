@@ -50,7 +50,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                   ListTile(
                     horizontalTitleGap: 0,
                     leading: const Icon(Icons.info_rounded),
-                    title: Text(S.current.currentFinancialCycleHint +
+                    title: Text(S.current.subscriptionsFinanceDetailsHint +
                         ' ${model.startDate + ' - ' + model.endDate}'),
                   ),
                   const Padding(
@@ -106,7 +106,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                           scrollable: true,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25)),
-                          title: Text(S.current.paymentToCaptain),
+                          title: Text(S.current.paymentFromStore),
                           content: Container(
                             child: Column(
                               children: [
@@ -336,7 +336,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             firstBubble: verticalBubble(
                 subtitle: model.startDate, title: S.current.subscriptionDate),
             secondBubble: verticalBubble(
-                subtitle: S.current.endDate, title: S.current.expirationData)),
+                subtitle: model.endDate, title: S.current.expirationData)),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.subscriptionStatus),
             secondBubble: verticalBubble(

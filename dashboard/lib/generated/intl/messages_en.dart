@@ -605,6 +605,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
             "Payment process has been failed , please try again later"),
+        "paymentFromStore":
+            MessageLookupByLibrary.simpleMessage("Payment From Store"),
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
@@ -837,6 +839,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Subscription Inactive"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription Status"),
+        "subscriptionsFinanceDetailsHint": MessageLookupByLibrary.simpleMessage(
+            "Here you find all financial details included in this subscription with date"),
         "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your subscriptions financial information with included all payments "),
         "successCreateOrder":
