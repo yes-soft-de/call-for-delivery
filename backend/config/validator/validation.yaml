@@ -510,3 +510,14 @@ App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilte
             - NotBlank: ~
         toDate:
             - NotBlank: ~
+
+App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        captain:
+            - NotBlank: ~
+        fromDate:
+            - NotBlank: ~
+        toDate:
+            - NotBlank: ~

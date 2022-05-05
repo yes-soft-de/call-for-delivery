@@ -5,11 +5,13 @@ namespace App\Manager\Admin\StoreOwnerPayment;
 use App\AutoMapping;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Repository\StoreOwnerPaymentFromCompanyEntityRepository;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
+use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Payment\PaymentConstant;
+use App\Constant\Order\OrderAmountCashConstant;
+use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersManager;
 
 class AdminStoreOwnerPaymentFromCompanyManager
 {
@@ -17,16 +19,18 @@ class AdminStoreOwnerPaymentFromCompanyManager
     private EntityManagerInterface $entityManager;
     private StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository;
     private StoreOwnerProfileManager $storeOwnerProfileManager;
+    private AdminStoreOwnerDuesFromCashOrdersManager $adminStoreOwnerDuesFromCashOrdersManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository, StoreOwnerProfileManager $storeOwnerProfileManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository, StoreOwnerProfileManager $storeOwnerProfileManager, AdminStoreOwnerDuesFromCashOrdersManager $adminStoreOwnerDuesFromCashOrdersManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->storeOwnerPaymentFromCompanyEntityRepository = $storeOwnerPaymentFromCompanyEntityRepository;
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
+        $this->adminStoreOwnerDuesFromCashOrdersManager = $adminStoreOwnerDuesFromCashOrdersManager;
     }
 
-    public function createStoreOwnerPaymentFromCompany(AdminStoreOwnerPaymentCreateRequest $request): StoreOwnerPaymentFromCompanyEntity|string
+    public function createStoreOwnerPaymentFromCompany(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest $request): StoreOwnerPaymentFromCompanyEntity|string
     {
         $store = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStore());
        
@@ -36,10 +40,12 @@ class AdminStoreOwnerPaymentFromCompanyManager
 
         $request->setStore($store);
 
-        $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentCreateRequest::class, StoreOwnerPaymentFromCompanyEntity::class, $request);
+        $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class, StoreOwnerPaymentFromCompanyEntity::class, $request);
 
         $this->entityManager->persist($storeOwnerPaymentFromCompanyEntity);
         $this->entityManager->flush();
+
+        $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getStore());
 
         return $storeOwnerPaymentFromCompanyEntity;
     }

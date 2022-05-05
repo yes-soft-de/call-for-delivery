@@ -3,7 +3,6 @@
 namespace App\Service\Admin\CaptainAmountFromOrderCash;
 
 use App\AutoMapping;
-use App\Entity\CaptainAmountFromOrderCashEntity;
 use App\Manager\Admin\CaptainAmountFromOrderCash\AdminCaptainAmountFromOrderCashManager;
 use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilterGetRequest;
 use App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse;

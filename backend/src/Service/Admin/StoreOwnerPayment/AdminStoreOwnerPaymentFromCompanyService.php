@@ -5,7 +5,7 @@ namespace App\Service\Admin\StoreOwnerPayment;
 use App\AutoMapping;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Manager\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyManager;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
+use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateResponse;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyResponse;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -23,7 +23,7 @@ class AdminStoreOwnerPaymentFromCompanyService
         $this->adminStoreOwnerPaymentFromCompanyManager = $adminStoreOwnerPaymentFromCompanyManager;
     }
 
-    public function createStoreOwnerPaymentFromCompany(AdminStoreOwnerPaymentCreateRequest $request): AdminStoreOwnerPaymentCreateResponse|string
+    public function createStoreOwnerPaymentFromCompany(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest $request): AdminStoreOwnerPaymentCreateResponse|string
     {
         $payment = $this->adminStoreOwnerPaymentFromCompanyManager->createStoreOwnerPaymentFromCompany($request);
        

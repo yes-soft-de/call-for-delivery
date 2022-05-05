@@ -4,7 +4,7 @@ namespace App\Controller\Admin\StoreOwnerPayment;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateRequest;
+use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -74,6 +74,8 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
      *            @OA\Property(type="number", property="amount"),
      *            @OA\Property(type="object", property="date"),
      *            @OA\Property(type="string", property="note"),
+     *            @OA\Property(type="string", property="fromDate"),
+     *            @OA\Property(type="string", property="toDate"),
      *      )
      *   )
      * )
@@ -95,7 +97,7 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, AdminStoreOwnerPaymentCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
 

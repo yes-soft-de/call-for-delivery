@@ -4,7 +4,7 @@ namespace App\Controller\Admin\CaptainPayment;
 
 use App\AutoMapping;
 use App\Controller\BaseController;
-use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentToCompanyService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,7 +39,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
     }
 
     /**
-     * admin:Create new Payment to captain
+     * admin:Create new Payment from captain for order cash
      * @Route("captainpaymenttocompany", name="createCaptainPaymentToCompany", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -60,6 +60,8 @@ class AdminCaptainPaymentToCompanyController extends BaseController
      *          @OA\Property(type="number", property="amount"),
      *          @OA\Property(type="integer", property="captain"),
      *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
      *      )
      * )
      *
@@ -95,7 +97,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, AdminCaptainPaymentCreateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
 

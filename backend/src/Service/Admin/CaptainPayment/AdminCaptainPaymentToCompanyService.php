@@ -11,6 +11,7 @@ use App\Response\Admin\CaptainPayment\AdminCaptainPaymentResponse;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
+use App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest;
 
 class AdminCaptainPaymentToCompanyService
 {
@@ -23,7 +24,7 @@ class AdminCaptainPaymentToCompanyService
         $this->adminCaptainPaymentToCompanyManager = $adminCaptainPaymentToCompanyManager;
     }
 
-    public function createCaptainPaymentToCompany(AdminCaptainPaymentCreateRequest $request): AdminCaptainPaymentCreateResponse|string
+    public function createCaptainPaymentToCompany(AdminCaptainPaymentToCompanyForOrderCashCreateRequest $request): AdminCaptainPaymentCreateResponse|string
     {
         $payment = $this->adminCaptainPaymentToCompanyManager->createCaptainPaymentToCompany($request);
     
