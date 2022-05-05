@@ -68,5 +68,8 @@ class OrderByIdForSupplierGetResponse
      */
     public $roomId;
 
+    /**
+     * @var int|null
+     */
     public $usedAs;
 }
