@@ -9,6 +9,7 @@ use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersF
 class AdminStoreOwnerDuesFromCashOrdersManager
 {
     private StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository, EntityManagerInterface $entityManager)
     {
