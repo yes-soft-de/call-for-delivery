@@ -87,7 +87,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             firstBubble: verticalBubble(
                 subtitle: model.startDate, title: S.current.subscriptionDate),
             secondBubble: verticalBubble(
-                subtitle: S.current.endDate, title: S.current.expirationData)),
+                subtitle: model.endDate, title: S.current.expirationData)),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.subscriptionStatus),
             secondBubble: verticalBubble(
