@@ -521,6 +521,10 @@ class OrderService
 
             $bidOrder['pricesOffers'] = $this->filterAndCustomizePricesOffersAccordingToSupplier($bidOrder['bidDetails']->getPriceOfferEntities()->toArray(), $supplierId);
 
+            if($bidOrder['roomId']) {
+                $bidOrder['roomId'] = $bidOrder['roomId']->toBase32();
+            }
+
             $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
         }
 
