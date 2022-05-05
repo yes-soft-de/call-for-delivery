@@ -509,6 +509,9 @@ class OrderService
 
             $bidOrder['bidDetailsId'] = $bidOrder['bidDetails']->getId();
             $bidOrder['bidDetailsImages'] = $this->customizeBidOrderImages($bidOrder['bidDetails']->getImages()->toArray());
+            $bidOrder['title'] = $bidOrder['bidDetails']->getTitle();
+            $bidOrder['description'] = $bidOrder['bidDetails']->getDescription();
+            $bidOrder['openToPriceOffer'] = $bidOrder['bidDetails']->getOpenToPriceOffer();
 
             $bidOrder['pricesOffers'] = $this->filterAndCustomizePricesOffersAccordingToSupplier($bidOrder['bidDetails']->getPriceOfferEntities()->toArray(), $supplierId);
 
