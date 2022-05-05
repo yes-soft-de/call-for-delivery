@@ -22,7 +22,7 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $recipientPhone;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $detail;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'storeOrderDetailsEntities')]
