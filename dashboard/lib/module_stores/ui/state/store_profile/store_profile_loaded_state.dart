@@ -58,66 +58,85 @@ class StoreProfileLoadedState extends States {
             ),
           ),
           Positioned(
-             bottom: 0.0,
+            bottom: 0.0,
             left: 0.0,
             right: 0.0,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 color: Theme.of(context).secondaryHeaderColor,
-                shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                child:  Padding(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(profile?.storeOwnerName ?? '' , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                        Text(profile?.phone ?? '',style: TextStyle(fontWeight: FontWeight.bold ),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Text(S.current.openingTime+': ',style: TextStyle(color: Colors.green.shade900)),
-
-                          Text(profile?.openingTime ?? ''),
-                        ],),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Text(S.current.closingTime+ ': ',style: TextStyle(color: Colors.red.shade900),),
-
-                          Text(profile?.closingTime ?? ''),
-                        ],),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          Text(S.current.bankName+': ', style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text(profile?.bankName ?? ''),
-                        ],),
-
-                        Row(
-                          children: [
-                            Text(S.current.city+': ', style: TextStyle(fontWeight: FontWeight.bold),),
-                            Text(profile?.city ?? ''),
-                          ],
-                        ),
-
-
-
-                        Text(S.current.bankAccountNumber , style: TextStyle(fontWeight: FontWeight.bold),),
-                        Text(profile?.bankNumber ?? ''),
-
-
-                      ],
-                    ),
-                  ],),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            profile?.storeOwnerName ?? '',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          Text(
+                            profile?.phone ?? '',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(S.current.openingTime + ': ',
+                                  style:
+                                      TextStyle(color: Colors.green.shade900)),
+                              Text(profile?.openingTime ?? ''),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                S.current.closingTime + ': ',
+                                style: TextStyle(color: Colors.red.shade900),
+                              ),
+                              Text(profile?.closingTime ?? ''),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                S.current.bankName + ': ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(profile?.bankName ?? ''),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                S.current.city + ': ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(profile?.city ?? ''),
+                            ],
+                          ),
+                          Text(
+                            S.current.bankAccountNumber,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(profile?.bankNumber ?? ''),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -155,12 +174,15 @@ class StoreProfileLoadedState extends States {
               screenState.refresh();
             }),
       ),
-          Wrap(
-            spacing: 30,
-            alignment: WrapAlignment.center,
-            direction: Axis.horizontal,
-            children: [
-            cardTap(image: ImageAsset.EDIT_PROFILE, title: S.of(context).editProfile,onTapCard: (){
+      Wrap(
+        spacing: 30,
+        alignment: WrapAlignment.center,
+        direction: Axis.horizontal,
+        children: [
+          cardTap(
+              image: ImageAsset.EDIT_PROFILE,
+              title: S.of(context).editProfile,
+              onTapCard: () {
 //              showDialog(
 //                  barrierDismissible: false,
 //                  context: screenState.context,
@@ -183,55 +205,85 @@ class StoreProfileLoadedState extends States {
 //                      ),
 //                    );
 //                  });
-            }),
-            cardTap(image: ImageAsset.BID_ORDER, title: S.of(context).bidOrder,onTapCard: (){
-              Navigator.pushNamed(
-                  screenState.context, BidOrderRoutes.BID_ORDER,
-                  arguments: profile?.id);
-
-
-            }),
-              cardTap(image: ImageAsset.ORDERS, title: S.of(context).storeOrders,onTapCard: (){
+              }),
+          cardTap(
+              image: ImageAsset.BID_ORDER,
+              title: S.of(context).bidOrder,
+              onTapCard: () {
+                Navigator.pushNamed(
+                    screenState.context, BidOrderRoutes.BID_ORDER,
+                    arguments: profile?.id);
+              }),
+          cardTap(
+              image: ImageAsset.ORDERS,
+              title: S.of(context).storeOrders,
+              onTapCard: () {
                 Navigator.pushNamed(
                     screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
                     arguments: profile?.id);
               }),
-              cardTap(image: ImageAsset.BRANCH, title: S.of(context).manageBranch,onTapCard: (){
-                              Navigator.of(context).pushNamed(
-                  BranchesRoutes.BRANCHES_LIST_SCREEN,
-                  arguments: profile?.id ?? -1);
-
+          cardTap(
+              image: ImageAsset.BRANCH,
+              title: S.of(context).manageBranch,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(
+                    BranchesRoutes.BRANCHES_LIST_SCREEN,
+                    arguments: profile?.id ?? -1);
               }),
-              cardTap(image: ImageAsset.PAYMENT, title: S.of(context).payments , onTapCard: (){
-                              Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
-                  arguments: profile?.id ?? -1);
-
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).payments,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
+                    arguments: profile?.id ?? -1);
               }),
-          ],),
-
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).financeSubscriptions,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    arguments: profile?.id ?? -1);
+              }),
+        ],
+      ),
     ]));
   }
-  Widget cardTap({required String title ,required String  image , required Function() onTapCard}){
+
+  Widget cardTap(
+      {required String title,
+      required String image,
+      required Function() onTapCard}) {
     return GestureDetector(
       onTap: onTapCard,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Card(elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child:
-          Padding(
+        child: Card(
+          elevation: 5,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(image,height: 100,width: 130,),
+                Image.asset(
+                  image,
+                  height: 100,
+                  width: 130,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(title,style: TextStyle(fontSize: 13,fontWeight: FontWeight.w600),),
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                  ),
                 )
-              ],),
-          ),),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
