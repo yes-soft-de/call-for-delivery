@@ -58,4 +58,9 @@ class AdminCaptainPaymentToCompanyService
 
         return $response;
     }
+
+    public function getSumPaymentsToCompany(int $captainId): array
+    {
+       return $this->adminCaptainPaymentToCompanyManager->getSumPaymentsToCompany($captainId);
+    }
 }

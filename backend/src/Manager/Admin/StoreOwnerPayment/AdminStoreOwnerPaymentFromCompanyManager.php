@@ -63,4 +63,9 @@ class AdminStoreOwnerPaymentFromCompanyManager
     {
         return $this->storeOwnerPaymentFromCompanyEntityRepository->getAllStorePaymentsFromCompany($storeId);
     }
+
+    public function getSumPaymentsFromCompany(int $storeId): ?array
+    {
+        return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompany($storeId);
+    }
 }

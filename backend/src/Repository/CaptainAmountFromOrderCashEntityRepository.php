@@ -9,7 +9,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
-
+use App\Constant\Order\OrderAmountCashConstant;
 
 /**
  * @method CaptainAmountFromOrderCashEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -61,12 +61,15 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->andWhere('captainAmountFromOrderCash.captain = :captainId')
             ->setParameter('captainId', $captainId)
            
+            ->andWhere('captainAmountFromOrderCash.flag = :flag')
+            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            
             ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
             ->setParameter('fromDate', $fromDate)
            
             ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
             ->setParameter('toDate', $toDate)
-            
+
             ->getQuery()
             ->getResult();
     }

@@ -66,10 +66,18 @@ class AdminCaptainAmountFromOrderCashController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *             ref=@Model(type="App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse")
-     *         )
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="object", property="total",
+     *                  @OA\Property(type="number", property="sumAmountWithCaptain"),
+     *                  @OA\Property(type="number", property="sumPaymentsFromCaptain"),
+     *                  @OA\Property(type="boolean", property="advancePayment"),
+     *                  @OA\Property(type="number", property="total"),
+     *              ),
+     *              @OA\Property(type="array", property="detail",
+     *                @OA\Items(
+     *                 ref=@Model(type="App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse")
+     *              ),
+     *          )
      *      )
      *    )
      *  ) 

@@ -65,4 +65,17 @@ class StoreOwnerPaymentFromCompanyEntityRepository extends ServiceEntityReposito
             ->getQuery()
             ->getResult();
     }
+
+    public function  getSumPaymentsFromCompany(int $storeId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerPaymentFromCompanyEntity')
+           
+            ->select('sum (storeOwnerPaymentFromCompanyEntity.amount) as sumPaymentsFromCompany')
+           
+            ->andWhere('storeOwnerPaymentFromCompanyEntity.store = :storeId')
+            ->setParameter('storeId', $storeId)
+            
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

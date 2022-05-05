@@ -66,14 +66,21 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *             ref=@Model(type="App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersResponse")
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="object", property="total",
+     *                  @OA\Property(type="number", property="sumAmountStorOwnerDues"),
+     *                  @OA\Property(type="number", property="sumPaymentsFromCompany"),
+     *                  @OA\Property(type="boolean", property="advancePayment"),
+     *                  @OA\Property(type="number", property="total"),
+     *              ),
+     *              @OA\Property(type="array", property="detail",
+     *                 @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersResponse")
      *         )
      *      )
      *    )
      *  ) 
-     * 
+     * )
      * @Security(name="Bearer")
      */
     public function getStoreOwnerDuesFromCashOrders(Request $request): JsonResponse

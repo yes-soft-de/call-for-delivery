@@ -63,4 +63,9 @@ class AdminCaptainPaymentToCompanyManager
     {
         return $this->captainPaymentToCompanyEntityRepository->getAllCaptainPaymentsToCompany($captainId);
     }
+
+    public function getSumPaymentsToCompany(int $captainId): ?array
+    {
+        return $this->captainPaymentToCompanyEntityRepository->getSumPayments($captainId);
+    }
 }
