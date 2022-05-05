@@ -83,8 +83,13 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentFromCompanyEntity::class)]
     private $storeOwnerPaymentFromCompanyEntity;
 
+
     #[ORM\Column(type: 'float', nullable: true)]
     private $profitMargin;
+
+    #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerDuesFromCashOrdersEntity::class)]
+    private $storeOwnerDuesFromCashOrders;
+
 
     public function __construct()
     {
@@ -95,6 +100,7 @@ class StoreOwnerProfileEntity
         $this->OrderLogsEntity = new ArrayCollection();
         $this->storeOwnerPaymentEntity = new ArrayCollection();
         $this->storeOwnerPaymentFromCompanyEntity = new ArrayCollection();
+        $this->storeOwnerDuesFromCashOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -504,6 +510,7 @@ class StoreOwnerProfileEntity
         return $this;
     }
 
+
     public function getProfitMargin(): ?float
     {
         return $this->profitMargin;
@@ -512,6 +519,34 @@ class StoreOwnerProfileEntity
     public function setProfitMargin(?float $profitMargin): self
     {
         $this->profitMargin = $profitMargin;
+    }
+
+    /**
+     * @return Collection<int, StoreOwnerDuesFromCashOrdersEntity>
+     */
+    public function getStoreOwnerDuesFromCashOrders(): Collection
+    {
+        return $this->storeOwnerDuesFromCashOrders;
+    }
+
+    public function addStoreOwnerDuesFromCashOrder(StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrder): self
+    {
+        if (!$this->storeOwnerDuesFromCashOrders->contains($storeOwnerDuesFromCashOrder)) {
+            $this->storeOwnerDuesFromCashOrders[] = $storeOwnerDuesFromCashOrder;
+            $storeOwnerDuesFromCashOrder->setStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStoreOwnerDuesFromCashOrder(StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrder): self
+    {
+        if ($this->storeOwnerDuesFromCashOrders->removeElement($storeOwnerDuesFromCashOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($storeOwnerDuesFromCashOrder->getStore() === $this) {
+                $storeOwnerDuesFromCashOrder->setStore(null);
+            }
+        }
 
         return $this;
     }
