@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_profile/model/store_balance_model.dart';
+import 'package:c4d/module_profile/model/captain_balance_model.dart';
 import 'package:c4d/module_profile/ui/screen/account_balance_screen.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
@@ -68,21 +68,24 @@ class AccountBalanceLoaded extends States {
                     const SizedBox(
                       width: 16,
                     ),
-                    IconButton(
-                        splashRadius: 15,
-                        onPressed: () {
-                          showDialog(
-                              context: screenState.context,
-                              builder: (context) {
-                                return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    content: S
-                                        .current.areYouSureToDeleteThisPayment);
-                              });
-                        },
-                        icon: const Icon(Icons.delete)),
+                    Visibility(
+                      visible: false,
+                      child: IconButton(
+                          splashRadius: 15,
+                          onPressed: () {
+                            showDialog(
+                                context: screenState.context,
+                                builder: (context) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      content: S
+                                          .current.areYouSureToDeleteThisPayment);
+                                });
+                          },
+                          icon: const Icon(Icons.delete)),
+                    ),
                   ],
                 ),
               ),

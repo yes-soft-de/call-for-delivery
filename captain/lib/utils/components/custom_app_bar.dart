@@ -12,7 +12,9 @@ class CustomC4dAppBar {
       IconData? icon,
       Widget? widget,
       bool canGoBack = true,
-      List<Widget>? actions}) {
+      List<Widget>? actions,
+      PreferredSizeWidget? bottom
+      }) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     if (icon == Icons.menu && ScreenType.isDesktop(context)) {
       icon = null;
@@ -20,6 +22,7 @@ class CustomC4dAppBar {
       canGoBack = false;
     }
     return AppBar(
+      bottom: bottom,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
       title: Text(

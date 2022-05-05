@@ -20,7 +20,8 @@ class Trans {
     newWord = newWord.replaceAll('day', ' ' + S.current.day + ' ');
     return newWord;
   }
-   static Future<String> translateService(String word) async {
+
+  static Future<String> translateService(String word) async {
     var reg = RegExp(
         r'[\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufc3f]|[\ufe70-\ufefc]');
     if (reg.hasMatch(word) &&

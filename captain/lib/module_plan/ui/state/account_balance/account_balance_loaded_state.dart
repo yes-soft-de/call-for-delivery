@@ -1,11 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
 import 'package:c4d/module_plan/ui/widget/account_balance_details.dart';
-import 'package:c4d/module_plan/ui/widget/custom_text_button.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -20,104 +17,38 @@ class AccountBalanceStateLoaded extends States {
   int currentIndex = 0;
   @override
   Widget getUI(BuildContext context) {
-    return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.myBalance, actions: [
-        Visibility(
-          visible: false,
-          child: CustomC4dAppBar.actionIcon(context, onTap: () {
-            showModalBottomSheet(
-                backgroundColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // buttons
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                // renew new subscription
-                                CustomTextButton(
-                                  label: S.current.renewNewPlan,
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pushNamed(
-                                        PlanRoutes.PLAN_ROUTE,
-                                        arguments: S.current.renewNewPlan);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // close button
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shape: StadiumBorder()),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  S.current.close,
-                                  style: Theme.of(context).textTheme.button,
-                                ),
-                              )),
-                        ),
-                      )
-                    ],
-                  );
-                });
-          }, icon: Icons.restart_alt_rounded),
-        )
-      ]),
-      body: CustomListView.custom(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).backgroundColor,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.info_rounded),
-                      title: Text(S.current.myBalanceHint),
+    return CustomListView.custom(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).backgroundColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.info_rounded),
+                    title: Text(S.current.myBalanceHint),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 16.0, left: 16),
+                    child: Divider(
+                      thickness: 2,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 16.0, left: 16),
-                      child: Divider(
-                        thickness: 2,
-                      ),
-                    ),
-                    balanceDetails(context),
-                  ],
-                ),
+                  ),
+                  balanceDetails(context),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -135,6 +66,7 @@ class AccountBalanceStateLoaded extends States {
         milliseconds: 1250,
         fade: true,
         child: ListTile(
+          horizontalTitleGap: 0,
           leading: Icon(icon),
           title: Text(text),
           trailing: Container(
@@ -153,6 +85,7 @@ class AccountBalanceStateLoaded extends States {
                     '${FixedNumber.getFixedNumber(value ?? 0)} ${currency ? S.current.sar : S.current.sOrder}',
                 style: const TextStyle(
                   color: Colors.white,
+                  fontSize: 14
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -199,6 +132,8 @@ class AccountBalanceStateLoaded extends States {
       children: [
         countOrderDetails(context),
         CustomTile(FontAwesomeIcons.boxes, S.current.countOrders, null,
+            stringValue: balance?.ordersInMonth?.toString()),
+        CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersCompleted, null,
             stringValue: balance?.countOrders?.toString()),
         CustomTile(
             FontAwesomeIcons.road, S.current.countOrdersMaxFromNineteen, null,
@@ -206,7 +141,7 @@ class AccountBalanceStateLoaded extends States {
         CustomTile(FontAwesomeIcons.road, S.current.compensationForEveryOrder,
             balance?.compensationForEveryOrder),
         CustomTile(
-            FontAwesomeIcons.moneyBill, S.current.total, balance?.salary),
+            FontAwesomeIcons.moneyBill, S.current.salary, balance?.salary),
         CustomTile(FontAwesomeIcons.coins, S.current.financialDues,
             balance?.financialDues),
         CustomTile(Icons.payments, S.current.sumPayments, balance?.sumPayments),
@@ -224,9 +159,9 @@ class AccountBalanceStateLoaded extends States {
             balance?.countOrdersCompleted),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
             balance?.amountForStore ?? 0),
-        CustomTile(
-            FontAwesomeIcons.calendar, S.current.dateFinancialCycleEnds, null,
-            stringValue: balance?.dateFinancialCycleEnds),
+        // CustomTile(
+        //     FontAwesomeIcons.calendar, S.current.dateFinancialCycleEnds, null,
+        //     stringValue: balance?.dateFinancialCycleEnds),
         const Padding(
           padding: EdgeInsets.only(right: 16.0, left: 16),
           child: Divider(
@@ -238,4 +173,6 @@ class AccountBalanceStateLoaded extends States {
       ],
     );
   }
+
 }
+

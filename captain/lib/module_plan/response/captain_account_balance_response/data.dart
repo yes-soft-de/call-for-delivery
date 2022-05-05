@@ -19,6 +19,8 @@ class Data {
   List<FinancialAccountDetail>? financialAccountDetails;
   FinalFinancialAccount? finalFinancialAccount;
   num? amountForStore;
+  num? countOrdersInMonth;
+
   Data(
       {this.countOrders,
       this.countOrdersMaxFromNineteen,
@@ -36,8 +38,8 @@ class Data {
       this.monthTargetSuccess,
       this.finalFinancialAccount,
       this.financialAccountDetails,
-      this.amountForStore
-      });
+      this.amountForStore,
+      this.countOrdersInMonth});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         countOrders: json['countOrders'] as num?,
@@ -47,7 +49,12 @@ class Data {
         financialDues: json['financialDues'] as num?,
         sumPayments: json['sumPayments'] as num?,
         total: json['total'] as num?,
-        advancePayment: json['advancePayment'] as bool?,
+        advancePayment: json['advancePayment'] is bool?
+            ? json['advancePayment'] as bool?
+            : (json['advancePayment'] != null
+                ? (json['advancePayment'] == 1 ? true : false)
+                : null),
+        countOrdersInMonth: json['countOrdersInMonth'] as num?,
         bounce: json['bounce'] as num?,
         countOrdersCompleted: json['countOrdersCompleted'] as num?,
         countOverOrdersThanRequired:

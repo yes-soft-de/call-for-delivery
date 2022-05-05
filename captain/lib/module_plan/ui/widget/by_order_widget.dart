@@ -71,10 +71,6 @@ class FinanceByOrder extends StatelessWidget {
                   dashRadius: 25,
                 ),
               ),
-              horizontalsTile(S.current.bounceCountOrdersInMonth,
-                  FixedNumber.getFixedNumber(bounceCountOrdersInMonth)),
-              horizontalsTile(S.current.amount,
-                  FixedNumber.getFixedNumber(amount) + ' ${S.current.sar}'),
               horizontalsTile(
                   S.current.countKilometersFrom,
                   FixedNumber.getFixedNumber(countKilometersFrom) +
@@ -83,6 +79,10 @@ class FinanceByOrder extends StatelessWidget {
                   S.current.countKilometersTo,
                   FixedNumber.getFixedNumber(countKilometersTo) +
                       ' ${S.current.km}'),
+              horizontalsTile(S.current.amount,
+                  FixedNumber.getFixedNumber(amount) + ' ${S.current.sar}'),
+              horizontalsTile(S.current.bounceCountOrdersInMonth,
+                  FixedNumber.getFixedNumber(bounceCountOrdersInMonth) + ' ${S.current.orderWithoutDef}'),
               horizontalsTile(S.current.bounce,
                   FixedNumber.getFixedNumber(bounce) + ' ${S.current.sar}'),
             ],

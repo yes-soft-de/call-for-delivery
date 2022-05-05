@@ -61,7 +61,7 @@ class InitAccountCaptainInitProfile extends States {
                         child: GestureDetector(
                           onTap: () {
                             ImagePicker.platform
-                                .getImage(source: ImageSource.gallery)
+                                .getImage(source: ImageSource.gallery,imageQuality: 75)
                                 .then((value) {
                               if (value != null) {
                                 captainImage = Uri(path: value.path);
