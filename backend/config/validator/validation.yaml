@@ -104,13 +104,7 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
 
 App\Request\Order\OrderCreateRequest:
     properties:
-        orderCost:
-            - NotBlank: ~
-        deliveryDate:
-            - NotBlank: ~
         destination:
-            - NotBlank: ~
-        detail:
             - NotBlank: ~
         branch:
             - NotBlank: ~
