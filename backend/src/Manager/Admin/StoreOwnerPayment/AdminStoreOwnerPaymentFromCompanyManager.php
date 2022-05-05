@@ -63,4 +63,14 @@ class AdminStoreOwnerPaymentFromCompanyManager
     {
         return $this->storeOwnerPaymentFromCompanyEntityRepository->getAllStorePaymentsFromCompany($storeId);
     }
+
+    public function getSumPaymentsFromCompany(int $storeId): ?array
+    {
+        return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompany($storeId);
+    }
+
+    public function getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): ?array
+    {
+        return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompanyInSpecificDate($storeId, $fromDate, $toDate);
+    }
 }

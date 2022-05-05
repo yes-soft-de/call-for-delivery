@@ -112,4 +112,23 @@ class CaptainPaymentToCompanyEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function  getSumPaymentsToCompanyInSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+
+            ->select('sum(captainPaymentEntity.amount) as sumPayments')
+
+            ->where('captainPaymentEntity.captain = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('captainPaymentEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+           
+            ->andWhere('captainPaymentEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

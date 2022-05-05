@@ -58,4 +58,14 @@ class AdminStoreOwnerPaymentFromCompanyService
 
         return $response;
     }
+
+    public function getSumPaymentsFromCompany(int $storeId): array
+    {
+        return $this->adminStoreOwnerPaymentFromCompanyManager->getSumPaymentsFromCompany($storeId);
+    }
+
+    public function getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): array
+    {
+        return $this->adminStoreOwnerPaymentFromCompanyManager->getSumPaymentsFromCompanyInSpecificDate($storeId, $fromDate, $toDate);
+    }
 }

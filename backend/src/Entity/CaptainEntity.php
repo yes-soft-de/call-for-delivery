@@ -78,6 +78,9 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainFinancialDuesEntity::class)]
     private $captainFinancialDuesEntity;
 
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainAmountFromOrderCashEntity::class)]
+    private $captainAmountFromOrderCash;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -87,6 +90,7 @@ class CaptainEntity
         $this->captainFinancialSystemDetailEntity = new ArrayCollection();
         $this->captainPaymentToCompanyEntity = new ArrayCollection();
         $this->captainFinancialDuesEntity = new ArrayCollection();
+        $this->captainAmountFromOrderCash = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -466,6 +470,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainFinancialDuesEntity->getCaptain() === $this) {
                 $captainFinancialDuesEntity->setCaptain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainAmountFromOrderCashEntity>
+     */
+    public function getCaptainAmountFromOrderCash(): Collection
+    {
+        return $this->captainAmountFromOrderCash;
+    }
+
+    public function addCaptainAmountFromOrderCash(CaptainAmountFromOrderCashEntity $captainAmountFromOrderCash): self
+    {
+        if (!$this->captainAmountFromOrderCash->contains($captainAmountFromOrderCash)) {
+            $this->captainAmountFromOrderCash[] = $captainAmountFromOrderCash;
+            $captainAmountFromOrderCash->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainAmountFromOrderCash(CaptainAmountFromOrderCashEntity $captainAmountFromOrderCash): self
+    {
+        if ($this->captainAmountFromOrderCash->removeElement($captainAmountFromOrderCash)) {
+            // set the owning side to null (unless already changed)
+            if ($captainAmountFromOrderCash->getCaptain() === $this) {
+                $captainAmountFromOrderCash->setCaptain(null);
             }
         }
 
