@@ -59,7 +59,7 @@ class Urls {
   static const BASE_CAPTAIN_ACCOUNT_BALANCE_DUES =
       DOMAIN + '/v1/captainfinancialduesforadmin';
   static const BASE_STORE_SUBSCRIPTIONS_FINANCE =
-      DOMAIN +VERSION_ADMIN + '/captainfinancialduesforadmin';
+      DOMAIN +VERSION_ADMIN + '/subscription';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -154,7 +154,7 @@ class Urls {
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
-  static const GET_STORE_SUBSCRIPTIONS_FINANCE = BASE_STORE_SUBSCRIPTIONS_FINANCE + '/storepayments';
+  static const GET_STORE_SUBSCRIPTIONS_FINANCE = BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
 
   /*------------------------CAPTAIN PAYMENTS------------------------*/
   static const CREATE_CAPTAIN_PAYMENTS =
