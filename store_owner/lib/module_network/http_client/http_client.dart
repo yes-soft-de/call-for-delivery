@@ -114,7 +114,7 @@ class ApiClient {
         }
       } else {
         _logger.error(tag, e.toString() + ', POST: ' + url, StackTrace.current);
-        return null;
+        return {'status_code': '-1'};
       }
     }
   }

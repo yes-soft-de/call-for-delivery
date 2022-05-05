@@ -525,7 +525,7 @@ class NewOrderStateBranchesLoaded extends States {
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.parse(screenState.priceController.text.trim()),
+        orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: null,
         date: orderDate.toUtc().toIso8601String(),
         payment: screenState.payments));
