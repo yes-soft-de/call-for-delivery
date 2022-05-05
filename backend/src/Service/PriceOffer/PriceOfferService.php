@@ -63,6 +63,13 @@ class PriceOfferService
         return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferUpdateResponse::class, $priceOfferResult);
     }
 
+    public function deletePendingPriceOfferById(int $id): ?PriceOfferDeleteResponse
+    {
+        $priceOfferResult = $this->priceOfferManager->deletePendingPriceOfferById($id);
+
+        return $this->autoMapping->map(PriceOfferEntity::class, PriceOfferDeleteResponse::class, $priceOfferResult);
+    }
+
     public function deleteAllPricesOffers(): PriceOfferDeleteResponse
     {
         $pricesOffers = $this->priceOfferManager->deleteAllPricesOffers();
