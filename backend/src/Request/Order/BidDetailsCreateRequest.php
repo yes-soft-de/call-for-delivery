@@ -24,11 +24,6 @@ class BidDetailsCreateRequest
     private $storeOwner;
 
     /**
-     * @var float|null
-     */
-    private $orderCost;
-
-    /**
      * @var string|null
      */
     private $title;

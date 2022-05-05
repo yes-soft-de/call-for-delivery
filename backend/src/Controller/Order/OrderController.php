@@ -843,7 +843,6 @@ class OrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="payment"),
      *          @OA\Property(type="string", property="note"),
-     *          @OA\Property(type="string", property="orderCost"),
      *          @OA\Property(type="string", property="title"),
      *          @OA\Property(type="number", property="description"),
      *          @OA\Property(type="string", property="supplierCategory"),
