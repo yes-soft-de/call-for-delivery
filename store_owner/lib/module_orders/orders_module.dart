@@ -15,8 +15,8 @@ class OrdersModule extends YesModule {
   final OrderDetailsScreen _orderStatus;
   final OrderLogsScreen _logsScreen;
   final OrderTimeLineScreen _orderTimeLineScreen;
-  OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen,this._orderTimeLineScreen,
-      this._logsScreen) {
+  OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen,
+      this._orderTimeLineScreen, this._logsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 

@@ -42,6 +42,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account activated"),
         "accountAlreadyExist":
             MessageLookupByLibrary.simpleMessage("This account already exist"),
+        "accountBalance":
+            MessageLookupByLibrary.simpleMessage("Account Balance"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
         "accountInActivated":
@@ -80,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "at": MessageLookupByLibrary.simpleMessage("At"),
+        "balanceHint": MessageLookupByLibrary.simpleMessage(
+            "Here you find all your subscriptions financial information with included all payments "),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
@@ -315,6 +319,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financeSubscriptionDetails": MessageLookupByLibrary.simpleMessage(
+            "Finance Subscription Details"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -478,6 +484,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
+        "orderCostHandedByCaptain":
+            MessageLookupByLibrary.simpleMessage("Cost received from captain"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
@@ -524,6 +532,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("Package cost"),
         "packageExtend": MessageLookupByLibrary.simpleMessage(
             "Temporary subscription extend"),
         "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -674,6 +683,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "sOrder": MessageLookupByLibrary.simpleMessage("order"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("Saudi Riyal"),
@@ -764,6 +774,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("Total Payments From Captain"),
         "sumPaymentsFromCompany":

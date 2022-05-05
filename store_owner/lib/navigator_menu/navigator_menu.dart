@@ -101,7 +101,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               icon: Icons.account_balance_rounded,
               onTap: () {
                 Navigator.of(context)
-                    .pushNamed(ProfileRoutes.ACCOUNT_BALANCE_SCREEN);
+                    .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
               },
               title: S.current.myBalance),
           Divider(
@@ -184,7 +184,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           CustomNavTile(
               icon: Icons.settings_rounded,
               onTap: () {
-                 GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
+                GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
                 Navigator.of(context).pushNamed(SettingRoutes.ROUTE_SETTINGS);
               },
               title: S.current.settings),

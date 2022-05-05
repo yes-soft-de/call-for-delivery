@@ -13,7 +13,7 @@ class LauncherLinkHelper {
     if (Platform.isAndroid) {
       return 'https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}';
     } else {
-      return 'comgooglemaps://?daddr=${lat},${lon}';
+      return 'http://maps.apple.com/?daddr=${lat},${lon}';
     }
   }
 }
