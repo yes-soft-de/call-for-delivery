@@ -54,13 +54,13 @@ class CompanyInfoManager
         return $companyInfoResult;
     }
 
-    public function getCompanyInfo(): ?array
+    public function getCompanyInfo(): ?CompanyInfoEntity
     {
-        return $this->companyInfoEntityRepository->getCompanyInfo();
+        return $this->companyInfoEntityRepository->findOneBy([], ['id'=>'DESC']);
     }
 
-    public function getCompanyInfoForUser(string $requiredByUserType, string $userId): ?array
+    public function getCompanyInfoForUser(string $requiredByUserType): ?array
     {
-        return $this->companyInfoEntityRepository->getCompanyInfoForUser($requiredByUserType, $userId);
+        return $this->companyInfoEntityRepository->getCompanyInfoForUser($requiredByUserType);
     }
 }

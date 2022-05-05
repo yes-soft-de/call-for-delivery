@@ -20,23 +20,19 @@ class CompanyInfoEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, CompanyInfoEntity::class);
     }
 
-    public function getCompanyInfo(): ?array
-    {
-        return $this->createQueryBuilder('companyInfo')
-            ->select('companyInfo.id', 'companyInfo.phone', 'companyInfo.phoneTwo', 'companyInfo.email', 'companyInfo.fax', 'companyInfo.whatsapp', 'companyInfo.bankName',
-             'companyInfo.stc', 'companyInfo.kilometers', 'companyInfo.maxKilometerBonus', 'companyInfo.minKilometerBonus')
-
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function getCompanyInfoForUser(string $requiredByUserType, string $userId): ?array
+    public function getCompanyInfoForUser(string $requiredByUserType): ?array
     {
         $query = $this->createQueryBuilder('companyInfo')
             ->select('companyInfo.id', 'companyInfo.phone', 'companyInfo.phoneTwo', 'companyInfo.email', 'companyInfo.fax', 'companyInfo.whatsapp', 'companyInfo.bankName',
                 'companyInfo.stc', 'companyInfo.kilometers', 'companyInfo.maxKilometerBonus', 'companyInfo.minKilometerBonus');
 
-        // Another section will be added lately to this function for retrieving the uuid of user's profile according to his/her type
+        if ($requiredByUserType === CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_SUPPLIER) {
+            $query->addSelect('companyInfo.supplierProfitMargin');
+        }
+
+        if ($requiredByUserType === CompanyInfoConstant::COMPANY_INFO_REQUIRED_BY_STORE_OWNER) {
+            $query->addSelect('companyInfo.storeProfitMargin');
+        }
 
         return $query->getQuery()->getOneOrNullResult();
     }

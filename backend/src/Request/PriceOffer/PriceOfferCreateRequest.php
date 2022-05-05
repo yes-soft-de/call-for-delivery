@@ -30,6 +30,11 @@ class PriceOfferCreateRequest
      */
     private $deliveryCar;
 
+    /**
+     * @var int|null
+     */
+    private $transportationCount;
+
     public function getBidDetails(): BidDetailsEntity|int
     {
         return $this->bidDetails;

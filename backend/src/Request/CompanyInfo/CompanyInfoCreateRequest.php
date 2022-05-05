@@ -23,4 +23,14 @@ class CompanyInfoCreateRequest
     private float $maxKilometerBonus;
 
     private float $minKilometerBonus;
+
+    /**
+     * @var float|null
+     */
+    private $supplierProfitMargin;
+
+    /**
+     * @var float|null
+     */
+    private $storeProfitMargin;
 }

@@ -20,7 +20,23 @@ class PriceOfferByBidOrderIdGetForStoreOwnerResponse
     public DateTime $offerDeadline;
 
     /**
-     * @OA\Property(type="object", property="deliveryCar", nullable=true)
+     * @var int|null
      */
-    public $deliveryCar;
+    public $transportationCount;
+
+    public int $deliveryCarId;
+
+    public string $carModel;
+
+    public float $deliveryCost;
+
+    /**
+     * @var string|null
+     */
+    public $details;
+
+    /**
+     * @var float|null
+     */
+    public $totalDeliveryCost;
 }

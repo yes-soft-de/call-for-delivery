@@ -2,6 +2,9 @@
 
 namespace App\Response\StoreOwner;
 
+use DateTime;
+use OpenApi\Annotations as OA;
+
 class StoreOwnerProfileByIdGetByAdminResponse
 {
     /**
@@ -20,7 +23,8 @@ class StoreOwnerProfileByIdGetByAdminResponse
     public $storeOwnerName;
 
     /**
-     * @var array|null $images
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"), nullable=true)
      */
     public $images;
 
@@ -50,12 +54,12 @@ class StoreOwnerProfileByIdGetByAdminResponse
     public $phone;
 
     /**
-     * @var object|null $openingTime
+     * @var DateTime|null $openingTime
      */
     public $openingTime;
 
     /**
-     * @var object|null $closingTime
+     * @var DateTime|null $closingTime
      */
     public $closingTime;
 
@@ -85,7 +89,8 @@ class StoreOwnerProfileByIdGetByAdminResponse
     public $employeeCount;
 
     /**
-     * @var array|null $branches
+     * @OA\Property(type="array", property="branches",
+     *     @OA\Items(type="object"))
      */
     public $branches;
     
@@ -93,4 +98,9 @@ class StoreOwnerProfileByIdGetByAdminResponse
      * @var string|null $roomId
      */
     public $roomId;
+
+    /**
+     * @var float|null
+     */
+    public $profitMargin;
 }

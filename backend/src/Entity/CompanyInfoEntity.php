@@ -43,6 +43,12 @@ class CompanyInfoEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $minKilometerBonus;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $supplierProfitMargin;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $storeProfitMargin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +170,30 @@ class CompanyInfoEntity
     public function setMinKilometerBonus(?float $minKilometerBonus): self
     {
         $this->minKilometerBonus = $minKilometerBonus;
+
+        return $this;
+    }
+
+    public function getSupplierProfitMargin(): ?float
+    {
+        return $this->supplierProfitMargin;
+    }
+
+    public function setSupplierProfitMargin(?float $supplierProfitMargin): self
+    {
+        $this->supplierProfitMargin = $supplierProfitMargin;
+
+        return $this;
+    }
+
+    public function getStoreProfitMargin(): ?float
+    {
+        return $this->storeProfitMargin;
+    }
+
+    public function setStoreProfitMargin(?float $storeProfitMargin): self
+    {
+        $this->storeProfitMargin = $storeProfitMargin;
 
         return $this;
     }

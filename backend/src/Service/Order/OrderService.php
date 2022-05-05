@@ -502,28 +502,49 @@ class OrderService
     {
         $response = [];
 
-        $bidOrder = $this->orderManager->getOrderByIdForSupplier($orderId, $supplierId);
+        $bidOrder = $this->orderManager->getOrderByIdForSupplier($orderId);
 
         if ($bidOrder) {
             $bidOrder['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($bidOrder['id']);
 
-            // here we retrieve the delivery car info for each price offer
-            if ($bidOrder['pricesOffers']) {
-                foreach ($bidOrder['pricesOffers'] as $key=>$value) {
-                    $bidOrder['pricesOffers'][$key]['deliveryCar'] = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForSupplierResponse::class, $value['deliveryCar']);
-                }
-            }
-            //----end retrieving delivery cars info
+            $bidOrder['bidDetailsId'] = $bidOrder['bidDetails']->getId();
+            $bidOrder['bidDetailsImages'] = $this->customizeBidOrderImages($bidOrder['bidDetails']->getImages()->toArray());
+
+            $bidOrder['pricesOffers'] = $this->filterAndCustomizePricesOffersAccordingToSupplier($bidOrder['bidDetails']->getPriceOfferEntities()->toArray(), $supplierId);
 
             $response = $this->autoMapping->map("array", OrderByIdForSupplierGetResponse::class, $bidOrder);
-
-            if ($response) {
-                // get each image of the order images as an object contain image URL, base URL, and full image URL
-                $response->bidDetailsImages = $this->customizeBidOrderImages($response->bidDetailsImages);
-            }
         }
 
         return $response;
+    }
+
+    // This function filter prices offers according to the supplier, and returns specific fields
+    public function filterAndCustomizePricesOffersAccordingToSupplier(array $pricesOffersEntities, int $supplierId): ?array
+    {
+        if (! empty($pricesOffersEntities)) {
+            $response = [];
+
+            foreach ($pricesOffersEntities as $key=>$value) {
+                if ($value->getSupplierProfile()->getUser()->getId() === $supplierId) {
+                    // get delivery car info
+                    $response[$key]['deliveryCar']['id'] = $value->getDeliveryCar()->getId();
+                    $response[$key]['deliveryCar']['carModel'] = $value->getDeliveryCar()->getCarModel();
+                    $response[$key]['deliveryCar']['details'] = $value->getDeliveryCar()->getDetails();
+                    $response[$key]['deliveryCar']['deliveryCost'] = $value->getDeliveryCar()->getDeliveryCost();
+
+                    // get price offer info
+                    $response[$key]['priceOfferId'] = $value->getId();
+                    $response[$key]['priceOfferValue'] = $value->getPriceOfferValue();
+                    $response[$key]['priceOfferStatus'] = $value->getPriceOfferStatus();
+                    $response[$key]['transportationCount'] = $value->getTransportationCount();
+                    $response[$key]['offerDeadline'] = $value->getOfferDeadline();
+                }
+            }
+
+            return $response;
+        }
+
+        return null;
     }
 
     public function customizeBidOrderImages(array $imagesArray): ?array
@@ -532,7 +553,7 @@ class OrderService
 
         if (! empty($imagesArray)) {
             foreach ($imagesArray as $image) {
-                $response[] = $this->uploadFileHelperService->getImageParams($image);
+                $response[] = $this->uploadFileHelperService->getImageParams($image->getImagePath());
             }
 
             return $response;
@@ -586,9 +607,17 @@ class OrderService
         $order = $this->orderManager->getSpecificBidOrderForStore($id);
 
         if ($order) {
+            $order['bidDetailsId'] = $order['bidDetails']->getId();
+            $order['title'] = $order['bidDetails']->getTitle();
+            $order['description'] = $order['bidDetails']->getDescription();
+            $order['openToPriceOffer'] = $order['bidDetails']->getOpenToPriceOffer();
+
+            $order['supplierCategoryId'] = $order['bidDetails']->getSupplierCategory()->getId();
+            $order['supplierCategoryName'] = $order['bidDetails']->getSupplierCategory()->getName();
+
             $order['attention'] = $order['noteCaptainOrderCost'];
 
-            $order['bidDetailsImages'] =  $this->customizeBidOrderImages($order['bidDetailsImages']);
+            $order['bidDetailsImages'] =  $this->customizeBidOrderImages($order['bidDetails']->getImages()->toArray());
 
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();

@@ -59,7 +59,8 @@ class PriceOfferController extends BaseController
      *          @OA\Property(type="integer", property="bidDetails"),
      *          @OA\Property(type="number", property="priceOfferValue"),
      *          @OA\Property(type="string", property="offerDeadline"),
-     *          @OA\Property(type="integer", property="deliveryCar")
+     *          @OA\Property(type="integer", property="deliveryCar"),
+     *          @OA\Property(type="integer", property="transportationCount")
      *      )
      * )
      *

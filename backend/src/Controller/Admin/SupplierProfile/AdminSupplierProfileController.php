@@ -198,7 +198,8 @@ class AdminSupplierProfileController extends BaseController
      *              @OA\Items(type="integer")
      *          ),
      *          @OA\Property(type="bool", property="allSupplierCategories",
-     *              description="takes 'true' when we want to store all supplier categories in supplierCategories field.")
+     *              description="takes 'true' when we want to store all supplier categories in supplierCategories field."),
+     *          @OA\Property(type="number", property="profitMargin")
      *      )
      * )
      *

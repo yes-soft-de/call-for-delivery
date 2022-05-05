@@ -38,7 +38,12 @@ class PriceOfferService
         foreach ($priceOffers as $key=>$value) {
             $response[$key] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $value);
 
-            $response[$key]->deliveryCar = $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarForStoreOwnerGetResponse::class, $value['deliveryCar']);
+            // this condition can be removed later when old data is replaced by new one
+            if ($response[$key]->transportationCount !== null && $response[$key]->deliveryCost !== null) {
+                // Calculate the total delivery cost of a price offer
+                // Total Delivery Cost = the delivery cost of one transportation of a specific car X transportation count
+                $response[$key]->totalDeliveryCost = round($response[$key]->transportationCount * $response[$key]->deliveryCost, 2);
+            }
         }
 
         return $response;
