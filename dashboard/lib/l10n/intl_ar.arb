@@ -618,17 +618,23 @@
     "addCars": "أضف سيارة",
     "deliveryCarsCost": "أجرة التوصيل",
     "carModel": "نوع السيارة",
-    "profit": "الأرباح"
+    "profit": "الأرباح",
+
+    "price": "السعر",
+    "deadLine": "تاريخ التسليم",
+    "offerLog": "سجل العروض",
+    "onGoingOrder": "الطلبات الجارية",
 
 
+    "pendingOfferMsg": "بإنتظار قبول عرضك",
+    "rejectOfferMsg": "المتجر رفض عرضك",
+    "acceptOfferMsg": "المتجر قبل عرضك",
+    "confirmed": "مُأكد",
+    "open": "مفتوح",
+    "supplierOffer": "عروض الموردين",
 
-
-
-
-
-
-
-
-
-
+    "bidOrder": "طلبات المناقصات",
+    "editProfile": "تعديل معلومات المتجر",
+    "manageBranch": "إدارة الأفرع",
+    "storeOrders": "طلبات المتجر"
 }

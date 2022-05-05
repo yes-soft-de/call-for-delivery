@@ -117,6 +117,9 @@ dependencies:
   custom_info_window: ^1.0.1
   clippy_flutter: ^2.0.0-nullsafety.1
   flutter_slidable: ^1.2.0
+  rotated_corner_decoration: ^2.0.0
+  carousel_slider: ^4.0.0
+
 
 
 dev_dependencies:

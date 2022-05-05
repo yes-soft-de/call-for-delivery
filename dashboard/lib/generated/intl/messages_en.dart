@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Data not found"),
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
+        "acceptOfferMsg":
+            MessageLookupByLibrary.simpleMessage("Store accept your offer"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountAlreadyExist":
@@ -82,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
+        "bidOrder": MessageLookupByLibrary.simpleMessage("Bid order"),
         "bill": MessageLookupByLibrary.simpleMessage("Bill"),
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
         "birthDateHint":
@@ -221,6 +224,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm deletion of this branch"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
@@ -283,6 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dayCount": MessageLookupByLibrary.simpleMessage(
             "The number of days of validity of the package"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
+        "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
@@ -313,6 +318,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editProfile":
+            MessageLookupByLibrary.simpleMessage("Edit store profile"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -458,6 +465,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account has been logged successfully"),
         "makePayment": MessageLookupByLibrary.simpleMessage("Make Payment"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
+        "manageBranch": MessageLookupByLibrary.simpleMessage("Manage branch"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mechanichLicence":
             MessageLookupByLibrary.simpleMessage("Mechanich Licence"),
@@ -515,9 +523,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please place your order notes"),
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
+        "open": MessageLookupByLibrary.simpleMessage("Open"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
@@ -604,6 +614,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
+        "pendingOfferMsg": MessageLookupByLibrary.simpleMessage(
+            "Waiting to accept your offer"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phone2": MessageLookupByLibrary.simpleMessage("Phone 2"),
         "phoneIsRequired":
@@ -652,6 +664,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "price": MessageLookupByLibrary.simpleMessage("Price"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -696,6 +709,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account has been registered successfully"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "Register Success, Setup my profile"),
+        "rejectOfferMsg":
+            MessageLookupByLibrary.simpleMessage("Store reject your offer"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("Amount owed for store"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
@@ -788,6 +803,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
+        "storeOrders": MessageLookupByLibrary.simpleMessage("Store orders"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
@@ -817,6 +833,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("Payments to captain"),
+        "supplierOffer": MessageLookupByLibrary.simpleMessage("Supplier offer"),
         "supplierUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Supplier updated successfully"),
         "suppliers": MessageLookupByLibrary.simpleMessage("Suppliers"),

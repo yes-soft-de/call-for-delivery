@@ -6129,6 +6129,136 @@ class S {
       args: [],
     );
   }
+
+  /// `Price`
+  String get price {
+    return Intl.message(
+      'Price',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dead Line`
+  String get deadLine {
+    return Intl.message(
+      'Dead Line',
+      name: 'deadLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer log`
+  String get offerLog {
+    return Intl.message(
+      'Offer log',
+      name: 'offerLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting to accept your offer`
+  String get pendingOfferMsg {
+    return Intl.message(
+      'Waiting to accept your offer',
+      name: 'pendingOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store reject your offer`
+  String get rejectOfferMsg {
+    return Intl.message(
+      'Store reject your offer',
+      name: 'rejectOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store accept your offer`
+  String get acceptOfferMsg {
+    return Intl.message(
+      'Store accept your offer',
+      name: 'acceptOfferMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmed`
+  String get confirmed {
+    return Intl.message(
+      'Confirmed',
+      name: 'confirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open`
+  String get open {
+    return Intl.message(
+      'Open',
+      name: 'open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supplier offer`
+  String get supplierOffer {
+    return Intl.message(
+      'Supplier offer',
+      name: 'supplierOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bid order`
+  String get bidOrder {
+    return Intl.message(
+      'Bid order',
+      name: 'bidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit store profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit store profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage branch`
+  String get manageBranch {
+    return Intl.message(
+      'Manage branch',
+      name: 'manageBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store orders`
+  String get storeOrders {
+    return Intl.message(
+      'Store orders',
+      name: 'storeOrders',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
