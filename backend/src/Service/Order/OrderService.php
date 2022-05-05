@@ -283,10 +283,16 @@ class OrderService
 
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
     {
-        if ($this->orderManager->getOrderTypeByOrderId($request->getId()) === OrderTypeConstant::ORDER_TYPE_NORMAL) {
-            // Following if block will be executed only when the order is of type 1,
-            // otherwise, we will mover to update statement directly
-            if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            // check if order is not being accepted by a captain yet
+            if ($this->orderManager->isOrderAcceptedByCaptain($request->getId()) === true) {
+                // order is already being accepted by another captain
+                return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
+            }
+
+            if ($this->orderManager->getOrderTypeByOrderId($request->getId()) === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                // Following if block will be executed only when the order is of type 1,
+                // otherwise, we will move to update statement directly
                 $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
                 if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {

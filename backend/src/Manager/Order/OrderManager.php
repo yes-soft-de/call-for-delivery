@@ -348,4 +348,20 @@ class OrderManager
 
         return $this->orderLogsManager->createOrderLogs($request);
     }
+
+    // this function checks if an order is being accepted by a captain
+    public function isOrderAcceptedByCaptain(int $orderId): string|bool
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if ($orderEntity) {
+            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
 }
