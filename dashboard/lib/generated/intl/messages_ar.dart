@@ -826,12 +826,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscriptionActive":
+            MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("الاشتراك غير مفعل"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
+        "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":

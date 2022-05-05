@@ -650,7 +650,11 @@
     "packageCost": "Package Cost",
     "subscriptionInactive": "Subscription Inactive",
     "expiredSubscriptions": "Expired Subscriptions",
-    "financeSubscriptions": "Finance Subscriptions"
+    "financeSubscriptions": "Finance Subscriptions",
+    "subscriptionActive": "Activated",
+    "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments "
+
+
 
 
 

@@ -830,12 +830,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscriptionActive": MessageLookupByLibrary.simpleMessage("Activated"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription Date"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("Subscription Inactive"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription Status"),
+        "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
+            "Here you find all your subscriptions financial information with included all payments "),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "successRenew": MessageLookupByLibrary.simpleMessage(

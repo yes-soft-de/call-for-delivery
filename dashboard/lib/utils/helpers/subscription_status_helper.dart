@@ -6,7 +6,7 @@ class SubscriptionsStatusHelper {
   static String getStatusMessage(String status) {
     switch (status) {
       case 'active':
-        return S.current.active;
+        return S.current.subscriptionActive;
       case 'inactive':
         return S.current.subscriptionInactive;
       case 'cars finished':

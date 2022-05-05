@@ -6339,6 +6339,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Activated`
+  String get subscriptionActive {
+    return Intl.message(
+      'Activated',
+      name: 'subscriptionActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all your subscriptions financial information with included all payments `
+  String get subscriptionsFinanceHint {
+    return Intl.message(
+      'Here you find all your subscriptions financial information with included all payments ',
+      name: 'subscriptionsFinanceHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

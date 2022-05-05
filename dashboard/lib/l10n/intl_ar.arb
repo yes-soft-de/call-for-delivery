@@ -644,7 +644,10 @@
     "packageCost": "تكلفة الاشتراك",
     "subscriptionInactive": "الاشتراك غير مفعل",
     "expiredSubscriptions": "الاشتراك منتهي",
-    "financeSubscriptions": "نفقات الاشتراكات"
+    "financeSubscriptions": "نفقات الاشتراكات",
+    "subscriptionActive": "الاشتراك فعال",
+    "subscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"
+
 
 
 }

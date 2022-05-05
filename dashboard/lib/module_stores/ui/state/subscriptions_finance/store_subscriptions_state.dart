@@ -32,7 +32,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            S.current.BalanceHint,
+            S.current.subscriptionsFinanceHint,
             style: Theme.of(context).textTheme.button,
           ),
         ),
