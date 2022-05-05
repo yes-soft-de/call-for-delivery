@@ -3,7 +3,9 @@ class CreateStorePaymentsRequest {
   int? storeId;
   int? id;
   String? note;
-  CreateStorePaymentsRequest({this.amount, this.storeId, this.id, this.note});
+  int? subscriptionId;
+  CreateStorePaymentsRequest(
+      {this.subscriptionId, this.amount, this.storeId, this.id, this.note});
 
   Map<String, dynamic> toJson() {
     if (id != null) {
@@ -11,6 +13,14 @@ class CreateStorePaymentsRequest {
         'id': id,
         'amount': amount,
         'store': storeId,
+      };
+    }
+    if (subscriptionId != null) {
+      return {
+        'amount': amount,
+        'store': storeId,
+        'note': note,
+        'subscriptionId': subscriptionId
       };
     }
     return {'amount': amount, 'store': storeId, 'note': note};

@@ -636,5 +636,20 @@
     "bidOrder": "طلبات المناقصات",
     "editProfile": "تعديل معلومات المتجر",
     "manageBranch": "إدارة الأفرع",
-    "storeOrders": "طلبات المتجر"
+    "storeOrders": "طلبات المتجر",
+    "financeSubscriptionDetails": "تفاصيل الاشتراك",
+    "subscriptionDate": "تاريخ الاشتراك",
+    "expirationData": "تاريخ الانتهاء",
+    "subscriptionStatus": "حالة الاشتراك",
+    "packageCost": "تكلفة الاشتراك",
+    "subscriptionInactive": "الاشتراك غير مفعل",
+    "expiredSubscriptions": "الاشتراك منتهي",
+    "financeSubscriptions": "نفقات الاشتراكات",
+    "subscriptionActive": "الاشتراك فعال",
+    "subscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها",
+    "subscriptionsFinanceDetailsHint": "في هذه النافذة نستعرض التفاصيل المالية للاشتراك الحالي في التاريخ",
+    "paymentFromStore": "دفعة من المتجر"
+
+
+
 }

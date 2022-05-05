@@ -21,8 +21,13 @@ class PaymentsManager {
       _paymentsRepository.getStorePayments(id);
   Future<ActionResponse?> paymentToStore(CreateStorePaymentsRequest request) =>
       _paymentsRepository.paymentToStore(request);
+  Future<ActionResponse?> paymentFromStore(
+          CreateStorePaymentsRequest request) =>
+      _paymentsRepository.paymentFromStore(request);
   Future<ActionResponse?> deleteStorePayment(String id) =>
       _paymentsRepository.deleteStorePayments(id);
+  Future<ActionResponse?> deleteFromStorePayment(String id) =>
+      _paymentsRepository.deleteFromStorePayments(id);
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
   /* GET */
   Future<CaptainFinanceByOrderResponse?> getCaptainFinanceByOrder() =>
@@ -42,7 +47,7 @@ class PaymentsManager {
   Future<ActionResponse?> createCaptainFinanceByOrderCounts(
           CreateCaptainFinanceByCountOrderRequest request) =>
       _paymentsRepository.createCaptainFinanceByOrderCounts(request);
-       /* UPDATE */
+  /* UPDATE */
   Future<ActionResponse?> updateCaptainFinanceByOrder(
           CreateCaptainFinanceByOrderRequest request) =>
       _paymentsRepository.updateCaptainFinanceByOrder(request);

@@ -6259,6 +6259,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Finance Subscription Details`
+  String get financeSubscriptionDetails {
+    return Intl.message(
+      'Finance Subscription Details',
+      name: 'financeSubscriptionDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Date`
+  String get subscriptionDate {
+    return Intl.message(
+      'Subscription Date',
+      name: 'subscriptionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration Data`
+  String get expirationData {
+    return Intl.message(
+      'Expiration Data',
+      name: 'expirationData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Status`
+  String get subscriptionStatus {
+    return Intl.message(
+      'Subscription Status',
+      name: 'subscriptionStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Cost`
+  String get packageCost {
+    return Intl.message(
+      'Package Cost',
+      name: 'packageCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Inactive`
+  String get subscriptionInactive {
+    return Intl.message(
+      'Subscription Inactive',
+      name: 'subscriptionInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expired Subscriptions`
+  String get expiredSubscriptions {
+    return Intl.message(
+      'Expired Subscriptions',
+      name: 'expiredSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance Subscriptions`
+  String get financeSubscriptions {
+    return Intl.message(
+      'Finance Subscriptions',
+      name: 'financeSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activated`
+  String get subscriptionActive {
+    return Intl.message(
+      'Activated',
+      name: 'subscriptionActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all your subscriptions financial information with included all payments `
+  String get subscriptionsFinanceHint {
+    return Intl.message(
+      'Here you find all your subscriptions financial information with included all payments ',
+      name: 'subscriptionsFinanceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all financial details included in this subscription with date`
+  String get subscriptionsFinanceDetailsHint {
+    return Intl.message(
+      'Here you find all financial details included in this subscription with date',
+      name: 'subscriptionsFinanceDetailsHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment From Store`
+  String get paymentFromStore {
+    return Intl.message(
+      'Payment From Store',
+      name: 'paymentFromStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

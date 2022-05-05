@@ -621,7 +621,7 @@
     "paymentToCaptain": "Payment To Captain",
     "makePayment": "Make Payment",
     "currentFinancialCycle": "Current Cycle",
-   "deliveryCars": "Delivery cars",
+    "deliveryCars": "Delivery cars",
     "addCars": "Add cars",
     "deliveryCarsCost": "Delivery Cars Cost",
     "carModel": "Car Model",
@@ -642,6 +642,23 @@
     "bidOrder": "Bid order",
     "editProfile": "Edit store profile",
     "manageBranch": "Manage branch",
-    "storeOrders": "Store orders"
+    "storeOrders": "Store orders",
+    "financeSubscriptionDetails": "Finance Subscription Details",
+    "subscriptionDate": "Subscription Date",
+    "expirationData": "Expiration Data",
+    "subscriptionStatus": "Subscription Status",
+    "packageCost": "Package Cost",
+    "subscriptionInactive": "Subscription Inactive",
+    "expiredSubscriptions": "Expired Subscriptions",
+    "financeSubscriptions": "Finance Subscriptions",
+    "subscriptionActive": "Activated",
+    "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments ",
+    "subscriptionsFinanceDetailsHint": "Here you find all financial details included in this subscription with date",
+    "paymentFromStore": "Payment From Store"
+
+
+
+
+
 
 }

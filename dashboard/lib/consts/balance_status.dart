@@ -1,0 +1,8 @@
+enum BalanceStatus {
+  ACTIVE,
+  INACTIVE,
+  CARS_FINISHED,
+  ORDERS_FINISHED,
+  EXPIRED,
+  UNSUBSCRIBED
+}

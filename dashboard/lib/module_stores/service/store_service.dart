@@ -2,6 +2,7 @@ import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
 import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
+import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
@@ -9,6 +10,7 @@ import 'package:c4d/module_stores/response/order/order_captain_not_arrived/order
 import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -157,5 +159,19 @@ class StoresService {
     }
     if (response.data == null) return DataModel.empty();
     return OrderDetailsModel.withData(response);
+  }
+
+  Future<DataModel> getSubscriptionsFinance(int storeID) async {
+    SubscriptionsFinancialResponse? response =
+        await _storeManager.getSubscriptionsFinance(storeID);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) {
+      return DataModel.empty();
+    }
+    return StoreSubscriptionsFinanceModel.withData(response);
   }
 }
