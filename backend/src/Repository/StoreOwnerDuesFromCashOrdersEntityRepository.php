@@ -9,6 +9,8 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
+use App\Constant\Order\OrderAmountCashConstant;
+
 
 /**
  * @method StoreOwnerDuesFromCashOrdersEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,6 +50,32 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     }
 
     public function filterStoreOwnerDuesFromCashOrders(int $storeId, string $fromDate, string $toDate): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
+    
+            ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+           
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
+            
+            ->andWhere('storeOwnerDuesFromCashOrders.store = :store')
+            ->setParameter('store', $storeId)
+           
+            ->andWhere('storeOwnerDuesFromCashOrders.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+           
+            ->andWhere('storeOwnerDuesFromCashOrders.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('captainAmountFromOrderCash.flag = :flag')
+            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerDuesFromCashOrders(int $storeId, string $fromDate, string $toDate): ?array
     {
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     

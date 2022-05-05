@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
+use App\Manager\Admin\CaptainAmountFromOrderCash\AdminCaptainAmountFromOrderCashManager;
+use App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminCaptainPaymentToCompanyManager
 {
@@ -17,16 +20,19 @@ class AdminCaptainPaymentToCompanyManager
     private EntityManagerInterface $entityManager;
     private CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository;
     private CaptainManager $captainManager;
+    private AdminCaptainAmountFromOrderCashManager $adminCaptainAmountFromOrderCashManager;
 
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository, CaptainManager $captainManager)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository, CaptainManager $captainManager, AdminCaptainAmountFromOrderCashManager $adminCaptainAmountFromOrderCashManager)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
         $this->captainPaymentToCompanyEntityRepository = $captainPaymentToCompanyEntityRepository;
         $this->captainManager = $captainManager;
+        $this->adminCaptainAmountFromOrderCashManager = $adminCaptainAmountFromOrderCashManager;
+
     }
 
-    public function createCaptainPaymentToCompany(AdminCaptainPaymentCreateRequest $request): CaptainPaymentToCompanyEntity|string
+    public function createCaptainPaymentToCompany(AdminCaptainPaymentToCompanyForOrderCashCreateRequest $request): CaptainPaymentToCompanyEntity|string
     {
         $captain = $this->captainManager->getCaptainProfileById($request->getCaptain());
        
@@ -36,11 +42,13 @@ class AdminCaptainPaymentToCompanyManager
 
         $request->setCaptain($captain);
 
-        $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
+        $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
 
         $this->entityManager->persist($captainPaymentToCompanyEntity);
         $this->entityManager->flush();
 
+        $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain());
+     
         return $captainPaymentToCompanyEntity;
     }
 

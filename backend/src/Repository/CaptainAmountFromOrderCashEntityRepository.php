@@ -73,4 +73,27 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getCaptainAmountFromOrderCash(int $captainId, string $fromDate, string $toDate): ?array
+    {
+        return $this->createQueryBuilder('captainAmountFromOrderCash')
+    
+            ->select('IDENTITY (captainAmountFromOrderCash.orderId) as orderId')
+            ->addSelect('captainAmountFromOrderCash.id', 'captainAmountFromOrderCash.amount', 'captainAmountFromOrderCash.flag', 'captainAmountFromOrderCash.createdAt')
+            ->addSelect('captainEntity.captainName')
+           
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainAmountFromOrderCash.captain')
+            
+            ->andWhere('captainAmountFromOrderCash.captain = :captainId')
+            ->setParameter('captainId', $captainId)
+            
+            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+           
+            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
