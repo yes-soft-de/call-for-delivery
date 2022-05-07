@@ -489,5 +489,6 @@
     "eg": "eg",
     "locationPref": "This location is shown to Captains",
     "locationSelected": "Your location selected",
-    "selectTheDeliveryCar": "Select The delivery car"
+    "selectTheDeliveryCar": "Select The delivery car",
+    "transportationCount": "Transportation count"
 }

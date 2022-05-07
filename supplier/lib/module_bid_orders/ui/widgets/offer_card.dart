@@ -66,11 +66,3 @@ class OfferCard extends StatelessWidget {
     );
   }
 }
-//Card(
-//child: ListTile(
-//leading: CircleAvatar(
-//backgroundColor: Colors.transparent,
-//backgroundImage: AssetImage(ImageAsset.LOGO)),
-//title: Text('20 ر.س'),
-//),
-//);

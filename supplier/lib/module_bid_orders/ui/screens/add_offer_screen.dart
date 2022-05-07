@@ -30,12 +30,13 @@ class AddOfferScreenState extends State<AddOfferScreen> {
   CarsModel? selectedCardModel;
   String? offerTime;
 
-  void addOffer(String price) async {
+  void addOffer(String price ,String count) async {
     widget._stateManager.addNewOrder(this, AddOfferRequest(
       bidOrder: orderBidId,
       priceOfferValue:num.parse(price),
       offerDeadline: offerTime,
       deliveryCar: selectedCardModel?.id,
+      transportationCount: num.parse(count)
     ));
   }
   void refresh(){
