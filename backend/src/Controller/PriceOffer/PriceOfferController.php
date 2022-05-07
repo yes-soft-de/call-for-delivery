@@ -245,6 +245,53 @@ class PriceOfferController extends BaseController
     }
 
     /**
+     * @Route("pendingpriceoffer/{id}", name="deletePendingPriceOfferById", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPPLIER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Price Offer")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted price offers info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\PriceOffer\PriceOfferDeleteResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns Data not found!",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg", example="Data not found!")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deletePendingPriceOfferById(int $id): JsonResponse
+    {
+        $response = $this->priceOfferService->deletePendingPriceOfferById($id);
+
+        return $this->response($response, self::DELETE);
+    }
+
+    /**
      * @Route("deleteallpricesoffers", name="deleteAllPricesOffersBySuperAdmin", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @return JsonResponse

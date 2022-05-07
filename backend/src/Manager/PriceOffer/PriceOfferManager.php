@@ -142,6 +142,22 @@ class PriceOfferManager
         }
     }
 
+    public function deletePendingPriceOfferById(int $id): ?PriceOfferEntity
+    {
+        $priceOfferEntity = $this->priceOfferEntityRepository->find($id);
+
+        if ($priceOfferEntity) {
+            if ($priceOfferEntity->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_PENDING_STATUS) {
+                // safe to delete the price offer because its not accepted yet
+                $this->entityManager->remove($priceOfferEntity);
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $priceOfferEntity;
+    }
+
     public function deleteAllPricesOffers(): array
     {
         $pricesOffers = $this->priceOfferEntityRepository->findAll();

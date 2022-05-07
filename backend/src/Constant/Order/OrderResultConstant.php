@@ -13,4 +13,6 @@ final class OrderResultConstant
     const ORDER_NOT_UPDATE_STATE = "you can't edit, The captain received the order";
 
     const ORDER_NOT_REMOVE_CAPTAIN_RECEIVED = "can not remove it, The captain received the order";
+
+    const ORDER_ALREADY_IS_BEING_ACCEPTED = "orderAlreadyIsBeingAccepted";
 }
