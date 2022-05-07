@@ -5,14 +5,13 @@ class CreateCaptainFinanceByCountOrderRequest {
   num? bounceMaxCountOrdersInMonth;
   num? bounceMinCountOrdersInMonth;
   int? id;
-  CreateCaptainFinanceByCountOrderRequest({
-    this.countOrdersInMonth,
-    this.salary,
-    this.monthCompensation,
-    this.bounceMaxCountOrdersInMonth,
-    this.bounceMinCountOrdersInMonth,
-    this.id
-  });
+  CreateCaptainFinanceByCountOrderRequest(
+      {this.countOrdersInMonth,
+      this.salary,
+      this.monthCompensation,
+      this.bounceMaxCountOrdersInMonth,
+      this.bounceMinCountOrdersInMonth,
+      this.id});
 
   Map<String, dynamic> toJson() => {
         'countOrdersInMonth': countOrdersInMonth,
@@ -21,8 +20,8 @@ class CreateCaptainFinanceByCountOrderRequest {
         'bounceMaxCountOrdersInMonth': bounceMaxCountOrdersInMonth,
         'bounceMinCountOrdersInMonth': bounceMinCountOrdersInMonth,
       };
-      Map<String, dynamic> toJsonWithID() => {
-        'id':id,
+  Map<String, dynamic> toJsonWithID() => {
+        'id': id,
         'countOrdersInMonth': countOrdersInMonth,
         'salary': salary,
         'monthCompensation': monthCompensation,

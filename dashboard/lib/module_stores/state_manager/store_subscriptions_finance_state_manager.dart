@@ -17,13 +17,14 @@ class StoreSubscriptionsFinanceStateManager {
 
   StoreSubscriptionsFinanceStateManager(this._serviceService);
   Stream<States> get stateStream => stateSubject.stream;
-  void getAccountBalance(StoreSubscriptionsFinanceScreenState screenState,int storeID) {
+  void getAccountBalance(
+      StoreSubscriptionsFinanceScreenState screenState, int storeID) {
     stateSubject.add(LoadingState(screenState));
     _serviceService.getSubscriptionsFinance(storeID).then((value) {
       if (value.hasError) {
         stateSubject.add(
           ErrorState(screenState, onPressed: () {
-            getAccountBalance(screenState,storeID);
+            getAccountBalance(screenState, storeID);
           }, title: S.current.myBalance, error: value.error, hasAppbar: false),
         );
       } else if (value.isEmpty) {
@@ -31,7 +32,7 @@ class StoreSubscriptionsFinanceStateManager {
             emptyMessage: S.current.homeDataEmpty,
             hasAppbar: false,
             title: S.current.myBalance, onPressed: () {
-          getAccountBalance(screenState,storeID);
+          getAccountBalance(screenState, storeID);
         }));
       } else {
         value as StoreSubscriptionsFinanceModel;

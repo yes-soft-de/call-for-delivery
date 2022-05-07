@@ -15,7 +15,8 @@ class SupplierCategoriesModule extends YesModule {
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      SupplierCategoriesRoutes.SUPPLIER_CATEGORIES: (context) => categoriesScreen,
+      SupplierCategoriesRoutes.SUPPLIER_CATEGORIES: (context) =>
+          categoriesScreen,
     };
   }
 }

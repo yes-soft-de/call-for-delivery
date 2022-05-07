@@ -29,8 +29,8 @@ class CaptainFinancialDuesScreenState
       if (mounted) setState(() {});
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
-    widget._manager
-        .getAccountBalance(this, CaptainsHiveHelper().getCurrentCaptainID(),false);   
+      widget._manager.getAccountBalance(
+          this, CaptainsHiveHelper().getCurrentCaptainID(), false);
     });
     widget._manager
         .getAccountBalance(this, CaptainsHiveHelper().getCurrentCaptainID());

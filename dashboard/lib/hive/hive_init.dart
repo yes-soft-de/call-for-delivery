@@ -17,6 +17,5 @@ class HiveSetUp {
     await Hive.openBox('Init');
     await Hive.openBox('Chat');
     await Hive.openBox('Helper');
-
   }
 }

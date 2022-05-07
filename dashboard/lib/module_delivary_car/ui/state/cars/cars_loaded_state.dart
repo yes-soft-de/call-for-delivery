@@ -65,9 +65,10 @@ class CarsLoadedState extends States {
     }
     if (model!.isEmpty) return widgets;
     for (var element in model ?? <CarsModel>[]) {
-        widgets.add(
-          CarCard(model: element,
-            edit: () {
+      widgets.add(
+        CarCard(
+          model: element,
+          edit: () {
 //              showDialog(
 //                  context: context,
 //                  builder: (_) {
@@ -78,9 +79,9 @@ class CarsLoadedState extends States {
 //                      },
 //                    );
 //                  });
-            },
-          ),
-        );
+          },
+        ),
+      );
     }
     return widgets;
   }

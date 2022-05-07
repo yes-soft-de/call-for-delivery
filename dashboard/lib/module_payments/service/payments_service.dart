@@ -39,7 +39,8 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-    Future<DataModel> paymentFromStore(CreateStorePaymentsRequest request) async {
+
+  Future<DataModel> paymentFromStore(CreateStorePaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.paymentFromStore(request);
 
@@ -79,7 +80,8 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-   Future<DataModel> deletePaymentFromStore(String id) async {
+
+  Future<DataModel> deletePaymentFromStore(String id) async {
     ActionResponse? actionResponse =
         await _paymentsManager.deleteFromStorePayment(id);
 
@@ -222,6 +224,7 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
+
   /* UPDATE */
   Future<DataModel> updateCaptainFinanceByOrder(
       CreateCaptainFinanceByOrderRequest request) async {
@@ -267,5 +270,4 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-
 }

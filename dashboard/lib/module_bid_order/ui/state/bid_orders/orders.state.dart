@@ -5,14 +5,13 @@ import 'package:c4d/module_bid_order/ui/widget/bid_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
-class   BidOrdersListStateLoaded extends States {
+class BidOrdersListStateLoaded extends States {
   final List<OrderModel> orders;
   final BidOrdersScreenState screenState;
   BidOrdersListStateLoaded(
     this.screenState, {
     required this.orders,
-  }) : super(screenState) {
-  }
+  }) : super(screenState) {}
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(children: getOrders());
@@ -28,7 +27,7 @@ class   BidOrdersListStateLoaded extends States {
           onTap: () {
 //            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments:{'id' : element.id ,'onGoing':false} );
           },
-          child:BidOrderCard(element,true),
+          child: BidOrderCard(element, true),
         ),
       ));
     });

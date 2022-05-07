@@ -32,5 +32,4 @@ class CarsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-
 }

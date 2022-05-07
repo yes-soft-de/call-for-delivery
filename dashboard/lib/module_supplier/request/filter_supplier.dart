@@ -1,4 +1,4 @@
-class FilterSupplierRequest{
+class FilterSupplierRequest {
   bool status;
 
   FilterSupplierRequest(this.status);

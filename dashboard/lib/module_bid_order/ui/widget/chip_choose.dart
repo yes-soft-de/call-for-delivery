@@ -9,7 +9,10 @@ class ChipChoose extends StatelessWidget {
   final VoidCallback onTap;
 
   ChipChoose(
-      {required this.title, required this.selected, required this.onTap ,required this.cost});
+      {required this.title,
+      required this.selected,
+      required this.onTap,
+      required this.cost});
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +25,22 @@ class ChipChoose extends StatelessWidget {
           color: selected
               ? Theme.of(context).primaryColor
               : Theme.of(context).cardColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side:BorderSide(width: 1,color: Theme.of(context).secondaryHeaderColor) ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(
+                  width: 1, color: Theme.of(context).secondaryHeaderColor)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
               title: Text(
                 title,
-                style: TextStyle(color: selected ? Colors.white : Colors.black,fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: selected ? Colors.white : Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 cost.toString() + ' ' + S.of(context).sar,
-                style: TextStyle(color: Colors.green ),
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ),

@@ -67,8 +67,7 @@ class SupplierProfileScreenState extends State<SupplierProfileScreen> {
       }
     }
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.profile),
+      appBar: CustomC4dAppBar.appBar(context, title: S.current.profile),
       body: currentState.getUI(context),
     );
   }

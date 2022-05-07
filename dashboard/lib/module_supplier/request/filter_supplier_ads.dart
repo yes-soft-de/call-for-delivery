@@ -1,4 +1,4 @@
-class FilterSupplierAds{
+class FilterSupplierAds {
   String? toDate;
   String? fromDate;
   int supplierProfileId;
@@ -6,16 +6,18 @@ class FilterSupplierAds{
   String? status;
   String? administrationStatus;
 
-
   FilterSupplierAds(
-  {this.toDate, this.fromDate,required this.supplierProfileId,
-      this.supplierCategoryId, this.status, this.administrationStatus});
+      {this.toDate,
+      this.fromDate,
+      required this.supplierProfileId,
+      this.supplierCategoryId,
+      this.status,
+      this.administrationStatus});
 
   Map<String, dynamic> toJson() {
-
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['supplierCategoryId']= this.supplierCategoryId;
-    data['supplierProfileId']= this.supplierProfileId;
+    data['supplierCategoryId'] = this.supplierCategoryId;
+    data['supplierProfileId'] = this.supplierProfileId;
     if (toDate != null) {
       data['toDate'] = this.toDate;
     }

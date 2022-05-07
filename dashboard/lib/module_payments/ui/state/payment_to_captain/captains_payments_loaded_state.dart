@@ -43,88 +43,88 @@ class PaymentsToCaptainLoadedState extends States {
     }
     return FixedContainer(
         child: CustomListView.custom(
-          padding: EdgeInsets.only(left: 16,right: 16),
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  S.current.paymentAmount,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.start,
-                ),
+      padding: EdgeInsets.only(left: 16, right: 16),
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 12.0, bottom: 8, right: 12, top: 16.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              S.current.paymentAmount,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.start,
+            ),
+          ),
+        ),
+        CustomFormField(
+          controller: _amount,
+          hintText: S.current.paymentAmount,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 12.0, bottom: 8, right: 12, top: 16.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              S.current.note,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.start,
+            ),
+          ),
+        ),
+        CustomFormField(
+          controller: _note,
+          hintText: S.current.note,
+          last: true,
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              screenState.pay(CaptainPaymentsRequest(
+                  captainId: screenState.captainId,
+                  note: _note.text,
+                  amount: num.parse(_amount.text.trim())));
+            },
+            style: ElevatedButton.styleFrom(
+              onSurface: Theme.of(context).primaryColor,
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
             ),
-            CustomFormField(
-              controller: _amount,
-              hintText: S.current.paymentAmount,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  S.current.note,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ),
-            CustomFormField(
-              controller: _note,
-              hintText: S.current.note,
-              last: true,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  screenState.pay(CaptainPaymentsRequest(
-                      captainId: screenState.captainId,
-                      note: _note.text,
-                      amount: num.parse(_amount.text.trim())));
-                },
-                style: ElevatedButton.styleFrom(
-                  onSurface: Theme.of(context).primaryColor,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                  S.current.pay,
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      S.current.pay,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                )),
-            SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 32.0, left: 32),
-              child: Divider(
-                thickness: 2.5,
-                color: Theme.of(context).backgroundColor,
               ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            getCaptainPaymentFrom(),
-            SizedBox(
-              height: 16,
-            ),
-          ],
-        ));
+            )),
+        SizedBox(
+          height: 16,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 32.0, left: 32),
+          child: Divider(
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        getCaptainPaymentFrom(),
+        SizedBox(
+          height: 16,
+        ),
+      ],
+    ));
   }
 
   Widget getCaptainPaymentFrom() {

@@ -63,7 +63,7 @@ class CaptainAccountBalanceScreenState
           title: S.current.accountBalance,
           bottom: PreferredSize(
               child: Padding(
-                padding: const EdgeInsets.only(bottom:8.0),
+                padding: const EdgeInsets.only(bottom: 8.0),
                 child: FilterBar(
                   cursorRadius: BorderRadius.circular(25),
                   animationDuration: const Duration(milliseconds: 350),

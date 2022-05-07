@@ -76,7 +76,7 @@ class SupplierService {
   }
 
   Future<DataModel> getSupplierProfile(int id) async {
-   SupplierProfileResponse? _storeResponse =
+    SupplierProfileResponse? _storeResponse =
         await _manager.getSupplierProfile(id);
     if (_storeResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -114,5 +114,4 @@ class SupplierService {
     if (_response.data == null) return DataModel.empty();
     return SupplierAdsModel.withData(_response);
   }
-
 }

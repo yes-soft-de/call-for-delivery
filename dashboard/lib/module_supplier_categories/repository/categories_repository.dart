@@ -33,7 +33,8 @@ class SupplierCategoriesRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> updateCategory(SupplierCategoryRequest request) async {
+  Future<ActionResponse?> updateCategory(
+      SupplierCategoryRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.CREATE_SUPPLIER_CATEGORY, request.toJson(),

@@ -5,7 +5,12 @@ class CaptainPaymentsRequest {
   int? status;
   int? captainFinancialDuesId;
 
-  CaptainPaymentsRequest({this.captainFinancialDuesId,this.status,this.captainId, this.amount, this.note});
+  CaptainPaymentsRequest(
+      {this.captainFinancialDuesId,
+      this.status,
+      this.captainId,
+      this.amount,
+      this.note});
 
   CaptainPaymentsRequest.fromJson(dynamic json) {
     captainId = json['captainId'];

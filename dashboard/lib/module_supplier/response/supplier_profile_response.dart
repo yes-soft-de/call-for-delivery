@@ -12,7 +12,9 @@ class SupplierProfileResponse {
     try {
       statusCode = json['status_code'];
       msg = json['msg'];
-      data = json['Data'] != null ? DataSupplierProfile.fromJson(json['Data']) : null;
+      data = json['Data'] != null
+          ? DataSupplierProfile.fromJson(json['Data'])
+          : null;
     } catch (e) {
       Logger().error('Supplier Profile', e.toString(), StackTrace.current);
       statusCode = '-1';
@@ -36,8 +38,7 @@ class DataSupplierProfile {
       this.supplierCategoryName,
       this.supplierName,
       this.status,
-      this.image
-      });
+      this.image});
 
   DataSupplierProfile.fromJson(dynamic json) {
     id = json['id'];
@@ -53,6 +54,4 @@ class DataSupplierProfile {
     }
     phone = json['phone'];
   }
-
-
 }

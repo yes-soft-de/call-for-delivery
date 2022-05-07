@@ -70,5 +70,4 @@ class SupplierCategoriesService {
     }
     return DataModel.empty();
   }
-
 }

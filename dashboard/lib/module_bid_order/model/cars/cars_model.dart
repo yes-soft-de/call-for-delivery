@@ -9,21 +9,20 @@ class CarsModel extends DataModel {
   String? details;
   late num cost;
 
-  CarsModel({
-    required this.id,
-    required this.carModel,
-    required this.details,
-    required this.cost
-  });
+  CarsModel(
+      {required this.id,
+      required this.carModel,
+      required this.details,
+      required this.cost});
   List<CarsModel> _orders = [];
   CarsModel.withData(CarsResponse response) {
     var data = response.data;
     data?.forEach((element) {
       _orders.add(new CarsModel(
-          id: element.id ?? -1,
-          cost: element.deliveryCost ?? 0,
-          details: element.details ,
-          carModel: element.carModel ?? S.current.unknown,
+        id: element.id ?? -1,
+        cost: element.deliveryCost ?? 0,
+        details: element.details,
+        carModel: element.carModel ?? S.current.unknown,
       ));
     });
   }

@@ -127,7 +127,9 @@ class StoresRepository {
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
   }
-    Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance(int storeId) async {
+
+  Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance(
+      int storeId) async {
     var token = await _authService.getToken();
     var response = await _apiClient.get(
       Urls.GET_STORE_SUBSCRIPTIONS_FINANCE + '/$storeId',
@@ -136,5 +138,4 @@ class StoresRepository {
     if (response == null) return null;
     return SubscriptionsFinancialResponse.fromJson(response);
   }
-
 }

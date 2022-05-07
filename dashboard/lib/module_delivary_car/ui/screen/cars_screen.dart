@@ -49,7 +49,6 @@ class CarsScreenState extends State<CarsScreen> {
 //    widget._stateManager.updateCars(this, request);
 //  }
 
-
   void refresh() {
     if (mounted) {
       setState(() {});

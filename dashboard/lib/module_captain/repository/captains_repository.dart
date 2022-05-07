@@ -108,15 +108,20 @@ class CaptainsRepository {
     if (response == null) return null;
     return CaptainNeedSupportResponse.fromJson(response);
   }
-   /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
-  Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(int id) async {
+
+  /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
+  Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(
+      int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_ACCOUNT_BALANCE+'/$id',
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_ACCOUNT_BALANCE + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainAccountBalanceResponse.fromJson(response);
   }
-  Future<ActionResponse?> captainFinanceStatus(EnableCaptainRequest request) async {
+
+  Future<ActionResponse?> captainFinanceStatus(
+      EnableCaptainRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.UPDATE_CAPTAIN_FINANCE_PLAN, request.toJson(),
@@ -125,9 +130,11 @@ class CaptainsRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(int captainID) async {
+  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
+      int captainID) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_FINANCE_DUES +'/$captainID',
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_FINANCE_DUES + '/$captainID',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainFinancialDuesResponse.fromJson(response);

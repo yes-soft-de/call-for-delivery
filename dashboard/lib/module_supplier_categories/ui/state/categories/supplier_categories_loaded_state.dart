@@ -72,12 +72,10 @@ class SupplierCategoriesLoadedState extends States {
           description: element.description ?? '',
           name: element.name,
           image: element.image ?? '',
-          status: element.status ??false,
-          enablePackage: (stat){
-            screenState.enableCategory(ActiveCategoryRequest(
-              id: element.id,
-              status: stat
-            ));
+          status: element.status ?? false,
+          enablePackage: (stat) {
+            screenState.enableCategory(
+                ActiveCategoryRequest(id: element.id, status: stat));
           },
           onEdit: () {
             showDialog(

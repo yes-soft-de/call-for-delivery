@@ -17,22 +17,25 @@ class AccountBalanceStateManager {
 
   AccountBalanceStateManager(this._planService);
   Stream<States> get stateStream => stateSubject.stream;
-  void getAccountBalance(CaptainAccountBalanceScreenState screenState,int captainID) {
+  void getAccountBalance(
+      CaptainAccountBalanceScreenState screenState, int captainID) {
     stateSubject.add(LoadingState(screenState));
     _planService.getCaptainAccountBalance(captainID).then((value) {
       if (value.hasError) {
-        stateSubject.add(ErrorState(screenState, onPressed: () {
-          getAccountBalance(screenState,captainID);
-        }, title: S.current.myBalance,error: value.error),);
+        stateSubject.add(
+          ErrorState(screenState, onPressed: () {
+            getAccountBalance(screenState, captainID);
+          }, title: S.current.myBalance, error: value.error),
+        );
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
             emptyMessage: S.current.homeDataEmpty,
             title: S.current.myBalance, onPressed: () {
-          getAccountBalance(screenState,captainID);
+          getAccountBalance(screenState, captainID);
         }));
       } else {
         value as CaptainAccountBalanceModel;
-        stateSubject.add(AccountBalanceStateLoaded(screenState,value.data));
+        stateSubject.add(AccountBalanceStateLoaded(screenState, value.data));
       }
     });
   }

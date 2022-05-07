@@ -10,7 +10,8 @@ class BidOrderManager {
 
   BidOrderManager(this._repository);
 
-  Future<OrdersResponse?> getBidOrder(FilterBidOrderRequest request) => _repository.getBidOrder(request);
+  Future<OrdersResponse?> getBidOrder(FilterBidOrderRequest request) =>
+      _repository.getBidOrder(request);
 
   Future<OrderDetailsResponse?> getOrderDetails(int id) =>
       _repository.getBidOrderDetails(id);

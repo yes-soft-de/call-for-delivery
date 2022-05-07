@@ -30,7 +30,8 @@ class InActiveSupplierStateManager {
             empty: value.isEmpty));
       } else {
         InActiveModel _model = value as InActiveModel;
-        _stateSubject.add(InActiveSupplierLoadedState(screenState, _model.data));
+        _stateSubject
+            .add(InActiveSupplierLoadedState(screenState, _model.data));
       }
     });
   }

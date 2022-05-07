@@ -41,8 +41,7 @@ class StoresModule extends YesModule {
       this.captainNotArrivedScreen,
       this.orderTimeLineScreen,
       this.storeSubscriptionsFinanceDetailsScreen,
-      this.storeSubscriptionsFinanceScreen
-      ) {
+      this.storeSubscriptionsFinanceScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -56,9 +55,10 @@ class StoresModule extends YesModule {
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
-      StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN: (context) => storeSubscriptionsFinanceScreen,
-      StoresRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) => storeSubscriptionsFinanceDetailsScreen,
-      
+      StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN: (context) =>
+          storeSubscriptionsFinanceScreen,
+      StoresRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
+          storeSubscriptionsFinanceDetailsScreen,
     };
   }
 }

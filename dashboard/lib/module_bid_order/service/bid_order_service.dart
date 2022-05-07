@@ -16,8 +16,7 @@ class BidOrderService {
   BidOrderService(this._manager);
 
   Future<DataModel> getOrderDetails(int orderId) async {
-    OrderDetailsResponse? response =
-    await _manager.getOrderDetails(orderId);
+    OrderDetailsResponse? response = await _manager.getOrderDetails(orderId);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -26,6 +25,7 @@ class BidOrderService {
     if (response.data == null) return DataModel.empty();
     return OrderDetailsModel.withData(response);
   }
+
   Future<DataModel> getBidOrder(FilterBidOrderRequest request) async {
     OrdersResponse? response = await _manager.getBidOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);

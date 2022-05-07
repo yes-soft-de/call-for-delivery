@@ -4,7 +4,7 @@ import 'package:c4d/module_supplier/ui/screen/in_active_supplier_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
- import 'package:c4d/utils/components/costom_search.dart';
+import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';

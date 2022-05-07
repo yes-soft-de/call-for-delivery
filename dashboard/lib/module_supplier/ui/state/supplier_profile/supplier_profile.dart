@@ -80,7 +80,6 @@ class SupplierProfileLoadedState extends States {
                           title: S.of(context).name,
                           subTitle: model?.name,
                           iconData: Icons.person_rounded),
-
                       CustomListTile(
                           title: S.of(context).phoneNumber,
                           subTitle: model?.phone,
@@ -89,7 +88,6 @@ class SupplierProfileLoadedState extends States {
                           title: S.of(context).category,
                           subTitle: model?.supplierCategoryName,
                           iconData: Icons.category),
-
                       Container(
                         child: ListTileSwitch(
                             switchActiveColor: Colors.green,
@@ -115,10 +113,10 @@ class SupplierProfileLoadedState extends States {
                                   : S.current.captainStateInactive,
                               style: TextStyle(color: Colors.white),
                             ),
-                            value: model?.status ??false ,
+                            value: model?.status ?? false,
                             onChanged: (v) {
                               if (v) {
-                                model?.status =true;
+                                model?.status = true;
                                 screenState.enableCaptain(true);
                               } else {
                                 model?.status = false;

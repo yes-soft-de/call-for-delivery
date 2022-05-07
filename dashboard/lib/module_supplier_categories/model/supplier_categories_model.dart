@@ -16,19 +16,22 @@ class SupplierCategoryModel extends DataModel {
 
   SupplierCategoryModel(
       {required this.imageSource,
-        required this.name, required this.id, this.description,this.status,this.image});
+      required this.name,
+      required this.id,
+      this.description,
+      this.status,
+      this.image});
 
   SupplierCategoryModel.withData(List<Data> data) : super.withData() {
     _model = [];
     for (var element in data) {
       _model.add(SupplierCategoryModel(
-        id: element.id ?? -1,
-        description: element.description,
-        name: element.categoryName ?? S.current.category,
-        image: element.image?.image ?? '',
-        status: element.status ?? false,
-        imageSource: element.image?.imageURL
-      ));
+          id: element.id ?? -1,
+          description: element.description,
+          name: element.categoryName ?? S.current.category,
+          image: element.image?.image ?? '',
+          status: element.status ?? false,
+          imageSource: element.image?.imageURL));
     }
   }
   List<SupplierCategoryModel> get data => _model;

@@ -30,8 +30,7 @@ class CaptainsModule extends YesModule {
       this.supportScreen,
       this.captainAccountBalanceScreen,
       this.captainFinancialDuesDetailsScreen,
-      this.captainFinancialDuesScreen
-      ) {
+      this.captainFinancialDuesScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -43,8 +42,8 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
       CaptainsRoutes.CAPTAIN_BALANCE: (context) => captainAccountBalanceScreen,
       CaptainsRoutes.CAPTAIN_DUES: (context) => captainFinancialDuesScreen,
-      CaptainsRoutes.CAPTAIN_DUES_DETAILS: (context) => captainFinancialDuesDetailsScreen,
-
+      CaptainsRoutes.CAPTAIN_DUES_DETAILS: (context) =>
+          captainFinancialDuesDetailsScreen,
     };
   }
 }

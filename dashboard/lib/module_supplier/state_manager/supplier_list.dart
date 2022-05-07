@@ -29,7 +29,7 @@ class SuppliersStateManager {
             .add(SupplierLoadedState(screenState, [], empty: value.isEmpty));
       } else {
         InActiveModel _model = value as InActiveModel;
-        _stateSubject.add(SupplierLoadedState(screenState, _model.data  ));
+        _stateSubject.add(SupplierLoadedState(screenState, _model.data));
       }
     });
   }

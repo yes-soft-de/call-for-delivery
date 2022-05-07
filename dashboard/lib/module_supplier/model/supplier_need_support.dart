@@ -15,7 +15,8 @@ class SupplierNeedSupportModel extends DataModel {
     required this.id,
   });
 
-  SupplierNeedSupportModel.withData(List<DatumSupplier> data) : super.withData() {
+  SupplierNeedSupportModel.withData(List<DatumSupplier> data)
+      : super.withData() {
     _model = [];
     for (var element in data) {
       _model.add(SupplierNeedSupportModel(

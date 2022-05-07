@@ -20,8 +20,8 @@ class SupplierCategoryResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger()
-          .error('Supplier Category Response', e.toString(), StackTrace.current);
+      Logger().error(
+          'Supplier Category Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;
@@ -30,19 +30,14 @@ class SupplierCategoryResponse {
 }
 
 class Data {
-  Data({
-    this.id,
-    this.categoryName,
-    this.description,
-    this.status,this.image
-  });
+  Data({this.id, this.categoryName, this.description, this.status, this.image});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
     categoryName = json['name'];
     description = json['description'];
     status = json['status'];
-    image =json['image'] != null ? ImageUrl.fromJson(json['image']) : null;
+    image = json['image'] != null ? ImageUrl.fromJson(json['image']) : null;
   }
   int? id;
   String? categoryName;

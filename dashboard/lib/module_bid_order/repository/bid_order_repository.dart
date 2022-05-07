@@ -33,5 +33,4 @@ class BidOrderRepository {
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
   }
-
 }

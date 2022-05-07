@@ -16,7 +16,8 @@ class SuppliersManager {
   SuppliersManager(this._repository);
 
   Future<SupplierResponse?> getSuppliers() => _repository.getSuppliers();
-  Future<AdsResponse?> getSupplierAds(FilterSupplierAds request) => _repository.getSupplierAds(request);
+  Future<AdsResponse?> getSupplierAds(FilterSupplierAds request) =>
+      _repository.getSupplierAds(request);
 
   Future<SupplierResponse?> getInActiveSupplier() =>
       _repository.getInActiveSupplier();
