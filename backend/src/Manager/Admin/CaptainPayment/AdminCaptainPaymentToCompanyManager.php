@@ -47,7 +47,7 @@ class AdminCaptainPaymentToCompanyManager
         $this->entityManager->persist($captainPaymentToCompanyEntity);
         $this->entityManager->flush();
 
-        $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain());
+        $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain(), $captainPaymentToCompanyEntity);
      
         return $captainPaymentToCompanyEntity;
     }
@@ -55,6 +55,8 @@ class AdminCaptainPaymentToCompanyManager
     public function deleteCaptainPaymentToCompany($id): CaptainPaymentToCompanyEntity|string
     {
         $captainPaymentToCompanyEntity = $this->captainPaymentToCompanyEntityRepository->find($id);
+
+        $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashByCaptainPaymentToCompanyId($captainPaymentToCompanyEntity);
 
         if (! $captainPaymentToCompanyEntity) {     
             
