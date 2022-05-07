@@ -89,6 +89,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   void requestOrderProgress(UpdateOrderRequest request) {
     showDialog(
         context: context,
+        routeSettings: const RouteSettings(name: '/accepting_order'),
         builder: (_) {
           return CustomAlertDialog(
               onPressed: () {
@@ -97,6 +98,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                   showDialog(
                       barrierDismissible: false,
                       context: context,
+                      routeSettings: const RouteSettings(name: '/paid'),
                       builder: (_) {
                         return CustomAlertDialogForCash(
                             onPressed: (paid) {
@@ -104,7 +106,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                               request.paid = paid ? 1 : 2;
                               widget.stateManager.updateOrder(request, this);
                             },
-                            content: S.of(context).confirmUpdateOrderStatus);
+                            content: S.of(context).paidToProvider);
                       });
                 } else {
                   widget.stateManager.updateOrder(request, this);

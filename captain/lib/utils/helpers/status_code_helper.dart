@@ -41,6 +41,8 @@ class StatusCodeHelper {
         return S.current.youCannotChoosePlan;
       case '9601':
         return S.current.youCannotChoosePlan;
+      case '9207':
+        return S.current.thisOrderAcceptedByAnotherCaptain;
       case '-1':
         return S.current.dataDecodeError;
       default:

@@ -6809,6 +6809,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Did you pay order cost totally to store owner before taking the order`
+  String get paidToProvider {
+    return Intl.message(
+      'Did you pay order cost totally to store owner before taking the order',
+      name: 'paidToProvider',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order accepted by another captain`
+  String get thisOrderAcceptedByAnotherCaptain {
+    return Intl.message(
+      'This order accepted by another captain',
+      name: 'thisOrderAcceptedByAnotherCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

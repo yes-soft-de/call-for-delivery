@@ -678,7 +678,10 @@
     "financialDuesCycles": "Financial dues cycles",
     "currentFinancialDuesCycle": "Current cycle",
     "financialDuesDetails": "Financial dues details",
-    "financeStoreStatus": "Finance order status"
+    "financeStoreStatus": "Finance order status",
+    "paidToProvider": "Did you pay order cost totally to store owner before taking the order",
+    "thisOrderAcceptedByAnotherCaptain": "This order accepted by another captain"
+
 
 
 

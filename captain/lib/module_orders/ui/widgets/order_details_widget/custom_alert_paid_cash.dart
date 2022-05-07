@@ -22,16 +22,16 @@ class CustomAlertDialogForCash extends StatelessWidget {
       },
       child: AlertDialog(
         title: Text(title ?? S.current.warnning),
-        content: Container(child: Text(content)),
+        content: Text(content),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        actionsAlignment: onPressed == null ? MainAxisAlignment.center : null,
         actions: [
-          Visibility(
-              visible: onPressed != null,
-              child: TextButton(
-                  onPressed: onPressed(true), child: Text(S.current.yes))),
+          TextButton(
+              onPressed: () {
+                onPressed(true);
+              },
+              child: Text(S.current.yes)),
           TextButton(
               onPressed: () {
                 onPressed(false);

@@ -666,6 +666,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
         "paid": MessageLookupByLibrary.simpleMessage("Paid"),
+        "paidToProvider": MessageLookupByLibrary.simpleMessage(
+            "Did you pay order cost totally to store owner before taking the order"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -962,6 +964,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
+        "thisOrderAcceptedByAnotherCaptain":
+            MessageLookupByLibrary.simpleMessage(
+                "This order accepted by another captain"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(

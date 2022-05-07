@@ -530,7 +530,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddressHint": MessageLookupByLibrary.simpleMessage("اكتب عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "myBalanceHint": MessageLookupByLibrary.simpleMessage(
-            "هنا نستعرض تفاصيل الورة المالية الخاص بهذا المستخدم"),
+            "هنا نستعرض تفاصيل الدورة المالية الخاص بهذا المستخدم"),
         "myLocation": MessageLookupByLibrary.simpleMessage("موقعي"),
         "myLocationDescribtion": MessageLookupByLibrary.simpleMessage(
             "اضغط على العلامة لتذهب لموقعك"),
@@ -659,6 +659,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "paid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
+        "paidToProvider": MessageLookupByLibrary.simpleMessage(
+            "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -956,6 +958,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
+        "thisOrderAcceptedByAnotherCaptain":
+            MessageLookupByLibrary.simpleMessage(
+                "تم قبول الطلب من قبل كابتن آخر"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(

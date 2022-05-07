@@ -679,7 +679,9 @@
     "financialDuesCycles": "الدورات المالية",
     "currentFinancialDuesCycle": "الدورة الحالية",
     "financialDuesDetails": "تفاصيل الدورة المالية",
-    "financeStoreStatus": "حالة مستحقات المتاجر"
+    "financeStoreStatus": "حالة مستحقات المتاجر",
+    "paidToProvider": "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر",
+    "thisOrderAcceptedByAnotherCaptain": "تم قبول الطلب من قبل كابتن آخر"
 
 
 
