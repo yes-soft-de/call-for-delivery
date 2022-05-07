@@ -3,6 +3,7 @@
 namespace App\Manager\ChatRoom;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
 use App\Repository\OrderChatRoomEntityRepository;
@@ -39,10 +40,11 @@ class OrderChatRoomManager
     {
         $captain = $this->captainManager->getCaptainProfileByUserId($request->getUserId());
 
-        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $request->getOrderId(), "captain" => $captain]);
+        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $request->getOrderId(), "captain" => $captain,
+            "usedAs"=>[ChatRoomConstant::CAPTAIN_STORE, ChatRoomConstant::CAPTAIN_STORE_ENQUIRE]]);
       
         if(! $orderChatRoom) {
-           return $this->create($request, $captain);
+           return $this->create($request);
         }
        
         return $orderChatRoom;
@@ -50,13 +52,21 @@ class OrderChatRoomManager
 
     public function createOrderChatRoomOrUpdateCurrent(OrderEntity $order): ?OrderChatRoomEntity
     {
-        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $order->getId(), "captain" => $order->getCaptainId()]);
+        $orderChatRoom = $this->orderChatRoomRepository->findOneBy(["orderId" => $order->getId(), "captain" => $order->getCaptainId(),
+            "usedAs"=>[ChatRoomConstant::CAPTAIN_STORE, ChatRoomConstant::CAPTAIN_STORE_ENQUIRE]]);
        
         if (! $orderChatRoom) {
+            if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+                // if the order is of type bid, then create a chat room id between captain and supplier
+                $this->createOrderChatRoomBetweenCaptainAndSupplier($order);
+            }
+
            return  $this->createOrderChatRoomBetWeenCaptainAndStore($order);
         }
 
-        return $this->updateUsedAs($orderChatRoom);
+        if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+            return $this->updateUsedAs($orderChatRoom);
+        }
     }
 
     public function updateUsedAs(OrderChatRoomEntity $orderChatRoom): ?OrderChatRoomEntity
@@ -93,5 +103,16 @@ class OrderChatRoomManager
         $this->entityManager->flush();    
 
         return $orderChatRoom;
+    }
+
+    public function createOrderChatRoomBetweenCaptainAndSupplier(OrderEntity $order): ?OrderChatRoomEntity
+    {
+        $request = new OrderChatRoomRequest();
+
+        $request->setOrderId($order->getId());
+        $request->setUsedAs(ChatRoomConstant::CAPTAIN_SUPPLIER);
+        $request->setUserId($order->getCaptainId()->getCaptainId());
+
+        return $this->create($request);
     }
 }

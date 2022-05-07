@@ -570,6 +570,10 @@ class OrderController extends BaseController
         if($response === SubscriptionConstant::CARS_FINISHED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
         }
+
+        if ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
+        }
       
         return $this->response($response, self::UPDATE);
     }
@@ -839,7 +843,6 @@ class OrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="payment"),
      *          @OA\Property(type="string", property="note"),
-     *          @OA\Property(type="string", property="orderCost"),
      *          @OA\Property(type="string", property="title"),
      *          @OA\Property(type="number", property="description"),
      *          @OA\Property(type="string", property="supplierCategory"),
