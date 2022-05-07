@@ -348,4 +348,9 @@ class OrderManager
 
         return $this->orderLogsManager->createOrderLogs($request);
     }
+
+    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+    {
+        return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
+    }
 }

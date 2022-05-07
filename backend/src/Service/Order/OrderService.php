@@ -163,10 +163,13 @@ class OrderService
     public function getStoreOrders(int $userId): ?array
     {
         $response = [];
+
+        $this->cancelOrderAfterSpecifiedTime();
        
         $orders = $this->orderManager->getStoreOrders($userId);
        
         foreach ($orders as $order) {
+                      
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
 
@@ -225,6 +228,8 @@ class OrderService
 
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
+
+        $this->cancelOrderAfterSpecifiedTime();
 
         $response = [];
 
@@ -627,5 +632,25 @@ class OrderService
         }
 
         return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
+    }
+
+    //cancel the order before a specified time in case the captain does not receive the order
+    public function cancelOrderAfterSpecifiedTime()
+    {   
+        $nowDate = new DateTime('now');
+
+        $specificTime = date_modify($nowDate, '-3 day');
+        
+        $orders = $this->orderManager->getOrdersPendingBeforeSpecificDate($specificTime);
+
+        foreach($orders as $order) {
+          
+            $order = $this->orderManager->orderCancel($order);
+            if($order) {
+                $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+               
+                $this->orderLogsService->createOrderLogsRequest($order);
+            }
+        }     
     }
 }
