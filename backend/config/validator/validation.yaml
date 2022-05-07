@@ -104,8 +104,6 @@ App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
 
 App\Request\Order\OrderCreateRequest:
     properties:
-        destination:
-            - NotBlank: ~
         branch:
             - NotBlank: ~
 

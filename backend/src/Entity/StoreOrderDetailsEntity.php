@@ -13,7 +13,7 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column(type: 'json', nullable: true)]
     private $destination = [];
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

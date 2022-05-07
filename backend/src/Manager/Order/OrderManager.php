@@ -349,6 +349,11 @@ class OrderManager
         return $this->orderLogsManager->createOrderLogs($request);
     }
 
+    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+    {
+        return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
+    }
+    
     // this function checks if an order is being accepted by a captain
     public function isOrderAcceptedByCaptain(int $orderId): string|bool
     {

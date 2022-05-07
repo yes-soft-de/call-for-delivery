@@ -974,4 +974,18 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.deliveryDate < :specificTime')
+            ->setParameter('specificTime', $specificTime)
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
