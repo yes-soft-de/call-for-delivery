@@ -158,6 +158,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->andWhere('orderEntity.state = :pending ')
+            ->andWhere('orderEntity.orderType = :orderTypeNormal')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -167,6 +168,39 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
+            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function closestBidOrders(int $captainId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('bidDetailsEntity as bidDetails')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
+            ->andWhere('orderEntity.state = :pending')
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->andWhere('orderEntity.orderType = :bidOrderType')
+            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
             ->getQuery()
             ->getResult();
     }
