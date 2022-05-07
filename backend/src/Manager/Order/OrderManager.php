@@ -369,4 +369,19 @@ class OrderManager
 
         return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
+
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity->setPaidToProvider($paidToProvider);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }

@@ -50,6 +50,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
+use App\Response\Order\OrderUpdatePaidToProviderResponse;
 
 class OrderService
 {
@@ -665,5 +666,12 @@ class OrderService
                 $this->orderLogsService->createOrderLogsRequest($order);
             }
         }     
+    }
+    
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): ?OrderUpdatePaidToProviderResponse
+    {
+        $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
 }
