@@ -59,7 +59,7 @@ class OfferCard extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Icon(FontAwesomeIcons.check,color: Colors.white,),
                 ),),
-            ):Container(),
+            ):Icon(Icons.payment),
           ),
         ),
       ),

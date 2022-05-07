@@ -488,5 +488,6 @@
     "bankNameHint": "Bimo",
     "eg": "eg",
     "locationPref": "This location is shown to Captains",
-    "locationSelected": "Your location selected"
+    "locationSelected": "Your location selected",
+    "selectTheDeliveryCar": "Select The delivery car"
 }

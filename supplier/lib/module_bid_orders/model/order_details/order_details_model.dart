@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 class OrderDetailsModel extends DataModel {
   late int id;
+  late int bidDetailsId;
   late String description;
   late String createdDate;
   late String? deliveryDate;
@@ -26,6 +27,7 @@ class OrderDetailsModel extends DataModel {
     required this.title,
     required this.createdDate,
     required this.id,
+    required this.bidDetailsId,
     required this.offers,
     required this.images,
    required this.openToPriceOffer,
@@ -53,11 +55,14 @@ class OrderDetailsModel extends DataModel {
               .format(DateHelper.convert(element.createdAt?.timestamp));
 
       var deadLine =
-          DateFormat.Md()
-              .format(DateHelper.convert(element.offerDeadline?.timestamp));
+          DateFormat.jm()
+              .format(DateHelper.convert(element.offerDeadline?.timestamp)) +
+              ' 📅 ' +
+              DateFormat.Md()
+                  .format(DateHelper.convert(element.offerDeadline?.timestamp));
       _offersModel.add(OfferModel(
           createAt: create,
-          id: element.id ?? -1,
+          id: element.priceOfferId ?? -1,
           priceOfferValue: element.priceOfferValue ?? 0,
           priceOfferStatus:
           OfferStatusHelper.getOfferEnum(element.priceOfferStatus ?? ''),
@@ -77,7 +82,8 @@ class OrderDetailsModel extends DataModel {
         DateFormat.Md()
             .format(DateHelper.convert(data?.deliveryDate?.timestamp));
     _detailsModel = OrderDetailsModel(
-      id: data?.id ?? 1,
+      id: data?.id ?? -1,
+      bidDetailsId: data?.bidDetailsId ?? -1,
       description: data?.description ?? S.current.unknown,
       offers: _offersModel  ,
       title: data?.title ?? S.current.unknown,

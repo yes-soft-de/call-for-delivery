@@ -1,12 +1,14 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_orders/manager/orders_manager/orders_manager.dart';
+import 'package:c4d/module_bid_orders/model/cars/cars_model.dart';
 import 'package:c4d/module_bid_orders/model/order/order_model.dart';
 import 'package:c4d/module_bid_orders/model/order_details/order_details_model.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
 import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
+import 'package:c4d/module_bid_orders/response/cars/cars_response.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
@@ -22,16 +24,16 @@ class OrdersService {
 
   OrdersService(this._ordersManager, this._profileService);
 
-//  Future<DataModel> getMyOrders() async {
-//    OrdersResponse? response = await _ordersManager.getMyOrders();
-//    if (response == null) return DataModel.withError(S.current.networkError);
-//    if (response.statusCode != '200') {
-//      return DataModel.withError(
-//          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
-//    }
-//    if (response.data == null) return DataModel.empty();
-//    return OrderModel.withData(response);
-//  }
+  Future<DataModel> getDeliveryCar() async {
+    CarsResponse? response = await _ordersManager.getDeliveryCar();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return CarsModel.withData(response);
+  }
 
   Future<DataModel> getOpenOrders(FilterOpenBidOrderRequest request) async {
     OrdersResponse? response = await _ordersManager.getOpenOrders(request);

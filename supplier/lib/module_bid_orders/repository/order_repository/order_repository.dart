@@ -4,6 +4,7 @@ import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/bid_order_offer_filter_request.dart';
 import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/open_order_filter_request.dart';
+import 'package:c4d/module_bid_orders/response/cars/cars_response.dart';
 import 'package:c4d/module_bid_orders/response/order_details_response/order_details_reponse.dart';
 import 'package:c4d/module_bid_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
@@ -76,6 +77,15 @@ class OrderRepository {
     if (response == null) return null;
 
     return ActionResponse.fromJson(response);
+  }
+  Future<CarsResponse?> getDeliveryCar() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.GET_CARS,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return CarsResponse.fromJson(response);
   }
 
 }

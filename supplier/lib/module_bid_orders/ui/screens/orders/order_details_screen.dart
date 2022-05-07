@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_orders/request/add_offer_request.dart';
 import 'package:c4d/module_bid_orders/request/confirm_offer_request.dart';
@@ -10,6 +11,8 @@ import 'package:c4d/module_bid_orders/state_manager/owner_orders/open_orders.sta
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../utils/global/global_state_manager.dart';
 
 @injectable
 class OrderDetailsScreen extends StatefulWidget {
@@ -24,7 +27,7 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late States _currentState;
   StreamSubscription? _stateSubscription;
-
+  late StreamSubscription _globalStreamSubscription;
   AddOfferRequest? addOfferRequest;
    int orderId = -1;
    bool onGoing = false;
@@ -41,13 +44,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     }
   }
 
-   void addOffer(){
-     widget._stateManager.addNewOrder(this,AddOfferRequest(
-       offerDeadline: offerTime,
-       priceOfferValue: double.parse(priceController.text),
-       bidOrder: orderId
-     ));
-   }
   void confirmOffer(ConfirmOfferRequest request){
     widget._stateManager.confirmOffer(this,request,orderId);
   }
@@ -62,6 +58,10 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         setState(() {});
       }
     });
+    _globalStreamSubscription =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
+          widget._stateManager.getOrderDetails(this, orderId);
+        });
   }
 
 
@@ -79,12 +79,14 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     }
     return  Scaffold(
       appBar: CustomC4dAppBar.appBar(context, title:S.of(context).orderNumber+ ' '+orderId.toString()+'#',canGoBack: true),
-        body: SafeArea(child: Container(child: _currentState.getUI(context))));
+        body: SafeArea(
+            child: Container(child: _currentState.getUI(context))));
   }
 
 
   @override
   void dispose() {
+    _globalStreamSubscription.cancel();
     _stateSubscription?.cancel();
     super.dispose();
   }

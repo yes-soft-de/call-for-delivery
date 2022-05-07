@@ -138,7 +138,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
               Visibility(
                   child: Material(
                       color: Colors.transparent,
-                      child: widget.sufIcon ?? SizedBox.shrink())),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 8.0),
+                        child: widget.sufIcon ?? SizedBox.shrink(),
+                      ))),
             ],
           )),
     );
