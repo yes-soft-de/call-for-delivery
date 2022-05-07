@@ -62,4 +62,14 @@ class OrderByIdForSupplierGetResponse
      *     @OA\Items(type="object"))
      */
     public $orderLogs;
+
+    /**
+     * @var string|null
+     */
+    public $roomId;
+
+    /**
+     * @var int|null
+     */
+    public $usedAs;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
@@ -652,6 +653,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id', 'orderEntity.orderType', 'orderEntity.noteCaptainOrderCost', 'orderEntity.note', 'orderEntity.state', 'orderEntity.createdAt', 'orderEntity.captainOrderCost',
                 'orderEntity.updatedAt', 'orderEntity.dateCaptainArrived', 'orderEntity.deliveryDate', 'orderEntity.isCaptainArrived', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.kilometer')
             ->addSelect('bidDetailsEntity as bidDetails')
+            ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
 
             ->leftJoin(
                 BidDetailsEntity::class,
@@ -659,6 +661,15 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'bidDetailsEntity.orderId = orderEntity.id'
             )
+
+            ->leftJoin(
+                OrderChatRoomEntity::class,
+                'orderChatRoomEntity',
+                Join::WITH,
+                'orderChatRoomEntity.orderId = orderEntity.id AND orderChatRoomEntity.usedAs = :chatRoomUsedAs'
+            )
+
+            ->setParameter('chatRoomUsedAs', ChatRoomConstant::CAPTAIN_SUPPLIER)
 
             ->andWhere('orderEntity.id = :orderId')
             ->setParameter('orderId', $orderId)
