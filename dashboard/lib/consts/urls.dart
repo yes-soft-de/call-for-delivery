@@ -40,6 +40,11 @@ class Urls {
   static const String BASE_API_CAPTAIN = DOMAIN + VERSION_ADMIN + '/captain';
 
   static const String BASE_API_ORDER = DOMAIN + VERSION_ADMIN + '/order';
+  static const String BASE_API_ORDER_CASH_FINANCE =
+      DOMAIN + VERSION_ADMIN + '/storeownerduesfromcashorders';
+  static const String BASE_API_ORDER_CASH_FINANCE_FOR_CAPTAIN =
+      DOMAIN + VERSION_ADMIN + '/captainamountfromordercash';
+
   static const String BASE_API_STORE_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/storeownerpayment';
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER =
@@ -59,7 +64,7 @@ class Urls {
   static const BASE_CAPTAIN_ACCOUNT_BALANCE_DUES =
       DOMAIN + '/v1/captainfinancialduesforadmin';
   static const BASE_STORE_SUBSCRIPTIONS_FINANCE =
-      DOMAIN +VERSION_ADMIN + '/subscription';
+      DOMAIN + VERSION_ADMIN + '/subscription';
 
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT = DOMAIN + '/upload/';
@@ -100,6 +105,10 @@ class Urls {
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
+  static const FILTER_CASH_ORDERS_FINANCES_API =
+      BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
+  static const FILTER_CASH_ORDERS_FINANCES_CAPTAIN_API =
+      BASE_API_ORDER_CASH_FINANCE_FOR_CAPTAIN + '/captainamountfromordercash';
   static const GET_ORDERS_DETAILS = BASE_API_ORDER + '/orderbyidforadmin/';
   static const FILTER_CAPTAIN_NOT_ARRIVED =
       BASE_API_ORDER + '/filtercaptainnotarrivedorders';
@@ -154,7 +163,8 @@ class Urls {
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
-  static const GET_STORE_SUBSCRIPTIONS_FINANCE = BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
+  static const GET_STORE_SUBSCRIPTIONS_FINANCE =
+      BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
 
   /*------------------------CAPTAIN PAYMENTS------------------------*/
   static const CREATE_CAPTAIN_PAYMENTS =
