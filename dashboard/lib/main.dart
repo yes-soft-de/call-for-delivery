@@ -8,6 +8,7 @@ import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
+import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
@@ -106,6 +107,7 @@ class MyApp extends StatefulWidget {
   final SupplierModule _supplierModule;
   final CarsModule _carsModule;
   final BidOrderModule _bidOrderModule;
+  final OrdersModule _ordersModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -126,7 +128,8 @@ class MyApp extends StatefulWidget {
       this._supplierCategoriesModule,
       this._supplierModule,
       this._carsModule,
-      this._bidOrderModule
+      this._bidOrderModule,
+      this._ordersModule
       );
 
   @override
