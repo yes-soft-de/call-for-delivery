@@ -1095,4 +1095,41 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * captain: Order Update Paid To Provider.
+     * @Route("orderupdatepaidtoprovider/{orderId}/{paidToProvider}", name="orderUpdatePaidToProvider", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              )
+     *       )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function orderUpdatePaidToProvider(int $orderId,int $paidToProvider): JsonResponse
+    {
+        $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
+      
+        return $this->response($response, self::UPDATE);
+    }
 }

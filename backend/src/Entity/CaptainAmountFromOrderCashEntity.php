@@ -33,6 +33,9 @@ class CaptainAmountFromOrderCashEntity
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: CaptainPaymentToCompanyEntity::class, inversedBy: 'captainAmountFromOrderCashEntities')]
+    private $captainPaymentToCompany;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,6 +97,18 @@ class CaptainAmountFromOrderCashEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCaptainPaymentToCompany(): ?CaptainPaymentToCompanyEntity
+    {
+        return $this->captainPaymentToCompany;
+    }
+
+    public function setCaptainPaymentToCompany(?CaptainPaymentToCompanyEntity $captainPaymentToCompany): self
+    {
+        $this->captainPaymentToCompany = $captainPaymentToCompany;
 
         return $this;
     }
