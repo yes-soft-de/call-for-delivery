@@ -4,6 +4,7 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
+use App\Entity\BidDetailsEntity;
 use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
@@ -13,7 +14,9 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
+use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
@@ -316,6 +319,32 @@ class OrderService
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
+    }
+
+    public function getSpecificBidOrderForCaptain(int $id, int $userId): ?BidOrderByIdGetForCaptainResponse
+    {
+        $order = $this->orderManager->getSpecificBidOrderForCaptain($id, $userId);
+
+        if ($order) {
+            $order['bidDetailsInfo'] = $this->autoMapping->map(BidDetailsEntity::class, BidDetailsGetForCaptainResponse::class, $order['bidDetails']);
+
+            $order['bidDetailsInfo']->images = $this->customizeBidOrderImages($order['bidDetails']->getImages()->toArray());
+
+            $order['bidDetailsInfo']->branchPhone = $order['bidDetails']->getBranch()->getBranchPhone();
+            $order['bidDetailsInfo']->location = $order['bidDetails']->getBranch()->getLocation();
+
+            if ($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+
+            } else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+            }
+
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+        }
+
+        return $this->autoMapping->map("array", BidOrderByIdGetForCaptainResponse::class, $order);
     }
 
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string

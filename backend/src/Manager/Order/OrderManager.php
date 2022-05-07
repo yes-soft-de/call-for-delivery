@@ -165,6 +165,13 @@ class OrderManager
         return $this->orderRepository->getSpecificOrderForCaptain($id, $captainId->getId(), $userId);
     }
 
+    public function getSpecificBidOrderForCaptain(int $id, int $userId): ?array
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->getSpecificBidOrderForCaptain($id, $captainId->getId(), $userId);
+    }
+
     public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());

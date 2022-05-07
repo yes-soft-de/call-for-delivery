@@ -543,6 +543,44 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /** captain: Get bid order by id for captain.
+     * @Route("captainbidorder/{id}", name="getSpecificBidOrderForCaptainById", methods={"GET"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns bid order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\BidOrderClosestGetResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getSpecificBidOrderForCaptain(int $id): JsonResponse
+    {
+        $result = $this->orderService->getSpecificBidOrderForCaptain($id, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
     
     /**
      * captain: To accept the order AND change order state and update kilometer.
