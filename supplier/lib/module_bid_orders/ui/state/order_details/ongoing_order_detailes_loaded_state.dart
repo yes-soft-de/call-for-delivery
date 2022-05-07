@@ -5,6 +5,8 @@ import 'package:c4d/module_bid_orders/model/order_details/order_details_model.da
 import 'package:c4d/module_bid_orders/ui/screens/orders/order_details_screen.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_bid_orders/ui/widgets/progress_order_status.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -51,11 +53,11 @@ class OngoingOrderDetailsStateLoaded extends States {
           padding:
           const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
-            onTap:orderInfo.orderState != OrderStatusEnum.CANCELLED ? () {
-              Navigator.of(context).pushNamed('',
-//                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
-                  arguments: orderInfo.id);
-            } : null,
+//            onTap:orderInfo.orderState != OrderStatusEnum.CANCELLED ? () {
+//              Navigator.of(context).pushNamed('',
+////                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
+//                  arguments: orderInfo.id);
+//            } : //            null,
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -93,7 +95,60 @@ class OngoingOrderDetailsStateLoaded extends States {
             ),
           ),
         ),
-
+        Visibility(
+          visible: orderInfo.roomID != null,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(-0.2, 0)),
+                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.93),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.95),
+                    Theme.of(context).colorScheme.primary,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                        arguments: ChatArgument(
+                            roomID: orderInfo.roomID ?? '',
+                            userID: orderInfo.captainID,
+                            userType: 'captain'));
+                  },
+                  leading: Icon(
+                    Icons.chat_bubble_rounded,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  title: Text(S.current.chatRoom),
+                  textColor: Theme.of(context).textTheme.button?.color,
+                  subtitle: Text(S.current.chatWithCaptain),
+                  trailing: Icon(Icons.arrow_forward_rounded,
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
+            ),
+          ),
+        ),
         // order details tile
         ListTile(
           title: Text(S.current.orderDetails + ' #${orderInfo.id}'),

@@ -5,6 +5,9 @@ import 'package:c4d/module_profile/response/profile_response/images.dart';
 
 class Datum{
   int? id;
+  late String? roomID;
+  int? captainID;
+
   int? bidDetailsId;
   String? title;
   String? payment;
@@ -18,11 +21,13 @@ class Datum{
   List<OfferResponse>? offers;
   OrderLogsResponse? orderLogs;
 
-  Datum({this.id, this.title, this.description, this.createdAt, this.images,this.orderLogs,
+  Datum({this.id, this.title, this.description, this.createdAt, this.images,this.orderLogs,this.roomID,this.captainID,
 
       this.offers,this.openToPriceOffer, required this.bidDetailsId ,this.deliveryDate,required this.payment ,required this.note ,required this.state});
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json['id'] as int?,
+    roomID: json['roomId'] as String?,
+    captainID: json['captainId'] as int?,
     title: json['title'] as String?,
     description: json['description'] as String?,
     payment: json['payment'] as String?,
