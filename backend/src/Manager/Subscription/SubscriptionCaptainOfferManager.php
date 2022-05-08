@@ -48,7 +48,7 @@ class SubscriptionCaptainOfferManager
         $this->entityManager->persist($subscriptionCaptainOfferEntity);
         $this->entityManager->flush();
 
-        $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity);
+        $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity, true);
        
         return $subscriptionCaptainOfferEntity;
     }

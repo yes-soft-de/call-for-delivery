@@ -214,7 +214,7 @@ class SubscriptionManager
         return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
 
-    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): string
+    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity, $captainOfferFirstTime = false): string
     { 
         //TODO shortcut two queries in one query
         $subscribeCurrent = $this->subscriptionDetailsManager->getSubscriptionCurrent($subscriptionCaptainOfferEntity->getStoreOwner()->getId());
@@ -227,6 +227,7 @@ class SubscriptionManager
         }
 
         $subscribeEntity->setSubscriptionCaptainOffer($subscriptionCaptainOfferEntity);
+        $subscribeEntity->setCaptainOfferFirstTime($captainOfferFirstTime);
     
         $this->entityManager->flush();
        
@@ -279,5 +280,11 @@ class SubscriptionManager
     {
 
         return $this->subscribeRepository->getSubscriptionsByUserID($userId);
+    }
+    
+    public function getCaptainOfferFirstTimeBySubscriptionId(int $subscriptionId): ?array
+    {
+
+        return $this->subscribeRepository->getCaptainOfferFirstTimeBySubscriptionId($subscriptionId);
     }
 }
