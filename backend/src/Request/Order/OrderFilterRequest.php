@@ -20,6 +20,11 @@ class OrderFilterRequest
     private $toDate;
 
     /**
+     * @var bool|null
+     */
+    private $openToPriceOffer;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -41,5 +46,13 @@ class OrderFilterRequest
     public function getToDate(): ?string
     {
         return $this->toDate;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getOpenToPriceOffer(): ?bool
+    {
+        return $this->openToPriceOffer;
     }
 }
