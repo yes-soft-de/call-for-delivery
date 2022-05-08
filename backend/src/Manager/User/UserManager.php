@@ -9,6 +9,7 @@ use App\Repository\UserEntityRepository;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserRegisterRequest;
+use App\Request\User\UserVerificationStatusUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Manager\ChatRoom\ChatRoomManager;
@@ -203,5 +204,21 @@ class UserManager
     public function getUserBySupplierProfileId(int $supplierProfileId): ?UserEntity
     {
         return $this->userRepository->getUserBySupplierProfileId($supplierProfileId);
+    }
+
+    public function updateUserVerificationStatus(UserVerificationStatusUpdateRequest $request): string|UserEntity
+    {
+        $userEntity = $this->userRepository->findOneBy(["id"=>$request->getUser()]);
+
+        if (! $userEntity) {
+            return UserReturnResultConstant::USER_NOT_FOUND_RESULT;
+        }
+
+        $userEntity = $this->autoMapping->mapToObject(UserVerificationStatusUpdateRequest::class, UserEntity::class, $request, $userEntity);
+
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
+        return $userEntity;
     }
 }

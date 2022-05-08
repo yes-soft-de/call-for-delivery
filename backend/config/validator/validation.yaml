@@ -513,3 +513,10 @@ App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateR
             - NotBlank: ~
         toDate:
             - NotBlank: ~
+
+App\Request\Verification\VerifyCodeRequest:
+    properties:
+        user:
+            - NotBlank: ~
+        code:
+            - NotBlank: ~
