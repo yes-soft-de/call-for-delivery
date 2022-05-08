@@ -45,7 +45,7 @@ class AdminStoreOwnerPaymentFromCompanyManager
         $this->entityManager->persist($storeOwnerPaymentFromCompanyEntity);
         $this->entityManager->flush();
 
-        $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getStore());
+        $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getStore(),  $storeOwnerPaymentFromCompanyEntity);
 
         return $storeOwnerPaymentFromCompanyEntity;
     }
@@ -53,11 +53,13 @@ class AdminStoreOwnerPaymentFromCompanyManager
     public function deleteStoreOwnerPaymentFromCompany($id): StoreOwnerPaymentFromCompanyEntity|string
     {
         $storeOwnerPaymentFromCompanyEntity = $this->storeOwnerPaymentFromCompanyEntityRepository->find($id);
-
+              
         if (! $storeOwnerPaymentFromCompanyEntity) {     
             
             return PaymentConstant::PAYMENT_NOT_EXISTS;
         }
+
+        $this->adminStoreOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId($storeOwnerPaymentFromCompanyEntity);
        
         $this->entityManager->remove($storeOwnerPaymentFromCompanyEntity);
         $this->entityManager->flush();

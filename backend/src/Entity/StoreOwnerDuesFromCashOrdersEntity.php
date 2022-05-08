@@ -32,6 +32,9 @@ class StoreOwnerDuesFromCashOrdersEntity
     #[ORM\Column(type: 'float')]
     private $amount;
 
+    #[ORM\ManyToOne(targetEntity: StoreOwnerPaymentFromCompanyEntity::class, inversedBy: 'storeOwnerDuesFromCashOrdersEntities')]
+    private $storeOwnerPaymentFromCompany;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +96,18 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getStoreOwnerPaymentFromCompany(): ?StoreOwnerPaymentFromCompanyEntity
+    {
+        return $this->storeOwnerPaymentFromCompany;
+    }
+
+    public function setStoreOwnerPaymentFromCompany(?StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): self
+    {
+        $this->storeOwnerPaymentFromCompany = $storeOwnerPaymentFromCompany;
 
         return $this;
     }
