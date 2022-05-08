@@ -4,6 +4,7 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
+use App\Entity\BidDetailsEntity;
 use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
@@ -13,7 +14,10 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
+use App\Response\Order\BidOrderByIdGetForCaptainResponse;
+use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
@@ -165,7 +169,7 @@ class OrderService
     {
         $response = [];
 
-        $this->cancelOrderAfterSpecifiedTime();
+        $this->cancelOrdersBeforeSpecificTime();
        
         $orders = $this->orderManager->getStoreOrders($userId);
        
@@ -230,14 +234,14 @@ class OrderService
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
 
-        $this->cancelOrderAfterSpecifiedTime();
+        $this->cancelOrdersBeforeSpecificTime();
 
         $response = [];
 
         $orders = $this->orderManager->closestOrders($userId);
 
         foreach ($orders as $order) {
-           
+
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
                 $order['usedAs'] = $this->getUsedAs($order['usedAs']);
@@ -250,6 +254,36 @@ class OrderService
         }
 
        return $response;
+    }
+
+    public function closestBidOrders(int $userId): array|CaptainStatusResponse
+    {
+        $captain = $this->captainService->captainIsActive($userId);
+
+        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
+            return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
+        }
+
+        $this->cancelOrdersBeforeSpecificTime();
+
+        $response = [];
+
+        $orders = $this->orderManager->closestBidOrders($userId);
+
+        foreach ($orders as $order) {
+            // get bid details info
+            $order['bidDetailsId'] = $order['bidDetails']->getId();
+            $order['title'] = $order['bidDetails']->getTitle();
+            $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
+
+            // get branch info
+            $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+            $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+
+            $response[] = $this->autoMapping->map('array', BidOrderClosestGetResponse::class, $order);
+        }
+
+        return $response;
     }
     
     public function acceptedOrderByCaptainId($captainId): ?array
@@ -285,6 +319,32 @@ class OrderService
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
+    }
+
+    public function getSpecificBidOrderForCaptain(int $id, int $userId): ?BidOrderByIdGetForCaptainResponse
+    {
+        $order = $this->orderManager->getSpecificBidOrderForCaptain($id, $userId);
+
+        if ($order) {
+            $order['bidDetailsInfo'] = $this->autoMapping->map(BidDetailsEntity::class, BidDetailsGetForCaptainResponse::class, $order['bidDetails']);
+
+            $order['bidDetailsInfo']->images = $this->customizeBidOrderImages($order['bidDetails']->getImages()->toArray());
+
+            $order['bidDetailsInfo']->branchPhone = $order['bidDetails']->getBranch()->getBranchPhone();
+            $order['bidDetailsInfo']->location = $order['bidDetails']->getBranch()->getLocation();
+
+            if ($order['roomId']) {
+                $order['roomId'] = $order['roomId']->toBase32();
+                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+
+            } else {
+                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+            }
+
+            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+        }
+
+        return $this->autoMapping->map("array", BidOrderByIdGetForCaptainResponse::class, $order);
     }
 
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
@@ -649,7 +709,7 @@ class OrderService
     }
 
     //cancel the order before a specified time in case the captain does not receive the order
-    public function cancelOrderAfterSpecifiedTime()
+    public function cancelOrdersBeforeSpecificTime()
     {   
         $nowDate = new DateTime('now');
 
@@ -658,10 +718,12 @@ class OrderService
         $orders = $this->orderManager->getOrdersPendingBeforeSpecificDate($specificTime);
 
         foreach($orders as $order) {
-          
             $order = $this->orderManager->orderCancel($order);
+
             if($order) {
-                $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+                if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                    $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+                }
                
                 $this->orderLogsService->createOrderLogsRequest($order);
             }

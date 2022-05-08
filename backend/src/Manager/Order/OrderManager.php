@@ -143,6 +143,13 @@ class OrderManager
 
         return $this->orderRepository->closestOrders($captainId->getId());
     }
+
+    public function closestBidOrders(int $userId): ?array
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->closestBidOrders($captainId->getId());
+    }
     
     public function acceptedOrderByCaptainId($userId): ?array
     {
@@ -156,6 +163,13 @@ class OrderManager
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
 
         return $this->orderRepository->getSpecificOrderForCaptain($id, $captainId->getId(), $userId);
+    }
+
+    public function getSpecificBidOrderForCaptain(int $id, int $userId): ?array
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        return $this->orderRepository->getSpecificBidOrderForCaptain($id, $captainId->getId(), $userId);
     }
 
     public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity

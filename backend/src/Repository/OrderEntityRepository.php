@@ -158,6 +158,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->andWhere('orderEntity.state = :pending ')
+//            ->andWhere('orderEntity.orderType = :orderTypeNormal')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -167,6 +168,43 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
+//            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
+
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function closestBidOrders(int $captainId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('bidDetailsEntity as bidDetails')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
+            ->andWhere('orderEntity.state = :pending')
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->andWhere('orderEntity.orderType = :bidOrderType')
+            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->orderBy('orderEntity.id', 'DESC')
+
             ->getQuery()
             ->getResult();
     }
@@ -220,6 +258,53 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             
+            ->getOneOrNullResult();
+    }
+
+    public function getSpecificBidOrderForCaptain(int $id, int $captainId, int $userId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt',
+                'orderEntity.kilometer', 'orderEntity.paidToProvider')
+            ->addSelect('bidDetailsEntity as bidDetails')
+            ->addSelect('storeOwnerProfileEntity.id as storeId','storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.phone')
+            ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
+            ->addSelect('rateEntity.rating', 'rateEntity.comment as ratingComment')
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                OrderChatRoomEntity::class,
+                'orderChatRoomEntity',
+                Join::WITH,
+                'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = :captainId'
+            )
+            ->setParameter('captainId', $captainId)
+
+            ->leftJoin(
+                RateEntity::class,
+                'rateEntity',
+                Join::WITH,
+                'rateEntity.orderId = :id and rateEntity.rated = :userId'
+            )
+            ->setParameter('userId', $userId)
+
+            ->andWhere('orderEntity.id = :id')
+            ->setParameter('id', $id)
+
+            ->getQuery()
             ->getOneOrNullResult();
     }
 
