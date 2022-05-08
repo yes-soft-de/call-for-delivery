@@ -32,6 +32,7 @@ class Data {
   String? employeeCount;
   String? bankName;
   String? bankAccountNumber;
+  num? profitMargin;
 
   Data(
       {this.id,
@@ -44,7 +45,9 @@ class Data {
       this.city,
       this.bankAccountNumber,
       this.bankName,
-      this.employeeCount});
+      this.employeeCount,
+        this.profitMargin
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -60,6 +63,7 @@ class Data {
     bankAccountNumber = json['bankAccountNumber'];
     bankName = json['bankName'];
     employeeCount = json['employeeCount'];
+    profitMargin = json['profitMargin'];
   }
 }
 
