@@ -490,8 +490,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i123.StoreFinancialSubscriptionsDuesDetailsStateManager>(() =>
       _i123.StoreFinancialSubscriptionsDuesDetailsStateManager(
           get<_i73.PaymentsService>(), get<_i80.StoresService>()));
-  gh.factory<_i124.StoreProfileStateManager>(
-      () => _i124.StoreProfileStateManager(get<_i80.StoresService>()));
+  gh.factory<_i124.StoreProfileStateManager>(() =>
+      _i124.StoreProfileStateManager(
+          get<_i80.StoresService>(), get<_i31.ImageUploadService>()));
   gh.factory<_i125.StoreSubscriptionsFinanceDetailsScreen>(() =>
       _i125.StoreSubscriptionsFinanceDetailsScreen(
           get<_i123.StoreFinancialSubscriptionsDuesDetailsStateManager>()));

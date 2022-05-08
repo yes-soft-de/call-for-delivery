@@ -41,6 +41,9 @@ class CompanyFinanceLoadedState extends States {
       kilometerLimt.text = model?.kilometers.toString() ?? '';
       minkilometerLimt.text = model?.minKilometerBonus.toString() ?? '';
       maxkilometerLimt.text = model?.maxKilometerBonus.toString() ?? '';
+
+      storeProfitMargin.text = model?.storeProfitMargin.toString() ?? '';
+      supplierProfitMargin.text = model?.supplierProfitMargin.toString() ?? '';
       screenState.refresh();
     }
   }
@@ -58,6 +61,9 @@ class CompanyFinanceLoadedState extends States {
   var kilometerLimt = TextEditingController();
   var minkilometerLimt = TextEditingController();
   var maxkilometerLimt = TextEditingController();
+
+  var supplierProfitMargin = TextEditingController();
+  var storeProfitMargin = TextEditingController();
 
   @override
   Widget getUI(BuildContext context) {
@@ -119,6 +125,37 @@ class CompanyFinanceLoadedState extends States {
                   hintText: S.current.kilometerLimtMax,
                   numbers: true,
                 ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
+                        S.current.supplierProfitMargin,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: supplierProfitMargin,
+                      hintText: S.current.supplierProfitMargin,
+                      numbers: true,
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
+                        S.current.storeProfitMargin,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: storeProfitMargin,
+                      hintText: S.current.storeProfitMargin,
+                      numbers: true,
+                    ),
+
                 SizedBox(
                   height: 100,
                 ),
@@ -150,6 +187,8 @@ class CompanyFinanceLoadedState extends States {
                 minKilometerBonus: minkilometerLimt.text,
                 maxKilometerBonus: maxkilometerLimt.text,
                 kilometers: kilometerLimt.text,
+                supplierProfitMargin: supplierProfitMargin.text,
+                storeProfitMargin: storeProfitMargin.text
               ));
             }
           } else {
