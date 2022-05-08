@@ -31,8 +31,15 @@ class AdminStoreSubscriptionService
        foreach ($subscriptions as $subscription) {
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
-           
-            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost']);
+          
+            $subscription['captainOffer'] = $this->adminStoreSubscriptionManager->getCaptainOfferFirstTimeBySubscriptionId($subscription['id']);
+
+            $captainOfferPrice = 0;
+            if ($subscription['captainOffer']) {
+                $captainOfferPrice =  $subscription['captainOffer']['price'];
+            }
+
+            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $captainOfferPrice);
 
             $response[] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
         }
@@ -40,13 +47,15 @@ class AdminStoreSubscriptionService
         return $response;
     }
 
-    public function getTotal(array $payments, float $packageCost): array
+    public function getTotal(array $payments, float $packageCost, float $captainOfferPrice): array
     {
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
         $item['packageCost'] = $packageCost;
+
+        $item['captainOfferPrice'] = $captainOfferPrice;
       
-        $total = $packageCost - $item['sumPayments'];
+        $total = ($packageCost + $captainOfferPrice) - $item['sumPayments'];
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     

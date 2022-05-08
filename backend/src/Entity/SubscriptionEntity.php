@@ -45,6 +45,9 @@ class SubscriptionEntity
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: StoreOwnerPaymentEntity::class)]
     private $storeOwnerPaymentEntities;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $captainOfferFirstTime;
+
     public function __construct()
     {
         $this->storeOwnerPaymentEntities = new ArrayCollection();
@@ -189,6 +192,18 @@ class SubscriptionEntity
                 $storeOwnerPaymentEntity->setSubscription(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCaptainOfferFirstTime(): ?bool
+    {
+        return $this->captainOfferFirstTime;
+    }
+
+    public function setCaptainOfferFirstTime(?bool $captainOfferFirstTime): self
+    {
+        $this->captainOfferFirstTime = $captainOfferFirstTime;
 
         return $this;
     }

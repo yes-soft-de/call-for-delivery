@@ -18,4 +18,9 @@ class AdminStoreSubscriptionManager
     {
         return $this->subscribeRepository->getSubscriptionsSpecificStoreForAdmin($storeId);
     }
+
+    public function getCaptainOfferFirstTimeBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->subscribeRepository->getCaptainOfferFirstTimeBySubscriptionId($subscriptionId);
+    }
 }

@@ -40,4 +40,6 @@ class AdminStoreSubscriptionResponse
      * )
      */
     public array $total;
+
+    // public array|null $captainOffer;
 }

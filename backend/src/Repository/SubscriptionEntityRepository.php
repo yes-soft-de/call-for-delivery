@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
+use App\Entity\CaptainOfferEntity;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -219,5 +220,26 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
 
             ->getResult();
+    }
+
+    public function getCaptainOfferFirstTimeBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('captainOfferEntity.price')
+           
+            ->andWhere('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+           
+            ->andWhere('subscription.captainOfferFirstTime = :captainOfferFirstTime')
+            ->setParameter('captainOfferFirstTime', 1)
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+           
+            ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
     }
 }

@@ -6,6 +6,8 @@ use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\StoreOwnerPaymentFromCompanyEntity;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminStoreOwnerDuesFromCashOrdersManager
 {
@@ -23,7 +25,7 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDuesFromCashOrders($request->getStoreId(), $request->getFromDate(), $request->getToDate());
     }
     
-    public function updateFlagBySpecificDate(string $fromDate, string $toDate, int $flag, StoreOwnerProfileEntity $storeOwnerProfile)
+    public function updateFlagBySpecificDate(string $fromDate, string $toDate, int $flag, StoreOwnerProfileEntity $storeOwnerProfile, $storeOwnerPaymentFromCompanyEntity)
     {      
       $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrders($storeOwnerProfile->getId(), $fromDate, $toDate);
      
@@ -31,8 +33,24 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         $storeOwnerDuesFromCashOrdersEntity = $this->storeOwnerDuesFromCashOrdersEntityRepository->find($item['id']);
 
         $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
+        $storeOwnerDuesFromCashOrdersEntity->setStoreOwnerPaymentFromCompany($storeOwnerPaymentFromCompanyEntity);
        
         $this->entityManager->flush();
       }
+    }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId(StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): ?array
+    {                   
+        $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->findBy(['storeOwnerPaymentFromCompany' =>$storeOwnerPaymentFromCompany->getId()]);
+
+        foreach($items as $storeOwnerDuesFromCashOrder) {
+         
+          $storeOwnerDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
+          $storeOwnerDuesFromCashOrder->setFlag(OrderAmountCashConstant::ORDER_PAID_FLAG_NO);
+
+          $this->entityManager->flush();
+        }
+
+        return $items;
     }
 }
