@@ -3,10 +3,14 @@
 namespace App\Controller\Verification;
 
 use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
+use App\Constant\User\UserReturnResultConstant;
 use App\Constant\Verification\VerificationCodeResultConstant;
 use App\Controller\BaseController;
+use App\Request\User\UserVerificationStatusGetRequest;
 use App\Request\Verification\VerifyCodeRequest;
 use App\Service\Verification\VerificationService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -84,7 +88,6 @@ class VerificationController extends BaseController
      * )
      *
      * @Security(name="Bearer")
-     *
      */
     public function checkVerificationCode(Request $request): JsonResponse
     {
@@ -113,5 +116,71 @@ class VerificationController extends BaseController
         } elseif ($result === VerificationCodeResultConstant::ACTIVATED_RESULT) {
             return $this->response($result, self::FETCH);
         }
+    }
+
+    /**
+     * Get verification status of the user (either captain, store owner, or supplier) before login
+     * @Route("checkverificationstatus", name="getUserVerificationStatus", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Verification")
+     *
+     * @OA\RequestBody(
+     *      description="get user verification status by userId request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="userId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns fetched successfully message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="200"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\User\UserVerificationStatusGetResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns user is not verified message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9011"),
+     *          @OA\Property(type="string", property="msg", example="user is not verified! Error.")
+     *      )
+     * )
+     *
+     */
+    public function getUserVerificationStatusByUserId(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserVerificationStatusGetRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->verificationService->getUserVerificationStatusByUserId($request);
+
+        if ($result) {
+            if ($result->verificationStatus) {
+                return $this->response($result, self::FETCH);
+            }
+
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_IS_NOT_VERIFIED);
+        }
+
+        return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_NOT_FOUND);
     }
 }

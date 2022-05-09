@@ -7,9 +7,11 @@ use App\Constant\Verification\UserVerificationStatusConstant;
 use App\Constant\Verification\VerificationCodeResultConstant;
 use App\Entity\VerificationEntity;
 use App\Manager\Verification\VerificationManager;
+use App\Request\User\UserVerificationStatusGetRequest;
 use App\Request\User\UserVerificationStatusUpdateRequest;
 use App\Request\Verification\VerificationCreateRequest;
 use App\Request\Verification\VerifyCodeRequest;
+use App\Response\User\UserVerificationStatusGetResponse;
 use App\Response\Verification\CodeVerificationResponse;
 use App\Response\Verification\VerificationCreateResponse;
 use App\Service\MalathSMS\MalathSMSService;
@@ -99,5 +101,12 @@ class VerificationService
         $userVerificationUpdateRequest->setVerificationStatus($verificationStatus);
 
         $this->userService->updateUserVerificationStatus($userVerificationUpdateRequest);
+    }
+
+    public function getUserVerificationStatusByUserId(UserVerificationStatusGetRequest $request): ?UserVerificationStatusGetResponse
+    {
+        $result = $this->userService->getUserVerificationStatusByUserId($request->getUserId());
+
+        return $this->autoMapping->map('array', UserVerificationStatusGetResponse::class, $result);
     }
 }

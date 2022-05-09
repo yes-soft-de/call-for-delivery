@@ -221,4 +221,9 @@ class UserManager
 
         return $userEntity;
     }
+
+    public function getUserVerificationStatusByUserId(string $userId): ?array
+    {
+        return $this->userRepository->getUserVerificationStatusByUserId($userId);
+    }
 }

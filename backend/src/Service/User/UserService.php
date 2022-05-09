@@ -83,4 +83,9 @@ class UserService
 
         return $this->autoMapping->map(UserEntity::class, UserVerificationStatusUpdateResponse::class, $userResult);
     }
+
+    public function getUserVerificationStatusByUserId(string $userId): ?array
+    {
+        return $this->userManager->getUserVerificationStatusByUserId($userId);
+    }
 }

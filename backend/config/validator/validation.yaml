@@ -520,3 +520,8 @@ App\Request\Verification\VerifyCodeRequest:
             - NotBlank: ~
         code:
             - NotBlank: ~
+
+App\Request\User\UserVerificationStatusGetRequest:
+    properties:
+        userId:
+            - NotBlank: ~
