@@ -76,7 +76,7 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $paidToProvider;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $isHide;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'orderEntities')]
@@ -84,9 +84,6 @@ class OrderEntity
 
     #[ORM\OneToMany(mappedBy: 'primaryOrder', targetEntity: self::class)]
     private $orderEntities;
-
-    // #[ORM\Column(type: 'integer', nullable: true)]
-    // private $primaryOrderId;
 
     public function __construct()
     {
@@ -398,29 +395,17 @@ class OrderEntity
         return $this;
     }
 
-    public function getIsHide(): ?bool
+    public function getIsHide(): ?int
     {
         return $this->isHide;
     }
 
-    public function setIsHide(?bool $isHide): self
+    public function setIsHide(?int $isHide): self
     {
         $this->isHide = $isHide;
 
         return $this;
     }
-
-    // public function getPrimaryOrderId(): ?int
-    // {
-    //     return $this->primaryOrderId;
-    // }
-
-    // public function setPrimaryOrderId(?int $primaryOrderId): self
-    // {
-    //     $this->primaryOrderId = $primaryOrderId;
-
-    //     return $this;
-    // }
 
     public function getPrimaryOrder(): ?self
     {

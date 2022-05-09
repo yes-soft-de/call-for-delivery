@@ -267,6 +267,8 @@ class OrderService
         $orders = $this->orderManager->closestOrders($userId);
 
         foreach ($orders as $order) {
+          
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
 
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
@@ -779,7 +781,7 @@ class OrderService
         $order = $this->orderManager->createSubOrder($request);
         if($order) {
            
-            // $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
@@ -791,13 +793,6 @@ class OrderService
              catch (\Exception $e){
                   error_log($e);
                 }
-            //  create firebase notification to captains
-            //  try{
-            //       $this->notificationFirebaseService->notificationToCaptains($order->getId());
-            //     }
-            //  catch (\Exception $e){
-            //         error_log($e);
-            //     }
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);

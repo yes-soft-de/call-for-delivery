@@ -26,6 +26,7 @@ use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Request\Order\SubOrderCreateRequest;
+use App\Constant\Order\OrderIsHideConstant;
 
 class OrderManager
 {
@@ -66,6 +67,7 @@ class OrderManager
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+       $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -418,7 +420,7 @@ class OrderManager
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
-       $orderEntity->setIsHide(false);
+       $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -428,5 +430,10 @@ class OrderManager
        $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $orderCreateRequest);
 
        return $orderEntity;
+    }
+    
+    public function getSubOrdersByPrimaryOrderId(int $primaryOrderId): ?array
+    {
+        return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
     }
 }
