@@ -518,5 +518,5 @@ App\Request\Order\SubOrderCreateRequest:
     properties:
         branch:
             - NotBlank: ~
-        primaryOrderId:
+        primaryOrder:
             - NotBlank: ~

@@ -33,6 +33,8 @@ class BaseController extends AbstractController
     const ERROR_ORDER_CAN_NOT_CREATE = ["error","9204"];
     const ERROR_ORDER_NOT_FOUND = ["error","9205"];
     const ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN = ["error","9207"];
+    const ERROR_SUB_ORDER_CAN_NOT_CREATE = ["can not create sub order,the primary order is delivered ","9208"];
+
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users

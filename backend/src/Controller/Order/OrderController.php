@@ -29,6 +29,7 @@ use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Request\Order\SubOrderCreateRequest;
+use App\Constant\Order\OrderStateConstant;
 
 /**
  * Create and fetch order.
@@ -1307,7 +1308,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
-     *          @OA\Property(type="integer", property="primaryOrderId"),
+     *          @OA\Property(type="integer", property="primaryOrder"),
      *      )
      * )
      *
@@ -1348,15 +1349,9 @@ class OrderController extends BaseController
         }
 
         $result = $this->orderService->createSubOrder($request);
-      //TODO
-        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+        if ($result === OrderStateConstant::ORDER_STATE_DELIVERED) {
       
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
-        }
-//TODO
-        if (isset($result->canCreateOrder)) {
-      
-            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE);
         }
         
         return $this->response($result, self::CREATE);

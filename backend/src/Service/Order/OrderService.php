@@ -765,22 +765,33 @@ class OrderService
 
     public function createSubOrder(SubOrderCreateRequest $request): OrderResponse|string 
     {        
+        $primaryOrder = $this->orderManager->getOrderById($request->getPrimaryOrder());
+        if($primaryOrder->getState() === OrderStateConstant::ORDER_STATE_DELIVERED ) {
+            return OrderStateConstant::ORDER_STATE_DELIVERED;
+        }
+
+        if($primaryOrder->getCaptainId() ) {
+            $request->setCaptainId($primaryOrder->getCaptainId());
+        }
+
+        $request->setPrimaryOrder($primaryOrder);
+
         $order = $this->orderManager->createSubOrder($request);
         if($order) {
            
             // $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
  
-            // $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            // $this->orderLogsService->createOrderLogsRequest($order);
-            //create firebase notification to store
-            //  try{
-            //       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
-            //       }
-            //  catch (\Exception $e){
-            //       error_log($e);
-            //     }
-             //create firebase notification to captains
+            $this->orderLogsService->createOrderLogsRequest($order);
+            // create firebase notification to store
+             try{
+                  $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                  }
+             catch (\Exception $e){
+                  error_log($e);
+                }
+            //  create firebase notification to captains
             //  try{
             //       $this->notificationFirebaseService->notificationToCaptains($order->getId());
             //     }

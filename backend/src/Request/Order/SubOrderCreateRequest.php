@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Request\Order;
+use App\Entity\OrderEntity;
+use App\Entity\CaptainEntity;
 
 class SubOrderCreateRequest
 {
@@ -26,7 +28,9 @@ class SubOrderCreateRequest
    
     private $branch;
 
-    private $primaryOrderId;
+    private int|OrderEntity $primaryOrder;
+
+    private null|CaptainEntity $captainId;
 
     /**
      * Get the value of storeOwner
@@ -169,21 +173,41 @@ class SubOrderCreateRequest
     }
 
     /**
-     * Get the value of primaryOrderId
+     * Get the value of primaryOrder
      */ 
-    public function getPrimaryOrderId()
+    public function getPrimaryOrder()
     {
-        return $this->primaryOrderId;
+        return $this->primaryOrder;
     }
 
     /**
-     * Set the value of primaryOrderId
+     * Set the value of primaryOrder
      *
      * @return  self
      */ 
-    public function setPrimaryOrderId($primaryOrderId)
+    public function setPrimaryOrder($primaryOrder)
     {
-        $this->primaryOrderId = $primaryOrderId;
+        $this->primaryOrder = $primaryOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of captainId
+     */ 
+    public function getCaptainId()
+    {
+        return $this->captainId;
+    }
+
+    /**
+     * Set the value of captainId
+     *
+     * @return  self
+     */ 
+    public function setCaptainId($captainId)
+    {
+        $this->captainId = $captainId;
 
         return $this;
     }
