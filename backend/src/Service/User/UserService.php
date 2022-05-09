@@ -88,4 +88,9 @@ class UserService
     {
         return $this->userManager->getUserVerificationStatusByUserId($userId);
     }
+
+    public function getUseEntityByUserId(string $userId): ?UserEntity
+    {
+        return $this->userManager->getUserEntityByUserId($userId);
+    }
 }

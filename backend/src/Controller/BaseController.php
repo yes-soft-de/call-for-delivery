@@ -42,6 +42,7 @@ class BaseController extends AbstractController
     const ERROR_WRONG_PASSWORDS = ["password is not correct", "9006"];
     const ERROR_USER_TYPE = ["wrong user type", "9004"];
     const ERROR_USER_NOT_FOUND = ["error user not found", "9005"];
+    const ERROR_USER_ALREADY_VERIFIED = ["already verified user!", "9007"];
     const ERROR_USER_CREATED = ["error, not created user","9010"];
     const ERROR_USER_IS_NOT_VERIFIED = ["user is not verified!", "9011"];
     // error captain
@@ -54,7 +55,6 @@ class BaseController extends AbstractController
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];
     const INCORRECT_ENTERED_DATA = ["incorrect entered date!", "9152"];
     const CODE_DATE_IS_NOT_VALID = ["overdue cod!", "9153"];
-    const ALREADY_VERIFIED_STORE_OWNER = ["already verified store owner!", "9154"];
     const STORE_OWNER_IS_NOT_REGISTERED = ["store owner is not registered!", "9155"];
     const STORE_OWNER_PROFILE_NOT_EXIST = ["store owner profile not exist!", "9157"];
     const STORE_OWNER_PROFILE_CREATED = ["store owner profile created", "9158"];
@@ -85,6 +85,8 @@ class BaseController extends AbstractController
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
     // admin
     const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
+    // verification
+    const VERIFICATION_CODE_WAS_NOT_CREATED = ["supplier category does not created", "9411"];
     // supplier category
     const SUPPLIER_CATEGORY_NOT_EXIST = ["supplier category does not exist", "9550"];
 
@@ -96,8 +98,6 @@ class BaseController extends AbstractController
     const SUPPLIER_PROFILE_CREATED = ["supplier profile created", "9552"];
     const SUPPLIER_PROFILE_COMPLETED = ["supplier profile created", "9553"];
     const SUPPLIER_PROFILE_NOT_ACTIVE = ["supplier profile is not active!", "9554"];
-    //payments
-
     //CAPTAIN FINANCIAL SYSTEM
     const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = ["youNotHaveCaptainFinancialSystem", "9602"];

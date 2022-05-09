@@ -42,4 +42,23 @@ class VerificationEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    // return verification entity
+    public function getVerificationCodeByUserId(string $userId): array
+    {
+        return $this->createQueryBuilder('verificationEntity')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = verificationEntity.user'
+            )
+
+            ->andWhere('userEntity.userId = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

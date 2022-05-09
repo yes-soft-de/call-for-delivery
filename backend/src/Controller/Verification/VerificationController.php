@@ -4,10 +4,12 @@ namespace App\Controller\Verification;
 
 use App\AutoMapping;
 use App\Constant\Main\MainErrorConstant;
+use App\Constant\Main\MainMessageConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\Verification\VerificationCodeResultConstant;
 use App\Controller\BaseController;
 use App\Request\User\UserVerificationStatusGetRequest;
+use App\Request\Verification\VerificationCodeResendRequest;
 use App\Request\Verification\VerifyCodeRequest;
 use App\Service\Verification\VerificationService;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -182,5 +184,72 @@ class VerificationController extends BaseController
         }
 
         return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_NOT_FOUND);
+    }
+
+    /**
+     * Resend a new verification code to the user.
+     * @Route("resendnewverificationcode", name="createNewVerificationCode", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Verification")
+     *
+     * @OA\RequestBody(
+     *      description="create a new verification code request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="userId"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns created successfully message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9152"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Verification\CodeVerificationResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns already verified store owner message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9007"),
+     *          @OA\Property(type="string", property="msg")
+     *      )
+     * )
+     */
+    public function reSendNewVerificationCode(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, VerificationCodeResendRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->verificationService->reSendNewVerificationCode($request);
+
+        if ($result->resultMessage === VerificationCodeResultConstant::NEW_CODE_WAS_CREATED) {
+            return $this->response(MainMessageConstant::CREATED_SUCCESSFULLY_MSG, self::CREATE);
+
+        } elseif ($result->resultMessage === VerificationCodeResultConstant::USER_ALREADY_VERIFIED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_ALREADY_VERIFIED);
+
+        } elseif ($result->resultMessage === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_NOT_FOUND);
+        }
+
+        return $this->response(MainErrorConstant::ERROR_MSG, self::VERIFICATION_CODE_WAS_NOT_CREATED);
     }
 }
