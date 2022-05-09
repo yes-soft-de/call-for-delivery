@@ -201,8 +201,12 @@ class OrderService
             }
          
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+           
+            $order['captain'] = null;
 
-            $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+            if($order['captainUserId']) {
+                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+            }
         }
    
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
