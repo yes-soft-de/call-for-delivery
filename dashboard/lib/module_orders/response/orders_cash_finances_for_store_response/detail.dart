@@ -4,7 +4,7 @@ class Detail {
   int? id;
   String? storeOwnerName;
   int? orderId;
-  int? amount;
+  num? amount;
   int? flag;
   CreatedAt? createdAt;
 
@@ -21,7 +21,7 @@ class Detail {
         id: json['id'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
         orderId: json['orderId'] as int?,
-        amount: json['amount'] as int?,
+        amount: json['amount'] as num?,
         flag: json['flag'] as int?,
         createdAt: json['createdAt'] == null
             ? null

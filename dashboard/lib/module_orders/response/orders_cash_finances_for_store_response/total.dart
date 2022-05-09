@@ -1,8 +1,8 @@
 class Total {
-  int? sumAmountStorOwnerDues;
-  int? sumPaymentsFromCompany;
+  num? sumAmountStorOwnerDues;
+  num? sumPaymentsFromCompany;
   bool? advancePayment;
-  int? total;
+  num? total;
 
   Total({
     this.sumAmountStorOwnerDues,
@@ -12,10 +12,10 @@ class Total {
   });
 
   factory Total.fromJson(Map<String, dynamic> json) => Total(
-        sumAmountStorOwnerDues: json['sumAmountStorOwnerDues'] as int?,
-        sumPaymentsFromCompany: json['sumPaymentsFromCompany'] as int?,
+        sumAmountStorOwnerDues: json['sumAmountStorOwnerDues'] as num?,
+        sumPaymentsFromCompany: json['sumPaymentsFromCompany'] as num?,
         advancePayment: json['advancePayment'] as bool?,
-        total: json['total'] as int?,
+        total: json['total'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

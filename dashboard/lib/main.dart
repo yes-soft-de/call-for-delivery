@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_bid_order/bid_order_module.dart';
 import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_captain/captains_module.dart';
@@ -60,6 +61,7 @@ void main() async {
     }
   }
   await HiveSetUp.init();
+  await ArgumentHiveHelper().clean();
   await Firebase.initializeApp();
   if (kIsWeb) {
   } else {
@@ -129,8 +131,7 @@ class MyApp extends StatefulWidget {
       this._supplierModule,
       this._carsModule,
       this._bidOrderModule,
-      this._ordersModule
-      );
+      this._ordersModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

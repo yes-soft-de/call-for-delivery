@@ -648,7 +648,15 @@
     "subscriptionActive": "الاشتراك فعال",
     "subscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها",
     "subscriptionsFinanceDetailsHint": "في هذه النافذة نستعرض التفاصيل المالية للاشتراك الحالي في التاريخ",
-    "paymentFromStore": "دفعة من المتجر"
+    "paymentFromStore": "دفعة من المتجر",
+    "sumPaymentsFromCompany": "الدفعات من الشركة",
+    "sumAmountStorOwnerDues": "مستحقات المتجر",
+    "sumPaymentsToCaptain": "الدفعات للكابتن",
+    "sumAmountWithCaptain": "الكاش مع الكابتن",
+    "cashOrders": "الطلبات الكاش",
+    "paymentsToCaptain": "دفعة للكابتن",
+    "paymentsToStore": "دفعة للمتجر"
+
 
 
 

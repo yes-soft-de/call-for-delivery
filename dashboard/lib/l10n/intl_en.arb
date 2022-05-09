@@ -654,7 +654,14 @@
     "subscriptionActive": "Activated",
     "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments ",
     "subscriptionsFinanceDetailsHint": "Here you find all financial details included in this subscription with date",
-    "paymentFromStore": "Payment From Store"
+    "paymentFromStore": "Payment From Store",
+    "sumPaymentsFromCompany": "Payments from Company",
+    "sumAmountStorOwnerDues": "Store Dues",
+    "sumPaymentsToCaptain": "Payments to captain",
+    "sumAmountWithCaptain": "Cash with captain",
+    "cashOrders": "Cash order",
+    "paymentsToCaptain": "Payments To Captain",
+    "paymentsToStore": "Payments To Store"
 
 
 

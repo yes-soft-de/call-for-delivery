@@ -5,7 +5,7 @@ class CustomListTile extends StatelessWidget {
   final String title;
   String? subTitle;
   final IconData iconData;
-
+  Widget? leading;
   @override
   Widget build(BuildContext context) {
     Widget? icon;
@@ -37,8 +37,8 @@ class CustomListTile extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.white),
       ),
-      trailing: icon,
-      subtitle: Text(
+      trailing:leading ?? icon ,
+      subtitle:subTitle == '' ? null : Text(
         subTitle ?? S.current.unknown,
         style: TextStyle(color: Colors.white),
         textDirection: S.current.phoneNumber == title &&
@@ -53,5 +53,9 @@ class CustomListTile extends StatelessWidget {
     );
   }
 
-  CustomListTile({required this.title, this.subTitle, required this.iconData});
+  CustomListTile(
+      {required this.title,
+      this.subTitle,
+      required this.iconData,
+      this.leading});
 }

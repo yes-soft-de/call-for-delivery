@@ -167,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cartValidation":
             MessageLookupByLibrary.simpleMessage("جاري التحقق من السلة"),
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
+        "cashOrders": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("صورة التصنيف"),
@@ -619,6 +620,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
+        "paymentsToCaptain":
+            MessageLookupByLibrary.simpleMessage("دفعة للكابتن"),
+        "paymentsToStore": MessageLookupByLibrary.simpleMessage("دفعة للمتجر"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
         "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
@@ -845,11 +849,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew":
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
+        "sumAmountStorOwnerDues":
+            MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
+        "sumAmountWithCaptain":
+            MessageLookupByLibrary.simpleMessage("الكاش مع الكابتن"),
         "sumCaptainFinancialDues":
             MessageLookupByLibrary.simpleMessage("مستحقات الكابتن"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),
+        "sumPaymentsFromCompany":
+            MessageLookupByLibrary.simpleMessage("الدفعات من الشركة"),
+        "sumPaymentsToCaptain":
+            MessageLookupByLibrary.simpleMessage("الدفعات للكابتن"),
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("المدفوعات للكابتن"),
         "supplierOffer": MessageLookupByLibrary.simpleMessage("عروض الموردين"),

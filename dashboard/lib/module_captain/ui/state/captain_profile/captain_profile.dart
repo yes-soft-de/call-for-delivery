@@ -1,5 +1,7 @@
+import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -192,6 +194,22 @@ class CaptainProfileLoadedState extends States {
                                 screenState.enableCaptain('inactive');
                               }
                             }),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ArgumentHiveHelper().setCurrentCaptainID(
+                              screenState.captainId.toString());
+                          Navigator.of(context)
+                              .pushNamed(OrdersRoutes.ORDER_CASH_CAPTAINS);
+                        },
+                        child: CustomListTile(
+                            title: S.of(context).cashOrders,
+                            subTitle: '',
+                            leading: Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                            ),
+                            iconData: Icons.money),
                       ),
                     ],
                   ),
