@@ -19,6 +19,7 @@ use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
+use App\Response\Order\FilterBidOrderByStoreOwnerResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
@@ -222,6 +223,30 @@ class OrderService
 
         foreach ($orders as $order) {
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
+        }
+
+        return $response;
+    }
+
+    public function filterStoreBidOrders(OrderFilterRequest $request, int $userId): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterStoreBidOrders($request, $userId);
+
+        foreach ($orders as $order) {
+            // get bid details info
+            $order['bidDetailsId'] = $order['bidDetails']->getId();
+            $order['title'] = $order['bidDetails']->getTitle();
+            $order['openToPriceOffer'] = $order['bidDetails']->getOpenToPriceOffer();
+
+            // get store branch info
+            $order['storeOwnerBranchId'] = $order['bidDetails']->getBranch()->getId();
+            $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+            $order['branchPhone'] = $order['bidDetails']->getBranch()->getBranchPhone();
+            $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+
+            $response[] = $this->autoMapping->map("array", FilterBidOrderByStoreOwnerResponse::class, $order);
         }
 
         return $response;

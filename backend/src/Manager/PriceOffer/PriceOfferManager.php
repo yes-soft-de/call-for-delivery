@@ -4,6 +4,7 @@ namespace App\Manager\PriceOffer;
 
 use App\AutoMapping;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\PriceOfferEntity;
 use App\Manager\BidDetails\BidDetailsManager;
 use App\Manager\DeliveryCar\DeliveryCarManager;
@@ -37,7 +38,7 @@ class PriceOfferManager
         $this->priceOfferEntityRepository = $priceOfferEntityRepository;
     }
 
-    public function createPriceOffer(PriceOfferCreateRequest $request): PriceOfferEntity
+    public function createPriceOffer(PriceOfferCreateRequest $request): string|PriceOfferEntity
     {
         // Set the bid order entity in the create request
         $bidDetailsEntity = $this->bidDetailsManager->getBidDetailsEntityByBidOrderId($request->getBidDetails());
@@ -46,6 +47,11 @@ class PriceOfferManager
         // Set the supplier profile entity in the create request
         $supplierProfileEntity = $this->supplierProfileManager->getSupplierProfileEntityBySupplierId($request->getSupplierProfile());
         $request->setSupplierProfile($supplierProfileEntity);
+
+        // check if supplier profile is active
+        if ($supplierProfileEntity->getStatus() === SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_STATUS) {
+            return SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_RESULT;
+        }
 
         // Set the delivery car entity in the create request
         $deliveryCar = $this->deliveryCarManager->getDeliveryCarEntityById($request->getDeliveryCar());

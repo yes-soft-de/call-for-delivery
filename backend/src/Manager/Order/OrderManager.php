@@ -122,6 +122,13 @@ class OrderManager
         return $this->orderRepository->filterStoreOrders($request, $storeOwner);
     }
 
+    public function filterStoreBidOrders(OrderFilterRequest $request, int $userId): ?array
+    {
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
+
+        return $this->orderRepository->filterStoreBidOrders($request, $storeOwner);
+    }
+
     public function updateOrderStateBySuperAdmin(OrderStateUpdateBySuperAdminRequest $request): string|OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());

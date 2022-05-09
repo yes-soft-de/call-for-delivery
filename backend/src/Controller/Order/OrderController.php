@@ -324,6 +324,59 @@ class OrderController extends BaseController
     }
 
     /**
+     * store: filter bid orders by store owner
+     * @Route("filterbidorders", name="filterBidOrdersByStoreOwner", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="boolean", property="openToPriceOffer")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\FilterBidOrderByStoreOwnerResponse")
+     *          )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterStoreBidOrders(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterRequest::class, (object)$data);
+
+        $result = $this->orderService->filterStoreBidOrders($request, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
      * captain: Get pending orders for captain.
      * @Route("closestorders",   name="GetPendingOrdersForCaptain", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN") 
