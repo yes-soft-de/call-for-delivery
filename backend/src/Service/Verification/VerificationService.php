@@ -15,6 +15,7 @@ use App\Request\Verification\VerificationCreateRequest;
 use App\Request\Verification\VerifyCodeRequest;
 use App\Response\User\UserVerificationStatusGetResponse;
 use App\Response\Verification\CodeVerificationResponse;
+use App\Response\Verification\VerificationCodeGetResponse;
 use App\Response\Verification\VerificationCreateResponse;
 use App\Service\MalathSMS\MalathSMSService;
 use App\Service\User\UserService;
@@ -167,5 +168,22 @@ class VerificationService
         }
 
         return $this->autoMapping->map('array', CodeVerificationResponse::class, $response);
+    }
+
+    public function getAllVerificationCodeByUserId($userID): array
+    {
+        $response = [];
+
+        $verificationCodes = $this->verificationManager->getAllVerificationCodeByUserId($userID);
+
+        foreach ($verificationCodes as $key=>$value) {
+            $response[$key] = $this->autoMapping->map(VerificationEntity::class, VerificationCodeGetResponse::class, $value);
+
+            $response[$key]->userId = $value->getUser()->getUserId();
+            $response[$key]->verificationStatus = $value->getUser()->getVerificationStatus();
+            $response[$key]->roles = $value->getUser()->getRoles();
+        }
+
+        return $response;
     }
 }

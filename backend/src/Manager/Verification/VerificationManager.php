@@ -82,6 +82,11 @@ class VerificationManager
         return $verificationCodesResults;
     }
 
+    public function getAllVerificationCodeByUserId(string $userID): array
+    {
+        return $this->verificationEntityRepository->getVerificationCodeByUserId($userID);
+    }
+
     public function generateVerificationCode(): string
     {
         $verificationCode = "";

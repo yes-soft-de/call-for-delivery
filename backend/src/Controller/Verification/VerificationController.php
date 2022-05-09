@@ -252,4 +252,43 @@ class VerificationController extends BaseController
 
         return $this->response(MainErrorConstant::ERROR_MSG, self::VERIFICATION_CODE_WAS_NOT_CREATED);
     }
+
+    /**
+     * For testing issues
+     * @Route("getverificationcode/{userId}", name="getVerificationCodeByUserId", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param string $userId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Verification")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns verification code record info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9156"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Verification\CodeVerificationResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getVerificationCodeByUserId(string $userId): JsonResponse
+    {
+        $result = $this->verificationService->getAllVerificationCodeByUserId($userId);
+
+        return $this->response($result, self::FETCH);
+    }
 }

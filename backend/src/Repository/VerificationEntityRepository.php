@@ -43,7 +43,7 @@ class VerificationEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    // return verification entity
+    // return array of verification entities
     public function getVerificationCodeByUserId(string $userId): array
     {
         return $this->createQueryBuilder('verificationEntity')
