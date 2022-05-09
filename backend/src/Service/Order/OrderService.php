@@ -794,4 +794,17 @@ class OrderService
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
+     
+    public function orderNonSub(int $orderId): ?OrderUpdatePaidToProviderResponse
+    {
+        $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
+      
+        // if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+        //     return $checkRemainingCars;
+        // }
+        
+        $order = $this->orderManager->orderNonSub($orderId);
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
 }

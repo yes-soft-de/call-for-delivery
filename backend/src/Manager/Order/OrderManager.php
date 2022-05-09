@@ -436,4 +436,19 @@ class OrderManager
     {
         return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
     }
+    
+    public function orderNonSub(int $orderId): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }
