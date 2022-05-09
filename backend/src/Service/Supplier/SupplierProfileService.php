@@ -46,7 +46,7 @@ class SupplierProfileService
         }
 
         // create verification code for the user
-        //$this->createVerificationCodeForSupplier($userRegister);
+        $this->createVerificationCodeForSupplier($userRegister);
 
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
     }
