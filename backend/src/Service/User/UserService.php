@@ -7,8 +7,10 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Manager\User\UserManager;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Request\User\UserVerificationStatusUpdateRequest;
 use App\Response\User\FilterUserResponse;
 use App\Response\User\UserRegisterResponse;
+use App\Response\User\UserVerificationStatusUpdateResponse;
 
 class UserService
 {
@@ -69,5 +71,16 @@ class UserService
     public function getUserBySupplierProfileId(int $supplierProfileId): ?UserEntity
     {
         return $this->userManager->getUserBySupplierProfileId($supplierProfileId);
+    }
+
+    public function updateUserVerificationStatus(UserVerificationStatusUpdateRequest $request): string|UserVerificationStatusUpdateResponse
+    {
+        $userResult = $this->userManager->updateUserVerificationStatus($request);
+
+        if ($userResult === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
+            return $userResult;
+        }
+
+        return $this->autoMapping->map(UserEntity::class, UserVerificationStatusUpdateResponse::class, $userResult);
     }
 }

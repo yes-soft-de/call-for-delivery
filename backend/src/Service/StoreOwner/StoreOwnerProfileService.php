@@ -10,6 +10,7 @@ use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
+use App\Request\Verification\VerificationCreateRequest;
 use App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
@@ -17,19 +18,22 @@ use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use App\Service\Verification\VerificationService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class StoreOwnerProfileService
 {
-    private $autoMapping;
+    private AutoMapping $autoMapping;
     private $params;
-    private $storeOwnerProfileManager;
+    private StoreOwnerProfileManager $storeOwnerProfileManager;
+    private VerificationService $verificationService;
 
-    public function __construct(AutoMapping $autoMapping, StoreOwnerProfileManager $storeOwnerProfileManager, ParameterBagInterface $params)
+    public function __construct(AutoMapping $autoMapping, StoreOwnerProfileManager $storeOwnerProfileManager, ParameterBagInterface $params, VerificationService $verificationService)
     {
         $this->params = $params->get('upload_base_url') . '/';
         $this->autoMapping = $autoMapping;
         $this->storeOwnerProfileManager = $storeOwnerProfileManager;
+        $this->verificationService = $verificationService;
     }
 
     public function storeOwnerRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -40,8 +44,20 @@ class StoreOwnerProfileService
             $user['found'] = UserReturnResultConstant::YES_RESULT;
             return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }
+
+        // create verification code for the user
+        //$this->createVerificationCodeForStoreOwner($userRegister);
       
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+    }
+
+    public function createVerificationCodeForStoreOwner(UserEntity $userEntity)
+    {
+        $verificationCodeRequest = new VerificationCreateRequest();
+
+        $verificationCodeRequest->setUser($userEntity);
+
+        $this->verificationService->createVerificationCode($verificationCodeRequest);
     }
 
     public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request): StoreOwnerProfileResponse
