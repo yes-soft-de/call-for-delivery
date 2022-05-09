@@ -1,5 +1,6 @@
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -50,7 +51,9 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
       setState(() {});
     }
   }
-
+  void updateStore(UpdateStoreRequest request, bool haveImage) {
+    widget.stateManager.updateStore(this, request, haveImage);
+  }
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;

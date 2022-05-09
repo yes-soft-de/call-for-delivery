@@ -824,6 +824,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
+        "storeProfitMargin":
+            MessageLookupByLibrary.simpleMessage("Store profit margin"),
         "storeRated":
             MessageLookupByLibrary.simpleMessage("stores has been rated"),
         "storeUpdatedSuccessfully":
@@ -869,6 +871,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("Payments to captain"),
         "supplierOffer": MessageLookupByLibrary.simpleMessage("Supplier offer"),
+        "supplierProfitMargin":
+            MessageLookupByLibrary.simpleMessage("Supplier profit margin"),
         "supplierUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Supplier updated successfully"),
         "suppliers": MessageLookupByLibrary.simpleMessage("Suppliers"),

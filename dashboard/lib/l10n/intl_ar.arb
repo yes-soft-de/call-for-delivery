@@ -655,9 +655,8 @@
     "sumAmountWithCaptain": "الكاش مع الكابتن",
     "cashOrders": "الطلبات الكاش",
     "paymentsToCaptain": "دفعة للكابتن",
-    "paymentsToStore": "دفعة للمتجر"
-
-
-
+    "paymentsToStore": "دفعة للمتجر",
+    "supplierProfitMargin": "هامش الربح من المورد",
+    "storeProfitMargin": "هامش الربح من المتجر"
 
 }

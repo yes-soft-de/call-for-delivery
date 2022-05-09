@@ -10,6 +10,8 @@ class CreateCompanyProfile {
   String? minKilometerBonus;
   String? maxKilometerBonus;
   String? kilometers;
+  String? storeProfitMargin;
+  String? supplierProfitMargin;
 
   CreateCompanyProfile(
       {this.phone,
@@ -22,7 +24,9 @@ class CreateCompanyProfile {
       this.id,
       this.minKilometerBonus,
       this.maxKilometerBonus,
-      this.kilometers});
+      this.kilometers,
+        this.storeProfitMargin,this.supplierProfitMargin
+      });
 
   CreateCompanyProfile.fromJson(dynamic json) {
     id = json['id'];
@@ -48,6 +52,8 @@ class CreateCompanyProfile {
     map['minKilometerBonus'] = minKilometerBonus;
     map['maxKilometerBonus'] = maxKilometerBonus;
     map['kilometers'] = kilometers;
+    map['storeProfitMargin'] = storeProfitMargin;
+    map['supplierProfitMargin'] = supplierProfitMargin;
     return map;
   }
 }

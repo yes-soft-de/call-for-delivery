@@ -11,6 +11,7 @@ class UpdateStoreRequest {
   String? stcPay;
   String? employeeCount;
   String? city;
+  String? profitMargin;
 
   UpdateStoreRequest(
       {required this.id,
@@ -24,7 +25,9 @@ class UpdateStoreRequest {
       this.bankAccountNumber,
       this.city,
       this.bankName,
-      this.employeeCount});
+      this.employeeCount,
+        this.profitMargin
+      });
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -40,6 +43,7 @@ class UpdateStoreRequest {
     map['bankName'] = bankName;
     map['employeeCount'] = employeeCount;
     map['city'] = city;
+    map['profitMargin'] = profitMargin;
     return map;
   }
 }

@@ -15,6 +15,7 @@ import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:intl/intl.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
 class StoreProfileLoadedState extends States {
@@ -91,7 +92,8 @@ class StoreProfileLoadedState extends States {
                               Text(S.current.openingTime + ': ',
                                   style:
                                       TextStyle(color: Colors.green.shade900)),
-                              Text(profile?.openingTime ?? ''),
+                              Text(DateFormat.jm()
+                                  .format(profile?.openingTime ?? DateTime.now())),
                             ],
                           ),
                           Row(
@@ -101,7 +103,8 @@ class StoreProfileLoadedState extends States {
                                 S.current.closingTime + ': ',
                                 style: TextStyle(color: Colors.red.shade900),
                               ),
-                              Text(profile?.closingTime ?? ''),
+                              Text(DateFormat.jm()
+                                  .format(profile?.closingTime ?? DateTime.now())),
                             ],
                           ),
                         ],
@@ -174,6 +177,21 @@ class StoreProfileLoadedState extends States {
               screenState.refresh();
             }),
       ),
+      SizedBox(height: 5,),
+      Container(
+        color:  Colors.grey.shade200,
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(S.of(context).storeProfitMargin),
+            Row(children: [
+              Text(profile?.profitMargin.toString() ??'0' ),
+              Text( ' '+S.current.sar),
+            ],)
+
+          ],
+        )
+      ),
       Wrap(
         spacing: 30,
         alignment: WrapAlignment.center,
@@ -183,28 +201,28 @@ class StoreProfileLoadedState extends States {
               image: ImageAsset.EDIT_PROFILE,
               title: S.of(context).editProfile,
               onTapCard: () {
-//              showDialog(
-//                  barrierDismissible: false,
-//                  context: screenState.context,
-//                  builder: (context) {
-//                    return Container(
-//                      width: MediaQuery.of(context).size.width,
-//                      height: MediaQuery.of(context).size.height,
-//                      child: Scaffold(
-//                        appBar: CustomC4dAppBar.appBar(context,
-//                            title: S.current.updateStore),
-//                        backgroundColor:
-//                        Theme.of(context).scaffoldBackgroundColor,
-//                        body: UpdateStoreWidget(
-//                          storesModel: profile,
-//                          updateStore: (request, haveImage) {
-//                            Navigator.of(context).pop();
-//                            screenState.updateStore(request, haveImage);
-//                          },
-//                        ),
-//                      ),
-//                    );
-//                  });
+              showDialog(
+                  barrierDismissible: false,
+                  context: screenState.context,
+                  builder: (context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Scaffold(
+                        appBar: CustomC4dAppBar.appBar(context,
+                            title: S.current.updateStore),
+                        backgroundColor:
+                        Theme.of(context).scaffoldBackgroundColor,
+                        body: UpdateStoreWidget(
+                          storesModel: profile,
+                          updateStore: (request, haveImage) {
+                            Navigator.of(context).pop();
+                            screenState.updateStore(request, haveImage);
+                          },
+                        ),
+                      ),
+                    );
+                  });
               }),
           cardTap(
               image: ImageAsset.BID_ORDER,

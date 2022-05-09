@@ -6380,11 +6380,18 @@ class S {
     );
   }
 
+
   /// `Payments from Company`
   String get sumPaymentsFromCompany {
     return Intl.message(
       'Payments from Company',
       name: 'sumPaymentsFromCompany',
+
+  /// `Supplier profit margin`
+  String get supplierProfitMargin {
+    return Intl.message(
+      'Supplier profit margin',
+      name: 'supplierProfitMargin',
       desc: '',
       args: [],
     );
@@ -6445,6 +6452,11 @@ class S {
     return Intl.message(
       'Payments To Store',
       name: 'paymentsToStore',
+  /// `Store profit margin`
+  String get storeProfitMargin {
+    return Intl.message(
+      'Store profit margin',
+      name: 'storeProfitMargin',
       desc: '',
       args: [],
     );

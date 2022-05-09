@@ -35,6 +35,9 @@ class Data {
   num? maxKilometerBonus;
   num? minKilometerBonus;
 
+  num? supplierProfitMargin;
+  num? storeProfitMargin;
+
   Data(
       {this.id,
       this.phone,
@@ -47,7 +50,10 @@ class Data {
       this.roomID,
       this.kilometers,
       this.maxKilometerBonus,
-      this.minKilometerBonus});
+      this.minKilometerBonus,
+        this.storeProfitMargin,
+        this.supplierProfitMargin
+      });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -63,6 +69,8 @@ class Data {
     kilometers = json['kilometers'];
     maxKilometerBonus = json['maxKilometerBonus'];
     minKilometerBonus = json['minKilometerBonus'];
+    supplierProfitMargin = json['supplierProfitMargin'];
+    storeProfitMargin = json['storeProfitMargin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +87,8 @@ class Data {
     map['minKilometerBonus'] = minKilometerBonus;
     map['maxKilometerBonus'] = maxKilometerBonus;
     map['kilometers'] = kilometers;
+    map['storeProfitMargin'] = storeProfitMargin;
+    map['supplierProfitMargin'] = supplierProfitMargin;
     return map;
   }
 }

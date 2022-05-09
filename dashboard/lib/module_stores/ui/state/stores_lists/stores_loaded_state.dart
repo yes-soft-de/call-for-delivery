@@ -111,47 +111,47 @@ class StoresLoadedState extends States {
                     child: getTile(element.storeOwnerName),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                        barrierDismissible: false,
-                        context: screenState.context,
-                        builder: (context) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              appBar: CustomC4dAppBar.appBar(context,
-                                  title: S.current.updateStore),
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              body: UpdateStoreWidget(
-                                storesModel: element,
-                                updateStore: (request, haveImage) {
-                                  Navigator.of(context).pop();
-                                  screenState.updateStore(request, haveImage);
-                                },
-                              ),
-                            ),
-                          );
-                        });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(screenState.context)
-                          .backgroundColor
-                          .withOpacity(0.2),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+//                InkWell(
+//                  onTap: () {
+//                    showDialog(
+//                        barrierDismissible: false,
+//                        context: screenState.context,
+//                        builder: (context) {
+//                          return Container(
+//                            width: MediaQuery.of(context).size.width,
+//                            height: MediaQuery.of(context).size.height,
+//                            child: Scaffold(
+//                              appBar: CustomC4dAppBar.appBar(context,
+//                                  title: S.current.updateStore),
+//                              backgroundColor:
+//                                  Theme.of(context).scaffoldBackgroundColor,
+//                              body: UpdateStoreWidget(
+//                                storesModel: element,
+//                                updateStore: (request, haveImage) {
+//                                  Navigator.of(context).pop();
+//                                  screenState.updateStore(request, haveImage);
+//                                },
+//                              ),
+//                            ),
+//                          );
+//                        });
+//                  },
+//                  child: Container(
+//                    decoration: BoxDecoration(
+//                      shape: BoxShape.circle,
+//                      color: Theme.of(screenState.context)
+//                          .backgroundColor
+//                          .withOpacity(0.2),
+//                    ),
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: Icon(
+//                        Icons.edit,
+//                        color: Colors.white,
+//                      ),
+//                    ),
+//                  ),
+//                ),
                 SizedBox(
                   width: 16,
                 ),

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/ui/state/stores_lists/stores_loaded_state.dart';
@@ -24,7 +25,7 @@ import '../../../abstracts/states/loading_state.dart';
 
 class UpdateStoreWidget extends StatefulWidget {
   final Function(UpdateStoreRequest, bool) updateStore;
-  StoresModel? storesModel;
+  StoreProfileModel? storesModel;
 
   UpdateStoreWidget({required this.updateStore, this.storesModel});
 
@@ -41,6 +42,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
   late TextEditingController _bankName;
   late TextEditingController _bankAccountNumber;
   late TextEditingController _stcPay;
+
+  late TextEditingController profitMargin;
 
   String? imagePath;
   String? networkImage;
@@ -111,6 +114,22 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         controller: _cityController,
                         hintText: S.current.city,
                       ),
+
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, bottom: 8, right: 12, top: 16.0),
+                        child: Text(
+                          S.current.storeProfitMargin,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: profitMargin,
+                        hintText: S.current.storeProfitMargin,
+                      ),
+
                       // bank name
                       Padding(
                         padding: const EdgeInsets.only(
@@ -435,6 +454,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
     _bankAccountNumber = TextEditingController();
     _bankName = TextEditingController();
     _stcPay = TextEditingController();
+    profitMargin = TextEditingController();
 
     if (widget.storesModel != null) {
       _nameController.text = widget.storesModel?.storeOwnerName ?? '';
@@ -443,7 +463,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
       openingTime = widget.storesModel?.openingTime;
       closingTime = widget.storesModel?.closingTime;
       status = widget.storesModel?.status ?? 'active';
-      _bankAccountNumber.text = widget.storesModel?.bankAccountNumber ?? '';
+      _bankAccountNumber.text = widget.storesModel?.bankNumber ?? '';
+      profitMargin.text = widget.storesModel?.profitMargin.toString() ?? '';
       _bankName.text = widget.storesModel?.bankName ?? '';
 //      _stcPay.text = widget.storesModel?.
       val = _bankAccountNumber.text != '' ? 1 : 2;
@@ -484,7 +505,9 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
         closingTime: closingTime?.toUtc().toIso8601String(),
         openingTime: openingTime?.toUtc().toIso8601String(),
         status: status,
-        id: widget.storesModel?.id ?? -1);
+        id: widget.storesModel?.id ?? -1,
+      profitMargin: profitMargin.text
+    );
     widget.updateStore(profileRequest, haveImage);
   }
 }
