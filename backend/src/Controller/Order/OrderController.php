@@ -28,6 +28,7 @@ use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Request\Order\SubOrderCreateRequest;
 
 /**
  * Create and fetch order.
@@ -1222,5 +1223,89 @@ class OrderController extends BaseController
         $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
       
         return $this->response($response, self::UPDATE);
+    }
+
+     /**
+     * store:Create new sub order by store
+     * @Route("createsuborder", name="createSubOrder", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new sub order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="primaryOrderId"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function createSubOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SubOrderCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->createSubOrder($request);
+      //TODO
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
+        }
+//TODO
+        if (isset($result->canCreateOrder)) {
+      
+            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
+        
+        return $this->response($result, self::CREATE);
     }
 }

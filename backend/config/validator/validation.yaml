@@ -513,3 +513,10 @@ App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateR
             - NotBlank: ~
         toDate:
             - NotBlank: ~
+
+App\Request\Order\SubOrderCreateRequest:
+    properties:
+        branch:
+            - NotBlank: ~
+        primaryOrderId:
+            - NotBlank: ~

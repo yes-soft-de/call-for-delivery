@@ -55,6 +55,7 @@ use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 use App\Response\Order\OrderUpdatePaidToProviderResponse;
+use App\Request\Order\SubOrderCreateRequest;
 
 class OrderService
 {
@@ -735,5 +736,34 @@ class OrderService
         $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
         
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
+
+    public function createSubOrder(SubOrderCreateRequest $request): OrderResponse|string 
+    {        
+        $order = $this->orderManager->createSubOrder($request);
+        if($order) {
+           
+            // $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+ 
+            // $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+
+            // $this->orderLogsService->createOrderLogsRequest($order);
+            //create firebase notification to store
+            //  try{
+            //       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+            //       }
+            //  catch (\Exception $e){
+            //       error_log($e);
+            //     }
+             //create firebase notification to captains
+            //  try{
+            //       $this->notificationFirebaseService->notificationToCaptains($order->getId());
+            //     }
+            //  catch (\Exception $e){
+            //         error_log($e);
+            //     }
+        }
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 }

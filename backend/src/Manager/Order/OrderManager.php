@@ -25,6 +25,7 @@ use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
+use App\Request\Order\SubOrderCreateRequest;
 
 class OrderManager
 {
@@ -397,5 +398,27 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+
+    public function createSubOrder(SubOrderCreateRequest $request): ?OrderEntity
+    {      
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
+       $request->setStoreOwner($storeOwner);
+     
+       $orderEntity = $this->autoMapping->map(SubOrderCreateRequest::class, OrderEntity::class, $request);
+
+       $orderEntity->setCreatedAt(new DateTime());
+       $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+       $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+       $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+
+       $this->entityManager->persist($orderEntity);
+       $this->entityManager->flush();
+
+       $orderCreateRequest = $this->autoMapping->map(SubOrderCreateRequest::class, OrderCreateRequest::class, $request);
+
+       $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $orderCreateRequest);
+
+       return $orderEntity;
     }
 }

@@ -76,6 +76,12 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $paidToProvider;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isHide;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $primaryOrderId;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -381,6 +387,30 @@ class OrderEntity
     public function setPaidToProvider(?int $paidToProvider): self
     {
         $this->paidToProvider = $paidToProvider;
+
+        return $this;
+    }
+
+    public function getIsHide(): ?bool
+    {
+        return $this->isHide;
+    }
+
+    public function setIsHide(?bool $isHide): self
+    {
+        $this->isHide = $isHide;
+
+        return $this;
+    }
+
+    public function getPrimaryOrderId(): ?int
+    {
+        return $this->primaryOrderId;
+    }
+
+    public function setPrimaryOrderId(?int $primaryOrderId): self
+    {
+        $this->primaryOrderId = $primaryOrderId;
 
         return $this;
     }
