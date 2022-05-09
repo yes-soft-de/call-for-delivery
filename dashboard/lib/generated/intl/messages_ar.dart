@@ -815,6 +815,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
+        "storeProfitMargin":
+            MessageLookupByLibrary.simpleMessage("هامش الربح من المتجر"),
         "storeRated":
             MessageLookupByLibrary.simpleMessage("تمت تقييم المتجر بنجاح"),
         "storeUpdatedSuccessfully":
@@ -853,6 +855,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("المدفوعات للكابتن"),
         "supplierOffer": MessageLookupByLibrary.simpleMessage("عروض الموردين"),
+        "supplierProfitMargin":
+            MessageLookupByLibrary.simpleMessage("هامش الربح من المورد"),
         "supplierUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المورد بنجاح"),
         "suppliers": MessageLookupByLibrary.simpleMessage("الموردين"),

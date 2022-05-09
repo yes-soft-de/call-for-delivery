@@ -654,7 +654,10 @@
     "subscriptionActive": "Activated",
     "subscriptionsFinanceHint": "Here you find all your subscriptions financial information with included all payments ",
     "subscriptionsFinanceDetailsHint": "Here you find all financial details included in this subscription with date",
-    "paymentFromStore": "Payment From Store"
+    "paymentFromStore": "Payment From Store",
+
+    "supplierProfitMargin": "Supplier profit margin",
+    "storeProfitMargin": "Store profit margin"
 
 
 

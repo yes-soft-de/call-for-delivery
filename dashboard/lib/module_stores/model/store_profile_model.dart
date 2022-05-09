@@ -11,12 +11,14 @@ class StoreProfileModel extends DataModel {
   String phone = '';
   String bankName = '';
   String bankNumber = '';
-  String image = '';
-  String? closingTime;
-  String? openingTime;
+  String? image;
+  String? imageUrl;
+  DateTime? closingTime;
+  DateTime? openingTime;
   String? city;
   String? employeeCount;
   String? status;
+  num profitMargin = 0;
 
   StoreProfileModel? _models;
 
@@ -31,23 +33,25 @@ class StoreProfileModel extends DataModel {
       required this.bankNumber,
       this.employeeCount,
       this.city,
-      this.status});
+      this.status,required this.profitMargin,this.imageUrl
+      });
 
   StoreProfileModel.withData(Data data) : super.withData() {
     _models = StoreProfileModel(
         id: data.id ?? -1,
         storeOwnerName: data.storeOwnerName ?? S.current.store,
-        image: data.image?.imageURL ?? ImageAsset.PLACEHOLDER,
+        image: data.image?.image,
+        imageUrl: data.image?.imageURL ?? ImageAsset.PLACEHOLDER,
         phone: data.phone ?? '',
-        openingTime: DateFormat.jm()
-            .format(DateHelper.convert(data.openingTime?.timestamp)),
-        closingTime: DateFormat.jm()
-            .format(DateHelper.convert(data.closingTime?.timestamp)),
+        openingTime: DateHelper.convert(data.openingTime?.timestamp),
+        closingTime: DateHelper.convert(data.closingTime?.timestamp),
         bankName: data.bankName ?? '',
         bankNumber: data.bankAccountNumber ?? '',
         employeeCount: data.employeeCount,
         city: data.city,
-        status: data.status);
+        status: data.status,
+      profitMargin: data.profitMargin ?? 0
+    );
   }
 
   StoreProfileModel get data {

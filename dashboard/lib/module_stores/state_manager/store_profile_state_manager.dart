@@ -1,6 +1,8 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,11 +18,12 @@ import 'package:c4d/module_stores/ui/state/store_profile/store_profile_loaded_st
 @injectable
 class StoreProfileStateManager {
   final StoresService _storesService;
+  final ImageUploadService _uploadService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  StoreProfileStateManager(this._storesService);
+  StoreProfileStateManager(this._storesService, this._uploadService);
 
   void getStore(StoreInfoScreenState screenState, int id,
       [bool loading = true]) {
@@ -72,6 +75,54 @@ class StoreProfileStateManager {
     }
   }
 
+
+  void updateStore(StoreInfoScreenState screenState, UpdateStoreRequest request,
+      bool haveImage) {
+    _stateSubject.add(LoadingState(screenState));
+    if (haveImage) {
+      _uploadService.uploadImage(request.image).then((image) {
+        if (image == null) {
+          getStore(screenState,request.id);
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning,
+              message: S.current.errorUploadingImages)
+              .show(screenState.context);
+          return;
+        } else {
+          request.image = image;
+          _storesService.updateStore(request).then((value) {
+            if (value.hasError) {
+              getStore(screenState,request.id);
+              CustomFlushBarHelper.createError(
+                  title: S.current.warnning, message: value.error ?? '')
+                ..show(screenState.context);
+            } else {
+              getStore(screenState,request.id);
+              CustomFlushBarHelper.createSuccess(
+                  title: S.current.warnning,
+                  message: S.current.storeUpdatedSuccessfully)
+                ..show(screenState.context);
+            }
+          });
+        }
+      });
+    } else {
+      _storesService.updateStore(request).then((value) {
+        if (value.hasError) {
+          getStore(screenState,request.id);
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '')
+            ..show(screenState.context);
+        } else {
+          getStore(screenState,request.id);
+          CustomFlushBarHelper.createSuccess(
+              title: S.current.warnning,
+              message: S.current.storeUpdatedSuccessfully)
+            ..show(screenState.context);
+        }
+      });
+    }
+  }
   void showSnackFailed(
       StoreInfoScreenState screenState, String message, bool loading) {
     if (loading) {

@@ -6379,6 +6379,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Supplier profit margin`
+  String get supplierProfitMargin {
+    return Intl.message(
+      'Supplier profit margin',
+      name: 'supplierProfitMargin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store profit margin`
+  String get storeProfitMargin {
+    return Intl.message(
+      'Store profit margin',
+      name: 'storeProfitMargin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
