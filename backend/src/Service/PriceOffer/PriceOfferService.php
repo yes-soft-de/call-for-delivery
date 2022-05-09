@@ -3,6 +3,7 @@
 namespace App\Service\PriceOffer;
 
 use App\AutoMapping;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\DeliveryCarEntity;
 use App\Entity\PriceOfferEntity;
 use App\Manager\PriceOffer\PriceOfferManager;
@@ -24,9 +25,9 @@ class PriceOfferService
         $this->priceOfferManager = $priceOfferManager;
     }
 
-    public function createPriceOffer(PriceOfferCreateRequest $request)
+    public function createPriceOffer(PriceOfferCreateRequest $request): string|PriceOfferEntity
     {
-        $this->priceOfferManager->createPriceOffer($request);
+        return $this->priceOfferManager->createPriceOffer($request);
     }
 
     public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array

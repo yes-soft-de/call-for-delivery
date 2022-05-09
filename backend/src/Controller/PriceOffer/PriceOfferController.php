@@ -4,6 +4,7 @@ namespace App\Controller\PriceOffer;
 
 use App\AutoMapping;
 use App\Constant\Main\MainMessageConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
 use App\Request\PriceOffer\PriceOfferStatusUpdateRequest;
@@ -90,7 +91,11 @@ class PriceOfferController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $this->priceOfferService->createPriceOffer($request);
+        $response = $this->priceOfferService->createPriceOffer($request);
+
+        if ($response === SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_RESULT) {
+            return $this->response(MainMessageConstant::CREATED_SUCCESSFULLY_MSG, self::SUPPLIER_PROFILE_NOT_ACTIVE);
+        }
 
         return $this->response(MainMessageConstant::CREATED_SUCCESSFULLY_MSG, self::CREATE);
     }

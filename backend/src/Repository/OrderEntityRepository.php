@@ -148,6 +148,59 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function filterStoreBidOrders(OrderFilterRequest $request, $storeOwner): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer')
+            ->addSelect('bidDetailsEntity as bidDetails')
+
+            ->andWhere('orderEntity.storeOwner = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwner)
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state IN (:statesArray)');
+            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+        }
+
+        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+
+        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        if ($request->getOpenToPriceOffer() !== null) {
+            $query->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferValue');
+            $query->setParameter('openToPriceOfferValue', $request->getOpenToPriceOffer());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     public function closestOrders(int $captainId): ?array
     {
         return $this->createQueryBuilder('orderEntity')
