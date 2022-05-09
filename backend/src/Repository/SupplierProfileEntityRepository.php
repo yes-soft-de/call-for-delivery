@@ -79,8 +79,8 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
         }
 
         if ($request->getSupplierCategoryId() !== null) {
-            $query->andWhere('supplierProfileEntity.supplierCategory = :supplierCategoryId');
-            $query->setParameter('supplierCategoryId', $request->getSupplierCategoryId());
+            $query->andWhere('supplierProfileEntity.supplierCategories LIKE :supplierCategoryId');
+            $query->setParameter('supplierCategoryId', '%"'.$request->getSupplierCategoryId().'"%');
         }
 
         return $query->getQuery()->getResult();
