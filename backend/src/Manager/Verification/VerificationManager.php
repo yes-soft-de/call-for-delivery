@@ -37,13 +37,9 @@ class VerificationManager
 
     public function checkVerificationCode(VerifyCodeRequest $request): string
     {
-        //$response = [];
-
         $result = $this->verificationEntityRepository->getByUserAndCode($request->getUser(), $request->getCode());
-        //dd($result);
+
         if (! $result) {
-            //$response['resultMessage'] = 'incorrectEnteredData';
-            //return $response;
             return VerificationCodeResultConstant::INCORRECT_ENTERED_DATA_RESULT;
 
         } else {
@@ -55,14 +51,10 @@ class VerificationManager
                 $different_hours = $interval->format('%h');
 
                 if ($different_hours <= 1) {
-                    //$response['resultMessage'] = 'activated';
-                    //return $response;
                     return VerificationCodeResultConstant::ACTIVATED_RESULT;
                 }
 
             } else {
-                //$response['resultMessage'] = 'codeDateIsNotValid';
-                //return $response;
                 return VerificationCodeResultConstant::NOT_VALID_CODE_DATE_RESULT;
             }
         }
