@@ -191,7 +191,7 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
         if($order) {
-            
+           
             $order['attention'] = $order['noteCaptainOrderCost'];
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
@@ -199,17 +199,10 @@ class OrderService
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
             }
-           
-//            if($order['captainOrderCost']) {
-//                if($order['orderCost'] !== $order['captainOrderCost']) {
-//                        $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
-//                 }
-//                 else{
-//                    $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_MATCH;
-//                 }
-//            }
          
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+
+            $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
         }
    
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
