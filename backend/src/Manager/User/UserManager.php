@@ -226,4 +226,18 @@ class UserManager
     {
         return $this->userRepository->getUserVerificationStatusByUserId($userId);
     }
+
+    // this function update verificationStatus field of all users to be 'true'
+    public function verifyAllUsers(): array
+    {
+        $users = $this->userRepository->findAll();
+
+        foreach ($users as $userEntity) {
+            $userEntity->setVerificationStatus(true);
+
+            $this->entityManager->flush();
+        }
+
+        return $users;
+    }
 }

@@ -4,9 +4,11 @@ namespace App\Controller\User;
 
 use App\Controller\BaseController;
 use App\Service\User\UserService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 
@@ -67,5 +69,43 @@ class UserController extends BaseController
             $response ="no not a"." ".$userType;
             return $this->response($response, self::ERROR_USER_CHECK); 
         }
+    }
+
+    /**
+     * Update verification status of all users by super admin
+     * @Route("verifyallusersbysuperadmin", name="updateVerificationStatusForAllUsersBySuperAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="User")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Return String",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\User\FilterUserResponse")
+     *              )
+     *          ),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function verifyAllUsers(): JsonResponse
+    {
+        $response = $this->userService->verifyAllUsers();
+
+        return $this->response($response, self::UPDATE);
     }
 }
