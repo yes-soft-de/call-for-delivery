@@ -105,6 +105,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.storeOwner = :storeOwnerId')
             ->setParameter('storeOwnerId', $storeOwner)
 
+            ->andWhere('orderEntity.orderType = :bidOrderType')
+            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
+
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
                 'storeOrderDetails',
@@ -158,6 +161,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.storeOwner = :storeOwnerId')
             ->setParameter('storeOwnerId', $storeOwner)
+
+            ->andWhere('orderEntity.orderType = :bidOrderType')
+            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
 
             ->leftJoin(
                 BidDetailsEntity::class,

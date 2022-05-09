@@ -520,3 +520,10 @@ App\Request\Order\SubOrderCreateRequest:
             - NotBlank: ~
         primaryOrder:
             - NotBlank: ~
+            
+App\Request\Verification\VerifyCodeRequest:
+    properties:
+        user:
+            - NotBlank: ~
+        code:
+            - NotBlank: ~

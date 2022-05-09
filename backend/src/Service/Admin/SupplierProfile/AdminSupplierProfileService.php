@@ -52,8 +52,8 @@ class AdminSupplierProfileService
 
                 $response[$key]->images = $this->customizeSupplierProfileImages($response[$key]->images->toArray());
 
-                if ($value->getSupplierCategory()) {
-                    $response[$key]->supplierCategoryName = $value->getSupplierCategory()->getName();
+                if (! empty($value->getSupplierCategories())) {
+                    $response[$key]->supplierCategories = $this->adminSupplierProfileManager->getSupplierCategoriesNamesBySupplierCategoriesIDs($value->getSupplierCategories());
                 }
             }
         }

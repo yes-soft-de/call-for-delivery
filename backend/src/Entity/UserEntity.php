@@ -29,10 +29,17 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'rater', targetEntity: RateEntity::class)]
     private $rateEntities;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: VerificationEntity::class)]
+    private $verificationEntities;
+
+    #[ORM\Column(type: 'integer')]
+    private $verificationStatus = 0;
+
     public function __construct($userID)
     {
         $this->userId = $userID;
         $this->rateEntities = new ArrayCollection();
+        $this->verificationEntities = new ArrayCollection();
     }
 
     /**
@@ -142,6 +149,48 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
                 $rateEntity->setRater(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VerificationEntity[]
+     */
+    public function getVerificationEntities(): Collection
+    {
+        return $this->verificationEntities;
+    }
+
+    public function addVerificationEntity(VerificationEntity $verificationEntity): self
+    {
+        if (!$this->verificationEntities->contains($verificationEntity)) {
+            $this->verificationEntities[] = $verificationEntity;
+            $verificationEntity->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVerificationEntity(VerificationEntity $verificationEntity): self
+    {
+        if ($this->verificationEntities->removeElement($verificationEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($verificationEntity->getUser() === $this) {
+                $verificationEntity->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVerificationStatus(): ?int
+    {
+        return $this->verificationStatus;
+    }
+
+    public function setVerificationStatus(int $verificationStatus): self
+    {
+        $this->verificationStatus = $verificationStatus;
 
         return $this;
     }
