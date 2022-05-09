@@ -11,22 +11,26 @@ use App\Manager\Supplier\SupplierProfileManager;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Supplier\SupplierProfileUpdateRequest;
 use App\Request\User\UserRegisterRequest;
+use App\Request\Verification\VerificationCreateRequest;
 use App\Response\Supplier\SupplierProfileGetResponse;
 use App\Response\Supplier\SupplierProfileUpdateResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\Verification\VerificationService;
 
 class SupplierProfileService
 {
     private AutoMapping $autoMapping;
     private SupplierProfileManager $supplierProfileManager;
     private UploadFileHelperService $uploadFileHelperService;
+    private VerificationService $verificationService;
 
-    public function __construct(AutoMapping $autoMapping, SupplierProfileManager $supplierManager, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(AutoMapping $autoMapping, SupplierProfileManager $supplierManager, UploadFileHelperService $uploadFileHelperService, VerificationService $verificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->supplierProfileManager = $supplierManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
+        $this->verificationService = $verificationService;
     }
 
     public function registerSupplier(UserRegisterRequest $request): UserRegisterResponse
@@ -41,7 +45,19 @@ class SupplierProfileService
             return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }
 
+        // create verification code for the user
+        //$this->createVerificationCodeForSupplier($userRegister);
+
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+    }
+
+    public function createVerificationCodeForSupplier(UserEntity $userEntity)
+    {
+        $verificationCodeRequest = new VerificationCreateRequest();
+
+        $verificationCodeRequest->setUser($userEntity);
+
+        $this->verificationService->createVerificationCode($verificationCodeRequest);
     }
 
     public function updateSupplierProfile(SupplierProfileUpdateRequest $request): string|SupplierProfileUpdateResponse
