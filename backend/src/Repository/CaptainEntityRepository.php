@@ -123,4 +123,19 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getCaptain(int $captainProfileId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+                'captainEntity.status')
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+
+            ->setParameter('captainProfileId', $captainProfileId)
+           
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

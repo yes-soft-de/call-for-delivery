@@ -76,11 +76,21 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $paidToProvider;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isHide;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'orderEntities')]
+    private $primaryOrder;
+
+    #[ORM\OneToMany(mappedBy: 'primaryOrder', targetEntity: self::class)]
+    private $orderEntities;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
         $this->rateEntity = new ArrayCollection();
         $this->OrderLogsEntity = new ArrayCollection();
+        $this->orderEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -381,6 +391,60 @@ class OrderEntity
     public function setPaidToProvider(?int $paidToProvider): self
     {
         $this->paidToProvider = $paidToProvider;
+
+        return $this;
+    }
+
+    public function getIsHide(): ?int
+    {
+        return $this->isHide;
+    }
+
+    public function setIsHide(?int $isHide): self
+    {
+        $this->isHide = $isHide;
+
+        return $this;
+    }
+
+    public function getPrimaryOrder(): ?self
+    {
+        return $this->primaryOrder;
+    }
+
+    public function setPrimaryOrder(?self $primaryOrder): self
+    {
+        $this->primaryOrder = $primaryOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getOrderEntities(): Collection
+    {
+        return $this->orderEntities;
+    }
+
+    public function addOrderEntity(self $orderEntity): self
+    {
+        if (!$this->orderEntities->contains($orderEntity)) {
+            $this->orderEntities[] = $orderEntity;
+            $orderEntity->setPrimaryOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderEntity(self $orderEntity): self
+    {
+        if ($this->orderEntities->removeElement($orderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderEntity->getPrimaryOrder() === $this) {
+                $orderEntity->setPrimaryOrder(null);
+            }
+        }
 
         return $this;
     }

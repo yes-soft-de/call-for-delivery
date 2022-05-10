@@ -31,4 +31,6 @@ class OrderClosestResponse
     public string $storeOwnerName;
 
     public float|null $rating;
+
+    public array|null $subOrder;
 }

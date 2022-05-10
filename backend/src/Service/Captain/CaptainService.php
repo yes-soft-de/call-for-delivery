@@ -99,4 +99,9 @@ class CaptainService
 
         return $this->autoMapping->map(CaptainEntity::class,CaptainIsOnlineResponse::class, $captainStatus);
      }
+ 
+    public function getCaptain(int $captainProfileId): ?array
+    {
+       return $this->captainManager->getCaptain($captainProfileId);
+     }
 }

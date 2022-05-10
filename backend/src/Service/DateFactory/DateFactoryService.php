@@ -24,4 +24,18 @@ class DateFactoryService
 
       return $result;
    }
+
+   public function subtractTwoDatesHours($firstDate, $lastDate)
+   {
+      $difference = $firstDate->diff($lastDate);
+
+         return $this->format_interval_hours($difference);
+   }
+
+   public function format_interval_hours($interval)
+   {
+      $result = "";
+      if ($interval->h) { $result .= $interval->format("%h"); }
+      return $result;
+   }
 }

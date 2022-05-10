@@ -28,6 +28,8 @@ use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Request\Order\SubOrderCreateRequest;
+use App\Constant\Order\OrderStateConstant;
 
 /**
  * Create and fetch order.
@@ -1274,6 +1276,141 @@ class OrderController extends BaseController
     {
         $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
       
+        return $this->response($response, self::UPDATE);
+    }
+
+     /**
+     * store:Create new sub order by store
+     * @Route("createsuborder", name="createSubOrder", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new sub order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="primaryOrder"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function createSubOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SubOrderCreateRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->createSubOrder($request);
+    
+        if ($result === SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE_ORDER_FINISHED);
+        }
+
+        if ($result === OrderStateConstant::ORDER_STATE_DELIVERED) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE);
+        }
+        
+        return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * captain: Order Non Sub.
+     * @Route("ordernonsub/{subOderId}", name="orderNonSub", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              )
+     *       )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function orderNonSub(int $subOderId): JsonResponse
+    {
+        $response = $this->orderService->orderNonSub($subOderId);
+
+        return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * TODO for remove after used
+     * admin:update isHide to show for all orders .
+     * @Route("updateishideshow", name="isHideShow", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     *
+     */
+    public function isHideShow(): JsonResponse
+    {
+        $response = $this->orderService->isHideShow();
+
         return $this->response($response, self::UPDATE);
     }
 }

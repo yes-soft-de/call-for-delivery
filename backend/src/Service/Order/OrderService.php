@@ -56,6 +56,9 @@ use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 use App\Response\Order\OrderUpdatePaidToProviderResponse;
+use App\Request\Order\SubOrderCreateRequest;
+use App\Constant\Order\OrderIsHideConstant;
+use App\Service\DateFactory\DateFactoryService;
 
 class OrderService
 {
@@ -71,8 +74,9 @@ class OrderService
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
+    private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, DateFactoryService $dateFactoryService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -86,6 +90,7 @@ class OrderService
        $this->captainFinancialDuesService = $captainFinancialDuesService;
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
+       $this->dateFactoryService = $dateFactoryService;
     }
 
     /**
@@ -170,6 +175,8 @@ class OrderService
     {
         $response = [];
 
+        $this->showSubOrderIfCarIsAvailable();
+
         $this->cancelOrdersBeforeSpecificTime();
        
         $orders = $this->orderManager->getStoreOrders($userId);
@@ -190,7 +197,7 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
         if($order) {
-            
+           
             $order['attention'] = $order['noteCaptainOrderCost'];
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
@@ -198,17 +205,14 @@ class OrderService
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
             }
-           
-//            if($order['captainOrderCost']) {
-//                if($order['orderCost'] !== $order['captainOrderCost']) {
-//                        $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
-//                 }
-//                 else{
-//                    $order['attention'] = OrderAttentionConstant::ATTENTION_VALUE_MATCH;
-//                 }
-//            }
          
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+           
+            $order['captain'] = null;
+
+            if($order['captainUserId']) {
+                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+            }
         }
    
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
@@ -259,6 +263,7 @@ class OrderService
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
 
+        $this->showSubOrderIfCarIsAvailable();
         $this->cancelOrdersBeforeSpecificTime();
 
         $response = [];
@@ -266,6 +271,8 @@ class OrderService
         $orders = $this->orderManager->closestOrders($userId);
 
         foreach ($orders as $order) {
+          
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
 
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
@@ -318,6 +325,7 @@ class OrderService
         $orders = $this->orderManager->acceptedOrderByCaptainId($captainId);
 
         foreach ($orders as $order) {
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
             
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
@@ -329,6 +337,8 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
         if($order) {
+            
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
                       
@@ -733,26 +743,32 @@ class OrderService
         return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
     }
 
-    //cancel the order before a specified time in case the captain does not receive the order
+    //Hide the order that exceeded the delivery time by an hour
     public function cancelOrdersBeforeSpecificTime()
     {   
-        $nowDate = new DateTime('now');
+        $pendingOrders = $this->orderManager->getOrdersPending();
+        foreach($pendingOrders as $pendingOrder) {
+    
+            $deliveredDate = $pendingOrder->getDeliveryDate();
 
-        $specificTime = date_modify($nowDate, '-3 day');
-        
-        $orders = $this->orderManager->getOrdersPendingBeforeSpecificDate($specificTime);
+            $deliveredDateCurrent = new DateTime($deliveredDate->format('Y-m-d H:i:s'));
 
-        foreach($orders as $order) {
-            $order = $this->orderManager->orderCancel($order);
+            $deliveredDate->diff(date_modify($deliveredDate, '+1 hours'));
 
-            if($order) {
-                if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
-                    $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+            $diff = $this->dateFactoryService->subtractTwoDatesHours($deliveredDate,$deliveredDateCurrent);
+
+            if($diff === "1") {
+                $order = $this->orderManager->updateIsHide($pendingOrder, OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+    
+                if($order) {
+                    if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                        $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+                    }
+                   
+                    $this->orderLogsService->createOrderLogsRequest($order);
                 }
-               
-                $this->orderLogsService->createOrderLogsRequest($order);
             }
-        }     
+        }  
     }
     
     public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): ?OrderUpdatePaidToProviderResponse
@@ -760,5 +776,82 @@ class OrderService
         $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
         
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
+
+    public function createSubOrder(SubOrderCreateRequest $request): OrderResponse|string 
+    {
+        $packageBalance = $this->subscriptionService->packageBalance($request->getStoreOwner());
+
+        if($packageBalance->remainingOrders <= 0 ) {
+   
+            return SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER;
+        }
+    
+        $primaryOrder = $this->orderManager->getOrderById($request->getPrimaryOrder());
+        if($primaryOrder->getState() === OrderStateConstant::ORDER_STATE_DELIVERED ) {
+            return OrderStateConstant::ORDER_STATE_DELIVERED;
+        }
+
+        if($primaryOrder->getCaptainId() ) {
+            $request->setCaptainId($primaryOrder->getCaptainId());
+        }
+
+        $request->setPrimaryOrder($primaryOrder);
+
+        $order = $this->orderManager->createSubOrder($request);
+        if($order) {
+           
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+ 
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+
+            $this->orderLogsService->createOrderLogsRequest($order);
+            // create firebase notification to store
+             try{
+                  $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                  }
+             catch (\Exception $e){
+                  error_log($e);
+                }
+        }
+     
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
+    }
+     
+    public function orderNonSub(int $orderId): ?OrderUpdatePaidToProviderResponse
+    {   
+        $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
+
+        $isHide = OrderIsHideConstant::ORDER_SHOW;
+      
+        if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+            $isHide = OrderIsHideConstant::ORDER_HIDE_TEMPORARILY;
+        }
+
+        $order = $this->orderManager->updateIsHideByOrderId($orderId, $isHide);
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
+     
+    public function isHideShow()
+    {
+        $order = $this->orderManager->isHideShow();
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
+    
+    //Show the sub-order for captains if a car is available
+    //Modify the field (isHide) from (ORDER_HIDE_TEMPORARILY) to (ORDER_SHOW)
+    public function showSubOrderIfCarIsAvailable()
+    {
+        $orders = $this->orderManager->getOrderTemporarilyHidden();
+        foreach($orders as $order){
+       
+            $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($order->getId());
+    
+            if ($checkRemainingCars === SubscriptionConstant::SUBSCRIPTION_OK) {
+                $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
+            }          
+        }
     }
 }
