@@ -36,7 +36,7 @@ class Datum {
             ? null
             : EndDate.fromJson(json['endDate'] as Map<String, dynamic>),
         status: json['status'] as String?,
-        note: json['note'] as dynamic,
+        note: json['note'] as String?,
         flag: json['flag'] as dynamic,
         paymentsFromStore: (json['paymentsFromCompany'] as List<dynamic>?)
             ?.map((e) => PaymentsFromStore.fromJson(e as Map<String, dynamic>))

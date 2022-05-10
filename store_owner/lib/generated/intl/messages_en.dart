@@ -134,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account not activated yet please wait"),
         "captainNotInStore":
             MessageLookupByLibrary.simpleMessage("Captain not in Store"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("Retained cash"),
         "captainPackageExtra":

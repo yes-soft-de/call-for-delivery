@@ -578,7 +578,9 @@
     "orderCostHandedByCaptain": "Cost received from captain",
     "financePaid": "Paid",
     "financeUnPaid": "Unpaid",
-    "financePartlyPaid": "Partly paid"
+    "financePartlyPaid": "Partly paid",
+    "captainOffers": "Captain Offers"
+
 
 
 

@@ -130,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainNotInStore":
             MessageLookupByLibrary.simpleMessage("الكابتن ليس في المتجر"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
         "captainPackageExtra":

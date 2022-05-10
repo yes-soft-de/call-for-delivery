@@ -2,7 +2,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -94,6 +93,11 @@ class StoreSubscriptionsFinanceDetailsScreenState
                 title: SubscriptionsStatusHelper.getStatusMessage(model.status),
                 background:
                     SubscriptionsStatusHelper.getStatusColor(model.status))),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.captainOffers),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.captainOffers) +
+                    ' ${S.current.sar}')),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.packageCost),
             secondBubble: verticalBubble(
