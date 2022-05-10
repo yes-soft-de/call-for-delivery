@@ -18,4 +18,16 @@ class AppFeatureEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, AppFeatureEntity::class);
     }
+
+    public function getAppFeatureStatusByAppFeatureName(string $featureName): ?array
+    {
+        return $this->createQueryBuilder('appFeatureEntity')
+            ->select('appFeatureEntity.featureStatus')
+
+            ->andWhere('appFeatureEntity.featureName = :name')
+            ->setParameter('name', $featureName)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
