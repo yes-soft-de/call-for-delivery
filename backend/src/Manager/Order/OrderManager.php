@@ -451,4 +451,16 @@ class OrderManager
 
         return $orderEntity;
     }
+    
+    public function isHideShow()
+    {
+        $orders = $this->orderRepository->findAll();
+        foreach($orders as  $order) {
+            $order->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        }
+        
+        $this->entityManager->flush();
+
+        return $order;
+    }
 }

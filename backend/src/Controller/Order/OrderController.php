@@ -1393,4 +1393,18 @@ class OrderController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * TODO for remove after used
+     * admin:update isHide to show for all orders .
+     * @Route("updateishideshow", name="isHideShow", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     *
+     */
+    public function isHideShow(): JsonResponse
+    {
+        $response = $this->orderService->isHideShow();
+
+        return $this->response($response, self::UPDATE);
+    }
 }

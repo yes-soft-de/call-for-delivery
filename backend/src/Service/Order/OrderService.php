@@ -807,4 +807,11 @@ class OrderService
         
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
+     
+    public function isHideShow()
+    {
+        $order = $this->orderManager->isHideShow();
+        
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
 }
