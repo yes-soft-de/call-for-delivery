@@ -11,6 +11,8 @@ import 'package:intl/intl.dart';
 
 class OrderDetailsModel extends DataModel {
   late int id;
+  late String? roomID;
+  int? captainID;
   late int bidDetailsId;
   late String description;
   late String createdDate;
@@ -34,7 +36,9 @@ class OrderDetailsModel extends DataModel {
    required this.orderState,
     this.deliveryDate,
    required this.payment,
-    this.orderLogs
+    this.orderLogs,
+    this.captainID,
+    this.roomID
 
   });
 
@@ -93,7 +97,9 @@ class OrderDetailsModel extends DataModel {
         orderState: StatusHelper.getStatusEnum(data?.state),
         deliveryDate: deliveryDate,
         payment: data?.payment ?? S.current.unknown,
-        orderLogs: _getOrderLogs(data?.orderLogs)
+        orderLogs: _getOrderLogs(data?.orderLogs),
+      captainID: data?.captainID,
+      roomID: data?.roomID
     );
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {

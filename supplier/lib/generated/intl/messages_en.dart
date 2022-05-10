@@ -658,6 +658,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "transportationCount":
+            MessageLookupByLibrary.simpleMessage("Transportation count"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),

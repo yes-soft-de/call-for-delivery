@@ -478,7 +478,8 @@
     "bankNameHint": "الراجحي",
     "locationPref": "هذا الموقع يظهر للكباتن",
     "locationSelected": "تم تحديد الموقع بنجاح",
-    "selectTheDeliveryCar": "أختر سيارة التوصيل"
+    "selectTheDeliveryCar": "أختر سيارة التوصيل",
+    "transportationCount": "عدد النقلات"
 
 
 }

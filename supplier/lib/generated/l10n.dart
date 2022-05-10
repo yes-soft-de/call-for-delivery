@@ -4839,6 +4839,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Transportation count`
+  String get transportationCount {
+    return Intl.message(
+      'Transportation count',
+      name: 'transportationCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

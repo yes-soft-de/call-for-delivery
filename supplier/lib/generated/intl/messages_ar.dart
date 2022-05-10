@@ -649,6 +649,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
+        "transportationCount":
+            MessageLookupByLibrary.simpleMessage("عدد النقلات"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
