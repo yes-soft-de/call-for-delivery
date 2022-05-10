@@ -66,8 +66,9 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
     }
 
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: model?.storeOwnerName ?? S.current.storeName,
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: model?.storeOwnerName ?? S.current.storeName,
       ),
       body: currentState.getUI(context),
     );

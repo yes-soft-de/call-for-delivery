@@ -1,6 +1,6 @@
 enum OfferStatusEnum {
   PENDING,
   ACCEPTED,
-  REFUSED ,
+  REFUSED,
   CONFIRMED,
 }

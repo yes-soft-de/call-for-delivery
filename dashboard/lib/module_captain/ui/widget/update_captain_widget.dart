@@ -390,8 +390,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
 
   Future<String?> uploadImage(String path) async {
     var imagePath = await getIt<ImageUploadService>().uploadImage(path);
-    setState(() {
-    });
+    setState(() {});
     return imagePath;
   }
 }

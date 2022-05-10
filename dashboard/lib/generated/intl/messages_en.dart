@@ -166,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Item removed from cart"),
         "cartValidation": MessageLookupByLibrary.simpleMessage("Checking Cart"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
+        "cashOrders": MessageLookupByLibrary.simpleMessage("Cash order"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("Category image"),
@@ -623,6 +624,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment deleted successfully"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("Payments for store"),
+        "paymentsFromCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments From Captain"),
+        "paymentsToCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments To Captain"),
+        "paymentsToStore":
+            MessageLookupByLibrary.simpleMessage("Payments To Store"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "pendingOfferMsg": MessageLookupByLibrary.simpleMessage(
@@ -850,11 +857,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
+        "sumAmountStorOwnerDues":
+            MessageLookupByLibrary.simpleMessage("Store Dues"),
+        "sumAmountWithCaptain":
+            MessageLookupByLibrary.simpleMessage("Cash with captain"),
         "sumCaptainFinancialDues":
             MessageLookupByLibrary.simpleMessage("Captain dues"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
+        "sumPaymentsFromCompany":
+            MessageLookupByLibrary.simpleMessage("Payments from Company"),
+        "sumPaymentsToCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments to captain"),
         "sumPaymentsToCaptainFinance":
             MessageLookupByLibrary.simpleMessage("Payments to captain"),
         "supplierOffer": MessageLookupByLibrary.simpleMessage("Supplier offer"),

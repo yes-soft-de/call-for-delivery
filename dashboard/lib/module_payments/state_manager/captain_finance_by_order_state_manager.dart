@@ -59,6 +59,7 @@ class CaptainFinanceByOrderStateManager {
       }
     });
   }
+
   void updateFinance(CaptainFinanceByOrderScreenState screenState,
       CreateCaptainFinanceByOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));

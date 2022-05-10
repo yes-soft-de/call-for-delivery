@@ -142,6 +142,15 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                         screenState.manager.makePayments(
                                             screenState,
                                             CreateStorePaymentsRequest(
+                                              flag: (num.tryParse(_amount.text
+                                                              .trim()) ??
+                                                          0) >=
+                                                      ((model.total
+                                                              .packageCost + model.total.captainOffer) -
+                                                          model.total
+                                                              .sumPayments )
+                                                  ? 1
+                                                  : 3,
                                               subscriptionId: model.id,
                                               storeId: StoresHiveHelper()
                                                   .getCurrentStoreID(),
@@ -346,8 +355,15 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         RowBubble(
             firstBubble: verticalBubble(title: S.current.packageCost),
             secondBubble: verticalBubble(
-                title:
-                    model.total.packageCost.toString() + ' ${S.current.sar}')),
+                title: FixedNumber.getFixedNumber(model.total.packageCost)
+                        .toString() +
+                    ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.captainsOffer),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.captainOffer)
+                        .toString() +
+                    ' ${S.current.sar}')),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
             secondBubble: verticalBubble(

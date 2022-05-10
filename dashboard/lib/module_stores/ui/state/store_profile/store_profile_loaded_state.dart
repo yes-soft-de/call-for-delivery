@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_bid_order/bid_order_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
@@ -262,6 +264,16 @@ class StoreProfileLoadedState extends States {
                 Navigator.of(context).pushNamed(
                     StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
                     arguments: profile?.id ?? -1);
+              }),
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).cashOrders,
+              onTapCard: () {
+                ArgumentHiveHelper()
+                    .setCurrentStoreID(profile?.id.toString() ?? '-1');
+                Navigator.of(context).pushNamed(
+                  OrdersRoutes.ORDER_CASH_STORES,
+                );
               }),
         ],
       ),

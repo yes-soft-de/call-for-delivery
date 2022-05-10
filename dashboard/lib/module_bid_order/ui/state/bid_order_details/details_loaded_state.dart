@@ -19,30 +19,32 @@ class OrderDetailsStateLoaded extends States {
     required this.model,
   }) : super(screenState) {}
 
-
-
   @override
   Widget getUI(BuildContext context) {
     return StackedForm(
-      label:'',
+      label: '',
       child: CustomListView.custom(
         children: [
-        model.images.isEmpty ?
-        Image.asset(ImageAsset.PLACEHOLDER,height: 250,):  CarouselSlider.builder(
-            options: CarouselOptions(
-                height: 250.0, autoPlay: true, pageSnapping: true),
-            itemCount: model.images.length,
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: CustomNetworkImage(
-                imageSource: model.images[itemIndex],
-                height: 200,
-                width: 200,
-              ),
-            ),
-          ),
+          model.images.isEmpty
+              ? Image.asset(
+                  ImageAsset.PLACEHOLDER,
+                  height: 250,
+                )
+              : CarouselSlider.builder(
+                  options: CarouselOptions(
+                      height: 250.0, autoPlay: true, pageSnapping: true),
+                  itemCount: model.images.length,
+                  itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                      Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: CustomNetworkImage(
+                      imageSource: model.images[itemIndex],
+                      height: 200,
+                      width: 200,
+                    ),
+                  ),
+                ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(
@@ -56,13 +58,17 @@ class OrderDetailsStateLoaded extends States {
                       Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: model.openToPriceOffer ? Colors.green.shade900 :Colors.red.shade900 ,
+                            color: model.openToPriceOffer
+                                ? Colors.green.shade900
+                                : Colors.red.shade900,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 3, bottom: 3),
                             child: Text(
-                              model.openToPriceOffer ? S.of(context).open :S.of(context).close ,
+                              model.openToPriceOffer
+                                  ? S.of(context).open
+                                  : S.of(context).close,
                               style: TextStyle(color: Colors.white),
                             ),
                           )),
@@ -84,8 +90,7 @@ class OrderDetailsStateLoaded extends States {
                         height: 10,
                       ),
                       Padding(
-                        padding:
-                        const EdgeInsetsDirectional.only(start: 12.0),
+                        padding: const EdgeInsetsDirectional.only(start: 12.0),
                         child: Row(
                           children: [
                             Icon(
@@ -118,8 +123,11 @@ class OrderDetailsStateLoaded extends States {
             color: Theme.of(context).backgroundColor,
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.only(start: 8,end: 8),
-            child: Text(S.of(context).supplierOffer,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+            padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+            child: Text(
+              S.of(context).supplierOffer,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
           ),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -129,13 +137,13 @@ class OrderDetailsStateLoaded extends States {
             itemCount: model.offers.length,
             shrinkWrap: true,
           ),
-          SizedBox(height: 55,)
+          SizedBox(
+            height: 55,
+          )
         ],
       ),
-      onTap: (){
-      },
+      onTap: () {},
       visible: false,
     );
   }
-
 }

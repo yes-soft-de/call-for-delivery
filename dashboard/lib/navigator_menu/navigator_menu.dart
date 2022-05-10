@@ -172,8 +172,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
-            customListTile(getIt<CarsModule>().carsScreen, S.current.deliveryCars,
-                FontAwesomeIcons.car),
+            customListTile(getIt<CarsModule>().carsScreen,
+                S.current.deliveryCars, FontAwesomeIcons.car),
             customExpansionTile(
                 title: S.current.directSupport,
                 icon: FontAwesomeIcons.headphonesAlt,

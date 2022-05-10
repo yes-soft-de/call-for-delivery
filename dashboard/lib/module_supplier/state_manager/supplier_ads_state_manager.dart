@@ -20,18 +20,19 @@ class SupplierAdsStateManager {
 
   SupplierAdsStateManager(this._service);
 
-  void getSupplierAds(SupplierAdsScreenState screenState,FilterSupplierAds request) {
+  void getSupplierAds(
+      SupplierAdsScreenState screenState, FilterSupplierAds request) {
     _stateSubject.add(LoadingState(screenState));
     _service.getSupplierAds(request).then((value) {
       if (value.hasError) {
         _stateSubject
             .add(SupplierAdsLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject
-            .add(SupplierAdsLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(
+            SupplierAdsLoadedState(screenState, null, empty: value.isEmpty));
       } else {
         SupplierAdsModel _model = value as SupplierAdsModel;
-        _stateSubject.add(SupplierAdsLoadedState(screenState, _model.data  ));
+        _stateSubject.add(SupplierAdsLoadedState(screenState, _model.data));
       }
     });
   }

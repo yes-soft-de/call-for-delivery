@@ -31,7 +31,7 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
   int? id;
   String? imagePath;
   String? imageSource;
-  bool status= true;
+  bool status = true;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context, title: S.of(context).addCategory),
       body: StackedForm(
-        visible: true,
+          visible: true,
           child: Form(
             key: _key,
             child: FixedContainer(
@@ -105,10 +105,8 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
                         )
                             .then((value) {
                           if (value != null) {
-                             imagePath = value.path;
-                           setState(() {
-
-                           });
+                            imagePath = value.path;
+                            setState(() {});
                           }
                         });
                       },
@@ -117,36 +115,38 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
                           Icons.image,
                           size: 125,
                         ),
-                        checked:  imagePath != null,
+                        checked: imagePath != null,
                         checkedWidget: SizedBox(
                             height: 250,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(25),
-                                child:  imagePath
-                                    ?.contains('http') ==
-                                    true
-                                    ? Image.network( imagePath ?? '')
+                                child: imagePath?.contains('http') == true
+                                    ? Image.network(imagePath ?? '')
                                     : Image.file(
-                                  File(imagePath ?? ''),
-                                  fit: BoxFit.scaleDown,
-                                ))),
+                                        File(imagePath ?? ''),
+                                        fit: BoxFit.scaleDown,
+                                      ))),
                       ),
                     ),
-                    SizedBox(height: 100,)
+                    SizedBox(
+                      height: 100,
+                    )
                   ]),
             ),
           ),
           label: S.current.save,
           onTap: () {
             if (_key.currentState!.validate() && imagePath != null) {
-              if(imagePath!.contains('http')){
+              if (imagePath!.contains('http')) {
                 imagePath = imageSource;
               }
               Navigator.pop(context);
               widget.onSave(SupplierCategoryRequest(
                   name: _nameController.text,
                   description: _decController.text,
-                  id: id,image:imagePath,status: status ));
+                  id: id,
+                  image: imagePath,
+                  status: status));
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,

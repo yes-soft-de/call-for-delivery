@@ -1,4 +1,4 @@
- import 'package:c4d/utils/logger/logger.dart';
+import 'package:c4d/utils/logger/logger.dart';
 
 import '../../module_stores/response/store_profile_response.dart';
 
@@ -24,7 +24,6 @@ class SupplierResponse {
       });
     }
   }
-
 }
 
 class SupplierData {
@@ -33,11 +32,12 @@ class SupplierData {
   List<ImageUrl>? image;
   bool? state;
 
-  SupplierData(
-      {this.id,
-      this.supplierName,
-      this.image,
-      this.state,});
+  SupplierData({
+    this.id,
+    this.supplierName,
+    this.image,
+    this.state,
+  });
 
   SupplierData.fromJson(dynamic json) {
     id = json['id'];
@@ -50,8 +50,6 @@ class SupplierData {
     }
     state = json['status'];
   }
-
-
 }
 
 class Location {

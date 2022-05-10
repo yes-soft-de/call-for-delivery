@@ -63,8 +63,7 @@ class CustomFlushBarHelper {
 
   static showSnackFailed(State screenState, String message, bool loading) {
     if (loading) {
-      createError(
-              title: S.current.warnning, message: message)
+      createError(title: S.current.warnning, message: message)
           .show(screenState.context);
     } else {
       Fluttertoast.showToast(msg: message);

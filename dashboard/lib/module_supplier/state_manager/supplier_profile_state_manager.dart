@@ -1,4 +1,3 @@
-
 import 'package:c4d/module_supplier/model/porfile_model.dart';
 import 'package:c4d/module_supplier/request/enable_supplier.dart';
 import 'package:c4d/module_supplier/service/supplier_service.dart';
@@ -23,15 +22,16 @@ class SupplierProfileStateManager {
 
   SupplierProfileStateManager(this._service);
 
-  void getSupplierProfile(SupplierProfileScreenState screenState, int captainId) {
+  void getSupplierProfile(
+      SupplierProfileScreenState screenState, int captainId) {
     _stateSubject.add(LoadingState(screenState));
     _service.getSupplierProfile(captainId).then((value) {
       if (value.hasError) {
         _stateSubject.add(
             SupplierProfileLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            SupplierProfileLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(SupplierProfileLoadedState(screenState, null,
+            empty: value.isEmpty));
       } else {
         ProfileSupplierModel _model = value as ProfileSupplierModel;
         _stateSubject.add(SupplierProfileLoadedState(screenState, _model.data));
@@ -39,8 +39,8 @@ class SupplierProfileStateManager {
     });
   }
 
-  void enableSupplier(SupplierProfileScreenState screenState,
-      int captainId, EnableSupplierRequest request) {
+  void enableSupplier(SupplierProfileScreenState screenState, int captainId,
+      EnableSupplierRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _service.enableSupplier(request).then((value) {
       if (value.hasError) {

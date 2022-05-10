@@ -15,32 +15,33 @@ class SupplierAdsModel extends DataModel {
 
   List<SupplierAdsModel> _model = [];
 
-  SupplierAdsModel({
-    required this.id,
-    required this.price,
-    required this.quantity,
-    required this.details,
-    this.images,this.status,this.administrationStatus,this.createdDate
-  });
+  SupplierAdsModel(
+      {required this.id,
+      required this.price,
+      required this.quantity,
+      required this.details,
+      this.images,
+      this.status,
+      this.administrationStatus,
+      this.createdDate});
 
   SupplierAdsModel.withData(AdsResponse response) : super.withData() {
     var data = response.data;
-    _model =[];
+    _model = [];
     data?.forEach((element) {
       var create = DateFormat.jm()
-          .format(DateHelper.convert(element.createdAt?.timestamp)) +
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
           DateFormat.Md()
               .format(DateHelper.convert(element.createdAt?.timestamp));
       _model.add(SupplierAdsModel(
-        id: element.id ,
-        details: element.details,
-        price: element.price,
-        quantity: element.quantity,
-        status: element.status,
-        administrationStatus: element.administrationStatus,
-        createdDate: create
-      ));
+          id: element.id,
+          details: element.details,
+          price: element.price,
+          quantity: element.quantity,
+          status: element.status,
+          administrationStatus: element.administrationStatus,
+          createdDate: create));
     });
   }
   List<SupplierAdsModel> get data => _model;

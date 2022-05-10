@@ -1,4 +1,3 @@
-
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -12,8 +11,12 @@ class SupplierCategoryCard extends StatelessWidget {
   final VoidCallback onEdit;
   final Function enablePackage;
   SupplierCategoryCard(
-
-      {required this.name, required this.description, required this.onEdit,required this.image,required this.status,required this.enablePackage});
+      {required this.name,
+      required this.description,
+      required this.onEdit,
+      required this.image,
+      required this.status,
+      required this.enablePackage});
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +56,10 @@ class SupplierCategoryCard extends StatelessWidget {
               direction: Axis.horizontal,
               children: [
                 Expanded(
-                  child:  CustomNetworkImage(height:
-                  60, width: 60,
-                      imageSource: image),
+                  child: CustomNetworkImage(
+                      height: 60, width: 60, imageSource: image),
                 ),
-                Expanded(
-                  child:  Text(name)
-                ),
+                Expanded(child: Text(name)),
                 Spacer(
                   flex: 1,
                 ),

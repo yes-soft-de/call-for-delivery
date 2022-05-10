@@ -20,23 +20,25 @@ class BidOrderStateManager {
 
   BidOrderStateManager(this._service);
 
-  void getBidOrder(BidOrdersScreenState screenState,FilterBidOrderRequest request) {
+  void getBidOrder(
+      BidOrdersScreenState screenState, FilterBidOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _service.getBidOrder(request).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getBidOrder(screenState,request);
+          getBidOrder(screenState, request);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
-          getBidOrder(screenState,request);
-        },  emptyMessage: S.current.homeDataEmpty, title: '',hasAppbar: false));
-      }
-      else {
+          getBidOrder(screenState, request);
+        }, emptyMessage: S.current.homeDataEmpty, title: '', hasAppbar: false));
+      } else {
         OrderModel model = value as OrderModel;
-        _stateSubject.add(BidOrdersListStateLoaded(screenState,  orders: model.data,));
+        _stateSubject.add(BidOrdersListStateLoaded(
+          screenState,
+          orders: model.data,
+        ));
       }
     });
   }
-
 }

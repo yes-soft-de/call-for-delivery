@@ -26,65 +26,63 @@ class SupplierCategoriesStateManager {
     _stateSubject.add(LoadingState(screenState));
     _categoriesService.getCategories().then((value) {
       if (value.hasError) {
-        _stateSubject
-            .add(SupplierCategoriesLoadedState(screenState, null, error: value.error));
+        _stateSubject.add(SupplierCategoriesLoadedState(screenState, null,
+            error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            SupplierCategoriesLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(SupplierCategoriesLoadedState(screenState, null,
+            empty: value.isEmpty));
       } else {
         SupplierCategoryModel model = value as SupplierCategoryModel;
-        _stateSubject.add(SupplierCategoriesLoadedState(screenState, model.data));
+        _stateSubject
+            .add(SupplierCategoriesLoadedState(screenState, model.data));
       }
     });
   }
 
-  void createCategory(
-      SupplierCategoriesScreenState screenState, SupplierCategoryRequest request) {
+  void createCategory(SupplierCategoriesScreenState screenState,
+      SupplierCategoryRequest request) {
     _stateSubject.add(LoadingState(screenState));
-   _uploadService.uploadImage(request.image).then((value) {
-     print('this is the image');
-     print(value);
-     if(value == null){
-       getCategories(screenState);
-       CustomFlushBarHelper.createError(
-           title: S.current.warnning, message: S.current.errorUploadingImages)
-         ..show(screenState.context);
-     }else
-       {
-         request.image = value;
-         _categoriesService.createCategory(request).then((value) {
-           if (value.hasError) {
-             getCategories(screenState);
-             CustomFlushBarHelper.createError(
-                 title: S.current.warnning, message: value.error ?? '')
-               ..show(screenState.context);
-           } else {
-             getCategories(screenState);
-             CustomFlushBarHelper.createSuccess(
-                 title: S.current.warnning, message: S.current.saveSuccess)
-               ..show(screenState.context);
-           }
-         });
-       }
-
-   });
-
+    _uploadService.uploadImage(request.image).then((value) {
+      print('this is the image');
+      print(value);
+      if (value == null) {
+        getCategories(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: S.current.errorUploadingImages)
+          ..show(screenState.context);
+      } else {
+        request.image = value;
+        _categoriesService.createCategory(request).then((value) {
+          if (value.hasError) {
+            getCategories(screenState);
+            CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+              ..show(screenState.context);
+          } else {
+            getCategories(screenState);
+            CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.saveSuccess)
+              ..show(screenState.context);
+          }
+        });
+      }
+    });
   }
 
-  void updateCategory(
-      SupplierCategoriesScreenState screenState, SupplierCategoryRequest request) {
+  void updateCategory(SupplierCategoriesScreenState screenState,
+      SupplierCategoryRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    if(!request.image!.contains('http')){
+    if (!request.image!.contains('http')) {
       _uploadService.uploadImage(request.image).then((value) {
         print('this is the image');
         print(value);
-        if(value == null){
+        if (value == null) {
           getCategories(screenState);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: S.current.errorUploadingImages)
+              title: S.current.warnning,
+              message: S.current.errorUploadingImages)
             ..show(screenState.context);
-        }else
-        {
+        } else {
           request.image = value;
           _categoriesService.updateCategory(request).then((value) {
             if (value.hasError) {
@@ -95,15 +93,14 @@ class SupplierCategoriesStateManager {
             } else {
               getCategories(screenState);
               CustomFlushBarHelper.createSuccess(
-                  title: S.current.warnning, message: S.current.categoryUpdatedSuccessfully)
+                  title: S.current.warnning,
+                  message: S.current.categoryUpdatedSuccessfully)
                 ..show(screenState.context);
             }
           });
         }
-
       });
-    }
-    else{
+    } else {
       _categoriesService.updateCategory(request).then((value) {
         if (value.hasError) {
           getCategories(screenState);
@@ -121,25 +118,22 @@ class SupplierCategoriesStateManager {
     }
   }
 
-
-
-  void enableCategory(
-      SupplierCategoriesScreenState screenState, ActiveCategoryRequest request) {
+  void enableCategory(SupplierCategoriesScreenState screenState,
+      ActiveCategoryRequest request) {
     _stateSubject.add(LoadingState(screenState));
-      _categoriesService.enableCategory(request).then((value) {
-        if (value.hasError) {
-          getCategories(screenState);
-          CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
-        } else {
-          getCategories(screenState);
-          CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning,
-              message: S.current.categoryUpdatedSuccessfully)
-            ..show(screenState.context);
-        }
-      });
-    }
-
- }
+    _categoriesService.enableCategory(request).then((value) {
+      if (value.hasError) {
+        getCategories(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '')
+          ..show(screenState.context);
+      } else {
+        getCategories(screenState);
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.categoryUpdatedSuccessfully)
+          ..show(screenState.context);
+      }
+    });
+  }
+}

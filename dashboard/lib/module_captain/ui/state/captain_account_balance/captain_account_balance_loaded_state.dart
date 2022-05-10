@@ -69,7 +69,10 @@ class AccountBalanceStateLoaded extends States {
         fade: true,
         child: ListTile(
           leading: Icon(icon),
-          title: Text(text,style: TextStyle(fontSize: 14),),
+          title: Text(
+            text,
+            style: TextStyle(fontSize: 14),
+          ),
           trailing: Container(
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),

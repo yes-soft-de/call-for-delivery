@@ -9,23 +9,16 @@ import 'ui/screen/in_active_supplier_screen.dart';
 import 'ui/screen/supplier_list_screen.dart';
 import 'ui/screen/supplier_needs_support_screen.dart';
 
-
 @injectable
 class SupplierModule extends YesModule {
-
   final InActiveSupplierScreen inActiveSupplierScreen;
   final SuppliersScreen suppliersScreen;
   final SupplierProfileScreen supplierProfileScreen;
   final SupplierNeedsSupportScreen supportScreen;
   final SupplierAdsScreen adsScreen;
 
-  SupplierModule(
-    this.inActiveSupplierScreen,
-    this.suppliersScreen,
-    this.supplierProfileScreen,
-    this.supportScreen,
-      this.adsScreen
-  ) {
+  SupplierModule(this.inActiveSupplierScreen, this.suppliersScreen,
+      this.supplierProfileScreen, this.supportScreen, this.adsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {

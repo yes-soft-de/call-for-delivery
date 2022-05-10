@@ -14,7 +14,8 @@ class ProfileSupplierModel extends DataModel {
       this.image,
       this.name,
       this.phone,
-      this.status,this.supplierCategoryName});
+      this.status,
+      this.supplierCategoryName});
 
   ProfileSupplierModel? _models;
 
@@ -24,7 +25,8 @@ class ProfileSupplierModel extends DataModel {
         image: data.image?[0].image,
         name: data.supplierName,
         phone: data.phone,
-        status: data.status,supplierCategoryName: data.supplierCategoryName);
+        status: data.status,
+        supplierCategoryName: data.supplierCategoryName);
   }
 
   ProfileSupplierModel get data => _models ?? ProfileSupplierModel(id: -1);

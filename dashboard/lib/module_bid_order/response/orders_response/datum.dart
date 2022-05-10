@@ -8,25 +8,23 @@ class Datum {
   String? state;
   CreatedAt? createdAt;
   bool? openToPriceOffer;
-  Datum({
-    this.id,
-    this.createdAt,
-    this.description,
-    this.title,
-    this.openToPriceOffer,
-    this.bidDetailsId,
-    this.state
-  });
+  Datum(
+      {this.id,
+      this.createdAt,
+      this.description,
+      this.title,
+      this.openToPriceOffer,
+      this.bidDetailsId,
+      this.state});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json['id'] as int?,
-        title: json['title'] as String?,
-        description: json['description'] as String?,
-        openToPriceOffer: json['openToPriceOffer'] as bool?,
-        createdAt: json['createdAt'] == null
-            ? null
-            : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
-    bidDetailsId: json['bidDetailsId'] as int?,
-    state: json['state'] as String?
-      );
+      id: json['id'] as int?,
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      openToPriceOffer: json['openToPriceOffer'] as bool?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
+      bidDetailsId: json['bidDetailsId'] as int?,
+      state: json['state'] as String?);
 }

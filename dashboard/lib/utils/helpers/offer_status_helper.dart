@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 
 class OfferStatusHelper {
-
-
   static Color getOfferStatusColor(OfferStatusEnum status) {
     switch (status) {
       case OfferStatusEnum.PENDING:
@@ -19,6 +17,7 @@ class OfferStatusHelper {
         return Colors.red;
     }
   }
+
   static OfferStatusEnum getOfferEnum(String status) {
     if (status == 'pending') {
       return OfferStatusEnum.PENDING;

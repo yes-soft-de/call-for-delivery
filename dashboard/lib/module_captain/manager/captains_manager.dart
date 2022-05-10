@@ -52,6 +52,7 @@ class CaptainsManager {
   Future<ActionResponse?> captainFinancePlanStatus(
           EnableCaptainRequest request) =>
       _repository.captainFinanceStatus(request);
-  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(int captainID) =>
+  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
+          int captainID) =>
       _repository.getCaptainFinancialDues(captainID);
 }

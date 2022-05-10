@@ -30,7 +30,6 @@ class _CategoryFormState extends State<CarsForm> {
 
   int? id;
 
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +39,7 @@ class _CategoryFormState extends State<CarsForm> {
       _nameController.text = widget.request?.carModel ?? '';
       _decController.text = widget.request?.details ?? '';
       id = widget.request?.id ?? -1;
-      _costController.text = widget.request!.deliveryCost.toString() ;
+      _costController.text = widget.request!.deliveryCost.toString();
     }
   }
 
@@ -66,8 +65,11 @@ class _CategoryFormState extends State<CarsForm> {
                     ),
                     CustomFormField(
                       controller: _nameController,
-                      hintText:  S.current.carModel,
-                      sufIcon: Icon(FontAwesomeIcons.car,color: Theme.of(context).primaryColor,),
+                      hintText: S.current.carModel,
+                      sufIcon: Icon(
+                        FontAwesomeIcons.car,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -81,7 +83,7 @@ class _CategoryFormState extends State<CarsForm> {
                     CustomFormField(
                       maxLines: 5,
                       controller: _decController,
-                      hintText:   S.current.description,
+                      hintText: S.current.description,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -97,7 +99,10 @@ class _CategoryFormState extends State<CarsForm> {
                       controller: _costController,
                       hintText: S.current.deliveryCarsCost,
                       numbers: true,
-                      sufIcon: Icon(FontAwesomeIcons.moneyBill,color: Theme.of(context).primaryColor,),
+                      sufIcon: Icon(
+                        FontAwesomeIcons.moneyBill,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                     SizedBox(
                       height: 100,
@@ -113,7 +118,7 @@ class _CategoryFormState extends State<CarsForm> {
                   carModel: _nameController.text,
                   details: _decController.text,
                   id: id,
-                  deliveryCost:num.parse(_costController.text) ));
+                  deliveryCost: num.parse(_costController.text)));
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
@@ -123,5 +128,4 @@ class _CategoryFormState extends State<CarsForm> {
           }),
     );
   }
-
 }

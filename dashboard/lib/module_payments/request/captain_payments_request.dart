@@ -4,8 +4,16 @@ class CaptainPaymentsRequest {
   String? note;
   int? status;
   int? captainFinancialDuesId;
-
-  CaptainPaymentsRequest({this.captainFinancialDuesId,this.status,this.captainId, this.amount, this.note});
+  String? fromDate;
+  String? toDate;
+  CaptainPaymentsRequest(
+      {this.captainFinancialDuesId,
+      this.status,
+      this.captainId,
+      this.amount,
+      this.note,
+      this.fromDate,
+      this.toDate});
 
   CaptainPaymentsRequest.fromJson(dynamic json) {
     captainId = json['captainId'];
@@ -18,9 +26,19 @@ class CaptainPaymentsRequest {
     map['captain'] = captainId;
     map['amount'] = amount;
     map['note'] = note;
-    map['status'] = status;
-    map['captainFinancialDuesId'] = captainFinancialDuesId;
-
+    if (status != null) {
+      map['status'] = status;
+    }
+    if (captainFinancialDuesId != null) {
+      map['captainFinancialDuesId'] = captainFinancialDuesId;
+    }
+    if (fromDate != null) {
+      map['fromDate'] = fromDate;
+    }
+    if (toDate != null) {
+      map['toDate'] = toDate;
+    }
     return map;
   }
+
 }

@@ -4,7 +4,8 @@ class FilterBidOrderRequest {
   String? fromDate;
 
   bool? openToPriceOffer;
-  FilterBidOrderRequest({this.fromDate,  this.toDate , this.openToPriceOffer , this.storeId});
+  FilterBidOrderRequest(
+      {this.fromDate, this.toDate, this.openToPriceOffer, this.storeId});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -199,8 +199,9 @@ class CaptainFinancialDuesStateLoaded extends States {
                   fontSize: 14,
                   color: background != null ? Colors.white : null)),
           subtitle: Text(subtitle,
-              style:
-                  TextStyle(color: background != null ? Colors.white : null,fontSize: subtitleText ? 14 : null)),
+              style: TextStyle(
+                  color: background != null ? Colors.white : null,
+                  fontSize: subtitleText ? 14 : null)),
         ),
       ),
     );

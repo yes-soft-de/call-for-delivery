@@ -21,11 +21,10 @@ class SupplierRepository {
 
   SupplierRepository(this._apiClient, this._authService);
 
-
   Future<SupplierResponse?> getInActiveSupplier() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(Urls.GET_SUPPLIERS ,
-        FilterSupplierRequest(false).toJson(),
+    dynamic response = await _apiClient.post(
+        Urls.GET_SUPPLIERS, FilterSupplierRequest(false).toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return SupplierResponse.fromJson(response);
@@ -33,8 +32,8 @@ class SupplierRepository {
 
   Future<SupplierResponse?> getSuppliers() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(Urls.GET_SUPPLIERS ,
-        FilterSupplierRequest(true).toJson(),
+    dynamic response = await _apiClient.post(
+        Urls.GET_SUPPLIERS, FilterSupplierRequest(true).toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return SupplierResponse.fromJson(response);
@@ -42,8 +41,7 @@ class SupplierRepository {
 
   Future<SupplierProfileResponse?> getSupplierProfile(int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-      Urls.GET_SUPPLIER_PROFILE+ '$id',
+    dynamic response = await _apiClient.get(Urls.GET_SUPPLIER_PROFILE + '$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return SupplierProfileResponse.fromJson(response);
@@ -74,10 +72,11 @@ class SupplierRepository {
     if (response == null) return null;
     return SupplierNeedSupportResponse.fromJson(response);
   }
+
   Future<AdsResponse?> getSupplierAds(FilterSupplierAds request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(Urls.GET_ANNOUNCEMENT ,
-        request.toJson(),
+    dynamic response = await _apiClient.post(
+        Urls.GET_ANNOUNCEMENT, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return AdsResponse.fromJson(response);

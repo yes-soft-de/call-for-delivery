@@ -102,8 +102,7 @@ class NoticeLoadedState extends States {
             },
           ),
         );
-      }
-      else if (currentIndex == 2 &&
+      } else if (currentIndex == 2 &&
           (element.appType == 'suppliers' || element.appType == 'all')) {
         widgets.add(
           NoteCard(

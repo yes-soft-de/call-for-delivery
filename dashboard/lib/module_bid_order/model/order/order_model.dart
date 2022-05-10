@@ -16,15 +16,14 @@ class OrderModel extends DataModel {
   late bool openToPriceOffer;
   late OrderStatusEnum orderState;
 
-  OrderModel({
-    required this.description,
-    required this.title,
-    required this.createdDate,
-    required this.id,
-    required this.openToPriceOffer,
-    required this.bidDetailsId,
-    required this.orderState
-  });
+  OrderModel(
+      {required this.description,
+      required this.title,
+      required this.createdDate,
+      required this.id,
+      required this.openToPriceOffer,
+      required this.bidDetailsId,
+      required this.orderState});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -40,12 +39,10 @@ class OrderModel extends DataModel {
           description: element.description ?? S.current.unknown,
           createdDate: create,
           id: element.id ?? -1,
-          title: element.title ??  S.current.unknown,
+          title: element.title ?? S.current.unknown,
           openToPriceOffer: element.openToPriceOffer ?? false,
-        bidDetailsId: element.bidDetailsId ?? -1,
-        orderState: StatusHelper.getStatusEnum(element.state)
-
-      ));
+          bidDetailsId: element.bidDetailsId ?? -1,
+          orderState: StatusHelper.getStatusEnum(element.state)));
     });
   }
   List<OrderModel> get data => _orders;

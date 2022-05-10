@@ -6380,6 +6380,76 @@ class S {
     );
   }
 
+  /// `Payments from Company`
+  String get sumPaymentsFromCompany {
+    return Intl.message(
+      'Payments from Company',
+      name: 'sumPaymentsFromCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Dues`
+  String get sumAmountStorOwnerDues {
+    return Intl.message(
+      'Store Dues',
+      name: 'sumAmountStorOwnerDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments to captain`
+  String get sumPaymentsToCaptain {
+    return Intl.message(
+      'Payments to captain',
+      name: 'sumPaymentsToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash with captain`
+  String get sumAmountWithCaptain {
+    return Intl.message(
+      'Cash with captain',
+      name: 'sumAmountWithCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash order`
+  String get cashOrders {
+    return Intl.message(
+      'Cash order',
+      name: 'cashOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments To Captain`
+  String get paymentsToCaptain {
+    return Intl.message(
+      'Payments To Captain',
+      name: 'paymentsToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments To Store`
+  String get paymentsToStore {
+    return Intl.message(
+      'Payments To Store',
+      name: 'paymentsToStore',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Supplier profit margin`
   String get supplierProfitMargin {
     return Intl.message(
@@ -6395,6 +6465,16 @@ class S {
     return Intl.message(
       'Store profit margin',
       name: 'storeProfitMargin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments From Captain`
+  String get paymentsFromCaptain {
+    return Intl.message(
+      'Payments From Captain',
+      name: 'paymentsFromCaptain',
       desc: '',
       args: [],
     );

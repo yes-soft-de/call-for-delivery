@@ -25,13 +25,12 @@ class BidOrderDetailsScreenState extends State<BidOrderDetailsScreen> {
   late States _currentState;
   StreamSubscription? _stateSubscription;
   late StreamSubscription _globalStreamSubscription;
-   int orderId = -1;
-   bool onGoing = false;
+  int orderId = -1;
+  bool onGoing = false;
 
-  void refresh(){
-    if(mounted){
-      setState(() {
-      });
+  void refresh() {
+    if (mounted) {
+      setState(() {});
     }
   }
 
@@ -47,10 +46,9 @@ class BidOrderDetailsScreenState extends State<BidOrderDetailsScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-  var  args = ModalRoute.of(context)?.settings.arguments;
+    var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null && orderId == -1) {
 //        orderId = args as int;
 //        if(onGoing)
@@ -59,12 +57,12 @@ class BidOrderDetailsScreenState extends State<BidOrderDetailsScreen> {
 //        else widget._stateManager.getBidOrder(this, orderId);
 
     }
-    return  Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title:S.of(context).orderNumber+ ' '+orderId.toString()+'#',canGoBack: true),
-        body: SafeArea(
-            child: Container(child: _currentState.getUI(context))));
+    return Scaffold(
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.of(context).orderNumber + ' ' + orderId.toString() + '#',
+            canGoBack: true),
+        body: SafeArea(child: Container(child: _currentState.getUI(context))));
   }
-
 
   @override
   void dispose() {
@@ -72,5 +70,4 @@ class BidOrderDetailsScreenState extends State<BidOrderDetailsScreen> {
     _stateSubscription?.cancel();
     super.dispose();
   }
-
 }

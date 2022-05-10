@@ -39,7 +39,8 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-    Future<DataModel> paymentFromStore(CreateStorePaymentsRequest request) async {
+
+  Future<DataModel> paymentFromStore(CreateStorePaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.paymentFromStore(request);
 
@@ -79,7 +80,8 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-   Future<DataModel> deletePaymentFromStore(String id) async {
+
+  Future<DataModel> deletePaymentFromStore(String id) async {
     ActionResponse? actionResponse =
         await _paymentsManager.deleteFromStorePayment(id);
 
@@ -111,6 +113,19 @@ class PaymentsService {
   Future<DataModel> paymentToCaptain(CaptainPaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.paymentToCaptain(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.paymentFromCaptain(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -222,6 +237,7 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
+
   /* UPDATE */
   Future<DataModel> updateCaptainFinanceByOrder(
       CreateCaptainFinanceByOrderRequest request) async {
@@ -267,5 +283,4 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-
 }

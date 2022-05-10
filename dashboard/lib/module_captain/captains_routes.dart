@@ -7,5 +7,4 @@ class CaptainsRoutes {
   static const CAPTAIN_BALANCE = '/captains_balance';
   static const CAPTAIN_DUES = '/captains_dues';
   static const CAPTAIN_DUES_DETAILS = '/captains_dues_details';
-
 }

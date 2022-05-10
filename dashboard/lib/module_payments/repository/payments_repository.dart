@@ -25,7 +25,7 @@ class PaymentsRepository {
       CreateStorePaymentsRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.CREATE_STORE_PAYMENTS, request.toJson(),
+        Urls.CREATE_STORE_PAYMENTS_TO_STORE, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
@@ -73,6 +73,16 @@ class PaymentsRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.CREATE_CAPTAIN_PAYMENTS, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> paymentFromCaptain(
+      CaptainPaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.CREATE_CAPTAIN_PAYMENTS_TO_COMPANY, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

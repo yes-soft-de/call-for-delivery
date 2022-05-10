@@ -5,7 +5,8 @@ class SupplierCategoryRequest {
   bool? status;
   String? image;
 
-  SupplierCategoryRequest({this.id, this.name, this.description,this.image,this.status});
+  SupplierCategoryRequest(
+      {this.id, this.name, this.description, this.image, this.status});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};

@@ -58,8 +58,7 @@ class PaymentsToCaptainScreenState extends State<PaymentsToCaptainScreen> {
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).payments),
+      appBar: CustomC4dAppBar.appBar(context, title: S.of(context).payments),
       body: currentState.getUI(context),
     );
   }

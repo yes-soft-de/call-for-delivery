@@ -17,17 +17,14 @@ class CarCard extends StatelessWidget {
         elevation: 5.0,
         color: Theme.of(context).backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-
         child: Container(
           child: ListTile(
             leading: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 shape: BoxShape.rectangle,
-                color: Theme.of(context)
-                    .colorScheme
-                    .background
-                    .withOpacity(0.8),
+                color:
+                    Theme.of(context).colorScheme.background.withOpacity(0.8),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -37,15 +34,23 @@ class CarCard extends StatelessWidget {
                 ),
               ),
             ),
-            title: Text(model.carModel,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+            title: Text(
+              model.carModel,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 model.details.isNotEmpty ? Text(model.details) : Container(),
-                Row(children: [
-                  Text(S.of(context).deliveryCarsCost +':  '),
-                  Text(model.deliveryCost.toString() + ' '+S.of(context).sar,style: TextStyle(color:Colors.green),),
-                ],)
+                Row(
+                  children: [
+                    Text(S.of(context).deliveryCarsCost + ':  '),
+                    Text(
+                      model.deliveryCost.toString() + ' ' + S.of(context).sar,
+                      style: TextStyle(color: Colors.green),
+                    ),
+                  ],
+                )
               ],
             ),
             trailing: InkWell(
@@ -54,10 +59,8 @@ class CarCard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .background
-                      .withOpacity(0.8),
+                  color:
+                      Theme.of(context).colorScheme.background.withOpacity(0.8),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

@@ -23,7 +23,8 @@ class SupplierCategoriesScreen extends StatefulWidget {
   SupplierCategoriesScreen(this._stateManager);
 
   @override
-  SupplierCategoriesScreenState createState() => SupplierCategoriesScreenState();
+  SupplierCategoriesScreenState createState() =>
+      SupplierCategoriesScreenState();
 }
 
 class SupplierCategoriesScreenState extends State<SupplierCategoriesScreen> {
