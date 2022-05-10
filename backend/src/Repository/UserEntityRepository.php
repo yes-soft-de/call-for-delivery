@@ -156,4 +156,16 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getUserVerificationStatusByUserId(string $userId): ?array
+    {
+        return $this->createQueryBuilder('userEntity')
+            ->select('userEntity.verificationStatus')
+
+            ->andWhere('userEntity.userId = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

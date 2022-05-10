@@ -3,11 +3,11 @@
 namespace App\Service\Captain;
 
 use App\AutoMapping;
-use App\Constant\Captain\CaptainConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\CaptainEntity;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Captain\CaptainProfileUpdateRequest;
+use App\Request\Verification\VerificationCreateRequest;
 use App\Response\Captain\CaptainProfileResponse;
 use App\Response\Captain\CaptainStatusResponse;
 use App\Entity\UserEntity;
@@ -18,6 +18,7 @@ use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Rate\RatingService;
 use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 use App\Response\Captain\CaptainIsOnlineResponse;
+use App\Service\Verification\VerificationService;
 
 class CaptainService
 {
@@ -25,13 +26,16 @@ class CaptainService
     private CaptainManager $captainManager;
     private UploadFileHelperService $uploadFileHelperService;
     private RatingService $ratingService;
+    private VerificationService $verificationService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService, RatingService $ratingService)
+    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService, RatingService $ratingService,
+                                VerificationService $verificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->captainManager = $captainManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->ratingService = $ratingService;
+        $this->verificationService = $verificationService;
     }
 
     public function captainRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -44,8 +48,20 @@ class CaptainService
 
             return $this->autoMapping->map("array", UserRegisterResponse::class, $user);
         }
+
+        // create verification code for the user
+        //$this->createVerificationCodeForCaptain($userRegister);
       
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
+    }
+
+    public function createVerificationCodeForCaptain(UserEntity $userEntity)
+    {
+        $verificationCodeRequest = new VerificationCreateRequest();
+
+        $verificationCodeRequest->setUser($userEntity);
+
+        $this->verificationService->createVerificationCode($verificationCodeRequest);
     }
 
     public function captainProfileUpdate(CaptainProfileUpdateRequest $request): CaptainProfileResponse
