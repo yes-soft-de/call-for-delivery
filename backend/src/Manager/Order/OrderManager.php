@@ -377,6 +377,11 @@ class OrderManager
     {
         return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
     }
+
+    public function getOrdersPending(): ?array
+    {
+        return $this->orderRepository->getOrdersPending();
+    }
     
     // this function checks if an order is being accepted by a captain
     public function isOrderAcceptedByCaptain(int $orderId): string|bool
@@ -446,6 +451,7 @@ class OrderManager
         }
                
         $orderEntity->setIsHide($isHide);
+        $orderEntity->setCaptainId(null);
         
         $this->entityManager->flush();
 

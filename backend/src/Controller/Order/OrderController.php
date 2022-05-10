@@ -1349,10 +1349,10 @@ class OrderController extends BaseController
         }
 
         $result = $this->orderService->createSubOrder($request);
-       
-        if ($result === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+    
+        if ($result === SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER) {
       
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CAN_NOT_CREATE);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE_ORDER_FINISHED);
         }
 
         if ($result === OrderStateConstant::ORDER_STATE_DELIVERED) {

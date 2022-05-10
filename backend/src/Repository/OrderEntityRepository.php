@@ -287,7 +287,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('captainId', $captainId)
             ->setParameter('userId', $userId)
-
+           
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+           
             ->getQuery()
             ->getResult();
     }
@@ -1129,6 +1132,17 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.deliveryDate < :specificTime')
             ->setParameter('specificTime', $specificTime)
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersPending(): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
 
             ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
