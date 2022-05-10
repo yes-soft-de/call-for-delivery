@@ -446,6 +446,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "newOrderHint": MessageLookupByLibrary.simpleMessage(
             "This button let you to make a new order"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("New sub order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":

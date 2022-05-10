@@ -9,6 +9,8 @@ class CreateOrderRequest {
   num? orderCost;
   String? detail;
   String? image;
+  int? orderType;
+  int? orderID;
   CreateOrderRequest(
       {this.fromBranch,
       this.note,
@@ -19,7 +21,9 @@ class CreateOrderRequest {
       this.destination,
       this.orderCost,
       this.image,
-      this.detail});
+      this.detail,
+      this.orderID,
+      this.orderType});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -30,7 +34,6 @@ class CreateOrderRequest {
     if (this.note != null && this.note?.isNotEmpty == true) {
       data['note'] = this.note;
     }
-
     data['payment'] = this.payment;
     data['recipientName'] = this.recipientName;
     data['recipientPhone'] = this.recipientPhone;
@@ -44,7 +47,12 @@ class CreateOrderRequest {
     if (this.detail != null && this.detail?.isNotEmpty == true) {
       data['detail'] = this.detail;
     }
-
+    if (this.orderType != null) {
+      //  data['orderType'] = this.orderType;
+    }
+    if (this.orderID != null) {
+      data['primaryOrder'] = this.orderID;
+    }
     return data;
   }
 }

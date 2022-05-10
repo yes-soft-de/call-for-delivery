@@ -9,6 +9,7 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -80,6 +81,28 @@ class OrdersService {
 
   Future<DataModel> addNewOrder(CreateOrderRequest request) async {
     ActionResponse? response = await _ordersManager.addNewOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    await FireStoreHelper().insertWatcher();
+    return DataModel.empty();
+  }
+
+  Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
+    ActionResponse? response = await _ordersManager.removeOrderSub(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    await FireStoreHelper().insertWatcher();
+    return DataModel.empty();
+  }
+
+  Future<DataModel> addNewOrderLink(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.addNewOrderLink(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
       return DataModel.withError(

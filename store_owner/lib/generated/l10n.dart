@@ -5829,6 +5829,16 @@ class S {
       args: [],
     );
   }
+
+  /// `New sub order`
+  String get newOrderLink {
+    return Intl.message(
+      'New sub order',
+      name: 'newOrderLink',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

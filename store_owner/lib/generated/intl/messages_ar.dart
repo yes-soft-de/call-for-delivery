@@ -437,6 +437,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("طلب جديد"),
         "newOrderHint": MessageLookupByLibrary.simpleMessage(
             "بإمكانك عن طريق هذا الزر إضافة طلبات جديدة"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
