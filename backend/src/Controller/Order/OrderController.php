@@ -1349,6 +1349,12 @@ class OrderController extends BaseController
         }
 
         $result = $this->orderService->createSubOrder($request);
+       
+        if ($result === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
+
         if ($result === OrderStateConstant::ORDER_STATE_DELIVERED) {
       
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE);
@@ -1359,7 +1365,7 @@ class OrderController extends BaseController
 
     /**
      * captain: Order Non Sub.
-     * @Route("ordernonsub/{orderId}", name="orderNonSub", methods={"PUT"})
+     * @Route("ordernonsub/{subOderId}", name="orderNonSub", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param Request $request
      * @return JsonResponse
@@ -1387,9 +1393,9 @@ class OrderController extends BaseController
      * 
      * @Security(name="Bearer")
      */
-    public function orderNonSub(int $orderId): JsonResponse
+    public function orderNonSub(int $subOderId): JsonResponse
     {
-        $response = $this->orderService->orderNonSub($orderId);
+        $response = $this->orderService->orderNonSub($subOderId);
 
         return $this->response($response, self::UPDATE);
     }

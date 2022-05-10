@@ -59,4 +59,6 @@ class OrdersResponse
     public int|null $kilometer;
 
     public null|array $captain;
+
+    public null|int $isHide;
 }

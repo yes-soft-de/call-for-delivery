@@ -437,7 +437,7 @@ class OrderManager
         return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
     }
     
-    public function orderNonSub(int $orderId): ?OrderEntity
+    public function updateIsHideByOrderId(int $orderId, int $isHide): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($orderId);
 
@@ -445,7 +445,7 @@ class OrderManager
             return $orderEntity;
         }
                
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        $orderEntity->setIsHide($isHide);
         
         $this->entityManager->flush();
 
@@ -462,5 +462,19 @@ class OrderManager
         $this->entityManager->flush();
 
         return $order;
+    }
+    
+    public function getOrderTemporarilyHidden(): array
+    {
+        return $this->orderRepository->findBy(['isHide' => OrderIsHideConstant::ORDER_HIDE_TEMPORARILY]);
+    }
+    
+    public function updateIsHide(OrderEntity $orderEntity, int $isHide): ?OrderEntity
+    {               
+        $orderEntity->setIsHide($isHide);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }
