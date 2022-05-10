@@ -36,4 +36,13 @@ class CompanyInfoEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getOneOrNullResult();
     }
+
+    public function getStoreProfitMargin(): ?array
+    {
+        return $this->createQueryBuilder('companyInfoEntity')
+            ->select('companyInfoEntity.storeProfitMargin')
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

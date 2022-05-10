@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\ChatRoomEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
@@ -128,5 +129,24 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function getStoreProfitMarginByStoreOwnerId(int $userId): ?array
+    {
+        return $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('storeOwnerProfileEntity.profitMargin')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = storeOwnerProfileEntity.storeOwnerId'
+            )
+
+            ->andWhere('userEntity.id = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
