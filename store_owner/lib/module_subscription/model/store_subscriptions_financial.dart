@@ -1,7 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/payments_from_company.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/subscriptions_financial_response.dart';
-import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
@@ -45,7 +44,8 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               advancePayment: element.total?.advancePayment,
               packageCost: element.total?.packageCost ?? 0,
               sumPayments: element.total?.sumPayments ?? 0,
-              total: element.total?.total ?? 0),
+              total: element.total?.total ?? 0,
+              captainOffers: element.total?.captainOffers ?? 0),
           flag: element.flag,
           note: element.note,
           packageName: element.packageName ?? S.current.unknown));
@@ -83,10 +83,11 @@ class Total {
   num packageCost;
   num sumPayments;
   num total;
-  Total({
-    required this.advancePayment,
-    required this.packageCost,
-    required this.sumPayments,
-    required this.total,
-  });
+  num captainOffers;
+  Total(
+      {required this.advancePayment,
+      required this.packageCost,
+      required this.sumPayments,
+      required this.total,
+      required this.captainOffers});
 }
