@@ -4,6 +4,7 @@ import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -25,6 +26,31 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.NEW_ORDER_API,
+      orderRequest.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> addNewOrderLink(CreateOrderRequest orderRequest) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.NEW_ORDER_API_LINK,
+      orderRequest.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+ Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.ORDER_NONSUB_API_LINK,
       orderRequest.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

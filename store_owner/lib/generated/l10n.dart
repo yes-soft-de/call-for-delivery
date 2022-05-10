@@ -5789,6 +5789,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Paid`
+  String get financePaid {
+    return Intl.message(
+      'Paid',
+      name: 'financePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get financeUnPaid {
+    return Intl.message(
+      'Unpaid',
+      name: 'financeUnPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partly paid`
+  String get financePartlyPaid {
+    return Intl.message(
+      'Partly paid',
+      name: 'financePartlyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Offers`
+  String get captainOffers {
+    return Intl.message(
+      'Captain Offers',
+      name: 'captainOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New sub order`
+  String get newOrderLink {
+    return Intl.message(
+      'New sub order',
+      name: 'newOrderLink',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -130,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainNotInStore":
             MessageLookupByLibrary.simpleMessage("الكابتن ليس في المتجر"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
         "captainPackageExtra":
@@ -311,8 +312,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("فاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
         "financeSubscriptionDetails":
             MessageLookupByLibrary.simpleMessage("التفاصيل المالية للاشتراك"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -432,6 +437,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("طلب جديد"),
         "newOrderHint": MessageLookupByLibrary.simpleMessage(
             "بإمكانك عن طريق هذا الزر إضافة طلبات جديدة"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),

@@ -134,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account not activated yet please wait"),
         "captainNotInStore":
             MessageLookupByLibrary.simpleMessage("Captain not in Store"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("Retained cash"),
         "captainPackageExtra":
@@ -319,8 +320,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("Partly paid"),
         "financeSubscriptionDetails": MessageLookupByLibrary.simpleMessage(
             "Finance Subscription Details"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -441,6 +446,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "newOrderHint": MessageLookupByLibrary.simpleMessage(
             "This button let you to make a new order"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("New sub order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
