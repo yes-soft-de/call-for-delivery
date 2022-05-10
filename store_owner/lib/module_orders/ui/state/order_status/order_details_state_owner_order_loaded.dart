@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -77,11 +79,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
-            onTap:orderInfo.state != OrderStatusEnum.CANCELLED ? () {
-              Navigator.of(context).pushNamed(
-                  OrdersRoutes.OWNER_TIME_LINE_SCREEN,
-                  arguments: orderInfo.id);
-            } : null,
+            onTap: orderInfo.state != OrderStatusEnum.CANCELLED
+                ? () {
+                    Navigator.of(context).pushNamed(
+                        OrdersRoutes.OWNER_TIME_LINE_SCREEN,
+                        arguments: orderInfo.id);
+                  }
+                : null,
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -271,7 +275,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // date widgets
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0).copyWith(bottom: 8, top: 8),
           child: Container(
             decoration: decoration,
             child: Column(
@@ -297,9 +301,203 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
+        // details
+        Padding(
+          padding: const EdgeInsets.all(16.0).copyWith(bottom: 8, top: 8),
+          child: Container(
+            decoration: decoration,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.store_rounded,
+                  ),
+                  title: Text(S.current.branch),
+                  subtitle: Text(orderInfo.branchName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Visibility(
+                  visible: orderInfo.image != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.image,
+                        ),
+                        title: Text(S.current.orderImage),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: CustomNetworkImage(
+                                height: 100,
+                                imageSource: orderInfo.image ?? '',
+                                width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.info,
+                  ),
+                  title: Text(S.current.orderDetails),
+                  subtitle: Text(orderInfo.note),
+                ),
+                Visibility(
+                    visible: orderInfo.kilometer != null,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.roundabout_left_rounded,
+                          ),
+                          title: Text(S.current.ProvideDistanceInKm),
+                          subtitle: Text(orderInfo.kilometer.toString() +
+                              ' ${S.current.km}'),
+                        ),
+                      ],
+                    )),
+                Visibility(
+                    visible: orderInfo.paidToProvider != null,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.roundabout_left_rounded,
+                          ),
+                          title: Text(S.current.orderCostHandedByCaptain),
+                          subtitle: Text(FixedNumber.getFixedNumber(
+                                  orderInfo.paidToProvider ?? 0) +
+                              ' ${S.current.km}'),
+                        ),
+                      ],
+                    ))
+              ],
+            ),
+          ),
+        ),
+        // payments
+        Padding(
+          padding: const EdgeInsets.all(16.0).copyWith(bottom: 8, top: 8),
+          child: Container(
+            decoration: decoration,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.payment,
+                  ),
+                  title: Text(S.current.paymentMethod),
+                  subtitle: Text(orderInfo.payment == 'cash'
+                      ? S.current.cash
+                      : S.current.card),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                ListTile(
+                  leading: Icon(Icons.price_change_rounded),
+                  title: Text(S.current.orderCostWithDeliveryCost),
+                  subtitle: Text(
+                      FixedNumber.getFixedNumber(orderInfo.orderCost) +
+                          ' ' +
+                          S.current.sar),
+                ),
+                Visibility(
+                  visible: orderInfo.captainOrderCost != null,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                      ListTile(
+                        leading: Icon(
+                          Icons.money,
+                        ),
+                        title: Text(S.current.captainOrderCost),
+                        subtitle: Text(FixedNumber.getFixedNumber(
+                                orderInfo.captainOrderCost ?? 0) +
+                            ' ' +
+                            S.current.sar),
+                      ),
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                      ),
+                      Visibility(
+                        visible: orderInfo.attention != null,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.info,
+                          ),
+                          title: Text(S.current.captainPaymentNote),
+                          subtitle: Text(orderInfo.attention ?? ''),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
         // customers
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0).copyWith(bottom: 8, top: 8),
           child: Container(
             decoration: decoration,
             child: Column(
@@ -376,155 +574,6 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        // details
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.store_rounded,
-                  ),
-                  title: Text(S.current.branch),
-                  subtitle: Text(orderInfo.branchName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Visibility(
-                  visible: orderInfo.image != null,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.image,
-                        ),
-                        title: Text(S.current.orderImage),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: CustomNetworkImage(
-                                height: 100,
-                                imageSource: orderInfo.image ?? '',
-                                width: 100,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: DottedLine(
-                            dashColor: Theme.of(context).disabledColor,
-                            lineThickness: 2.5,
-                            dashRadius: 25),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.info,
-                  ),
-                  title: Text(S.current.orderDetails),
-                  subtitle: Text(orderInfo.note),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // payments
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.payment,
-                  ),
-                  title: Text(S.current.paymentMethod),
-                  subtitle: Text(orderInfo.payment == 'cash'
-                      ? S.current.cash
-                      : S.current.card),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                ListTile(
-                  leading: Icon(Icons.price_change_rounded),
-                  title: Text(S.current.orderCostWithDeliveryCost),
-                  subtitle: Text(
-                      FixedNumber.getFixedNumber(orderInfo.orderCost) +
-                          ' ' +
-                          S.current.sar),
-                ),
-                Visibility(
-                  visible: orderInfo.captainOrderCost != null,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: DottedLine(
-                            dashColor: Theme.of(context).disabledColor,
-                            lineThickness: 2.5,
-                            dashRadius: 25),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.money,
-                        ),
-                        title: Text(S.current.captainOrderCost),
-                        subtitle: Text(FixedNumber.getFixedNumber(
-                                orderInfo.captainOrderCost ?? 0) +
-                            ' ' +
-                            S.current.sar),
-                      ),
-                      Visibility(
-                        visible: orderInfo.attention != null,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: DottedLine(
-                              dashColor: Theme.of(context).disabledColor,
-                              lineThickness: 2.5,
-                              dashRadius: 25),
-                        ),
-                      ),
-                      Visibility(
-                        visible: orderInfo.attention != null,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.info,
-                          ),
-                          title: Text(S.current.captainPaymentNote),
-                          subtitle: Text(orderInfo.attention ?? ''),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

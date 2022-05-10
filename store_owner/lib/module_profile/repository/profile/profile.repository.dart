@@ -52,10 +52,10 @@ class ProfileRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
   Future<StorePaymentsResponse?> getStoreAccountBalance() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-        Urls.GET_STORE_PAYMENTS,
+    dynamic response = await _apiClient.get(Urls.GET_STORE_PAYMENTS,
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StorePaymentsResponse.fromJson(response);

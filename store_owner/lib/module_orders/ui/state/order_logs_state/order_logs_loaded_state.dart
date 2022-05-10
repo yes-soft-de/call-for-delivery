@@ -38,7 +38,7 @@ class OrderLogsLoadedState extends States {
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
-              orderCost:element.orderCost,
+              orderCost: element.orderCost,
               note: element.note,
             ),
           ),

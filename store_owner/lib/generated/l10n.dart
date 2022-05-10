@@ -5719,6 +5719,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Package cost`
+  String get packageCost {
+    return Intl.message(
+      'Package cost',
+      name: 'packageCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sum payments`
+  String get sumPayments {
+    return Intl.message(
+      'Sum payments',
+      name: 'sumPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Balance`
+  String get accountBalance {
+    return Intl.message(
+      'Account Balance',
+      name: 'accountBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all your subscriptions financial information with included all payments `
+  String get balanceHint {
+    return Intl.message(
+      'Here you find all your subscriptions financial information with included all payments ',
+      name: 'balanceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance Subscription Details`
+  String get financeSubscriptionDetails {
+    return Intl.message(
+      'Finance Subscription Details',
+      name: 'financeSubscriptionDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order`
+  String get sOrder {
+    return Intl.message(
+      'order',
+      name: 'sOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost received from captain`
+  String get orderCostHandedByCaptain {
+    return Intl.message(
+      'Cost received from captain',
+      name: 'orderCostHandedByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

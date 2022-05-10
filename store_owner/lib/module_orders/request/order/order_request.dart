@@ -27,7 +27,10 @@ class CreateOrderRequest {
     if (this.destination != null) {
       data['destination'] = this.destination?.toJson();
     }
-    data['note'] = this.note;
+    if (this.note != null && this.note?.isNotEmpty == true) {
+      data['note'] = this.note;
+    }
+
     data['payment'] = this.payment;
     data['recipientName'] = this.recipientName;
     data['recipientPhone'] = this.recipientPhone;
@@ -35,8 +38,12 @@ class CreateOrderRequest {
     if (this.image != null) {
       data['images'] = this.image;
     }
-    data['orderCost'] = this.orderCost;
-    data['detail'] = this.detail ?? '';
+    if (this.orderCost != null) {
+      data['orderCost'] = this.orderCost;
+    }
+    if (this.detail != null && this.detail?.isNotEmpty == true) {
+      data['detail'] = this.detail;
+    }
 
     return data;
   }

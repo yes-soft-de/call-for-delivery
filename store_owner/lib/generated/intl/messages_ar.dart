@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountActivated": MessageLookupByLibrary.simpleMessage("الحساب مفعل"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
+        "accountBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountInActivated":
@@ -78,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
+        "balanceHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد قائمة بالاشتراكات التي قمت بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيتها"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
@@ -308,6 +311,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("فاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financeSubscriptionDetails":
+            MessageLookupByLibrary.simpleMessage("التفاصيل المالية للاشتراك"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -472,6 +477,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
+        "orderCostHandedByCaptain":
+            MessageLookupByLibrary.simpleMessage("المبلغ المقبوض من الكابتن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":
@@ -517,6 +524,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراكات"),
         "packageExtend":
             MessageLookupByLibrary.simpleMessage("تمديد اضطراري للاشتراك"),
         "packageExtendedSuccessfully":
@@ -666,6 +674,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("السعودية"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),
@@ -759,6 +768,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successRenew":
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
+        "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات من المندوب"),
         "sumPaymentsFromCompany":

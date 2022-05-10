@@ -567,7 +567,15 @@
     "youCannotDeleteOrder": "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها",
     "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
     "youCannotDeleteOrderCaptainAccepted": "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن",
-    "inactiveStore": "متجرك غير مفعل الرجاء انتظار التفعيل من قبل الإدارة"
+    "inactiveStore": "متجرك غير مفعل الرجاء انتظار التفعيل من قبل الإدارة",
+    "packageCost": "تكلفة الاشتراكات",
+    "sumPayments": "مجموع الدفعات",
+    "accountBalance": "الحساب المالي",
+    "balanceHint": "هنا تجد قائمة بالاشتراكات التي قمت بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيتها",
+    "financeSubscriptionDetails": "التفاصيل المالية للاشتراك",
+    "sOrder": "طلب",
+    "orderCostHandedByCaptain": "المبلغ المقبوض من الكابتن"
+
 
 
 

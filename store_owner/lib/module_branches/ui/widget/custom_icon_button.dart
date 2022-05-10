@@ -24,9 +24,9 @@ class CustomIconButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(radius ?? 12),
-              color: backgroundColor,
-              ),
+            borderRadius: BorderRadius.circular(radius ?? 12),
+            color: backgroundColor,
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(

@@ -6,6 +6,7 @@ import 'package:c4d/module_subscription/response/captain_offers_response/captain
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
+import 'package:c4d/module_subscription/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -106,5 +107,14 @@ class SubscriptionsRepository {
     );
     if (response == null) return null;
     return CaptainOffersResponse.fromJson(response);
+  }
+   Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance() async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.get(
+      Urls.GET_SUBSCRIPTIONS_FINANCE,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return SubscriptionsFinancialResponse.fromJson(response);
   }
 }
