@@ -83,4 +83,28 @@ class UserService
 
         return $this->autoMapping->map(UserEntity::class, UserVerificationStatusUpdateResponse::class, $userResult);
     }
+
+    public function getUserVerificationStatusByUserId(string $userId): ?array
+    {
+        return $this->userManager->getUserVerificationStatusByUserId($userId);
+    }
+
+    public function getUseEntityByUserId(string $userId): ?UserEntity
+    {
+        return $this->userManager->getUserEntityByUserId($userId);
+    }
+
+    // this function update verificationStatus field of all users to be 'true'
+    public function verifyAllUsers(): array
+    {
+        $response = [];
+
+        $usersResult = $this->userManager->verifyAllUsers();
+
+        foreach ($usersResult as $user) {
+            $response[] = $this->autoMapping->map(UserEntity::class, FilterUserResponse::class, $user);
+        }
+
+        return $response;
+    }
 }

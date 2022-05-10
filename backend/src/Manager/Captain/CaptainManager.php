@@ -331,4 +331,9 @@ class CaptainManager
 
         return $this->captainProfileCompleteAccountStatusUpdate($request);
     }
+
+    public function getCaptain(int $captainProfileId): ?array
+    {
+        return $this->captainEntityRepository->getCaptain($captainProfileId);
+    }
 }

@@ -39,4 +39,6 @@ class PriceOfferByBidOrderIdGetForStoreOwnerResponse
      * @var float|null
      */
     public $totalDeliveryCost;
+
+    public float $profitMargin;
 }

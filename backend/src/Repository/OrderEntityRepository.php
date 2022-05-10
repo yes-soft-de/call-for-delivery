@@ -28,6 +28,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\RateEntity;
 use App\Entity\SupplierProfileEntity;
+use App\Constant\Order\OrderIsHideConstant;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,7 +48,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
 
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
@@ -71,7 +72,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('IDENTITY (orderEntity.captainId) as captainUserId')
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
@@ -98,7 +99,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
 
             ->andWhere('orderEntity.storeOwner = :storeOwnerId')
@@ -229,6 +230,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('captainId', $captainId)
 //            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
 
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+
             ->orderBy('orderEntity.id', 'DESC')
 
             ->getQuery()
@@ -283,7 +287,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('captainId', $captainId)
             ->setParameter('userId', $userId)
-
+           
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+           
             ->getQuery()
             ->getResult();
     }
@@ -1128,6 +1135,43 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersPending(): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getSubOrdersByPrimaryOrderId(int $primaryOrderId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+           
+            ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
+            
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE)
+
+            ->andWhere('orderEntity.primaryOrder = :primaryOrderId')
+            ->setParameter('primaryOrderId', $primaryOrderId)
+
+            ->orderBy('orderEntity.id', 'DESC')
 
             ->getQuery()
             ->getResult();

@@ -30,11 +30,14 @@ class PriceOfferService
         return $this->priceOfferManager->createPriceOffer($request);
     }
 
-    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): array
+    public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId, int $userId): array
     {
         $response = [];
 
         $priceOffers = $this->priceOfferManager->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
+
+        // Get store profit margin (either private or common one)
+        $storeProfitMargin = $this->priceOfferManager->getStoreProfitMarginForStoreOwner($userId);
 
         foreach ($priceOffers as $key=>$value) {
             $response[$key] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $value);
@@ -45,6 +48,9 @@ class PriceOfferService
                 // Total Delivery Cost = the delivery cost of one transportation of a specific car X transportation count
                 $response[$key]->totalDeliveryCost = round($response[$key]->transportationCount * $response[$key]->deliveryCost, 2);
             }
+
+            // set the store profit margin
+            $response[$key]->profitMargin = $storeProfitMargin;
         }
 
         return $response;

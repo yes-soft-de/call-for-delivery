@@ -25,6 +25,8 @@ use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
+use App\Request\Order\SubOrderCreateRequest;
+use App\Constant\Order\OrderIsHideConstant;
 
 class OrderManager
 {
@@ -65,6 +67,7 @@ class OrderManager
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+       $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -374,6 +377,11 @@ class OrderManager
     {
         return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
     }
+
+    public function getOrdersPending(): ?array
+    {
+        return $this->orderRepository->getOrdersPending();
+    }
     
     // this function checks if an order is being accepted by a captain
     public function isOrderAcceptedByCaptain(int $orderId): string|bool
@@ -400,6 +408,76 @@ class OrderManager
         }
                
         $orderEntity->setPaidToProvider($paidToProvider);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function createSubOrder(SubOrderCreateRequest $request): ?OrderEntity
+    {      
+       $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
+       $request->setStoreOwner($storeOwner);
+     
+       $orderEntity = $this->autoMapping->map(SubOrderCreateRequest::class, OrderEntity::class, $request);
+
+       $orderEntity->setCreatedAt(new DateTime());
+       $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+       $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+       $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+       $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+
+       $this->entityManager->persist($orderEntity);
+       $this->entityManager->flush();
+
+       $orderCreateRequest = $this->autoMapping->map(SubOrderCreateRequest::class, OrderCreateRequest::class, $request);
+
+       $this->storeOrderDetailsManager->createOrderDetail($orderEntity, $orderCreateRequest);
+
+       return $orderEntity;
+    }
+    
+    public function getSubOrdersByPrimaryOrderId(int $primaryOrderId): ?array
+    {
+        return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
+    }
+    
+    public function updateIsHideByOrderId(int $orderId, int $isHide): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity->setIsHide($isHide);
+        $orderEntity->setCaptainId(null);
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+    
+    public function isHideShow()
+    {
+        $orders = $this->orderRepository->findAll();
+        foreach($orders as  $order) {
+            $order->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        }
+        
+        $this->entityManager->flush();
+
+        return $order;
+    }
+    
+    public function getOrderTemporarilyHidden(): array
+    {
+        return $this->orderRepository->findBy(['isHide' => OrderIsHideConstant::ORDER_HIDE_TEMPORARILY]);
+    }
+    
+    public function updateIsHide(OrderEntity $orderEntity, int $isHide): ?OrderEntity
+    {               
+        $orderEntity->setIsHide($isHide);
         
         $this->entityManager->flush();
 

@@ -514,6 +514,13 @@ App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateR
         toDate:
             - NotBlank: ~
 
+App\Request\Order\SubOrderCreateRequest:
+    properties:
+        branch:
+            - NotBlank: ~
+        primaryOrder:
+            - NotBlank: ~
+            
 App\Request\Verification\VerifyCodeRequest:
     properties:
         user:
@@ -534,3 +541,13 @@ App\Request\Admin\AppFeature\AppFeatureStatusUpdateBySuperAdminRequest:
             - NotBlank: ~
         featureStatus:
             - NotNull: ~
+
+App\Request\User\UserVerificationStatusGetRequest:
+    properties:
+        userId:
+            - NotBlank: ~
+
+App\Request\Verification\VerificationCodeResendRequest:
+    properties:
+        userId:
+            - NotBlank: ~

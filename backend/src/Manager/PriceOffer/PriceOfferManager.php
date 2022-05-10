@@ -9,6 +9,7 @@ use App\Entity\PriceOfferEntity;
 use App\Manager\BidDetails\BidDetailsManager;
 use App\Manager\DeliveryCar\DeliveryCarManager;
 use App\Manager\Order\OrderManager;
+use App\Manager\StoreOwner\StoreFinancialManager;
 use App\Manager\Supplier\SupplierProfileManager;
 use App\Repository\PriceOfferEntityRepository;
 use App\Request\PriceOffer\PriceOfferCreateRequest;
@@ -23,11 +24,12 @@ class PriceOfferManager
     private BidDetailsManager $bidDetailsManager;
     private SupplierProfileManager $supplierProfileManager;
     private OrderManager $orderManager;
+    private StoreFinancialManager $storeFinancialManager;
     private PriceOfferEntityRepository $priceOfferEntityRepository;
     private DeliveryCarManager $deliveryCarManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, BidDetailsManager $bidDetailsManager, SupplierProfileManager $supplierProfileManager, OrderManager $orderManager,
-                                DeliveryCarManager $deliveryCarManager, PriceOfferEntityRepository $priceOfferEntityRepository)
+                                DeliveryCarManager $deliveryCarManager, StoreFinancialManager $storeFinancialManager,  PriceOfferEntityRepository $priceOfferEntityRepository)
     {
         $this->autoMapping = $autoMapping;
         $this->entityManager = $entityManager;
@@ -35,6 +37,7 @@ class PriceOfferManager
         $this->supplierProfileManager = $supplierProfileManager;
         $this->orderManager = $orderManager;
         $this->deliveryCarManager = $deliveryCarManager;
+        $this->storeFinancialManager = $storeFinancialManager;
         $this->priceOfferEntityRepository = $priceOfferEntityRepository;
     }
 
@@ -177,5 +180,11 @@ class PriceOfferManager
         }
 
         return $pricesOffers;
+    }
+
+    // Get store profit margin (either private or common one)
+    public function getStoreProfitMarginForStoreOwner(int $userId): float
+    {
+        return $this->storeFinancialManager->getStoreProfitMarginForStoreOwner($userId);
     }
 }

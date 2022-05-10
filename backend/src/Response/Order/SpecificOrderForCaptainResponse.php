@@ -57,4 +57,6 @@ class SpecificOrderForCaptainResponse
     public $storeId;
 
     public int|null $paidToProvider;
+
+    public array|null $subOrder;
 }
