@@ -312,6 +312,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                     widget._stateManager.payForStore(
                                         this,
                                         CreateStorePaymentsRequest(
+                                          fromDate: ordersFilter.fromDate,
+                                          toDate: ordersFilter.toDate,
                                           storeId: StoresHiveHelper()
                                               .getCurrentStoreID(),
                                           amount: num.tryParse(

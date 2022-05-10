@@ -102,7 +102,7 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                       scrollable: true,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
-                      title: Text(S.current.paymentsToCaptain),
+                      title: Text(S.current.paymentsFromCaptain),
                       content: Container(
                         child: Column(
                           children: [
@@ -138,6 +138,8 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                                     widget._stateManager.payForStore(
                                         this,
                                         CaptainPaymentsRequest(
+                                          toDate: ordersFilter.toDate,
+                                          fromDate: ordersFilter.fromDate,
                                           captainId: int.tryParse(
                                               ArgumentHiveHelper()
                                                       .getCurrentCaptainID() ??
@@ -147,6 +149,8 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                                               0,
                                           note: _note.text,
                                         ));
+                                    _amount.clear();
+                                    _note.clear();
                                   },
                             child: Text(
                               S.current.pay,

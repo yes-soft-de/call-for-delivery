@@ -44,7 +44,8 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               advancePayment: element.total?.advancePayment,
               packageCost: element.total?.packageCost ?? 0,
               sumPayments: element.total?.sumPayments ?? 0,
-              total: element.total?.total ?? 0),
+              total: element.total?.total ?? 0,
+              captainOffer: element.total?.captainOfferPrice ?? 0),
           flag: element.flag,
           note: element.note,
           packageName: element.packageName ?? S.current.unknown));
@@ -82,10 +83,11 @@ class Total {
   num packageCost;
   num sumPayments;
   num total;
-  Total({
-    required this.advancePayment,
-    required this.packageCost,
-    required this.sumPayments,
-    required this.total,
-  });
+  num captainOffer;
+  Total(
+      {required this.advancePayment,
+      required this.packageCost,
+      required this.sumPayments,
+      required this.total,
+      required this.captainOffer});
 }

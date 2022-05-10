@@ -47,6 +47,8 @@ class Urls {
 
   static const String BASE_API_STORE_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/storeownerpayment';
+  static const String BASE_API_STORE_PAYMENTS_TO_STORE =
+      DOMAIN + VERSION_ADMIN + '/storeownerpaymentfromcompany';
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER =
       DOMAIN + VERSION_ADMIN + '/captainfinancialsystemaccordingnorderbyadmin';
   static const String BASE_API_CAPTAIN_FINANCE_BY_HOURS = DOMAIN +
@@ -57,6 +59,8 @@ class Urls {
       '/captainfinancialsystemaccordingntocountofordersbyadmin';
   static const BASE_CAPTAIN_PAYMENT =
       DOMAIN + VERSION_ADMIN + '/captainpayment';
+  static const BASE_CAPTAIN_PAYMENT_TO_COMPANY =
+      DOMAIN + VERSION_ADMIN + '/captainpaymenttocompany';
   static const BASE_CAPTAIN_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/captainpayments';
   static const BASE_CAPTAIN_ACCOUNT_BALANCE =
@@ -162,6 +166,8 @@ class Urls {
   /*------------------------STORE PAYMENTS------------------------*/
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
+  static const CREATE_STORE_PAYMENTS_TO_STORE =
+      BASE_API_STORE_PAYMENTS_TO_STORE + '/storeownerpaymentfromcompany';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
   static const GET_STORE_SUBSCRIPTIONS_FINANCE =
       BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
@@ -169,6 +175,8 @@ class Urls {
   /*------------------------CAPTAIN PAYMENTS------------------------*/
   static const CREATE_CAPTAIN_PAYMENTS =
       BASE_CAPTAIN_PAYMENT + '/captainpayment';
+  static const CREATE_CAPTAIN_PAYMENTS_TO_COMPANY =
+      BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompany';
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
   /*------------------------CAPTAIN FINANCE------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDERS =

@@ -3,26 +3,39 @@ class CreateStorePaymentsRequest {
   int? storeId;
   int? id;
   String? note;
+  int? flag;
   int? subscriptionId;
+  String? fromDate;
+  String? toDate;
+
   CreateStorePaymentsRequest(
-      {this.subscriptionId, this.amount, this.storeId, this.id, this.note});
+      {this.fromDate,
+      this.toDate,
+      this.subscriptionId,
+      this.amount,
+      this.storeId,
+      this.id,
+      this.note,
+      this.flag
+      });
 
   Map<String, dynamic> toJson() {
-    if (id != null) {
-      return {
-        'id': id,
-        'amount': amount,
-        'store': storeId,
-      };
+    var map = <String, dynamic>{};
+    map['store'] = storeId;
+    map['amount'] = amount;
+    map['note'] = note;
+    if (flag != null) {
+      map['subscriptionFlag'] = flag;
     }
     if (subscriptionId != null) {
-      return {
-        'amount': amount,
-        'store': storeId,
-        'note': note,
-        'subscriptionId': subscriptionId
-      };
+      map['subscriptionId'] = subscriptionId;
     }
-    return {'amount': amount, 'store': storeId, 'note': note};
+    if (fromDate != null) {
+      map['fromDate'] = fromDate;
+    }
+    if (toDate != null) {
+      map['toDate'] = toDate;
+    }
+    return map;
   }
 }

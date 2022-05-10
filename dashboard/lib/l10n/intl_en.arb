@@ -663,7 +663,8 @@
     "paymentsToCaptain": "Payments To Captain",
     "paymentsToStore": "Payments To Store",
     "supplierProfitMargin": "Supplier profit margin",
-    "storeProfitMargin": "Store profit margin"
+    "storeProfitMargin": "Store profit margin",
+    "paymentsFromCaptain": "Payments From Captain"
 
 
 

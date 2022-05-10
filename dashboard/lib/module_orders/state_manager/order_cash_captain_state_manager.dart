@@ -51,7 +51,7 @@ class OrderCashCaptainStateManager {
   void payForStore(OrdersCashCaptainScreenState screenState,
       CaptainPaymentsRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    getIt<PaymentsService>().paymentToCaptain(request).then((value) {
+    getIt<PaymentsService>().paymentFromCaptain(request).then((value) {
       if (value.hasError) {
         getOrdersFilters(screenState, screenState.ordersFilter);
         CustomFlushBarHelper.createError(

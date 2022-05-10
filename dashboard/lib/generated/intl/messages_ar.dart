@@ -620,6 +620,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
         "paymentsForStore":
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
+        "paymentsFromCaptain":
+            MessageLookupByLibrary.simpleMessage("دفعة من الكابتن"),
         "paymentsToCaptain":
             MessageLookupByLibrary.simpleMessage("دفعة للكابتن"),
         "paymentsToStore": MessageLookupByLibrary.simpleMessage("دفعة للمتجر"),

@@ -123,6 +123,19 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
+Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.paymentFromCaptain(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 
   Future<DataModel> deletePaymentToCaptain(String id) async {
     ActionResponse? actionResponse =
