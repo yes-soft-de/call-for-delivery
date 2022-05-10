@@ -15,6 +15,7 @@ import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
+import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -405,9 +406,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                             Icons.roundabout_left_rounded,
                           ),
                           title: Text(S.current.orderCostHandedByCaptain),
-                          subtitle: Text(FixedNumber.getFixedNumber(
-                                  orderInfo.paidToProvider ?? 0) +
-                              ' ${S.current.km}'),
+                          subtitle: Text(FinanceHelper.getStatusString(
+                              orderInfo.paidToProvider?.toInt())),
                         ),
                       ],
                     ))
