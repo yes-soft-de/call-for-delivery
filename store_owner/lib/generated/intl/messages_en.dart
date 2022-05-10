@@ -319,8 +319,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("Partly paid"),
         "financeSubscriptionDetails": MessageLookupByLibrary.simpleMessage(
             "Finance Subscription Details"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("Unpaid"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

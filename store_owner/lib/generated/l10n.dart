@@ -5789,6 +5789,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Paid`
+  String get financePaid {
+    return Intl.message(
+      'Paid',
+      name: 'financePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get financeUnPaid {
+    return Intl.message(
+      'Unpaid',
+      name: 'financeUnPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partly paid`
+  String get financePartlyPaid {
+    return Intl.message(
+      'Partly paid',
+      name: 'financePartlyPaid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

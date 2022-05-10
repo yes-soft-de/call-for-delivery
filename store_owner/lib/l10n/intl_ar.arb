@@ -574,7 +574,10 @@
     "balanceHint": "هنا تجد قائمة بالاشتراكات التي قمت بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيتها",
     "financeSubscriptionDetails": "التفاصيل المالية للاشتراك",
     "sOrder": "طلب",
-    "orderCostHandedByCaptain": "المبلغ المقبوض من الكابتن"
+    "orderCostHandedByCaptain": "المبلغ المقبوض من الكابتن",
+    "financePaid": "تم التسديد",
+    "financeUnPaid": "لم يتم التسديد",
+    "financePartlyPaid": "تم التسديد جزئيا"
 
 
 

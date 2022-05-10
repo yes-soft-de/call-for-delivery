@@ -311,8 +311,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("فاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
+        "financePartlyPaid":
+            MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
         "financeSubscriptionDetails":
             MessageLookupByLibrary.simpleMessage("التفاصيل المالية للاشتراك"),
+        "financeUnPaid": MessageLookupByLibrary.simpleMessage("لم يتم التسديد"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
