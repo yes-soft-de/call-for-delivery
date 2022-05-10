@@ -520,3 +520,17 @@ App\Request\Verification\VerifyCodeRequest:
             - NotBlank: ~
         code:
             - NotBlank: ~
+
+App\Request\Admin\AppFeature\AppFeatureCreateRequest:
+    properties:
+        featureName:
+            - NotBlank: ~
+        featureStatus:
+            - NotNull: ~
+
+App\Request\Admin\AppFeature\AppFeatureStatusUpdateBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        featureStatus:
+            - NotNull: ~
