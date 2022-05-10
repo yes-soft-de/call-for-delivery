@@ -177,7 +177,7 @@ class OrderService
 
         $this->showSubOrderIfCarIsAvailable();
 
-        $this->cancelOrdersBeforeSpecificTime();
+        // $this->cancelOrdersBeforeSpecificTime();
        
         $orders = $this->orderManager->getStoreOrders($userId);
        
@@ -264,7 +264,7 @@ class OrderService
         }
 
         $this->showSubOrderIfCarIsAvailable();
-        $this->cancelOrdersBeforeSpecificTime();
+        // $this->cancelOrdersBeforeSpecificTime();
 
         $response = [];
 
@@ -296,7 +296,7 @@ class OrderService
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
 
-        $this->cancelOrdersBeforeSpecificTime();
+        // $this->cancelOrdersBeforeSpecificTime();
 
         $response = [];
 
@@ -758,6 +758,7 @@ class OrderService
             $diff = $this->dateFactoryService->subtractTwoDatesHours($deliveredDate,$deliveredDateCurrent);
 
             if($diff === "1") {
+                dd("ok");
                 $order = $this->orderManager->updateIsHide($pendingOrder, OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
     
                 if($order) {
