@@ -76,7 +76,8 @@ class ResetPasswordOrderService
 
                 if ($different_hours <= 1) {
                     $response['status'] = ResetPasswordResultConstant::VALID_RESET_PASSWORD_CODE;
-                    //TODO code is valid one, update codeStatus to be false while we verified the code
+
+                    $this->updateResetPasswordOrderStatus($resetPasswordOrder, false);
 
                 } else {
                     $response['status'] = ResetPasswordResultConstant::INVALID_RESET_PASSWORD_CODE;
@@ -91,6 +92,11 @@ class ResetPasswordOrderService
         }
 
         return $this->autoMapping->map('array', ResetPasswordOrderGetResponse::class, $response);
+    }
+
+    public function updateResetPasswordOrderStatus(ResetPasswordOrderEntity $resetPasswordOrderEntity, bool $status): ResetPasswordOrderEntity
+    {
+        return $this->resetPasswordOrderManager->updateResetPasswordOrderStatus($resetPasswordOrderEntity, $status);
     }
 
     public function updateUserPassword(UserPasswordUpdateRequest $request): UserRegisterResponse|string

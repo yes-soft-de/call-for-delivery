@@ -44,12 +44,4 @@ class ResetPasswordOrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    public function getAllResetPasswordOrdersBySuperAdmin(): array
-    {
-        return $this->createQueryBuilder('resetPasswordOrderEntity')
-
-            ->getQuery()
-            ->getResult();
-    }
 }
