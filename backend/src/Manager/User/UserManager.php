@@ -8,6 +8,7 @@ use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
 use App\Request\Admin\AdminRegisterRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Request\User\UserPasswordUpdateRequest;
 use App\Request\User\UserRegisterRequest;
 use App\Request\User\UserVerificationStatusUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -239,5 +240,23 @@ class UserManager
         }
 
         return $users;
+    }
+
+    public function updateUserPassword(UserPasswordUpdateRequest $request): string|UserEntity
+    {
+        $userEntity = $this->userRepository->findOneBy(['userId'=>$request->getUserId()]);
+
+        if (! $userEntity) {
+            return UserReturnResultConstant::USER_NOT_FOUND_RESULT;
+
+        } else {
+            $userEntity = $this->autoMapping->mapToObject(UserPasswordUpdateRequest::class, UserEntity::class, $request, $userEntity);
+
+            $userEntity->setPassword($this->encoder->hashPassword($userEntity, $request->getPassword()));
+
+            $this->entityManager->flush();
+
+            return $userEntity;
+        }
     }
 }

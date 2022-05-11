@@ -7,6 +7,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Manager\User\UserManager;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
+use App\Request\User\UserPasswordUpdateRequest;
 use App\Request\User\UserVerificationStatusUpdateRequest;
 use App\Response\User\FilterUserResponse;
 use App\Response\User\UserRegisterResponse;
@@ -111,5 +112,16 @@ class UserService
     public function getUserByUserIdAndRole(string $userId, string $role): ?UserEntity
     {
         return $this->userManager->getUserByUserIdAndRole($userId, $role);
+    }
+
+    public function updateUserPassword(UserPasswordUpdateRequest $request): string|UserRegisterResponse
+    {
+        $result = $this->userManager->updateUserPassword($request);
+
+        if ($result === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
+            return $result;
+        }
+
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $result);
     }
 }

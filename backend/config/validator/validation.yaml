@@ -549,3 +549,10 @@ App\Request\ResetPassword\VerifyResetPasswordCodeRequest:
     properties:
         code:
             - NotBlank: ~
+
+App\Request\User\UserPasswordUpdateRequest:
+    properties:
+        userId:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~

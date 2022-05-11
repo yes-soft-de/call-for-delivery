@@ -10,7 +10,9 @@ use App\Entity\ResetPasswordOrderEntity;
 use App\Manager\ResetPassword\ResetPasswordOrderManager;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
 use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
+use App\Request\User\UserPasswordUpdateRequest;
 use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
+use App\Response\User\UserRegisterResponse;
 use App\Service\MalathSMS\MalathSMSService;
 use App\Service\User\UserService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -125,5 +127,10 @@ class ResetPasswordOrderService
                 return 'creditAreNotAvailable';
             }
         }
+    }
+
+    public function updateUserPassword(UserPasswordUpdateRequest $request): UserRegisterResponse|string
+    {
+        return $this->userService->updateUserPassword($request);
     }
 }
