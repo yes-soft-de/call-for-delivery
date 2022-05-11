@@ -33,4 +33,6 @@ class OrderClosestResponse
     public float|null $rating;
 
     public array|null $subOrder;
+
+    public bool|null $orderIsMain;
 }

@@ -30,6 +30,8 @@ use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderStateConstant;
+use App\Request\Order\RecyclingOrCancelOrderRequest;
+
 
 /**
  * Create and fetch order.
@@ -79,6 +81,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="boolean", property="orderIsMain"),
      *      )
      * )
      *
@@ -181,6 +184,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *          )
      *      )
      *   )
@@ -237,6 +241,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="boolean", property="isCaptainArrived"),
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -305,7 +310,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
-     *                  @OA\Property(type="string", property="images")
+     *                  @OA\Property(type="string", property="images"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *          )
      *      )
      *   )
@@ -408,6 +414,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="orderType"),
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  ),
      *            )
      *       )
@@ -522,6 +529,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
      *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  ),
      *            )
      *       )
@@ -583,6 +591,7 @@ class OrderController extends BaseController
      *                      ),
      *                  @OA\Property(type="number", property="rating"),
      *                  @OA\Property(type="string", property="branchPhone"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      * 
      *              ),
      *          )
@@ -1412,5 +1421,97 @@ class OrderController extends BaseController
         $response = $this->orderService->isHideShow();
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * store:Recycling or cancel the order
+     * @Route("recyclingorcancelorder", name="recyclingOrCancelOrder", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="recycling Or Cancel Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="cancel", description="1 for cancel"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *               @OA\Property(type="string", property="payment"),
+     *               @OA\Property(type="number", property="orderCost"),
+     *               @OA\Property(type="string", property="note"),
+     *               @OA\Property(type="object", property="deliveryDate"),
+     *               @OA\Property(type="string", property="state"),
+     *               @OA\Property(type="integer", property="orderType"),
+     *      )
+     *   )
+     * )
+     * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9204"),
+     *              @OA\Property(type="string", property="msg"),
+     *              @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Subscription\CanCreateOrderResponse"),
+     *        )
+     *     ) 
+     *  )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function recyclingOrCancelOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, RecyclingOrCancelOrderRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->recyclingOrCancelOrder($request);
+        
+        if (isset($result->canCreateOrder)) {
+      
+            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }
