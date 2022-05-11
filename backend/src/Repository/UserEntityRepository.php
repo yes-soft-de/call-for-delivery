@@ -53,10 +53,9 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getOneOrNullResult();
     }
 
-    public function getUserByUserIdAndRole($userId, $role): mixed
+    public function getUserByUserIdAndRole(string $userId, string $role): ?UserEntity
     {
         return $this->createQueryBuilder('userEntity')
-            ->select('userEntity.id', 'userEntity.userId')
 
             ->andWhere('userEntity.userId = :userId')
             ->setParameter('userId', $userId)

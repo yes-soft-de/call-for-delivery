@@ -2,11 +2,21 @@
 
 namespace App\Response\User;
 
+use DateTime;
+use OpenApi\Annotations as OA;
+
 class UserRegisterResponse
 {
+    /**
+     * @OA\Property(type="array", property="roles",
+     *     @OA\Items(type="string"))
+     */
     public $roles = [];
 
-    public $createDate;
+    public DateTime $createDate;
 
+    /**
+     * @var string|null
+     */
     public $found;
 }
