@@ -581,7 +581,10 @@
     "financePartlyPaid": "Partly paid",
     "captainOffers": "Captain Offers",
     "newOrderLink": "New sub order",
-    "thisOrderCanBeLinked": "Order can contains a sub orders"
+    "thisOrderCanBeLinked": "Order can contains a sub orders",
+    "groupOrder": "Group Order",
+    "areYouSureAboutCreatingSubOrder": "Are you sure about creating new sub order , you can split later if needed"
+
 
 
 

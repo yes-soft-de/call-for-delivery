@@ -32,6 +32,7 @@ class Data {
   OrderLogsResponse? orderLogs;
   num? kilometer;
   num? paidToProvider;
+  bool? orderIsMain;
   Data(
       {this.id,
       this.state,
@@ -58,7 +59,8 @@ class Data {
       this.attention,
       this.captainOrderCost,
       this.kilometer,
-      this.paidToProvider});
+      this.paidToProvider,
+      this.orderIsMain});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -91,6 +93,7 @@ class Data {
       captainId: json['captainUserId']?.toString(),
       branchPhone: json['branchPhone']?.toString(),
       isCaptainArrived: json['isCaptainArrived'] as bool?,
+      orderIsMain:json['orderIsMain'] as bool?,
       dateCaptainArrived: json['dateCaptainArrived'] == null
           ? null
           : CreatedAt.fromJson(

@@ -40,10 +40,10 @@ class NewOrderStateBranchesLoaded extends States {
   Uint8List? memoryBytes;
   String? imagePath;
   int orderType = 1;
+  bool orderIsMain = false;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
-
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
         child: SingleChildScrollView(
@@ -385,7 +385,7 @@ class NewOrderStateBranchesLoaded extends States {
                     ),
                   ),
                 ),
-                // order type
+                // suborder check
                 Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                   child: Container(
@@ -395,15 +395,16 @@ class NewOrderStateBranchesLoaded extends States {
                     child: Material(
                       color: Colors.transparent,
                       child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
                           secondary: Icon(FontAwesomeIcons.boxes),
-                          value: orderType == 2,
+                          value: orderIsMain,
                           title: Text(S.current.thisOrderCanBeLinked),
                           onChanged: (check) {
                             if (check == true) {
-                              orderType = 2;
+                              orderIsMain = true;
                             } else {
-                              orderType = 1;
+                              orderIsMain = false;
                             }
                             screenState.refresh();
                           }),
@@ -521,6 +522,7 @@ class NewOrderStateBranchesLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+          orderIsMain: orderIsMain,
           orderType: orderType,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
@@ -543,6 +545,7 @@ class NewOrderStateBranchesLoaded extends States {
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
         orderType: orderType,
+        orderIsMain: orderIsMain,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +

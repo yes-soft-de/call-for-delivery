@@ -5849,6 +5849,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Group Order`
+  String get groupOrder {
+    return Intl.message(
+      'Group Order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new sub order , you can split later if needed`
+  String get areYouSureAboutCreatingSubOrder {
+    return Intl.message(
+      'Are you sure about creating new sub order , you can split later if needed',
+      name: 'areYouSureAboutCreatingSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

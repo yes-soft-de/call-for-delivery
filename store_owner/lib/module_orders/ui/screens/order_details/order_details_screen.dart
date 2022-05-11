@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
+import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -74,7 +76,30 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar.appBar(context, title: S.current.orderDetails),
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.current.orderDetails,
+            actions: [
+              Visibility(
+                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                        .orderInfo
+                        .orderIsMain,
+                child: CustomC4dAppBar.actionIcon(context,
+                    message: S.current.groupOrder, onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return CustomAlertDialog(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                  OrdersRoutes.NEW_SUB_ORDER_SCREEN,
+                                  arguments: orderId);
+                            },
+                            content: S.current.areYouSureAboutCreatingSubOrder);
+                      });
+                }, icon: Icons.link),
+              )
+            ]),
         body: currentState.getUI(context),
         floatingActionButton: Visibility(
             visible: canRemoveIt,
