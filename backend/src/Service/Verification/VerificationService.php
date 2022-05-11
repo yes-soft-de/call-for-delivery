@@ -3,6 +3,7 @@
 namespace App\Service\Verification;
 
 use App\AutoMapping;
+use App\Constant\MalathSMS\MessageUsedAsConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\Verification\UserVerificationStatusConstant;
 use App\Constant\Verification\VerificationCodeResultConstant;
@@ -17,26 +18,22 @@ use App\Response\User\UserVerificationStatusGetResponse;
 use App\Response\Verification\CodeVerificationResponse;
 use App\Response\Verification\VerificationCodeGetResponse;
 use App\Response\Verification\VerificationCreateResponse;
-use App\Service\MalathSMS\MalathSMSService;
+use App\Service\MalathSMS\SMSMessageService;
 use App\Service\User\UserService;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class VerificationService
 {
     private AutoMapping $autoMapping;
-    private ParameterBagInterface $params;
     private VerificationManager $verificationManager;
-    private MalathSMSService $malathSMSService;
     private UserService $userService;
+    private SMSMessageService $SMSMessageService;
 
-    public function __construct(AutoMapping $autoMapping, VerificationManager $verificationManager, MalathSMSService $malathSMSService, ParameterBagInterface $params,
-                                UserService $userService)
+    public function __construct(AutoMapping $autoMapping, VerificationManager $verificationManager, UserService $userService, SMSMessageService $SMSMessageService)
     {
         $this->autoMapping = $autoMapping;
-        $this->params = $params;
         $this->verificationManager = $verificationManager;
-        $this->malathSMSService = $malathSMSService;
         $this->userService = $userService;
+        $this->SMSMessageService = $SMSMessageService;
     }
 
     public function createVerificationCode(VerificationCreateRequest $request): ?VerificationCreateResponse
@@ -44,43 +41,13 @@ class VerificationService
         $verificationEntity = $this->verificationManager->createVerificationCode($request);
 
         if ($verificationEntity) {
-            //$result = $this->sendSMSMessage($request->getUser(), $verificationEntity->getCode());
+            //$this->SMSMessageService->sendSMSMessage($verificationEntity->getUser()->getUserId(), $verificationEntity->getCode(), MessageUsedAsConstant::USER_VERIFICATION_MESSAGE);
 
             $response = $this->autoMapping->map(VerificationEntity::class, VerificationCreateResponse::class, $verificationEntity);
 
 //            $response->smsMessageStatus = $result;
 
             return $response;
-        }
-    }
-
-    public function sendSMSMessage($phone, $code): string
-    {
-        $messageText = 'Please use this code to activate your account:'.' '.$code;
-
-        // send SMS message
-        $this->malathSMSService->setUserName($this->params->get('malath_username'));
-        $this->malathSMSService->setPassword($this->params->get('malath_password'));
-
-        $result = $this->malathSMSService->sendSMS($phone, "MANDOBQUICK", $messageText);
-
-        if ($result) {
-            if ($result['RESULT'] === 0) {
-                // message sent successfully
-                return 'sentSuccessfully';
-
-            } elseif ($result['RESULT'] === 101) {
-                // Parameter are missing
-                return 'parameterAreMissing';
-
-            } elseif ($result['RESULT'] === 104) {
-                // either user name or password are missing or your Account is on hold
-                return 'userNameOrPasswordAreMissingOrYourAccountIsOnHold';
-
-            } elseif ($result['RESULT'] === 105) {
-                // Credit are not available
-                return 'creditAreNotAvailable';
-            }
         }
     }
 

@@ -4,6 +4,7 @@
 namespace App\Service\ResetPassword;
 
 use App\AutoMapping;
+use App\Constant\MalathSMS\MessageUsedAsConstant;
 use App\Constant\ResetPassword\ResetPasswordResultConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\ResetPasswordOrderEntity;
@@ -13,26 +14,22 @@ use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
 use App\Response\User\UserRegisterResponse;
-use App\Service\MalathSMS\MalathSMSService;
+use App\Service\MalathSMS\SMSMessageService;
 use App\Service\User\UserService;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ResetPasswordOrderService
 {
     private AutoMapping $autoMapping;
     private ResetPasswordOrderManager $resetPasswordOrderManager;
     private UserService $userService;
-    private ParameterBagInterface $params;
-    private MalathSMSService $malathSMSService;
+    private SMSMessageService $SMSMessageService;
 
-    public function __construct(AutoMapping $autoMapping, ResetPasswordOrderManager $resetPasswordOrderManager, UserService $userService, ParameterBagInterface $params,
-                                MalathSMSService $malathSMSService)
+    public function __construct(AutoMapping $autoMapping, ResetPasswordOrderManager $resetPasswordOrderManager, UserService $userService, SMSMessageService $SMSMessageService)
     {
         $this->autoMapping = $autoMapping;
         $this->resetPasswordOrderManager = $resetPasswordOrderManager;
         $this->userService = $userService;
-        $this->params = $params;
-        $this->malathSMSService = $malathSMSService;
+        $this->SMSMessageService = $SMSMessageService;
     }
 
     public function createResetPasswordOrder(ResetPasswordOrderCreateRequest $request): ResetPasswordOrderGetResponse
@@ -48,7 +45,7 @@ class ResetPasswordOrderService
 
             if ($resetPasswordOrder) {
                 // send code in SMS message
-//                $this->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode());
+                //$this->SMSMessageService->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode(), MessageUsedAsConstant::RESET_PASSWORD_MESSAGE);
 
                 return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetResponse::class, $resetPasswordOrder);
             }
@@ -92,41 +89,6 @@ class ResetPasswordOrderService
         }
 
         return $this->autoMapping->map('array', ResetPasswordOrderGetResponse::class, $response);
-    }
-
-    public function sendSMSMessage($phone, $code): string
-    {
-        $messageText = 'Please use this code to reset your password:'.' '.$code;
-
-        // send SMS message
-        $this->malathSMSService->setUserName($this->params->get('malath_username'));
-        $this->malathSMSService->setPassword($this->params->get('malath_password'));
-
-        $result = $this->malathSMSService->sendSMS($phone, "MANDOB-AD", $messageText);
-
-        if($result)
-        {
-            if ($result['RESULT'] == 0)
-            {
-                // message sent successfully
-                return 'sentSuccessfully';
-            }
-            elseif ($result['RESULT'] == 101)
-            {
-                // Parameter are missing
-                return 'parameterAreMissing';
-            }
-            elseif ($result['RESULT'] == 104)
-            {
-                // either user name or password are missing or your Account is on hold
-                return 'userNameOrPasswordAreMissingOrYourAccountIsOnHold';
-            }
-            elseif ($result['RESULT'] == 105)
-            {
-                // Credit are not available
-                return 'creditAreNotAvailable';
-            }
-        }
     }
 
     public function updateUserPassword(UserPasswordUpdateRequest $request): UserRegisterResponse|string
