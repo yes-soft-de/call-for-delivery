@@ -81,6 +81,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="boolean", property="orderIsMain"),
      *      )
      * )
      *
@@ -183,6 +184,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *          )
      *      )
      *   )
@@ -239,6 +241,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="boolean", property="isCaptainArrived"),
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -307,7 +310,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="detail"),
      *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
      *                  @OA\Property(type="string", property="branchName"),
-     *                  @OA\Property(type="string", property="images")
+     *                  @OA\Property(type="string", property="images"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *          )
      *      )
      *   )
@@ -410,6 +414,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="integer", property="orderType"),
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  ),
      *            )
      *       )
@@ -524,6 +529,7 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
      *                  @OA\Property(type="number", property="rating"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      *                  ),
      *            )
      *       )
@@ -585,6 +591,7 @@ class OrderController extends BaseController
      *                      ),
      *                  @OA\Property(type="number", property="rating"),
      *                  @OA\Property(type="string", property="branchPhone"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
      * 
      *              ),
      *          )
