@@ -177,7 +177,7 @@ class OrderService
 
         $this->showSubOrderIfCarIsAvailable();
 
-        // $this->cancelOrdersBeforeSpecificTime();
+        $this->hideOrderExceededDeliveryTimeByHour();
        
         $orders = $this->orderManager->getStoreOrders($userId);
        
@@ -264,7 +264,7 @@ class OrderService
         }
 
         $this->showSubOrderIfCarIsAvailable();
-        // $this->cancelOrdersBeforeSpecificTime();
+        $this->hideOrderExceededDeliveryTimeByHour();
 
         $response = [];
 
@@ -296,7 +296,7 @@ class OrderService
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
 
-        // $this->cancelOrdersBeforeSpecificTime();
+        $this->hideOrderExceededDeliveryTimeByHour();
 
         $response = [];
 
@@ -744,21 +744,17 @@ class OrderService
     }
 
     //Hide the order that exceeded the delivery time by an hour
-    public function cancelOrdersBeforeSpecificTime()
+    public function hideOrderExceededDeliveryTimeByHour()
     {   
         $pendingOrders = $this->orderManager->getOrdersPending();
         foreach($pendingOrders as $pendingOrder) {
     
             $deliveredDate = $pendingOrder->getDeliveryDate();
 
-            $deliveredDateCurrent = new DateTime($deliveredDate->format('Y-m-d H:i:s'));
-
             $deliveredDate->diff(date_modify($deliveredDate, '+1 hours'));
 
-            $diff = $this->dateFactoryService->subtractTwoDatesHours($deliveredDate,$deliveredDateCurrent);
+            if(new DateTime('now') >= $deliveredDate) {
 
-            if($diff === "1") {
-                dd("ok");
                 $order = $this->orderManager->updateIsHide($pendingOrder, OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
     
                 if($order) {
