@@ -537,3 +537,10 @@ App\Request\Verification\VerificationCodeResendRequest:
     properties:
         userId:
             - NotBlank: ~
+
+App\Request\ResetPassword\ResetPasswordOrderCreateRequest:
+    properties:
+        userId:
+            - NotBlank: ~
+        role:
+            - NotBlank: ~

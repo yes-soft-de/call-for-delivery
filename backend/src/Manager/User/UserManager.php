@@ -95,7 +95,7 @@ class UserManager
         return $this->userRepository->getUserByUserId($userId);
     }
 
-    public function getUserByUserIdAndRole($userId, $role): array
+    public function getUserByUserIdAndRole(string $userId, string $role): ?UserEntity
     {
         return $this->userRepository->getUserByUserIdAndRole($userId, $role);
     }

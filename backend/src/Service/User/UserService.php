@@ -107,4 +107,9 @@ class UserService
 
         return $response;
     }
+
+    public function getUserByUserIdAndRole(string $userId, string $role): ?UserEntity
+    {
+        return $this->userManager->getUserByUserIdAndRole($userId, $role);
+    }
 }

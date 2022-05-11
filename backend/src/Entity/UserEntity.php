@@ -35,11 +35,15 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $verificationStatus = 0;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetPasswordOrderEntity::class)]
+    private $resetPasswordOrderEntities;
+
     public function __construct($userID)
     {
         $this->userId = $userID;
         $this->rateEntities = new ArrayCollection();
         $this->verificationEntities = new ArrayCollection();
+        $this->resetPasswordOrderEntities = new ArrayCollection();
     }
 
     /**
@@ -191,6 +195,36 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerificationStatus(int $verificationStatus): self
     {
         $this->verificationStatus = $verificationStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ResetPasswordOrderEntity[]
+     */
+    public function getResetPasswordOrderEntities(): Collection
+    {
+        return $this->resetPasswordOrderEntities;
+    }
+
+    public function addResetPasswordOrderEntity(ResetPasswordOrderEntity $resetPasswordOrderEntity): self
+    {
+        if (!$this->resetPasswordOrderEntities->contains($resetPasswordOrderEntity)) {
+            $this->resetPasswordOrderEntities[] = $resetPasswordOrderEntity;
+            $resetPasswordOrderEntity->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResetPasswordOrderEntity(ResetPasswordOrderEntity $resetPasswordOrderEntity): self
+    {
+        if ($this->resetPasswordOrderEntities->removeElement($resetPasswordOrderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($resetPasswordOrderEntity->getUser() === $this) {
+                $resetPasswordOrderEntity->setUser(null);
+            }
+        }
 
         return $this;
     }
