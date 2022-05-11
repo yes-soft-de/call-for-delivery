@@ -46,6 +46,11 @@ class ResetPasswordOrderManager
         return $this->resetPasswordOrderEntityRepository->getResetPasswordOrderByActiveCode($code);
     }
 
+    public function getAllResetPasswordOrdersBySuperAdmin(): array
+    {
+        return $this->resetPasswordOrderEntityRepository->getAllResetPasswordOrdersBySuperAdmin();
+    }
+
     public function generateCode(): string
     {
         do {

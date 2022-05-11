@@ -12,7 +12,9 @@ use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Service\ResetPassword\ResetPasswordOrderService;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -211,5 +213,41 @@ class ResetPasswordOrderController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * super admin: get all reset password orders by super admin
+     * @Route("resetpasswordordersbysuperadmin", name="getAllResetPasswordOrdersBySuperAdmin", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Reset Password Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the info of all reset password orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Admin\ResetPassword\ResetPasswordOrderGetForSuperAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllResetPasswordOrdersBySuperAdmin(): JsonResponse
+    {
+        $result = $this->resetPasswordOrderService->getAllResetPasswordOrdersBySuperAdmin();
+
+        return $this->response($result, self::FETCH);
     }
 }

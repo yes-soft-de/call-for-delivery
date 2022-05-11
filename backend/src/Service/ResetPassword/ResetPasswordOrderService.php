@@ -8,10 +8,12 @@ use App\Constant\MalathSMS\MessageUsedAsConstant;
 use App\Constant\ResetPassword\ResetPasswordResultConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\ResetPasswordOrderEntity;
+use App\Entity\UserEntity;
 use App\Manager\ResetPassword\ResetPasswordOrderManager;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
 use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
 use App\Request\User\UserPasswordUpdateRequest;
+use App\Response\Admin\ResetPassword\ResetPasswordOrderGetForSuperAdminResponse;
 use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Service\MalathSMS\SMSMessageService;
@@ -94,5 +96,31 @@ class ResetPasswordOrderService
     public function updateUserPassword(UserPasswordUpdateRequest $request): UserRegisterResponse|string
     {
         return $this->userService->updateUserPassword($request);
+    }
+
+    public function getAllResetPasswordOrdersBySuperAdmin(): array
+    {
+        $response = [];
+
+        $resetPasswordOrders = $this->resetPasswordOrderManager->getAllResetPasswordOrdersBySuperAdmin();
+
+        foreach ($resetPasswordOrders as $key=>$value) {
+            $response[$key] = $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetForSuperAdminResponse::class, $value);
+
+            $response[$key]->user = $this->getSpecificUserFields($value->getUser());
+        }
+
+        return $response;
+    }
+
+    public function getSpecificUserFields(UserEntity $userEntity): array
+    {
+        $response = [];
+
+        $response['id'] = $userEntity->getId();
+        $response['userId'] = $userEntity->getUserId();
+        $response['roles'] = $userEntity->getRoles();
+
+        return $response;
     }
 }
