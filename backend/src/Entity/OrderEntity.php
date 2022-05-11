@@ -85,6 +85,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'primaryOrder', targetEntity: self::class)]
     private $orderEntities;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $orderIsMain;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -445,6 +448,18 @@ class OrderEntity
                 $orderEntity->setPrimaryOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrderIsMain(): ?bool
+    {
+        return $this->orderIsMain;
+    }
+
+    public function setOrderIsMain(?bool $orderIsMain): self
+    {
+        $this->orderIsMain = $orderIsMain;
 
         return $this;
     }

@@ -528,6 +528,13 @@ App\Request\Verification\VerifyCodeRequest:
         code:
             - NotBlank: ~
 
+App\Request\Order\RecyclingOrCancelOrderRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        cancel:
+            - NotBlank: ~
+            
 App\Request\User\UserVerificationStatusGetRequest:
     properties:
         userId:

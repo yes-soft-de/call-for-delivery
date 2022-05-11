@@ -27,6 +27,7 @@ use App\Request\Order\OrderUpdateCaptainOrderCostRequest;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Request\Order\RecyclingOrCancelOrderRequest;
 
 class OrderManager
 {
@@ -479,6 +480,24 @@ class OrderManager
     {               
         $orderEntity->setIsHide($isHide);
         
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+ 
+    public function getOrderByOrderIdAndState(int $orderId, int $isHide): ?OrderEntity
+    {        
+        return $this->orderRepository->findOneBy(["id" => $orderId, "isHide" => $isHide]);
+    }
+    
+    public function recyclingOrder(OrderEntity $orderEntity, RecyclingOrCancelOrderRequest $request): string|OrderEntity
+    {
+        $orderEntity = $this->autoMapping->mapToObject(RecyclingOrCancelOrderRequest::class, OrderEntity::class, $request, $orderEntity);
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+
         $this->entityManager->flush();
 
         return $orderEntity;
