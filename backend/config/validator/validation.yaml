@@ -527,3 +527,10 @@ App\Request\Verification\VerifyCodeRequest:
             - NotBlank: ~
         code:
             - NotBlank: ~
+
+App\Request\Order\RecyclingOrCancelOrderRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        cancel:
+            - NotBlank: ~

@@ -59,6 +59,8 @@ use App\Response\Order\OrderUpdatePaidToProviderResponse;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Service\DateFactory\DateFactoryService;
+use App\Request\Order\RecyclingOrCancelOrderRequest;
+use App\Constant\Order\OrderIsCancelConstant;
 
 class OrderService
 {
@@ -760,9 +762,7 @@ class OrderService
                 if($order) {
                     if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                         $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
-                    }
-                   
-                    $this->orderLogsService->createOrderLogsRequest($order);
+                    }                   
                 }
             }
         }  
@@ -850,5 +850,67 @@ class OrderService
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
             }          
         }
+    }
+
+    public function recyclingOrCancelOrder(RecyclingOrCancelOrderRequest $request): OrderCancelResponse|CanCreateOrderResponse|null|OrderResponse
+    {        
+        $orderEntity = $this->orderManager->getOrderByOrderIdAndState($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+        if($orderEntity) {
+            if($request->getCancel() === OrderIsCancelConstant::ORDER_CANCEL) {
+          
+                $order = $this->orderManager->orderCancel($orderEntity);
+                
+                if($order) {
+                    $this->orderLogsService->createOrderLogsRequest($order);
+
+                    //create local notification to store
+                    $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
+    
+                    //create firebase notification to store
+                    try{
+                        $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
+                        }
+                    catch (\Exception $e){
+                        error_log($e);
+                    }
+                }
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+             }
+     
+             $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
+          
+             if($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+     
+               return $canCreateOrder;
+             }
+             
+             $order = $this->orderManager->recyclingOrder($orderEntity, $request);
+             if($order) {
+                
+                 $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+      
+                 $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
+     
+                 //create firebase notification to store
+                  try{
+                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                       }
+                  catch (\Exception $e){
+                       error_log($e);
+                     }
+                  //create firebase notification to captains
+                  try{
+                       $this->notificationFirebaseService->notificationToCaptains($order->getId());
+                     }
+                  catch (\Exception $e){
+                         error_log($e);
+                     }
+             }
+             
+             return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $orderEntity);
     }
 }

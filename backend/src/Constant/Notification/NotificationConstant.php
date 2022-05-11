@@ -5,7 +5,7 @@ namespace App\Constant\Notification;
 final class NotificationConstant
 {
     const NEW_ORDER_TITLE = "طلب جديد";
-  
+
     const CREATE_ORDER_SUCCESS = "تم إنشاء طلب جديد بنجاح";
 
     const NEW_ANNOUNCEMENT_ORDER_TITLE = "طلب إعلان جديد";
@@ -63,4 +63,9 @@ final class NotificationConstant
     const CAPTAIN = "captain";
 
     const APP_TYPE_SUPPLIER = "suppliers";
+    
+    const RECYCLING_ORDER_TITLE = "تدوير الطلب";
+
+    const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح و أصبح ظاهرا للكباتن";
 }
+

@@ -4,8 +4,9 @@ namespace App\Response\Subscription;
 
 class CanCreateOrderResponse
 {
-    public $canCreateOrder;
-    public $subscriptionStatus;
+    public bool|null $canCreateOrder;
+   
+    public string|null $subscriptionStatus;
   
     public string|null $percentageOfOrdersConsumed;
 }
