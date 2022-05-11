@@ -4,9 +4,11 @@ namespace App\Controller\ResetPassword;
 
 use App\AutoMapping;
 use App\Constant\Main\MainErrorConstant;
+use App\Constant\ResetPassword\ResetPasswordResultConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
+use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
 use App\Service\ResetPassword\ResetPasswordOrderService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
@@ -94,5 +96,58 @@ class ResetPasswordOrderController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * check if sent code is a valid one or not
+     * @Route("verifyresetpasswordcode", name="verifyResetPasswordCodeByUser", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Reset Password Order")
+     *
+     * @OA\RequestBody(
+     *      description="verify reset password code by user request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="code"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the result of the verification process",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="200, or 9152, or 9153"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\ResetPassword\ResetPasswordOrderCreateResponse")
+     *          )
+     *      )
+     * )
+     */
+    public function verifyResetPasswordCode(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, VerifyResetPasswordCodeRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->resetPasswordOrderService->verifyResetPasswordCode($request);
+
+        if ($result->status === ResetPasswordResultConstant::INVALID_RESET_PASSWORD_CODE) {
+            return $this->response($result, self::CODE_DATE_IS_NOT_VALID);
+
+        } elseif ($result->status === ResetPasswordResultConstant::NO_RESET_PASSWORD_CODE_IS_EXIST) {
+            return $this->response($result, self::INCORRECT_ENTERED_DATA);
+        }
+
+        return $this->response($result, self::FETCH);
     }
 }

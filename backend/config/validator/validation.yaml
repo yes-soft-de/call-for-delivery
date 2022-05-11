@@ -544,3 +544,8 @@ App\Request\ResetPassword\ResetPasswordOrderCreateRequest:
             - NotBlank: ~
         role:
             - NotBlank: ~
+
+App\Request\ResetPassword\VerifyResetPasswordCodeRequest:
+    properties:
+        code:
+            - NotBlank: ~

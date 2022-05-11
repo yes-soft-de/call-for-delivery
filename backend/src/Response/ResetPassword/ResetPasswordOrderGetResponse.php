@@ -4,9 +4,12 @@ namespace App\Response\ResetPassword;
 
 use DateTime;
 
-class ResetPasswordOrderCreateResponse
+class ResetPasswordOrderGetResponse
 {
-    public DateTime $createdAt;
+    /**
+     * @var DateTime|null
+     */
+    public $createdAt;
 
     /**
      * used when no user is found

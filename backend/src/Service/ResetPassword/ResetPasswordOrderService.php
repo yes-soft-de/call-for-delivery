@@ -4,11 +4,13 @@
 namespace App\Service\ResetPassword;
 
 use App\AutoMapping;
+use App\Constant\ResetPassword\ResetPasswordResultConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\ResetPasswordOrderEntity;
 use App\Manager\ResetPassword\ResetPasswordOrderManager;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
-use App\Response\ResetPassword\ResetPasswordOrderCreateResponse;
+use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
+use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
 use App\Service\MalathSMS\MalathSMSService;
 use App\Service\User\UserService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -31,7 +33,7 @@ class ResetPasswordOrderService
         $this->malathSMSService = $malathSMSService;
     }
 
-    public function createResetPasswordOrder(ResetPasswordOrderCreateRequest $request): ResetPasswordOrderCreateResponse
+    public function createResetPasswordOrder(ResetPasswordOrderCreateRequest $request): ResetPasswordOrderGetResponse
     {
         $response = [];
 
@@ -46,14 +48,48 @@ class ResetPasswordOrderService
                 // send code in SMS message
 //                $this->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode());
 
-                return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderCreateResponse::class, $resetPasswordOrder);
+                return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetResponse::class, $resetPasswordOrder);
             }
 
         } else {
             $response['status'] = UserReturnResultConstant::USER_NOT_FOUND_RESULT;
 
-            return $this->autoMapping->map('array', ResetPasswordOrderCreateResponse::class, $response);
+            return $this->autoMapping->map('array', ResetPasswordOrderGetResponse::class, $response);
         }
+    }
+
+    public function verifyResetPasswordCode(VerifyResetPasswordCodeRequest $request): ResetPasswordOrderGetResponse
+    {
+        $response = [];
+
+        $resetPasswordOrder = $this->resetPasswordOrderManager->getResetPasswordOrderByActiveCode($request->getCode());
+
+        if ($resetPasswordOrder) {
+            // while there is active code, check if its duration time is valid
+            $interval = date_diff(new \DateTime('now') , $resetPasswordOrder->getCreatedAt());
+
+            $different_days = $interval->format('%d');
+
+            if ($different_days == 0) {
+                $different_hours = $interval->format('%h');
+
+                if ($different_hours <= 1) {
+                    $response['status'] = ResetPasswordResultConstant::VALID_RESET_PASSWORD_CODE;
+                    //TODO code is valid one, update codeStatus to be false while we verified the code
+
+                } else {
+                    $response['status'] = ResetPasswordResultConstant::INVALID_RESET_PASSWORD_CODE;
+                }
+
+            } else {
+                $response['status'] = ResetPasswordResultConstant::INVALID_RESET_PASSWORD_CODE;
+            }
+
+        } else {
+            $response['status'] = ResetPasswordResultConstant::NO_RESET_PASSWORD_CODE_IS_EXIST;
+        }
+
+        return $this->autoMapping->map('array', ResetPasswordOrderGetResponse::class, $response);
     }
 
     public function sendSMSMessage($phone, $code): string

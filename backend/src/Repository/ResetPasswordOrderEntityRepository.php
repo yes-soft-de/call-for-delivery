@@ -30,4 +30,18 @@ class ResetPasswordOrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getResetPasswordOrderByActiveCode(string $code): ?ResetPasswordOrderEntity
+    {
+        return $this->createQueryBuilder('resetPasswordOrderEntity')
+
+            ->andWhere('resetPasswordOrderEntity.code = :code')
+            ->setParameter('code', $code)
+
+            ->andWhere('resetPasswordOrderEntity.codeStatus = :activeStatus')
+            ->setParameter('activeStatus', 1)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
