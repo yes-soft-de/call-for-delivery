@@ -5839,6 +5839,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order can contains a sub orders`
+  String get thisOrderCanBeLinked {
+    return Intl.message(
+      'Order can contains a sub orders',
+      name: 'thisOrderCanBeLinked',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

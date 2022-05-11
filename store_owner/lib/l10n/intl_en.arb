@@ -580,7 +580,8 @@
     "financeUnPaid": "Unpaid",
     "financePartlyPaid": "Partly paid",
     "captainOffers": "Captain Offers",
-    "newOrderLink": "New sub order"
+    "newOrderLink": "New sub order",
+    "thisOrderCanBeLinked": "Order can contains a sub orders"
 
 
 

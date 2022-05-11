@@ -48,7 +48,7 @@ class CreateOrderRequest {
       data['detail'] = this.detail;
     }
     if (this.orderType != null) {
-      //  data['orderType'] = this.orderType;
+      data['orderType'] = this.orderType;
     }
     if (this.orderID != null) {
       data['primaryOrder'] = this.orderID;

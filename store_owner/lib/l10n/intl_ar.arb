@@ -579,7 +579,8 @@
     "financeUnPaid": "لم يتم التسديد",
     "financePartlyPaid": "تم التسديد جزئيا",
     "captainOffers": "عروض الكباتن",
-    "newOrderLink": "إنشاء طلب فرعي"
+    "newOrderLink": "إنشاء طلب فرعي",
+    "thisOrderCanBeLinked": "الطلب يمكن أن يحتوي على طلبات فرعية"
 
 
 
