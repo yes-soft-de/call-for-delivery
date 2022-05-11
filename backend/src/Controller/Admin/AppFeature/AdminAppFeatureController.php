@@ -96,7 +96,7 @@ class AdminAppFeatureController extends BaseController
 
     /**
      * super admin: get all app features by super admin
-     * @Route("appfeatures", name="createAppFeatureBySuperAdmin", methods={"GET"})
+     * @Route("appfeatures", name="getAllAppFeaturesBySuperAdmin", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @return JsonResponse
      *
