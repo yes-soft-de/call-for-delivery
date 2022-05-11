@@ -132,7 +132,7 @@ class PriceOfferController extends BaseController
      */
     public function getPriceOffersByBidOrderIdForStoreOwner(int $bidDetailsId): JsonResponse
     {
-        $response = $this->priceOfferService->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
+        $response = $this->priceOfferService->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId, $this->getUserId());
 
         return $this->response($response, self::FETCH);
     }

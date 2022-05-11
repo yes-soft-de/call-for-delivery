@@ -63,4 +63,9 @@ class CompanyInfoManager
     {
         return $this->companyInfoEntityRepository->getCompanyInfoForUser($requiredByUserType);
     }
+
+    public function getStoreProfitMargin(): ?array
+    {
+        return $this->companyInfoEntityRepository->getStoreProfitMargin();
+    }
 }
