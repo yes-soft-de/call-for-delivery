@@ -528,7 +528,6 @@ App\Request\Verification\VerifyCodeRequest:
         code:
             - NotBlank: ~
 
-<<<<<<< HEAD
 App\Request\Admin\AppFeature\AppFeatureCreateRequest:
     properties:
         featureName:
