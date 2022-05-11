@@ -4,6 +4,7 @@ namespace App\Service\Verification;
 
 use App\AutoMapping;
 use App\Constant\MalathSMS\MessageUsedAsConstant;
+use App\Constant\AppFeature\AppFeatureNameConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\Verification\UserVerificationStatusConstant;
 use App\Constant\Verification\VerificationCodeResultConstant;
@@ -19,6 +20,8 @@ use App\Response\Verification\CodeVerificationResponse;
 use App\Response\Verification\VerificationCodeGetResponse;
 use App\Response\Verification\VerificationCreateResponse;
 use App\Service\MalathSMS\SMSMessageService;
+use App\Service\AppFeature\AppFeatureService;
+use App\Service\MalathSMS\MalathSMSService;
 use App\Service\User\UserService;
 
 class VerificationService
@@ -27,28 +30,34 @@ class VerificationService
     private VerificationManager $verificationManager;
     private UserService $userService;
     private SMSMessageService $SMSMessageService;
+    private AppFeatureService $appFeatureService;
 
-    public function __construct(AutoMapping $autoMapping, VerificationManager $verificationManager, UserService $userService, SMSMessageService $SMSMessageService)
+    public function __construct(AutoMapping $autoMapping, VerificationManager $verificationManager, UserService $userService, SMSMessageService $SMSMessageService,
+                                AppFeatureService $appFeatureService)
+
     {
         $this->autoMapping = $autoMapping;
         $this->verificationManager = $verificationManager;
         $this->userService = $userService;
         $this->SMSMessageService = $SMSMessageService;
+        $this->appFeatureService = $appFeatureService;
     }
 
     public function createVerificationCode(VerificationCreateRequest $request): ?VerificationCreateResponse
     {
         $verificationEntity = $this->verificationManager->createVerificationCode($request);
 
+        $response = $this->autoMapping->map(VerificationEntity::class, VerificationCreateResponse::class, $verificationEntity);
+
         if ($verificationEntity) {
-            //$this->SMSMessageService->sendSMSMessage($verificationEntity->getUser()->getUserId(), $verificationEntity->getCode(), MessageUsedAsConstant::USER_VERIFICATION_MESSAGE);
-
-            $response = $this->autoMapping->map(VerificationEntity::class, VerificationCreateResponse::class, $verificationEntity);
-
-//            $response->smsMessageStatus = $result;
-
-            return $response;
+            // send sms message with verification code if sending sms feature is activated
+            if ($this->appFeatureService->getAppFeatureStatusByAppFeatureName(AppFeatureNameConstant::APP_FEATURE_SMS_NAME)) {
+//                $result = $this->sendSMSMessage($request->getUser()->getUserId(), $verificationEntity->getCode());
+//                $response->smsMessageStatus = $result;
+            }
         }
+
+        return $response;
     }
 
     public function checkVerificationCode(VerifyCodeRequest $request): string

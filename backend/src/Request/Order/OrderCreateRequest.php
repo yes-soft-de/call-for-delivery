@@ -26,6 +26,8 @@ class OrderCreateRequest
    
     private $branch;
 
+    private bool|null $orderIsMain;
+
     /**
      * Get the value of storeOwner
      */ 

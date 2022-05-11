@@ -528,6 +528,27 @@ App\Request\Verification\VerifyCodeRequest:
         code:
             - NotBlank: ~
 
+App\Request\Admin\AppFeature\AppFeatureCreateRequest:
+    properties:
+        featureName:
+            - NotBlank: ~
+        featureStatus:
+            - NotNull: ~
+
+App\Request\Admin\AppFeature\AppFeatureStatusUpdateBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        featureStatus:
+            - NotNull: ~
+
+App\Request\Order\RecyclingOrCancelOrderRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        cancel:
+            - NotBlank: ~
+
 App\Request\User\UserVerificationStatusGetRequest:
     properties:
         userId:
