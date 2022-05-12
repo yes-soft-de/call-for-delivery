@@ -13,6 +13,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String note;
   final Color? background;
   final bool orderIsMain;
+  final String? primaryTitle;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -21,6 +22,7 @@ class OwnerOrderCard extends StatelessWidget {
       required this.orderCost,
       required this.note,
       this.background,
+      this.primaryTitle,
       required this.orderIsMain});
 
   @override
@@ -59,7 +61,7 @@ class OwnerOrderCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        S.current.groupOrder,
+                       primaryTitle ?? S.current.groupOrder,
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.white,

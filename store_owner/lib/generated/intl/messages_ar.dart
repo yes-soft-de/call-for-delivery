@@ -69,7 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
-            "هل أنت متأكد من رغبتك في إنشاء فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
+            "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
         "areYouSureAboutDeleteSelectedNotifications":
@@ -513,6 +513,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
@@ -617,6 +619,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("الطلب الأساسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -816,6 +819,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
+        "unlinkSubOrders":
+            MessageLookupByLibrary.simpleMessage("فك ارتباط الطلبات الفرعية"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

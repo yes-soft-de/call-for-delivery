@@ -81,7 +81,7 @@ class CustomC4dAppBar {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Tooltip(
-        message: message,
+        message: message ?? '',
         child: InkWell(
           customBorder: CircleBorder(),
           onTap: onTap,

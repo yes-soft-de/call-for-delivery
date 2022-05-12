@@ -5869,6 +5869,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Unlink suborders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink suborders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Removed Successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order Removed Successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

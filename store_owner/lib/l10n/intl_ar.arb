@@ -582,7 +582,10 @@
     "newOrderLink": "إنشاء طلب فرعي",
     "thisOrderCanBeLinked": "الطلب يمكن أن يحتوي على طلبات فرعية",
     "groupOrder": "طلب مجمع",
-    "areYouSureAboutCreatingSubOrder": "هل أنت متأكد من رغبتك في إنشاء فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"
+    "areYouSureAboutCreatingSubOrder": "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل",
+    "unlinkSubOrders": "فك ارتباط الطلبات الفرعية",
+    "orderRemovedSuccessfully": "تم فك الارتباط بنجاح",
+    "primaryOrder": "الطلب الأساسي"
 
 
 

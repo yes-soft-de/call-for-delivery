@@ -93,7 +93,7 @@ class OrdersService {
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

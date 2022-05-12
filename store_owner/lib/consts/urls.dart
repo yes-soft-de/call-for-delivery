@@ -204,8 +204,8 @@ class Urls {
   static const CREATE_BRANCH_LIST_API =
       DOMAIN + '/v1/StoreOwnerBranch/multiplebranches';
   static const NEW_ORDER_API = DOMAIN + '/v1/order/create';
-  static const NEW_ORDER_API_LINK = DOMAIN + 'v1/order/createsuborder';
-  static const ORDER_NONSUB_API_LINK = DOMAIN + 'v1/order/ordernonsub';
+  static const NEW_ORDER_API_LINK = DOMAIN + '/v1/order/createsuborder';
+  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsub';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/order/storeorders';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
   static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';

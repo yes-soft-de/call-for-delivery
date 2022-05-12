@@ -76,16 +76,22 @@ class OrdersListStateOrdersLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              if (element.orderIsMain == true && element.orders.isNotEmpty) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
-              orderIsMain:element.orderIsMain,
+              orderIsMain: element.orderIsMain,
               background: screenState.currentIndex == 0
                   ? (element.orderIsMain ? Colors.red[700] : null)
                   : StatusHelper.getOrderStatusColor(element.state),
