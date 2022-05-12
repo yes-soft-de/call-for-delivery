@@ -913,4 +913,23 @@ class OrderService
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $orderEntity);
     }
+
+    public function orderNonSubByStore(int $orderId): OrderUpdatePaidToProviderResponse|string
+    {   
+        $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
+
+        $isHide = OrderIsHideConstant::ORDER_SHOW;
+      
+        if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+            $isHide = OrderIsHideConstant::ORDER_HIDE_TEMPORARILY;
+        }
+
+        $order = $this->orderManager->orderNonSubByStore($orderId, $isHide);
+       
+        if($order === OrderResultConstant::ORDER_CAPTAIN_RECEIVED) {
+            return $order;
+        }
+       
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+    }
 }

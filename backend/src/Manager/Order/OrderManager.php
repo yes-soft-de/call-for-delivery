@@ -452,8 +452,9 @@ class OrderManager
         }
                
         $orderEntity->setIsHide($isHide);
+        $orderEntity->setPrimaryOrder(null);
         $orderEntity->setCaptainId(null);
-        
+
         $this->entityManager->flush();
 
         return $orderEntity;
@@ -497,6 +498,22 @@ class OrderManager
         $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+  
+    public function orderNonSubByStore(int $orderId, int $isHide): OrderEntity|string
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $orderId, 'state' => OrderStateConstant::ORDER_STATE_PENDING]);
+
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_CAPTAIN_RECEIVED;
+        }
+               
+        $orderEntity->setIsHide($isHide);
+        $orderEntity->setPrimaryOrder(null);
 
         $this->entityManager->flush();
 

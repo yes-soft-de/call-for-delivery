@@ -1404,7 +1404,7 @@ class OrderController extends BaseController
      */
     public function orderNonSub(int $subOderId): JsonResponse
     {
-        $response = $this->orderService->orderNonSub($subOderId);
+        $response = $this->orderService->orderNonSub($subOderId, true);
 
         return $this->response($response, self::UPDATE);
     }
@@ -1513,5 +1513,58 @@ class OrderController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    
+    /**
+     * store: Order Non Sub by store.
+     * @Route("ordernonsubbyowner/{subOderId}", name="orderNonSubByStore", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              )
+     *       )
+     * )
+     * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9211"),
+     *          @OA\Property(type="string", property="msg", description="error, The captain received the order Error."),
+     *        )
+     *     ) 
+     * 
+     * @Security(name="Bearer")
+     */
+    public function orderNonSubByStore(int $subOderId): JsonResponse
+    {
+        $response = $this->orderService->orderNonSubByStore($subOderId);
+ 
+        if ($response === OrderResultConstant::ORDER_CAPTAIN_RECEIVED) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UNSUB_ORDER);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }
