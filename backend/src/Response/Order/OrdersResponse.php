@@ -63,4 +63,6 @@ class OrdersResponse
     public null|int $isHide;
 
     public null|bool $orderIsMain;
+
+    public array|null $subOrder;
 }

@@ -442,7 +442,7 @@ class OrderManager
     {
         return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
     }
-    
+
     public function updateIsHideByOrderId(int $orderId, int $isHide): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($orderId);
@@ -452,8 +452,9 @@ class OrderManager
         }
                
         $orderEntity->setIsHide($isHide);
+        $orderEntity->setPrimaryOrder(null);
         $orderEntity->setCaptainId(null);
-        
+
         $this->entityManager->flush();
 
         return $orderEntity;
@@ -501,5 +502,26 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+  
+    public function orderNonSubByStore(int $orderId, int $isHide): OrderEntity|string
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $orderId, 'state' => OrderStateConstant::ORDER_STATE_PENDING]);
+
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_CAPTAIN_RECEIVED;
+        }
+               
+        $orderEntity->setIsHide($isHide);
+        $orderEntity->setPrimaryOrder(null);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+    
+    public function getSubOrdersByPrimaryOrderIdForStore(int $primaryOrderId): ?array
+    {
+        return $this->orderRepository->getSubOrdersByPrimaryOrderIdForStore($primaryOrderId);
     }
 }

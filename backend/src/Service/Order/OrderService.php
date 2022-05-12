@@ -184,6 +184,8 @@ class OrderService
         $orders = $this->orderManager->getStoreOrders($userId);
        
         foreach ($orders as $order) {
+          
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
                       
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
@@ -215,6 +217,8 @@ class OrderService
             if($order['captainUserId']) {
                 $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
             }
+
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
         }
    
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
@@ -227,6 +231,9 @@ class OrderService
         $orders = $this->orderManager->filterStoreOrders($request, $userId);
 
         foreach ($orders as $order) {
+
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
 
@@ -912,5 +919,24 @@ class OrderService
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $orderEntity);
+    }
+
+    public function orderNonSubByStore(int $orderId): OrderUpdatePaidToProviderResponse|string
+    {   
+        $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
+
+        $isHide = OrderIsHideConstant::ORDER_SHOW;
+      
+        if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+            $isHide = OrderIsHideConstant::ORDER_HIDE_TEMPORARILY;
+        }
+
+        $order = $this->orderManager->orderNonSubByStore($orderId, $isHide);
+       
+        if($order === OrderResultConstant::ORDER_CAPTAIN_RECEIVED) {
+            return $order;
+        }
+       
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
 }
