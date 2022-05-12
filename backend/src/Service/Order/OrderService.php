@@ -184,6 +184,8 @@ class OrderService
         $orders = $this->orderManager->getStoreOrders($userId);
        
         foreach ($orders as $order) {
+          
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
                       
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
@@ -215,6 +217,8 @@ class OrderService
             if($order['captainUserId']) {
                 $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
             }
+
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
         }
    
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
@@ -227,6 +231,9 @@ class OrderService
         $orders = $this->orderManager->filterStoreOrders($request, $userId);
 
         foreach ($orders as $order) {
+
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }
 

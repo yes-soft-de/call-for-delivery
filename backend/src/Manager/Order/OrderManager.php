@@ -442,7 +442,7 @@ class OrderManager
     {
         return $this->orderRepository->getSubOrdersByPrimaryOrderId($primaryOrderId);
     }
-    
+
     public function updateIsHideByOrderId(int $orderId, int $isHide): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($orderId);
@@ -518,5 +518,10 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+    
+    public function getSubOrdersByPrimaryOrderIdForStore(int $primaryOrderId): ?array
+    {
+        return $this->orderRepository->getSubOrdersByPrimaryOrderIdForStore($primaryOrderId);
     }
 }
