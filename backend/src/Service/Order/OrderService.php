@@ -143,30 +143,37 @@ class OrderService
             return $canCreateOrder;
         }
 
-        $order = $this->orderManager->createBidOrder($request);
+        $orderAndBidDetailsEntities = $this->orderManager->createBidOrder($request);
 
-        if($order) {
+        if($orderAndBidDetailsEntities[0]) {
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ANNOUNCEMENT_ORDER_TITLE,
-                NotificationConstant::CREATE_ANNOUNCEMENT_ORDER_SUCCESS, $order->getId());
+                NotificationConstant::CREATE_ANNOUNCEMENT_ORDER_SUCCESS, $orderAndBidDetailsEntities[0]->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderLogsService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
             //create firebase notification to store
             try{
-                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                $this->notificationFirebaseService->notificationOrderStateForUser($orderAndBidDetailsEntities[0]->getStoreOwner()->getStoreOwnerId(), $orderAndBidDetailsEntities[0]->getId(), $orderAndBidDetailsEntities[0]->getState(), NotificationConstant::STORE);
             }
             catch (\Exception $e){
                 error_log($e);
             }
             //create firebase notification to captains
             try{
-                $this->notificationFirebaseService->notificationToCaptains($order->getId());
+                $this->notificationFirebaseService->notificationToCaptains($orderAndBidDetailsEntities[0]->getId());
+            }
+            catch (\Exception $e){
+                error_log($e);
+            }
+            //create firebase notification to supplier who belong to the same category that the bid order belong
+            try {
+                $this->notificationFirebaseService->sendNotificationToSpecificSuppliers($orderAndBidDetailsEntities[0]->getId(), $orderAndBidDetailsEntities[1]->getSupplierCategory()->getId());
             }
             catch (\Exception $e){
                 error_log($e);
             }
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $orderAndBidDetailsEntities[0]);
     }
 
     /**
@@ -432,7 +439,13 @@ class OrderService
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
             //create Notification Local for captain
-            $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN); 
+            $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+
+            if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+                //create Notification Local for supplier
+                //$this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::SUPPLIER);
+            }
+
             //create order log
             $this->orderLogsService->createOrderLogsRequest($order);
             //create firebase notification to store

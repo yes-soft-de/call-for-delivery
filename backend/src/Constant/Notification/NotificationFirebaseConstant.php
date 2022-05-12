@@ -46,4 +46,12 @@ final class NotificationFirebaseConstant
     const DELIVERY_COMPANY_NAME = "C4D";
 
     const MESSAGE_NEW_CHAT = "لديك رسالة جديدة";
+
+    const NEW_BID_ORDER_CREATED_SUCCESSFULLY = "تم إنشاء طلب مناقصة جديد";
+
+    const NEW_PRICE_OFFER_ADDED = "تم إضافة عرض سعر جديد على الطلب الموافق للرقم المرفق ";
+
+    const PRICE_OFFER_ACCEPTED = "تم قبول عرض السعر المقدم الموافق للرقم ";
+
+    const PRICE_OFFER_REFUSED = "تم رفض عرض السعر المقدم الموافق للرقم ";
 }
