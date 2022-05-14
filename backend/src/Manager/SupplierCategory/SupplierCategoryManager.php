@@ -24,6 +24,11 @@ class SupplierCategoryManager
         return $this->supplierCategoryEntityRepository->getAllActiveSupplierCategories();
     }
 
+    public function getAllActiveSupplierCategoriesForStoreOwner(): array
+    {
+        return $this->supplierCategoryEntityRepository->getAllActiveSupplierCategoriesForStoreOwner();
+    }
+
     public function getAllActiveSupplierCategoriesIDs(): array
     {
         return $this->supplierCategoryEntityRepository->getAllActiveSupplierCategoriesIDs();
