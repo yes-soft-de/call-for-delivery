@@ -5919,6 +5919,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Hidden Order`
+  String get hiddenOrder {
+    return Intl.message(
+      'Hidden Order',
+      name: 'hiddenOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

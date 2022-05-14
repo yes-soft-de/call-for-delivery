@@ -588,7 +588,9 @@
     "orderRemovedSuccessfully": "Order Removed Successfully",
     "primaryOrder": "Primary order",
     "suborder": "Suborder",
-    "orderAlreadyAccepted": "Order already accepted by captain"
+    "orderAlreadyAccepted": "Order already accepted by captain",
+    "hiddenOrder": "Hidden Order"
+
 
 
 

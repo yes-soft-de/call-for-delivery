@@ -6,4 +6,5 @@ class OrdersRoutes {
   static const OWNER_ORDERS_SCREEN = '/owner-orders';
   static const OWNER_LOGS_ORDERS_SCREEN = '/owner_logs_orders';
   static const OWNER_TIME_LINE_SCREEN = '/owner_time_line_screen';
+  static const OWNER_HIDDEN_ORDERS_SCREEN = '/owner_hidden_orders_screen';
 }

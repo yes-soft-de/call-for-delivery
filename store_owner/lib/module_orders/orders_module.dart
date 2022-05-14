@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/screens/hidden_orders_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order_link.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
@@ -19,8 +20,16 @@ class OrdersModule extends YesModule {
   final OrderTimeLineScreen _orderTimeLineScreen;
   final NewOrderLinkScreen _newOrderLinkScreen;
   final SubOrdersScreen _subOrdersScreen;
-  OrdersModule(this._newOrderScreen, this._orderStatus, this._ordersScreen,this._subOrdersScreen,
-      this._newOrderLinkScreen, this._orderTimeLineScreen, this._logsScreen) {
+  final HiddenOrdersScreen _hiddenOrdersScreen;
+  OrdersModule(
+      this._newOrderScreen,
+      this._orderStatus,
+      this._ordersScreen,
+      this._subOrdersScreen,
+      this._newOrderLinkScreen,
+      this._orderTimeLineScreen,
+      this._logsScreen,
+      this._hiddenOrdersScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -33,7 +42,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.OWNER_TIME_LINE_SCREEN: (context) => _orderTimeLineScreen,
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => _newOrderLinkScreen,
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => _subOrdersScreen,
-
+      OrdersRoutes.OWNER_HIDDEN_ORDERS_SCREEN: (context) => _hiddenOrdersScreen,
     };
   }
 }

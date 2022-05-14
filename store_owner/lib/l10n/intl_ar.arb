@@ -587,7 +587,8 @@
     "orderRemovedSuccessfully": "تم فك الارتباط بنجاح",
     "primaryOrder": "طلب أساسي",
     "suborder": "طلب فرعي",
-    "orderAlreadyAccepted": "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن"
+    "orderAlreadyAccepted": "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن",
+    "hiddenOrder": "الطلبات المخفية"
 
 
 
