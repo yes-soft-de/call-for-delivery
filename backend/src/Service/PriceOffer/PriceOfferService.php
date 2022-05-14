@@ -81,7 +81,7 @@ class PriceOfferService
 
         if ($priceOfferResult) {
             // send firebase notification/s of price offer status update to the supplier
-            //$this->sendNotificationOfPriceOfferStatusUpdateToSupplier($priceOfferResult);
+            $this->sendNotificationOfPriceOfferStatusUpdateToSupplier($priceOfferResult);
 
             // create local notification/s of price offer status update
             $this->createLocalNotificationOfPriceOfferStatusUpdate($priceOfferResult);
