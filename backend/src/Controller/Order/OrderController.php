@@ -1404,7 +1404,7 @@ class OrderController extends BaseController
      */
     public function orderNonSub(int $subOderId): JsonResponse
     {
-        $response = $this->orderService->orderNonSub($subOderId, true);
+        $response = $this->orderService->orderNonSub($subOderId, $this->getUserId());
 
         return $this->response($response, self::UPDATE);
     }
