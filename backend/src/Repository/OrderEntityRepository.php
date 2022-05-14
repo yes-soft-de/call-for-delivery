@@ -59,9 +59,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.storeOwner = :storeOwner')
 
             ->setParameter('storeOwner', $storeOwner)
-           
-            ->andWhere('orderEntity.isHide = :isHide')
-            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+            
+            ->andWhere('orderEntity.isHide != :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE)
            
             ->orderBy('orderEntity.id', 'DESC')
        
