@@ -548,7 +548,28 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             height: 16,
           ),
           _getNextStageCard(context),
-          // chat
+          // paid to provider
+          Visibility(
+            visible: orderInfo.paidToProvider != null &&
+                OrderStatusEnum.FINISHED == orderInfo.state,
+            child: OrderButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              icon: Icons.paid_rounded,
+              subtitle: orderInfo.paidToProvider,
+              title: S.current.paidToProviderStatus,
+              onTap: () {
+                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+                // screenState.requestOrderProgress(UpdateOrderRequest(
+                //     id: int.tryParse(screenState.orderId ?? '-1'),
+                //     state: StatusHelper.getStatusString(
+                //         OrderStatusEnum.values[index]),
+                //     distance: distance,
+                //     paymentNote: noteController.text.trim(),
+                //     orderCost: double.tryParse(payment ?? 'n')));
+              },
+            ),
+          ),
+          // chat support
           Visibility(
             visible: orderInfo.usedAs == false &&
                 OrderStatusEnum.WAITING == orderInfo.state,

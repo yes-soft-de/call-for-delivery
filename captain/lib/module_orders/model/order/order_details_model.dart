@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -36,6 +37,7 @@ class OrderDetailsModel extends DataModel {
   String? branchPhone;
   String? ratingComment;
   late int storeId;
+  String? paidToProvider;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -63,7 +65,8 @@ class OrderDetailsModel extends DataModel {
       required this.rating,
       required this.branchPhone,
       required this.ratingComment,
-      required this.storeId});
+      required this.storeId,
+      required this.paidToProvider});
 
   late OrderDetailsModel _orders;
 
@@ -117,6 +120,7 @@ class OrderDetailsModel extends DataModel {
       branchPhone: element?.branchPhone,
       ratingComment: element?.ratingComment,
       storeId: element?.storeId ?? -1,
+      paidToProvider: FinanceHelper.getStatusString(element?.paidToProvider),
     );
     _orders.distance = _distance(_orders, location);
     _orders.branchDistance = _branchDistance(_orders, location);
