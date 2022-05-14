@@ -668,6 +668,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paid": MessageLookupByLibrary.simpleMessage("Paid"),
         "paidToProvider": MessageLookupByLibrary.simpleMessage(
             "Did you pay order cost totally to store owner before taking the order"),
+        "paidToProviderStatus":
+            MessageLookupByLibrary.simpleMessage("Paid to provider status"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":

@@ -681,7 +681,8 @@
     "financialDuesDetails": "تفاصيل الدورة المالية",
     "financeStoreStatus": "حالة مستحقات المتاجر",
     "paidToProvider": "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر",
-    "thisOrderAcceptedByAnotherCaptain": "تم قبول الطلب من قبل كابتن آخر"
+    "thisOrderAcceptedByAnotherCaptain": "تم قبول الطلب من قبل كابتن آخر",
+    "paidToProviderStatus": "هل تم دفع ثمن الطلب للمورد ؟"
 
 
 

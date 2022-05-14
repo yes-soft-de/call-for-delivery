@@ -6829,6 +6829,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Paid to provider status`
+  String get paidToProviderStatus {
+    return Intl.message(
+      'Paid to provider status',
+      name: 'paidToProviderStatus',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
