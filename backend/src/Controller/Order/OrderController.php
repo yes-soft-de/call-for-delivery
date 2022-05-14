@@ -1567,4 +1567,56 @@ class OrderController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+     
+    /**
+     * store:Get orders Hidden due to exceeding delivery time
+     * @Route("getordershiddenduetoexceedingdeliverytime", name="getordersHiddenDueToExceedingDeliveryTime", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders Hidden due to exceeding delivery time",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="integer", property="storeOrderDetailsId"),
+     *                  @OA\Property(type="object", property="destination"),
+     *                  @OA\Property(type="string", property="recipientPhone"),
+     *                  @OA\Property(type="string", property="detail"),
+     *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
+     *                  @OA\Property(type="string", property="branchName"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
+     *          )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getordersHiddenDueToExceedingDeliveryTime(): JsonResponse
+    {
+        $result = $this->orderService->getordersHiddenDueToExceedingDeliveryTime($this->getUserId());
+
+        return $this->response($result, self::FETCH);
+    }
 }

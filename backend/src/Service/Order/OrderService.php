@@ -1009,4 +1009,22 @@ class OrderService
    
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
+
+    public function getordersHiddenDueToExceedingDeliveryTime(int $userId): ?array
+    {
+        $response = [];
+
+        $this->showSubOrderIfCarIsAvailable();
+
+        $this->hideOrderExceededDeliveryTimeByHour();
+       
+        $orders = $this->orderManager->getordersHiddenDueToExceedingDeliveryTime($userId);
+       
+        foreach ($orders as $order) {
+                                
+            $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
+        }
+
+        return $response;
+    }
 }
