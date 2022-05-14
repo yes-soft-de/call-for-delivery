@@ -524,4 +524,11 @@ class OrderManager
     {
         return $this->orderRepository->getSubOrdersByPrimaryOrderIdForStore($primaryOrderId);
     }
+
+    public function getordersHiddenDueToExceedingDeliveryTime(int $userId): ?array
+    {      
+       
+       return $this->orderRepository->getordersHiddenDueToExceedingDeliveryTime($userId);
+   
+    }
 }

@@ -1200,4 +1200,36 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function getordersHiddenDueToExceedingDeliveryTime(int $userId): ?array
+     {   
+        return $this->createQueryBuilder('orderEntity')
+
+            ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+            ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+
+            ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'storeOwnerProfile.storeOwnerId = :userId')
+            
+            ->andWhere('orderEntity.storeOwner = storeOwnerProfile.id')
+            
+            ->andWhere('storeOwnerProfile.storeOwnerId = :userId')
+            ->setParameter('userId', $userId)
+            
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+   
+            ->andWhere('orderEntity.orderType = :orderTypeNormal')
+            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
+   
+            ->orderBy('orderEntity.id', 'DESC')
+       
+            ->getQuery()
+
+            ->getResult();
+    }
 }
