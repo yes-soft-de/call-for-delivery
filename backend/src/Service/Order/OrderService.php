@@ -806,9 +806,13 @@ class OrderService
         if($order) {
            
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
- 
-            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
-
+            //notification to store
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS, $order->getId());
+            if($primaryOrder->getCaptainId() ) {
+                //notification to captain
+                $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(), NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());  
+            }
+          
             $this->orderLogsService->createOrderLogsRequest($order);
             // create firebase notification to store
              try{
@@ -833,7 +837,16 @@ class OrderService
         }
 
         $order = $this->orderManager->updateIsHideByOrderId($orderId, $isHide);
-        
+      
+        //notification to store
+        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER_BY_CAPTAIN, $order->getId());
+        if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
+            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, $order->getId());
+        }
+      
+        //notification to captain
+        $this->notificationLocalService->createNotificationLocal($order->getCaptainId()->getCaptainId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
+     
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
      
@@ -855,6 +868,8 @@ class OrderService
     
             if ($checkRemainingCars === SubscriptionConstant::SUBSCRIPTION_OK) {
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
+                //notification to store
+                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_SHOW, $order->getId());
             }          
         }
     }
@@ -936,7 +951,24 @@ class OrderService
         if($order === OrderResultConstant::ORDER_CAPTAIN_RECEIVED) {
             return $order;
         }
-       
+        
+        //notification to store
+        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
+
+        if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
+            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, $order->getId());
+        }
+
+        if ($isHide = OrderIsHideConstant::ORDER_SHOW) {   
+            //create firebase notification to captains
+            try{
+                $this->notificationFirebaseService->notificationToCaptains($order->getId());
+              }
+           catch (\Exception $e){
+                  error_log($e);
+              }
+        }
+   
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
 }
