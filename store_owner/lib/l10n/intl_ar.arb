@@ -580,12 +580,14 @@
     "financePartlyPaid": "تم التسديد جزئيا",
     "captainOffers": "عروض الكباتن",
     "newOrderLink": "إنشاء طلب فرعي",
-    "thisOrderCanBeLinked": "الطلب يمكن أن يحتوي على طلبات فرعية",
+    "thisOrderCanBeLinked": "الطلب من الممكن أن يحتوي على طلبات فرعية",
     "groupOrder": "طلب مجمع",
     "areYouSureAboutCreatingSubOrder": "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل",
     "unlinkSubOrders": "فك ارتباط الطلبات الفرعية",
     "orderRemovedSuccessfully": "تم فك الارتباط بنجاح",
-    "primaryOrder": "الطلب الأساسي"
+    "primaryOrder": "طلب أساسي",
+    "suborder": "طلب فرعي",
+    "orderAlreadyAccepted": "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن"
 
 
 

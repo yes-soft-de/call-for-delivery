@@ -478,6 +478,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
+        "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
+            "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن"),
         "orderAverage35": MessageLookupByLibrary.simpleMessage(
             "نود تذكيرك لسداد الدفعة الثانية من رسوم الباقة وذلك لكي نستمر بخدمتكم . حيث تم استهلاك 35% من رسوم الباقة وشكرا"),
         "orderAverage40": MessageLookupByLibrary.simpleMessage(
@@ -619,7 +621,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
-        "primaryOrder": MessageLookupByLibrary.simpleMessage("الطلب الأساسي"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -766,6 +768,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
+        "suborder": MessageLookupByLibrary.simpleMessage("طلب فرعي"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
@@ -803,7 +806,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
-            "الطلب يمكن أن يحتوي على طلبات فرعية"),
+            "الطلب من الممكن أن يحتوي على طلبات فرعية"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(

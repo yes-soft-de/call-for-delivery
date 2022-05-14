@@ -5899,6 +5899,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order already accepted by captain`
+  String get orderAlreadyAccepted {
+    return Intl.message(
+      'Order already accepted by captain',
+      name: 'orderAlreadyAccepted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

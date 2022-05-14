@@ -586,7 +586,10 @@
     "areYouSureAboutCreatingSubOrder": "Are you sure about creating new sub order , you can split later if needed",
     "unlinkSubOrders": "Unlink suborders",
     "orderRemovedSuccessfully": "Order Removed Successfully",
-    "primaryOrder": "Primary order"
+    "primaryOrder": "Primary order",
+    "suborder": "Suborder",
+    "orderAlreadyAccepted": "Order already accepted by captain"
+
 
 
 

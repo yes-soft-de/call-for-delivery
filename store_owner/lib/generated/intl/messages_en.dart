@@ -485,6 +485,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
+            "Order already accepted by captain"),
         "orderAverage35":
             MessageLookupByLibrary.simpleMessage("You have consumed 35%"),
         "orderAverage40":
@@ -772,6 +774,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
+        "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
