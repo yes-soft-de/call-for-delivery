@@ -8,9 +8,9 @@ final class NotificationConstant
 
     const CREATE_ORDER_SUCCESS = "تم إنشاء طلب جديد بنجاح";
 
-    const NEW_ANNOUNCEMENT_ORDER_TITLE = "طلب إعلان جديد";
+    const NEW_BID_ORDER_TITLE = "طلب مناقصة جديد";
 
-    const CREATE_ANNOUNCEMENT_ORDER_SUCCESS = "تم إنشاء طلب إعلان جديد بنجاح";
+    const CREATE_BID_ORDER_SUCCESS = "تم إنشاء طلب مناقصة جديد بنجاح";
 
     const UPDATE_ORDER_TITLE = "تعديل طلب";
 

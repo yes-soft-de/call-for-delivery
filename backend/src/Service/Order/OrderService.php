@@ -146,8 +146,8 @@ class OrderService
         $orderAndBidDetailsEntities = $this->orderManager->createBidOrder($request);
 
         if($orderAndBidDetailsEntities[0]) {
-            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ANNOUNCEMENT_ORDER_TITLE,
-                NotificationConstant::CREATE_ANNOUNCEMENT_ORDER_SUCCESS, $orderAndBidDetailsEntities[0]->getId());
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_BID_ORDER_TITLE,
+                NotificationConstant::CREATE_BID_ORDER_SUCCESS, $orderAndBidDetailsEntities[0]->getId());
 
             $this->orderLogsService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
             //create firebase notification to store
