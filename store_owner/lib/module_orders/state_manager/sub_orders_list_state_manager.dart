@@ -83,11 +83,13 @@ class SubOrdersStateManager {
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().update();
+        getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
         getIt<GlobalStateManager>().update();
+        getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderRemovedSuccessfully)

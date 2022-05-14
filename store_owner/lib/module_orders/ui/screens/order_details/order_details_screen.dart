@@ -116,6 +116,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       context: context,
                       builder: (ctx) {
                         return RemoveSubOrderDialog(
+                          primaryOrder: orderId,
                           orders: (currentState
                                   as OrderDetailsStateOwnerOrderLoaded)
                               .orderInfo

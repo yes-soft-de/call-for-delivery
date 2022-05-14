@@ -44,8 +44,8 @@ class OwnerOrderCard extends StatelessWidget {
         child: Column(
           children: [
             Visibility(
-              visible: orderIsMain == false,
-              replacement: Row(
+              visible: orderIsMain || primaryTitle != null,
+              child: Row(
                 children: [
                   Icon(
                     FontAwesomeIcons.tag,
@@ -95,7 +95,7 @@ class OwnerOrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              child: InfoButtonOrder(
+              replacement: InfoButtonOrder(
                 onTap: () {
                   showDialog(
                       context: context,

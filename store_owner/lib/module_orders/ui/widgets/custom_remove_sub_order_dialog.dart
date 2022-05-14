@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 class RemoveSubOrderDialog extends StatefulWidget {
   final List<OrderModel> orders;
   final Function(OrderNonSubRequest request) request;
-  RemoveSubOrderDialog({Key? key, required this.orders, required this.request})
+  final int primaryOrder;
+  RemoveSubOrderDialog(
+      {Key? key,
+      required this.orders,
+      required this.request,
+      required this.primaryOrder})
       : super(key: key);
 
   @override
@@ -45,7 +50,10 @@ class _RemoveSubOrderDialogState extends State<RemoveSubOrderDialog> {
 
   List<Widget> subOrders() {
     List<Widget> widgets = [];
-    widget.orders.forEach((element) {
+    for (var element in widget.orders) {
+      if (element.id == widget.primaryOrder) {
+        continue;
+      }
       widgets.add(CheckboxListTile(
           title: Text('#' + element.id.toString()),
           value: (orderID != null && element.id != orderID)
@@ -60,7 +68,7 @@ class _RemoveSubOrderDialogState extends State<RemoveSubOrderDialog> {
             }
             setState(() {});
           }));
-    });
+    }
     return widgets;
   }
 }

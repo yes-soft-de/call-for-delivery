@@ -4,11 +4,11 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/sub_orders_list_state_manager.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
+import 'package:c4d/module_orders/ui/state/order_status/sub_orders_list_state.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_remove_sub_order_dialog.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
-import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -74,10 +74,7 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
             title: S.current.groupOrder,
             actions: [
               Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .orderIsMain,
+                visible: currentState is SubOrdersListStateLoaded ,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.newOrderLink, onTap: () {
                   showDialog(
@@ -95,13 +92,9 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
                 }, icon: Icons.link),
               ),
               Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .orderIsMain &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .subOrders
+                visible: currentState is SubOrdersListStateLoaded &&
+                    (currentState as SubOrdersListStateLoaded)
+                        .orders
                         .isNotEmpty,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.unlinkSubOrders, onTap: () {
@@ -109,13 +102,13 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
                       context: context,
                       builder: (ctx) {
                         return RemoveSubOrderDialog(
+                          primaryOrder: orderId,
                           orders: (currentState
-                                  as OrderDetailsStateOwnerOrderLoaded)
-                              .orderInfo
-                              .subOrders,
+                                  as SubOrdersListStateLoaded)
+                              .orders
+                              ,
                           request: (request) {
                             manager.removeSubOrder(this, request);
-                            Navigator.of(context).pop();
                           },
                         );
                       });
