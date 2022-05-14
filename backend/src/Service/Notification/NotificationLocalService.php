@@ -39,6 +39,26 @@ class NotificationLocalService
         return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
     }
 
+    public function createPriceOfferNotificationLocal(int $userId, string $title, string $text, int $orderId, int $bidDetailsId, int $priceOfferId): NotificationLocalResponse
+    {
+        $request = new NotificationLocalCreateRequest();
+
+        $message = [
+            "text" => $text,
+            "orderId" => $orderId,
+            "bidDetailsId" => $bidDetailsId,
+            "priceOfferId" => $priceOfferId
+        ];
+
+        $request->setUserId($userId);
+        $request->setTitle($title);
+        $request->setMessage($message);
+
+        $item = $this->notificationLocalManager->createNotificationLocal($request);
+
+        return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
+    }
+
     public function createNotificationLocalBySuperAdmin(int $userId, string $title, string $text, string $orderState, int $captainUserId = null, int $orderId = null): NotificationLocalResponse
     {
         $request = new NotificationLocalCreateRequest();
@@ -114,15 +134,22 @@ class NotificationLocalService
                 "orderId"=> $orderId,
                 "captainUserId"=> $captainProfileId
             ];
-        }
 
-        if ($userType === NotificationConstant::CAPTAIN) {
+        } elseif ($userType === NotificationConstant::CAPTAIN) {
             $text = $this->getOrderStateForCaptain($state);
             $message = [
                 "text" => $text,
                 "orderId"=> $orderId
             ];
-        } 
+
+        } elseif ($userType === NotificationConstant::SUPPLIER) {
+            $text = $this->getOrderStateForSupplier($state);
+            //TODO here we may also add supplierId to the message
+            $message = [
+                "text" => $text,
+                "orderId"=> $orderId
+            ];
+        }
 
         $request = $this->createNotificationLocalCreateRequest($userId, $title, $message);
        
@@ -160,6 +187,27 @@ class NotificationLocalService
             $state =  NotificationConstant::STATE_DELIVERED_CAPTAIN;
         }
         
+        return $state;
+    }
+
+    public function getOrderStateForSupplier(string $state): string
+    {
+        if ($state === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            $state = NotificationConstant::STATE_CAPTAIN_ON_WAY_TO_PICK_ORDER;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_IN_STORE){
+            $state =  NotificationConstant::STATE_CAPTAIN_IN_STORE;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_PICKED){
+            $state =  NotificationConstant::STATE_ORDER_PICKED;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_ONGOING){
+            $state =  NotificationConstant::STATE_ORDER_ONGOING;
+        }
+        if ($state == OrderStateConstant::ORDER_STATE_DELIVERED){
+            $state =  NotificationConstant::STATE_ORDER_DELIVERED;
+        }
+
         return $state;
     }
 }

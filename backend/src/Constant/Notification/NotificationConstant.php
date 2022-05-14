@@ -62,6 +62,8 @@ final class NotificationConstant
     
     const CAPTAIN = "captain";
 
+    const SUPPLIER = "supplier";
+
     const APP_TYPE_SUPPLIER = "suppliers";
     
     //sub order    
@@ -86,5 +88,27 @@ final class NotificationConstant
     const SUB_ORDER_HIDE_TEMPORARILY = "الطلب لا يظهر للكباتن بسبب عدم توفر سيارات لديك,سيظهر الطلب تلقائيا عند توفر سيارات في باقتك";
    
     const SUB_ORDER_SHOW = "تم إظهار الطلب للكباتن";
+
+    // local notifications for supplier
+    const STATE_CAPTAIN_ON_WAY_TO_PICK_ORDER = "الكابتن في طريقه إلى المتجر";
+
+    const STATE_CAPTAIN_IN_STORE = "الكابتن في المتجر";
+
+    const STATE_ORDER_PICKED = "الكابتن إلتقط الطلب من المتجر";
+
+    const STATE_ORDER_ONGOING = "الكابتن في طريقه لتسليم الطلب";
+
+    const STATE_ORDER_DELIVERED = "تم تسليم الطلب";
+
+    // price offer
+    const NEW_PRICE_OFFER = "عرض سعر جديد";
+
+    const NEW_PRICE_OFFER_ADDED = "تم إنشاء عرض سعر جديد بنجاح";
+
+    const PRICE_OFFER_STATUS_UPDATE = "تحديث حالة عرض السعر";
+
+    const PRICE_OFFER_STATUS_ACCEPTED = "تم قبول عرض السعر من قبل المتجر";
+
+    const PRICE_OFFER_STATUS_REFUSED = "تم رفض عرض السعر من قبل المتجر";
 }
 

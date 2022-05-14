@@ -78,7 +78,7 @@ class OrderManager
        return $orderEntity;
     }
 
-    public function createBidOrder(BidDetailsCreateRequest $request): OrderEntity
+    public function createBidOrder(BidDetailsCreateRequest $request): array
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
         $request->setStoreOwner($storeOwner);
@@ -93,9 +93,9 @@ class OrderManager
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();
 
-        $this->bidDetailsManager->createBidDetails($request, $orderEntity);
+        $bidDetailsEntity = $this->bidDetailsManager->createBidDetails($request, $orderEntity);
 
-        return $orderEntity;
+        return [$orderEntity, $bidDetailsEntity];
     }
 
     /**

@@ -124,4 +124,9 @@ class UserService
 
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $result);
     }
+
+    public function getSupplierUsersEntitiesBySupplierCategoryId(int $supplierCategoryId): array
+    {
+        return $this->userManager->getSupplierUsersEntitiesBySupplierCategoryId($supplierCategoryId);
+    }
 }

@@ -32,4 +32,16 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getTokensByUsersArray(array $usersEntities): array
+    {
+        return $this->createQueryBuilder('notificationFirebaseToken')
+            ->select('notificationFirebaseToken.token')
+
+            ->where('notificationFirebaseToken.user IN (:usersArray)')
+            ->setParameter('usersArray', $usersEntities)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }

@@ -268,4 +268,92 @@ class NotificationFirebaseService
 
         return $devicesToken;
     }
+
+    /**
+     * send firebase notification to supplier (who belong to the same category that the order relates to), when
+     * new bid order is created.
+     */
+    public function sendNotificationToSpecificSuppliers(int $orderId, int $supplierCategoryId)
+    {
+        // First, get all suppliers who belong to the same category
+        $users = $this->userService->getSupplierUsersEntitiesBySupplierCategoryId($supplierCategoryId);
+
+        // Then, call creating firebase notification function
+        $tokens = $this->notificationTokensService->getTokensByUsersArray($users);
+
+        if(! $tokens) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::NEW_BID_ORDER_CREATED_SUCCESSFULLY))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+        $this->messaging->sendMulticast($message, $tokens);
+    }
+
+    public function sendNotificationToStoreOwnerOfNewPriceOffer(int $userId, int $orderId)
+    {
+        $token = [];
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+
+        if (! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $msg = NotificationFirebaseConstant::NEW_PRICE_OFFER_ADDED." ".$orderId;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+
+        $this->messaging->sendMulticast($message, $token);
+    }
+
+    public function sendNotificationOfPriceOfferStatusUpdateToSupplier(int $userId, int $priceOfferId, string $text)
+    {
+        $token = [];
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+
+        if (! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $priceOfferId,
+        ];
+
+        $msg = $text." ".$priceOfferId;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+
+        $this->messaging->sendMulticast($message, $token);
+    }
 }
