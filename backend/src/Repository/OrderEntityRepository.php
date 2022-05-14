@@ -1222,7 +1222,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             
             ->andWhere('orderEntity.isHide = :isHide')
             ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
-           
+   
+            ->andWhere('orderEntity.orderType = :orderTypeNormal')
+            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
+   
             ->orderBy('orderEntity.id', 'DESC')
        
             ->getQuery()
