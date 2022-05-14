@@ -66,9 +66,28 @@ final class NotificationConstant
 
     const APP_TYPE_SUPPLIER = "suppliers";
     
+    //sub order    
     const RECYCLING_ORDER_TITLE = "تدوير الطلب";
 
     const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح و أصبح ظاهرا للكباتن";
+   
+    const ADD_SUB_ORDER = "تم إضافة طلب فرعي إلى الطلب";
+
+    const NEW_SUB_ORDER_TITLE = "طلب فرعي جديد";
+
+    const CREATE_SUB_ORDER_SUCCESS = "تم إنشاء طلب فرعي جديد بنجاح";
+
+    const NON_SUB_ORDER_TITLE = "فك ارتباط طلب";
+
+    const NON_SUB_ORDER_BY_CAPTAIN = "تم فك ارتباط الطلب بواسطة الكابتن";
+
+    const NON_SUB_ORDER = "تم فك ارتباط الطلب";
+
+    const SUB_ORDER_ATTENTION = "تنبيه";
+
+    const SUB_ORDER_HIDE_TEMPORARILY = "الطلب لا يظهر للكباتن بسبب عدم توفر سيارات لديك,سيظهر الطلب تلقائيا عند توفر سيارات في باقتك";
+   
+    const SUB_ORDER_SHOW = "تم إظهار الطلب للكباتن";
 
     // local notifications for supplier
     const STATE_CAPTAIN_ON_WAY_TO_PICK_ORDER = "الكابتن في طريقه إلى المتجر";
