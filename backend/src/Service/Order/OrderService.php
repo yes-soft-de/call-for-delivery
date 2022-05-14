@@ -61,6 +61,7 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Service\DateFactory\DateFactoryService;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Order\OrderIsCancelConstant;
+use App\Constant\Notification\NotificationFirebaseConstant;
 
 class OrderService
 {
@@ -827,10 +828,13 @@ class OrderService
             }
           
             $this->orderLogsService->createOrderLogsRequest($order);
-            // create firebase notification to store
-             try{
-                  $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
-                  }
+           
+            try{
+                // create firebase notification to store
+                  $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
+                   //create Notification Local for captain
+                  $this->notificationFirebaseService->notificationSubOrderForUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ADD_SUB_ORDER);               
+                }
              catch (\Exception $e){
                   error_log($e);
                 }
@@ -839,7 +843,7 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
      
-    public function orderNonSub(int $orderId): ?OrderUpdatePaidToProviderResponse
+    public function orderNonSub(int $orderId, $userId): ?OrderUpdatePaidToProviderResponse
     {   
         $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
 
@@ -858,8 +862,21 @@ class OrderService
         }
       
         //notification to captain
-        $this->notificationLocalService->createNotificationLocal($order->getCaptainId()->getCaptainId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
-     
+        $this->notificationLocalService->createNotificationLocal($userId, NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
+      
+        try{
+            // create firebase notification to store
+              $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::NON_SUB_ORDER_BY_CAPTAIN);
+              if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
+                $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::SUB_ORDER_HIDE_TEMPORARILY);
+            }
+               //create firebase notification to captain
+              $this->notificationFirebaseService->notificationSubOrderForUser($userId, $order->getId(), NotificationFirebaseConstant::NON_SUB_ORDER);               
+            }
+        catch (\Exception $e){
+              error_log($e);
+            }
+
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
      
@@ -883,6 +900,13 @@ class OrderService
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
                 //notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_SHOW, $order->getId());
+                try{
+                    // create firebase notification to store
+                      $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::SUB_ORDER_SHOW);
+                    }
+                catch (\Exception $e){
+                      error_log($e);
+                    }
             }          
         }
     }
@@ -976,6 +1000,7 @@ class OrderService
             //create firebase notification to captains
             try{
                 $this->notificationFirebaseService->notificationToCaptains($order->getId());
+                $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::SUB_ORDER_SHOW);
               }
            catch (\Exception $e){
                   error_log($e);

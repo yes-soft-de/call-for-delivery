@@ -51,7 +51,6 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-            ->withDefaultSounds()
             ->withHighestPossiblePriority()->withData($payload);
         $this->messaging->sendMulticast($message, $tokens);
     }
@@ -86,7 +85,6 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
-            ->withDefaultSounds()
             ->withHighestPossiblePriority()->withData($payload);
 
         $this->messaging->sendMulticast($message, $token);
@@ -177,7 +175,7 @@ class NotificationFirebaseService
         ];
 
         $message = CloudMessage::new()
-        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
         ->withHighestPossiblePriority();
 
         $message = $message->withData($payload);
@@ -202,7 +200,7 @@ class NotificationFirebaseService
         ];
 
         $message = CloudMessage::new()
-        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))->withDefaultSounds()
+        ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
         ->withHighestPossiblePriority();
 
         $message = $message->withData($payload);
@@ -237,7 +235,6 @@ class NotificationFirebaseService
                 $message = CloudMessage::new()
                     ->withNotification(
                         Notification::create($request->getTitle(), $request->getMessageBody()))
-                    ->withDefaultSounds()
                     ->withHighestPossiblePriority()->withData($payload);
 
                 $this->messaging->sendMulticast($message, $devicesToken);
@@ -257,7 +254,7 @@ class NotificationFirebaseService
                 ];
 
                 $message = CloudMessage::new()
-                    ->withNotification(Notification::create($request->getTitle(), $request->getMessageBody()))->withDefaultSounds()
+                    ->withNotification(Notification::create($request->getTitle(), $request->getMessageBody()))
                     ->withHighestPossiblePriority();
 
                 $message = $message->withData($payload);
@@ -294,7 +291,6 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::NEW_BID_ORDER_CREATED_SUCCESSFULLY))
-            ->withDefaultSounds()
             ->withHighestPossiblePriority()->withData($payload);
         $this->messaging->sendMulticast($message, $tokens);
     }
@@ -322,7 +318,6 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
-            ->withDefaultSounds()
             ->withHighestPossiblePriority()->withData($payload);
 
         $this->messaging->sendMulticast($message, $token);
@@ -351,7 +346,33 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
-            ->withDefaultSounds()
+            ->withHighestPossiblePriority()->withData($payload);
+
+        $this->messaging->sendMulticast($message, $token);
+    }
+
+    public function notificationSubOrderForUser(int $userId, int $orderId, string $text)
+    { 
+        $token = [];
+        
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $msg = $text." ".$orderId;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
             ->withHighestPossiblePriority()->withData($payload);
 
         $this->messaging->sendMulticast($message, $token);
