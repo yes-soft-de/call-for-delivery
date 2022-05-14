@@ -37,4 +37,8 @@ class NotificationTokensService
         return $this->notificationTokensManager->getTokenByUserId($userId);
     }
 
+    public function getTokensByUsersArray(array $usersEntities): array
+    {
+        return $this->notificationTokensManager->getTokensByUsersArray($usersEntities);
+    }
 }

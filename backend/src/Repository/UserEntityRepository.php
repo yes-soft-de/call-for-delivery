@@ -167,4 +167,22 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getSupplierUsersEntitiesBySupplierCategoryId(int $supplierCategoryId): array
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = userEntity.id'
+            )
+
+            ->andWhere('supplierProfileEntity.supplierCategories LIKE :supplierCategoryId')
+            ->setParameter('supplierCategoryId', '%"'.$supplierCategoryId.'"%')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

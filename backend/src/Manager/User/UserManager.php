@@ -259,4 +259,9 @@ class UserManager
             return $userEntity;
         }
     }
+
+    public function getSupplierUsersEntitiesBySupplierCategoryId(int $supplierCategoryId): array
+    {
+        return $this->userRepository->getSupplierUsersEntitiesBySupplierCategoryId($supplierCategoryId);
+    }
 }

@@ -58,4 +58,9 @@ class NotificationTokensManager
     {
         return $this->notificationFirebaseTokenEntityRepository->getToken($userId);
     }
+
+    public function getTokensByUsersArray(array $usersEntities): array
+    {
+        return $this->notificationFirebaseTokenEntityRepository->getTokensByUsersArray($usersEntities);
+    }
 }
