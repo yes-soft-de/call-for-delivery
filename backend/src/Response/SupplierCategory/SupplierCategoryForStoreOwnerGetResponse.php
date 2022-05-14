@@ -4,7 +4,7 @@ namespace App\Response\SupplierCategory;
 
 use OpenApi\Annotations as OA;
 
-class SupplierCategoryGetResponse
+class SupplierCategoryForStoreOwnerGetResponse
 {
     /**
      * @var int|null

@@ -4,6 +4,7 @@ namespace App\Controller\SupplierCategory;
 
 use App\Controller\BaseController;
 use App\Service\SupplierCategory\SupplierCategoryService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,22 +41,14 @@ class SupplierCategoryController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=201,
+     *      response=200,
      *      description="Returns all active supplier categories",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="name"),
-     *                  @OA\Property(type="string", property="description"),
-     *                  @OA\Property(type="boolean", property="status"),
-     *                  @OA\Property(type="object", property="image",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL"),
-     *                  )
+     *                  ref=@Model(type="App\Response\SupplierCategory\SupplierCategoryGetResponse")
      *              )
      *          )
      *      )
@@ -66,6 +59,44 @@ class SupplierCategoryController extends BaseController
     public function getAllActiveSupplierCategories(): JsonResponse
     {
         $response = $this->supplierCategoryService->getAllActiveSupplierCategories();
+
+        return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * store owner: fetch all active supplier categories for store owner.
+     * @Route("activesuppliercategoriesforstore", name="getAllActiveSupplierCategoriesByStoreOwner", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Supplier Category")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns all active supplier categories",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\SupplierCategory\SupplierCategoryForStoreOwnerGetResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getAllActiveSupplierCategoriesForStoreOwner(): JsonResponse
+    {
+        $response = $this->supplierCategoryService->getAllActiveSupplierCategoriesForStoreOwner();
 
         return $this->response($response, self::FETCH);
     }

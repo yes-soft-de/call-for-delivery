@@ -4,6 +4,7 @@ namespace App\Service\SupplierCategory;
 
 use App\AutoMapping;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
+use App\Response\SupplierCategory\SupplierCategoryForStoreOwnerGetResponse;
 use App\Response\SupplierCategory\SupplierCategoryGetResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 
@@ -31,6 +32,23 @@ class SupplierCategoryService
                 $supplierCategory['image'] = $this->uploadFileHelperService->getImageParams($supplierCategory['image']);
 
                 $response[] = $this->autoMapping->map("array", SupplierCategoryGetResponse::class, $supplierCategory);
+            }
+        }
+
+        return $response;
+    }
+
+    public function getAllActiveSupplierCategoriesForStoreOwner(): array
+    {
+        $response = [];
+
+        $supplierCategories = $this->supplierCategoryManager->getAllActiveSupplierCategoriesForStoreOwner();
+
+        if (! empty($supplierCategories)) {
+            foreach ($supplierCategories as $supplierCategory) {
+                $supplierCategory['image'] = $this->uploadFileHelperService->getImageParams($supplierCategory['image']);
+
+                $response[] = $this->autoMapping->map("array", SupplierCategoryForStoreOwnerGetResponse::class, $supplierCategory);
             }
         }
 
