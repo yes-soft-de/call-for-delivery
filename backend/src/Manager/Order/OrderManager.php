@@ -89,6 +89,8 @@ class OrderManager
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_INITIALIZED);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        $orderEntity->setOrderIsMain(true);
 
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();

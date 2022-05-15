@@ -57,6 +57,9 @@ class BidDetailsEntity
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'bidDetailsEntities')]
     private $branch;
 
+    #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class, inversedBy: 'bidDetailsEntities')]
+    private $supplierProfile;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -244,6 +247,18 @@ class BidDetailsEntity
     public function setBranch(?StoreOwnerBranchEntity $branch): self
     {
         $this->branch = $branch;
+
+        return $this;
+    }
+
+    public function getSupplierProfile(): ?SupplierProfileEntity
+    {
+        return $this->supplierProfile;
+    }
+
+    public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): self
+    {
+        $this->supplierProfile = $supplierProfile;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\BidDetails\BidDetailsOpenToPriceOfferStatusConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
+use App\Entity\SupplierProfileEntity;
 use App\Manager\Image\ImageManager;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Manager\SupplierCategory\SupplierCategoryManager;
@@ -81,8 +82,10 @@ class BidDetailsManager
         return $bidDetailsEntity;
     }
 
-    public function updateBidDetailsSourceDestination(BidDetailsEntity $bidDetailsEntity, array $sourceDestination): BidDetailsEntity
+    // This function updates supplierProfile and sourceDestination of bidDetails
+    public function updateBidDetailsSupplierProfileAndSourceDestination(BidDetailsEntity $bidDetailsEntity, array $sourceDestination, SupplierProfileEntity $supplierProfileEntity): BidDetailsEntity
     {
+        $bidDetailsEntity->setSupplierProfile($supplierProfileEntity);
         $bidDetailsEntity->setSourceDestination($sourceDestination);
 
         $this->entityManager->flush();
