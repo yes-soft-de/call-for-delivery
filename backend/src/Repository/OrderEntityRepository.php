@@ -220,6 +220,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+            ->addSelect('bidDetailsEntity as bidDetailsInfo')
            
             ->andWhere('orderEntity.state = :pending ')
 //            ->andWhere('orderEntity.orderType = :orderTypeNormal')
@@ -229,6 +230,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = :captainId')
             
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+
+            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
@@ -1150,6 +1153,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->andWhere('orderEntity.orderType = :normalOrderType')
+            ->setParameter('normalOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
 
             ->getQuery()
             ->getResult();

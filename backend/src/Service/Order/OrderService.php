@@ -285,19 +285,24 @@ class OrderService
 
         $orders = $this->orderManager->closestOrders($userId);
 
-        foreach ($orders as $order) {
-          
-            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
+        foreach ($orders as $key=>$value) {
 
-            if($order['roomId']) {
-                $order['roomId'] = $order['roomId']->toBase32();
-                $order['usedAs'] = $this->getUsedAs($order['usedAs']);
+            $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
+
+            if($value['roomId']) {
+                $value['roomId'] = $value['roomId']->toBase32();
+                $value['usedAs'] = $this->getUsedAs($value['usedAs']);
             }
             else {
-                $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
+                $value['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
             }
 
-            $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
+            $response[$key] = $this->autoMapping->map('array', OrderClosestResponse::class, $value);
+
+            if ($value['bidDetailsInfo']) {
+                $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
+                $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
+            }
         }
 
        return $response;
