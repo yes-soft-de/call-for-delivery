@@ -316,12 +316,15 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   title: Text(S.current.branch),
                   subtitle: Text(orderInfo.branchName),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
+                Visibility(
+                  visible: orderInfo.note != null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
                 ),
                 Visibility(
                   visible: orderInfo.image != null,
@@ -360,12 +363,15 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     ],
                   ),
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.info,
+                Visibility(
+                  visible: orderInfo.note != null,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.info,
+                    ),
+                    title: Text(S.current.orderDetails),
+                    subtitle: Text(orderInfo.note ?? ''),
                   ),
-                  title: Text(S.current.orderDetails),
-                  subtitle: Text(orderInfo.note),
                 ),
                 Visibility(
                     visible: orderInfo.kilometer != null,

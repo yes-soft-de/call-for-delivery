@@ -1,8 +1,8 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
-import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OwnerOrderCard extends StatelessWidget {
   final String orderNumber;
@@ -10,8 +10,10 @@ class OwnerOrderCard extends StatelessWidget {
   final String deliveryDate;
   final String createdDate;
   final num orderCost;
-  final String note;
+  final String? note;
   final Color? background;
+  final bool orderIsMain;
+  final String? primaryTitle;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -19,12 +21,13 @@ class OwnerOrderCard extends StatelessWidget {
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
-      this.background});
+      this.background,
+      this.primaryTitle,
+      required this.orderIsMain});
 
   @override
   Widget build(BuildContext context) {
     var color = background ?? Theme.of(context).colorScheme.primary;
-
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
@@ -40,29 +43,89 @@ class OwnerOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            InfoButtonOrder(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text(S.current.note),
-                        content: Container(child: Text(note)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        actionsAlignment: MainAxisAlignment.center,
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(S.current.close)),
-                        ],
-                      );
-                    });
-              },
+            Visibility(
+              visible: orderIsMain || primaryTitle != null,
+              child: Row(
+                children: [
+                  Icon(
+                    FontAwesomeIcons.tag,
+                    color: Colors.amber,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.amber),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        primaryTitle ?? S.current.groupOrder,
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Visibility(
+                    visible: note != null,
+                    child: InfoButtonOrder(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(S.current.note),
+                                content: Container(child: Text(note ?? '')),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                actionsAlignment: MainAxisAlignment.center,
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(S.current.close)),
+                                ],
+                              );
+                            });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              replacement: Visibility(
+                visible: note != null,
+                child: InfoButtonOrder(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(S.current.note),
+                            content: Container(child: Text(note ?? '')),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            actionsAlignment: MainAxisAlignment.center,
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(S.current.close)),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ),
             ),
+
             // order number & order status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

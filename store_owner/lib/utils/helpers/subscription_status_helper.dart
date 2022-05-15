@@ -45,6 +45,7 @@ class SubscriptionsStatusHelper {
         return BalanceStatus.INACTIVE;
     }
   }
+
   static Color? getStatusColor(String status) {
     switch (status) {
       case 'active':

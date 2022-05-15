@@ -5840,6 +5840,96 @@ class S {
     );
   }
 
+  /// `Order can contains a sub orders`
+  String get thisOrderCanBeLinked {
+    return Intl.message(
+      'Order can contains a sub orders',
+      name: 'thisOrderCanBeLinked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Order`
+  String get groupOrder {
+    return Intl.message(
+      'Group Order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new sub order , you can split later if needed`
+  String get areYouSureAboutCreatingSubOrder {
+    return Intl.message(
+      'Are you sure about creating new sub order , you can split later if needed',
+      name: 'areYouSureAboutCreatingSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink suborders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink suborders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Removed Successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order Removed Successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order already accepted by captain`
+  String get orderAlreadyAccepted {
+    return Intl.message(
+      'Order already accepted by captain',
+      name: 'orderAlreadyAccepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hidden Order`
+  String get hiddenOrder {
+    return Intl.message(
+      'Hidden Order',
+      name: 'hiddenOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `title`
   String get title {
     return Intl.message(

@@ -2,17 +2,19 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
+import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
-class OrderLogsLoadedState extends States {
-  OrderLogsScreenState screenState;
-  List<OrderModel> orders;
-  OrderLogsLoadedState(this.screenState, this.orders) : super(screenState);
-
+class SubOrdersListStateLoaded extends States {
+  final List<OrderModel> orders;
+  final SubOrdersScreenState screenState;
+  SubOrdersListStateLoaded(
+    this.screenState, {
+    required this.orders,
+  }) : super(screenState);
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(children: getOrders());
@@ -34,13 +36,17 @@ class OrderLogsLoadedState extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
+              primaryTitle:element.orderIsMain ? S.current.primaryOrder : S.current.suborder ,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
+              orderIsMain: element.orderIsMain,
+              background: element.orderIsMain
+                  ? Colors.red[700]
+                  : StatusHelper.getOrderStatusColor(element.state),
               orderCost: element.orderCost,
               note: element.note,
-              orderIsMain: element.orderIsMain,
             ),
           ),
         ),

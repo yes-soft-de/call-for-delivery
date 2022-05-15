@@ -93,7 +93,7 @@ class OrdersService {
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
@@ -143,5 +143,16 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> getHiddenOrders() async {
+    OrdersResponse? response = await _ordersManager.getHiddenOrder();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
   }
 }

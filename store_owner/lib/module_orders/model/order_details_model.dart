@@ -1,4 +1,6 @@
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -18,8 +20,9 @@ class OrderDetailsModel extends DataModel {
   late String? destinationLink;
   late String deliveryDateString;
   late DateTime deliveryDate;
+  late DateTime createDateTime;
   late String createdDate;
-  late String note;
+  late String? note;
   late num orderCost;
   late String payment;
   late OrderStatusEnum state;
@@ -30,6 +33,7 @@ class OrderDetailsModel extends DataModel {
   late bool? isCaptainArrived;
   late num? kilometer;
   late num? paidToProvider;
+  late bool orderIsMain;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -37,6 +41,7 @@ class OrderDetailsModel extends DataModel {
   num? captainOrderCost;
   String? attention;
   late OrderTimeLine? orderLogs;
+  late List<OrderModel> subOrders;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -62,7 +67,10 @@ class OrderDetailsModel extends DataModel {
       required this.captainOrderCost,
       required this.orderLogs,
       required this.kilometer,
-      required this.paidToProvider});
+      required this.paidToProvider,
+      required this.orderIsMain,
+      required this.subOrders,
+      required this.createDateTime});
 
   late OrderDetailsModel _orders;
 
@@ -100,7 +108,7 @@ class OrderDetailsModel extends DataModel {
                 element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
             : null,
         destinationLink: element?.destination?.link,
-        note: element?.note ?? '',
+        note: element?.note,
         orderCost: element?.orderCost ?? 0,
         payment: element?.payment ?? 'cash',
         roomID: element?.roomId,
@@ -112,7 +120,10 @@ class OrderDetailsModel extends DataModel {
         captainOrderCost: element?.captainOrderCost,
         orderLogs: _getOrderLogs(element?.orderLogs),
         kilometer: element?.kilometer,
-        paidToProvider: element?.paidToProvider);
+        paidToProvider: element?.paidToProvider,
+        orderIsMain: element?.orderIsMain ?? false,
+        subOrders: _getOrders(element?.subOrders ?? []),
+        createDateTime: DateHelper.convert(element?.createdAt?.timestamp));
 
     _orders.distance = _distance(_orders, location);
   }
@@ -162,6 +173,35 @@ class OrderDetailsModel extends DataModel {
       return distance;
     }
     return null;
+  }
+
+  List<OrderModel> _getOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(OrderModel(
+          branchName: element.branchName ?? S.current.unknown,
+          createdDate: create,
+          deliveryDate: delivery,
+          id: element.id ?? -1,
+          note: element.note,
+          orderCost: element.orderCost ?? 0,
+          orderIsMain: false,
+          orders: [],
+          orderType: 1,
+          state: StatusHelper.getStatusEnum(element.state),
+          isHide: -1));
+    });
+    return orders;
   }
 
   OrderDetailsModel get data => _orders;

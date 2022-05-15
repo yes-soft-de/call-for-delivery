@@ -108,7 +108,8 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return CaptainOffersResponse.fromJson(response);
   }
-   Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance() async {
+
+  Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance() async {
     var token = await _authService.getToken();
     var response = await _apiClient.get(
       Urls.GET_SUBSCRIPTIONS_FINANCE,

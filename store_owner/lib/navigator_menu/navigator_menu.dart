@@ -127,6 +127,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               },
               title: S.current.myOrders),
           CustomNavTile(
+              icon: Icons.hide_source_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(OrdersRoutes.OWNER_HIDDEN_ORDERS_SCREEN);
+              },
+              title: S.current.hiddenOrder),
+
+          CustomNavTile(
               icon: Icons.store_rounded,
               onTap: () {
                 Navigator.of(context)

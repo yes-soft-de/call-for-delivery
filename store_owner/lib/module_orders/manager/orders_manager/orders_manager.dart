@@ -46,4 +46,5 @@ class OrdersManager {
   Future<ActionResponse?> confirmCaptainLocation(
           ConfirmCaptainLocationRequest request) =>
       _repository.confirmCaptainLocation(request);
+  Future<OrdersResponse?> getHiddenOrder() => _repository.getHiddenOrder();
 }

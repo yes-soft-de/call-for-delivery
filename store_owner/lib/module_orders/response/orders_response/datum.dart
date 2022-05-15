@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -18,24 +19,28 @@ class Datum {
   String? detail;
   int? storeOwnerBranchId;
   String? branchName;
-
-  Datum({
-    this.id,
-    this.state,
-    this.payment,
-    this.orderCost,
-    this.orderType,
-    this.note,
-    this.deliveryDate,
-    this.createdAt,
-    this.storeOrderDetailsId,
-    this.destination,
-    this.recipientName,
-    this.recipientPhone,
-    this.detail,
-    this.storeOwnerBranchId,
-    this.branchName,
-  });
+  bool? orderIsMain;
+  List<SubOrder>? subOrders;
+  num? isHide;
+  Datum(
+      {this.id,
+      this.state,
+      this.payment,
+      this.orderCost,
+      this.orderType,
+      this.note,
+      this.deliveryDate,
+      this.createdAt,
+      this.storeOrderDetailsId,
+      this.destination,
+      this.recipientName,
+      this.recipientPhone,
+      this.detail,
+      this.storeOwnerBranchId,
+      this.branchName,
+      this.orderIsMain,
+      this.subOrders,
+      this.isHide});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -44,6 +49,7 @@ class Datum {
         orderCost: json['orderCost'] as num?,
         orderType: json['orderType'] as int?,
         note: json['note'] as String?,
+        orderIsMain: json['orderIsMain'] as bool?,
         deliveryDate: json['deliveryDate'] == null
             ? null
             : DeliveryDate.fromJson(
@@ -60,6 +66,10 @@ class Datum {
         detail: json['detail'] as String?,
         storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
         branchName: json['branchName'] as String?,
+        subOrders: (json['subOrder'] as List<dynamic>?)
+            ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        isHide: json['isHide'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

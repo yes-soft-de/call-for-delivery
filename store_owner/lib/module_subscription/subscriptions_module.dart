@@ -14,8 +14,11 @@ class SubscriptionsModule extends YesModule {
   final StoreSubscriptionsFinanceScreen _storeSubscriptionsFinanceScreen;
   final StoreSubscriptionsFinanceDetailsScreen
       storeSubscriptionsFinanceDetailsScreen;
-  SubscriptionsModule(this._initSubscriptionsScreen,
-      this._subscriptionBalanceScreen, this._storeSubscriptionsFinanceScreen,this.storeSubscriptionsFinanceDetailsScreen) {
+  SubscriptionsModule(
+      this._initSubscriptionsScreen,
+      this._subscriptionBalanceScreen,
+      this._storeSubscriptionsFinanceScreen,
+      this.storeSubscriptionsFinanceDetailsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -27,7 +30,7 @@ class SubscriptionsModule extends YesModule {
           _subscriptionBalanceScreen,
       SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN: (context) =>
           _storeSubscriptionsFinanceScreen,
-            SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
+      SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
           storeSubscriptionsFinanceDetailsScreen,
     };
   }
