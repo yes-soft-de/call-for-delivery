@@ -144,8 +144,9 @@ class PriceOfferManager
             // then, we update order status from 'initialized' to 'pending'
             $this->orderManager->updateBidOrderStateToPendingBySupplier($priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getOfferDeadline()->format('Y-m-d H:i:s'));
 
-            // besides that, we also have to update the source destination of bid details to be as the supplier location
-            $this->bidDetailsManager->updateBidDetailsSourceDestination($priceOfferEntity->getBidDetails(), $priceOfferEntity->getSupplierProfile()->getLocation());
+            // besides that, we also have to update the supplier profile and source destination of bid details to be as the supplier location
+            $this->bidDetailsManager->updateBidDetailsSupplierProfileAndSourceDestination($priceOfferEntity->getBidDetails(), $priceOfferEntity->getSupplierProfile()->getLocation(),
+                $priceOfferEntity->getSupplierProfile());
 
             return $priceOfferEntity;
         }
