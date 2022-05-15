@@ -31,7 +31,10 @@ class OrderByIdForSupplierGetResponse
 
     public string $title;
 
-    public string $description;
+    /**
+     * @var string|null
+     */
+    public $description;
 
     public DateTime $createdAt;
 
