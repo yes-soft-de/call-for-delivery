@@ -1619,4 +1619,57 @@ class OrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * store: cancel bid order by store owner.
+     * @Route("bidordercancel/{id}", name="bidOrderCancelByStoreOwner", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Order\BidOrderForStoreOwnerGetResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9212"),
+     *          @OA\Property(type="string", property="msg", description="errorMsg"),
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function cancelBidOrder(int $id): JsonResponse
+    {
+        $response = $this->orderService->cancelBidOrder($id);
+
+        if ($response === OrderResultConstant::ORDER_NOT_REMOVE_STATE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::BID_ORDER_CAN_NOT_BE_DELETED);
+
+        }
+
+        return $this->response($response, self::UPDATE);
+    }
 }

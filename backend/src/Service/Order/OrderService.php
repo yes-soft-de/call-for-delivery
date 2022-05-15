@@ -5,7 +5,6 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
-use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
@@ -15,7 +14,6 @@ use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
-use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
@@ -1026,5 +1024,16 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function cancelBidOrder(int $orderId): string|BidOrderForStoreOwnerGetResponse
+    {
+        $bidOrderResult = $this->orderManager->cancelBidOrder($orderId);
+
+        if ($bidOrderResult === OrderResultConstant::ORDER_NOT_REMOVE_STATE) {
+            return $bidOrderResult;
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, BidOrderForStoreOwnerGetResponse::class, $bidOrderResult);
     }
 }

@@ -526,9 +526,21 @@ class OrderManager
     }
 
     public function getordersHiddenDueToExceedingDeliveryTime(int $userId): ?array
-    {      
-       
+    {
        return $this->orderRepository->getordersHiddenDueToExceedingDeliveryTime($userId);
-   
+    }
+
+    public function cancelBidOrder(int $orderId): string|OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($orderId);
+
+        if ($orderEntity) {
+            if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_INITIALIZED) {
+                // Can not delete the bid order because a confirmation on a price offer is made
+                return OrderResultConstant::ORDER_NOT_REMOVE_STATE;
+            }
+        }
+
+        return  $orderEntity;
     }
 }
