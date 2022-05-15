@@ -37,7 +37,9 @@ class CreateOrderRequest {
       data['note'] = this.note;
     }
     data['payment'] = this.payment;
-    data['recipientName'] = this.recipientName;
+    if (this.recipientName != null && this.recipientName != '') {
+      data['recipientName'] = this.recipientName;
+    }
     data['recipientPhone'] = this.recipientPhone;
     data['deliveryDate'] = this.date;
     if (this.image != null) {

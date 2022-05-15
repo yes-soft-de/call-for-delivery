@@ -10,7 +10,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String deliveryDate;
   final String createdDate;
   final num orderCost;
-  final String note;
+  final String? note;
   final Color? background;
   final bool orderIsMain;
   final String? primaryTitle;
@@ -61,7 +61,7 @@ class OwnerOrderCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                       primaryTitle ?? S.current.groupOrder,
+                        primaryTitle ?? S.current.groupOrder,
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.white,
@@ -70,53 +70,59 @@ class OwnerOrderCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  InfoButtonOrder(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text(S.current.note),
-                              content: Container(child: Text(note)),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              actionsAlignment: MainAxisAlignment.center,
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(S.current.close)),
-                              ],
-                            );
-                          });
-                    },
+                  Visibility(
+                    visible: note != null,
+                    child: InfoButtonOrder(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(S.current.note),
+                                content: Container(child: Text(note ?? '')),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                actionsAlignment: MainAxisAlignment.center,
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(S.current.close)),
+                                ],
+                              );
+                            });
+                      },
+                    ),
                   ),
                 ],
               ),
-              replacement: InfoButtonOrder(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text(S.current.note),
-                          content: Container(child: Text(note)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          actionsAlignment: MainAxisAlignment.center,
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(S.current.close)),
-                          ],
-                        );
-                      });
-                },
+              replacement: Visibility(
+                visible: note != null,
+                child: InfoButtonOrder(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(S.current.note),
+                            content: Container(child: Text(note ?? '')),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            actionsAlignment: MainAxisAlignment.center,
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(S.current.close)),
+                            ],
+                          );
+                        });
+                  },
+                ),
               ),
             ),
 

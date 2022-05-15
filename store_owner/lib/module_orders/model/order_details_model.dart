@@ -22,7 +22,7 @@ class OrderDetailsModel extends DataModel {
   late DateTime deliveryDate;
   late DateTime createDateTime;
   late String createdDate;
-  late String note;
+  late String? note;
   late num orderCost;
   late String payment;
   late OrderStatusEnum state;
@@ -108,7 +108,7 @@ class OrderDetailsModel extends DataModel {
                 element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
             : null,
         destinationLink: element?.destination?.link,
-        note: element?.note ?? '',
+        note: element?.note,
         orderCost: element?.orderCost ?? 0,
         payment: element?.payment ?? 'cash',
         roomID: element?.roomId,
@@ -194,7 +194,7 @@ class OrderDetailsModel extends DataModel {
           deliveryDate: delivery,
           id: element.id ?? -1,
           note: element.note,
-          orderCost: element.orderCost,
+          orderCost: element.orderCost ?? 0,
           orderIsMain: false,
           orders: [],
           orderType: 1,

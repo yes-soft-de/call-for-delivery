@@ -11,7 +11,7 @@ class OrderModel extends DataModel {
   late int id;
   late OrderStatusEnum state;
   late num orderCost;
-  late String note;
+  late String? note;
   late String deliveryDate;
   late String createdDate;
   late String branchName;
@@ -85,7 +85,7 @@ class OrderModel extends DataModel {
           deliveryDate: delivery,
           id: element.id ?? -1,
           note: element.note,
-          orderCost: element.orderCost,
+          orderCost: element.orderCost ?? 0,
           orderIsMain: false,
           orders: [],
           orderType: 1,

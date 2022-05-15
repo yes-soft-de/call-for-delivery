@@ -6,10 +6,10 @@ class SubOrder {
   int? id;
   DeliveryDate? deliveryDate;
   CreatedAt? createdAt;
-  dynamic payment;
-  dynamic orderCost;
+  String? payment;
+  num? orderCost;
   int? orderType;
-  dynamic note;
+  String? note;
   String? state;
   int? storeOwnerBranchId;
   Location? location;
@@ -40,10 +40,10 @@ class SubOrder {
         createdAt: json['createdAt'] == null
             ? null
             : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
-        payment: json['payment'] as dynamic,
-        orderCost: json['orderCost'] as dynamic,
+        payment: json['payment'] as String?,
+        orderCost: json['orderCost'] as num?,
         orderType: json['orderType'] as int?,
-        note: json['note'] as dynamic,
+        note: json['note'] as String?,
         state: json['state'] as String?,
         storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
         location: json['location'] == null
