@@ -22,7 +22,10 @@ class OrderByIdForSupplierGetResponse
 
     public int $orderType;
 
-    public string $note;
+    /**
+     * @var string|null
+     */
+    public $note;
 
     /**
      * @var DateTime|null

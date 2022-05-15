@@ -5,7 +5,6 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
-use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
@@ -15,7 +14,6 @@ use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
-use App\Response\DeliveryCar\DeliveryCarGetForSupplierResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
@@ -525,9 +523,14 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 
-    public function orderCancel(int $id): ?OrderCancelResponse
+    public function orderCancel(int $id): string|OrderCancelResponse|null
     {
         $order = $this->orderManager->getOrderById($id);
+
+        // if order of type bid, then use another api in order to cancel it
+        if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
      
         if($order) {
             $halfHourLaterTime = date_modify($order->getCreatedAt(), '+30 minutes');
@@ -1029,5 +1032,16 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function cancelBidOrder(int $orderId): string|BidOrderForStoreOwnerGetResponse
+    {
+        $bidOrderResult = $this->orderManager->cancelBidOrder($orderId);
+
+        if ($bidOrderResult === OrderResultConstant::ORDER_NOT_REMOVE_STATE) {
+            return $bidOrderResult;
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, BidOrderForStoreOwnerGetResponse::class, $bidOrderResult);
     }
 }

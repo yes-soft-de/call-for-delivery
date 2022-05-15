@@ -17,4 +17,6 @@ final class OrderResultConstant
     const ORDER_ALREADY_IS_BEING_ACCEPTED = "orderAlreadyIsBeingAccepted";
 
     const ORDER_CAPTAIN_RECEIVED = "error, The captain received the order";
+
+    const ORDER_TYPE_BID = "orderIsOfTypeBid";
 }
