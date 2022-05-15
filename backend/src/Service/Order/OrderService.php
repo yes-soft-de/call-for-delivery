@@ -522,9 +522,14 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 
-    public function orderCancel(int $id): ?OrderCancelResponse
+    public function orderCancel(int $id): string|OrderCancelResponse|null
     {
         $order = $this->orderManager->getOrderById($id);
+
+        // if order of type bid, then use another api in order to cancel it
+        if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
      
         if($order) {
             $halfHourLaterTime = date_modify($order->getCreatedAt(), '+30 minutes');

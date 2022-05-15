@@ -972,6 +972,9 @@ class OrderController extends BaseController
             if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED) {
                 return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
             }
+
+        } elseif ($response === OrderResultConstant::ORDER_TYPE_BID) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
         }
       
         return $this->response($response, self::UPDATE);

@@ -37,6 +37,7 @@ class BaseController extends AbstractController
     const ERROR_SUB_ORDER_CAN_NOT_CREATE_ORDER_FINISHED = ["can not create sub order,the orders finished ","9209"];
     const ERROR_UNSUB_ORDER = ["error, The captain received the order","9211"];
     const BID_ORDER_CAN_NOT_BE_DELETED = ["bid order can not be deleted", "9212"];
+    const ERROR_WRONG_ORDER_TYPE = ["wrong order type", "9213"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
