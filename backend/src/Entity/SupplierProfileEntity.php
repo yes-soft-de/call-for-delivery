@@ -61,10 +61,14 @@ class SupplierProfileEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $profitMargin;
 
+    #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: BidDetailsEntity::class)]
+    private $bidDetailsEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->announcementEntities = new ArrayCollection();
+        $this->bidDetailsEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -272,6 +276,36 @@ class SupplierProfileEntity
     public function setProfitMargin(?float $profitMargin): self
     {
         $this->profitMargin = $profitMargin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BidDetailsEntity[]
+     */
+    public function getBidDetailsEntities(): Collection
+    {
+        return $this->bidDetailsEntities;
+    }
+
+    public function addBidDetailsEntity(BidDetailsEntity $bidDetailsEntity): self
+    {
+        if (!$this->bidDetailsEntities->contains($bidDetailsEntity)) {
+            $this->bidDetailsEntities[] = $bidDetailsEntity;
+            $bidDetailsEntity->setSupplierProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBidDetailsEntity(BidDetailsEntity $bidDetailsEntity): self
+    {
+        if ($this->bidDetailsEntities->removeElement($bidDetailsEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($bidDetailsEntity->getSupplierProfile() === $this) {
+                $bidDetailsEntity->setSupplierProfile(null);
+            }
+        }
 
         return $this;
     }
