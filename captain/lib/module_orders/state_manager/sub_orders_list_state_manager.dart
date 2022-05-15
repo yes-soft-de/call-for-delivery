@@ -83,14 +83,14 @@ class SubOrdersStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-        getOrder(screenState, screenState.orderId);
+        getOrder(screenState, screenState.orderId, false);
         getIt<GlobalStateManager>().update();
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderRemovedSuccessfully)
             .show(screenState.context);
-        getOrder(screenState, screenState.orderId);
+        getOrder(screenState, screenState.orderId, false);
         getIt<GlobalStateManager>().update();
       }
     });

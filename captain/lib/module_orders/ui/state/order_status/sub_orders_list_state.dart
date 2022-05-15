@@ -41,49 +41,46 @@ class SubOrdersListStateLoaded extends States {
       ));
     }
     for (var element in orders) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              if (element.orderIsMain) {
-                Navigator.of(screenState.context).pushNamed(
-                    OrdersRoutes.ORDER_STATUS_SCREEN,
-                    arguments: element.id);
-              } else if (acceptedOrder == false) {
-                Navigator.of(screenState.context).pushNamed(
-                    OrdersRoutes.ORDER_STATUS_WITHOUT_ACTIONS_SCREEN,
-                    arguments: element.id);
-              } else {
-                Navigator.of(screenState.context).pushNamed(
-                    OrdersRoutes.ORDER_STATUS_SCREEN,
-                    arguments: element.id);
-              }
-            },
-            child: OrderCard(
-              primaryTitle: element.orderIsMain
-                  ? S.current.primaryOrder
-                  : S.current.suborder,
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              deliveryDate: element.deliveryDate,
-              orderIsMain: element.orderIsMain,
-              background: element.orderIsMain
-                  ? Colors.red[700]
-                  : StatusHelper.getOrderStatusColor(element.state),
-              note: element.note,
-              orderCost: FixedNumber.getFixedNumber(element.orderCost),
-              destination: S.current.destinationUnavailable == element.distance
-                  ? element.distance
-                  : S.current.distance +
-                      ' ' +
-                      element.distance +
-                      ' ' +
-                      S.current.km,
-              credit: element.paymentMethod != 'cash',
-            ),
+      widgets.add(Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(25),
+          onTap: () {
+            if (element.orderIsMain) {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            } else if (acceptedOrder == false) {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_WITHOUT_ACTIONS_SCREEN,
+                  arguments: element.id);
+            } else {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            }
+          },
+          child: OrderCard(
+            primaryTitle: element.orderIsMain
+                ? S.current.primaryOrder
+                : S.current.suborder,
+            orderNumber: element.id.toString(),
+            orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+            deliveryDate: element.deliveryDate,
+            orderIsMain: element.orderIsMain,
+            background: element.orderIsMain
+                ? Colors.red[700]
+                : StatusHelper.getOrderStatusColor(element.state),
+            note: element.note,
+            orderCost: FixedNumber.getFixedNumber(element.orderCost),
+            destination: S.current.destinationUnavailable == element.distance
+                ? element.distance
+                : S.current.distance +
+                    ' ' +
+                    element.distance +
+                    ' ' +
+                    S.current.km,
+            credit: element.paymentMethod != 'cash',
           ),
         ),
       ));
@@ -91,7 +88,7 @@ class SubOrdersListStateLoaded extends States {
           element.state == OrderStatusEnum.WAITING &&
           acceptedOrder) {
         widgets.add(Padding(
-          padding: const EdgeInsets.only(left: 32.0, right: 32.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Row(
             children: [
               ElevatedButton.icon(
