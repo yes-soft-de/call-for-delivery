@@ -28,7 +28,7 @@ class UpdateOrderRequest {
     if (paid != null) {
       data['paidToProvider'] = paid;
     }
-    if (paymentNote != null || paymentNote != '') {
+    if (paymentNote != null && paymentNote != '') {
       data['noteCaptainOrderCost'] = paymentNote;
     }
     return data;

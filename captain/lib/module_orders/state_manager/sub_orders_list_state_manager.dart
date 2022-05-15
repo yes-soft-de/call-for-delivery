@@ -9,11 +9,13 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_status/sub_orders_list_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
@@ -66,8 +68,9 @@ class SubOrdersStateManager {
         List<OrderModel> orders = [];
         orders.addAll(order.subOrders);
         orders.insert(0, primaryOrder);
-        _stateSubject
-            .add(SubOrdersListStateLoaded(screenState, orders: orders));
+        _stateSubject.add(SubOrdersListStateLoaded(screenState,
+            orders: orders,
+            acceptedOrder: StatusHelper.getOrderStatusIndex(order.state) > 0));
       }
     });
   }
@@ -77,18 +80,39 @@ class SubOrdersStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
-        getIt<GlobalStateManager>().update();
-        getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-      } else {
-        getIt<GlobalStateManager>().update();
         getOrder(screenState, screenState.orderId);
+        getIt<GlobalStateManager>().update();
+      } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderRemovedSuccessfully)
             .show(screenState.context);
+        getOrder(screenState, screenState.orderId);
+        getIt<GlobalStateManager>().update();
+      }
+    });
+  }
+
+  void updateOrderState(
+      SubOrdersScreenState screenState, UpdateOrderRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.updateOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error)
+            .show(screenState.context);
+        getOrder(screenState, screenState.orderId);
+        getIt<GlobalStateManager>().update();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
+        getOrder(screenState, screenState.orderId);
+        getIt<GlobalStateManager>().update();
       }
     });
   }

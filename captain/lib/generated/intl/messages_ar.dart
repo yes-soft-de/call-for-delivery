@@ -239,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
+        "confirmAcceptSubOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك من قبول هذا الطلب الفرعي"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف الفرع"),
@@ -248,6 +250,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
+        "confirmRemoveSubOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في رفض هذا الطلب ، وسيتم إزالته من الطلب المجمع"),
         "confirmRenewSub": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من عملية تجديد اشتراكك"),
         "confirmUpdateOrderStatus": MessageLookupByLibrary.simpleMessage(
@@ -810,6 +814,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
+        "reject": MessageLookupByLibrary.simpleMessage("رفض"),
         "remainingAmountForCompany":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
         "renewNewPlan":
@@ -1062,6 +1067,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
+        "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
+            "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),

@@ -204,7 +204,7 @@ class Urls {
       DOMAIN + '/v1/order/filterordersbycaptain';
   static const CREATE_CHATROOM_BEFORE_ACCEPT =
       DOMAIN + '/v1/orderchatroom/createneworderchatroom';
-  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsubbyowner';
+  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsub';
 
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +

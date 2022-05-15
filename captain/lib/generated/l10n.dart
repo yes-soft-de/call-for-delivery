@@ -6889,6 +6889,46 @@ class S {
       args: [],
     );
   }
+
+  /// `You need to accept primary order first, before interact with suborders `
+  String get youNeedToAcceptPrimaryOrderFirst {
+    return Intl.message(
+      'You need to accept primary order first, before interact with suborders ',
+      name: 'youNeedToAcceptPrimaryOrderFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reject`
+  String get reject {
+    return Intl.message(
+      'Reject',
+      name: 'reject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm removing suborder from group order `
+  String get confirmRemoveSubOrder {
+    return Intl.message(
+      'Confirm removing suborder from group order ',
+      name: 'confirmRemoveSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you want to accept this sub order, `
+  String get confirmAcceptSubOrder {
+    return Intl.message(
+      'Are you want to accept this sub order, ',
+      name: 'confirmAcceptSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

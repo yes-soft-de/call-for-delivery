@@ -69,27 +69,8 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar
-            .appBar(context, title: S.current.groupOrder, actions: [
-          Visibility(
-            visible: currentState is SubOrdersListStateLoaded &&
-                (currentState as SubOrdersListStateLoaded).orders.isNotEmpty,
-            child: CustomC4dAppBar.actionIcon(context,
-                message: S.current.unlinkSubOrders, onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return RemoveSubOrderDialog(
-                      primaryOrder: orderId,
-                      orders: (currentState as SubOrdersListStateLoaded).orders,
-                      request: (request) {
-                        manager.removeSubOrder(this, request);
-                      },
-                    );
-                  });
-            }, icon: Icons.link_off),
-          )
-        ]),
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.current.groupOrder, actions: []),
         body: currentState.getUI(context),
       ),
     );

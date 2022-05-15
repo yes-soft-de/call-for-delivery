@@ -686,7 +686,13 @@
     "unlinkSubOrders": "Unlink SubOrders",
     "orderRemovedSuccessfully": "Order removed successfully",
     "primaryOrder": "Primary order",
-    "suborder": "Suborder"
+    "suborder": "Suborder",
+    "youNeedToAcceptPrimaryOrderFirst": "You need to accept primary order first, before interact with suborders ",
+    "reject": "Reject",
+    "confirmRemoveSubOrder": "Confirm removing suborder from group order ",
+    "confirmAcceptSubOrder": "Are you want to accept this sub order, "
+
+
 
 
 

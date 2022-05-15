@@ -687,7 +687,11 @@
     "unlinkSubOrders": "فك طلب فرعي",
     "orderRemovedSuccessfully": "تم فك ربط طلب فرعي بنجاح",
     "primaryOrder": "طلب رئيسي",
-    "suborder": "طلب فرعي"
+    "suborder": "طلب فرعي",
+    "youNeedToAcceptPrimaryOrderFirst": "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها",
+    "reject": "رفض",
+    "confirmRemoveSubOrder": "هل أنت متأكد من رغبتك في رفض هذا الطلب ، وسيتم إزالته من الطلب المجمع",
+    "confirmAcceptSubOrder": "هل أنت متأكد من رغبتك من قبول هذا الطلب الفرعي"
 
 
 

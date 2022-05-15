@@ -242,6 +242,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmAcceptSubOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you want to accept this sub order, "),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
@@ -251,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmRemoveSubOrder": MessageLookupByLibrary.simpleMessage(
+            "Confirm removing suborder from group order "),
         "confirmRenewSub": MessageLookupByLibrary.simpleMessage(
             "Are your sure about renewing your subscription"),
         "confirmUpdateOrderStatus": MessageLookupByLibrary.simpleMessage(
@@ -819,6 +823,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account has been registered successfully"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "Register Success, Setup my profile"),
+        "reject": MessageLookupByLibrary.simpleMessage("Reject"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
@@ -1065,6 +1070,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You cannot choose new plan , because you have a running one"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
+            "You need to accept primary order first, before interact with suborders "),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),

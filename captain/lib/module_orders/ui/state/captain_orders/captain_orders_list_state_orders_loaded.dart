@@ -96,7 +96,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             onTap: () {
               if (element.orderIsMain && element.subOrders.isNotEmpty) {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
-                    arguments: element.id.toString());
+                    arguments: element.id);
               } else {
                 Navigator.of(context).pushNamed(
                     OrdersRoutes.ORDER_STATUS_SCREEN,
