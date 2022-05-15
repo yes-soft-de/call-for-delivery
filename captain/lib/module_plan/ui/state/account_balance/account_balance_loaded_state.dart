@@ -83,10 +83,7 @@ class AccountBalanceStateLoaded extends States {
               child: Text(
                 stringValue ??
                     '${FixedNumber.getFixedNumber(value ?? 0)} ${currency ? S.current.sar : S.current.sOrder}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -173,6 +170,4 @@ class AccountBalanceStateLoaded extends States {
       ],
     );
   }
-
 }
-

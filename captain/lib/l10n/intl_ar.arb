@@ -682,7 +682,12 @@
     "financeStoreStatus": "حالة مستحقات المتاجر",
     "paidToProvider": "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر",
     "thisOrderAcceptedByAnotherCaptain": "تم قبول الطلب من قبل كابتن آخر",
-    "paidToProviderStatus": "هل تم دفع ثمن الطلب للمورد ؟"
+    "paidToProviderStatus": "هل تم دفع ثمن الطلب للمورد ؟",
+    "groupOrder": "طلب مجمع",
+    "unlinkSubOrders": "فك طلب فرعي",
+    "orderRemovedSuccessfully": "تم فك ربط طلب فرعي بنجاح",
+    "primaryOrder": "طلب رئيسي",
+    "suborder": "طلب فرعي"
 
 
 

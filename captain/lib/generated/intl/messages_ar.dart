@@ -428,6 +428,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
+        "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
@@ -630,6 +631,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderReceved": MessageLookupByLibrary.simpleMessage(
             "تم استلام الطلب من قبل كابتن آخر "),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم فك ربط طلب فرعي بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
@@ -661,8 +664,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
         "paidToProvider": MessageLookupByLibrary.simpleMessage(
             "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر"),
-        "paidToProviderStatus":
-            MessageLookupByLibrary.simpleMessage("هل تم دفع ثمن الطلب للمورد"),
+        "paidToProviderStatus": MessageLookupByLibrary.simpleMessage(
+            "هل تم دفع ثمن الطلب للمورد ؟"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -756,6 +759,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب رئيسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -921,6 +925,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
+        "suborder": MessageLookupByLibrary.simpleMessage("طلب فرعي"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
@@ -981,6 +986,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
+        "unlinkSubOrders": MessageLookupByLibrary.simpleMessage("فك طلب فرعي"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

@@ -184,7 +184,8 @@ class CaptainFinancialDuesDetailsScreenState
                   : null,
               leading: const Icon(Icons.credit_card_rounded),
               title: Text(S.current.paymentAmount),
-              subtitle: Text(FixedNumber.getFixedNumber(element.amount) +' ${S.current.sar}'),
+              subtitle: Text(FixedNumber.getFixedNumber(element.amount) +
+                  ' ${S.current.sar}'),
               trailing: SizedBox(
                 child:
                     Text(DateFormat('yyyy/M/dd').format(element.paymentDate)),

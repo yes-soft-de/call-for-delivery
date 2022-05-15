@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
@@ -13,8 +14,9 @@ class OrdersModule extends YesModule {
   final CaptainOrdersScreen _captainOrdersScreen;
   final TermsScreen _termsScreen;
   final OrderLogsScreen _orderLogsScreen;
+  final SubOrdersScreen _subOrdersScreen;
   OrdersModule(this._orderStatus, this._captainOrdersScreen, this._termsScreen,
-      this._orderLogsScreen) {
+      this._subOrdersScreen, this._orderLogsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -23,7 +25,8 @@ class OrdersModule extends YesModule {
       OrdersRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
       OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => _captainOrdersScreen,
       OrdersRoutes.TERMS_SCREEN: (context) => _termsScreen,
-      OrdersRoutes.ORDER_LOGS: (context) => _orderLogsScreen
+      OrdersRoutes.ORDER_LOGS: (context) => _orderLogsScreen,
+      OrdersRoutes.SUB_ORDERS_SCREEN: (context) => _subOrdersScreen,
     };
   }
 }

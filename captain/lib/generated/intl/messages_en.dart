@@ -433,6 +433,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
@@ -637,6 +638,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderReceved": MessageLookupByLibrary.simpleMessage(
             "The order has been receved by another captain"),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order removed successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("Order Status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
@@ -762,6 +765,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -927,6 +931,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
+        "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
@@ -987,6 +992,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
+        "unlinkSubOrders":
+            MessageLookupByLibrary.simpleMessage("Unlink SubOrders"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

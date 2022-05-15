@@ -13,8 +13,7 @@ class UpdateOrderRequest {
       this.orderCost,
       this.storeID,
       this.paymentNote,
-      this.paid
-      });
+      this.paid});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -26,7 +25,7 @@ class UpdateOrderRequest {
     if (orderCost != null) {
       data['captainOrderCost'] = orderCost;
     }
-     if (paid != null) {
+    if (paid != null) {
       data['paidToProvider'] = paid;
     }
     if (paymentNote != null || paymentNote != '') {

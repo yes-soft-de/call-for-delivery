@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
+import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -93,14 +94,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id.toString());
+              if (element.orderIsMain && element.subOrders.isNotEmpty) {
+                Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id.toString());
+              } else {
+                Navigator.of(context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id.toString());
+              }
             },
             child: OrderCard(
-              background: StatusHelper.getOrderStatusColor(element.state),
+              orderIsMain: element.orderIsMain,
+              background:element.orderIsMain ? Colors.red[700] : StatusHelper.getOrderStatusColor(element.state),
               deliveryDate: element.deliveryDate,
               note: element.note,
-              orderCost: element.orderCost.toStringAsFixed(1),
+              orderCost: FixedNumber.getFixedNumber(element.orderCost),
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               destination: S.current.destinationUnavailable == element.distance
@@ -169,10 +177,18 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id.toString());
+              if (element.orderIsMain && element.subOrders.isNotEmpty) {
+                Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id.toString());
+              }
             },
             child: NearbyOrdersCard(
+              background: element.orderIsMain ? Colors.red[700] : null,
+              orderIsMain: element.orderIsMain,
               deliveryDate: element.deliveryDate,
               note: element.note,
               orderCost: element.orderCost.toStringAsFixed(1),

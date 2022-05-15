@@ -558,7 +558,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               subtitle: orderInfo.paidToProvider,
               title: S.current.paidToProviderStatus,
               onTap: () {
-                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
+                var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
                 // screenState.requestOrderProgress(UpdateOrderRequest(
                 //     id: int.tryParse(screenState.orderId ?? '-1'),
                 //     state: StatusHelper.getStatusString(

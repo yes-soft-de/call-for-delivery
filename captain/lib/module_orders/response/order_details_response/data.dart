@@ -1,4 +1,5 @@
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
+import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -31,7 +32,9 @@ class Data {
   String? branchPhone;
   int? storeId;
   int? paidToProvider;
-
+  int? isHide;
+  bool? orderIsMain;
+  List<SubOrder>? subOrders;
   Data(
       {this.id,
       this.state,
@@ -59,7 +62,10 @@ class Data {
       this.branchPhone,
       this.ratingComment,
       this.storeId,
-      this.paidToProvider});
+      this.paidToProvider,
+      this.isHide,
+      this.orderIsMain,
+      this.subOrders});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -98,6 +104,11 @@ class Data {
           : Destination.fromJson(json['location'] as Map<String, dynamic>),
       usedAs: json['usedAs'] as String?,
       storeId: json['storeId'] as int?,
+      isHide: json['isHide'] as int?,
+      orderIsMain: json['orderIsMain'] as bool?,
+      subOrders: (json['subOrder'] as List<dynamic>?)
+          ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
+          .toList(),
       paidToProvider: json['paidToProvider'] as int?);
 
   Map<String, dynamic> toJson() => {

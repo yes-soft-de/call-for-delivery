@@ -6839,6 +6839,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Group Order`
+  String get groupOrder {
+    return Intl.message(
+      'Group Order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink SubOrders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink SubOrders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order removed successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order removed successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

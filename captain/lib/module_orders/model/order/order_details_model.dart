@@ -2,7 +2,9 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
+import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -38,6 +40,10 @@ class OrderDetailsModel extends DataModel {
   String? ratingComment;
   late int storeId;
   String? paidToProvider;
+  late int? isHide;
+  late List<OrderModel> subOrders;
+  late bool? orderIsMain;
+  late DateTime createDateTime;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -66,7 +72,11 @@ class OrderDetailsModel extends DataModel {
       required this.branchPhone,
       required this.ratingComment,
       required this.storeId,
-      required this.paidToProvider});
+      required this.paidToProvider,
+      required this.subOrders,
+      required this.isHide,
+      required this.orderIsMain,
+      required this.createDateTime});
 
   late OrderDetailsModel _orders;
 
@@ -121,6 +131,10 @@ class OrderDetailsModel extends DataModel {
       ratingComment: element?.ratingComment,
       storeId: element?.storeId ?? -1,
       paidToProvider: FinanceHelper.getStatusString(element?.paidToProvider),
+      isHide: element?.isHide,
+      subOrders: _getOrders(element?.subOrders ?? []),
+      orderIsMain: element?.orderIsMain,
+      createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
     );
     _orders.distance = _distance(_orders, location);
     _orders.branchDistance = _branchDistance(_orders, location);
@@ -153,6 +167,38 @@ class OrderDetailsModel extends DataModel {
       return branchDistance;
     }
     return null;
+  }
+
+  List<OrderModel> _getOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(OrderModel(
+          branchName: element.branchName ?? S.current.unknown,
+          createdDate: create,
+          deliveryDate: delivery,
+          id: element.id ?? -1,
+          note: element.note,
+          orderCost: element.orderCost ?? 0,
+          orderIsMain: false,
+          subOrders: [],
+          state: StatusHelper.getStatusEnum(element.state),
+          isHide: -1,
+          distance: S.current.destinationUnavailable,
+          location: LatLng(element.location?.latitude?.toDouble() ?? 0,
+              element.location?.longitude?.toDouble() ?? 0),
+          paymentMethod: ''));
+    });
+    return orders;
   }
 
   OrderDetailsModel get data => _orders;

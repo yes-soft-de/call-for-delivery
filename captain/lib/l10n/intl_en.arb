@@ -681,7 +681,14 @@
     "financeStoreStatus": "Finance order status",
     "paidToProvider": "Did you pay order cost totally to store owner before taking the order",
     "thisOrderAcceptedByAnotherCaptain": "This order accepted by another captain",
-    "paidToProviderStatus": "Paid to provider status"
+    "paidToProviderStatus": "Paid to provider status",
+    "groupOrder": "Group Order",
+    "unlinkSubOrders": "Unlink SubOrders",
+    "orderRemovedSuccessfully": "Order removed successfully",
+    "primaryOrder": "Primary order",
+    "suborder": "Suborder"
+
+
 
 
 

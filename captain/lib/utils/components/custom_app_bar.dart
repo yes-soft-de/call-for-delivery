@@ -13,8 +13,7 @@ class CustomC4dAppBar {
       Widget? widget,
       bool canGoBack = true,
       List<Widget>? actions,
-      PreferredSizeWidget? bottom
-      }) {
+      PreferredSizeWidget? bottom}) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     if (icon == Icons.menu && ScreenType.isDesktop(context)) {
       icon = null;
@@ -78,36 +77,40 @@ class CustomC4dAppBar {
       {required Function() onTap,
       Color? buttonBackground,
       required IconData icon,
+      String? message,
       Color? colorIcon}) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                  color: isDark
-                      ? Theme.of(context)
-                          .colorScheme
-                          .background
-                          .withOpacity(0.5)
-                      : Theme.of(context).backgroundColor,
-                  spreadRadius: 1.5,
-                  blurRadius: 6,
-                  offset: Offset(-0.2, 0))
-            ],
-            color:
-                buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(icon,
-                color: colorIcon ??
-                    (isDark ? null : Theme.of(context).colorScheme.primary)),
+      child: Tooltip(
+        message: message ?? '',
+        child: InkWell(
+          customBorder: CircleBorder(),
+          onTap: onTap,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                    color: isDark
+                        ? Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(0.5)
+                        : Theme.of(context).backgroundColor,
+                    spreadRadius: 1.5,
+                    blurRadius: 6,
+                    offset: Offset(-0.2, 0))
+              ],
+              color:
+                  buttonBackground ?? Theme.of(context).scaffoldBackgroundColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(icon,
+                  color: colorIcon ??
+                      (isDark ? null : Theme.of(context).colorScheme.primary)),
+            ),
           ),
         ),
       ),

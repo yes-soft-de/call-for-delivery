@@ -73,8 +73,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: active ? Colors.white : null),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0)
