@@ -828,12 +828,14 @@ class OrderService
             }
           
             $this->orderLogsService->createOrderLogsRequest($order);
-           
+
             try{
                 // create firebase notification to store
                   $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
-                   //create Notification Local for captain
-                  $this->notificationFirebaseService->notificationSubOrderForUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ADD_SUB_ORDER);               
+                  if($primaryOrder->getCaptainId()) {
+                    //create firebase notification to captain
+                    $this->notificationFirebaseService->notificationSubOrderForUser($primaryOrder->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ADD_SUB_ORDER);               
+                  }
                 }
              catch (\Exception $e){
                   error_log($e);

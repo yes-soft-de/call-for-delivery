@@ -60,7 +60,7 @@ final class NotificationFirebaseConstant
 
     const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح و أصبح ظاهرا للكباتن";
        
-    const ADD_SUB_ORDER = "تم إضافة طلب فرعي إلى الطلب";
+    const ADD_SUB_ORDER = "تم إضافة طلب فرعي";
     
     const NEW_SUB_ORDER_TITLE = "طلب فرعي جديد";
     

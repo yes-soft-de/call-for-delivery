@@ -29,6 +29,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\RateEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Constant\Order\OrderIsMainConstant;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -1225,6 +1226,9 @@ class OrderEntityRepository extends ServiceEntityRepository
    
             ->andWhere('orderEntity.orderType = :orderTypeNormal')
             ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
+   
+            ->andWhere('orderEntity.orderIsMain = :orderIsMain')
+            ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
    
             ->orderBy('orderEntity.id', 'DESC')
        
