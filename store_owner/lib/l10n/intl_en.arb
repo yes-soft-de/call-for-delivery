@@ -580,8 +580,37 @@
     "financeUnPaid": "Unpaid",
     "financePartlyPaid": "Partly paid",
     "captainOffers": "Captain Offers",
-    "newOrderLink": "New sub order"
+    "newOrderLink": "New sub order",
 
+    "title": "title",
+    "description": "description",
+    "open": "open",
+    "closeOrder": "close",
+    "openOrder": "Open order",
+    "orderCategory": "Order category",
+    "chooseCategory": "Choose category",
+    "newBidOrder": "New bidorder",
+    "orderOffers": "Order Offers",
+    "myBidOrder": "My bid order",
+    "confirmRefuseOffer": "Are you sure about refuse this offer",
+    "confirmAcceptOffer": "Are you sure about accept this offer",
+    "offerStatusUpdatedSuccessfully": "Offer Status Updated Successfully",
+    "waitingSupplier": "Waiting Supplier",
+    "waitingCaptain": "Waiting Captain",
+
+    "offerPrice": "Offer price",
+    "deliverCost": "Deliver Cost",
+    "profitMargin": "Profit Margin",
+
+    "transCount": "Transportation Count",
+    "carModel": "Car model",
+    "pendingOffer": "pending",
+    "refusedOffer": "refused",
+    "acceptedOffer": "accepted",
+    "confirmed": "confirmed",
+
+    "offerNumber": "offerNumber",
+    "offerStatus": "offerStatus"
 
 
 

@@ -5839,6 +5839,266 @@ class S {
       args: [],
     );
   }
+
+  /// `title`
+  String get title {
+    return Intl.message(
+      'title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `description`
+  String get description {
+    return Intl.message(
+      'description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `open`
+  String get open {
+    return Intl.message(
+      'open',
+      name: 'open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `close`
+  String get closeOrder {
+    return Intl.message(
+      'close',
+      name: 'closeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open order`
+  String get openOrder {
+    return Intl.message(
+      'Open order',
+      name: 'openOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order category`
+  String get orderCategory {
+    return Intl.message(
+      'Order category',
+      name: 'orderCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose category`
+  String get chooseCategory {
+    return Intl.message(
+      'Choose category',
+      name: 'chooseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New bidorder`
+  String get newBidOrder {
+    return Intl.message(
+      'New bidorder',
+      name: 'newBidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Offers`
+  String get orderOffers {
+    return Intl.message(
+      'Order Offers',
+      name: 'orderOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My bid order`
+  String get myBidOrder {
+    return Intl.message(
+      'My bid order',
+      name: 'myBidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about refuse this offer`
+  String get confirmRefuseOffer {
+    return Intl.message(
+      'Are you sure about refuse this offer',
+      name: 'confirmRefuseOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about accept this offer`
+  String get confirmAcceptOffer {
+    return Intl.message(
+      'Are you sure about accept this offer',
+      name: 'confirmAcceptOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer Status Updated Successfully`
+  String get offerStatusUpdatedSuccessfully {
+    return Intl.message(
+      'Offer Status Updated Successfully',
+      name: 'offerStatusUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting Supplier`
+  String get waitingSupplier {
+    return Intl.message(
+      'Waiting Supplier',
+      name: 'waitingSupplier',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting Captain`
+  String get waitingCaptain {
+    return Intl.message(
+      'Waiting Captain',
+      name: 'waitingCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer price`
+  String get offerPrice {
+    return Intl.message(
+      'Offer price',
+      name: 'offerPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deliver Cost`
+  String get deliverCost {
+    return Intl.message(
+      'Deliver Cost',
+      name: 'deliverCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit Margin`
+  String get profitMargin {
+    return Intl.message(
+      'Profit Margin',
+      name: 'profitMargin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transportation Count`
+  String get transCount {
+    return Intl.message(
+      'Transportation Count',
+      name: 'transCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Car model`
+  String get carModel {
+    return Intl.message(
+      'Car model',
+      name: 'carModel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pending`
+  String get pendingOffer {
+    return Intl.message(
+      'pending',
+      name: 'pendingOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `refused`
+  String get refusedOffer {
+    return Intl.message(
+      'refused',
+      name: 'refusedOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `accepted`
+  String get acceptedOffer {
+    return Intl.message(
+      'accepted',
+      name: 'acceptedOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `confirmed`
+  String get confirmed {
+    return Intl.message(
+      'confirmed',
+      name: 'confirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `offerNumber`
+  String get offerNumber {
+    return Intl.message(
+      'offerNumber',
+      name: 'offerNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `offerStatus`
+  String get offerStatus {
+    return Intl.message(
+      'offerStatus',
+      name: 'offerStatus',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

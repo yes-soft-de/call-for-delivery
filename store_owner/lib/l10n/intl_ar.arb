@@ -579,15 +579,38 @@
     "financeUnPaid": "لم يتم التسديد",
     "financePartlyPaid": "تم التسديد جزئيا",
     "captainOffers": "عروض الكباتن",
-    "newOrderLink": "إنشاء طلب فرعي"
+    "newOrderLink": "إنشاء طلب فرعي",
+
+    "title": "عنوان الطلب",
+    "description": "وصف للطلب",
+    "open": "مفتوح",
+    "closeOrder": "مغلق",
+    "openOrder": "الطلبات المفتوحة",
+
+    "orderCategory": "فئة الطلب",
+    "chooseCategory": "أختر فئة",
+    "newBidOrder": "طلب مناقصة جديد",
+    "orderOffers": "عروض الأسعار",
+    "myBidOrder": "مناقصاتي",
+    "confirmRefuseOffer": "هل انت متاكد من رفض هذا العرض",
+    "confirmAcceptOffer": "هل انت متاكد من قبول هذا العرض",
+    "offerStatusUpdatedSuccessfully": "تم تحديث عرض السعر بنجاح",
+    "waitingSupplier": "انتظار مورد",
+    "waitingCaptain": "انتظار كابتن",
 
 
+    "offerPrice": "سعر العرض",
+    "deliverCost": "تكلفة التوصيل",
+    "profitMargin": "عمولة",
 
-
-
-
-
-
+    "transCount": "عدد النقلات",
+    "carModel": "نوع السيارة",
+    "pendingOffer": "قيد الإنتظار",
+    "refusedOffer": "مرفوض",
+    "acceptedOffer": "مقبول",
+    "confirmed": "مُأكد",
+    "offerNumber": "رقم العرض",
+    "offerStatus": "حالة العرض"
 
 
 

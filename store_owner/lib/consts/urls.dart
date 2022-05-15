@@ -232,4 +232,15 @@ class Urls {
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
+
+
+  /*----------------------------bidorders-----------------------------*/
+  static const GET_SUPPLIER_CATEGORY = DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';
+
+  static const GET_BID_ORDER = DOMAIN + '/v1/order/filterbidorders';
+  static const ADD_BID_ORDER = DOMAIN + '/v1/order/bidorder';
+  static const BID_ORDER_DETAILS = DOMAIN + '/v1/order/storebidorder/';
+
+  static const GET_ORDER_OFFERS = DOMAIN + '/v1/priceoffer/priceoffersbybidorderidforstore/';
+  static const UPDATE_OFFER_STATE = DOMAIN + '/v1/priceoffer/priceofferstatus';
 }
