@@ -444,7 +444,8 @@ class OrderService
 
             if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
                 //create Notification Local for supplier
-                //$this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::SUPPLIER);
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getBidDetailsEntity()->getSupplierProfile()->getUser()->getId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(),
+                    NotificationConstant::SUPPLIER);
             }
 
             //create order log
