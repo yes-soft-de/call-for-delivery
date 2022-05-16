@@ -75,9 +75,12 @@ class OrderService
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
-    private DateFactoryService $dateFactoryService;
+    private BidOrderFinancialService $bidOrderFinancialService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
+                                CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService,
+                                CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
+                                BidOrderFinancialService $bidOrderFinancialService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -91,7 +94,7 @@ class OrderService
        $this->captainFinancialDuesService = $captainFinancialDuesService;
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
-       $this->dateFactoryService = $dateFactoryService;
+       $this->bidOrderFinancialService = $bidOrderFinancialService;
     }
 
     /**
@@ -346,6 +349,12 @@ class OrderService
 
         foreach ($orders as $order) {
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
+
+            if ($order['bidDetails']) {
+                // get branch info
+                $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+                $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+            }
             
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
@@ -494,6 +503,12 @@ class OrderService
         $orders = $this->orderManager->filterOrdersByCaptain($request);
 
         foreach ($orders as $order) {
+            if ($order['bidDetails']) {
+                // get branch info
+                $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+                $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+            }
+
             $response[] = $this->autoMapping->map('array', FilterOrdersByCaptainResponse::class, $order);
         }
 
@@ -748,7 +763,7 @@ class OrderService
         return $response;
     }
 
-    public function getSpecificBidOrderForStore(int $id): ?BidOrderForStoreOwnerGetResponse
+    public function getSpecificBidOrderForStore(int $id, int $userId): ?BidOrderForStoreOwnerGetResponse
     {
         $order = $this->orderManager->getSpecificBidOrderForStore($id);
 
@@ -770,6 +785,8 @@ class OrderService
             }
 
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+
+            $order['totalDeliveryCost'] = $this->bidOrderFinancialService->getBidOrderTotalDeliveryCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
         }
 
         return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
