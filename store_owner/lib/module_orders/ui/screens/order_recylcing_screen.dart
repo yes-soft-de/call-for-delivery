@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_recycling_state_manager.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,6 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen> {
     }
   }
 
-
   bool canRemoveIt = false;
   bool flag = true;
   @override
@@ -81,10 +82,23 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen> {
         resizeToAvoidBottomInset: false,
         appBar: CustomC4dAppBar.appBar(context,
             title: S.current.recycleOrder,
-           ),
+            actions: [
+              CustomC4dAppBar.actionIcon(context, onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            manager.recycle(this,
+                                CreateOrderRequest(order: orderId, cancel: 1));
+                          },
+                          content: S.current.areYouSureAboutDeleteOrder);
+                    });
+              }, icon: Icons.delete)
+            ]),
         body: currentState.getUI(context),
-     
-       ),
+      ),
     );
   }
 }
