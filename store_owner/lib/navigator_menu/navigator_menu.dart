@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_about/about_routes.dart';
+import 'package:c4d/module_bidorder/bid_orders_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -126,6 +127,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               },
               title: S.current.myOrders),
           CustomNavTile(
+              icon: Icons.hide_source_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(OrdersRoutes.OWNER_HIDDEN_ORDERS_SCREEN);
+              },
+              title: S.current.hiddenOrder),
+
+          CustomNavTile(
               icon: Icons.store_rounded,
               onTap: () {
                 Navigator.of(context)
@@ -138,6 +147,35 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             thickness: 2.5,
             color: Theme.of(context).backgroundColor,
           ),
+          //BID-ORDER
+          CustomNavTile(
+              icon: Icons.production_quantity_limits,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(BidOrdersRoutes.OPEN_ORDERS_SCREEN);
+              },
+              title: S.current.openOrder),
+          CustomNavTile(
+              icon: Icons.bookmark_border,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(BidOrdersRoutes.NEW_ORDER_SCREEN);
+              },
+              title: S.current.newBidOrder),
+          CustomNavTile(
+              icon: Icons.compare_arrows_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(BidOrdersRoutes.LOGS_BID_ORDERS_SCREEN);
+              },
+              title: S.current.myBidOrder),
+          Divider(
+            indent: 32,
+            endIndent: 32,
+            thickness: 2.5,
+            color: Theme.of(context).backgroundColor,
+          ),
+
           // support
           CustomNavTile(
               icon: Icons.notifications_active_rounded,

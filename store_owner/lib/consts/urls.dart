@@ -204,9 +204,10 @@ class Urls {
   static const CREATE_BRANCH_LIST_API =
       DOMAIN + '/v1/StoreOwnerBranch/multiplebranches';
   static const NEW_ORDER_API = DOMAIN + '/v1/order/create';
-  static const NEW_ORDER_API_LINK = DOMAIN + 'v1/order/createsuborder';
-  static const ORDER_NONSUB_API_LINK = DOMAIN + 'v1/order/ordernonsub';
+  static const NEW_ORDER_API_LINK = DOMAIN + '/v1/order/createsuborder';
+  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsubbyowner';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/order/storeorders';
+  static const OWNER_HIDDEN_ORDERS_API = DOMAIN + '/v1/order/getordershiddenduetoexceedingdeliverytime';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
   static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
@@ -232,4 +233,15 @@ class Urls {
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
+
+
+  /*----------------------------bidorders-----------------------------*/
+  static const GET_SUPPLIER_CATEGORY = DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';
+
+  static const GET_BID_ORDER = DOMAIN + '/v1/order/filterbidorders';
+  static const ADD_BID_ORDER = DOMAIN + '/v1/order/bidorder';
+  static const BID_ORDER_DETAILS = DOMAIN + '/v1/order/storebidorder/';
+
+  static const GET_ORDER_OFFERS = DOMAIN + '/v1/priceoffer/priceoffersbybidorderidforstore/';
+  static const UPDATE_OFFER_STATE = DOMAIN + '/v1/priceoffer/priceofferstatus';
 }

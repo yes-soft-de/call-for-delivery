@@ -3,13 +3,16 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
@@ -93,6 +96,27 @@ class OrderStatusStateManager {
                 title: S.current.warnning, message: S.current.deleteSuccess)
             .show(screenState.context);
         getOrder(screenState, orderId);
+      }
+    });
+  }
+
+  void removeSubOrder(
+      OrderDetailsScreenState screenState, OrderNonSubRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.removeOrderSub(request).then((value) {
+      if (value.hasError) {
+        getOrder(screenState,screenState.orderId);
+        getIt<GlobalStateManager>().update();
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+      } else {
+        getOrder(screenState,screenState.orderId);
+        getIt<GlobalStateManager>().update();
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.orderRemovedSuccessfully)
+            .show(screenState.context);
       }
     });
   }

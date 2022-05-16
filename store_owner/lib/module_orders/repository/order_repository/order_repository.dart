@@ -35,7 +35,8 @@ class OrderRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> addNewOrderLink(CreateOrderRequest orderRequest) async {
+  Future<ActionResponse?> addNewOrderLink(
+      CreateOrderRequest orderRequest) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.NEW_ORDER_API_LINK,
@@ -47,11 +48,13 @@ class OrderRepository {
 
     return ActionResponse.fromJson(response);
   }
- Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) async {
+
+  Future<ActionResponse?> removeOrderSub(
+      OrderNonSubRequest orderRequest) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.post(
-      Urls.ORDER_NONSUB_API_LINK,
-      orderRequest.toJson(),
+    dynamic response = await _apiClient.put(
+      Urls.ORDER_NONSUB_API_LINK + '/${orderRequest.orderID}',
+      {},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
 
@@ -134,5 +137,15 @@ class OrderRepository {
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getHiddenOrder() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.OWNER_HIDDEN_ORDERS_API,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
   }
 }

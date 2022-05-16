@@ -19,6 +19,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -38,11 +39,11 @@ class NewOrderStateBranchesLoaded extends States {
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
-
+  int orderType = 1;
+  bool orderIsMain = false;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
-
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
         child: SingleChildScrollView(
@@ -169,7 +170,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
                   subtitle: CustomFormField(
-                    validator:false,
+                    validator: false,
                     maxLines: 3,
                     hintText: S.of(context).orderDetailHint,
                     controller: screenState.orderDetailsController,
@@ -179,7 +180,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderPrice),
                   subtitle: CustomFormField(
-                    validator:false,
+                    validator: false,
                     hintText: S.of(context).orderCostWithDeliveryCost,
                     onTap: () {},
                     numbers: true,
@@ -384,6 +385,32 @@ class NewOrderStateBranchesLoaded extends States {
                     ),
                   ),
                 ),
+                // suborder check
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Theme.of(context).backgroundColor),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: CheckboxListTile(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          secondary: Icon(FontAwesomeIcons.boxes),
+                          value: orderIsMain,
+                          title: Text(S.current.thisOrderCanBeLinked),
+                          onChanged: (check) {
+                            if (check == true) {
+                              orderIsMain = true;
+                            } else {
+                              orderIsMain = false;
+                            }
+                            screenState.refresh();
+                          }),
+                    ),
+                  ),
+                ),
                 // payment method
                 ListTile(
                   title: Padding(
@@ -495,6 +522,8 @@ class NewOrderStateBranchesLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+          orderIsMain: orderIsMain,
+          orderType: orderType,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
@@ -515,6 +544,8 @@ class NewOrderStateBranchesLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+        orderType: orderType,
+        orderIsMain: orderIsMain,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +

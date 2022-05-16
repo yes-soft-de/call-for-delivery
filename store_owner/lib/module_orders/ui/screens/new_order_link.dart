@@ -87,9 +87,15 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen> {
   }
 
   void saveInfo(String info) {}
-
+  int orderId = -1;
+  bool flag = true;
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null && currentState is LoadingState && flag) {
+      orderId = args as int;
+      flag = false;
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);

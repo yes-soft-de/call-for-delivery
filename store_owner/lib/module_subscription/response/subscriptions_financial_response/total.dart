@@ -5,13 +5,12 @@ class Total {
   num? total;
   num? captainOffers;
 
-  Total({
-    this.sumPayments,
-    this.packageCost,
-    this.advancePayment,
-    this.total,
-    this.captainOffers
-  });
+  Total(
+      {this.sumPayments,
+      this.packageCost,
+      this.advancePayment,
+      this.total,
+      this.captainOffers});
 
   factory Total.fromJson(Map<String, dynamic> json) => Total(
         sumPayments: json['sumPayments'] as num?,

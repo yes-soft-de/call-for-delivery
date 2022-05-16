@@ -580,8 +580,49 @@
     "financeUnPaid": "Unpaid",
     "financePartlyPaid": "Partly paid",
     "captainOffers": "Captain Offers",
-    "newOrderLink": "New sub order"
+    "newOrderLink": "New sub order",
+    "thisOrderCanBeLinked": "Order can contains a sub orders",
+    "groupOrder": "Group Order",
+    "areYouSureAboutCreatingSubOrder": "Are you sure about creating new sub order , you can split later if needed",
+    "unlinkSubOrders": "Unlink suborders",
+    "orderRemovedSuccessfully": "Order Removed Successfully",
+    "primaryOrder": "Primary order",
+    "suborder": "Suborder",
+    "orderAlreadyAccepted": "Order already accepted by captain",
+    "hiddenOrder": "Hidden Order",
 
+
+
+
+    "title": "title",
+    "description": "description",
+    "open": "open",
+    "closeOrder": "close",
+    "openOrder": "Open order",
+    "orderCategory": "Order category",
+    "chooseCategory": "Choose category",
+    "newBidOrder": "New bidorder",
+    "orderOffers": "Order Offers",
+    "myBidOrder": "My bid order",
+    "confirmRefuseOffer": "Are you sure about refuse this offer",
+    "confirmAcceptOffer": "Are you sure about accept this offer",
+    "offerStatusUpdatedSuccessfully": "Offer Status Updated Successfully",
+    "waitingSupplier": "Waiting Supplier",
+    "waitingCaptain": "Waiting Captain",
+
+    "offerPrice": "Offer price",
+    "deliverCost": "Deliver Cost",
+    "profitMargin": "Profit Margin",
+
+    "transCount": "Transportation Count",
+    "carModel": "Car model",
+    "pendingOffer": "pending",
+    "refusedOffer": "refused",
+    "acceptedOffer": "accepted",
+    "confirmed": "confirmed",
+
+    "offerNumber": "offerNumber",
+    "offerStatus": "offerStatus"
 
 
 

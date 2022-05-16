@@ -495,6 +495,7 @@ class NewOrderLinkStateLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+          orderID: screenState.orderId,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
@@ -515,6 +516,7 @@ class NewOrderLinkStateLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+        orderID: screenState.orderId,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
