@@ -137,4 +137,6 @@ class BidOrderForStoreOwnerGetResponse
      *     @OA\Items(type="object"))
      */
     public $orderLogs;
+
+    public float $totalDeliveryCost;
 }

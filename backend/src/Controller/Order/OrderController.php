@@ -1249,7 +1249,7 @@ class OrderController extends BaseController
      */
     public function getSpecificBidOrderForStore(int $id): JsonResponse
     {
-        $result = $this->orderService->getSpecificBidOrderForStore($id);
+        $result = $this->orderService->getSpecificBidOrderForStore($id, $this->getUserId());
 
         return $this->response($result, self::FETCH);
     }
