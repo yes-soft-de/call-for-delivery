@@ -494,9 +494,17 @@ class OrderEntityRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
                 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('bidDetailsEntity as bidDetails')
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $request->getCaptainId())
+
+            ->leftJoin(
+                BidDetailsEntity::class,
+                'bidDetailsEntity',
+                Join::WITH,
+                'bidDetailsEntity.orderId = orderEntity.id'
+            )
 
             ->orderBy('orderEntity.id', 'DESC');
 

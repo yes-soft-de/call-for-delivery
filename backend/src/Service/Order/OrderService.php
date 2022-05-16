@@ -503,6 +503,12 @@ class OrderService
         $orders = $this->orderManager->filterOrdersByCaptain($request);
 
         foreach ($orders as $order) {
+            if ($order['bidDetails']) {
+                // get branch info
+                $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+                $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+            }
+
             $response[] = $this->autoMapping->map('array', FilterOrdersByCaptainResponse::class, $order);
         }
 
