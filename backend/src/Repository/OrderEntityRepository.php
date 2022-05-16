@@ -6,7 +6,6 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
-use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
@@ -847,79 +846,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getPricesOffersByBidOrderIdAndSupplierId(int $bidDetailsId, int $supplierId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.priceOfferValue', 'deliveryCarEntity as deliveryCar')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                PriceOfferEntity::class,
-                'priceOfferEntity',
-                Join::WITH,
-                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->leftJoin(
-                SupplierProfileEntity::class,
-                'supplierProfileEntity',
-                Join::WITH,
-                'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
-            )
-
-            ->leftJoin(
-                DeliveryCarEntity::class,
-                'deliveryCarEntity',
-                Join::WITH,
-                'deliveryCarEntity.id = priceOfferEntity.deliveryCar'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
-            ->setParameter('bidDetailsId', $bidDetailsId)
-
-            ->andWhere('supplierProfileEntity.user = :supplierId')
-            ->setParameter('supplierId', $supplierId)
-
-            ->orderBy('priceOfferEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getBidDetailsImagesByBidDetailsId(int $bidDetailsId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('imageEntity.imagePath')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
-            ->setParameter('bidDetailsId', $bidDetailsId)
-
-            ->orderBy('imageEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getSingleColumnResult();
-    }
-
     // This function filter bid orders which have price offers made by the supplier (who request the filter).
     public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
@@ -1029,34 +955,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    public function getPricesOffersByBidOrderId(int $bidOrderId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                PriceOfferEntity::class,
-                'priceOfferEntity',
-                Join::WITH,
-                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
-
-            ->orderBy('priceOfferEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
     }
 
     public function filterStoreBidOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
