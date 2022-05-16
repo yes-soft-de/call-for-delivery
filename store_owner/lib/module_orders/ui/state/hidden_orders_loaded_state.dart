@@ -31,12 +31,12 @@ class HiddenOrdersStateLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,arguments: element.id);
             },
             child: OwnerOrderCard(
-              primaryTitle:element.orderIsMain ? S.current.primaryOrder : S.current.suborder ,
+              primaryTitle: element.orderIsMain
+                  ? S.current.primaryOrder
+                  : S.current.suborder,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
@@ -47,6 +47,7 @@ class HiddenOrdersStateLoaded extends States {
                   : StatusHelper.getOrderStatusColor(element.state),
               orderCost: element.orderCost,
               note: element.note,
+              icon: Icons.recycling_rounded,
             ),
           ),
         ),

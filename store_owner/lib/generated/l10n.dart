@@ -5930,6 +5930,26 @@ class S {
     );
   }
 
+  /// `Republish`
+  String get republish {
+    return Intl.message(
+      'Republish',
+      name: 'republish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recycle Order`
+  String get recycleOrder {
+    return Intl.message(
+      'Recycle Order',
+      name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `title`
   String get title {
     return Intl.message(

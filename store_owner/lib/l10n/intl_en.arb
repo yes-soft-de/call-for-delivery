@@ -590,10 +590,8 @@
     "suborder": "Suborder",
     "orderAlreadyAccepted": "Order already accepted by captain",
     "hiddenOrder": "Hidden Order",
-
-
-
-
+    "republish": "Republish",
+    "recycleOrder": "Recycle Order",
     "title": "title",
     "description": "description",
     "open": "open",

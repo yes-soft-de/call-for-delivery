@@ -20,6 +20,8 @@ class OrdersManager {
 
   Future<ActionResponse?> addNewOrder(CreateOrderRequest orderRequest) =>
       _repository.addNewOrder(orderRequest);
+  Future<ActionResponse?> recycling(CreateOrderRequest orderRequest) =>
+      _repository.recycling(orderRequest);
 
   Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) =>
       _repository.removeOrderSub(orderRequest);

@@ -35,6 +35,19 @@ class OrderRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> recycling(CreateOrderRequest orderRequest) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.RECYCLE_ORDER_API,
+      orderRequest.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> addNewOrderLink(
       CreateOrderRequest orderRequest) async {
     var token = await _authService.getToken();
