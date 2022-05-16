@@ -28,6 +28,7 @@ class OrderDetailsModel extends DataModel {
   late OrderStatusEnum state;
   late String? roomID;
   String? image;
+  String? imagePath;
   int? captainID;
   String? branchPhone;
   late bool? isCaptainArrived;
@@ -70,7 +71,9 @@ class OrderDetailsModel extends DataModel {
       required this.paidToProvider,
       required this.orderIsMain,
       required this.subOrders,
-      required this.createDateTime});
+      required this.createDateTime,
+      required this.imagePath
+      });
 
   late OrderDetailsModel _orders;
 
@@ -123,7 +126,7 @@ class OrderDetailsModel extends DataModel {
         paidToProvider: element?.paidToProvider,
         orderIsMain: element?.orderIsMain ?? false,
         subOrders: _getOrders(element?.subOrders ?? []),
-        createDateTime: DateHelper.convert(element?.createdAt?.timestamp));
+        createDateTime: DateHelper.convert(element?.createdAt?.timestamp), imagePath: element?.image?.imageUrl);
 
     _orders.distance = _distance(_orders, location);
   }

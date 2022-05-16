@@ -27,6 +27,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:the_country_number/the_country_number.dart';
 
 class OrderRecyclingLoaded extends States {
   OrderDetailsModel orderInfo;
@@ -38,8 +39,18 @@ class OrderRecyclingLoaded extends States {
     screenState.orderDetailsController.text = orderInfo.note ?? '';
     screenState.noteController.text = orderInfo.note ?? '';
     screenState.receiptNameController.text = orderInfo.customerName;
-    //  screenState.phoneNumberController.text = orderInfo.customerPhone;
-    //  screenState.countryNumberController = TextEditingController();
+
+    var number = orderInfo.customerPhone;
+    if (number == S.current.unknown) number = '';
+    if (number.isNotEmpty || number != '') {
+      final sNumber =
+          TheCountryNumber().parseNumber(internationalNumber: '+' + number);
+      if (sNumber.dialCode.length > 0) {
+        screenState.countryNumberController.text =
+            sNumber.dialCode.substring(1);
+      }
+      screenState.phoneNumberController.text = sNumber.number;
+    }
     screenState.toController.text = orderInfo.destinationLink ?? '';
     screenState.priceController.text = orderInfo.orderCost.toString();
     screenState.payments = orderInfo.payment;
@@ -48,6 +59,9 @@ class OrderRecyclingLoaded extends States {
         ? LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
             orderInfo.destinationCoordinate?.longitude ?? 0)
         : null;
+    orderIsMain = orderInfo.orderIsMain;
+    imagePath = orderInfo.imagePath;
+    image = orderInfo.image;
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
@@ -62,6 +76,7 @@ class OrderRecyclingLoaded extends States {
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
+  String? image;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -329,9 +344,13 @@ class OrderRecyclingLoaded extends States {
                               ),
                               checkedWidget: ClipRRect(
                                   borderRadius: BorderRadius.circular(18),
-                                  child: Image.memory(
-                                    memoryBytes ?? Uint8List(0),
-                                    fit: BoxFit.cover,
+                                  child: Visibility(
+                                    visible: image == null,
+                                    replacement: Image.network(image ?? ''),
+                                    child: Image.memory(
+                                      memoryBytes ?? Uint8List(0),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ))),
                         ),
                       ),
@@ -476,7 +495,7 @@ class OrderRecyclingLoaded extends States {
             ),
           ),
         ),
-        label: S.current.createNewOrder,
+        label: S.current.republish,
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&

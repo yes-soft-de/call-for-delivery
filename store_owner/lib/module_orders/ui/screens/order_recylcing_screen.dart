@@ -80,7 +80,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderDetails,
+            title: S.current.recycleOrder,
            ),
         body: currentState.getUI(context),
      
