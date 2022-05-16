@@ -19,4 +19,6 @@ final class OrderResultConstant
     const ORDER_CAPTAIN_RECEIVED = "error, The captain received the order";
 
     const ORDER_TYPE_BID = "orderIsOfTypeBid";
+
+    const ORDER_TYPE_IS_NOT_BID = "orderIsNotOfTypeBid";
 }

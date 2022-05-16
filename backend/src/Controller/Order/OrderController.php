@@ -1671,6 +1671,8 @@ class OrderController extends BaseController
         if ($response === OrderResultConstant::ORDER_NOT_REMOVE_STATE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::BID_ORDER_CAN_NOT_BE_DELETED);
 
+        } elseif ($response === OrderResultConstant::ORDER_TYPE_IS_NOT_BID) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
         }
 
         return $this->response($response, self::UPDATE);

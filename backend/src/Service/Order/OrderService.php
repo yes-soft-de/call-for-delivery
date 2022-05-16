@@ -1039,11 +1039,11 @@ class OrderService
         return $response;
     }
 
-    public function cancelBidOrder(int $orderId): string|BidOrderForStoreOwnerGetResponse
+    public function cancelBidOrder(int $orderId): string|BidOrderForStoreOwnerGetResponse|null
     {
         $bidOrderResult = $this->orderManager->cancelBidOrder($orderId);
 
-        if ($bidOrderResult === OrderResultConstant::ORDER_NOT_REMOVE_STATE) {
+        if ($bidOrderResult === OrderResultConstant::ORDER_NOT_REMOVE_STATE || $bidOrderResult === OrderResultConstant::ORDER_TYPE_IS_NOT_BID) {
             return $bidOrderResult;
         }
 
