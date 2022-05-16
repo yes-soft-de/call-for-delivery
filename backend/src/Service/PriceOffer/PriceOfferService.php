@@ -16,6 +16,7 @@ use App\Response\PriceOffer\PriceOfferDeleteResponse;
 use App\Response\PriceOffer\PriceOfferUpdateResponse;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
+use App\Service\StoreOwner\StoreFinancialService;
 
 class PriceOfferService
 {
@@ -23,14 +24,16 @@ class PriceOfferService
     private PriceOfferManager $priceOfferManager;
     private NotificationFirebaseService $notificationFirebaseService;
     private NotificationLocalService $notificationLocalService;
+    private StoreFinancialService $storeFinancialService;
 
     public function __construct(AutoMapping $autoMapping, PriceOfferManager $priceOfferManager, NotificationFirebaseService $notificationFirebaseService,
-                                NotificationLocalService $notificationLocalService)
+                                NotificationLocalService $notificationLocalService, StoreFinancialService $storeFinancialService)
     {
         $this->autoMapping = $autoMapping;
         $this->priceOfferManager = $priceOfferManager;
         $this->notificationFirebaseService = $notificationFirebaseService;
         $this->notificationLocalService = $notificationLocalService;
+        $this->storeFinancialService = $storeFinancialService;
     }
 
     public function createPriceOffer(PriceOfferCreateRequest $request): string|PriceOfferEntity
@@ -56,7 +59,7 @@ class PriceOfferService
         $priceOffers = $this->priceOfferManager->getPriceOffersByBidOrderIdForStoreOwner($bidDetailsId);
 
         // Get store profit margin (either private or common one)
-        $storeProfitMargin = $this->priceOfferManager->getStoreProfitMarginForStoreOwner($userId);
+        $storeProfitMargin = $this->storeFinancialService->getStoreProfitMarginForStoreOwner($userId);
 
         foreach ($priceOffers as $key=>$value) {
             $response[$key] = $this->autoMapping->map("array", PriceOfferByBidOrderIdGetForStoreOwnerResponse::class, $value);
