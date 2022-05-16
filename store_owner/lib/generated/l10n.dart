@@ -6209,6 +6209,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Notification sound`
+  String get notificationSound {
+    return Intl.message(
+      'Notification sound',
+      name: 'notificationSound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ringtone`
+  String get ringtone {
+    return Intl.message(
+      'Ringtone',
+      name: 'ringtone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

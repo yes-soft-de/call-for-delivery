@@ -591,8 +591,8 @@
     "hiddenOrder": "الطلبات المخفية",
     "republish": "إعادة نشر",
     "recycleOrder": "إعادة تدوير الطلب",
-
-
+    "notificationSound": "صوت الإشعار",
+    "ringtone": "نغمة",
 
     "title": "عنوان الطلب",
     "description": "وصف للطلب",

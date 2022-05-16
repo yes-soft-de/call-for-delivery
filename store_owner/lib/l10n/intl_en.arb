@@ -618,9 +618,10 @@
     "refusedOffer": "refused",
     "acceptedOffer": "accepted",
     "confirmed": "confirmed",
-
     "offerNumber": "offerNumber",
-    "offerStatus": "offerStatus"
+    "offerStatus": "offerStatus",
+    "notificationSound": "Notification sound",
+    "ringtone": "Ringtone"
 
 
 

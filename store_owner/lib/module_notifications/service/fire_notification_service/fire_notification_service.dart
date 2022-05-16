@@ -76,7 +76,7 @@ class FireNotificationService {
     _onNotificationReceived.add(message);
     Soundpool pool = Soundpool.fromOptions();
     var sound = await rootBundle
-        .load('assets/sounds/receive_message.mp3')
+        .load(NotificationsPrefHelper().getNotification())
         .then((ByteData soundData) {
       return pool.load(soundData);
     });
