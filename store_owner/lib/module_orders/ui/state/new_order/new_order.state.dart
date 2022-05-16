@@ -22,7 +22,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
@@ -41,6 +40,7 @@ class NewOrderStateBranchesLoaded extends States {
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
+  
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();

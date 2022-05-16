@@ -35,6 +35,7 @@ class OrderDetailsModel extends DataModel {
   late num? kilometer;
   late num? paidToProvider;
   late bool orderIsMain;
+  late int branchID;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -72,8 +73,8 @@ class OrderDetailsModel extends DataModel {
       required this.orderIsMain,
       required this.subOrders,
       required this.createDateTime,
-      required this.imagePath
-      });
+      required this.imagePath,
+      required this.branchID});
 
   late OrderDetailsModel _orders;
 
@@ -126,7 +127,9 @@ class OrderDetailsModel extends DataModel {
         paidToProvider: element?.paidToProvider,
         orderIsMain: element?.orderIsMain ?? false,
         subOrders: _getOrders(element?.subOrders ?? []),
-        createDateTime: DateHelper.convert(element?.createdAt?.timestamp), imagePath: element?.image?.imageUrl);
+        createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
+        imagePath: element?.image?.imageUrl,
+        branchID: element?.storeOwnerBranchId ?? -1);
 
     _orders.distance = _distance(_orders, location);
   }

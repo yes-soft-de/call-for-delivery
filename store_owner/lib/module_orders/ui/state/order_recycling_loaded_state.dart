@@ -54,7 +54,7 @@ class OrderRecyclingLoaded extends States {
     screenState.toController.text = orderInfo.destinationLink ?? '';
     screenState.priceController.text = orderInfo.orderCost.toString();
     screenState.payments = orderInfo.payment;
-    screenState.branch = null;
+    screenState.branch = orderInfo.branchID;
     screenState.customerLocation = orderInfo.destinationCoordinate != null
         ? LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
             orderInfo.destinationCoordinate?.longitude ?? 0)
