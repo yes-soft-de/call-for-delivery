@@ -285,8 +285,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
             'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
             ->addSelect('rateEntity.rating')
+            ->addSelect('bidDetailsEntity as bidDetails')
            
             ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
+
+            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
 
             ->andWhere('orderEntity.state != :delivered')
             ->andWhere('orderEntity.captainId = :captainId')

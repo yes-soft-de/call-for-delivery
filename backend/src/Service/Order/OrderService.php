@@ -349,6 +349,12 @@ class OrderService
 
         foreach ($orders as $order) {
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
+
+            if ($order['bidDetails']) {
+                // get branch info
+                $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+                $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+            }
             
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
         }
