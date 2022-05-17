@@ -356,6 +356,7 @@ class OrderService
                 // get branch info
                 $order['branchName'] = $order['bidDetails']->getBranch()->getName();
                 $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+                $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
             }
             
             $response[] = $this->autoMapping->map('array', OrderClosestResponse::class, $order);
