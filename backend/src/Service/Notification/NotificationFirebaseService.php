@@ -16,6 +16,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Request\Notification\NotificationFirebaseByUserIdRequest;
 use App\Request\Notification\NotificationFirebaseFromAdminRequest;
 use App\Constant\Notification\NotificationTokenConstant;
+use Kreait\Firebase\Messaging\ApnsConfig;
 
 class NotificationFirebaseService
 {
@@ -176,6 +177,12 @@ class NotificationFirebaseService
 
         $message = CloudMessage::new()
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
+        // ->withDefaultSounds()
+        ->withApnsConfig(
+            ApnsConfig::new()
+                ->withSound('silence.mp3')
+                ->withBadge(1)
+        )
         ->withHighestPossiblePriority();
 
         $message = $message->withData($payload);
