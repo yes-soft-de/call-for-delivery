@@ -16,6 +16,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Request\Notification\NotificationFirebaseByUserIdRequest;
 use App\Request\Notification\NotificationFirebaseFromAdminRequest;
 use App\Constant\Notification\NotificationTokenConstant;
+use Kreait\Firebase\Messaging\AndroidConfig;
 
 class NotificationFirebaseService
 {
@@ -171,14 +172,18 @@ class NotificationFirebaseService
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
-            'argument' => null,
-            'channel_id' => 'C4d_Notifications_custom_sound_test',
+            'argument' => null
         ];
+       
+        $config = AndroidConfig::fromArray([
+            'channel_id' => 'C4d_Notifications_custom_sound_test',
+        ]);
 
         $message = CloudMessage::new()
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
-       
+        ->withAndroidConfig($config)
         ->withHighestPossiblePriority();
+       
 
         $message = $message->withData($payload);
 
