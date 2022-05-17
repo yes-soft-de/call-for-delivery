@@ -58,4 +58,9 @@ class FilterOrdersByCaptainResponse
      * @var string|null
      */
     public $storeOwnerName;
+
+    /**
+     * @var object|null
+     */
+    public $sourceDestination;
 }
