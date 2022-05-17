@@ -90,7 +90,7 @@ class LocalNotificationService {
     });
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
     if (ringerStatus == RingerModeStatus.normal) {
-      pool.play(sound);
+      pool.play(sound,repeat: NotificationsPrefHelper().getNotification().contains('2') ? 3 : 0);
     }
   }
 }

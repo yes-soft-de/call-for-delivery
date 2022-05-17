@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io' as p;
+import 'package:c4d/hive/hive_init.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -35,12 +37,12 @@ class FireNotificationService {
 
   Future<void> init() async {
     if (p.Platform.isIOS) {
-      await _fcm.requestPermission();
+      await _fcm.requestPermission(sound: false);
     }
     await _fcm.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
-      sound: true,
+      sound: false,
     );
     // var isActive = _prefHelper.getIsActive();
     await refreshNotificationToken();
@@ -48,15 +50,19 @@ class FireNotificationService {
 
   Future<void> refreshNotificationToken() async {
     var token = await _fcm.getToken();
+    log(token.toString());
     if (token != null) {
       // And Subscribe to the changes
       try {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           Logger().info('FireNotificationService', 'onMessage: $message');
+          playSound();
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          Logger().info('On Message Opened App', 'onMessage: $message');
+
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
               Navigator.pushNamed(GlobalVariable.navState.currentContext!,
@@ -73,7 +79,14 @@ class FireNotificationService {
   }
 
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
+    await HiveSetUp.init();
+    Logger().info('Background Message Handler', 'onMessage: $message');
     _onNotificationReceived.add(message);
+    await playSound();
+    return Future<void>.value();
+  }
+
+  static Future<void> playSound() async {
     Soundpool pool = Soundpool.fromOptions();
     var sound = await rootBundle
         .load(NotificationsPrefHelper().getNotification())
@@ -82,8 +95,10 @@ class FireNotificationService {
     });
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
     if (ringerStatus == RingerModeStatus.normal) {
-      pool.play(sound);
+      pool.play(sound,
+          repeat: NotificationsPrefHelper().getNotification().contains('2')
+              ? 3
+              : 0);
     }
-    return Future<void>.value();
   }
 }

@@ -141,95 +141,113 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         S.of(context).notificationSound,
                       ),
                       subtitle: Text(S.current.ringtone +
-                          ringtones
-                              .indexOf(
-                                  NotificationsPrefHelper().getNotification())
+                          ' ' +
+                          (ringtones.indexOf(NotificationsPrefHelper()
+                                      .getNotification()) +
+                                  1)
                               .toString()),
                       onTap: () {
                         showDialog(
                             context: context,
                             builder: (ctx) {
-                              return StatefulBuilder(builder: (ctx, setState) {
+                              return StatefulBuilder(builder: (ctx, refresh) {
                                 return AlertDialog(
-                                  title: Text(S.current.ringtone),
+                                  title: Text(S.current.notificationSound),
                                   scrollable: true,
                                   content: Container(
                                     child: Column(
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Theme.of(context)
-                                                .backgroundColor,
-                                          ),
-                                          child: RadioListTile(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            title: Text(
-                                                S.of(context).ringtone + '1'),
-                                            value:
-                                                'assets/sounds/ringtone1.wav',
-                                            groupValue: ringtone,
-                                            onChanged: (String? value) {
-                                              NotificationsPrefHelper()
-                                                  .setNotificationPath(
-                                                      value ?? '');
-                                              playSound(value ?? '');
-                                              ringtone = value;
-                                              setState(() {});
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Theme.of(context)
-                                                .backgroundColor,
-                                          ),
-                                          child: RadioListTile(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            title: Text(S.of(context).card),
-                                            value:
-                                                'assets/sounds/ringtone2.wav',
-                                            groupValue: ringtone,
-                                            onChanged: (String? value) {
-                                              NotificationsPrefHelper()
-                                                  .setNotificationPath(
-                                                      value ?? '');
-                                              playSound(value ?? '');
-                                              ringtone = value;
-                                              setState(() {});
-                                            },
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 1 '),
+                                              value:
+                                                  'assets/sounds/ringtone1.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
                                           ),
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Theme.of(context)
-                                                .backgroundColor,
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 2 '),
+                                              value:
+                                                  'assets/sounds/ringtone2.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
                                           ),
-                                          child: RadioListTile(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            title: Text(S.of(context).card),
-                                            value:
-                                                'assets/sounds/ringtone3.wav',
-                                            groupValue: ringtone,
-                                            onChanged: (String? value) {
-                                              NotificationsPrefHelper()
-                                                  .setNotificationPath(
-                                                      value ?? '');
-                                              playSound(value ?? '');
-                                              ringtone = value;
-                                              setState(() {});
-                                            },
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 3 '),
+                                              value:
+                                                  'assets/sounds/ringtone3.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -239,11 +257,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          setState(() {});
                                         },
                                         child: Text(S.current.cancel)),
                                     ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          setState(() {});
                                         },
                                         child: Text(S.current.confirm)),
                                   ],
@@ -290,6 +310,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var sound = await rootBundle.load(ringtone).then((ByteData soundData) {
       return pool.load(soundData);
     });
-    pool.play(sound);
+    pool.play(sound, repeat: ringtone.contains('2') ? 3 : 0);
   }
 }
