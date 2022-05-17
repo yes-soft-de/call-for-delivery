@@ -780,6 +780,8 @@ class OrderService
 
             $order['supplierCategoryId'] = $order['bidDetails']->getSupplierCategory()->getId();
             $order['supplierCategoryName'] = $order['bidDetails']->getSupplierCategory()->getName();
+            $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
+            $order['destination'] = $order['bidDetails']->getBranch()->getLocation();
 
             $order['attention'] = $order['noteCaptainOrderCost'];
 

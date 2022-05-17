@@ -56,8 +56,7 @@ class BidOrderForStoreOwnerGetResponse
     public $storeOrderDetailsId;
 
     /**
-     * @OA\Property(type="array", property="destination",
-     *     @OA\Items(type="object"), nullable=true)
+     * @OA\Property(type="object", property="destination", nullable=true)
      */
     public $destination;
 
@@ -139,4 +138,9 @@ class BidOrderForStoreOwnerGetResponse
     public $orderLogs;
 
     public float $totalDeliveryCost;
+
+    /**
+     * @OA\Property(type="object", property="sourceDestination", nullable=true)
+     */
+    public $sourceDestination;
 }
