@@ -6,7 +6,6 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\BidDetailsEntity;
-use App\Entity\DeliveryCarEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderLogsEntity;
@@ -246,38 +245,39 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function closestBidOrders(int $captainId): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
-            ->addSelect('bidDetailsEntity as bidDetails')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
-
-            ->andWhere('orderEntity.state = :pending')
-            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
-
-            ->andWhere('orderEntity.orderType = :bidOrderType')
-            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                StoreOwnerProfileEntity::class,
-                'storeOwnerProfileEntity',
-                Join::WITH,
-                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
-            )
-
-            ->orderBy('orderEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
-    }
+    // Currently we do not need this function
+//    public function closestBidOrders(int $captainId): ?array
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+//            ->addSelect('bidDetailsEntity as bidDetails')
+//            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+//
+//            ->andWhere('orderEntity.state = :pending')
+//            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+//
+//            ->andWhere('orderEntity.orderType = :bidOrderType')
+//            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
+//
+//            ->leftJoin(
+//                BidDetailsEntity::class,
+//                'bidDetailsEntity',
+//                Join::WITH,
+//                'bidDetailsEntity.orderId = orderEntity.id'
+//            )
+//
+//            ->leftJoin(
+//                StoreOwnerProfileEntity::class,
+//                'storeOwnerProfileEntity',
+//                Join::WITH,
+//                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+//            )
+//
+//            ->orderBy('orderEntity.id', 'DESC')
+//
+//            ->getQuery()
+//            ->getResult();
+//    }
     
     public function acceptedOrderByCaptainId($captainId, int $userId): ?array
     {
@@ -698,6 +698,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferStatus')
             ->setParameter('openToPriceOfferStatus', 1)
 
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+
             ->leftJoin(
                 BidDetailsEntity::class,
                 'bidDetailsEntity',
@@ -847,85 +850,15 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getPricesOffersByBidOrderIdAndSupplierId(int $bidDetailsId, int $supplierId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus', 'priceOfferEntity.priceOfferValue', 'deliveryCarEntity as deliveryCar')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                PriceOfferEntity::class,
-                'priceOfferEntity',
-                Join::WITH,
-                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->leftJoin(
-                SupplierProfileEntity::class,
-                'supplierProfileEntity',
-                Join::WITH,
-                'supplierProfileEntity.id = priceOfferEntity.supplierProfile'
-            )
-
-            ->leftJoin(
-                DeliveryCarEntity::class,
-                'deliveryCarEntity',
-                Join::WITH,
-                'deliveryCarEntity.id = priceOfferEntity.deliveryCar'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
-            ->setParameter('bidDetailsId', $bidDetailsId)
-
-            ->andWhere('supplierProfileEntity.user = :supplierId')
-            ->setParameter('supplierId', $supplierId)
-
-            ->orderBy('priceOfferEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getBidDetailsImagesByBidDetailsId(int $bidDetailsId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('imageEntity.imagePath')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidDetailsId')
-            ->setParameter('bidDetailsId', $bidDetailsId)
-
-            ->orderBy('imageEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getSingleColumnResult();
-    }
-
     // This function filter bid orders which have price offers made by the supplier (who request the filter).
     public function filterBidOrdersThatHavePriceOffersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('DISTINCT(orderEntity.id) as id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
             ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.openToPriceOffer')
+
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
             ->leftJoin(
                 BidDetailsEntity::class,
@@ -1029,34 +962,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    public function getPricesOffersByBidOrderId(int $bidOrderId): array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('priceOfferEntity.id as priceOfferId', 'priceOfferEntity.priceOfferStatus')
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                PriceOfferEntity::class,
-                'priceOfferEntity',
-                Join::WITH,
-                'priceOfferEntity.bidDetails = bidDetailsEntity.id'
-            )
-
-            ->andWhere('bidDetailsEntity.id = :bidOrderId')
-            ->setParameter('bidOrderId', $bidOrderId)
-
-            ->orderBy('priceOfferEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
     }
 
     public function filterStoreBidOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
