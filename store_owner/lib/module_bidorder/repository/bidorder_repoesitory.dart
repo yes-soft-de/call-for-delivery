@@ -76,4 +76,14 @@ class BidOrderRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> cancelBidOrder(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.CANCEL_BID_ORDER + '$id',{},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

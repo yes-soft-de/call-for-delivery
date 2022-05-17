@@ -35,13 +35,17 @@ class OpenBidOrderScreenState extends State<OpenBidOrderScreen> {
         setState(() {});
       }
     });
+    request.openToPriceOffer = true;
+    request.state = null;
     widget._stateManager.getOpenOrdersFilters(this, request);
   }
 
   void getOrders() {
     widget._stateManager.getOpenOrdersFilters(this, request);
   }
-
+  void cancelOrder(int id) {
+    widget._stateManager.cancelOrder(this, id);
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

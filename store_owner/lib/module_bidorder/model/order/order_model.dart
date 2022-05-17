@@ -17,6 +17,7 @@ class BidOrderModel extends DataModel {
   late String title;
   late String description;
   late String payment;
+  late String supplierCategoryName;
   BidOrderModel({
     required this.branchName,
     required this.state,
@@ -27,7 +28,8 @@ class BidOrderModel extends DataModel {
     required this.title,
     required this.description,
    required this.payment,
-    required this.bidOrderId
+    required this.bidOrderId,
+    required this.supplierCategoryName
   });
   List<BidOrderModel> _orders = [];
   BidOrderModel.withData(BidOrdersResponse response) {
@@ -57,6 +59,7 @@ class BidOrderModel extends DataModel {
           description: element.description ??'',
           payment: element.payment ?? S.current.unknown,
           bidOrderId: element.bidDetailsId ?? -1,
+          supplierCategoryName: element.supplierCategoryName ?? S.current.unknown,
           state: StatusHelper.getStatusEnum(element.state)));
     });
   }

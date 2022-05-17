@@ -14,6 +14,7 @@ class Datum {
   CreatedAt? createdAt;
   int? storeOwnerBranchId;
   String? branchName;
+  String? supplierCategoryName;
 
   Datum({
     this.id,
@@ -26,7 +27,8 @@ class Datum {
     this.branchName,
     this.description,
     this.title,
-    this.bidDetailsId
+    this.bidDetailsId,
+    this.supplierCategoryName,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -45,6 +47,7 @@ class Datum {
         branchName: json['branchName'] as String?,
         title: json['title'] as String?,
         description: json['description'] as String?,
+        supplierCategoryName: json['supplierCategoryName'] as String?,
         bidDetailsId: json['bidDetailsId'] as int?,
       );
 

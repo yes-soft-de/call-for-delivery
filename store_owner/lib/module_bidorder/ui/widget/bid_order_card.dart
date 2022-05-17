@@ -7,9 +7,10 @@ import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
 class BidOrderCard extends StatelessWidget {
   final BidOrderModel model;
   final bool isOpen;
+  final Function deleteOrder;
 
 
-  BidOrderCard({required this.model,required this.isOpen});
+  BidOrderCard({required this.model,required this.isOpen,required this.deleteOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +73,29 @@ class BidOrderCard extends StatelessWidget {
                           title: S.current.createdDate, subtitle: model.createdDate),
                     ],
                   ),
+                  divider(context),
                   // divider
-
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      verticalTile(context,
+                          title: S.current.category, subtitle: model.supplierCategoryName),
+                    isOpen ?     InkWell(
+                      onTap: (){
+                        deleteOrder();
+                      },
+                      child: Card(
+                        color: Colors.red.shade900,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Icon(Icons.delete,color: Colors.white,size: 18,),
+                        ),),
+                    ) :Container()
+                    ],
+                  ),
                 ],
               ),
             ),

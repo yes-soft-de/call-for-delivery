@@ -50,7 +50,7 @@ class Data {
     priceOfferValue: json['priceOfferValue'] as int?,
     transportationCount: json['transportationCount'] as int?,
     totalDeliveryCost: json['totalDeliveryCost'] as int?,
-    profitMargin: json['profitMargin'] as int?,
+    profitMargin: json['profitMargin'] as num?,
 
   );
 }
