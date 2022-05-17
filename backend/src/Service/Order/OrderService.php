@@ -399,6 +399,7 @@ class OrderService
 
             $order['bidDetailsInfo']->branchPhone = $order['bidDetails']->getBranch()->getBranchPhone();
             $order['bidDetailsInfo']->location = $order['bidDetails']->getBranch()->getLocation();
+            $order['bidDetailsInfo']->sourceDestination = $order['bidDetails']->getSourceDestination();
 
             if ($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
