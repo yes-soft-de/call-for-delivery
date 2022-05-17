@@ -312,35 +312,36 @@ class OrderService
        return $response;
     }
 
-    public function closestBidOrders(int $userId): array|CaptainStatusResponse
-    {
-        $captain = $this->captainService->captainIsActive($userId);
-
-        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
-            return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
-        }
-
-        $this->hideOrderExceededDeliveryTimeByHour();
-
-        $response = [];
-
-        $orders = $this->orderManager->closestBidOrders($userId);
-
-        foreach ($orders as $order) {
-            // get bid details info
-            $order['bidDetailsId'] = $order['bidDetails']->getId();
-            $order['title'] = $order['bidDetails']->getTitle();
-            $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
-
-            // get branch info
-            $order['branchName'] = $order['bidDetails']->getBranch()->getName();
-            $order['location'] = $order['bidDetails']->getBranch()->getLocation();
-
-            $response[] = $this->autoMapping->map('array', BidOrderClosestGetResponse::class, $order);
-        }
-
-        return $response;
-    }
+    // Currently we do not need this function
+//    public function closestBidOrders(int $userId): array|CaptainStatusResponse
+//    {
+//        $captain = $this->captainService->captainIsActive($userId);
+//
+//        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
+//            return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
+//        }
+//
+//        $this->hideOrderExceededDeliveryTimeByHour();
+//
+//        $response = [];
+//
+//        $orders = $this->orderManager->closestBidOrders($userId);
+//
+//        foreach ($orders as $order) {
+//            // get bid details info
+//            $order['bidDetailsId'] = $order['bidDetails']->getId();
+//            $order['title'] = $order['bidDetails']->getTitle();
+//            $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
+//
+//            // get branch info
+//            $order['branchName'] = $order['bidDetails']->getBranch()->getName();
+//            $order['location'] = $order['bidDetails']->getBranch()->getLocation();
+//
+//            $response[] = $this->autoMapping->map('array', BidOrderClosestGetResponse::class, $order);
+//        }
+//
+//        return $response;
+//    }
     
     public function acceptedOrderByCaptainId($captainId): ?array
     {

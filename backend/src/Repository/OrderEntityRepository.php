@@ -245,38 +245,39 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function closestBidOrders(int $captainId): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
-            ->addSelect('bidDetailsEntity as bidDetails')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
-
-            ->andWhere('orderEntity.state = :pending')
-            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
-
-            ->andWhere('orderEntity.orderType = :bidOrderType')
-            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
-
-            ->leftJoin(
-                BidDetailsEntity::class,
-                'bidDetailsEntity',
-                Join::WITH,
-                'bidDetailsEntity.orderId = orderEntity.id'
-            )
-
-            ->leftJoin(
-                StoreOwnerProfileEntity::class,
-                'storeOwnerProfileEntity',
-                Join::WITH,
-                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
-            )
-
-            ->orderBy('orderEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
-    }
+    // Currently we do not need this function
+//    public function closestBidOrders(int $captainId): ?array
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+//            ->addSelect('bidDetailsEntity as bidDetails')
+//            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+//
+//            ->andWhere('orderEntity.state = :pending')
+//            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+//
+//            ->andWhere('orderEntity.orderType = :bidOrderType')
+//            ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_BID)
+//
+//            ->leftJoin(
+//                BidDetailsEntity::class,
+//                'bidDetailsEntity',
+//                Join::WITH,
+//                'bidDetailsEntity.orderId = orderEntity.id'
+//            )
+//
+//            ->leftJoin(
+//                StoreOwnerProfileEntity::class,
+//                'storeOwnerProfileEntity',
+//                Join::WITH,
+//                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+//            )
+//
+//            ->orderBy('orderEntity.id', 'DESC')
+//
+//            ->getQuery()
+//            ->getResult();
+//    }
     
     public function acceptedOrderByCaptainId($captainId, int $userId): ?array
     {

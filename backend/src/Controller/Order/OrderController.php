@@ -444,58 +444,59 @@ class OrderController extends BaseController
         return $this->response($response, self::FETCH);
     }
 
-    /**
-     * captain: Get pending bid orders for captain.
-     * @Route("closestbidorders", name="GetPendingBidOrdersForCaptain", methods={"GET"})
-     * @IsGranted("ROLE_CAPTAIN")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Order")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Return pending orders.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *                  ref=@Model(type="App\Response\Order\BidOrderClosestGetResponse")
-     *                  ),
-     *            )
-     *       )
-     *  )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return captain inactive.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9100"),
-     *          @OA\Property(type="string", property="msg", description="error captain inactive Error."),
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function closestBidOrders(): JsonResponse
-    {
-        $response = $this->orderService->closestBidOrders($this->getUserId());
-
-        if (isset($response->status)) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
-        }
-
-        return $this->response($response, self::FETCH);
-    }
+    // Currently we do not need this API
+//    /**
+//     * captain: Get pending bid orders for captain.
+//     * @Route("closestbidorders", name="GetPendingBidOrdersForCaptain", methods={"GET"})
+//     * @IsGranted("ROLE_CAPTAIN")
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Order")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @OA\Response(
+//     *      response=200,
+//     *      description="Return pending orders.",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="array", property="Data",
+//     *              @OA\Items(
+//     *                  ref=@Model(type="App\Response\Order\BidOrderClosestGetResponse")
+//     *                  ),
+//     *            )
+//     *       )
+//     *  )
+//     *
+//     * or
+//     *
+//     * @OA\Response(
+//     *      response="default",
+//     *      description="Return captain inactive.",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code", description="9100"),
+//     *          @OA\Property(type="string", property="msg", description="error captain inactive Error."),
+//     *      )
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function closestBidOrders(): JsonResponse
+//    {
+//        $response = $this->orderService->closestBidOrders($this->getUserId());
+//
+//        if (isset($response->status)) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
+//        }
+//
+//        return $this->response($response, self::FETCH);
+//    }
     
     /**
      * captain: Get the orders received by the captain.

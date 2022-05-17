@@ -157,12 +157,13 @@ class OrderManager
         return $this->orderRepository->closestOrders($captainId->getId());
     }
 
-    public function closestBidOrders(int $userId): ?array
-    {
-        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
-
-        return $this->orderRepository->closestBidOrders($captainId->getId());
-    }
+    // Currently we do not need this function
+//    public function closestBidOrders(int $userId): ?array
+//    {
+//        $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
+//
+//        return $this->orderRepository->closestBidOrders($captainId->getId());
+//    }
     
     public function acceptedOrderByCaptainId($userId): ?array
     {
