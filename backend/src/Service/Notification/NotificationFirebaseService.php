@@ -176,8 +176,8 @@ class NotificationFirebaseService
         ];
        
         $config = AndroidConfig::fromArray([
-             'data' => [
-                 'channel_id' => 'C4d_Notifications_custom_sound_test'
+             "notification" => [
+                 "channel_id" => "C4d_Notifications_custom_sound_test"
              ]
         ]);
 
