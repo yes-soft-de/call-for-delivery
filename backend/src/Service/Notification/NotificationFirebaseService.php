@@ -175,16 +175,18 @@ class NotificationFirebaseService
             'argument' => null
         ];
        
-        // $config = AndroidConfig::fromArray([
-        //     'channel_id' => 'C4d_Notifications_custom_sound_test',
-        // ]);
+        $config = AndroidConfig::fromArray([
+             'data' => [
+                 'channel_id' => 'C4d_Notifications_custom_sound_test'
+             ]
+        ]);
 
         $message = CloudMessage::new()
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
-        // ->withAndroidConfig($config)      
+//            ->withAndroidConfig($config)
         ->withHighestPossiblePriority();
 
-        $message = $message->withData($payload);
+        $message = $message->withData($payload)->withAndroidConfig($config);
 
         $this->messaging->sendMulticast($message, $devicesToken);
 
