@@ -697,6 +697,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferStatus')
             ->setParameter('openToPriceOfferStatus', 1)
 
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+
             ->leftJoin(
                 BidDetailsEntity::class,
                 'bidDetailsEntity',
@@ -852,6 +855,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('orderEntity')
             ->select('DISTINCT(orderEntity.id) as id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
             ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.openToPriceOffer')
+
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
             ->leftJoin(
                 BidDetailsEntity::class,
