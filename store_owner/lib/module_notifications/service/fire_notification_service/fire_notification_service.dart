@@ -57,12 +57,17 @@ class FireNotificationService {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           Logger().info('FireNotificationService', 'onMessage: $message');
+          Logger().info('FireNotificationService',
+              'onMessage: ${message.notification?.android?.channelId}');
+          Logger().info('Message Data', 'onMessage: ${message.data}');
+          Logger().info('FireNotificationService',
+              'onMessage: ${message.notification?.android?.channelId}');
+
           playSound();
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           Logger().info('On Message Opened App', 'onMessage: $message');
-
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
               Navigator.pushNamed(GlobalVariable.navState.currentContext!,

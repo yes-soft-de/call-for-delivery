@@ -27,7 +27,12 @@ class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
   final NewOrderScreenState screenState;
   NewOrderStateBranchesLoaded(this.branches, this.screenState)
-      : super(screenState);
+      : super(screenState) {
+    if (branches.isNotEmpty) {
+      screenState.branch = branches[0].id;
+      screenState.refresh();
+    }
+  }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
   DateTime orderDate = DateTime.now();
@@ -40,7 +45,7 @@ class NewOrderStateBranchesLoaded extends States {
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
-  
+
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -605,5 +610,4 @@ class NewOrderStateBranchesLoaded extends States {
     });
     return branchDropDown;
   }
-
 }
