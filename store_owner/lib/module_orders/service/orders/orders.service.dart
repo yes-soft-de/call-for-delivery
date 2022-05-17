@@ -90,6 +90,17 @@ class OrdersService {
     return DataModel.empty();
   }
 
+  Future<DataModel> recycling(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.recycling(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    await FireStoreHelper().insertWatcher();
+    return DataModel.empty();
+  }
+
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
     if (response == null) return DataModel.withError(S.current.networkError);

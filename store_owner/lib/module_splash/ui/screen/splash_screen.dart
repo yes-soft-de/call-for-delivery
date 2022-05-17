@@ -3,6 +3,8 @@ import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:c4d/utils/logger/logger.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -23,12 +25,39 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    _createNewChannel();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _getNextRoute().then((route) {
         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
       });
     });
     super.initState();
+  }
+
+  String _statusText = "Waiting...";
+  final String _finished = "Finished creating channel";
+  final String _error = "Error while creating channel";
+
+  static const MethodChannel _channel =
+      MethodChannel('yessoft.de/channel_test');
+
+  Map<String, String> channelMap = {
+    "id": "C4d_Notifications_custom_sound_test",
+    "name": "C4d Notifications",
+    "description": "C4d Notifications with custom sounds",
+  };
+
+  void _createNewChannel() async {
+    try {
+      await _channel.invokeMethod('createNotificationChannel', channelMap);
+      setState(() {
+        _statusText = _finished;
+      });
+      Logger().info('Notifications Channel', _statusText);
+    } on PlatformException catch (e) {
+      _statusText = _error;
+      print(e);
+    }
   }
 
   @override

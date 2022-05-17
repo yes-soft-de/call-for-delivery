@@ -12,6 +12,8 @@ class CreateOrderRequest {
   int? orderType;
   int? orderID;
   bool? orderIsMain;
+  int? cancel;
+  int? order;
   CreateOrderRequest(
       {this.fromBranch,
       this.note,
@@ -25,7 +27,10 @@ class CreateOrderRequest {
       this.detail,
       this.orderID,
       this.orderType,
-      this.orderIsMain});
+      this.orderIsMain,
+      this.order,
+      this.cancel
+      });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -56,6 +61,12 @@ class CreateOrderRequest {
     }
     if (this.orderID != null) {
       data['primaryOrder'] = this.orderID;
+    }
+    if (this.order != null) {
+      data['id'] = this.order;
+    }
+    if (this.cancel != null) {
+      data['cancel'] = this.cancel;
     }
     if (orderIsMain != null) {
       data['orderIsMain'] = this.orderIsMain;

@@ -479,6 +479,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
+        "notificationSound":
+            MessageLookupByLibrary.simpleMessage("صوت الإشعار"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
@@ -684,6 +686,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
+        "recycleOrder":
+            MessageLookupByLibrary.simpleMessage("إعادة تدوير الطلب"),
         "redo": MessageLookupByLibrary.simpleMessage("تراجع"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "refusedOffer": MessageLookupByLibrary.simpleMessage("مرفوض"),
@@ -709,11 +713,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewedNoteYourSubStillActive": MessageLookupByLibrary.simpleMessage(
             "باقتك الحالية لم تنتهي بعد ، في حال اشتراكك بباقة جديدة ستخسر المتبقي بالباقة"),
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
+        "republish": MessageLookupByLibrary.simpleMessage("إعادة نشر"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "ringtone": MessageLookupByLibrary.simpleMessage("نغمة"),
         "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("السعودية"),

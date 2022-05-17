@@ -14,6 +14,7 @@ class OwnerOrderCard extends StatelessWidget {
   final Color? background;
   final bool orderIsMain;
   final String? primaryTitle;
+  final IconData? icon;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -23,7 +24,8 @@ class OwnerOrderCard extends StatelessWidget {
       required this.note,
       this.background,
       this.primaryTitle,
-      required this.orderIsMain});
+      required this.orderIsMain,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +162,7 @@ class OwnerOrderCard extends StatelessWidget {
                         ' ' +
                         S.current.sar),
                 Icon(
-                  Icons.arrow_circle_left_outlined,
+                  icon ?? Icons.arrow_circle_left_outlined,
                   color: Theme.of(context).textTheme.button?.color,
                 )
               ],

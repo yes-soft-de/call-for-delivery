@@ -33,9 +33,9 @@ class UpdateProfileStateLoaded extends States {
         _countryController.text = sNumber.dialCode.substring(1);
       }
       _phoneController.text = sNumber.number;
-      openingTime = profileModel.openingTime;
-      closingTime = profileModel.closingTime;
     }
+    openingTime = profileModel.openingTime;
+    closingTime = profileModel.closingTime;
     _nameController.text = profileModel.name;
     _bankNameController.text = profileModel.bankName;
     _bankNumberController.text = profileModel.bankNumber;

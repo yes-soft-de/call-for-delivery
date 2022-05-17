@@ -5930,6 +5930,26 @@ class S {
     );
   }
 
+  /// `Republish`
+  String get republish {
+    return Intl.message(
+      'Republish',
+      name: 'republish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recycle Order`
+  String get recycleOrder {
+    return Intl.message(
+      'Recycle Order',
+      name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `title`
   String get title {
     return Intl.message(
@@ -6185,6 +6205,26 @@ class S {
     return Intl.message(
       'offerStatus',
       name: 'offerStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification sound`
+  String get notificationSound {
+    return Intl.message(
+      'Notification sound',
+      name: 'notificationSound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ringtone`
+  String get ringtone {
+    return Intl.message(
+      'Ringtone',
+      name: 'ringtone',
       desc: '',
       args: [],
     );

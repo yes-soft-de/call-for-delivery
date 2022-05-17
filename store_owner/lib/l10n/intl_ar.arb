@@ -589,7 +589,10 @@
     "suborder": "طلب فرعي",
     "orderAlreadyAccepted": "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن",
     "hiddenOrder": "الطلبات المخفية",
-
+    "republish": "إعادة نشر",
+    "recycleOrder": "إعادة تدوير الطلب",
+    "notificationSound": "صوت الإشعار",
+    "ringtone": "نغمة",
 
     "title": "عنوان الطلب",
     "description": "وصف للطلب",
