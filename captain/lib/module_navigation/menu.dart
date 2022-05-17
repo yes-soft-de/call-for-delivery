@@ -191,18 +191,6 @@ class MenuScreen extends StatelessWidget {
             ],
           ),
         ),
-        DefaultTextStyle(
-          style: TextStyle(
-              fontSize: 12,
-              color: Theme.of(context).disabledColor,
-              fontWeight: FontWeight.w500),
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 16.0,
-            ),
-            child: const Text('Yes Soft | C4D Captain'),
-          ),
-        ),
       ],
     ));
   }

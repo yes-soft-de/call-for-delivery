@@ -969,6 +969,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
             "عذرا لم يتوفر لدينا الصلاحيات الكافية لتفعيل هذا الإجراء"),
+        "thereIsSomeSubOrderNeedYouAttention": MessageLookupByLibrary.simpleMessage(
+            "هناك بعض الطلبات التي تحتاج للموافقة على ربطها أو فك ارتباطها بهذا الطلب، علما أن الطلب سيبقى معلقا في حالة عدم اتخاذ إجراء"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(

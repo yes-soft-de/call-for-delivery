@@ -6949,6 +6949,16 @@ class S {
       args: [],
     );
   }
+
+  /// `There is some suborders need your action , reject it or accept it or it will remain pending`
+  String get thereIsSomeSubOrderNeedYouAttention {
+    return Intl.message(
+      'There is some suborders need your action , reject it or accept it or it will remain pending',
+      name: 'thereIsSomeSubOrderNeedYouAttention',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

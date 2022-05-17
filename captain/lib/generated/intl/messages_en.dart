@@ -975,6 +975,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no branches available"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
             "There is no permission to handle this feature"),
+        "thereIsSomeSubOrderNeedYouAttention": MessageLookupByLibrary.simpleMessage(
+            "There is some suborders need your action , reject it or accept it or it will remain pending"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(

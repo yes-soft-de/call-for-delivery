@@ -29,6 +29,7 @@ class SubOrdersListStateLoaded extends States {
 
   List<Widget> getOrders() {
     var context = screenState.context;
+    bool needToTakeAction = false;
     List<Widget> widgets = [];
     if (acceptedOrder == false) {
       widgets.add(Flushbar(
@@ -87,6 +88,7 @@ class SubOrdersListStateLoaded extends States {
       if (widgets.length > 1 &&
           element.state == OrderStatusEnum.WAITING &&
           acceptedOrder) {
+        needToTakeAction = true;
         widgets.add(Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Row(
@@ -146,6 +148,18 @@ class SubOrdersListStateLoaded extends States {
           ),
         ));
       }
+    }
+    if (needToTakeAction) {
+      widgets.insert(
+          1,
+          Flushbar(
+            icon: const Icon(
+              FontAwesomeIcons.info,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.amber,
+            message: S.current.thereIsSomeSubOrderNeedYouAttention,
+          ));
     }
     widgets.add(const SizedBox(
       height: 75,
