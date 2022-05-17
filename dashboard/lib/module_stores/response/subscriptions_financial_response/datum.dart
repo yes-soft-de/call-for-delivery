@@ -39,7 +39,7 @@ class Datum {
         status: json['status'] as String?,
         note: json['note'] as dynamic,
         flag: json['flag'] as dynamic,
-        paymentsFromStore: (json['paymentsFromCompany'] as List<dynamic>?)
+        paymentsFromStore: (json['paymentsFromStore'] as List<dynamic>?)
             ?.map((e) => PaymentsFromStore.fromJson(e as Map<String, dynamic>))
             .toList(),
         total: json['total'] == null

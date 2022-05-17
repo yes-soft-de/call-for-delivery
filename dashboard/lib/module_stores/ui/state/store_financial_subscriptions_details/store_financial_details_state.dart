@@ -1,10 +1,6 @@
 import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/hive/captain_hive_helper.dart';
-import 'package:c4d/module_captain/model/captain_financial_dues.dart';
-import 'package:c4d/module_captain/ui/screen/captain_financial_details_screen.dart';
-import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
@@ -13,12 +9,10 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
-import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
@@ -85,9 +79,6 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                       ),
                     ),
                   ),
-                  Column(
-                    children: getPayments(),
-                  )
                 ],
               ),
             ),
@@ -314,7 +305,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
       widgets.insert(
         1,
         Text(
-          S.current.captainPayments,
+          S.current.storePayments,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       );
