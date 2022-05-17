@@ -3,6 +3,8 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_my_notifications/model/notification_model.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
@@ -97,5 +99,42 @@ class MyNotificationsStateManager {
       });
     }
   }
-  
+
+  void updateOrder(
+      MyNotificationsScreenState screenState, UpdateOrderRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().updateOrder(request).then((value) {
+      if (value.hasError) {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error)
+            .show(screenState.context);
+      } else {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void removeOrderSub(
+      MyNotificationsScreenState screenState, OrderNonSubRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().removeOrderSub(request).then((value) {
+      if (value.hasError) {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+      } else {
+        getNotifications(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.orderRemovedSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
 }

@@ -587,6 +587,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
+        "notificationSound":
+            MessageLookupByLibrary.simpleMessage("صوت الإشعار"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
@@ -835,6 +837,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "ringtone": MessageLookupByLibrary.simpleMessage("نغمة"),
         "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "salary": MessageLookupByLibrary.simpleMessage("الراتب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),

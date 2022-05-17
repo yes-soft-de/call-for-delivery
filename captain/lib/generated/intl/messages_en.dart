@@ -594,6 +594,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notices": MessageLookupByLibrary.simpleMessage("Notices"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
+        "notificationSound":
+            MessageLookupByLibrary.simpleMessage("Notification sound"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
@@ -844,6 +846,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "ringtone": MessageLookupByLibrary.simpleMessage("Ringtone"),
         "sOrder": MessageLookupByLibrary.simpleMessage("order"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),

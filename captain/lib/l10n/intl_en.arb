@@ -690,8 +690,9 @@
     "youNeedToAcceptPrimaryOrderFirst": "You need to accept primary order first, before interact with suborders ",
     "reject": "Reject",
     "confirmRemoveSubOrder": "Confirm removing suborder from group order ",
-    "confirmAcceptSubOrder": "Are you want to accept this sub order, "
-
+    "confirmAcceptSubOrder": "Are you want to accept this sub order, ",
+    "notificationSound": "Notification sound",
+    "ringtone": "Ringtone"
 
 
 
