@@ -181,11 +181,11 @@ class NotificationFirebaseService
 
         $message = CloudMessage::new()
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
-        ->withAndroidConfig($config)
+      
         ->withHighestPossiblePriority();
        
 
-        $message = $message->withData($payload);
+        $message = $message->withData($payload)->withAndroidConfig($config);
 
         $this->messaging->sendMulticast($message, $devicesToken);
 
