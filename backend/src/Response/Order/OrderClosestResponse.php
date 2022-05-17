@@ -35,4 +35,9 @@ class OrderClosestResponse
     public array|null $subOrder;
 
     public bool|null $orderIsMain;
+
+    /**
+     * @var object|null
+     */
+    public $sourceDestination;
 }

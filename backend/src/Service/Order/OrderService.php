@@ -305,6 +305,7 @@ class OrderService
             if ($value['bidDetailsInfo']) {
                 $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
                 $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
+                $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
             }
         }
 
