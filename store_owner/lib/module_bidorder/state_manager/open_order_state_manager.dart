@@ -8,6 +8,7 @@ import 'package:c4d/module_bidorder/request/filter_bidorder_request.dart';
 import 'package:c4d/module_bidorder/service/bidorder_service.dart';
 import 'package:c4d/module_bidorder/ui/screens/open_bidorder_screen.dart';
 import 'package:c4d/module_bidorder/ui/states/open_order_loaded_state.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -42,4 +43,22 @@ class OpenBidOrderStateManager {
       }
     });
   }
+
+  void cancelOrder(OpenBidOrderScreenState screenState , int id){
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.cancelBidOrder(id).then((value) {
+      getOpenOrdersFilters(screenState , screenState.request);
+      if(value.hasError){
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+      }else {
+        getOpenOrdersFilters(screenState , screenState.request);
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning, message:S.current.orderRemovedSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
+
 }

@@ -88,5 +88,14 @@ class BidOrderService {
 
     return BidOrderDetailsModel.withData(response);
   }
-
+  Future<DataModel> cancelBidOrder(int request) async {
+    ActionResponse? response = await _manager.cancelBidOrder(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

@@ -20,6 +20,8 @@ class BidOrderManager {
 
   Future<ActionResponse?> updateOfferState(OfferStateRequest request) async =>
       await _repository.updateOfferState(request);
+  Future<ActionResponse?> cancelBidOrder(int request) async =>
+      await _repository.cancelBidOrder(request);
 
   Future<BidOrderDetailsResponse?> getOrderDetails(int id) async =>
       await _repository.getOrderDetails(id);

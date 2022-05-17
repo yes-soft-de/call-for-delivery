@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bidorder/model/order/order_model.dart';
 import 'package:c4d/module_bidorder/ui/screens/open_bidorder_screen.dart';
 import 'package:c4d/module_bidorder/ui/widget/bid_order_card.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -34,8 +36,20 @@ class OpenOrdersLoaded extends States {
 //                  arguments: element.id);
             },
             child: BidOrderCard(
+              deleteOrder: (){
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomAlertDialog(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            screenState.cancelOrder(element.id);
+                          },
+                          content: S.current.areYouSureAboutDeleteOrder);
+                    });
+              },
                model: element,
-              isOpen: true,
+              isOpen: screenState.request.openToPriceOffer ?? false,
             ),
           ),
         ),
