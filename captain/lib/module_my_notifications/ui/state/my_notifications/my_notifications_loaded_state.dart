@@ -213,30 +213,55 @@ class MyNotificationsLoadedState extends States {
               dragDismissible: false,
               // All actions are defined in the children parameter.
               children: [
-                SlidableAction(
-                  backgroundColor: Colors.green,
-                  label: S.current.accept,
-                  icon: Icons.thumb_up_alt_rounded,
-                  onPressed: (context) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomAlertDialog(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                screenState.manager.updateOrder(
-                                    screenState,
-                                    UpdateOrderRequest(
-                                        id: int.tryParse(
-                                            element.orderNumber ?? ''),
-                                        state: StatusHelper.getStatusString(
-                                            OrderStatusEnum.IN_STORE)));
-                                screenState
-                                    .deleteNotification(element.id.toString());
-                              },
-                              content: S.current.confirmAcceptSubOrder);
-                        });
-                  },
+                Visibility(
+                  visible: subOrder == false,
+                  child: SlidableAction(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    label: S.current.delete,
+                    icon: Icons.delete,
+                    onPressed: (context) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.deleteNotification(
+                                      element.id.toString());
+                                },
+                                content: S.current
+                                    .areYouSureAboutDeleteThisNotification);
+                          });
+                    },
+                  ),
+                ),
+                Visibility(
+                  visible: subOrder,
+                  child: SlidableAction(
+                    backgroundColor: Colors.green,
+                    label: S.current.accept,
+                    icon: Icons.thumb_up_alt_rounded,
+                    onPressed: (context) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.manager.updateOrder(
+                                      screenState,
+                                      UpdateOrderRequest(
+                                          id: int.tryParse(
+                                              element.orderNumber ?? ''),
+                                          state: StatusHelper.getStatusString(
+                                              OrderStatusEnum.IN_STORE)));
+                                  screenState.deleteNotification(
+                                      element.id.toString());
+                                },
+                                content: S.current.confirmAcceptSubOrder);
+                          });
+                    },
+                  ),
                 ),
                 Visibility(
                   visible: subOrder,
