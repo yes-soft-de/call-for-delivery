@@ -184,10 +184,10 @@ class NotificationFirebaseService
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
             'argument' => null,
-            'chatNotification' => [
+            'chatNotification' => json_encode([
                 'roomId' => $request->getRoomId(),
                 'userId' => (string) $request->getUserID()
-            ]
+            ])
         ];
        
         $config = AndroidConfig::fromArray([
