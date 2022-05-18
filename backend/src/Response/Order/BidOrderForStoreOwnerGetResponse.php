@@ -137,8 +137,6 @@ class BidOrderForStoreOwnerGetResponse
      */
     public $orderLogs;
 
-    public float $totalDeliveryCost;
-
     /**
      * @OA\Property(type="object", property="sourceDestination", nullable=true)
      */

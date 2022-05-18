@@ -4,6 +4,7 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
@@ -785,6 +786,8 @@ class OrderService
             $order['supplierCategoryName'] = $order['bidDetails']->getSupplierCategory()->getName();
             $order['sourceDestination'] = $order['bidDetails']->getSourceDestination();
             $order['destination'] = $order['bidDetails']->getBranch()->getLocation();
+            $order['storeOwnerBranchId'] = $order['bidDetails']->getBranch()->getId();
+            $order['branchName'] = $order['bidDetails']->getBranch()->getName();
 
             $order['attention'] = $order['noteCaptainOrderCost'];
 
@@ -794,12 +797,32 @@ class OrderService
                 $order['roomId'] = $order['roomId']->toBase32();
             }
 
+            // Check if there is confirmed price offer, then set deliver date as price offer deadline
+            $priceOfferDeadlineResult = $this->getDeliveryDateOfConfirmedPriceOffer($order['bidDetails']->getPriceOfferEntities()->toArray());
+
+            if ($priceOfferDeadlineResult !== null) {
+                $order['deliveryDate'] = $priceOfferDeadlineResult;
+            }
+
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
 
-            $order['totalDeliveryCost'] = $this->bidOrderFinancialService->getBidOrderTotalDeliveryCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
+            $order['orderCost'] = $this->bidOrderFinancialService->getBidOrderTotalDeliveryCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
         }
 
         return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
+    }
+
+    public function getDeliveryDateOfConfirmedPriceOffer(array $pricesOffersEntities): ?\DateTimeInterface
+    {
+        if (! empty($pricesOffersEntities)) {
+            foreach ($pricesOffersEntities as $priceOfferEntity) {
+                if ($priceOfferEntity->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_CONFIRMED_STATUS) {
+                    return $priceOfferEntity->getOfferDeadline();
+                }
+            }
+        }
+
+        return null;
     }
 
     //Hide the order that exceeded the delivery time by an hour
