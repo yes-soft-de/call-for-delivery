@@ -49,4 +49,14 @@ class FilterBidOrderByStoreOwnerResponse
      * @var string|null
      */
     public $branchPhone;
+
+    /**
+     * @var int|null
+     */
+    public $supplierCategoryId;
+
+    /**
+     * @var string|null
+     */
+    public $supplierCategoryName;
 }

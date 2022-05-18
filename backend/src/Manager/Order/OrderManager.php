@@ -551,6 +551,9 @@ class OrderManager
             $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
 
             $this->entityManager->flush();
+
+            // Finally, set the order to be closed for further price offers
+            $this->bidDetailsManager->updateBidDetailsToBeClosedForPriceOffer($orderEntity->getBidDetailsEntity()->getId());
         }
 
         return  $orderEntity;
