@@ -12,6 +12,11 @@ class NotificationFirebaseByUserIdRequest
     private int $userID;
 
     /**
+     * @var string|null
+     */
+    private $roomId;
+
+    /**
      * @return int|null
      */
     public function getOtherUserID(): ?int
@@ -41,5 +46,10 @@ class NotificationFirebaseByUserIdRequest
     public function setUserID(int $userID): void
     {
         $this->userID = $userID;
+    }
+
+    public function getRoomId(): ?string
+    {
+        return $this->roomId;
     }
 }
