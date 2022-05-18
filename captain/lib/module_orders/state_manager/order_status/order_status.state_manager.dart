@@ -102,6 +102,25 @@ class OrderStatusStateManager {
     });
   }
 
+  void updateCashStatus(
+      UpdateOrderRequest request, OrderStatusScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.updateCashStatus(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error)
+            .show(screenState.context);
+        getIt<GlobalStateManager>().update();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
+        getIt<GlobalStateManager>().update();
+      }
+    });
+  }
+
   void dispose() {
     _updateStateListener?.cancel();
   }

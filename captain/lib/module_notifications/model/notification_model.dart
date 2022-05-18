@@ -1,23 +1,29 @@
+import 'dart:convert';
 import 'dart:math';
 
-import 'package:c4d/module_notifications/repository/notification_repo.dart';
-
 class NotificationModel {
-  int? id;
-  String? title;
-  String? body;
-  var payLoad;
-  NotificationModel(this.id, this.title, this.body, this.payLoad);
+  dynamic argument;
+  ChatNotification? chatNotification;
+  String? navigateRoute;
+  NotificationModel({this.argument, this.chatNotification, this.navigateRoute});
   NotificationModel.fromJson(Map<String, dynamic> json) {
-    var data = json['data'];
-    if (data != null) {
-      payLoad = data ?? '';
+    argument = json['argument'];
+    navigateRoute = json['navigate_route']?.toString();
+    chatNotification = json['chatNotification'] != null
+        ? ChatNotification.fromJson(json['chatNotification'])
+        : null;
+  }
+}
+
+class ChatNotification {
+  String? roomID;
+  int? senderID;
+  ChatNotification({this.roomID, this.senderID});
+  ChatNotification.fromJson(dynamic json) {
+    if ((json is Map<String, dynamic>) == false) {
+      json = JsonDecoder(json);
     }
-    var notification = json['notification'];
-    if (notification != null) {
-      id = notification['id'] ?? Random().nextInt(10000000);
-      title = notification['title'];
-      body = notification['body'];
-    }
+    roomID = json['roomId'];
+    senderID = json['userId'];
   }
 }

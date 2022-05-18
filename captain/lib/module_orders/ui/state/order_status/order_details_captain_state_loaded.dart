@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
+import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
@@ -558,14 +559,24 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               subtitle: orderInfo.paidToProvider,
               title: S.current.paidToProviderStatus,
               onTap: () {
-                var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
-                // screenState.requestOrderProgress(UpdateOrderRequest(
-                //     id: int.tryParse(screenState.orderId ?? '-1'),
-                //     state: StatusHelper.getStatusString(
-                //         OrderStatusEnum.values[index]),
-                //     distance: distance,
-                //     paymentNote: noteController.text.trim(),
-                //     orderCost: double.tryParse(payment ?? 'n')));
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    routeSettings: const RouteSettings(name: '/paid'),
+                    builder: (_) {
+                      return CustomAlertDialogForCash(
+                          onPressed: (paid) {
+                            Navigator.of(context).pop();
+                            screenState.manager.updateCashStatus(
+                                UpdateOrderRequest(
+                                  paid: paid ? 1 : 2,
+                                  id: int.tryParse(screenState.orderId ?? ''),
+                                  state: '',
+                                ),
+                                screenState);
+                          },
+                          content: S.of(context).paidToProvider);
+                    });
               },
             ),
           ),

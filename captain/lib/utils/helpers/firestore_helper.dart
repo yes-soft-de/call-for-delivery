@@ -25,7 +25,7 @@ class FireStoreHelper {
           .collection('action_history')
           .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
               const Duration(seconds: 10));
-      return;
+      print("inserted ------------------------------------------------!");
     } catch (e) {
       return;
     }

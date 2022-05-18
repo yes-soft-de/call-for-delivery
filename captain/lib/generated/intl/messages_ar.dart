@@ -1007,7 +1007,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
-            MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
+            MessageLookupByLibrary.simpleMessage("تم تعديل طلبك بنجاح"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),

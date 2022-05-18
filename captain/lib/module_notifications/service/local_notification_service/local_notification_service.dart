@@ -15,10 +15,11 @@ class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static final PublishSubject<String> _onNotificationReceived =
+  static final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
       PublishSubject();
 
-  Stream get onLocalNotificationStream => _onNotificationReceived.stream;
+  Stream<Map<String, dynamic>> get onLocalNotificationStream =>
+      _onNotificationReceived.stream;
 
   Future<void> init() async {
     AndroidInitializationSettings initializationSettingsAndroid =
@@ -90,7 +91,10 @@ class LocalNotificationService {
     });
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
     if (ringerStatus == RingerModeStatus.normal) {
-      pool.play(sound,repeat: NotificationsPrefHelper().getNotification().contains('2') ? 3 : 0);
+      pool.play(sound,
+          repeat: NotificationsPrefHelper().getNotification().contains('2')
+              ? 3
+              : 0);
     }
   }
 }

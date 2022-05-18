@@ -93,8 +93,21 @@ class OrderRepository {
       UpdateOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-      '${Urls.CAPTAIN_ORDER_UPDATE_API}',
+      Urls.CAPTAIN_ORDER_UPDATE_API,
       request.toJson(),
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
+    if (response == null) return null;
+
+    return OrderActionResponse.fromJson(response);
+  }
+
+  Future<OrderActionResponse?> updateCashStatus(
+      UpdateOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_PAID_TO_PROVIDER_API + '/${request.id}' + '/${request.paid}',
+      {},
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );
     if (response == null) return null;
@@ -104,8 +117,8 @@ class OrderRepository {
 
   Future<CompanyInfoResponse?> getCompanyInfo() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get('${Urls.COMPANYINFO_API}',
-        headers: {'Authorization': 'Bearer $token'});
+    dynamic response = await _apiClient
+        .get(Urls.COMPANYINFO_API, headers: {'Authorization': 'Bearer $token'});
 
     if (response == null) return null;
     return CompanyInfoResponse.fromJson(response);

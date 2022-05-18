@@ -45,6 +45,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     super.dispose();
   }
 
+  OrderStatusStateManager get manager => widget.stateManager;
   @override
   void initState() {
     currentState = LoadingState(this);

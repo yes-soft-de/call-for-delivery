@@ -33,6 +33,9 @@ class OrdersManager {
   Future<OrderActionResponse?> updateOrder(
           UpdateOrderRequest updateOrderRequest) =>
       _repository.updateOrderState(updateOrderRequest);
+      Future<OrderActionResponse?> updateCashStatus(
+          UpdateOrderRequest updateOrderRequest) =>
+      _repository.updateCashStatus(updateOrderRequest);
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);

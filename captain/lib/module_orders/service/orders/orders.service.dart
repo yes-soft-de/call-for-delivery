@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
@@ -80,6 +82,9 @@ class OrdersService {
   Future<ActionStateModel> updateOrder(UpdateOrderRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateOrder(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
     if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
     }
@@ -87,7 +92,22 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
+    return ActionStateModel.empty();
+  }
+
+  Future<ActionStateModel> updateCashStatus(UpdateOrderRequest request) async {
+    OrderActionResponse? actionResponse =
+        await _ordersManager.updateCashStatus(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
+    if (actionResponse == null) {
+      return ActionStateModel.error(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return ActionStateModel.error(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     return ActionStateModel.empty();
   }
 
@@ -136,12 +156,14 @@ class OrdersService {
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
