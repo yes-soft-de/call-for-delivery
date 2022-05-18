@@ -267,6 +267,9 @@ class OrderService
             $order['branchPhone'] = $order['bidDetails']->getBranch()->getBranchPhone();
             $order['location'] = $order['bidDetails']->getBranch()->getLocation();
 
+            $order['supplierCategoryId'] = $order['bidDetails']->getSupplierCategory()->getId();
+            $order['supplierCategoryName'] = $order['bidDetails']->getSupplierCategory()->getName();
+
             $response[] = $this->autoMapping->map("array", FilterBidOrderByStoreOwnerResponse::class, $order);
         }
 
