@@ -104,9 +104,11 @@ class AdminOrderService
                 $response[$key]->openToPriceOffer = $value['bidOrderDetails']->getOpenToPriceOffer();
 
                 // get branch info
-                $response[$key]->storeOwnerBranchId = $value['bidOrderDetails']->getBranch()->getId();
-                $response[$key]->storeOwnerBranchName = $value['bidOrderDetails']->getBranch()->getName();
-                $response[$key]->storeOwnerBranchPhone = $value['bidOrderDetails']->getBranch()->getBranchPhone();
+                if ($value['bidOrderDetails']->getBranch()) {
+                    $response[$key]->storeOwnerBranchId = $value['bidOrderDetails']->getBranch()->getId();
+                    $response[$key]->storeOwnerBranchName = $value['bidOrderDetails']->getBranch()->getName();
+                    $response[$key]->storeOwnerBranchPhone = $value['bidOrderDetails']->getBranch()->getBranchPhone();
+                }
 
                 // get store info
                 $response[$key]->storeOwnerProfileId = $value['bidOrderDetails']->getBranch()->getStoreOwner()->getId();
