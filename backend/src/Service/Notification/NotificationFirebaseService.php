@@ -186,7 +186,7 @@ class NotificationFirebaseService
             'argument' => null,
             'chatNotification' => [
                 'roomId' => $request->getRoomId(),
-                'userId' => $request->getUserID()
+                'userId' => (string) $request->getUserID()
             ]
         ];
        
