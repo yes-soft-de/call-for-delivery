@@ -183,7 +183,11 @@ class NotificationFirebaseService
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
-            'argument' => null
+            'argument' => null,
+            'chatNotification' => [
+                'roomId' => $request->getRoomId(),
+                'userId' => $request->getUserID()
+            ]
         ];
        
         $config = AndroidConfig::fromArray([
