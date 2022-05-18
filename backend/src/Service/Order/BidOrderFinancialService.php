@@ -17,10 +17,10 @@ class BidOrderFinancialService
     }
 
     /**
-     * Get total delivery cost of a bid order for store owner
-     * Total delivery cost = transportationCount * deliveryCost of a car + store profit margin
+     * Get total cost of a bid order for store owner
+     * Total cost = transportationCount * deliveryCost of a car + store profit margin + price offer value
      */
-    public function getBidOrderTotalDeliveryCostForStoreOwnerByBidDetailsId(BidDetailsEntity $bidDetailsEntity, int $storeOwnerId): float
+    public function getBidOrderTotalCostForStoreOwnerByBidDetailsId(BidDetailsEntity $bidDetailsEntity, int $storeOwnerId): float
     {
         $result = 0.0;
 
@@ -33,7 +33,7 @@ class BidOrderFinancialService
         if (! empty($pricesOffers)) {
             foreach ($pricesOffers as $priceOffer) {
                 if ($priceOffer->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_CONFIRMED_STATUS) {
-                    $result = $priceOffer->getDeliveryCar()->getDeliveryCost() * $priceOffer->getTransportationCount() + $storeProfitMargin;
+                    $result = $priceOffer->getDeliveryCar()->getDeliveryCost() * $priceOffer->getTransportationCount() + $storeProfitMargin + $priceOffer->getPriceOfferValue();
 
                     return round($result, 2);
                 }
