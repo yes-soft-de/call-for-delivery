@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io' as p;
 import 'package:c4d/hive/hive_init.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -68,11 +71,23 @@ class FireNotificationService {
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           Logger().info('On Message Opened App', 'onMessage: $message');
+          NotificationModel notificationModel =
+              NotificationModel.fromJson(message.data);
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
-              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                  message.data['navigate_route'].toString(),
-                  arguments: message.data['argument']);
+              if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: ChatArgument(
+                        roomID:
+                            notificationModel.chatNotification?.roomID ?? '',
+                        userID: notificationModel.chatNotification?.senderID,
+                        userType: 'store'));
+              } else {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: notificationModel.argument);
+              }
             },
           );
         });
