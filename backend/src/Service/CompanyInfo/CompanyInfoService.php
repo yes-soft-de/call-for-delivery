@@ -57,4 +57,9 @@ class CompanyInfoService
 
         return $this->autoMapping->map('array', CompanyInfoForUserGetResponse::class, $companyInfoResult);
     }
+
+    public function getStoreProfitMargin(): ?array
+    {
+        return $this->companyInfoManager->getStoreProfitMargin();
+    }
 }
