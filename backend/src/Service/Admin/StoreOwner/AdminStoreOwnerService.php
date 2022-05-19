@@ -3,7 +3,10 @@
 namespace App\Service\Admin\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Admin\StoreOwner\AdminStoreOwnerManager;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Service\CompanyInfo\CompanyInfoService;
@@ -66,5 +69,16 @@ class AdminStoreOwnerService
         }
 
         return $response;
+    }
+
+    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileGetByAdminResponse
+    {
+        $storeOwnerProfile = $this->adminStoreOwnerManager->updateStoreOwnerProfileStatusByAdmin($request);
+
+        if ($storeOwnerProfile === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
     }
 }

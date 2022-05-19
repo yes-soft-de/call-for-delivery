@@ -2,14 +2,23 @@
 
 namespace App\Manager\Admin\StoreOwner;
 
+use App\AutoMapping;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminStoreOwnerManager
 {
+    private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
     private StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository;
 
-    public function __construct(StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
     {
+        $this->autoMapping = $autoMapping;
+        $this->entityManager = $entityManager;
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
     }
 
@@ -31,5 +40,21 @@ class AdminStoreOwnerManager
     public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+    }
+
+    public function updateStoreOwnerProfileStatusByAdmin(StoreOwnerProfileStatusUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
+    {
+        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
+
+        if(! $storeOwnerProfileEntity) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileStatusUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
+            $request, $storeOwnerProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $storeOwnerProfileEntity;
     }
 }

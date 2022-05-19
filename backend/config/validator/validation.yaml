@@ -90,7 +90,7 @@ App\Request\CompanyInfo\CompanyInfoUpdateRequest:
         id:
             - NotBlank: ~
 
-App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
+App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
     properties:
         id:
             - NotBlank: ~

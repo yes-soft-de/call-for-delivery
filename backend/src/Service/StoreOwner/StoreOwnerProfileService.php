@@ -7,7 +7,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
-use App\Request\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\Verification\VerificationCreateRequest;
