@@ -12,7 +12,7 @@ use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
 use App\Request\Verification\VerificationCreateRequest;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
-use App\Response\StoreOwner\StoreOwnerProfileGetByAdminResponse;
+use App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;

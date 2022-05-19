@@ -5,6 +5,7 @@ namespace App\Service\Admin\StoreOwner;
 use App\AutoMapping;
 use App\Manager\Admin\StoreOwner\AdminStoreOwnerManager;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
+use App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Service\CompanyInfo\CompanyInfoService;
 use App\Service\FileUpload\UploadFileHelperService;
 
@@ -48,5 +49,22 @@ class AdminStoreOwnerService
     public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): int
     {
         return $this->adminStoreOwnerManager->getStoreOwnersProfilesCountByStatusForAdmin($storeOwnerProfileStatus);
+    }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): array
+    {
+        $response = [];
+
+        $storeOwnerProfiles = $this->adminStoreOwnerManager->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+
+        if($storeOwnerProfiles) {
+            foreach($storeOwnerProfiles as $storeOwnerProfile) {
+                $storeOwnerProfile['images'] = $this->uploadFileHelperService->getImageParams($storeOwnerProfile['images']);
+
+                $response[] = $this->autoMapping->map('array', StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
+            }
+        }
+
+        return $response;
     }
 }

@@ -27,4 +27,9 @@ class AdminStoreOwnerManager
     {
         return $this->storeOwnerProfileEntityRepository->count(["status" => $storeOwnerProfileStatus]);
     }
+
+    public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
+    }
 }
