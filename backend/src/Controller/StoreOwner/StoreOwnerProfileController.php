@@ -7,7 +7,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
-use App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

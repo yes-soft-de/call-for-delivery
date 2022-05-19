@@ -97,7 +97,7 @@ App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest:
         status:
             - NotBlank: ~
 
-App\Request\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
+App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest:
     properties:
         id:
             - NotBlank: ~

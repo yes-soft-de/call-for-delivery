@@ -7,6 +7,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminStoreOwnerManager
@@ -52,6 +53,25 @@ class AdminStoreOwnerManager
 
         $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileStatusUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
             $request, $storeOwnerProfileEntity);
+
+        $this->entityManager->flush();
+
+        return $storeOwnerProfileEntity;
+    }
+
+    public function updateStoreOwnerProfileByAdmin(StoreOwnerProfileUpdateByAdminRequest $request): string|StoreOwnerProfileEntity
+    {
+        $storeOwnerProfileEntity = $this->storeOwnerProfileEntityRepository->find($request->getId());
+
+        if (! $storeOwnerProfileEntity) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storeOwnerProfileEntity = $this->autoMapping->mapToObject(StoreOwnerProfileUpdateByAdminRequest::class, StoreOwnerProfileEntity::class,
+            $request, $storeOwnerProfileEntity);
+
+        $storeOwnerProfileEntity->setOpeningTime($request->getOpeningTime());
+        $storeOwnerProfileEntity->setClosingTime($request->getClosingTime());
 
         $this->entityManager->flush();
 
