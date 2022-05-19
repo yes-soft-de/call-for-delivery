@@ -10,6 +10,10 @@ class AdminCaptainFinancialSystemDetailUpdateRequest
     private bool $status;
 
     private int $updatedBy;
+
+    private int $captainFinancialSystemId;
+
+    private int $captainFinancialSystemType;
     
 
     /**
