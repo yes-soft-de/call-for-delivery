@@ -806,7 +806,7 @@ class OrderService
 
             $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
 
-            $order['orderCost'] = $this->bidOrderFinancialService->getBidOrderTotalDeliveryCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
+            $order['orderCost'] = $this->bidOrderFinancialService->getBidOrderTotalCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
         }
 
         return $this->autoMapping->map("array", BidOrderForStoreOwnerGetResponse::class, $order);
