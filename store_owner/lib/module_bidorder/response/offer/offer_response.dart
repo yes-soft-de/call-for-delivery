@@ -1,4 +1,3 @@
-
 import '../../../module_orders/response/orders_response/created_at.dart';
 
 class OffersResponse {
@@ -31,26 +30,32 @@ class Data {
   String? priceOfferStatus;
   String? carModel;
 
-  Data({this.id,this.details , this.profitMargin ,this.transportationCount , this.deliveryDate ,this.carModel,this.priceOfferStatus,this.priceOfferValue ,this.createdAt,this.totalDeliveryCost});
+  Data(
+      {this.id,
+      this.details,
+      this.profitMargin,
+      this.transportationCount,
+      this.deliveryDate,
+      this.carModel,
+      this.priceOfferStatus,
+      this.priceOfferValue,
+      this.createdAt,
+      this.totalDeliveryCost});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json['id'] as int?,
-    details: json['details'] as String?,
-    priceOfferStatus: json['priceOfferStatus'] as String?,
-    carModel: json['carModel'] as String?,
-
-    deliveryDate: json['offerDeadline'] == null
-        ? null
-        : CreatedAt.fromJson(
-        json['offerDeadline'] as Map<String, dynamic>),
-    createdAt: json['createdAt'] == null
-        ? null
-        : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
-
-    priceOfferValue: json['priceOfferValue'] as int?,
-    transportationCount: json['transportationCount'] as int?,
-    totalDeliveryCost: json['totalDeliveryCost'] as int?,
-    profitMargin: json['profitMargin'] as num?,
-
-  );
+        id: json['id'] as int?,
+        details: json['details'] as String?,
+        priceOfferStatus: json['priceOfferStatus'] as String?,
+        carModel: json['carModel'] as String?,
+        deliveryDate: json['offerDeadline'] == null
+            ? null
+            : CreatedAt.fromJson(json['offerDeadline'] as Map<String, dynamic>),
+        createdAt: json['createdAt'] == null
+            ? null
+            : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
+        priceOfferValue: json['priceOfferValue'] as int?,
+        transportationCount: json['transportationCount'] as int?,
+        totalDeliveryCost: json['totalDeliveryCost'] as int?,
+        profitMargin: json['profitMargin'] as num?,
+      );
 }

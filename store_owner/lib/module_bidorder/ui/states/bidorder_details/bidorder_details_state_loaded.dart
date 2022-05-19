@@ -22,8 +22,7 @@ class BidOrderDetailsStateLoaded extends States {
   BidOrderDetailsStateLoaded(
     this.screenState,
     this.orderInfo,
-  ) : super(screenState) {
-  }
+  ) : super(screenState) {}
   bool dialogShowed = false;
   var confirmMessagesStates = [
     OrderStatusEnum.IN_STORE,
@@ -470,5 +469,4 @@ class BidOrderDetailsStateLoaded extends States {
     ];
     return steps;
   }
-
 }

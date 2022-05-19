@@ -48,7 +48,7 @@ class BidOrderLogsScreenState extends State<BidOrderLogsScreen> {
     super.initState();
     currentState = LoadingState(this);
     ordersFilter = FilterBidOrderRequest(
-       openToPriceOffer: true,
+        openToPriceOffer: true,
         fromDate:
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());

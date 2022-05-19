@@ -17,8 +17,8 @@ class BidOrdersModule extends YesModule {
   final BidOrderLogsScreen _logsScreen;
   final BidOrderDetailsScreen _orderStatus;
 //  final OrderTimeLineScreen _orderTimeLineScreen;
-  BidOrdersModule( this._ordersScreen,this._newOrderScreen, this._orderOfferDetailsScreen, this._logsScreen, this._orderStatus
-     ) {
+  BidOrdersModule(this._ordersScreen, this._newOrderScreen,
+      this._orderOfferDetailsScreen, this._logsScreen, this._orderStatus) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -26,7 +26,8 @@ class BidOrdersModule extends YesModule {
     return {
       BidOrdersRoutes.NEW_ORDER_SCREEN: (context) => _newOrderScreen,
       BidOrdersRoutes.OPEN_ORDERS_SCREEN: (context) => _ordersScreen,
-      BidOrdersRoutes.ORDER_OFFERS_SCREEN: (context) => _orderOfferDetailsScreen,
+      BidOrdersRoutes.ORDER_OFFERS_SCREEN: (context) =>
+          _orderOfferDetailsScreen,
       BidOrdersRoutes.LOGS_BID_ORDERS_SCREEN: (context) => _logsScreen,
       BidOrdersRoutes.BID_ORDER_STATUS_SCREEN: (context) => _orderStatus,
 //      OrdersRoutes.OWNER_TIME_LINE_SCREEN: (context) => _orderTimeLineScreen,

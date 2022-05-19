@@ -28,7 +28,9 @@ class BidOrderRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-  Future<BidOrdersResponse?> getOpenOrders(FilterBidOrderRequest request) async {
+
+  Future<BidOrdersResponse?> getOpenOrders(
+      FilterBidOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.GET_BID_ORDER,
@@ -38,6 +40,7 @@ class BidOrderRepository {
     if (response == null) return null;
     return BidOrdersResponse.fromJson(response);
   }
+
   Future<SupplierCategoriesResponse?> getSupplierCat() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
@@ -57,6 +60,7 @@ class BidOrderRepository {
     if (response == null) return null;
     return OffersResponse.fromJson(response);
   }
+
   Future<BidOrderDetailsResponse?> getOrderDetails(int orderId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
@@ -66,6 +70,7 @@ class BidOrderRepository {
     if (response == null) return null;
     return BidOrderDetailsResponse.fromJson(response);
   }
+
   Future<ActionResponse?> updateOfferState(OfferStateRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
@@ -80,7 +85,8 @@ class BidOrderRepository {
   Future<ActionResponse?> cancelBidOrder(int id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-      Urls.CANCEL_BID_ORDER + '$id',{},
+      Urls.CANCEL_BID_ORDER + '$id',
+      {},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

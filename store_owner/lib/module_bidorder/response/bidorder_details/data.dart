@@ -32,35 +32,35 @@ class Data {
   OrderLogsResponse? orderLogs;
 //  num? kilometer;
 //  num? paidToProvider;
-  Data(
-      {this.id,
-      this.state,
-      this.payment,
-      this.orderCost,
-      this.orderType,
-      this.note,
-      this.deliveryDate,
-      this.createdAt,
-      this.storeOrderDetailsId,
-        this.supplierCategoryName,
+  Data({
+    this.id,
+    this.state,
+    this.payment,
+    this.orderCost,
+    this.orderType,
+    this.note,
+    this.deliveryDate,
+    this.createdAt,
+    this.storeOrderDetailsId,
+    this.supplierCategoryName,
 //      this.destination,
 //      this.recipientName,
 //      this.recipientPhone,
-      this.detail,
-      this.storeOwnerBranchId,
-      this.branchName,
-      this.image,
-      this.roomId,
-      this.captainId,
-      this.branchPhone,
+    this.detail,
+    this.storeOwnerBranchId,
+    this.branchName,
+    this.image,
+    this.roomId,
+    this.captainId,
+    this.branchPhone,
 //      this.dateCaptainArrived,
 //      this.isCaptainArrived,
-      this.orderLogs,
-      this.attention,
-      this.captainOrderCost,
+    this.orderLogs,
+    this.attention,
+    this.captainOrderCost,
 //      this.kilometer,
 //      this.paidToProvider
-      });
+  });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,

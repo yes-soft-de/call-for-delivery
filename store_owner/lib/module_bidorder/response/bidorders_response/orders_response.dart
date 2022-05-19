@@ -7,7 +7,8 @@ class BidOrdersResponse {
 
   BidOrdersResponse({this.statusCode, this.msg, this.data});
 
-  factory BidOrdersResponse.fromJson(Map<String, dynamic> json) => BidOrdersResponse(
+  factory BidOrdersResponse.fromJson(Map<String, dynamic> json) =>
+      BidOrdersResponse(
         statusCode: json['status_code'] as String?,
         msg: json['msg'] as String?,
         data: (json['Data'] as List<dynamic>?)

@@ -16,7 +16,6 @@ import 'package:injectable/injectable.dart';
 class AddBidOrderScreen extends StatefulWidget {
   final AddBidOrderStateManager _stateManager;
 
-
   AddBidOrderScreen(this._stateManager);
 
   @override
@@ -27,9 +26,10 @@ class AddBidOrderScreenState extends State<AddBidOrderScreen> {
   late States currentState;
   StreamSubscription? _stateSubscription;
 
-  void addNewOrder(AddBidOrderRequest request,  List<BranchesModel> branches,
-  List<SupplierCategoriesModel> categories ) {
-    widget._stateManager.createOrder(this, request ,categories: categories , branches: branches);
+  void addNewOrder(AddBidOrderRequest request, List<BranchesModel> branches,
+      List<SupplierCategoriesModel> categories) {
+    widget._stateManager
+        .createOrder(this, request, categories: categories, branches: branches);
   }
 
   void refresh() {

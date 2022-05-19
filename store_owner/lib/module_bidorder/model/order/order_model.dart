@@ -18,19 +18,18 @@ class BidOrderModel extends DataModel {
   late String description;
   late String payment;
   late String supplierCategoryName;
-  BidOrderModel({
-    required this.branchName,
-    required this.state,
-    required this.note,
-    required this.deliveryDate,
-    required this.createdDate,
-    required this.id,
-    required this.title,
-    required this.description,
-   required this.payment,
-    required this.bidOrderId,
-    required this.supplierCategoryName
-  });
+  BidOrderModel(
+      {required this.branchName,
+      required this.state,
+      required this.note,
+      required this.deliveryDate,
+      required this.createdDate,
+      required this.id,
+      required this.title,
+      required this.description,
+      required this.payment,
+      required this.bidOrderId,
+      required this.supplierCategoryName});
   List<BidOrderModel> _orders = [];
   BidOrderModel.withData(BidOrdersResponse response) {
     var data = response.data;
@@ -55,11 +54,12 @@ class BidOrderModel extends DataModel {
           deliveryDate: delivery,
           id: element.id ?? -1,
           note: element.note ?? '',
-          title: element.title ??'',
-          description: element.description ??'',
+          title: element.title ?? '',
+          description: element.description ?? '',
           payment: element.payment ?? S.current.unknown,
           bidOrderId: element.bidDetailsId ?? -1,
-          supplierCategoryName: element.supplierCategoryName ?? S.current.unknown,
+          supplierCategoryName:
+              element.supplierCategoryName ?? S.current.unknown,
           state: StatusHelper.getStatusEnum(element.state)));
     });
   }

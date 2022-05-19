@@ -26,7 +26,7 @@ class NewBidOrderStateLoaded extends States {
   List<BranchesModel> branches;
   List<SupplierCategoriesModel> categories;
   final AddBidOrderScreenState screenState;
-  NewBidOrderStateLoaded(this.branches,this.categories , this.screenState)
+  NewBidOrderStateLoaded(this.branches, this.categories, this.screenState)
       : super(screenState);
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
@@ -46,7 +46,7 @@ class NewBidOrderStateLoaded extends States {
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
         child: SingleChildScrollView(
           physics:
-          BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Form(
             key: _formKey,
             child: Column(
@@ -115,30 +115,27 @@ class NewBidOrderStateLoaded extends States {
                   ],
                 ),
 
-
                 // order title
                 ListTile(
                   title: LabelText(S.of(context).title),
                   subtitle: CustomFormField(
-                    validator:false,
+                    validator: false,
                     maxLines: 3,
                     hintText: S.of(context).title,
                     controller: screenState.titleController,
                   ),
                 ),
 
-
                 // order description
                 ListTile(
                   title: LabelText(S.of(context).description),
                   subtitle: CustomFormField(
-                    validator:false,
+                    validator: false,
                     maxLines: 3,
                     hintText: S.of(context).description,
                     controller: screenState.descriptionController,
                   ),
                 ),
-
 
                 // upload image
                 Column(
@@ -158,7 +155,7 @@ class NewBidOrderStateLoaded extends States {
                         borderRadius: BorderRadius.circular(18),
                         onTap: () {
                           var isDark =
-                          getIt<ThemePreferencesHelper>().isDarkMode();
+                              getIt<ThemePreferencesHelper>().isDarkMode();
 
                           showModalBottomSheet(
                               backgroundColor: Colors.transparent,
@@ -172,7 +169,7 @@ class NewBidOrderStateLoaded extends States {
                                       child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(25),
+                                                BorderRadius.circular(25),
                                             color: Theme.of(context)
                                                 .scaffoldBackgroundColor),
                                         child: Padding(
@@ -191,8 +188,8 @@ class NewBidOrderStateLoaded extends States {
                                                         S.current.camera,
                                                         style: isDark
                                                             ? TextStyle(
-                                                            color: Colors
-                                                                .white70)
+                                                                color: Colors
+                                                                    .white70)
                                                             : null)),
                                               ),
                                               Divider(
@@ -214,8 +211,8 @@ class NewBidOrderStateLoaded extends States {
                                                         S.current.gallery,
                                                         style: isDark
                                                             ? TextStyle(
-                                                            color: Colors
-                                                                .white70)
+                                                                color: Colors
+                                                                    .white70)
                                                             : null)),
                                               ),
                                             ],
@@ -236,7 +233,7 @@ class NewBidOrderStateLoaded extends States {
                                             },
                                             child: Padding(
                                               padding:
-                                              const EdgeInsets.all(10.0),
+                                                  const EdgeInsets.all(10.0),
                                               child: Text(
                                                 S.current.close,
                                                 style: Theme.of(context)
@@ -272,7 +269,7 @@ class NewBidOrderStateLoaded extends States {
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color:
-                                          Theme.of(context).disabledColor),
+                                              Theme.of(context).disabledColor),
                                     ),
                                   ],
                                 ),
@@ -288,7 +285,6 @@ class NewBidOrderStateLoaded extends States {
                     ), // send
                   ],
                 ),
-
 
                 // payment method
                 ListTile(
@@ -370,19 +366,17 @@ class NewBidOrderStateLoaded extends States {
                 });
           } else if (screenState.payments == null) {
             CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: S.current.pleaseProvidePaymentMethode)
+                    title: S.current.warnning,
+                    message: S.current.pleaseProvidePaymentMethode)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: S.current.pleaseCompleteField)
+                    title: S.current.warnning,
+                    message: S.current.pleaseCompleteField)
                 .show(context);
           }
         });
   }
-
-
 
   // function to upload image then create order
   void createOrderWithImage() {
@@ -391,29 +385,36 @@ class NewBidOrderStateLoaded extends States {
     getIt<ImageUploadService>().uploadImage(imagePath).then((value) {
       if (value == null) {
         CustomFlushBarHelper.createError(
-            title: S.current.warnning,
-            message: S.current.errorUploadingImages)
+                title: S.current.warnning,
+                message: S.current.errorUploadingImages)
             .show(screenState.context);
       }
-      screenState.addNewOrder(AddBidOrderRequest(
-          branch: screenState.branch,
-          supplierCategory: screenState.category,
-          title: screenState.titleController.text.trim(),
-          description: screenState.descriptionController.text.trim(),
-          payment: screenState.payments,
-        image: value,
-      ),branches,categories);
+      screenState.addNewOrder(
+          AddBidOrderRequest(
+            branch: screenState.branch,
+            supplierCategory: screenState.category,
+            title: screenState.titleController.text.trim(),
+            description: screenState.descriptionController.text.trim(),
+            payment: screenState.payments,
+            image: value,
+          ),
+          branches,
+          categories);
     });
   }
 
   // function create order without upload image
   void createOrderWithoutImage() {
-    screenState.addNewOrder(AddBidOrderRequest(
-        branch: screenState.branch,
-        supplierCategory: screenState.category,
-        title: screenState.titleController.text.trim(),
-        description: screenState.descriptionController.text.trim(),
-        payment: screenState.payments,image: null),branches,categories,
+    screenState.addNewOrder(
+      AddBidOrderRequest(
+          branch: screenState.branch,
+          supplierCategory: screenState.category,
+          title: screenState.titleController.text.trim(),
+          description: screenState.descriptionController.text.trim(),
+          payment: screenState.payments,
+          image: null),
+      branches,
+      categories,
     );
   }
 
