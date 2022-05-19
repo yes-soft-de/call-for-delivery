@@ -31,7 +31,8 @@ class HiddenOrdersStateLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,arguments: element.id);
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,
+                  arguments: element.id);
             },
             child: OwnerOrderCard(
               primaryTitle: element.orderIsMain

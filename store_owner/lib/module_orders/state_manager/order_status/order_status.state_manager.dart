@@ -14,7 +14,6 @@ import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
@@ -105,13 +104,13 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
-        getOrder(screenState,screenState.orderId);
+        getOrder(screenState, screenState.orderId);
         getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
-        getOrder(screenState,screenState.orderId);
+        getOrder(screenState, screenState.orderId);
         getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,

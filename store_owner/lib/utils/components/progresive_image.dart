@@ -41,7 +41,7 @@ class CustomNetworkImage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Icon(
-                   Icons.delivery_dining_rounded,
+                    Icons.delivery_dining_rounded,
                     size: 30,
                   ),
                 ),

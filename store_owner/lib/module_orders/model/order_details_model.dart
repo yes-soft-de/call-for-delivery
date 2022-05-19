@@ -44,6 +44,8 @@ class OrderDetailsModel extends DataModel {
   String? attention;
   late OrderTimeLine? orderLogs;
   late List<OrderModel> subOrders;
+  late String? captainName;
+  late String? captainPhone;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -74,7 +76,9 @@ class OrderDetailsModel extends DataModel {
       required this.subOrders,
       required this.createDateTime,
       required this.imagePath,
-      required this.branchID});
+      required this.branchID,
+      required this.captainName,
+      required this.captainPhone});
 
   late OrderDetailsModel _orders;
 
@@ -95,42 +99,43 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-        image: element?.image?.image,
-        canRemove:
-            _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        isCaptainArrived: element?.isCaptainArrived,
-        branchPhone: element?.branchPhone,
-        branchName: element?.branchName ?? S.current.unknown,
-        createdDate: create,
-        customerName: element?.recipientName ?? S.current.unknown,
-        customerPhone: element?.recipientPhone ?? '',
-        deliveryDateString: delivery,
-        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-        destinationCoordinate: element?.destination?.lat != null &&
-                element?.destination?.lon != null
-            ? LatLng(
-                element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
-            : null,
-        destinationLink: element?.destination?.link,
-        note: element?.note,
-        orderCost: element?.orderCost ?? 0,
-        payment: element?.payment ?? 'cash',
-        roomID: element?.roomId,
-        state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1,
-        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null,
-        attention: element?.attention,
-        captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs),
-        kilometer: element?.kilometer,
-        paidToProvider: element?.paidToProvider,
-        orderIsMain: element?.orderIsMain ?? false,
-        subOrders: _getOrders(element?.subOrders ?? []),
-        createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
-        imagePath: element?.image?.imageUrl,
-        branchID: element?.storeOwnerBranchId ?? -1);
-
+      image: element?.image?.image,
+      canRemove: _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
+      isCaptainArrived: element?.isCaptainArrived,
+      branchPhone: element?.branchPhone,
+      branchName: element?.branchName ?? S.current.unknown,
+      createdDate: create,
+      customerName: element?.recipientName ?? S.current.unknown,
+      customerPhone: element?.recipientPhone ?? '',
+      deliveryDateString: delivery,
+      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+      destinationCoordinate: element?.destination?.lat != null &&
+              element?.destination?.lon != null
+          ? LatLng(
+              element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
+          : null,
+      destinationLink: element?.destination?.link,
+      note: element?.note,
+      orderCost: element?.orderCost ?? 0,
+      payment: element?.payment ?? 'cash',
+      roomID: element?.roomId,
+      state: StatusHelper.getStatusEnum(element?.state),
+      id: element?.id ?? -1,
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+      distance: null,
+      attention: element?.attention,
+      captainOrderCost: element?.captainOrderCost,
+      orderLogs: _getOrderLogs(element?.orderLogs),
+      kilometer: element?.kilometer,
+      paidToProvider: element?.paidToProvider,
+      orderIsMain: element?.orderIsMain ?? false,
+      subOrders: _getOrders(element?.subOrders ?? []),
+      createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
+      imagePath: element?.image?.imageUrl,
+      branchID: element?.storeOwnerBranchId ?? -1,
+      captainName: element?.captainName,
+      captainPhone: element?.captainDetails?.phone,
+    );
     _orders.distance = _distance(_orders, location);
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {

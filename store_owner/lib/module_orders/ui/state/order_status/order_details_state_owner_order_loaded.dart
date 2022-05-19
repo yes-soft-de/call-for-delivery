@@ -75,6 +75,30 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
           ),
         ),
+        // captain name
+        Visibility(
+            visible: orderInfo.captainName != null,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Flushbar(
+                borderRadius: BorderRadius.circular(18),
+                backgroundColor: StatusHelper.getOrderStatusColor(orderInfo.state),
+                messageText: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                          text: S.current.orderHandledByCaptain + ' ',
+                          style: TextStyle(color: Colors.white)),
+                      TextSpan(
+                          text: orderInfo.captainName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white)),
+                    ],
+                  ),
+                ),
+                icon: Icon(Icons.delivery_dining_rounded,color: Colors.white,),
+              ),
+            )),
         // order status
         Padding(
           padding:
@@ -255,6 +279,60 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   title: Text(S.current.chatRoom),
                   textColor: Theme.of(context).textTheme.button?.color,
                   subtitle: Text(S.current.chatWithCaptain),
+                  trailing: Icon(Icons.arrow_forward_rounded,
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // chat with whatsapp
+        Visibility(
+          visible: orderInfo.captainPhone != null,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.green.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(-0.2, 0)),
+                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.green.withOpacity(0.85),
+                    Colors.green.withOpacity(0.85),
+                    Colors.green.withOpacity(0.9),
+                    Colors.green.withOpacity(0.93),
+                    Colors.green.withOpacity(0.95),
+                    Colors.green,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onTap: () {
+                    var url = 'https://wa.me/${orderInfo.captainPhone}';
+                    canLaunch(url).then((value) {
+                      if (value) {
+                        launch(url);
+                      }
+                    });
+                  },
+                  leading: Icon(
+                    Icons.whatsapp,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  title: Text(S.current.whatsapp),
+                  textColor: Theme.of(context).textTheme.button?.color,
+                  subtitle: Text(S.current.whatsappWithCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
                       color: Theme.of(context).textTheme.button?.color),
                 ),

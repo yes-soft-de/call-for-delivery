@@ -36,7 +36,9 @@ class SubOrdersListStateLoaded extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
-              primaryTitle:element.orderIsMain ? S.current.primaryOrder : S.current.suborder ,
+              primaryTitle: element.orderIsMain
+                  ? S.current.primaryOrder
+                  : S.current.suborder,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
