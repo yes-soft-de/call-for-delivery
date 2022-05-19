@@ -286,7 +286,7 @@ class StoreOwnerProfileController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              ref=@Model(type="App\Response\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse")
+     *              ref=@Model(type="App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse")
      *      )
      *   )
      * )

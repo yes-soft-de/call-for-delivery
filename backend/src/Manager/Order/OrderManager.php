@@ -298,7 +298,11 @@ class OrderManager
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
     {
-        return $this->orderRepository->filterBidOrdersBySupplier($request);
+        $orders = $this->orderRepository->filterBidOrdersBySupplier($request);
+
+        $supplierProfileStatus = $this->orderRepository->getSupplierProfileStatusBySupplierId($request->getSupplierId());
+
+        return [$orders, $supplierProfileStatus];
     }
 
     public function getOrderByIdForSupplier(int $orderId): ?array

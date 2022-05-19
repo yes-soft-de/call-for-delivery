@@ -13,6 +13,16 @@ class AdminStoreOwnerManager
         $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
     }
 
+    public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerProfileByIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?array
+    {
+        return $this->storeOwnerProfileEntityRepository->getStoreOwnerBranchesByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+    }
+
     public function getStoreOwnersProfilesCountByStatusForAdmin(string $storeOwnerProfileStatus): int
     {
         return $this->storeOwnerProfileEntityRepository->count(["status" => $storeOwnerProfileStatus]);

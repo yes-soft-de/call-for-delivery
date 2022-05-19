@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Response\StoreOwner;
+namespace App\Response\Admin\StoreOwner;
 
 use DateTime;
 use OpenApi\Annotations as OA;
