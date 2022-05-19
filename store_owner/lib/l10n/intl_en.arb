@@ -621,7 +621,9 @@
     "offerNumber": "offerNumber",
     "offerStatus": "offerStatus",
     "notificationSound": "Notification sound",
-    "ringtone": "Ringtone"
+    "ringtone": "Ringtone",
+    "orderHandledByCaptain": "Order processing by captain "
+
 
 
 

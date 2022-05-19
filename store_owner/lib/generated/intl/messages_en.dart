@@ -534,6 +534,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+        "orderHandledByCaptain": MessageLookupByLibrary.simpleMessage(
+            "Order processing by captain "),
         "orderImage": MessageLookupByLibrary.simpleMessage("Order Image"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),

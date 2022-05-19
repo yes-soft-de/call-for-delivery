@@ -623,7 +623,8 @@
     "acceptedOffer": "مقبول",
     "confirmed": "مُأكد",
     "offerNumber": "رقم العرض",
-    "offerStatus": "حالة العرض"
+    "offerStatus": "حالة العرض",
+    "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن"
 
 
 
