@@ -3,6 +3,7 @@
 namespace App\Controller\Order;
 
 use App\AutoMapping;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -1104,8 +1105,19 @@ class OrderController extends BaseController
      *              @OA\Items(
      *                  ref=@Model(type="App\Response\Order\BidOrderFilterBySupplierResponse")
      *              )
+     *          )
      *      )
-     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns supplier profile not active message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9554"),
+     *          @OA\Property(type="string", property="msg")
+     *      )
      * )
      *
      * @Security(name="Bearer")
@@ -1119,6 +1131,10 @@ class OrderController extends BaseController
         $request->setSupplierId($this->getUserId());
 
         $result = $this->orderService->filterBidOrdersBySupplier($request);
+
+        if ($result === SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUPPLIER_PROFILE_NOT_ACTIVE);
+        }
 
         return $this->response($result, self::FETCH);
     }

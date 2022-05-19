@@ -5,6 +5,7 @@ namespace App\Service\Order;
 use App\AutoMapping;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Order\OrderManager;
@@ -57,7 +58,6 @@ use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService
 use App\Response\Order\OrderUpdatePaidToProviderResponse;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
-use App\Service\DateFactory\DateFactoryService;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
@@ -646,15 +646,24 @@ class OrderService
     }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
     {
         $response = [];
 
-        $orders = $this->orderManager->filterBidOrdersBySupplier($request);
+        $result = $this->orderManager->filterBidOrdersBySupplier($request);
+        //dd($result[1]['status']);
+        // check before the profile status of the supplier
+        if ($result[1]['status'] == SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_STATUS) {
+            return SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_RESULT;
+        }
 
-        if ($orders) {
-            foreach ($orders as $order) {
-                $response[] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $order);
+        if ($result[0]) {
+            foreach ($result[0] as $key=>$value) {
+                $response[$key] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $value);
+
+                $response[$key]->bidDetailsId = $value['bidDetails']->getId();
+                $response[$key]->title = $value['bidDetails']->getTitle();
+                $response[$key]->description = $value['bidDetails']->getDescription();
             }
         }
 

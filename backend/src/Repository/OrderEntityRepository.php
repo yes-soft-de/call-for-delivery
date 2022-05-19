@@ -693,7 +693,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
-            ->addSelect('bidDetailsEntity.id as bidDetailsId', 'bidDetailsEntity.title', 'bidDetailsEntity.openToPriceOffer', 'bidDetailsEntity.description')
+            ->addSelect('bidDetailsEntity as bidDetails')
 
             ->andWhere('bidDetailsEntity.openToPriceOffer = :openToPriceOfferStatus')
             ->setParameter('openToPriceOfferStatus', 1)
@@ -754,6 +754,24 @@ class OrderEntityRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getSupplierProfileStatusBySupplierId(int $supplierId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('DISTINCT(supplierProfileEntity.status) as status')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = :supplierId'
+            )
+
+            ->setParameter('supplierId', $supplierId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function getSupplierCategoriesBySupplierId(int $supplierId): array
