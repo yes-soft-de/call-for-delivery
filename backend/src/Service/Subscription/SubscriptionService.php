@@ -99,13 +99,15 @@ class SubscriptionService
        $this->checkSubscription($storeOwnerId);
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
+      
        if($subscription) {
-          
+           $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
+        
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
            if($subscription['hasExtra'] === true) {
 
-            $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+              $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
            }
            
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
