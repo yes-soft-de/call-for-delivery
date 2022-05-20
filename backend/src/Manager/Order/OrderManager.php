@@ -521,6 +521,7 @@ class OrderManager
                
         $orderEntity->setIsHide($isHide);
         $orderEntity->setPrimaryOrder(null);
+        $orderEntity->setCaptainId(null);
 
         $this->entityManager->flush();
 
