@@ -62,6 +62,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             
             ->andWhere('orderEntity.isHide != :isHide')
             ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE)
+
+            ->andWhere('orderEntity.isHide != :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+
            
             ->orderBy('orderEntity.id', 'DESC')
        
@@ -1170,6 +1174,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.orderIsMain = :orderIsMain')
             ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
    
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            
             ->orderBy('orderEntity.id', 'DESC')
        
             ->getQuery()
