@@ -1,0 +1,21 @@
+App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity:
+  accordingOnCountOfOrdersFinancialSystemOne:
+    countOrdersInMonth: 1
+    salary: 50
+    monthCompensation: 2
+    bounceMaxCountOrdersInMonth: 10
+    bounceMinCountOrdersInMonth: 5
+
+  accordingOnCountOfOrdersFinancialSystemTwo:
+    countOrdersInMonth: 2
+    salary: 100
+    monthCompensation: 3
+    bounceMaxCountOrdersInMonth: 15
+    bounceMinCountOrdersInMonth: 10
+
+  accordingOnCountOfOrdersFinancialSystemThree:
+    countOrdersInMonth: 3
+    salary: 150
+    monthCompensation: 4
+    bounceMaxCountOrdersInMonth: 25
+    bounceMinCountOrdersInMonth: 15
