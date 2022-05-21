@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\StoreOwner;
+namespace App\Request\Admin\StoreOwner;
 
 class StoreOwnerProfileUpdateByAdminRequest
 {
