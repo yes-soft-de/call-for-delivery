@@ -4,21 +4,25 @@ App\Entity\UserEntity:
     userId: superadmin
     roles: ['ROLE_SUPER_ADMIN', 'ROLE_SUPER_USER']
     password: super123admin
+    verificationStatus: 1
 
   admin_user_one:
     __construct: false
     userId: 966551111111
     roles: ['ROLE_ADMIN', 'ROLE_SUPER_USER']
     password: 123456
+    verificationStatus: 1
 
   admin_user_two:
     __construct: false
     userId: 966552222222
     roles: ['ROLE_ADMIN', 'ROLE_SUPER_USER']
     password: 123456
+    verificationStatus: 1
 
   admin_user_three:
     __construct: false
     userId: 966553333333
     roles: ['ROLE_ADMIN', 'ROLE_SUPER_USER']
     password: 123456
+    verificationStatus: 1

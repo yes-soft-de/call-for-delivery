@@ -13,6 +13,7 @@ App\Entity\StoreOwnerProfileEntity:
     employeeCount: 1-20
     completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
+    profitMargin: 0.1
 
   storeOwnerTwoProfile:
     storeOwnerId: 12
@@ -43,6 +44,7 @@ App\Entity\StoreOwnerProfileEntity:
     employeeCount: 1-20
     completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
+    profitMargin: 0.3
 
   storeOwnerFourProfile:
     storeOwnerId: 14
@@ -73,6 +75,7 @@ App\Entity\StoreOwnerProfileEntity:
     employeeCount: 1-20
     completeAccountStatus: branchCreated
     images: image/original-image/2022-04-02_10-52-06/img-avatar-624886da828b5.png
+    profitMargin: 0.5
 
   storeOwnerGoogleProfile:
     storeOwnerId: 16

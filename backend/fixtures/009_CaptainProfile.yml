@@ -11,6 +11,7 @@ App\Entity\CaptainEntity:
     bankAccountNumber: 11223345678
     stcPay: 11223345678
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
 
   captainTwoProfile:
     captainId: 7
@@ -24,6 +25,7 @@ App\Entity\CaptainEntity:
     bankAccountNumber: 11223345678
     stcPay: 11223345678
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
 
   captainThreeProfile:
     captainId: 8
@@ -37,6 +39,7 @@ App\Entity\CaptainEntity:
     bankAccountNumber: 11223345678
     stcPay: 11223345678
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
 
   captainFourProfile:
     captainId: 9
@@ -50,6 +53,7 @@ App\Entity\CaptainEntity:
     bankAccountNumber: 11223345678
     stcPay: 11223345678
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661728, "lon": 47.2510902 }
 
   captainFiveProfile:
     captainId: 10
@@ -63,3 +67,4 @@ App\Entity\CaptainEntity:
     bankAccountNumber: 11223345678
     stcPay: 11223345678
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661728, "lon": 47.2510902 }

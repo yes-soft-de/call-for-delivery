@@ -1,0 +1,6 @@
+App\Entity\AppFeatureEntity:
+  smsAppFeature:
+    featureName: sms
+    featureStatus: false
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>

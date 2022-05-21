@@ -4,3 +4,4 @@ App\Entity\UserEntity:
     userId: 96655331111<current()>
     roles: ['ROLE_SUPPLIER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1

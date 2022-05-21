@@ -4,33 +4,39 @@ App\Entity\UserEntity:
     userId: 966551111112
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1
 
   storeOwnerTwo:
     __construct: false
     userId: 966551111113
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1
 
   storeOwnerThree:
     __construct: false
     userId: 966551111114
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1
 
   storeOwnerFour:
     __construct: false
     userId: 966551111115
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1
 
   storeOwnerFive:
     __construct: false
     userId: 966551111116
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
+    verificationStatus: 1
 
   storeOwnerGoogle:
     __construct: false
     userId: 966959796722
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456789
+    verificationStatus: 1
