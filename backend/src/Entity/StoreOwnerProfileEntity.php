@@ -519,6 +519,8 @@ class StoreOwnerProfileEntity
     public function setProfitMargin(?float $profitMargin): self
     {
         $this->profitMargin = $profitMargin;
+
+        return $this;
     }
 
     /**
