@@ -1,0 +1,15 @@
+App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity:
+  accordingOnCountOfHoursFinancialSystemOne:
+    countHours: 10
+    compensationForEveryOrder: 20
+    salary: 100
+
+  accordingOnCountOfHoursFinancialSystemTwo:
+    countHours: 15
+    compensationForEveryOrder: 30
+    salary: 150
+
+  accordingOnCountOfHoursFinancialSystemThree:
+    countHours: 20
+    compensationForEveryOrder: 40
+    salary: 200

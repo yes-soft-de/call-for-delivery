@@ -1,0 +1,18 @@
+App\Entity\DeliveryCarEntity:
+  deliveryCarOne:
+    deliveryCost: 5
+    carModel: Cedan
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  deliveryCarTwo:
+    deliveryCost: 7
+    carModel: Scoda
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>
+
+  deliveryCarThree:
+    deliveryCost: 9
+    carModel: Mazda
+    createdAt: <(new \DateTime('Now'))>
+    updatedAt: <(new \DateTime('Now'))>

@@ -10,3 +10,5 @@ App\Entity\CompanyInfoEntity:
     kilometers: 22
     maxKilometerBonus: 50.50
     minKilometerBonus: 25.25
+    supplierProfitMargin: 1.3
+    storeProfitMargin: 1.2

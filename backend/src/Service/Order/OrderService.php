@@ -651,20 +651,18 @@ class OrderService
         $response = [];
 
         $result = $this->orderManager->filterBidOrdersBySupplier($request);
-        //dd($result[1]['status']);
+
         // check before the profile status of the supplier
-        if ($result[1]['status'] == SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_STATUS) {
+        if ($result === SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_STRING_STATUS) {
             return SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_RESULT;
         }
 
-        if ($result[0]) {
-            foreach ($result[0] as $key=>$value) {
-                $response[$key] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $value);
+        foreach ($result as $key=>$value) {
+            $response[$key] = $this->autoMapping->map("array", BidOrderFilterBySupplierResponse::class, $value);
 
-                $response[$key]->bidDetailsId = $value['bidDetails']->getId();
-                $response[$key]->title = $value['bidDetails']->getTitle();
-                $response[$key]->description = $value['bidDetails']->getDescription();
-            }
+            $response[$key]->bidDetailsId = $value['bidDetails']->getId();
+            $response[$key]->title = $value['bidDetails']->getTitle();
+            $response[$key]->description = $value['bidDetails']->getDescription();
         }
 
         return $response;

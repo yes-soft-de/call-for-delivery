@@ -4,42 +4,65 @@ App\Entity\SupplierProfileEntity:
     supplierName: المورد رامي
     phone: '@supplier_1->userId'
     createdAt: <(new \DateTime('Now'))>
-    supplierCategory: '@electronicSupplierCategory'
     status: true
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661800, "lon": 47.2510950 }
+    bankName: الراجحي
+    bankAccountNumber: 1234567890123
+    stcPay: 3210987654321
+    supplierCategories: ["1", "2", "3", "4", "5", "6"]
+    profitMargin: 1.1
 
   supplierProfile_2:
     user: '@supplier_2'
     supplierName: المورد يزن
     phone: '@supplier_2->userId'
     createdAt: <(new \DateTime('Now'))>
-    supplierCategory: '@restaurantSupplierCategory'
     status: true
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661810, "lon": 47.2510960 }
+    bankName: الراجحي
+    bankAccountNumber: 2345678901231
+    stcPay: 2109876543213
+    supplierCategories: ["1", "2", "3", "4", "5", "6"]
 
   supplierProfile_3:
     user: '@supplier_3'
     supplierName: المورد حبيب
     phone: '@supplier_3->userId'
     createdAt: <(new \DateTime('Now'))>
-    supplierCategory: '@vegetableSupplierCategory'
     status: true
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661830, "lon": 47.2510970 }
+    bankName: الراجحي
+    bankAccountNumber: 3456789012312
+    stcPay: 1098765432132
+    supplierCategories: ["1", "2", "3", "4", "5", "6"]
+    profitMargin: 1.3
 
   supplierProfile_4:
     user: '@supplier_4'
     supplierName: المورد كنان
     phone: '@supplier_1->userId'
     createdAt: <(new \DateTime('Now'))>
-    supplierCategory: '@vehicleSupplierCategory'
     status: true
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661840, "lon": 47.2510980 }
+    bankName: الراجحي
+    bankAccountNumber: 4567890123123
+    supplierCategories: ["1", "2", "3", "4", "5", "6"]
+    stcPay: 0987654321321
 
   supplierProfile_5:
     user: '@supplier_5'
     supplierName: المورد رهف
     phone: '@supplier_5->userId'
     createdAt: <(new \DateTime('Now'))>
-    supplierCategory: '@medicalSupplierCategory'
     status: true
     completeAccountStatus: profileCompleted
+    location: { "lat": 24.1661850, "lon": 47.2510990 }
+    bankName: الراجحي
+    bankAccountNumber: 5678901231234
+    stcPay: 9876543213210
+    supplierCategories: ["1", "2", "3", "4", "5", "6"]
+    profitMargin: 1.5

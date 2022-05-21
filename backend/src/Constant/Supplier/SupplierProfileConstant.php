@@ -19,4 +19,6 @@ final class SupplierProfileConstant
     const INACTIVE_SUPPLIER_PROFILE_STATUS = false;
 
     const INACTIVE_SUPPLIER_PROFILE_RESULT = "supplierProfileIsNotActive";
+
+    const INACTIVE_SUPPLIER_PROFILE_STRING_STATUS = "0";
 }
