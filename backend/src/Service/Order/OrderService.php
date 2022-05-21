@@ -848,11 +848,11 @@ class OrderService
 
                 $order = $this->orderManager->updateIsHide($pendingOrder, OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
     
-                if($order) {
-                    if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
-                        $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
-                    }                   
-                }
+                // if($order) {
+                //     if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                //         $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+                //     }                   
+                // }
             }
         }  
     }
@@ -990,6 +990,8 @@ class OrderService
                 $order = $this->orderManager->orderCancel($orderEntity);
                 
                 if($order) {
+                    $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+
                     $this->orderLogsService->createOrderLogsRequest($order);
 
                     //create local notification to store
@@ -1017,7 +1019,7 @@ class OrderService
              $order = $this->orderManager->recyclingOrder($orderEntity, $request);
              if($order) {
                 
-                 $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+                //  $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
       
                  $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
      
