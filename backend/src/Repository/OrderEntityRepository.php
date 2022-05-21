@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
@@ -693,8 +694,14 @@ class OrderEntityRepository extends ServiceEntityRepository
     }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
-    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array
+    public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
     {
+        $supplierProfileStatus = $this->getSupplierProfileStatusBySupplierId($request->getSupplierId());
+
+        if ($supplierProfileStatus === SupplierProfileConstant::INACTIVE_SUPPLIER_PROFILE_STRING_STATUS) {
+            return $supplierProfileStatus;
+        }
+
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.state', 'orderEntity.updatedAt')
             ->addSelect('bidDetailsEntity as bidDetails')
@@ -760,7 +767,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function getSupplierProfileStatusBySupplierId(int $supplierId): ?array
+    public function getSupplierProfileStatusBySupplierId(int $supplierId): string
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('DISTINCT(supplierProfileEntity.status) as status')
@@ -775,7 +782,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('supplierId', $supplierId)
 
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getSingleScalarResult();
     }
 
     public function getSupplierCategoriesBySupplierId(int $supplierId): array
