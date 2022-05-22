@@ -508,7 +508,7 @@ class NewOrderLinkStateLoaded extends States {
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.parse(screenState.priceController.text.trim()),
           image: value,
-          date: orderDate.toUtc().toIso8601String(),
+          date: orderDate.toIso8601String(),
           payment: screenState.payments));
     });
   }
@@ -529,7 +529,7 @@ class NewOrderLinkStateLoaded extends States {
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: null,
-        date: orderDate.toUtc().toIso8601String(),
+        date: orderDate.toIso8601String(),
         payment: screenState.payments));
   }
 

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
@@ -84,7 +85,11 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
                         .orderInfo
-                        .orderIsMain,
+                        .orderIsMain
+                         &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                        .orderInfo
+                        .state != OrderStatusEnum.FINISHED,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.newOrderLink, onTap: () {
                   showDialog(
@@ -109,7 +114,10 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
                         .orderInfo
                         .subOrders
-                        .isNotEmpty,
+                        .isNotEmpty &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                        .orderInfo
+                        .state != OrderStatusEnum.FINISHED,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.unlinkSubOrders, onTap: () {
                   showDialog(

@@ -45,8 +45,8 @@ class ProfileModel extends DataModel {
         city: data?.city ?? '',
         employeeCount: data?.employeeCount,
         status: data?.status ?? 'inActive',
-        closingTime: DateHelper.convert(data?.closeTime?.timestamp),
-        openingTime: DateHelper.convert(data?.openingTime?.timestamp),
+        closingTime: DateHelper.convert(data?.closeTime?.timestamp, true),
+        openingTime: DateHelper.convert(data?.openingTime?.timestamp, true),
         roomId: data?.roomId);
   }
   ProfileModel get data => _profile;

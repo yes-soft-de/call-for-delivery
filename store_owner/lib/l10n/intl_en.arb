@@ -622,7 +622,9 @@
     "offerStatus": "offerStatus",
     "notificationSound": "Notification sound",
     "ringtone": "Ringtone",
-    "orderHandledByCaptain": "Order processing by captain "
+    "orderHandledByCaptain": "Order processing by captain ",
+    "orderHandledDoneByCaptain": "Order processed by captain "
+
 
 
 

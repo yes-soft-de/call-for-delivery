@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -87,7 +86,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: S.current.orderHandledByCaptain + ' ',
+                          text:orderInfo.state == OrderStatusEnum.FINISHED  ? S.current.orderHandledDoneByCaptain : S.current.orderHandledByCaptain + ' ',
                           style: TextStyle(color: Colors.white)),
                       TextSpan(
                           text: orderInfo.captainName,

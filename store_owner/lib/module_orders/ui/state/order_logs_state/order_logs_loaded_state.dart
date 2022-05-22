@@ -1,5 +1,4 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
@@ -29,9 +28,15 @@ class OrderLogsLoadedState extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+             if (element.orderIsMain == true && element.orders.isNotEmpty) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               orderNumber: element.id.toString(),

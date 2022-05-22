@@ -6239,6 +6239,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order processed by captain `
+  String get orderHandledDoneByCaptain {
+    return Intl.message(
+      'Order processed by captain ',
+      name: 'orderHandledDoneByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
