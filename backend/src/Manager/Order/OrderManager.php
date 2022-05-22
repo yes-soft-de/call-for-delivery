@@ -169,7 +169,7 @@ class OrderManager
     {
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
 
-        return $this->orderRepository->acceptedOrderByCaptainId($captainId->getId(), $userId);
+        return $this->orderRepository->acceptedOrderNewByCaptainId($captainId->getId(), $userId);
     }
     
     public function getSpecificOrderForCaptain(int $id, int $userId): ?array
