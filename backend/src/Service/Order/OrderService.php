@@ -511,6 +511,8 @@ class OrderService
         $orders = $this->orderManager->filterOrdersByCaptain($request);
 
         foreach ($orders as $order) {
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+
             if ($order['bidDetails']) {
                 // get branch info
                 $order['branchName'] = $order['bidDetails']->getBranch()->getName();
@@ -1090,6 +1092,7 @@ class OrderService
         $orders = $this->orderManager->getordersHiddenDueToExceedingDeliveryTime($userId);
        
         foreach ($orders as $order) {
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
                                 
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
         }

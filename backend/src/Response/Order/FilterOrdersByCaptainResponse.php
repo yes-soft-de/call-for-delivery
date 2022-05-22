@@ -63,4 +63,6 @@ class FilterOrdersByCaptainResponse
      * @var object|null
      */
     public $sourceDestination;
+
+    public array|null $subOrder;
 }
