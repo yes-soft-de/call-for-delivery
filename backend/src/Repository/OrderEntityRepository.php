@@ -509,7 +509,10 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $request->getCaptainId())
-
+         
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+         
             ->leftJoin(
                 BidDetailsEntity::class,
                 'bidDetailsEntity',
