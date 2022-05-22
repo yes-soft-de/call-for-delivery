@@ -60,18 +60,13 @@ class OrderRecyclingStateManager {
     _ordersService.recycling(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().update();
-        Navigator.pushNamedAndRemoveUntil(
-            context, OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
+        Navigator.of(context).pop();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
         getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
       }
     });
   }

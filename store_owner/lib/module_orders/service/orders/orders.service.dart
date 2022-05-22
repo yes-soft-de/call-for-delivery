@@ -93,7 +93,7 @@ class OrdersService {
   Future<DataModel> recycling(CreateOrderRequest request) async {
     ActionResponse? response = await _ordersManager.recycling(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

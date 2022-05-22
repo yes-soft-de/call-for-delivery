@@ -146,7 +146,7 @@ class OrderDetailsModel extends DataModel {
     orderLogs.orderLogs?.logs?.forEach((element) {
       // step date
       var stepDate = DateFormat.jm()
-              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+              .format(DateHelper.convert(element.createdAt?.timestamp,)) +
           ' 📅 ' +
           DateFormat.yMd()
               .format(DateHelper.convert(element.createdAt?.timestamp));

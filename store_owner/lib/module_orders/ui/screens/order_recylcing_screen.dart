@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_recycling_state_manager.dart';
+import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -90,8 +91,19 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen> {
                       return CustomAlertDialog(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            manager.recycle(this,
-                                CreateOrderRequest(order: orderId, cancel: 1));
+                            CreateOrderRequest request =
+                                CreateOrderRequest(order: orderId, cancel: 1);
+                            if (currentState is OrderRecyclingLoaded) {
+                              var orderInfo =
+                                  (currentState as OrderRecyclingLoaded)
+                                      .orderInfo;
+                              request =
+                                  CreateOrderRequest(order: orderId,
+                                   fromBranch: orderInfo.branchID,
+                                   
+                                   cancel: 1);
+                            }
+                            manager.recycle(this, request);
                           },
                           content: S.current.areYouSureAboutDeleteOrder);
                     });

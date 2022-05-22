@@ -31,13 +31,20 @@ class HiddenOrdersStateLoaded extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,
-                  arguments: element.id);
+              if (element.orderIsMain == true && element.orders.isNotEmpty) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               primaryTitle: element.orderIsMain
                   ? S.current.primaryOrder
-                  : S.current.suborder,
+                  : null,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
@@ -48,10 +55,23 @@ class HiddenOrdersStateLoaded extends States {
                   : StatusHelper.getOrderStatusColor(element.state),
               orderCost: element.orderCost,
               note: element.note,
-              icon: Icons.recycling_rounded,
             ),
           ),
         ),
+      ));
+      widgets.add(Padding(
+        padding: const EdgeInsets.only(left:50.0,right: 50),
+        child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.green,
+              shape: StadiumBorder()
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,
+                  arguments: element.id);
+            },
+            icon: Icon(Icons.recycling_rounded),
+            label: Text(S.current.recycleOrder)),
       ));
     });
     widgets.add(SizedBox(

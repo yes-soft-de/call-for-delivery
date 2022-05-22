@@ -1,8 +1,8 @@
 class DateHelper {
-  static DateTime convert(int? timeStamp,[bool isUtc = true]) {
+  static DateTime convert(int? timeStamp) {
     timeStamp ??= 0;
     var date =
-        DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000, isUtc: isUtc);
+        DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
     return date;
   }
 }

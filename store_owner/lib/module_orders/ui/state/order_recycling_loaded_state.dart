@@ -634,6 +634,8 @@ class OrderRecyclingLoaded extends States {
       screenState.manager.recycle(
           screenState,
           CreateOrderRequest(
+            order: screenState.orderId,
+              cancel: -1,
               orderIsMain: orderIsMain,
               orderType: orderType,
               fromBranch: screenState.branch,
@@ -648,7 +650,7 @@ class OrderRecyclingLoaded extends States {
               detail: screenState.orderDetailsController.text.trim(),
               orderCost: num.parse(screenState.priceController.text.trim()),
               image: value,
-              date: orderDate.toIso8601String(),
+              date: orderDate.toUtc().toIso8601String(),
               payment: screenState.payments));
     });
   }
@@ -658,6 +660,8 @@ class OrderRecyclingLoaded extends States {
     screenState.manager.recycle(
         screenState,
         CreateOrderRequest(
+            order: screenState.orderId,
+            cancel: -1,
             orderType: orderType,
             orderIsMain: orderIsMain,
             fromBranch: screenState.branch,
@@ -672,7 +676,7 @@ class OrderRecyclingLoaded extends States {
             detail: screenState.orderDetailsController.text.trim(),
             orderCost: num.tryParse(screenState.priceController.text.trim()),
             image: null,
-            date: orderDate.toIso8601String(),
+            date: orderDate.toUtc().toIso8601String(),
             payment: screenState.payments));
   }
 
