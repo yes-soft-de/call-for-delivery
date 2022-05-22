@@ -1190,8 +1190,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.orderType = :orderTypeNormal')
             ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
    
-            ->andWhere('orderEntity.orderIsMain = :orderIsMain')
-            ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
+//            ->andWhere('orderEntity.orderIsMain = :orderIsMain')
+//            ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
    
             ->andWhere('orderEntity.state != :cancelledState')
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
