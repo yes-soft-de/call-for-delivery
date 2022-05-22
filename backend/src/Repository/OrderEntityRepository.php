@@ -136,17 +136,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            $query->andWhere('orderEntity.state IN (:statesArray)');
-            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
-
-        }
-
-        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
-            $query->andWhere('orderEntity.state = :state');
-            $query->setParameter('state', $request->getState());
-        }
-
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
             $query->setParameter('createdAt', $request->getFromDate());
@@ -163,7 +152,54 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
 
+        if ($request->getState() !== null && $request->getState() !== "" && $request->getState() !== OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :orderState');
+            $query->setParameter('orderState', $request->getState());
+
+        } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $response = [];
+
+            $orders = $query->getQuery()->getResult();
+
+            if ($orders) {
+                foreach ($orders as $order) {
+                    if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
+                        $response[] = $order;
+
+                    } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
+                            $response[] = $order;
+                        }
+                    }
+                }
+            }
+
+            return $response;
+        }
+
         return $query->getQuery()->getResult();
+    }
+
+    public function checkIfMainOrderHasUnDeliveredSubOrders(int $orderId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id')
+
+            ->andWhere('orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntityTwo',
+                 Join::WITH,
+                'orderEntityTwo.primaryOrder = orderEntity.id'
+            )
+
+            ->andWhere('orderEntityTwo.state IN (:statesArray)')
+            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+
+            ->getQuery()
+            ->getResult();
     }
 
     public function filterStoreBidOrders(OrderFilterRequest $request, $storeOwner): ?array
@@ -522,16 +558,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
-            $query->andWhere('orderEntity.state = :state');
-            $query->setParameter('state', $request->getState());
-        }
-
-        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            $query->andWhere('orderEntity.state IN (:statesArray)');
-            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
-        }
-
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
             $query->setParameter('createdAt', $request->getFromDate());
@@ -546,6 +572,31 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+
+        } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $response = [];
+
+            $orders = $query->getQuery()->getResult();
+
+            if ($orders) {
+                foreach ($orders as $order) {
+                    if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
+                        $response[] = $order;
+
+                    } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
+                            $response[] = $order;
+                        }
+                    }
+                }
+            }
+
+            return $response;
         }
 
         return $query->getQuery()->getResult();
