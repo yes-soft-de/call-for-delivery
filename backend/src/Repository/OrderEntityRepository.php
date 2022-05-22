@@ -115,6 +115,12 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.orderType = :bidOrderType')
             ->setParameter('bidOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
+              
+            ->andWhere('orderEntity.isHide != :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE)
+
+            ->andWhere('orderEntity.isHide != :hide')
+            ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
