@@ -1202,4 +1202,42 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getResult();
     }
+
+    public function acceptedOrderNewByCaptainId($captainId, int $userId): ?array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
+            ->addSelect('rateEntity.rating')
+            ->addSelect('bidDetailsEntity as bidDetails')
+           
+            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
+
+            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
+            
+            ->andWhere('orderEntity.captainId = :captainId')
+
+            ->setParameter('captainId', $captainId)
+            ->setParameter('userId', $userId)
+           
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW);
+          
+            $items = $query->addSelect('orderEntity.state as state')->getQuery()->getResult();
+            foreach($items as $item) {
+
+                if($item['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    $query->leftJoin(orderEntity::class, 'orderEntity2', Join::WITH, 'orderEntity2.primaryOrder = orderEntity.id and orderEntity.state = :delivered and orderEntity2.state != :delivered');
+                    $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);   
+                    
+                    $query->andWhere('orderEntity2.state != :delivered');
+                }
+                else {
+                    $query->andWhere('orderEntity.state != :delivered');
+
+                    $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);                      
+                }
+                return $query->getQuery()->getResult();   
+            }
+    }
 }
