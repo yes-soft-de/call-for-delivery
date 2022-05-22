@@ -16,6 +16,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThreeBalanceDetailService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemAccordingOnOrderService;
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
+use  App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 
 class CaptainFinancialSystemDetailService
 {
@@ -27,8 +28,9 @@ class CaptainFinancialSystemDetailService
     private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService;
     private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService;
     private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
+    private CaptainFinancialDuesService $captainFinancialDuesService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesService $captainFinancialDuesService)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->autoMapping = $autoMapping;
@@ -38,6 +40,7 @@ class CaptainFinancialSystemDetailService
         $this->captainFinancialSystemThreeBalanceDetailService = $captainFinancialSystemThreeBalanceDetailService;
         $this->captainFinancialSystemAccordingOnOrderService = $captainFinancialSystemAccordingOnOrderService;
         $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
+        $this->captainFinancialDuesService = $captainFinancialDuesService;
     }
 
     public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailResponse|string
@@ -57,15 +60,19 @@ class CaptainFinancialSystemDetailService
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
         if($financialSystemDetail) {
-            $sumPayments = $this->getSumPayments($financialSystemDetail['captainId']);
+           $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues
+           ($financialSystemDetail['captainId']);
+           $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d'), "toDate" => $captainFinancialDues['endDate']->format('Y-m-d')];
+
+           $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
            
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-                $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
+                // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
                 return $this->captainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments, $date);
             }
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-                $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemTwo();
+                // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemTwo();
 
                 return $this->captainFinancialSystemTwoBalanceDetailService->getBalanceDetailWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments, $date);
             }
@@ -74,8 +81,8 @@ class CaptainFinancialSystemDetailService
               
                 $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
               
-                $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
-                       
+                // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
+                 
                 return $this->captainFinancialSystemThreeBalanceDetailService->getBalanceDetailWithSystemThree($choseFinancialSystemDetails, $financialSystemDetail['captainId'], $sumPayments, $date);
             }
         }
@@ -83,12 +90,12 @@ class CaptainFinancialSystemDetailService
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
 
-    public function getSumPayments($captainId): float 
+    public function getSumPayments($captainId, $fromDate, $toDate): float 
     {
-        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        // $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
      
         //Sum Captain's Payments
-        $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($date['fromDate'], $date['toDate'], $captainId);
+        $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
         if($sumPayments['sumPaymentsToCaptain'] === null) {
             $sumPayments = 0;
         }

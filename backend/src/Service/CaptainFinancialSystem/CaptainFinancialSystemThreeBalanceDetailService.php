@@ -27,7 +27,8 @@ class CaptainFinancialSystemThreeBalanceDetailService
              
                 //get the number of orders arranged according to the categories of the financial system
                 $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $date['fromDate'], $date['toDate']);
-               //Amount payable to the captain in the absence of a bounce
+               
+                //Amount payable to the captain in the absence of a bounce
                 $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
                //cont Order Completed
                 $financialSystemThreeDetail['contOrderCompleted'] = $countOrders['countOrder'];

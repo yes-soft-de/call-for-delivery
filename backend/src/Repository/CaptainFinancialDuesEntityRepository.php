@@ -102,4 +102,23 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+   
+    public function getLatestCaptainFinancialDues(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
+            
+            ->andWhere('captainFinancialDuesEntity.captain = :captainId')
+
+            ->setParameter('captainId', $captainId)
+            
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+            
+            ->setMaxResults(1)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
 }
