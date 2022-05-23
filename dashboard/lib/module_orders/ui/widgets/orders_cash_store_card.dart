@@ -82,7 +82,7 @@ class OrdersCashStoreCard extends StatelessWidget {
                   ),
                   Expanded(
                       child: VerticalBubble(
-                    title: S.current.financeStatus,
+                    title: S.current.orderCashStatus,
                     subtitle: FinanceHelper.getStatusString(flag),
                     background: FinanceHelper.getFinanceStatusColor(flag),
                   )),

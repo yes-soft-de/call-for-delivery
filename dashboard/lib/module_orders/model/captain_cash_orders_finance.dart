@@ -17,10 +17,8 @@ class CaptainCashOrdersFinanceModel extends DataModel {
     var data = response.data;
     Total _total = Total(
         advancePayment: data?.total?.advancePayment ?? false,
-        sumAmountWithCaptain:
-            num.tryParse(data?.total?.sumAmountWithCaptain ?? '') ?? 0,
-        sumPaymentsToCaptain:
-            num.tryParse(data?.total?.sumPaymentsToCaptain ?? '') ?? 0,
+        sumAmountWithCaptain: data?.total?.sumAmountWithCaptain ?? 0,
+        sumPaymentsToCaptain: data?.total?.sumPaymentsToCaptain ?? 0,
         total: data?.total?.total ?? 0);
     var _orders = <Order>[];
     response.data?.detail?.forEach((element) {

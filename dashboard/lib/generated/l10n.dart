@@ -6479,6 +6479,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Order cost to store`
+  String get orderCashStatus {
+    return Intl.message(
+      'Order cost to store',
+      name: 'orderCashStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments From Captain`
+  String get sumPaymentsFromCaptain {
+    return Intl.message(
+      'Payments From Captain',
+      name: 'sumPaymentsFromCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In this screen you can see our work planes `
+  String get planHint {
+    return Intl.message(
+      'In this screen you can see our work planes ',
+      name: 'planHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please choose your plan`
+  String get choosePlan {
+    return Intl.message(
+      'Please choose your plan',
+      name: 'choosePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no packages in this category`
+  String get emptyPackagesCategory {
+    return Intl.message(
+      'There is no packages in this category',
+      name: 'emptyPackagesCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order`
+  String get orderWithoutDef {
+    return Intl.message(
+      'order',
+      name: 'orderWithoutDef',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can change captain financial request here`
+  String get youCanChangeCaptainFinancialPlan {
+    return Intl.message(
+      'You can change captain financial request here',
+      name: 'youCanChangeCaptainFinancialPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change captain plan`
+  String get changeCaptainPlan {
+    return Intl.message(
+      'Change captain plan',
+      name: 'changeCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

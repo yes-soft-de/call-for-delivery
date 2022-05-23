@@ -173,6 +173,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryName": MessageLookupByLibrary.simpleMessage("Category name"),
         "categoryUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Category Updated Successfully"),
+        "changeCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("Change captain plan"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
@@ -191,6 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Destination Location"),
         "chooseLocation":
             MessageLookupByLibrary.simpleMessage("choose location"),
+        "choosePlan":
+            MessageLookupByLibrary.simpleMessage("Please choose your plan"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("Choose Receipt Location"),
         "chooseYourCity":
@@ -327,6 +331,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddressIsRequired":
             MessageLookupByLibrary.simpleMessage("Email Address is Required"),
         "emptyField": MessageLookupByLibrary.simpleMessage("Empty Field"),
+        "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
+            "There is no packages in this category"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
         "enterProductInfo":
@@ -541,6 +547,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "orderCashStatus":
+            MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
@@ -573,6 +581,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("Order Time Line"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
+        "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -646,6 +655,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "planHint": MessageLookupByLibrary.simpleMessage(
+            "In this screen you can see our work planes "),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
@@ -866,6 +877,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
+        "sumPaymentsFromCaptain":
+            MessageLookupByLibrary.simpleMessage("Payments From Captain"),
         "sumPaymentsFromCompany":
             MessageLookupByLibrary.simpleMessage("Payments from Company"),
         "sumPaymentsToCaptain":
@@ -973,6 +986,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
+        "youCanChangeCaptainFinancialPlan":
+            MessageLookupByLibrary.simpleMessage(
+                "You can change captain financial request here"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

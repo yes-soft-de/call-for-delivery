@@ -43,7 +43,7 @@ class OrdersCashCaptainLoadedState extends States {
             Expanded(
               child: VerticalBubble(
                 radius: BorderRadius.circular(0),
-                title: S.current.sumPaymentsToCaptain,
+                title: S.current.sumPaymentsFromCaptain,
                 subtitle:
                     FixedNumber.getFixedNumber(total.sumPaymentsToCaptain) +
                         ' ${S.current.sar}',

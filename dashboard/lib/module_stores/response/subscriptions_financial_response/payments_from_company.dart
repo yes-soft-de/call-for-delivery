@@ -12,9 +12,9 @@ class PaymentsFromStore {
     return PaymentsFromStore(
       id: json['id'] as int?,
       amount: json['amount'] as num?,
-      createdAt: json['createdAt'] == null
+      createdAt: json['date'] == null
           ? null
-          : StartDate.fromJson(json['createdAt'] as Map<String, dynamic>),
+          : StartDate.fromJson(json['date'] as Map<String, dynamic>),
       note: json['note'] as String?,
     );
   }

@@ -137,9 +137,11 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                                               .trim()) ??
                                                           0) >=
                                                       ((model.total
-                                                              .packageCost + model.total.captainOffer) -
+                                                                  .packageCost +
+                                                              model.total
+                                                                  .captainOffer) -
                                                           model.total
-                                                              .sumPayments )
+                                                              .sumPayments)
                                                   ? 1
                                                   : 3,
                                               subscriptionId: model.id,

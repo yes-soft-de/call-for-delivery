@@ -658,6 +658,17 @@
     "paymentsToStore": "دفعة للمتجر",
     "supplierProfitMargin": "هامش الربح من المورد",
     "storeProfitMargin": "هامش الربح من المتجر",
-    "paymentsFromCaptain": "دفعة من الكابتن"
+    "paymentsFromCaptain": "دفعة من الكابتن",
+    "orderCashStatus": "سعر الطلبية للمتجر",
+    "sumPaymentsFromCaptain": "الدفعات من الكابتن",
+    "planHint": "في هذه النافذة ستظهر شرائح خطط العمل المتاحة",
+    "choosePlan": "اختر الخطة المناسبة لك",
+    "emptyPackagesCategory": "لايوجد اشتراكات متوفرة ضمن هذا التصنيف",
+    "orderWithoutDef": "طلب",
+    "youCanChangeCaptainFinancialPlan": "يمكنك تغيير خطة عمل الكابتن من هنا",
+    "changeCaptainPlan": "تغيير خطة الكابتن"
+
+
+
 
 }

@@ -18,7 +18,8 @@ class StoreCashOrdersFinanceModel extends DataModel {
     Total _total = Total(
         advancePayment: data?.total?.advancePayment ?? false,
         sumAmountStorOwnerDues: data?.total?.sumAmountStorOwnerDues ?? 0,
-        sumPaymentsFromCompany: data?.total?.sumPaymentsFromCompany ?? 0,
+        sumPaymentsFromCompany:
+            num.tryParse(data?.total?.sumPaymentsFromCompany ?? '0') ?? 0,
         total: data?.total?.total ?? 0);
     var _orders = <Order>[];
     response.data?.detail?.forEach((element) {

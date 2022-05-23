@@ -1,4 +1,5 @@
 import 'package:c4d/hive/util/argument_hive_helper.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -109,12 +110,16 @@ class CaptainProfileLoadedState extends States {
                                     appBar: CustomC4dAppBar.appBar(context,
                                         title: S.current.FinanceRequest),
                                     body: CaptainFinanceInfo(
+                                      captainID: screenState.captainId,
                                       details: model!.captainFinance!,
                                       requestStatus: (status) {
                                         Navigator.of(context).pop();
                                         screenState.enableCaptainFinance(
-                                            EnableCaptainRequest(
-                                          id: model?.captainFinance?.id,
+                                            CaptainFinanceRequest(
+                                          planId: model?.captainFinance?.id,
+                                          planType: model?.captainFinance
+                                              ?.captainFinancialSystemType,
+                                          id: screenState.captainId,
                                           status: status,
                                         ));
                                       },

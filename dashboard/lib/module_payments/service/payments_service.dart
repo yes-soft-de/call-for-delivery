@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/manager/payments_manager.dart';
 import 'package:c4d/module_payments/model/captain_balance_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
@@ -278,6 +279,17 @@ Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
       return DataModel.withError(S.current.networkError);
     }
     if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+  Future<DataModel> financeRequest(CaptainFinanceRequest request) async {
+    ActionResponse? actionResponse = await _paymentsManager.financeRequest(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
