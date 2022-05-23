@@ -1273,22 +1273,26 @@ class OrderEntityRepository extends ServiceEntityRepository
            
             ->andWhere('orderEntity.isHide = :isHide')
             ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW);
-          
-            $items = $query->addSelect('orderEntity.state as state')->getQuery()->getResult();
-            foreach($items as $item) {
 
-                if($item['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                    $query->leftJoin(orderEntity::class, 'orderEntity2', Join::WITH, 'orderEntity2.primaryOrder = orderEntity.id and orderEntity.state = :delivered and orderEntity2.state != :delivered');
-                    $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);   
-                    
-                    $query->andWhere('orderEntity2.state != :delivered');
-                }
-                else {
-                    $query->andWhere('orderEntity.state != :delivered');
+        $orders = $query->addSelect('orderEntity.state as state')->getQuery()->getResult();
 
-                    $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);                      
+        if ($orders) {
+            $response = [];
+
+            foreach($orders as $order) {
+                if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
+                    $response[] = $order;
+
+                } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
+                        $response[] = $order;
+                    }
                 }
-                return $query->getQuery()->getResult();   
             }
+
+            return $response;
+        }
+
+        return $orders;
     }
 }
