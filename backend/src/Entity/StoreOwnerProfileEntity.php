@@ -38,10 +38,10 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $phone;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $openingTime;
 
-    #[ORM\Column(type: 'time', nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $closingTime;
 
     #[ORM\Column(type: 'float', nullable: true)]
@@ -83,13 +83,11 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerPaymentFromCompanyEntity::class)]
     private $storeOwnerPaymentFromCompanyEntity;
 
-
     #[ORM\Column(type: 'float', nullable: true)]
     private $profitMargin;
 
     #[ORM\OneToMany(mappedBy: 'store', targetEntity: StoreOwnerDuesFromCashOrdersEntity::class)]
     private $storeOwnerDuesFromCashOrders;
-
 
     public function __construct()
     {
