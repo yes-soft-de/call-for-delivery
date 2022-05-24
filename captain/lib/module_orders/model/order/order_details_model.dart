@@ -136,7 +136,12 @@ class OrderDetailsModel extends DataModel {
       orderIsMain: element?.orderIsMain,
       createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
     );
-    _orders.distance = _distance(_orders, location);
+    _orders.distance = _distance(
+        _orders,
+        StatusHelper.getOrderStatusIndex(_orders.state) >=
+                StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
+            ? location
+            : branchCoordinate);
     _orders.branchDistance = _branchDistance(_orders, location);
   }
   String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
