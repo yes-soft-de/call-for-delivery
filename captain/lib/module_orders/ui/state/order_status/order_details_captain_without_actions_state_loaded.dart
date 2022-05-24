@@ -248,91 +248,6 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
             ),
           ),
         ),
-        // customers
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    Icons.account_box,
-                  ),
-                  title: Text(S.current.recipientName),
-                  subtitle: Text(orderInfo.customerName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      var url = 'tel:+${orderInfo.customerPhone}';
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: Text(S.current.recipientPhoneNumber),
-                      subtitle: Text(orderInfo.customerPhone),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      String url = '';
-                      if (orderInfo.destinationCoordinate != null) {
-                        url = LauncherLinkHelper.getMapsLink(
-                            orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.longitude ?? 0);
-                      } else if (orderInfo.destinationLink != null) {
-                        url = orderInfo.destinationLink ?? '';
-                      }
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.location_pin),
-                      title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destination +
-                              ' ' +
-                              S.current.destinationUnavailable),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         // details
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -530,6 +445,91 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                   subtitle: Text(orderInfo.orderCost.toStringAsFixed(1) +
                       ' ' +
                       S.current.sar),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // customers
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: decoration,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.account_box,
+                  ),
+                  title: Text(S.current.recipientName),
+                  subtitle: Text(orderInfo.customerName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      var url = 'tel:+${orderInfo.customerPhone}';
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      leading: const Icon(Icons.phone),
+                      title: Text(S.current.recipientPhoneNumber),
+                      subtitle: Text(orderInfo.customerPhone),
+                      trailing: const Icon(Icons.arrow_forward),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      leading: const Icon(Icons.location_pin),
+                      title: Text(S.current.locationOfCustomer),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(S.current.destination +
+                              ' ' +
+                              S.current.destinationUnavailable),
+                      trailing: const Icon(Icons.arrow_forward),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -788,5 +788,4 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
     ];
     return steps;
   }
-
 }
