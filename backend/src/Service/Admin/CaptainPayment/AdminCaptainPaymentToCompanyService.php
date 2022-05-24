@@ -12,6 +12,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminCaptainPaymentToCompanyService
 {
@@ -28,7 +29,7 @@ class AdminCaptainPaymentToCompanyService
     {
         $payment = $this->adminCaptainPaymentToCompanyManager->createCaptainPaymentToCompany($request);
     
-        if($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+        if($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
             return $payment;
         }
 

@@ -42,14 +42,20 @@ class AdminCaptainPaymentToCompanyManager
 
         $request->setCaptain($captain);
 
-        $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
+        $amountFromOrderCash = $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashBySpecificDate($request->getFromDate(), $request->getToDate(), $request->getCaptain()->getId());
 
-        $this->entityManager->persist($captainPaymentToCompanyEntity);
-        $this->entityManager->flush();
+        if($amountFromOrderCash) {
+            $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
 
-        $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain(), $captainPaymentToCompanyEntity);
-     
-        return $captainPaymentToCompanyEntity;
+            $this->entityManager->persist($captainPaymentToCompanyEntity);
+            $this->entityManager->flush();
+    
+            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain(), $captainPaymentToCompanyEntity);
+         
+            return $captainPaymentToCompanyEntity;
+        }
+  
+        return OrderAmountCashConstant::NOT_ORDER_CASH;        
     }
 
     public function deleteCaptainPaymentToCompany($id): CaptainPaymentToCompanyEntity|string

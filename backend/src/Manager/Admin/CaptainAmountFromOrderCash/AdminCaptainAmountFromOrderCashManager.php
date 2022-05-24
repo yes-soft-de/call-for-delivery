@@ -57,4 +57,9 @@ class AdminCaptainAmountFromOrderCashManager
 
         return $items;
     }
+
+    public function getCaptainAmountFromOrderCashBySpecificDate(string $fromDate, string $toDate, int $captainId): ?array
+    {      
+      return $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCash($captainId, $fromDate, $toDate);
+    }
 }

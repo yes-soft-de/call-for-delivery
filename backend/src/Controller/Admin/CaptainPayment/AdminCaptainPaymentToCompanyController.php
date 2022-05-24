@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Payment\PaymentConstant;
+use App\Constant\Order\OrderAmountCashConstant;
 
 /**
  * Create and fetch Payments from captain.
@@ -86,7 +87,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9101"),
+     *          @OA\Property(type="string", property="status_code", description="9101 or 9106"),
      *          @OA\Property(type="string", property="msg", description="captain profile not exist! Error."),
      *      )
      * )
@@ -111,6 +112,10 @@ class AdminCaptainPaymentToCompanyController extends BaseController
         
         if($result === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
+        }
+        
+        if($result === OrderAmountCashConstant::NOT_ORDER_CASH) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_NOT_ORDER_CASH);
         }
 
         return $this->response($result, self::CREATE);
