@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\ChatRoomEntity;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Image\ImageEntityTypeConstant;
+use App\Entity\CaptainFinancialSystemDetailEntity;
 
 /**
  * @method CaptainEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -135,6 +136,26 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
             ->setParameter('captainProfileId', $captainProfileId)
            
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
+    public function getCaptainFinancialSystemStatus(int $captainId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+
+            ->select('captainFinancialSystemDetailEntity.status')
+            
+            ->leftJoin(CaptainFinancialSystemDetailEntity::class, 'captainFinancialSystemDetailEntity', Join::WITH, 'captainFinancialSystemDetailEntity.captain = captainEntity.id')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+
+            ->setParameter('captainId', $captainId)
+            
+            ->orderBy('captainFinancialSystemDetailEntity.id', 'DESC')
+            
+            ->setMaxResults(1)
+            
             ->getQuery()
             ->getOneOrNullResult();
     }

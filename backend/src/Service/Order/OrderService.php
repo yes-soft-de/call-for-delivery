@@ -61,6 +61,8 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
 
 class OrderService
 {
@@ -277,14 +279,19 @@ class OrderService
         return $response;
     }
 
-    public function closestOrders($userId): array|CaptainStatusResponse
+    public function closestOrders($userId): array|CaptainStatusResponse|string
     {
        $captain = $this->captainService->captainIsActive($userId);
        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
 
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
-
+       
+        $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($userId);
+        if ($captainFinancialSystemStatus->status ===  CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
+            return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
+        }
+       
         $this->showSubOrderIfCarIsAvailable();
         $this->hideOrderExceededDeliveryTimeByHour();
 

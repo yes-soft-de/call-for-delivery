@@ -32,6 +32,8 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderStateConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
+use App\Constant\Captain\CaptainConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
 
 /**
@@ -427,8 +429,8 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return captain inactive.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9100"),
-     *          @OA\Property(type="string", property="msg", description="error captain inactive Error."),
+     *          @OA\Property(type="string", property="status_code", description="9100 or 9105"),
+     *          @OA\Property(type="string", property="msg", description="error captain inactive Error. or error system financial inactive Error."),
      *      )
      * )
      *
@@ -438,8 +440,13 @@ class OrderController extends BaseController
     {
         $response = $this->orderService->closestOrders($this->getUserId());
         if (isset($response->status)) {
-         
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
+           
+           return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
+        }
+
+        if ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
+            
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SYSTEM_FINANCIAL_INACTIVE);
         }
         
         return $this->response($response, self::FETCH);

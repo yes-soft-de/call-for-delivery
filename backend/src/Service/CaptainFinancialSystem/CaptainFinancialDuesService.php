@@ -160,7 +160,7 @@ class CaptainFinancialDuesService
         return $captainFinancialDues;
     }
     
-    public function getLatestCaptainFinancialDues(int $captainId): array
+    public function getLatestCaptainFinancialDues(int $captainId): ?array
     {        
         return $this->captainFinancialDuesManager->getLatestCaptainFinancialDues($captainId);
     }

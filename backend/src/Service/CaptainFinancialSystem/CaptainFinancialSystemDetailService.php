@@ -60,11 +60,20 @@ class CaptainFinancialSystemDetailService
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
         if($financialSystemDetail) {
-           $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues
-           ($financialSystemDetail['captainId']);
-           $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d'), "toDate" => $captainFinancialDues['endDate']->format('Y-m-d')];
+           $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues($financialSystemDetail['captainId']);
+           if($captainFinancialDues ) {
+                $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d'), "toDate" => $captainFinancialDues['endDate']->format('Y-m-d')];
+        
+                $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
+            }
 
-           $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
+            else {
+                $dateForPayments = $this->captainFinancialSystemDateService->getFromDateAndToDate(); 
+
+                $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $dateForPayments['fromDate'], $dateForPayments['toDate']);
+
+                $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
+            }
            
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
@@ -91,9 +100,7 @@ class CaptainFinancialSystemDetailService
     }
 
     public function getSumPayments($captainId, $fromDate, $toDate): float 
-    {
-        // $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
-     
+    {     
         //Sum Captain's Payments
         $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
         if($sumPayments['sumPaymentsToCaptain'] === null) {

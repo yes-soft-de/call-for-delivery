@@ -48,4 +48,6 @@ final class CaptainFinancialSystem
     const CONGRATULATIONS_CAPTAIN= "congratulations, you got the bonus";
 
     const CAPTAIN_GOT_BOUNCE_ADMIN= "captain's got the bonus";
+
+    const FINANCIAL_SYSTEM_INACTIVE = "financial inactive";
 }

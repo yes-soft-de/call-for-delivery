@@ -103,7 +103,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
    
-    public function getLatestCaptainFinancialDues(int $captainId): array
+    public function getLatestCaptainFinancialDues(int $captainId): ?array
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
