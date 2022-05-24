@@ -3,13 +3,15 @@
 namespace App\Request\Admin\CaptainFinancialSystem;
 
 
-class AdminCaptainFinancialSystemDetailUpdateRequest
+class AdminCaptainFinancialSystemDetailUpdateByAdminRequest
 {    
     private int $id;
 
-    private bool $status;
-
     private int $updatedBy;
+
+    private int $captainFinancialSystemId;
+
+    private int $captainFinancialSystemType;
     
 
     /**

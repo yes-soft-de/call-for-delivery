@@ -8,6 +8,8 @@ use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateRequest;
 use App\AutoMapping;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
 class AdminCaptainFinancialSystemDetailManager
 {
@@ -42,6 +44,21 @@ class AdminCaptainFinancialSystemDetailManager
         }
    
         $captainFinancialSystemDetailEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemDetailUpdateRequest::class, CaptainFinancialSystemDetailEntity::class, $request,  $captainFinancialSystemDetailEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemDetailEntity;
+    }
+
+    public function captainFinancialSystemDetailUpdate(AdminCaptainFinancialSystemDetailUpdateByAdminRequest $request): CaptainFinancialSystemDetailEntity|string 
+    {
+        $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["id" => $request->getId(), "status" => 0]);
+      
+        if(! $captainFinancialSystemDetailEntity) {
+            return CaptainFinancialSystem::NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE;
+        }
+   
+        $captainFinancialSystemDetailEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemDetailUpdateByAdminRequest::class, CaptainFinancialSystemDetailEntity::class, $request,  $captainFinancialSystemDetailEntity);
 
         $this->entityManager->flush();
 
