@@ -10,6 +10,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\CaptainPaymentEntity;
+use DateTime;
 
 /**
  * @method CaptainFinancialDuesEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -116,6 +117,27 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->orderBy('captainFinancialDuesEntity.id', 'DESC')
             
             ->setMaxResults(1)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function getCaptainFinancialDuesByEndDate(int $captainId, DateTime $date): ?array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
+            
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+
+            ->setParameter('captainId', $captainId)
+            
+            ->andWhere('captainFinancialDuesEntity.endDate = :date')
+
+            ->setParameter('date', $date)
 
             ->getQuery()
 

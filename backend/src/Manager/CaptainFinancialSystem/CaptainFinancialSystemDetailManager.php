@@ -62,4 +62,20 @@ class CaptainFinancialSystemDetailManager
     {      
         return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
     }
+
+    public function updateCaptainFinancialSystemDetail(bool $status, int $userId): CaptainFinancialSystemDetailEntity |null
+    {      
+        $captainId = $this->captainManager->getCaptainProfileByUserId($userId)->getId();
+
+        $financialSystemDetail = $this->captainFinancialSystemDetailEntityRepository->findOneBy(['captain' => $captainId]);
+        if(! $financialSystemDetail) {
+            return $financialSystemDetail;
+        }
+
+        $financialSystemDetail->setStatus($status);
+        $financialSystemDetail->setUpdatedBy(null);
+        $this->entityManager->flush();
+
+        return  $financialSystemDetail;
+    }
 }

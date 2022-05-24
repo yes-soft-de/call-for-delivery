@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Entity\AdminProfileEntity;
+use App\Entity\CaptainEntity;
 
 /**
  * @method CaptainFinancialSystemDetailEntity|null find($id, $lockMode = null, $lockVersion = null)

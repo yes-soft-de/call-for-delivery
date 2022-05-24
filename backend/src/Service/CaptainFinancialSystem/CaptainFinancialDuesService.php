@@ -16,6 +16,9 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
+use DateTime;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailServiceTwo;
+use App\Entity\CaptainFinancialSystemDetailEntity;
 
 class CaptainFinancialDuesService
 {
@@ -28,8 +31,9 @@ class CaptainFinancialDuesService
     private CaptainFinancialDuesManager $captainFinancialDuesManager;
     private AutoMapping $autoMapping;
     private CaptainPaymentService $captainPaymentService;
+    private CaptainFinancialSystemDetailServiceTwo $captainFinancialSystemDetailServiceTwo;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesManager $captainFinancialDuesManager, CaptainPaymentService $captainPaymentService)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService, CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService, CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService, CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesManager $captainFinancialDuesManager, CaptainPaymentService $captainPaymentService, CaptainFinancialSystemDetailServiceTwo $captainFinancialSystemDetailServiceTwo)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->captainFinancialSystemOneBalanceDetailService = $captainFinancialSystemOneBalanceDetailService;
@@ -40,6 +44,7 @@ class CaptainFinancialDuesService
         $this->captainFinancialDuesManager = $captainFinancialDuesManager;
         $this->autoMapping = $autoMapping;
         $this->captainPaymentService = $captainPaymentService;
+        $this->captainFinancialSystemDetailServiceTwo = $captainFinancialSystemDetailServiceTwo;
     }
 
     public function captainFinancialDues(int $userId)
@@ -163,5 +168,20 @@ class CaptainFinancialDuesService
     public function getLatestCaptainFinancialDues(int $captainId): ?array
     {        
         return $this->captainFinancialDuesManager->getLatestCaptainFinancialDues($captainId);
+    }
+    // Deactivation of the financial system in the event of the end of the financial cycle date
+    public function updateCaptainFinancialSystemDetail(int $captainId): CaptainFinancialSystemDetailEntity|null      
+    {     
+       $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
+ 
+       $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($captainId, $date);
+   
+       if($captainFinancialDues) {
+            if($captainFinancialDues['endDate'] > new datetime('now')) {
+               return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $captainId);
+            }
+       }
+
+       return null;
     }
 }

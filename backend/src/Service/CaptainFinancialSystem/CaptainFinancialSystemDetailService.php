@@ -56,6 +56,8 @@ class CaptainFinancialSystemDetailService
 
     public function getBalanceDetailForCaptain(int $userId):CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array
     {
+        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
+
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
