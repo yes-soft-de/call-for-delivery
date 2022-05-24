@@ -336,4 +336,9 @@ class CaptainManager
     {
         return $this->captainEntityRepository->getCaptain($captainProfileId);
     }
+    
+    public function getCaptainFinancialSystemStatus(int $captainId): ?array
+    {
+        return $this->captainEntityRepository->getCaptainFinancialSystemStatus($captainId);
+    }
 }

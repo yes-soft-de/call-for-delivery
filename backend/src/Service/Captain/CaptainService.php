@@ -19,6 +19,7 @@ use App\Service\Rate\RatingService;
 use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 use App\Response\Captain\CaptainIsOnlineResponse;
 use App\Service\Verification\VerificationService;
+use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
 
 class CaptainService
 {
@@ -120,4 +121,11 @@ class CaptainService
     {
        return $this->captainManager->getCaptain($captainProfileId);
      }
+
+     public function getCaptainFinancialSystemStatus(int $captainId): ?CaptainFinancialSystemDetailStatusResponse 
+     {
+         $captainStatus = $this->captainManager->getCaptainFinancialSystemStatus($captainId);
+ 
+         return $this->autoMapping->map('array',CaptainFinancialSystemDetailStatusResponse::class, $captainStatus);
+      }
 }
