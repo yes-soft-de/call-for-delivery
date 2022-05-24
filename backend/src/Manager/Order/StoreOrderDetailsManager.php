@@ -8,6 +8,7 @@ use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\StoreOrderDetailsEntityRepository;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\RecyclingOrCancelOrderRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Manager\Image\ImageManager;
@@ -53,6 +54,35 @@ class StoreOrderDetailsManager
        return  $orderDetailEntity;
     }
 
+    public function updateOrderDetail(OrderEntity $orderEntity, RecyclingOrCancelOrderRequest $request): ?StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId"=>$orderEntity->getId()]);
+
+        if ($storeOrderDetailsEntity) {
+            $request->setId($storeOrderDetailsEntity->getId());
+
+            $branch = $this->storeOwnerBranchManager->getBranchById($request->getBranch());
+
+            if ($branch) {
+                $request->setBranch($branch);
+            }
+
+            if ($request->getImages()) {
+                $imageEntity = $this->createImageOrUpdate($request->getImages(), $orderEntity->getId());
+
+                $request->setImages($imageEntity);
+            }
+
+            $storeOrderDetailsEntity = $this->autoMapping->mapToObject(RecyclingOrCancelOrderRequest::class, StoreOrderDetailsEntity::class,
+                $request, $storeOrderDetailsEntity);
+
+            $this->entityManager->persist($storeOrderDetailsEntity);
+            $this->entityManager->flush();
+        }
+
+        return $storeOrderDetailsEntity;
+    }
+
     public function createImage(string $image, int $id): ImageEntity
     {
         $request = new ImageCreateRequest();
@@ -63,7 +93,12 @@ class StoreOrderDetailsManager
         $request->setItemId($id);
 
         return $this->imageManager->create($request);
-        return $request;
+        //return $request;
+    }
+
+    public function createImageOrUpdate(string $image, int $id): ?ImageEntity
+    {
+        return $this->imageManager->createImageOrUpdate($image, $id, ImageEntityTypeConstant::ENTITY_TYPE_ORDER, ImageUseAsConstant::IMAGE_USE_AS_ORDER_IMAGE);
     }
 
     public function getOrderDetailsByOrderId(int $orderId): ?StoreOrderDetailsEntity
