@@ -42,7 +42,7 @@ dependencies:
   fluttertoast: ^8.0.8
   # Local Notifications
   flutter_local_notifications: ^6.0.0
-
+  isolate_handler: ^1.0.1
   flutter_localizations:
     sdk: flutter
   # Fonts

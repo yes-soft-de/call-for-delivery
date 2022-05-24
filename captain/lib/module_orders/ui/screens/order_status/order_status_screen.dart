@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
+import 'package:isolate_handler/isolate_handler.dart';
 
 @injectable
 class OrderStatusScreen extends StatefulWidget {
@@ -42,9 +43,11 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     globalStateSub?.cancel();
     distanceCalculator.dispose();
     paymentController.dispose();
+    isolates.kill('FireStoreInserter');
     super.dispose();
   }
 
+  final isolates = IsolateHandler();
   OrderStatusStateManager get manager => widget.stateManager;
   @override
   void initState() {
@@ -56,10 +59,6 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
       if (mounted) {
         setState(() {});
       }
-    });
-    globalStateSub = getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget.stateManager
-          .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this, false);
     });
     getIt<FlutterTextToSpeech>().init().then((value) {
       flutterTts = value;

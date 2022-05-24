@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:isolate';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -17,10 +20,13 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:isolate_handler/isolate_handler.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -30,10 +36,16 @@ import 'package:url_launcher/url_launcher.dart';
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
   final OrderStatusScreenState screenState;
-  OrderDetailsCaptainOrderLoadedState(
-    this.screenState,
-    this.orderInfo,
-  ) : super(screenState);
+  OrderDetailsCaptainOrderLoadedState(this.screenState, this.orderInfo,
+      {String? message})
+      : super(screenState) {
+    if (message != null) {
+      screenState.isolates.spawn(entryPoint, onReceive: triggerFireStore,
+          onInitialized: () {
+        screenState.isolates.send(message, to: "FireStoreInserter");
+      }, name: 'FireStoreInserter',);
+    }
+  }
   bool speaking = false;
   final TextEditingController noteController = TextEditingController();
   @override
@@ -879,4 +891,25 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ));
     }
   }
+
+  void triggerFireStore(String? message) async {
+    await Firebase.initializeApp();
+    await FireStoreHelper().insertWatcher();
+    // We will no longer be needing the isolate, let's dispose of it.
+    screenState.isolates.kill('FireStoreInserter');
+  }
+}
+
+void entryPoint(Map<String, dynamic> context) async {
+  // Calling initialize from the entry point with the context is
+  // required if communication is desired. It returns a messenger which
+  // allows listening and sending information to the main isolate.
+
+  final messenger = HandledIsolate.initialize(context);
+  // Triggered every time data is received from the main isolate.
+  messenger.listen((message) async {
+    // Add one to the count and send the new value back to the main
+    // isolate.
+    messenger.send(message);
+  });
 }

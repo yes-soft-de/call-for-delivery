@@ -671,7 +671,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paidToProvider": MessageLookupByLibrary.simpleMessage(
             "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر"),
         "paidToProviderStatus": MessageLookupByLibrary.simpleMessage(
-            "هل تم دفع ثمن الطلب للمورد ؟"),
+            "هل تم دفع ثمن الطلب للمتجر ؟"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -25,8 +28,9 @@ class FireStoreHelper {
           .collection('action_history')
           .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
               const Duration(seconds: 10));
-      print("inserted ------------------------------------------------!");
+      log('inserted ------------------------------------------------!');
     } catch (e) {
+      log(e.toString());
       return;
     }
   }

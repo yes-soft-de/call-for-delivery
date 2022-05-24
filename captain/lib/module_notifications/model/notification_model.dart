@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:math';
+import 'dart:developer';
 
 class NotificationModel {
   dynamic argument;
@@ -19,11 +19,11 @@ class ChatNotification {
   String? roomID;
   int? senderID;
   ChatNotification({this.roomID, this.senderID});
-  ChatNotification.fromJson(dynamic json) {
-    if ((json is Map<String, dynamic>) == false) {
-      json = JsonDecoder(json);
+  ChatNotification.fromJson(dynamic jjson) {
+    if (jjson is String) {
+      jjson = json.decode(jjson);
     }
-    roomID = json['roomId'];
-    senderID = json['userId'];
+    roomID = jjson['roomId'];
+    senderID = int.tryParse(jjson['userId'] ?? '');
   }
 }

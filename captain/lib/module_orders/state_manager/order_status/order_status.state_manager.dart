@@ -12,6 +12,7 @@ import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_st
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -33,7 +34,7 @@ class OrderStatusStateManager {
   OrderStatusStateManager(this._ordersService, this._imageUploadService);
 
   void getOrderDetails(int orderId, OrderStatusScreenState screenState,
-      [bool loading = true]) {
+      {bool loading = true, String? message}) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
     }
@@ -51,8 +52,9 @@ class OrderStatusStateManager {
             title: S.current.orderDetails));
       } else {
         value as OrderDetailsModel;
-        _stateSubject
-            .add(OrderDetailsCaptainOrderLoadedState(screenState, value.data));
+        _stateSubject.add(OrderDetailsCaptainOrderLoadedState(
+            screenState, value.data,
+            message: message));
       }
     });
   }
@@ -91,32 +93,29 @@ class OrderStatusStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error)
             .show(screenState.context);
-        getIt<GlobalStateManager>().update();
+        getOrderDetails(request.id ?? -1, screenState);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderSuccess)
             .show(screenState.context);
-        getIt<GlobalStateManager>().update();
+        getOrderDetails(request.id ?? -1, screenState, message: 'Trigger');
       }
     });
   }
 
   void updateCashStatus(
       UpdateOrderRequest request, OrderStatusScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
     _ordersService.updateCashStatus(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error)
             .show(screenState.context);
-        getIt<GlobalStateManager>().update();
+        getOrderDetails(request.id ?? -1, screenState, loading: false);
       } else {
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.updateOrderSuccess)
-            .show(screenState.context);
-        getIt<GlobalStateManager>().update();
+        Fluttertoast.showToast(msg: S.current.updateOrderSuccess);
+        getOrderDetails(request.id ?? -1, screenState,
+            loading: false, message: 'Trigger');
       }
     });
   }
