@@ -6959,6 +6959,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain plan not accepted from admin yet`
+  String get captainPlanNotAcceptedFromAdminYet {
+    return Intl.message(
+      'Captain plan not accepted from admin yet',
+      name: 'captainPlanNotAcceptedFromAdminYet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

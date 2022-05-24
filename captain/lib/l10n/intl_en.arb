@@ -693,7 +693,9 @@
     "confirmAcceptSubOrder": "Are you want to accept this sub order, ",
     "notificationSound": "Notification sound",
     "ringtone": "Ringtone",
-    "thereIsSomeSubOrderNeedYouAttention": "There is some suborders need your action , reject it or accept it or it will remain pending"
+    "thereIsSomeSubOrderNeedYouAttention": "There is some suborders need your action , reject it or accept it or it will remain pending",
+    "captainPlanNotAcceptedFromAdminYet": "Captain plan not accepted from admin yet"
+
 
 
 

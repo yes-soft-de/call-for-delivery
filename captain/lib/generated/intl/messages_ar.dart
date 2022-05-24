@@ -155,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
+        "captainPlanNotAcceptedFromAdminYet": MessageLookupByLibrary.simpleMessage(
+            "خطة العمل المختارة من الكابتن لم يتم اعتمادها من قبل الإدارة بعد  يرجى الانتظار"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
