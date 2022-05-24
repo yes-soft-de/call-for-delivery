@@ -47,4 +47,10 @@ class CaptainFinancialSystemDateService
 
         return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
     }
+
+    public function getCurrentMonthDate() {
+        $date = new datetime('now');
+
+        return (new datetime($date->format('Y-m-19')));
+    }
 }

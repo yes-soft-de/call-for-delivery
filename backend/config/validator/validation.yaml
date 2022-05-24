@@ -577,3 +577,12 @@ App\Request\User\UserPasswordUpdateRequest:
             - NotBlank: ~
         password:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        captainFinancialSystemId:
+            - NotNull: ~
+        captainFinancialSystemType:
+            - NotNull: ~

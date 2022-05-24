@@ -50,4 +50,6 @@ final class CaptainFinancialSystem
     const CAPTAIN_GOT_BOUNCE_ADMIN= "captain's got the bonus";
 
     const FINANCIAL_SYSTEM_INACTIVE = "financial inactive";
+
+    const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = "not update because financial System is active";
 }

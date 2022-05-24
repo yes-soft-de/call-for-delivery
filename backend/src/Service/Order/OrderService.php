@@ -294,6 +294,7 @@ class OrderService
        
         $this->showSubOrderIfCarIsAvailable();
         $this->hideOrderExceededDeliveryTimeByHour();
+        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         $response = [];
 

@@ -8,6 +8,7 @@ use App\Repository\CaptainFinancialDuesEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
+use DateTime;
 
 class CaptainFinancialDuesManager
 {
@@ -61,5 +62,10 @@ class CaptainFinancialDuesManager
     public function getLatestCaptainFinancialDues(int $captainId): ?array
     {
         return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDues($captainId);
+    } 
+
+    public function getCaptainFinancialDuesByEndDate(int $captainId, DateTime $date): ?array
+    {
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByEndDate($captainId, $date);
     } 
 }

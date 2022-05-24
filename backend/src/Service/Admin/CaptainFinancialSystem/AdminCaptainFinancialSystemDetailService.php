@@ -17,6 +17,7 @@ use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordin
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 use  App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest;
 
 class AdminCaptainFinancialSystemDetailService
 {
@@ -117,5 +118,15 @@ class AdminCaptainFinancialSystemDetailService
         }
 
         return $sumPayments;
+    }
+    
+    public function captainFinancialSystemDetailUpdate(AdminCaptainFinancialSystemDetailUpdateByAdminRequest $request): AdminCaptainFinancialSystemDetailUpdateResponse|string 
+    {
+        $result = $this->adminCaptainFinancialSystemDetailManager->captainFinancialSystemDetailUpdate($request);
+        if ($result === CaptainFinancialSystem::NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE) {
+            return CaptainFinancialSystem::NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE;
+        }
+       
+        return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);
     }
 }
