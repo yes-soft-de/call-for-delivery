@@ -105,20 +105,30 @@ class MenuScreen extends StatelessWidget {
                 title: Text(S.of(context).profile),
               ),
               ListTileSwitch(
-                value: profileModel.isOnline ?? false,
-                leading: const Icon(Icons.wifi_rounded),
-                onChanged: (mode) {
-                  profileModel.isOnline = mode;
-                  screenState.refresh();
-                  screenState.changeStatus(mode);
-                },
-                visualDensity: VisualDensity.comfortable,
-                switchType: SwitchType.cupertino,
-                switchActiveColor: Theme.of(context).colorScheme.primary,
-                title: Text(
-                  S.of(context).myStatus,
-                ),
-              ),
+                  value: profileModel.isOnline ?? false,
+                  leading: const Icon(Icons.wifi_rounded),
+                  onChanged: (mode) {
+                    profileModel.isOnline = mode;
+                    screenState.refresh();
+                    screenState.changeStatus(mode);
+                  },
+                  visualDensity: VisualDensity.comfortable,
+                  switchType: SwitchType.cupertino,
+                  switchActiveColor: Theme.of(context).colorScheme.primary,
+                  title: Row(
+                    children: [
+                      Text(S.current.myStatus),
+                      const Spacer(),
+                      Text(
+                        profileModel.isOnline == true ? ' ON ' : ' OFF ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: profileModel.isOnline == true
+                                ? Colors.green
+                                : Colors.red),
+                      )
+                    ],
+                  )),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pushNamed(PlanRoutes.BALANCE_ROUTE);
