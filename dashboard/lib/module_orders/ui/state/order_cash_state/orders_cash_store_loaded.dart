@@ -13,8 +13,7 @@ class OrdersCashStoreLoadedState extends States {
   StoreCashOrdersFinanceModel model;
   OrdersCashStoreLoadedState(this.screenState, this.model)
       : super(screenState) {
-    if (model.total.advancePayment == true &&
-        model.total.sumAmountStorOwnerDues > 0) {
+    if (model.total.sumAmountStorOwnerDues > 0) {
       screenState.canMakePayment = true;
       screenState.paymentLimit = model.total.sumAmountStorOwnerDues;
       screenState.refresh();

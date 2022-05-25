@@ -11,6 +11,7 @@ import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -295,7 +296,9 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                     },
                                     numbers: true,
                                     controller: _amount,
-                                    hintText:S.current.youNeedToPayExclusively + ' $paymentLimit',
+                                    hintText:
+                                        S.current.youNeedToPayExclusively +
+                                            ' $paymentLimit',
                                   ),
                                 ),
                                 ListTile(
@@ -312,7 +315,12 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                           actionsAlignment: MainAxisAlignment.center,
                           actions: [
                             ElevatedButton(
-                                onPressed: _amount.text.isEmpty && num.tryParse(_amount.text) != paymentLimit
+                                onPressed: _amount.text.isEmpty ||
+                                        FixedNumber.getFixedNumber(
+                                                num.tryParse(_amount.text) ??
+                                                    0) !=
+                                            FixedNumber.getFixedNumber(
+                                                paymentLimit)
                                     ? null
                                     : () {
                                         Navigator.of(context).pop();

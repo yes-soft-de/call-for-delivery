@@ -9,6 +9,7 @@ import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -73,6 +74,8 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  bool canMakePayment = false;
+  num paymentLimit = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -114,7 +117,8 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                                 },
                                 numbers: true,
                                 controller: _amount,
-                                hintText: '100',
+                                hintText: S.current.youNeedToPayExclusively +
+                                    ' $paymentLimit',
                               ),
                             ),
                             ListTile(
@@ -131,7 +135,10 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                       actionsAlignment: MainAxisAlignment.center,
                       actions: [
                         ElevatedButton(
-                            onPressed: _amount.text.isEmpty
+                            onPressed: _amount.text.isEmpty ||
+                                    FixedNumber.getFixedNumber(
+                                            num.tryParse(_amount.text) ?? 0) !=
+                                        FixedNumber.getFixedNumber(paymentLimit)
                                 ? null
                                 : () {
                                     Navigator.of(context).pop();

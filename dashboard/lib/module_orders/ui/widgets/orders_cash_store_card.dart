@@ -96,7 +96,7 @@ class OrdersCashStoreCard extends StatelessWidget {
                   Expanded(
                     child: VerticalBubble(
                       title: S.current.orderPrice,
-                      subtitle: FixedNumber.getFixedNumber(amount) +
+                      subtitle: FixedNumber.getFixedNumber(storeAmount) +
                           ' ${S.current.sar}',
                     ),
                   ),

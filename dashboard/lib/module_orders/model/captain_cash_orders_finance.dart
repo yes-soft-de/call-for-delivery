@@ -18,7 +18,8 @@ class CaptainCashOrdersFinanceModel extends DataModel {
     Total _total = Total(
         advancePayment: data?.total?.advancePayment ?? false,
         sumAmountWithCaptain: data?.total?.sumAmountWithCaptain ?? 0,
-        sumPaymentsToCaptain: data?.total?.sumPaymentsToCaptain ?? 0,
+        sumPaymentsToCaptain:
+            num.tryParse(data?.total?.sumPaymentsToCaptain ?? '0') ?? 0,
         total: data?.total?.total ?? 0);
     var _orders = <Order>[];
     response.data?.detail?.forEach((element) {
@@ -33,7 +34,9 @@ class CaptainCashOrdersFinanceModel extends DataModel {
           orderId: element.orderId ?? -1,
           amount: element.amount ?? 0,
           flag: element.flag ?? -1,
-          createdAt: create));
+          createdAt: create,
+          captainNote: element.captainNote,
+          storeAmount: element.storeAmount ?? 0));
     });
     _data = CaptainCashOrdersFinanceModel(total: _total, orders: _orders);
   }
@@ -60,12 +63,15 @@ class Order {
   num amount;
   int flag;
   String createdAt;
-  Order({
-    required this.id,
-    required this.captainName,
-    required this.orderId,
-    required this.amount,
-    required this.flag,
-    required this.createdAt,
-  });
+  String? captainNote;
+  num storeAmount;
+  Order(
+      {required this.id,
+      required this.captainName,
+      required this.orderId,
+      required this.amount,
+      required this.flag,
+      required this.createdAt,
+      required this.captainNote,
+      required this.storeAmount});
 }
