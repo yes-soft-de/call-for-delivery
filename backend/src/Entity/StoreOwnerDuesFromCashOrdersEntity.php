@@ -39,6 +39,12 @@ class StoreOwnerDuesFromCashOrdersEntity
     #[ORM\Column(type: 'date', nullable: true)]
     private $createdDate;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $storeAmount;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $captainNote;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,6 +130,30 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setCreatedDate(\DateTimeInterface $createdDate): self
     {
         $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    public function getStoreAmount(): ?float
+    {
+        return $this->storeAmount;
+    }
+
+    public function setStoreAmount(?float $storeAmount): self
+    {
+        $this->storeAmount = $storeAmount;
+
+        return $this;
+    }
+
+    public function getCaptainNote(): ?string
+    {
+        return $this->captainNote;
+    }
+
+    public function setCaptainNote(?string $captainNote): self
+    {
+        $this->captainNote = $captainNote;
 
         return $this;
     }

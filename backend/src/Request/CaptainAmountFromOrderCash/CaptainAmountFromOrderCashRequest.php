@@ -15,6 +15,10 @@ class CaptainAmountFromOrderCashRequest
     
     private int $flag;
 
+    private float $storeAmount;
+
+    private string|null $captainNote;
+
 
     /**
      * Get the value of captain
@@ -92,6 +96,46 @@ class CaptainAmountFromOrderCashRequest
     public function setFlag($flag)
     {
         $this->flag = $flag;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of storeAmount
+     */ 
+    public function getStoreAmount()
+    {
+        return $this->storeAmount;
+    }
+
+    /**
+     * Set the value of storeAmount
+     *
+     * @return  self
+     */ 
+    public function setStoreAmount($storeAmount)
+    {
+        $this->storeAmount = $storeAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of captainNote
+     */ 
+    public function getCaptainNote()
+    {
+        return $this->captainNote;
+    }
+
+    /**
+     * Set the value of captainNote
+     *
+     * @return  self
+     */ 
+    public function setCaptainNote($captainNote)
+    {
+        $this->captainNote = $captainNote;
 
         return $this;
     }
