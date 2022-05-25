@@ -504,6 +504,8 @@ class OrderManager
 
         $this->entityManager->flush();
 
+        $this->storeOrderDetailsManager->updateOrderDetail($orderEntity, $request);
+
         return $orderEntity;
     }
   
