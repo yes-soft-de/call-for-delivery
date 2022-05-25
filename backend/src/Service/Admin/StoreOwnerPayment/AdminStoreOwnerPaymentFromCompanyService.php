@@ -11,6 +11,7 @@ use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyRespon
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentDeleteResponse;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminStoreOwnerPaymentFromCompanyService
 {
@@ -27,7 +28,7 @@ class AdminStoreOwnerPaymentFromCompanyService
     {
         $payment = $this->adminStoreOwnerPaymentFromCompanyManager->createStoreOwnerPaymentFromCompany($request);
        
-        if($payment === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+        if($payment === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
             return $payment;
         }
 

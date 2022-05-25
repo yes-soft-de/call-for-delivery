@@ -43,7 +43,8 @@ class AdminStoreOwnerDuesFromCashOrdersService
     public function getTotal(float $sumAmountStorOwnerDues, int $storeId, string $fromDate, string $toDate): array
     {
         $sumPaymentsFromCompany = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeId, $fromDate, $toDate);
-
+      
+        //Now this field shown only in the front the rest of the fields are not needed at the present time
         $item['sumAmountStorOwnerDues'] = $sumAmountStorOwnerDues;
 
         $item['sumPaymentsFromCompany'] = $sumPaymentsFromCompany['sumPaymentsFromCompany'];

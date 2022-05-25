@@ -25,11 +25,9 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDuesFromCashOrders($request->getStoreId(), $request->getFromDate(), $request->getToDate());
     }
     
-    public function updateFlagBySpecificDate(string $fromDate, string $toDate, int $flag, StoreOwnerProfileEntity $storeOwnerProfile, $storeOwnerPaymentFromCompanyEntity)
+    public function updateFlagBySpecificDate(array $ids, int $flag, $storeOwnerPaymentFromCompanyEntity)
     {      
-      $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrders($storeOwnerProfile->getId(), $fromDate, $toDate);
-     
-      foreach($items as $item) {
+      foreach($ids as $item) {
         $storeOwnerDuesFromCashOrdersEntity = $this->storeOwnerDuesFromCashOrdersEntityRepository->find($item['id']);
 
         $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
@@ -52,5 +50,11 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         }
 
         return $items;
+    }
+    
+    //Get the store's amount from the cash system according to a specific date on an unpaid condition
+    public function getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $storeId): ?array
+    {      
+      return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrders($storeId, $fromDate, $toDate);
     }
 }
