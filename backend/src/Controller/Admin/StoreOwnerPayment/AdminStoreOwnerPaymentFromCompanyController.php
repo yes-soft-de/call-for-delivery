@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Payment\PaymentConstant;
+use App\Constant\Order\OrderAmountCashConstant;
 
 /**
  * Create and fetch Payments from company.
@@ -111,6 +112,10 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
         
         if($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
+
+        if($result === OrderAmountCashConstant::NOT_ORDER_CASH) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_NOT_ORDER_CASH);
         }
 
         return $this->response($result, self::CREATE);
