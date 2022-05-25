@@ -29,11 +29,9 @@ class AdminCaptainAmountFromOrderCashManager
         return $this->captainAmountFromOrderCashEntityRepository->filterCaptainAmountFromOrderCash($request->getCaptainId(), $request->getFromDate(), $request->getToDate());
     }
 
-    public function updateFlagBySpecificDate(string $fromDate, string $toDate, int $flag, CaptainEntity $captainId, CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity)
-    {      
-      $items = $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCash($captainId->getId(), $fromDate, $toDate);
-     
-      foreach($items as $item) {
+    public function updateFlagBySpecificDate(array $ids, $flag, CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity)
+    {           
+      foreach($ids as $item) {
         $captainAmountFromOrderCashEntity = $this->captainAmountFromOrderCashEntityRepository->find($item['id']);
        
         $captainAmountFromOrderCashEntity->setFlag($flag);
@@ -58,8 +56,9 @@ class AdminCaptainAmountFromOrderCashManager
         return $items;
     }
 
-    public function getCaptainAmountFromOrderCashBySpecificDate(string $fromDate, string $toDate, int $captainId): ?array
+    //Get the captain's amount from the cash system according to a specific date on an unpaid condition
+    public function getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $captainId): ?array
     {      
-      return $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCash($captainId, $fromDate, $toDate);
+      return $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($captainId, $fromDate, $toDate);
     }
 }

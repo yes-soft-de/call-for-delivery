@@ -10,7 +10,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderAmountCashConstant;
-
 /**
  * @method CaptainAmountFromOrderCashEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainAmountFromOrderCashEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -64,17 +63,17 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->andWhere('captainAmountFromOrderCash.flag = :flag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
             
-            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate >= :fromDate')
             ->setParameter('fromDate', $fromDate)
            
-            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
 
             ->getQuery()
             ->getResult();
     }
 
-    public function getCaptainAmountFromOrderCash(int $captainId, string $fromDate, string $toDate): ?array
+    public function getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition(int $captainId, string $fromDate, string $toDate): ?array
     {
         return $this->createQueryBuilder('captainAmountFromOrderCash')
     
@@ -87,11 +86,14 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->andWhere('captainAmountFromOrderCash.captain = :captainId')
             ->setParameter('captainId', $captainId)
             
-            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate >= :fromDate')
             ->setParameter('fromDate', $fromDate)
            
-            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
+           
+            ->andWhere('captainAmountFromOrderCash.flag = :flag')
+            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
 
             ->getQuery()
             ->getResult();

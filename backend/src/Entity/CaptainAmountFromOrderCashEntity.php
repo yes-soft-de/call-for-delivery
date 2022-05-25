@@ -35,6 +35,10 @@ class CaptainAmountFromOrderCashEntity
 
     #[ORM\ManyToOne(targetEntity: CaptainPaymentToCompanyEntity::class, inversedBy: 'captainAmountFromOrderCashEntities')]
     private $captainPaymentToCompany;
+   
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $createdDate;
 
     public function getId(): ?int
     {
@@ -109,6 +113,18 @@ class CaptainAmountFromOrderCashEntity
     public function setCaptainPaymentToCompany(?CaptainPaymentToCompanyEntity $captainPaymentToCompany): self
     {
         $this->captainPaymentToCompany = $captainPaymentToCompany;
+
+        return $this;
+    }
+
+    public function getCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->createdDate;
+    }
+
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
+    {
+        $this->createdDate = $createdDate;
 
         return $this;
     }

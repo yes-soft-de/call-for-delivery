@@ -42,7 +42,7 @@ class AdminCaptainPaymentToCompanyManager
 
         $request->setCaptain($captain);
 
-        $amountFromOrderCash = $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashBySpecificDate($request->getFromDate(), $request->getToDate(), $request->getCaptain()->getId());
+        $amountFromOrderCash = $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(), $request->getToDate(), $request->getCaptain()->getId());
 
         if($amountFromOrderCash) {
             $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
@@ -50,7 +50,7 @@ class AdminCaptainPaymentToCompanyManager
             $this->entityManager->persist($captainPaymentToCompanyEntity);
             $this->entityManager->flush();
     
-            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getCaptain(), $captainPaymentToCompanyEntity);
+            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $captainPaymentToCompanyEntity);
          
             return $captainPaymentToCompanyEntity;
         }

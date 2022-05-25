@@ -43,14 +43,14 @@ class AdminCaptainAmountFromOrderCashService
 
     public function getTotal(float $sumAmountWithCaptain, int $captainId, string $fromDate, string $toDate): array
     {
+        //convert from(sumPaymentsToCaptain) to (sumPaymentsFromCaptain),Typing error only
         $sumPaymentsToCaptain = $this->adminCaptainPaymentToCompanyService->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
-       
+      //Now this field shown only in the front the rest of the fields are not needed at the present time
         $item['sumAmountWithCaptain'] = $sumAmountWithCaptain;
 
         $item['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPayments'];
 
         $total = $sumAmountWithCaptain - $item['sumPaymentsToCaptain'];
-    
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
 
         if($total <= 0 ) {
