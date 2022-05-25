@@ -39,15 +39,20 @@ class AdminStoreOwnerPaymentFromCompanyManager
         }
 
         $request->setStore($store);
+        $amountFromOrderCash = $this->adminStoreOwnerDuesFromCashOrdersManager->getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(), $request->getToDate(), $request->getStore()->getId());
 
-        $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class, StoreOwnerPaymentFromCompanyEntity::class, $request);
+        if($amountFromOrderCash) {
+            $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class, StoreOwnerPaymentFromCompanyEntity::class, $request);
 
-        $this->entityManager->persist($storeOwnerPaymentFromCompanyEntity);
-        $this->entityManager->flush();
+            $this->entityManager->persist($storeOwnerPaymentFromCompanyEntity);
+            $this->entityManager->flush();
 
-        $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($request->getFromDate(), $request->getToDate(), OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $request->getStore(),  $storeOwnerPaymentFromCompanyEntity);
+            $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $storeOwnerPaymentFromCompanyEntity);
 
-        return $storeOwnerPaymentFromCompanyEntity;
+            return $storeOwnerPaymentFromCompanyEntity;
+       }
+  
+       return OrderAmountCashConstant::NOT_ORDER_CASH;  
     }
 
     public function deleteStoreOwnerPaymentFromCompany($id): StoreOwnerPaymentFromCompanyEntity|string

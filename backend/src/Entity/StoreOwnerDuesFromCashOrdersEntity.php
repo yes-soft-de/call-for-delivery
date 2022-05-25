@@ -34,6 +34,10 @@ class StoreOwnerDuesFromCashOrdersEntity
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerPaymentFromCompanyEntity::class, inversedBy: 'storeOwnerDuesFromCashOrdersEntities')]
     private $storeOwnerPaymentFromCompany;
+   
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $createdDate;
 
     public function getId(): ?int
     {
@@ -108,6 +112,18 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setStoreOwnerPaymentFromCompany(?StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): self
     {
         $this->storeOwnerPaymentFromCompany = $storeOwnerPaymentFromCompany;
+
+        return $this;
+    }
+    
+    public function getCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->createdDate;
+    }
+
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
+    {
+        $this->createdDate = $createdDate;
 
         return $this;
     }
