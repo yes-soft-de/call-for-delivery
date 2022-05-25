@@ -1,1 +1,1 @@
-enum AppTypeEnum { STORE, CAPTAIN, ALL, SUPPLIER }
+enum AppTypeEnum { STORE, CAPTAIN, SUPPLIER , ALL}

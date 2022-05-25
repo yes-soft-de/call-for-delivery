@@ -57,7 +57,6 @@ class CaptainProfileStateManager {
         CustomFlushBarHelper.showSnackSuccess(
             screenState, S.current.captainUpdatedSuccessfully, loading);
         getCaptainProfile(screenState, captainId, loading);
-        getIt<GlobalStateManager>().updateList();
       }
     });
   }

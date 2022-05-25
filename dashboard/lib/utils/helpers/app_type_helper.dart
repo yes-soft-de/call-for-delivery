@@ -42,6 +42,8 @@ class AppTypeHelper {
         return S.current.captains;
       case AppTypeEnum.STORE:
         return S.current.stores;
+      case AppTypeEnum.SUPPLIER:
+        return S.current.suppliers;
       case AppTypeEnum.ALL:
         return S.current.all;
       default:

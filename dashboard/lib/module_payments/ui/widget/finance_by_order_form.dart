@@ -80,6 +80,19 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       padding: const EdgeInsets.only(
                           left: 12.0, bottom: 8, right: 12, top: 16.0),
                       child: Text(
+                        S.current.amount,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    CustomFormField(
+                      controller: _amountController,
+                      hintText: '${S.current.eg} 100',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12.0, bottom: 8, right: 12, top: 16.0),
+                      child: Text(
                         S.current.bounceCountOrdersInMonth,
                         style: TextStyle(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.start,

@@ -140,6 +140,7 @@ class NoticeLoadedState extends States {
           items: [
             FilterItem(label: S.current.captain),
             FilterItem(label: S.current.store),
+            FilterItem(label: S.current.suppliers),
           ],
           onItemSelected: (index) {
             screenState.currentIndex = index;
