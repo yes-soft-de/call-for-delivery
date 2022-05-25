@@ -52,7 +52,7 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainAmountFromOrderCash')
     
             ->select('IDENTITY (captainAmountFromOrderCash.orderId) as orderId')
-            ->addSelect('captainAmountFromOrderCash.id', 'captainAmountFromOrderCash.amount', 'captainAmountFromOrderCash.flag', 'captainAmountFromOrderCash.createdAt')
+            ->addSelect('captainAmountFromOrderCash.id', 'captainAmountFromOrderCash.amount', 'captainAmountFromOrderCash.flag', 'captainAmountFromOrderCash.createdAt', 'captainAmountFromOrderCash.storeAmount', 'captainAmountFromOrderCash.captainNote')
             ->addSelect('captainEntity.captainName')
            
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainAmountFromOrderCash.captain')

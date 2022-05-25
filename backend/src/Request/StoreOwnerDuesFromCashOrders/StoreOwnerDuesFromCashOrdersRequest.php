@@ -14,6 +14,10 @@ class StoreOwnerDuesFromCashOrdersRequest
     private int $flag;
     
     private float $amount;
+    
+    private float $storeAmount;
+
+    private string|null $captainNote;
 
 
     /**
@@ -92,6 +96,46 @@ class StoreOwnerDuesFromCashOrdersRequest
     public function setOrderId($orderId)
     {
         $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of storeAmount
+     */ 
+    public function getStoreAmount()
+    {
+        return $this->storeAmount;
+    }
+
+    /**
+     * Set the value of storeAmount
+     *
+     * @return  self
+     */ 
+    public function setStoreAmount($storeAmount)
+    {
+        $this->storeAmount = $storeAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of captainNote
+     */ 
+    public function getCaptainNote()
+    {
+        return $this->captainNote;
+    }
+
+    /**
+     * Set the value of captainNote
+     *
+     * @return  self
+     */ 
+    public function setCaptainNote($captainNote)
+    {
+        $this->captainNote = $captainNote;
 
         return $this;
     }

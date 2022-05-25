@@ -15,6 +15,11 @@ class CaptainAmountFromOrderCashResponse
    public float $amount;
 
    public int $flag;
+   
+   public float|null $storeAmount;
+
+   public string|null $captainNote;
+   
      /**
      * @OA\Property(type="object", property="createdAt")
      */

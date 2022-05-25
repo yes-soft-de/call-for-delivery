@@ -14,6 +14,10 @@ class StoreOwnerDuesFromCashOrdersResponse
 
    public float $amount;
 
+   public float|null $storeAmount;
+
+   public string|null $captainNote;
+
    public int $flag;
      /**
      * @OA\Property(type="object", property="createdAt")

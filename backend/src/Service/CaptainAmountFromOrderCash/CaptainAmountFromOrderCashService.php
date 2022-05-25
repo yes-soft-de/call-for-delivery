@@ -38,6 +38,8 @@ class CaptainAmountFromOrderCashService
         $request->setOrderId($orderEntity);
         $request->setAmount($orderEntity->getCaptainOrderCost());
         $request->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $request->setStoreAmount($orderEntity->getOrderCost());
+        $request->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->captainAmountFromOrderCashManager->createCaptainAmountFromOrderCash($request); 
     }
@@ -48,6 +50,8 @@ class CaptainAmountFromOrderCashService
         $captainAmountFromOrderCashEntity->setOrderId($orderEntity);
         $captainAmountFromOrderCashEntity->setAmount($orderEntity->getCaptainOrderCost());
         $captainAmountFromOrderCashEntity->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $captainAmountFromOrderCashEntity->setStoreAmount($orderEntity->getOrderCost());
+        $captainAmountFromOrderCashEntity->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->captainAmountFromOrderCashManager->updateCaptainAmountFromOrderCash($captainAmountFromOrderCashEntity); 
     }

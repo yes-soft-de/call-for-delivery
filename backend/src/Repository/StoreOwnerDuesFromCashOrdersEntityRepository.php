@@ -54,7 +54,7 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
             ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
-            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt', 'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.captainNote')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')

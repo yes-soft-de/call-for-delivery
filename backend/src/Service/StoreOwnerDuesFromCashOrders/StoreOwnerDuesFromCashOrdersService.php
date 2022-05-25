@@ -38,6 +38,8 @@ class StoreOwnerDuesFromCashOrdersService
         $request->setOrderId($orderEntity);
         $request->setAmount($orderEntity->getCaptainOrderCost());
         $request->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $request->setStoreAmount($orderEntity->getOrderCost());
+        $request->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->storeOwnerDuesFromCashOrdersManager->createStoreOwnerDuesFromCashOrders($request); 
     }
@@ -48,6 +50,8 @@ class StoreOwnerDuesFromCashOrdersService
         $storeOwnerDuesFromCashOrdersEntity->setOrderId($orderEntity);
         $storeOwnerDuesFromCashOrdersEntity->setAmount($orderEntity->getCaptainOrderCost());
         $storeOwnerDuesFromCashOrdersEntity->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $storeOwnerDuesFromCashOrdersEntity->setStoreAmount($orderEntity->getOrderCost());
+        $storeOwnerDuesFromCashOrdersEntity->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->storeOwnerDuesFromCashOrdersManager->updateStoreOwnerDuesFromCashOrders($storeOwnerDuesFromCashOrdersEntity); 
     }
