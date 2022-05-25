@@ -63,10 +63,10 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->andWhere('captainAmountFromOrderCash.flag = :flag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
             
-            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate >= :fromDate')
             ->setParameter('fromDate', $fromDate)
            
-            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
 
             ->getQuery()
@@ -86,10 +86,10 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->andWhere('captainAmountFromOrderCash.captain = :captainId')
             ->setParameter('captainId', $captainId)
             
-            ->andWhere('captainAmountFromOrderCash.createdAt >= :fromDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate >= :fromDate')
             ->setParameter('fromDate', $fromDate)
            
-            ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
+            ->andWhere('captainAmountFromOrderCash.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
            
             ->andWhere('captainAmountFromOrderCash.flag = :flag')
