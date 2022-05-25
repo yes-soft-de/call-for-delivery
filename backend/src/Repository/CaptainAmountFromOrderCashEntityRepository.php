@@ -10,7 +10,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderAmountCashConstant;
-
 /**
  * @method CaptainAmountFromOrderCashEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainAmountFromOrderCashEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -74,7 +73,7 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getCaptainAmountFromOrderCash(int $captainId, string $fromDate, string $toDate): ?array
+    public function getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition(int $captainId, string $fromDate, string $toDate): ?array
     {
         return $this->createQueryBuilder('captainAmountFromOrderCash')
     
@@ -92,6 +91,9 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
            
             ->andWhere('captainAmountFromOrderCash.createdAt <= :toDate')
             ->setParameter('toDate', $toDate)
+           
+            ->andWhere('captainAmountFromOrderCash.flag = :flag')
+            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
 
             ->getQuery()
             ->getResult();
