@@ -187,7 +187,7 @@ class InitCaptainPlanLoadedState extends States {
                             screenState,
                             CaptainFinanceRequest(
                                 id: captainID,
-                                status: true,
+                                status: null,
                                 planId: index == 3 ? 0 : _selectedPlanId,
                                 planType: index));
                       },

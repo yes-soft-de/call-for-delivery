@@ -672,7 +672,15 @@
     "emptyPackagesCategory": "There is no packages in this category",
     "orderWithoutDef": "order",
     "youCanChangeCaptainFinancialPlan": "You can change captain financial request here",
-    "changeCaptainPlan": "Change captain plan"
+    "changeCaptainPlan": "Change captain plan",
+    "youCannotMakePaymentThereIsNoOrderCash": "There is no order cash deserved ",
+    "yourRequestToChangeCaptainPlanFailed": "Your request to change captain plan failed ",
+    "deliveryDate": "delivery date",
+    "orderCashWithCaptain": "Cash With Captain",
+    "captainNote": "Captain Notes",
+    "youNeedToPayExclusively": ""
+
+
 
 
 

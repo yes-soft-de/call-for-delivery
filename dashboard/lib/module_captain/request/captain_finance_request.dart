@@ -5,20 +5,20 @@ class CaptainFinanceRequest {
   int? id;
   CaptainFinanceRequest.empty();
 
-  CaptainFinanceRequest({
-    this.planId,
-    this.planType,
-    this.id,
-    this.status
-  });
+  CaptainFinanceRequest({this.planId, this.planType, this.id, this.status});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['captainFinancialSystemType'] = planType;
-    data['captainFinancialSystemId'] = planId;
+    if (planType != null) {
+      data['captainFinancialSystemType'] = planType;
+    }
+    if (planId != null) {
+      data['captainFinancialSystemId'] = planId;
+    }
     data['id'] = id;
-    data['status'] = status == true ? 1 : 0;
+    if (status != null) {
+      data['status'] = status == true ? 1 : 0;
+    }
 
     return data;
   }

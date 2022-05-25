@@ -6559,6 +6559,66 @@ class S {
       args: [],
     );
   }
+
+  /// `There is no order cash deserved `
+  String get youCannotMakePaymentThereIsNoOrderCash {
+    return Intl.message(
+      'There is no order cash deserved ',
+      name: 'youCannotMakePaymentThereIsNoOrderCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your request to change captain plan failed `
+  String get yourRequestToChangeCaptainPlanFailed {
+    return Intl.message(
+      'Your request to change captain plan failed ',
+      name: 'yourRequestToChangeCaptainPlanFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivery date`
+  String get deliveryDate {
+    return Intl.message(
+      'delivery date',
+      name: 'deliveryDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash With Captain`
+  String get orderCashWithCaptain {
+    return Intl.message(
+      'Cash With Captain',
+      name: 'orderCashWithCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Notes`
+  String get captainNote {
+    return Intl.message(
+      'Captain Notes',
+      name: 'captainNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get youNeedToPayExclusively {
+    return Intl.message(
+      '',
+      name: 'youNeedToPayExclusively',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

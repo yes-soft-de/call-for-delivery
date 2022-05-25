@@ -137,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain not arrived"),
         "captainNotArrivedToStore": MessageLookupByLibrary.simpleMessage(
             "Captain not arrived to store"),
+        "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
@@ -308,6 +309,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCars": MessageLookupByLibrary.simpleMessage("Delivery cars"),
         "deliveryCarsCost":
             MessageLookupByLibrary.simpleMessage("Delivery Cars Cost"),
+        "deliveryDate": MessageLookupByLibrary.simpleMessage("delivery date"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -549,6 +551,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
+        "orderCashWithCaptain":
+            MessageLookupByLibrary.simpleMessage("Cash With Captain"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
@@ -991,11 +995,18 @@ class MessageLookup extends MessageLookupByLibrary {
                 "You can change captain financial request here"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youCannotMakePaymentThereIsNoOrderCash":
+            MessageLookupByLibrary.simpleMessage(
+                "There is no order cash deserved "),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youNeedToPayExclusively": MessageLookupByLibrary.simpleMessage(""),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
         "yourRequestSent":
-            MessageLookupByLibrary.simpleMessage("Your Request have been sent")
+            MessageLookupByLibrary.simpleMessage("Your Request have been sent"),
+        "yourRequestToChangeCaptainPlanFailed":
+            MessageLookupByLibrary.simpleMessage(
+                "Your request to change captain plan failed ")
       };
 }

@@ -11,7 +11,15 @@ import 'package:flutter/material.dart';
 class OrdersCashStoreLoadedState extends States {
   OrdersCashStoreScreenState screenState;
   StoreCashOrdersFinanceModel model;
-  OrdersCashStoreLoadedState(this.screenState, this.model) : super(screenState);
+  OrdersCashStoreLoadedState(this.screenState, this.model)
+      : super(screenState) {
+    if (model.total.advancePayment == true &&
+        model.total.sumAmountStorOwnerDues > 0) {
+      screenState.canMakePayment = true;
+      screenState.paymentLimit = model.total.sumAmountStorOwnerDues;
+      screenState.refresh();
+    }
+  }
 
   @override
   Widget getUI(BuildContext context) {
@@ -89,10 +97,11 @@ class OrdersCashStoreLoadedState extends States {
           createdAt: element.createdAt,
           flag: element.flag,
           orderId: element.orderId,
+          captainNote: element.captainNote,
+          storeAmount: element.storeAmount,
         ),
       ));
     });
-
     widgets.add(SizedBox(
       height: 75,
     ));

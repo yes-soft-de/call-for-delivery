@@ -31,23 +31,26 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Flushbar(
-                  icon: Icon(
-                    FontAwesomeIcons.info,
-                    color: Colors.white,
+                Visibility(
+                  visible: widget.details.status == false,
+                  child: Flushbar(
+                    icon: Icon(
+                      FontAwesomeIcons.info,
+                      color: Colors.white,
+                    ),
+                    mainButton: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed(
+                            CaptainsRoutes.CAPTAIN_PLAN,
+                            arguments: widget.captainID);
+                      },
+                      icon: Icon(Icons.change_circle_rounded),
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    message: S.current.youCanChangeCaptainFinancialPlan,
                   ),
-                  mainButton: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamed(
-                          CaptainsRoutes.CAPTAIN_PLAN,
-                          arguments: widget.captainID);
-                    },
-                    icon: Icon(Icons.change_circle_rounded),
-                    color: Colors.white,
-                  ),
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  message: S.current.youCanChangeCaptainFinancialPlan,
                 ),
                 CustomTile(
                     FontAwesomeIcons.calendar, S.current.createDate, null,

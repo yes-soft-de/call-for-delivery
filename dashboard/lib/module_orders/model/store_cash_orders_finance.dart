@@ -34,7 +34,9 @@ class StoreCashOrdersFinanceModel extends DataModel {
           orderId: element.orderId ?? -1,
           amount: element.amount ?? 0,
           flag: element.flag ?? -1,
-          createdAt: create));
+          createdAt: create,
+          captainNote: element.captainNote,
+          storeAmount: element.storeAmount ?? 0));
     });
     _data = StoreCashOrdersFinanceModel(total: _total, orders: _orders);
   }
@@ -60,13 +62,16 @@ class Order {
   int orderId;
   num amount;
   int flag;
+  String? captainNote;
+  num storeAmount;
   String createdAt;
-  Order({
-    required this.id,
-    required this.storeOwnerName,
-    required this.orderId,
-    required this.amount,
-    required this.flag,
-    required this.createdAt,
-  });
+  Order(
+      {required this.id,
+      required this.storeOwnerName,
+      required this.orderId,
+      required this.amount,
+      required this.flag,
+      required this.createdAt,
+      required this.storeAmount,
+      required this.captainNote});
 }

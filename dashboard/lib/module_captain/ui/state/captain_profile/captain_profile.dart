@@ -116,10 +116,10 @@ class CaptainProfileLoadedState extends States {
                                         Navigator.of(context).pop();
                                         screenState.enableCaptainFinance(
                                             CaptainFinanceRequest(
-                                          planId: model?.captainFinance?.id,
-                                          planType: model?.captainFinance
-                                              ?.captainFinancialSystemType,
-                                          id: screenState.captainId,
+                                          // planId: model?.captainFinance?.id,
+                                          // planType: model?.captainFinance
+                                          //     ?.captainFinancialSystemType,
+                                          id: model?.captainFinance?.id,
                                           status: status,
                                         ));
                                       },

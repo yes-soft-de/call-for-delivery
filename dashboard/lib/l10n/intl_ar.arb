@@ -666,7 +666,13 @@
     "emptyPackagesCategory": "لايوجد اشتراكات متوفرة ضمن هذا التصنيف",
     "orderWithoutDef": "طلب",
     "youCanChangeCaptainFinancialPlan": "يمكنك تغيير خطة عمل الكابتن من هنا",
-    "changeCaptainPlan": "تغيير خطة الكابتن"
+    "changeCaptainPlan": "تغيير خطة الكابتن",
+    "youCannotMakePaymentThereIsNoOrderCash": "لايمكنك تسجيل دفعة لعدم وجود طلبات كاش تستحق الدفعات",
+    "yourRequestToChangeCaptainPlanFailed": "طلبك لتعديل الخطة المالية للكابتن فشلت الرجاء المحاولة في وقت لاحق",
+    "deliveryDate": "تاريخ التسليم",
+    "orderCashWithCaptain": "المبلغ مع الكابتن",
+    "captainNote": "ملاحظات الكابتن",
+    "youNeedToPayExclusively": "يجب انت تدفع حصرا المبلغ"
 
 
 
