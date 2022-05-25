@@ -45,7 +45,7 @@ class AdminCaptainAmountFromOrderCashService
     {
         //convert from(sumPaymentsToCaptain) to (sumPaymentsFromCaptain),Typing error only
         $sumPaymentsToCaptain = $this->adminCaptainPaymentToCompanyService->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
-      //Now this field appears only in the front the rest of the fields are not needed at the present time
+      //Now this field shown only in the front the rest of the fields are not needed at the present time
         $item['sumAmountWithCaptain'] = $sumAmountWithCaptain;
 
         $item['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPayments'];
