@@ -1000,7 +1000,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "There is no order cash deserved "),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
-        "youNeedToPayExclusively": MessageLookupByLibrary.simpleMessage(""),
+        "youNeedToPayExclusively":
+            MessageLookupByLibrary.simpleMessage("Pay Exclusively"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
         "yourRequestSent":

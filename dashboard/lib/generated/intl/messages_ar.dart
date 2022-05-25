@@ -1001,7 +1001,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youNeedToPayExclusively":
-            MessageLookupByLibrary.simpleMessage("يجب انت تدفع حصرا المبلغ"),
+            MessageLookupByLibrary.simpleMessage("يجب دفع حصرا"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
         "yourRequestSent":

@@ -6610,10 +6610,10 @@ class S {
     );
   }
 
-  /// ``
+  /// `Pay Exclusively`
   String get youNeedToPayExclusively {
     return Intl.message(
-      '',
+      'Pay Exclusively',
       name: 'youNeedToPayExclusively',
       desc: '',
       args: [],
