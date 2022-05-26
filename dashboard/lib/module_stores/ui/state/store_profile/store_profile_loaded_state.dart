@@ -250,13 +250,13 @@ class StoreProfileLoadedState extends States {
                     BranchesRoutes.BRANCHES_LIST_SCREEN,
                     arguments: profile?.id ?? -1);
               }),
-          cardTap(
-              image: ImageAsset.PAYMENT,
-              title: S.of(context).payments,
-              onTapCard: () {
-                Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
-                    arguments: profile?.id ?? -1);
-              }),
+          // cardTap(
+          //     image: ImageAsset.PAYMENT,
+          //     title: S.of(context).payments,
+          //     onTapCard: () {
+          //       Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
+          //           arguments: profile?.id ?? -1);
+          //     }),
           cardTap(
               image: ImageAsset.PAYMENT,
               title: S.of(context).financeSubscriptions,

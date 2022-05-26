@@ -658,6 +658,26 @@
     "paymentsToStore": "دفعة للمتجر",
     "supplierProfitMargin": "هامش الربح من المورد",
     "storeProfitMargin": "هامش الربح من المتجر",
-    "paymentsFromCaptain": "دفعة من الكابتن"
+    "paymentsFromCaptain": "دفعة من الكابتن",
+    "orderCashStatus": "سعر الطلبية للمتجر",
+    "sumPaymentsFromCaptain": "الدفعات من الكابتن",
+    "planHint": "في هذه النافذة ستظهر شرائح خطط العمل المتاحة",
+    "choosePlan": "اختر الخطة المناسبة لك",
+    "emptyPackagesCategory": "لايوجد اشتراكات متوفرة ضمن هذا التصنيف",
+    "orderWithoutDef": "طلب",
+    "youCanChangeCaptainFinancialPlan": "يمكنك تغيير خطة عمل الكابتن من هنا",
+    "changeCaptainPlan": "تغيير خطة الكابتن",
+    "youCannotMakePaymentThereIsNoOrderCash": "لايمكنك تسجيل دفعة لعدم وجود طلبات كاش تستحق الدفعات",
+    "yourRequestToChangeCaptainPlanFailed": "طلبك لتعديل الخطة المالية للكابتن فشلت الرجاء المحاولة في وقت لاحق",
+    "deliveryDate": "تاريخ التسليم",
+    "orderCashWithCaptain": "المبلغ مع الكابتن",
+    "captainNote": "ملاحظات الكابتن",
+    "youNeedToPayExclusively": "يجب دفع حصرا",
+    "carUpdatedSuccessfully": "تم تحديث السيارة بنجاح",
+    "financeCategoryDeletedSuccessfully": "تم حذف باقة عمل كابتن بنجاح",
+    "areSureAboutDeleteThisFinance": "هل انت متأكد من عملية حذف هذه الخطة"
+
+
+
 
 }

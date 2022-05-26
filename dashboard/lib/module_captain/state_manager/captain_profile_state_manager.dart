@@ -1,3 +1,4 @@
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:injectable/injectable.dart';
@@ -56,7 +57,6 @@ class CaptainProfileStateManager {
         CustomFlushBarHelper.showSnackSuccess(
             screenState, S.current.captainUpdatedSuccessfully, loading);
         getCaptainProfile(screenState, captainId, loading);
-        getIt<GlobalStateManager>().updateList();
       }
     });
   }
@@ -82,7 +82,7 @@ class CaptainProfileStateManager {
   }
 
   void captainFinanceStatusPlan(CaptainProfileScreenState screenState,
-      int captainId, EnableCaptainRequest request) {
+      int captainId, CaptainFinanceRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _captainsService.captainFinancePlanStatus(request).then((value) {
       if (value.hasError) {

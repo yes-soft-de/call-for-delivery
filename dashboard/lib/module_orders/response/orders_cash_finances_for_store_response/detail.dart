@@ -7,7 +7,8 @@ class Detail {
   num? amount;
   int? flag;
   CreatedAt? createdAt;
-
+  num? storeAmount;
+  String? captainNote;
   Detail({
     this.id,
     this.storeOwnerName,
@@ -15,6 +16,8 @@ class Detail {
     this.amount,
     this.flag,
     this.createdAt,
+    this.captainNote,
+    this.storeAmount
   });
 
   factory Detail.fromJson(Map<String, dynamic> json) => Detail(
@@ -22,6 +25,8 @@ class Detail {
         storeOwnerName: json['storeOwnerName'] as String?,
         orderId: json['orderId'] as int?,
         amount: json['amount'] as num?,
+        storeAmount: json['storeAmount'] as num?,
+        captainNote: json['captainNote'] as String?,
         flag: json['flag'] as int?,
         createdAt: json['createdAt'] == null
             ? null

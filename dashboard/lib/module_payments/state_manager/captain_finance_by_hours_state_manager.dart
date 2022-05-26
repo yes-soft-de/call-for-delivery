@@ -50,7 +50,7 @@ class CaptainFinanceByHoursStateManager {
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
-      } else {
+      }  else {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
@@ -75,6 +75,25 @@ class CaptainFinanceByHoursStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.updatePackageSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void deleteFinance(CaptainFinanceByHoursScreenState screenState, int id) {
+    _stateSubject.add(LoadingState(screenState));
+    _storePaymentsService.deleteCaptainFinanceByHour(id).then((value) {
+      if (value.hasError) {
+        getFinances(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getFinances(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: value.error ?? S.current.financeCategoryDeletedSuccessfully)
             .show(screenState.context);
       }
     });

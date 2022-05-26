@@ -1,6 +1,7 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/hive/captain_hive_helper.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/store_subscriptions_details_screen.dart';
@@ -28,7 +29,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
   void getCaptainPaymentsDetails(
       StoreSubscriptionsFinanceDetailsScreenState screenState) {
     _storesService
-        .getSubscriptionsFinance(CaptainsHiveHelper().getCurrentCaptainID())
+        .getSubscriptionsFinance(StoresHiveHelper().getCurrentStoreID())
         .then((value) {
       if (value.hasError) {
         _stateSubject

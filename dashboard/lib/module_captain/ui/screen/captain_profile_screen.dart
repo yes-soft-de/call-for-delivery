@@ -1,7 +1,10 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -31,6 +34,9 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       currentState = event;
       refresh();
     });
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      getCaptain();
+    });
     super.initState();
   }
 
@@ -43,7 +49,7 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
         EnableCaptainRequest(id: captainId, status: status), false);
   }
 
-  void enableCaptainFinance(EnableCaptainRequest request) {
+  void enableCaptainFinance(CaptainFinanceRequest request) {
     widget._stateManager.captainFinanceStatusPlan(this, captainId, request);
   }
 

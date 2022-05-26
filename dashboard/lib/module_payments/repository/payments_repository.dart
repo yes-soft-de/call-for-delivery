@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
@@ -192,6 +193,43 @@ class PaymentsRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS, request.toJsonWithID(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  /* DELETE */
+  Future<ActionResponse?> deleteCaptainFinanceByOrder(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDERS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteCaptainFinanceByHour(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_HOURS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteCaptainFinanceByOrderCounts(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.CHANGE_CAPTAIN_FINANCE_PLAN, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

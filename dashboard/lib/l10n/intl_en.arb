@@ -664,7 +664,31 @@
     "paymentsToStore": "Payments To Store",
     "supplierProfitMargin": "Supplier profit margin",
     "storeProfitMargin": "Store profit margin",
-    "paymentsFromCaptain": "Payments From Captain"
+    "paymentsFromCaptain": "Payments From Captain",
+    "orderCashStatus": "Order cost to store",
+    "sumPaymentsFromCaptain": "Payments From Captain",
+    "planHint": "In this screen you can see our work planes ",
+    "choosePlan": "Please choose your plan",
+    "emptyPackagesCategory": "There is no packages in this category",
+    "orderWithoutDef": "order",
+    "youCanChangeCaptainFinancialPlan": "You can change captain financial request here",
+    "changeCaptainPlan": "Change captain plan",
+    "youCannotMakePaymentThereIsNoOrderCash": "There is no order cash deserved ",
+    "yourRequestToChangeCaptainPlanFailed": "Your request to change captain plan failed ",
+    "deliveryDate": "delivery date",
+    "orderCashWithCaptain": "Cash With Captain",
+    "captainNote": "Captain Notes",
+    "youNeedToPayExclusively": "Pay Exclusively",
+    "carUpdatedSuccessfully": "Car Updated successfully",
+    "financeCategoryDeletedSuccessfully": "Finance category deleted successfully",
+    "areSureAboutDeleteThisFinance": "Are sure about deleting this captain finance plan"
+
+
+
+
+
+
+
 
 
 

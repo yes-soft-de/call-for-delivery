@@ -15,4 +15,6 @@ class CarsManager {
 
   Future<ActionResponse?> addCars(CarRequest request) =>
       _categoriesRepository.addCar(request);
+       Future<ActionResponse?> updateCar(CarRequest request) =>
+      _categoriesRepository.updateCar(request);
 }

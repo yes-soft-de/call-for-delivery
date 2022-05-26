@@ -23,6 +23,10 @@ class StatusCodeHelper {
         return S.current.invalidCredentials;
       case '9001':
         return S.current.accountAlreadyExist;
+      case '9106':
+        return S.current.youCannotMakePaymentThereIsNoOrderCash;
+      case '9603':
+        return S.current.yourRequestToChangeCaptainPlanFailed;
       case '-1':
         return S.current.dataDecodeError;
       default:

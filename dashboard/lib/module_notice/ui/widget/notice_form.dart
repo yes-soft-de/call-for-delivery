@@ -37,7 +37,6 @@ class _CategoryFormState extends State<NoticeForm> {
     super.initState();
 
     if (widget.request != null) {
-      print('notNull');
       _nameController.text = widget.request?.title ?? '';
       _decController.text = widget.request?.msg ?? '';
       id = widget.request?.id ?? -1;

@@ -10,6 +10,8 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
+import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -52,7 +54,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
     currentState = LoadingState(this);
     ordersFilter = StoreCashFinanceRequest(
         storeId: ArgumentHiveHelper().getCurrentStoreID(),
-        fromDate: DateTime(today.year, today.month, today.day, 0).toIso8601String(),
+        fromDate:
+            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());
     widget._stateManager.getOrdersFilters(this, ordersFilter);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -74,6 +77,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  bool canMakePayment = false;
+  num paymentLimit = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -257,92 +262,103 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
             Expanded(child: currentState.getUI(context))
           ],
         ),
-        floatingActionButton: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-          label: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(S.current.makePayment),
-          ),
-          icon: Padding(
-            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-            child: Icon(Icons.add),
-          ),
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return StatefulBuilder(builder: (context, setState) {
-                    return AlertDialog(
-                      scrollable: true,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25)),
-                      title: Text(S.current.paymentsToStore),
-                      content: Container(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(S.current.paymentAmount),
-                              subtitle: CustomFormField(
-                                onChanged: () {
-                                  setState(() {});
+        floatingActionButton: Visibility(
+          visible: canMakePayment,
+          child: ScalingWidget(
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+              label: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(S.current.makePayment),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                child: Icon(Icons.add),
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(builder: (context, setState) {
+                        return AlertDialog(
+                          scrollable: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          title: Text(S.current.paymentsToStore),
+                          content: Container(
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  title: Text(S.current.paymentAmount),
+                                  subtitle: CustomFormField(
+                                    onChanged: () {
+                                      setState(() {});
+                                    },
+                                    numbers: true,
+                                    controller: _amount,
+                                    hintText:
+                                        S.current.youNeedToPayExclusively +
+                                            ' $paymentLimit',
+                                  ),
+                                ),
+                                ListTile(
+                                  title: Text(S.current.note),
+                                  subtitle: CustomFormField(
+                                    controller: _note,
+                                    hintText: S.current.note,
+                                    last: true,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          actionsAlignment: MainAxisAlignment.center,
+                          actions: [
+                            ElevatedButton(
+                                onPressed: _amount.text.isEmpty ||
+                                        FixedNumber.getFixedNumber(
+                                                num.tryParse(_amount.text) ??
+                                                    0) !=
+                                            FixedNumber.getFixedNumber(
+                                                paymentLimit)
+                                    ? null
+                                    : () {
+                                        Navigator.of(context).pop();
+                                        widget._stateManager.payForStore(
+                                            this,
+                                            CreateStorePaymentsRequest(
+                                              fromDate: ordersFilter.fromDate,
+                                              toDate: ordersFilter.toDate,
+                                              storeId: StoresHiveHelper()
+                                                  .getCurrentStoreID(),
+                                              amount: num.tryParse(
+                                                      _amount.text.trim()) ??
+                                                  0,
+                                              note: _note.text,
+                                            ));
+                                      },
+                                child: Text(
+                                  S.current.pay,
+                                  style: Theme.of(context).textTheme.button,
+                                )),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  _amount.clear();
+                                  _note.clear();
                                 },
-                                numbers: true,
-                                controller: _amount,
-                                hintText: '100',
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(S.current.note),
-                              subtitle: CustomFormField(
-                                controller: _note,
-                                hintText: S.current.note,
-                                last: true,
-                              ),
-                            ),
+                                child: Text(
+                                  S.current.cancel,
+                                  style: Theme.of(context).textTheme.button,
+                                ))
                           ],
-                        ),
-                      ),
-                      actionsAlignment: MainAxisAlignment.center,
-                      actions: [
-                        ElevatedButton(
-                            onPressed: _amount.text.isEmpty
-                                ? null
-                                : () {
-                                    Navigator.of(context).pop();
-                                    widget._stateManager.payForStore(
-                                        this,
-                                        CreateStorePaymentsRequest(
-                                          fromDate: ordersFilter.fromDate,
-                                          toDate: ordersFilter.toDate,
-                                          storeId: StoresHiveHelper()
-                                              .getCurrentStoreID(),
-                                          amount: num.tryParse(
-                                                  _amount.text.trim()) ??
-                                              0,
-                                          note: _note.text,
-                                        ));
-                                  },
-                            child: Text(
-                              S.current.pay,
-                              style: Theme.of(context).textTheme.button,
-                            )),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _amount.clear();
-                              _note.clear();
-                            },
-                            child: Text(
-                              S.current.cancel,
-                              style: Theme.of(context).textTheme.button,
-                            ))
-                      ],
-                    );
-                  });
-                });
-          },
+                        );
+                      });
+                    });
+              },
+            ),
+          ),
         ),
-      
       ),
     );
   }

@@ -1,4 +1,5 @@
 class CarRequest {
+  int? carId;
   int? id;
   String? carModel;
   String? details;
@@ -8,7 +9,9 @@ class CarRequest {
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['id'] = id;
+    if (id != null) {
+      map['id'] = id;
+    }
     map['carModel'] = carModel;
     map['details'] = details;
     map['deliveryCost'] = deliveryCost;

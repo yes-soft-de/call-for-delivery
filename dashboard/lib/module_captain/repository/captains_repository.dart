@@ -1,3 +1,4 @@
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
@@ -121,7 +122,7 @@ class CaptainsRepository {
   }
 
   Future<ActionResponse?> captainFinanceStatus(
-      EnableCaptainRequest request) async {
+      CaptainFinanceRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.UPDATE_CAPTAIN_FINANCE_PLAN, request.toJson(),

@@ -5,6 +5,7 @@ import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
@@ -172,7 +173,7 @@ class CaptainsService {
   }
 
   Future<DataModel> captainFinancePlanStatus(
-      EnableCaptainRequest request) async {
+      CaptainFinanceRequest request) async {
     ActionResponse? actionResponse =
         await _manager.captainFinancePlanStatus(request);
 

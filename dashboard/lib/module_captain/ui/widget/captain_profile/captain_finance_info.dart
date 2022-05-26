@@ -1,4 +1,6 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -8,8 +10,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CaptainFinanceInfo extends StatefulWidget {
   final OrderCountsSystemDetails details;
   final Function(bool) requestStatus;
+  final int captainID;
   CaptainFinanceInfo(
-      {Key? key, required this.details, required this.requestStatus})
+      {Key? key,
+      required this.details,
+      required this.requestStatus,
+      required this.captainID})
       : super(key: key);
 
   @override
@@ -25,6 +31,27 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Visibility(
+                  visible: widget.details.status == false,
+                  child: Flushbar(
+                    icon: Icon(
+                      FontAwesomeIcons.info,
+                      color: Colors.white,
+                    ),
+                    mainButton: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed(
+                            CaptainsRoutes.CAPTAIN_PLAN,
+                            arguments: widget.captainID);
+                      },
+                      icon: Icon(Icons.change_circle_rounded),
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    message: S.current.youCanChangeCaptainFinancialPlan,
+                  ),
+                ),
                 CustomTile(
                     FontAwesomeIcons.calendar, S.current.createDate, null,
                     stringValue: widget.details.createDate),

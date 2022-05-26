@@ -12,7 +12,13 @@ class OrdersCashCaptainLoadedState extends States {
   OrdersCashCaptainScreenState screenState;
   CaptainCashOrdersFinanceModel model;
   OrdersCashCaptainLoadedState(this.screenState, this.model)
-      : super(screenState);
+      : super(screenState) {
+    if (model.total.sumAmountWithCaptain > 0) {
+      screenState.canMakePayment = true;
+      screenState.paymentLimit = model.total.sumAmountWithCaptain;
+      screenState.refresh();
+    }
+  }
 
   @override
   Widget getUI(BuildContext context) {
@@ -43,7 +49,7 @@ class OrdersCashCaptainLoadedState extends States {
             Expanded(
               child: VerticalBubble(
                 radius: BorderRadius.circular(0),
-                title: S.current.sumPaymentsToCaptain,
+                title: S.current.sumPaymentsFromCaptain,
                 subtitle:
                     FixedNumber.getFixedNumber(total.sumPaymentsToCaptain) +
                         ' ${S.current.sar}',
@@ -90,6 +96,8 @@ class OrdersCashCaptainLoadedState extends States {
           createdAt: element.createdAt,
           flag: element.flag,
           orderId: element.orderId,
+          captainNote: element.captainNote,
+          storeAmount: element.storeAmount,
         ),
       ));
     });

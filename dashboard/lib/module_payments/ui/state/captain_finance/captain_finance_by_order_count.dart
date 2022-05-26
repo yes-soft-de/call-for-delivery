@@ -3,7 +3,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
 import 'package:c4d/module_payments/ui/widget/finance_by_orders_count.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/global/screen_type.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -97,46 +99,92 @@ class CaptainFinanceByOrderCountLoadedState extends States {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                          color: Theme.of(context).backgroundColor,
-                          offset: Offset(-1, 0),
-                        )
-                      ],
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return FinanceByOrderCountForm(
-                                request: element,
-                                onSave: (request) {
-                                  request.id = element.id;
-                                  screenState.stateManager
-                                      .updateFinance(screenState, request);
-                                },
-                              );
-                            });
-                      },
-                      icon: Icon(
-                        Icons.edit,
-                        color: Theme.of(context).colorScheme.primary,
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              color: Theme.of(context).backgroundColor,
+                              offset: Offset(-1, 0),
+                            )
+                          ],
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return FinanceByOrderCountForm(
+                                    request: element,
+                                    onSave: (request) {
+                                      request.id = element.id;
+                                      screenState.stateManager
+                                          .updateFinance(screenState, request);
+                                    },
+                                  );
+                                });
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              color: Theme.of(context).backgroundColor,
+                              offset: Offset(-1, 0),
+                            )
+                          ],
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomAlertDialog(
+                                    content:
+                                        S.current.areSureAboutDeleteThisFinance,
+                                    oneAction: false,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.stateManager.deleteFinance(
+                                          screenState, element.id);
+                                    },
+                                  );
+                                });
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           )));
     });
@@ -147,15 +195,18 @@ class CaptainFinanceByOrderCountLoadedState extends States {
   }
 
   Widget horizontalsTile(String title, String subtitle) {
+    var context = screenState.context;
     return Padding(
       padding: const EdgeInsets.all(16.0).copyWith(bottom: 8.0, top: 0),
       child: Row(
         children: [
           SizedBox(
-            width: 190,
+            width: 170,
             child: Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: ScreenType.isMobile(context) ? 14 : null),
             ),
           ),
           SizedBox(
@@ -164,7 +215,9 @@ class CaptainFinanceByOrderCountLoadedState extends States {
           Text(
             subtitle,
             style: TextStyle(
-                color: Colors.green.shade600, fontWeight: FontWeight.bold),
+                color: Colors.green.shade600,
+                fontWeight: FontWeight.bold,
+                fontSize: ScreenType.isMobile(context) ? 13 : null),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
@@ -50,7 +51,7 @@ class CaptainsManager {
           int captainId) =>
       _repository.getCaptainAccountBalance(captainId);
   Future<ActionResponse?> captainFinancePlanStatus(
-          EnableCaptainRequest request) =>
+          CaptainFinanceRequest request) =>
       _repository.captainFinanceStatus(request);
   Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
           int captainID) =>

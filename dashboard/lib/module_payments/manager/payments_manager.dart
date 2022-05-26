@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/response/action_response.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/repository/payments_repository.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
@@ -57,7 +58,16 @@ class PaymentsManager {
   Future<ActionResponse?> updateCaptainFinanceByOrderCounts(
           CreateCaptainFinanceByCountOrderRequest request) =>
       _paymentsRepository.updateCaptainFinanceByOrderCounts(request);
-
+  /* DELETE */
+  Future<ActionResponse?> deleteCaptainFinanceByOrder(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByOrder(id);
+  Future<ActionResponse?> deleteCaptainFinanceByHour(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByHour(id);
+  Future<ActionResponse?> deleteCaptainFinanceByOrderCounts(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByOrderCounts(id);
+  /* CHANGE CAPTAIN FINANCE PLAN */
+  Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) =>
+      _paymentsRepository.financeRequest(request);
   /* ---------------------------------- CAPTAIN PAYMENTS --------------------------------------- */
   Future<CaptainPaymentsResponse?> getAccountBalance(int captainId) async =>
       _paymentsRepository.getCaptainAccountBalance(captainId);

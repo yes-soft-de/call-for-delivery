@@ -178,6 +178,9 @@ class Urls {
   static const CREATE_CAPTAIN_PAYMENTS_TO_COMPANY =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompany';
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
+  static const CREATE_CAPTAIN_FINANCE =
+      DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
+
   /*------------------------CAPTAIN FINANCE------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDERS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER +
@@ -192,6 +195,8 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
   static const UPDATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
+        static const CHANGE_CAPTAIN_FINANCE_PLAN =
+      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   /*-----------------Supplier--Categories---------------*/
