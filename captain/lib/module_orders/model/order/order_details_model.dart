@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -30,7 +32,7 @@ class OrderDetailsModel extends DataModel {
   int? captainID;
   late String storeName;
   late String storePhone;
-  late LatLng? branchCoordinate;
+  LatLng? branchCoordinate;
   late String? branchLink;
   String? distance;
   String? branchDistance;
@@ -141,7 +143,8 @@ class OrderDetailsModel extends DataModel {
         StatusHelper.getOrderStatusIndex(_orders.state) >=
                 StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
             ? location
-            : branchCoordinate);
+            : _orders.branchCoordinate);
+    log(_orders.distance.toString());
     _orders.branchDistance = _branchDistance(_orders, location);
   }
   String? _distance(OrderDetailsModel orderInfo, LatLng? location) {

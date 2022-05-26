@@ -40,14 +40,18 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       {String? message})
       : super(screenState) {
     if (message != null) {
-      screenState.isolates.spawn(
-        entryPoint,
-        onReceive: triggerFireStore,
-        onInitialized: () {
-          screenState.isolates.send(message, to: "FireStoreInserter");
-        },
-        name: 'FireStoreInserter',
-      );
+      try {
+        screenState.isolates.spawn(
+          entryPoint,
+          onReceive: triggerFireStore,
+          onInitialized: () {
+            screenState.isolates.send(message, to: 'FireStoreInserter');
+          },
+          name: 'FireStoreInserter',
+        );
+      } catch (e) {
+        log(e.toString());
+      }
     }
   }
   bool speaking = false;
@@ -568,7 +572,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           // paid to provider
           Visibility(
             visible: orderInfo.paidToProvider != null &&
-                OrderStatusEnum.FINISHED == orderInfo.state,
+                OrderStatusEnum.FINISHED == orderInfo.state &&
+                orderInfo.payment == 'cash',
             child: OrderButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
               icon: Icons.paid_rounded,
