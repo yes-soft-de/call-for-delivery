@@ -117,7 +117,6 @@ class CaptainFinancialSystemDetailController extends BaseController
      * captain: get Balance Detail.
      * @Route("captainbalancedetail", name="getBalanceDetailForCaptain", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Financial System Detail")
@@ -157,8 +156,8 @@ class CaptainFinancialSystemDetailController extends BaseController
      *          @OA\Property(type="string", property="status_code", description="9602"),
      *          @OA\Property(type="string", property="msg", description="youNotHaveCaptainFinancialSystem"),
      *      )
-     * )  
-     * 
+     * )
+     *
      * @Security(name="Bearer")
      */
     public function getBalanceDetailForCaptain(): JsonResponse
