@@ -33,6 +33,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
 
     public function getBalanceDetail(int $countOrders, array $financialSystemDetail, float $sumPayments, array $date, array $detailsOrders): ?array
     {
+        $total = 0;
         $item = [];
         $item['salary'] = 0;
         $item['monthCompensation'] = 0;
