@@ -37,6 +37,11 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
                     $financialSystemThreeDetail['countOfOrdersLeft'] = $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'] ;
                     //Motivational message
                     $financialSystemThreeDetail['message'] = CaptainFinancialSystem::COUNT_REMAINING_ORDER." ".$financialSystemThreeDetail['countOfOrdersLeft']." ".CaptainFinancialSystem::FOR_BOUNCE." ".$financialSystemThreeDetail['bounce'];
+                
+                    if( $financialSystemThreeDetail['countOfOrdersLeft'] < 0 ) {
+                        $financialSystemThreeDetail['countOfOrdersLeft'] = 0;
+                    }
+                    
                     //If the captain's achieve the order number of orders to get the bounce
                     if($financialSystemThreeDetail['contOrderCompleted'] >= $financialSystemThreeDetail['bounceCountOrdersInMonth']) {
                         $financialSystemThreeDetail['captainBounce'] = $financialSystemThreeDetail['bounce'];
