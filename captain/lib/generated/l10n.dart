@@ -6809,6 +6809,166 @@ class S {
       args: [],
     );
   }
+
+  /// `Did you pay order cost totally to store owner before taking the order`
+  String get paidToProvider {
+    return Intl.message(
+      'Did you pay order cost totally to store owner before taking the order',
+      name: 'paidToProvider',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order accepted by another captain`
+  String get thisOrderAcceptedByAnotherCaptain {
+    return Intl.message(
+      'This order accepted by another captain',
+      name: 'thisOrderAcceptedByAnotherCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid to provider status`
+  String get paidToProviderStatus {
+    return Intl.message(
+      'Paid to provider status',
+      name: 'paidToProviderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Order`
+  String get groupOrder {
+    return Intl.message(
+      'Group Order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink SubOrders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink SubOrders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order removed successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order removed successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to accept primary order first, before interact with suborders `
+  String get youNeedToAcceptPrimaryOrderFirst {
+    return Intl.message(
+      'You need to accept primary order first, before interact with suborders ',
+      name: 'youNeedToAcceptPrimaryOrderFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reject`
+  String get reject {
+    return Intl.message(
+      'Reject',
+      name: 'reject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm removing suborder from group order `
+  String get confirmRemoveSubOrder {
+    return Intl.message(
+      'Confirm removing suborder from group order ',
+      name: 'confirmRemoveSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you want to accept this sub order, `
+  String get confirmAcceptSubOrder {
+    return Intl.message(
+      'Are you want to accept this sub order, ',
+      name: 'confirmAcceptSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification sound`
+  String get notificationSound {
+    return Intl.message(
+      'Notification sound',
+      name: 'notificationSound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ringtone`
+  String get ringtone {
+    return Intl.message(
+      'Ringtone',
+      name: 'ringtone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is some suborders need your action , reject it or accept it or it will remain pending`
+  String get thereIsSomeSubOrderNeedYouAttention {
+    return Intl.message(
+      'There is some suborders need your action , reject it or accept it or it will remain pending',
+      name: 'thereIsSomeSubOrderNeedYouAttention',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain plan not accepted from admin yet`
+  String get captainPlanNotAcceptedFromAdminYet {
+    return Intl.message(
+      'Captain plan not accepted from admin yet',
+      name: 'captainPlanNotAcceptedFromAdminYet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

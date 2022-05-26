@@ -1,4 +1,5 @@
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -92,8 +93,21 @@ class OrderRepository {
       UpdateOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-      '${Urls.CAPTAIN_ORDER_UPDATE_API}',
+      Urls.CAPTAIN_ORDER_UPDATE_API,
       request.toJson(),
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
+    if (response == null) return null;
+
+    return OrderActionResponse.fromJson(response);
+  }
+
+  Future<OrderActionResponse?> updateCashStatus(
+      UpdateOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_PAID_TO_PROVIDER_API + '/${request.id}' + '/${request.paid}',
+      {},
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );
     if (response == null) return null;
@@ -103,10 +117,24 @@ class OrderRepository {
 
   Future<CompanyInfoResponse?> getCompanyInfo() async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get('${Urls.COMPANYINFO_API}',
-        headers: {'Authorization': 'Bearer $token'});
+    dynamic response = await _apiClient
+        .get(Urls.COMPANYINFO_API, headers: {'Authorization': 'Bearer $token'});
 
     if (response == null) return null;
     return CompanyInfoResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> removeOrderSub(
+      OrderNonSubRequest orderRequest) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.ORDER_NONSUB_API_LINK + '/${orderRequest.orderID}',
+      {},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
   }
 }

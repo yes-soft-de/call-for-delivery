@@ -1,5 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io' as p;
+import 'package:c4d/hive/hive_init.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -35,12 +40,12 @@ class FireNotificationService {
 
   Future<void> init() async {
     if (p.Platform.isIOS) {
-      await _fcm.requestPermission();
+      await _fcm.requestPermission(sound: false);
     }
     await _fcm.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
-      sound: true,
+      sound: false,
     );
     // var isActive = _prefHelper.getIsActive();
     await refreshNotificationToken();
@@ -48,20 +53,41 @@ class FireNotificationService {
 
   Future<void> refreshNotificationToken() async {
     var token = await _fcm.getToken();
+    log(token.toString());
     if (token != null) {
       // And Subscribe to the changes
       try {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           Logger().info('FireNotificationService', 'onMessage: $message');
+          Logger().info('FireNotificationService',
+              'onMessage: ${message.notification?.android?.channelId}');
+          Logger().info('Message Data', 'onMessage: ${message.data}');
+          Logger().info('FireNotificationService',
+              'onMessage: ${message.notification?.android?.channelId}');
+
+          playSound();
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          Logger().info('On Message Opened App', 'onMessage: $message');
+          NotificationModel notificationModel =
+              NotificationModel.fromJson(message.data);
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
-              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                  message.data['navigate_route'].toString(),
-                  arguments: message.data['argument']);
+              if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: ChatArgument(
+                        roomID:
+                            notificationModel.chatNotification?.roomID ?? '',
+                        userID: notificationModel.chatNotification?.senderID,
+                        userType: 'store'));
+              } else {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: notificationModel.argument);
+              }
             },
           );
         });
@@ -73,17 +99,26 @@ class FireNotificationService {
   }
 
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
+    await HiveSetUp.init();
+    Logger().info('Background Message Handler', 'onMessage: $message');
     _onNotificationReceived.add(message);
+    await playSound();
+    return Future<void>.value();
+  }
+
+  static Future<void> playSound() async {
     Soundpool pool = Soundpool.fromOptions();
     var sound = await rootBundle
-        .load('assets/sounds/receive_message.mp3')
+        .load(NotificationsPrefHelper().getNotification())
         .then((ByteData soundData) {
       return pool.load(soundData);
     });
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
     if (ringerStatus == RingerModeStatus.normal) {
-      pool.play(sound);
+      pool.play(sound,
+          repeat: NotificationsPrefHelper().getNotification().contains('2')
+              ? 3
+              : 0);
     }
-    return Future<void>.value();
   }
 }

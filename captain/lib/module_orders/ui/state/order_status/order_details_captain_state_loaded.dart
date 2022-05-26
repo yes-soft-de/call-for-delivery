@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:isolate';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -7,6 +10,7 @@ import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
+import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
@@ -16,10 +20,13 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:isolate_handler/isolate_handler.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -29,10 +36,24 @@ import 'package:url_launcher/url_launcher.dart';
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
   final OrderStatusScreenState screenState;
-  OrderDetailsCaptainOrderLoadedState(
-    this.screenState,
-    this.orderInfo,
-  ) : super(screenState);
+  OrderDetailsCaptainOrderLoadedState(this.screenState, this.orderInfo,
+      {String? message})
+      : super(screenState) {
+    if (message != null) {
+      try {
+        screenState.isolates.spawn(
+          entryPoint,
+          onReceive: triggerFireStore,
+          onInitialized: () {
+            screenState.isolates.send(message, to: 'FireStoreInserter');
+          },
+          name: 'FireStoreInserter',
+        );
+      } catch (e) {
+        log(e.toString());
+      }
+    }
+  }
   bool speaking = false;
   final TextEditingController noteController = TextEditingController();
   @override
@@ -248,91 +269,6 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             ),
           ),
         ),
-        // customers
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    Icons.account_box,
-                  ),
-                  title: Text(S.current.recipientName),
-                  subtitle: Text(orderInfo.customerName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      var url = 'tel:+${orderInfo.customerPhone}';
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: Text(S.current.recipientPhoneNumber),
-                      subtitle: Text(orderInfo.customerPhone),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      String url = '';
-                      if (orderInfo.destinationCoordinate != null) {
-                        url = LauncherLinkHelper.getMapsLink(
-                            orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.longitude ?? 0);
-                      } else if (orderInfo.destinationLink != null) {
-                        url = orderInfo.destinationLink ?? '';
-                      }
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.location_pin),
-                      title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destination +
-                              ' ' +
-                              S.current.destinationUnavailable),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         // details
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -535,6 +471,91 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             ),
           ),
         ),
+        // customers
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: decoration,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.account_box,
+                  ),
+                  title: Text(S.current.recipientName),
+                  subtitle: Text(orderInfo.customerName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      var url = 'tel:+${orderInfo.customerPhone}';
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      leading: const Icon(Icons.phone),
+                      title: Text(S.current.recipientPhoneNumber),
+                      subtitle: Text(orderInfo.customerPhone),
+                      trailing: const Icon(Icons.arrow_forward),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                    child: ListTile(
+                      leading: const Icon(Icons.location_pin),
+                      title: Text(S.current.locationOfCustomer),
+                      subtitle: orderInfo.distance != null
+                          ? Text(orderInfo.distance ?? '')
+                          : Text(S.current.destination +
+                              ' ' +
+                              S.current.destinationUnavailable),
+                      trailing: const Icon(Icons.arrow_forward),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -548,7 +569,39 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             height: 16,
           ),
           _getNextStageCard(context),
-          // chat
+          // paid to provider
+          Visibility(
+            visible: orderInfo.paidToProvider != null &&
+                OrderStatusEnum.FINISHED == orderInfo.state &&
+                orderInfo.payment == 'cash',
+            child: OrderButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              icon: Icons.paid_rounded,
+              subtitle: orderInfo.paidToProvider,
+              title: S.current.paidToProviderStatus,
+              onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    routeSettings: const RouteSettings(name: '/paid'),
+                    builder: (_) {
+                      return CustomAlertDialogForCash(
+                          onPressed: (paid) {
+                            Navigator.of(context).pop();
+                            screenState.manager.updateCashStatus(
+                                UpdateOrderRequest(
+                                  paid: paid ? 1 : 2,
+                                  id: int.tryParse(screenState.orderId ?? ''),
+                                  state: '',
+                                ),
+                                screenState);
+                          },
+                          content: S.of(context).paidToProvider);
+                    });
+              },
+            ),
+          ),
+          // chat support
           Visibility(
             visible: orderInfo.usedAs == false &&
                 OrderStatusEnum.WAITING == orderInfo.state,
@@ -847,4 +900,25 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ));
     }
   }
+
+  void triggerFireStore(String? message) async {
+    await Firebase.initializeApp();
+    await FireStoreHelper().insertWatcher();
+    // We will no longer be needing the isolate, let's dispose of it.
+    screenState.isolates.kill('FireStoreInserter');
+  }
+}
+
+void entryPoint(Map<String, dynamic> context) async {
+  // Calling initialize from the entry point with the context is
+  // required if communication is desired. It returns a messenger which
+  // allows listening and sending information to the main isolate.
+
+  final messenger = HandledIsolate.initialize(context);
+  // Triggered every time data is received from the main isolate.
+  messenger.listen((message) async {
+    // Add one to the count and send the new value back to the main
+    // isolate.
+    messenger.send(message);
+  });
 }

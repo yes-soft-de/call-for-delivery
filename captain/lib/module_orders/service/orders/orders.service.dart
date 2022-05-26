@@ -1,11 +1,15 @@
+import 'dart:isolate';
+
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
@@ -78,6 +82,9 @@ class OrdersService {
   Future<ActionStateModel> updateOrder(UpdateOrderRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateOrder(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
     if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
     }
@@ -85,7 +92,22 @@ class OrdersService {
       return ActionStateModel.error(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
+    return ActionStateModel.empty();
+  }
+
+  Future<ActionStateModel> updateCashStatus(UpdateOrderRequest request) async {
+    OrderActionResponse? actionResponse =
+        await _ordersManager.updateCashStatus(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
+    if (actionResponse == null) {
+      return ActionStateModel.error(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return ActionStateModel.error(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
     return ActionStateModel.empty();
   }
 
@@ -130,6 +152,19 @@ class OrdersService {
     }
     if (_ordersResponse.data == null) return OrderLogsModel.Empty();
     return OrderLogsModel.Data(_ordersResponse);
+  }
+
+  Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
+    ActionResponse? response = await _ordersManager.removeOrderSub(request);
+    Isolate.spawn((message) async {
+      await FireStoreHelper().insertWatcher();
+    }, '');
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 
 ////////////////////////////////////////////////////////////////////////////

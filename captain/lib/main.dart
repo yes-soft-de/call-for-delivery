@@ -2,8 +2,11 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_init/init_account_module.dart';
 import 'package:c4d/module_my_notifications/my_notifications_module.dart';
+import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_plan/plan_module.dart';
 import 'package:c4d/module_profile/module_profile.dart';
@@ -141,8 +144,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     widget._fireNotificationService.onNotificationStream.listen((event) {
       widget._localNotificationService.showNotification(event);
     });
-    widget._localNotificationService.onLocalNotificationStream
-        .listen((event) {});
+    widget._localNotificationService.onLocalNotificationStream.listen((event) {
+      NotificationModel notificationModel = NotificationModel.fromJson(event);
+      if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
+            arguments: ChatArgument(
+                roomID: notificationModel.chatNotification?.roomID ?? '',
+                userID: notificationModel.chatNotification?.senderID,
+                userType: 'store'));
+      } else {
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
+            arguments: notificationModel.argument);
+      }
+    });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       if (mounted) {
         setState(() {});

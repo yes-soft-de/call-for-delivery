@@ -25,6 +25,7 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
     }
   }
 
+  MyNotificationsStateManager  get manager => widget._stateManager;
   Future<void> getNotifications() async {
     widget._stateManager.getNotifications(this);
   }

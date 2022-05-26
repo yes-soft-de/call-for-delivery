@@ -1,8 +1,11 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/rating_form.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +49,7 @@ class MyNotificationsLoadedState extends States {
                             .areYouSureAboutDeleteSelectedNotifications);
                   });
             },
-            child: Icon(Icons.delete_rounded),
+            child: const Icon(Icons.delete_rounded),
           ),
         ),
       ),
@@ -91,7 +94,7 @@ class MyNotificationsLoadedState extends States {
                   width: 220,
                 )),
                 ListView(
-                  physics: BouncingScrollPhysics(
+                  physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   children: [
                     Visibility(
@@ -146,10 +149,10 @@ class MyNotificationsLoadedState extends States {
                       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: ListView(
                           shrinkWrap: true,
-                          physics: ScrollPhysics(),
+                          physics: const ScrollPhysics(),
                           children: getNotification(context)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 75,
                     ),
                   ],
@@ -163,6 +166,10 @@ class MyNotificationsLoadedState extends States {
   List<Widget> getNotification(BuildContext context) {
     List<Widget> children = [];
     model.forEach((element) {
+      bool subOrder = false;
+      if (element.title == 'طلب فرعي جديد') {
+        subOrder = true;
+      }
       children.add(Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: InkWell(
@@ -200,33 +207,88 @@ class MyNotificationsLoadedState extends States {
             endActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const ScrollMotion(),
-              extentRatio: element.orderStatus == OrderStatusEnum.FINISHED ||
-                      element.captainID != null
-                  ? 0.7
-                  : 0.2,
+
               // A pane can dismiss the Slidable.
               dismissible: null,
               dragDismissible: false,
               // All actions are defined in the children parameter.
               children: [
-                SlidableAction(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  label: S.current.delete,
-                  icon: Icons.delete,
-                  onPressed: (context) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomAlertDialog(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                screenState
-                                    .deleteNotification(element.id.toString());
-                              },
-                              content: S.current
-                                  .areYouSureAboutDeleteThisNotification);
-                        });
-                  },
+                Visibility(
+                  visible: subOrder == false,
+                  child: SlidableAction(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    label: S.current.delete,
+                    icon: Icons.delete,
+                    onPressed: (context) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.deleteNotification(
+                                      element.id.toString());
+                                },
+                                content: S.current
+                                    .areYouSureAboutDeleteThisNotification);
+                          });
+                    },
+                  ),
+                ),
+                Visibility(
+                  visible: subOrder,
+                  child: SlidableAction(
+                    backgroundColor: Colors.green,
+                    label: S.current.accept,
+                    icon: Icons.thumb_up_alt_rounded,
+                    onPressed: (context) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.manager.updateOrder(
+                                      screenState,
+                                      UpdateOrderRequest(
+                                          id: int.tryParse(
+                                              element.orderNumber ?? ''),
+                                          state: StatusHelper.getStatusString(
+                                              OrderStatusEnum.IN_STORE)));
+                                  screenState.deleteNotification(
+                                      element.id.toString());
+                                },
+                                content: S.current.confirmAcceptSubOrder);
+                          });
+                    },
+                  ),
+                ),
+                Visibility(
+                  visible: subOrder,
+                  child: SlidableAction(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    label: S.current.reject,
+                    icon: Icons.thumb_down,
+                    onPressed: (context) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  screenState.manager.removeOrderSub(
+                                      screenState,
+                                      OrderNonSubRequest(
+                                        orderID: int.tryParse(
+                                            element.orderNumber ?? ''),
+                                      ));
+                                  screenState.deleteNotification(
+                                      element.id.toString());
+                                },
+                                content: S.current.confirmRemoveSubOrder);
+                          });
+                    },
+                  ),
                 ),
               ],
             ),
@@ -244,7 +306,7 @@ class MyNotificationsLoadedState extends States {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Expanded(
@@ -253,7 +315,7 @@ class MyNotificationsLoadedState extends States {
                     children: [
                       Text(
                         element.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         element.body +

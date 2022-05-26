@@ -37,6 +37,8 @@ class Urls {
   static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
   static const CAPTAIN_ORDER_UPDATE_API =
       BASE_API + '/v1/order/orderupdatestate';
+        static const UPDATE_PAID_TO_PROVIDER_API =
+      BASE_API + '/v1/order/orderupdatepaidtoprovider';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
   static const UPDATES_API = BASE_API + '/updateall';
@@ -204,6 +206,8 @@ class Urls {
       DOMAIN + '/v1/order/filterordersbycaptain';
   static const CREATE_CHATROOM_BEFORE_ACCEPT =
       DOMAIN + '/v1/orderchatroom/createneworderchatroom';
+  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsub';
+
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +
       '/v1/captainfinancialsystemaccordingnorder/captainfinancialsystemaccordingonorder';

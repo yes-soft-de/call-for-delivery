@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
+
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -19,7 +21,9 @@ class Datum {
   int? storeOwnerBranchId;
   String? branchName;
   Destination? location;
-
+  int? isHide;
+  bool? orderIsMain;
+  List<SubOrder>? suborder;
   Datum(
       {this.id,
       this.state,
@@ -36,7 +40,10 @@ class Datum {
       this.detail,
       this.storeOwnerBranchId,
       this.branchName,
-      this.location});
+      this.location,
+      this.isHide,
+      this.orderIsMain,
+      this.suborder});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['id'] as int?,
@@ -60,6 +67,11 @@ class Datum {
       detail: json['detail'] as String?,
       storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
       branchName: json['branchName'] as String?,
+      isHide: json['isHide'] as int?,
+      suborder: (json['subOrder'] as List<dynamic>?)
+          ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      orderIsMain: json['orderIsMain'] as bool?,
       location: json['location'] == null
           ? null
           : Destination.fromJson(json['location'] as Map<String, dynamic>));

@@ -157,6 +157,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
+        "captainPlanNotAcceptedFromAdminYet":
+            MessageLookupByLibrary.simpleMessage(
+                "Captain plan not accepted from admin yet"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
@@ -242,6 +245,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmAcceptSubOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you want to accept this sub order, "),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
@@ -251,6 +256,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmRemoveSubOrder": MessageLookupByLibrary.simpleMessage(
+            "Confirm removing suborder from group order "),
         "confirmRenewSub": MessageLookupByLibrary.simpleMessage(
             "Are your sure about renewing your subscription"),
         "confirmUpdateOrderStatus": MessageLookupByLibrary.simpleMessage(
@@ -433,6 +440,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
@@ -589,6 +597,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notices": MessageLookupByLibrary.simpleMessage("Notices"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
+        "notificationSound":
+            MessageLookupByLibrary.simpleMessage("Notification sound"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
@@ -637,6 +647,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderReceved": MessageLookupByLibrary.simpleMessage(
             "The order has been receved by another captain"),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order removed successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("Order Status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
@@ -666,6 +678,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
         "paid": MessageLookupByLibrary.simpleMessage("Paid"),
+        "paidToProvider": MessageLookupByLibrary.simpleMessage(
+            "Did you pay order cost totally to store owner before taking the order"),
+        "paidToProviderStatus":
+            MessageLookupByLibrary.simpleMessage("Paid to provider status"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -758,6 +774,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -811,6 +828,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your account has been registered successfully"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "Register Success, Setup my profile"),
+        "reject": MessageLookupByLibrary.simpleMessage("Reject"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
@@ -831,6 +849,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "ringtone": MessageLookupByLibrary.simpleMessage("Ringtone"),
         "sOrder": MessageLookupByLibrary.simpleMessage("order"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
@@ -923,6 +942,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
+        "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
@@ -958,10 +978,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no branches available"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
             "There is no permission to handle this feature"),
+        "thereIsSomeSubOrderNeedYouAttention": MessageLookupByLibrary.simpleMessage(
+            "There is some suborders need your action , reject it or accept it or it will remain pending"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
+        "thisOrderAcceptedByAnotherCaptain":
+            MessageLookupByLibrary.simpleMessage(
+                "This order accepted by another captain"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
@@ -980,6 +1005,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
+        "unlinkSubOrders":
+            MessageLookupByLibrary.simpleMessage("Unlink SubOrders"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -1051,6 +1078,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You cannot choose new plan , because you have a running one"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
+            "You need to accept primary order first, before interact with suborders "),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),

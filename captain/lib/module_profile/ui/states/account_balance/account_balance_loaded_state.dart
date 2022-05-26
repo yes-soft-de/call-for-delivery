@@ -80,8 +80,8 @@ class AccountBalanceLoaded extends States {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      content: S
-                                          .current.areYouSureToDeleteThisPayment);
+                                      content: S.current
+                                          .areYouSureToDeleteThisPayment);
                                 });
                           },
                           icon: const Icon(Icons.delete)),

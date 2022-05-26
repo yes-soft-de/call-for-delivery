@@ -678,7 +678,29 @@
     "financialDuesCycles": "Financial dues cycles",
     "currentFinancialDuesCycle": "Current cycle",
     "financialDuesDetails": "Financial dues details",
-    "financeStoreStatus": "Finance order status"
+    "financeStoreStatus": "Finance order status",
+    "paidToProvider": "Did you pay order cost totally to store owner before taking the order",
+    "thisOrderAcceptedByAnotherCaptain": "This order accepted by another captain",
+    "paidToProviderStatus": "Paid to provider status",
+    "groupOrder": "Group Order",
+    "unlinkSubOrders": "Unlink SubOrders",
+    "orderRemovedSuccessfully": "Order removed successfully",
+    "primaryOrder": "Primary order",
+    "suborder": "Suborder",
+    "youNeedToAcceptPrimaryOrderFirst": "You need to accept primary order first, before interact with suborders ",
+    "reject": "Reject",
+    "confirmRemoveSubOrder": "Confirm removing suborder from group order ",
+    "confirmAcceptSubOrder": "Are you want to accept this sub order, ",
+    "notificationSound": "Notification sound",
+    "ringtone": "Ringtone",
+    "thereIsSomeSubOrderNeedYouAttention": "There is some suborders need your action , reject it or accept it or it will remain pending",
+    "captainPlanNotAcceptedFromAdminYet": "Captain plan not accepted from admin yet"
+
+
+
+
+
+
 
 
 

@@ -38,8 +38,7 @@ class CaptainAccountBalanceModel extends DataModel {
       this.orderCountsDetails,
       required this.amountForStore,
       required this.paymentsToClient,
-      required this.ordersInMonth
-      });
+      required this.ordersInMonth});
   late CaptainAccountBalanceModel _data;
   CaptainAccountBalanceModel.withData(CaptainAccountBalanceResponse response) {
     var element = response.data;
@@ -76,7 +75,8 @@ class CaptainAccountBalanceModel extends DataModel {
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
           amountForStore: element?.amountForStore ?? 0,
-          paymentsToClient: getPayments(), ordersInMonth: element?.countOrdersInMonth);
+          paymentsToClient: getPayments(),
+          ordersInMonth: element?.countOrdersInMonth);
     } else {
       _data = CaptainAccountBalanceModel(
         advancePayment: element?.advancePayment,
@@ -94,7 +94,8 @@ class CaptainAccountBalanceModel extends DataModel {
         monthCompensation: element?.monthCompensation,
         monthTargetSuccess: element?.monthTargetSuccess,
         amountForStore: element?.amountForStore ?? 0,
-        paymentsToClient: getPayments(), ordersInMonth: element?.countOrdersInMonth,
+        paymentsToClient: getPayments(),
+        ordersInMonth: element?.countOrdersInMonth,
       );
     }
   }

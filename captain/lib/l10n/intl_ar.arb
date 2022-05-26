@@ -305,7 +305,7 @@
     "updateOrders": "تعديل الطلبات",
     "updateOrderNote": "يمكنك تعديل الطلب من خلال النافذة الحالية",
     "welcomeToOurApp": "أهلا بك في تطبيق تواصلنا",
-    "updateOrderSuccess": "نم تعديل طلبك بنجاح",
+    "updateOrderSuccess": "تم تعديل طلبك بنجاح",
     "username": "اسم المستخدم",
     "registerHint": "اسم مستخدم أو رقم هاتف",
     "registerSuccess": "تم تسجيل حسابك بنجاح",
@@ -679,7 +679,23 @@
     "financialDuesCycles": "الدورات المالية",
     "currentFinancialDuesCycle": "الدورة الحالية",
     "financialDuesDetails": "تفاصيل الدورة المالية",
-    "financeStoreStatus": "حالة مستحقات المتاجر"
+    "financeStoreStatus": "حالة مستحقات المتاجر",
+    "paidToProvider": "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر",
+    "thisOrderAcceptedByAnotherCaptain": "تم قبول الطلب من قبل كابتن آخر",
+    "paidToProviderStatus": "هل تم دفع ثمن الطلب للمتجر ؟",
+    "groupOrder": "طلب مجمع",
+    "unlinkSubOrders": "فك طلب فرعي",
+    "orderRemovedSuccessfully": "تم فك ربط طلب فرعي بنجاح",
+    "primaryOrder": "طلب رئيسي",
+    "suborder": "طلب فرعي",
+    "youNeedToAcceptPrimaryOrderFirst": "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها",
+    "reject": "رفض",
+    "confirmRemoveSubOrder": "هل أنت متأكد من رغبتك في رفض هذا الطلب ، وسيتم إزالته من الطلب المجمع",
+    "confirmAcceptSubOrder": "هل أنت متأكد من رغبتك من قبول هذا الطلب الفرعي",
+    "notificationSound": "صوت الإشعار",
+    "ringtone": "نغمة",
+    "thereIsSomeSubOrderNeedYouAttention": "هناك بعض الطلبات التي تحتاج للموافقة على ربطها أو فك ارتباطها بهذا الطلب، علما أن الطلب سيبقى معلقا في حالة عدم اتخاذ إجراء",
+    "captainPlanNotAcceptedFromAdminYet": "خطة العمل المختارة من الكابتن لم يتم اعتمادها من قبل الإدارة بعد  يرجى الانتظار"
 
 
 

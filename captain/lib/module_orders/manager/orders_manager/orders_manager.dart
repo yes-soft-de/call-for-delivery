@@ -1,4 +1,5 @@
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -32,9 +33,14 @@ class OrdersManager {
   Future<OrderActionResponse?> updateOrder(
           UpdateOrderRequest updateOrderRequest) =>
       _repository.updateOrderState(updateOrderRequest);
+      Future<OrderActionResponse?> updateCashStatus(
+          UpdateOrderRequest updateOrderRequest) =>
+      _repository.updateCashStatus(updateOrderRequest);
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
   Future<EnquiryResponse?> createChatRoom(int orderId) =>
       _repository.createChatRoom(orderId);
+  Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) =>
+      _repository.removeOrderSub(orderRequest);
 }

@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -29,20 +30,33 @@ class OrderLogsLoadedState extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              if (element.orderIsMain && element.subOrders.isNotEmpty) {
+                Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id.toString());
+              }
             },
             child: OrderCard(
+              orderIsMain: element.orderIsMain,
+              background: element.orderIsMain
+                  ? Colors.red[700]
+                  : StatusHelper.getOrderStatusColor(element.state),
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: FixedNumber.getFixedNumber(element.orderCost),
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              deliveryDate: element.deliveryDate,
-              orderCost:
-                  element.orderCost.toStringAsFixed(2) + ' ' + S.current.sar,
-              note: element.note,
-              destination: element.distance,
+              destination: S.current.destinationUnavailable == element.distance
+                  ? element.distance
+                  : S.current.distance +
+                      ' ' +
+                      element.distance +
+                      ' ' +
+                      S.current.km,
               credit: element.paymentMethod != 'cash',
-              background: StatusHelper.getOrderStatusColor(element.state),
             ),
           ),
         ),

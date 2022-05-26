@@ -1,16 +1,19 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OrderCard extends StatelessWidget {
   final String orderNumber;
   final String orderStatus;
   final String deliveryDate;
   final String orderCost;
-  final String note;
+  final String? note;
   final String destination;
   final bool credit;
   final Color? background;
-  OrderCard(
+  final String? primaryTitle;
+  final bool orderIsMain;
+  const OrderCard(
       {required this.orderNumber,
       required this.orderStatus,
       required this.deliveryDate,
@@ -18,6 +21,8 @@ class OrderCard extends StatelessWidget {
       required this.note,
       required this.destination,
       required this.credit,
+      this.orderIsMain = false,
+      this.primaryTitle,
       this.background});
 
   @override
@@ -40,6 +45,36 @@ class OrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
+              Visibility(
+                visible: orderIsMain || primaryTitle != null,
+                child: Row(
+                  children: [
+                    const Icon(
+                      FontAwesomeIcons.tag,
+                      color: Colors.amber,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.amber),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          primaryTitle ?? S.current.groupOrder,
+                          style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
               // order number & order status
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -143,9 +178,12 @@ class NearbyOrdersCard extends StatelessWidget {
   final String deliveryDate;
   final String orderCost;
   final String distance;
-  final String note;
+  final String? note;
   final String branchName;
   final bool credit;
+  final bool orderIsMain;
+  final String? primaryTitle;
+  final Color? background;
   const NearbyOrdersCard(
       {required this.orderNumber,
       required this.distance,
@@ -153,25 +191,59 @@ class NearbyOrdersCard extends StatelessWidget {
       required this.orderCost,
       required this.note,
       required this.branchName,
-      required this.credit});
+      required this.credit,
+      this.orderIsMain = false,
+      this.background,
+      this.primaryTitle});
 
   @override
   Widget build(BuildContext context) {
+    var color = background ?? Theme.of(context).colorScheme.primary;
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
-            Theme.of(context).colorScheme.primary.withOpacity(0.9),
-            Theme.of(context).colorScheme.primary.withOpacity(0.93),
-            Theme.of(context).colorScheme.primary.withOpacity(0.95),
-            Theme.of(context).colorScheme.primary,
+            color.withOpacity(0.85),
+            color.withOpacity(0.85),
+            color.withOpacity(0.9),
+            color.withOpacity(0.93),
+            color.withOpacity(0.95),
+            color,
           ])),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+            Visibility(
+              visible: orderIsMain || primaryTitle != null,
+              child: Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.tag,
+                    color: Colors.amber,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.amber),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        primaryTitle ?? S.current.groupOrder,
+                        style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
             // order number & order status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

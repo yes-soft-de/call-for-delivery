@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -10,6 +12,7 @@ import 'package:c4d/module_localization/service/localization_service/localizatio
 import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:soundpool/soundpool.dart';
 
 @injectable
 class SettingsScreen extends StatefulWidget {
@@ -31,7 +34,12 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool loading = false;
-
+  List<String> ringtones = [
+    'assets/sounds/ringtone1.wav',
+    'assets/sounds/ringtone2.wav',
+    'assets/sounds/ringtone3.wav'
+  ];
+  String? ringtone = NotificationsPrefHelper().getNotification();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +120,143 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }),
                     ),
                     ListTile(
+                      leading: Icon(Icons.notifications_active),
+                      title: Text(
+                        S.of(context).notificationSound,
+                      ),
+                      subtitle: Text(S.current.ringtone +
+                          ' ' +
+                          (ringtones.indexOf(NotificationsPrefHelper()
+                                      .getNotification()) +
+                                  1)
+                              .toString()),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return StatefulBuilder(builder: (ctx, refresh) {
+                                return AlertDialog(
+                                  title: Text(S.current.notificationSound),
+                                  scrollable: true,
+                                  content: Container(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 1 '),
+                                              value:
+                                                  'assets/sounds/ringtone1.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 2 '),
+                                              value:
+                                                  'assets/sounds/ringtone2.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                            child: RadioListTile(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              title: Text(
+                                                  S.of(context).ringtone +
+                                                      ' 3 '),
+                                              value:
+                                                  'assets/sounds/ringtone3.wav',
+                                              groupValue: ringtone,
+                                              onChanged: (String? value) {
+                                                NotificationsPrefHelper()
+                                                    .setNotificationPath(
+                                                        value ?? '');
+                                                playSound(value ?? '');
+                                                ringtone = value;
+                                                refresh(() {});
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          setState(() {});
+                                        },
+                                        child: Text(S.current.cancel)),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          setState(() {});
+                                        },
+                                        child: Text(S.current.confirm)),
+                                  ],
+                                );
+                              });
+                            });
+                      },
+                    ),
+                    ListTile(
                       leading: const Icon(Icons.person_rounded),
                       title: Text(
                         S.of(context).signOut,
@@ -142,5 +287,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> playSound(String ringtone) async {
+    Soundpool pool = Soundpool.fromOptions();
+    var sound = await rootBundle.load(ringtone).then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    pool.play(sound, repeat: ringtone.contains('2') ? 3 : 0);
   }
 }

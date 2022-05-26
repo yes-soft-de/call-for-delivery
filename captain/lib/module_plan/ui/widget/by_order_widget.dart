@@ -81,8 +81,10 @@ class FinanceByOrder extends StatelessWidget {
                       ' ${S.current.km}'),
               horizontalsTile(S.current.amount,
                   FixedNumber.getFixedNumber(amount) + ' ${S.current.sar}'),
-              horizontalsTile(S.current.bounceCountOrdersInMonth,
-                  FixedNumber.getFixedNumber(bounceCountOrdersInMonth) + ' ${S.current.orderWithoutDef}'),
+              horizontalsTile(
+                  S.current.bounceCountOrdersInMonth,
+                  FixedNumber.getFixedNumber(bounceCountOrdersInMonth) +
+                      ' ${S.current.orderWithoutDef}'),
               horizontalsTile(S.current.bounce,
                   FixedNumber.getFixedNumber(bounce) + ' ${S.current.sar}'),
             ],

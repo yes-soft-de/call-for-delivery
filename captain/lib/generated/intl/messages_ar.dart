@@ -155,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
+        "captainPlanNotAcceptedFromAdminYet": MessageLookupByLibrary.simpleMessage(
+            "خطة العمل المختارة من الكابتن لم يتم اعتمادها من قبل الإدارة بعد  يرجى الانتظار"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
@@ -239,6 +241,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage(" طلبات منتهية "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
+        "confirmAcceptSubOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك من قبول هذا الطلب الفرعي"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("تأكيد الرقم"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف الفرع"),
@@ -248,6 +252,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
+        "confirmRemoveSubOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في رفض هذا الطلب ، وسيتم إزالته من الطلب المجمع"),
         "confirmRenewSub": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من عملية تجديد اشتراكك"),
         "confirmUpdateOrderStatus": MessageLookupByLibrary.simpleMessage(
@@ -428,6 +434,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
+        "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
@@ -530,7 +537,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myAddressHint": MessageLookupByLibrary.simpleMessage("اكتب عنوانك"),
         "myBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "myBalanceHint": MessageLookupByLibrary.simpleMessage(
-            "هنا نستعرض تفاصيل الورة المالية الخاص بهذا المستخدم"),
+            "هنا نستعرض تفاصيل الدورة المالية الخاص بهذا المستخدم"),
         "myLocation": MessageLookupByLibrary.simpleMessage("موقعي"),
         "myLocationDescribtion": MessageLookupByLibrary.simpleMessage(
             "اضغط على العلامة لتذهب لموقعك"),
@@ -582,6 +589,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
+        "notificationSound":
+            MessageLookupByLibrary.simpleMessage("صوت الإشعار"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
@@ -630,6 +639,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderReceved": MessageLookupByLibrary.simpleMessage(
             "تم استلام الطلب من قبل كابتن آخر "),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم فك ربط طلب فرعي بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
@@ -659,6 +670,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "paid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
+        "paidToProvider": MessageLookupByLibrary.simpleMessage(
+            "هل تم دفع القيمة النقدية كاملة الخاصة بالطلب لصاحب المتجر"),
+        "paidToProviderStatus": MessageLookupByLibrary.simpleMessage(
+            "هل تم دفع ثمن الطلب للمتجر ؟"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -752,6 +767,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب رئيسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -802,6 +818,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد الحساب، اتجه للاشتراك"),
+        "reject": MessageLookupByLibrary.simpleMessage("رفض"),
         "remainingAmountForCompany":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
         "renewNewPlan":
@@ -822,6 +839,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "ringtone": MessageLookupByLibrary.simpleMessage("نغمة"),
         "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "salary": MessageLookupByLibrary.simpleMessage("الراتب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
@@ -917,6 +935,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
+        "suborder": MessageLookupByLibrary.simpleMessage("طلب فرعي"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
@@ -952,10 +971,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
             "عذرا لم يتوفر لدينا الصلاحيات الكافية لتفعيل هذا الإجراء"),
+        "thereIsSomeSubOrderNeedYouAttention": MessageLookupByLibrary.simpleMessage(
+            "هناك بعض الطلبات التي تحتاج للموافقة على ربطها أو فك ارتباطها بهذا الطلب، علما أن الطلب سيبقى معلقا في حالة عدم اتخاذ إجراء"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
+        "thisOrderAcceptedByAnotherCaptain":
+            MessageLookupByLibrary.simpleMessage(
+                "تم قبول الطلب من قبل كابتن آخر"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
@@ -974,6 +998,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
+        "unlinkSubOrders": MessageLookupByLibrary.simpleMessage("فك طلب فرعي"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -984,7 +1009,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
-            MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
+            MessageLookupByLibrary.simpleMessage("تم تعديل طلبك بنجاح"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),
@@ -1049,6 +1074,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
+        "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
+            "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),

@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
@@ -83,10 +84,7 @@ class AccountBalanceStateLoaded extends States {
               child: Text(
                 stringValue ??
                     '${FixedNumber.getFixedNumber(value ?? 0)} ${currency ? S.current.sar : S.current.sOrder}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -152,9 +150,30 @@ class AccountBalanceStateLoaded extends States {
             S.current.countOverOrdersThanRequired,
             balance?.countOverOrdersThanRequired),
         CustomTile(Icons.show_chart_rounded, S.current.bounce, balance?.bounce),
-        CustomTile(
-            FontAwesomeIcons.chartBar, S.current.monthTargetSuccess, null,
-            stringValue: balance?.monthTargetSuccess),
+        Visibility(
+            visible: balance?.monthTargetSuccess != null,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 170,
+                  child: ListTile(
+                    horizontalTitleGap: 0,
+                    leading: const Icon(FontAwesomeIcons.chartBar),
+                    title: Text(S.current.monthTargetSuccess),
+                  ),
+                ),
+                Flushbar(
+                  icon: const Icon(
+                    FontAwesomeIcons.chartPie,
+                    color: Colors.white,
+                  ),
+                  message: balance?.monthTargetSuccess ?? '',
+                  flushbarStyle: FlushbarStyle.FLOATING,
+                  borderRadius: BorderRadius.circular(18),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
+              ],
+            )),
         CustomTile(Icons.checklist_rounded, S.current.countOrdersCompleted,
             balance?.countOrdersCompleted),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
@@ -173,6 +192,4 @@ class AccountBalanceStateLoaded extends States {
       ],
     );
   }
-
 }
-
