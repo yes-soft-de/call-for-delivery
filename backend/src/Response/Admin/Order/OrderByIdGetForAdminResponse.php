@@ -37,7 +37,7 @@ class OrderByIdGetForAdminResponse
     public $updatedAt;
 
     /**
-     * @var int|null $kilometer
+     * @var float|null $kilometer
      */
     public $kilometer;
 

@@ -8,6 +8,7 @@ use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordin
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateResponse;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
+use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDeleteResponse;
 
 class AdminCaptainFinancialSystemAccordingOnOrderService
 {
@@ -50,5 +51,12 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
     public function getCaptainFinancialSystemAccordingOnOrder(): array
     {
        return $this->adminCaptainFinancialSystemAccordingOnOrderManager->getCaptainFinancialSystemAccordingOnOrder();
-    } 
+    }
+    
+    public function deleteCaptainFinancialSystemAccordingOnOrder($id): ?AdminCaptainFinancialSystemDeleteResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderManager->deleteCaptainFinancialSystemAccordingOnOrder($id);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemDeleteResponse::class, $result);
+    }
 }

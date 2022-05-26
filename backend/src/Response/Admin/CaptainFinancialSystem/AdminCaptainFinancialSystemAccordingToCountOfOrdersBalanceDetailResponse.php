@@ -4,27 +4,27 @@ namespace App\Response\Admin\CaptainFinancialSystem;
 
 class AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
 {
-    public float $salary;
+    public float|null $salary;
 
-    public float $monthCompensation;
+    public float|null $monthCompensation;
 
-    public int $countOverOrdersThanRequired;
+    public int|null $countOverOrdersThanRequired;
 
-    public float $bounce;
+    public float|null $bounce;
 
-    public string $monthTargetSuccess;
+    public string|null $monthTargetSuccess;
    
-    public float $financialDues;
+    public float|null $financialDues;
 
-    public float $total;
+    public float|null $total;
 
-    public int $countOrdersCompleted;
+    public int|null $countOrdersCompleted;
 
-    public string $dateFinancialCycleEnds;
+    public string|null $dateFinancialCycleEnds;
 
-    public float $advancePayment;
+    public float|null $advancePayment;
 
-    public float $sumPayments;
+    public float|null $sumPayments;
     
-    public float $amountForStore;
+    public float|null $amountForStore;
 }

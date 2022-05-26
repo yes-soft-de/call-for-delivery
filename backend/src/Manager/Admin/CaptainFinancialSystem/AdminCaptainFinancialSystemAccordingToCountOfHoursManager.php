@@ -52,4 +52,19 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursManager
 
         return $captainFinancialSystemAccordingToCountOfHoursEntity;
     }
+    
+    public function deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id): ?CaptainFinancialSystemAccordingToCountOfHoursEntity
+    {
+        $captainFinancialSystem = $this->captainFinancialSystemAccordingToCountOfHoursEntityRepository->find($id);
+
+        if (! $captainFinancialSystem) {     
+            
+            return $captainFinancialSystem;
+        }
+       
+        $this->entityManager->remove($captainFinancialSystem);
+        $this->entityManager->flush();
+       
+        return $captainFinancialSystem;
+    }
 }

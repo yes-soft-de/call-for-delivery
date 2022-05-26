@@ -8,7 +8,7 @@ class OrderUpdateByCaptainResponse
 
     public string $state;
 
-    public int|null $kilometer;
+    public float|null $kilometer;
 
     public float|null $captainOrderCost;
 

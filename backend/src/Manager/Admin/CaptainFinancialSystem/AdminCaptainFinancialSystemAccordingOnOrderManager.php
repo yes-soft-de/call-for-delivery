@@ -55,4 +55,19 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
     {
         return $this->captainFinancialSystemAccordingOnOrderEntityRepository->getCaptainFinancialSystemAccordingOnOrder();
     }
+    
+    public function deleteCaptainFinancialSystemAccordingOnOrder($id): ?CaptainFinancialSystemAccordingOnOrderEntity
+    {
+        $captainFinancialSystem = $this->captainFinancialSystemAccordingOnOrderEntityRepository->find($id);
+
+        if (! $captainFinancialSystem) {     
+            
+            return $captainFinancialSystem;
+        }
+       
+        $this->entityManager->remove($captainFinancialSystem);
+        $this->entityManager->flush();
+       
+        return $captainFinancialSystem;
+    }
 }

@@ -8,6 +8,7 @@ use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordin
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateResponse;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest;
+use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDeleteResponse;
 
 class AdminCaptainFinancialSystemAccordingToCountOfHoursService
 {
@@ -45,5 +46,12 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursService
         $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursManager->updateCaptainFinancialSystemAccordingToCountOfHours($request);
 
         return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, AdminCaptainFinancialSystemAccordingToCountOfHoursCreateResponse::class, $result);
+    }
+    
+    public function deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id): ?AdminCaptainFinancialSystemDeleteResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfHoursManager->deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, AdminCaptainFinancialSystemDeleteResponse::class, $result);
     }
 }

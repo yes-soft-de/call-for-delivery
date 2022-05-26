@@ -36,7 +36,7 @@ class OrderStateUpdateBySuperAdminResponse
     public $updatedAt;
 
     /**
-     * @var int|null
+     * @var float|null
      */
     public $kilometer;
 }

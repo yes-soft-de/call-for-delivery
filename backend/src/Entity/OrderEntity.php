@@ -42,7 +42,7 @@ class OrderEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private $kilometer;
 
     #[ORM\Column(type: 'float', nullable: true)]
@@ -221,12 +221,12 @@ class OrderEntity
         return $this;
     }
 
-    public function getKilometer(): ?int
+    public function getKilometer(): ?float
     {
         return $this->kilometer;
     }
 
-    public function setKilometer(?int $kilometer): self
+    public function setKilometer(?float $kilometer): self
     {
         $this->kilometer = $kilometer;
 

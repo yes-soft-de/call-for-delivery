@@ -51,4 +51,19 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
 
         return $captainFinancialSystemAccordingToCountOfOrdersEntity;
     }
+    
+    public function deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id): ?CaptainFinancialSystemAccordingToCountOfOrdersEntity
+    {
+        $captainFinancialSystem = $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->find($id);
+
+        if (! $captainFinancialSystem) {     
+            
+            return $captainFinancialSystem;
+        }
+       
+        $this->entityManager->remove($captainFinancialSystem);
+        $this->entityManager->flush();
+       
+        return $captainFinancialSystem;
+    }
 }

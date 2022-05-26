@@ -16,10 +16,10 @@ class CaptainFinancialSystemAccordingOnOrderEntity
     #[ORM\Column(type: 'string', length: 255)]
     private $categoryName;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $countKilometersFrom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $countKilometersTo;
 
     #[ORM\Column(type: 'float')]
@@ -48,24 +48,24 @@ class CaptainFinancialSystemAccordingOnOrderEntity
         return $this;
     }
 
-    public function getCountKilometersFrom(): ?int
+    public function getCountKilometersFrom(): ?float
     {
         return $this->countKilometersFrom;
     }
 
-    public function setCountKilometersFrom(int $countKilometersFrom): self
+    public function setCountKilometersFrom(float $countKilometersFrom): self
     {
         $this->countKilometersFrom = $countKilometersFrom;
 
         return $this;
     }
 
-    public function getCountKilometersTo(): ?int
+    public function getCountKilometersTo(): ?float
     {
         return $this->countKilometersTo;
     }
 
-    public function setCountKilometersTo(int $countKilometersTo): self
+    public function setCountKilometersTo(float $countKilometersTo): self
     {
         $this->countKilometersTo = $countKilometersTo;
 

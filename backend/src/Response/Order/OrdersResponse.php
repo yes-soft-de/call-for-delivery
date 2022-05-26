@@ -56,7 +56,7 @@ class OrdersResponse
 
     public int|null $paidToProvider;
 
-    public int|null $kilometer;
+    public float|null $kilometer;
 
     public null|array $captain;
 
