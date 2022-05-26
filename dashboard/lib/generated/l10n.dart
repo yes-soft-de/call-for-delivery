@@ -6619,6 +6619,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Car Updated successfully`
+  String get carUpdatedSuccessfully {
+    return Intl.message(
+      'Car Updated successfully',
+      name: 'carUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance category deleted successfully`
+  String get financeCategoryDeletedSuccessfully {
+    return Intl.message(
+      'Finance category deleted successfully',
+      name: 'financeCategoryDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about deleting this captain finance plan`
+  String get areSureAboutDeleteThisFinance {
+    return Intl.message(
+      'Are sure about deleting this captain finance plan',
+      name: 'areSureAboutDeleteThisFinance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

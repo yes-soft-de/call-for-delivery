@@ -78,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من عملية حذف هذه الخطة"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "bankAccountNumber":
@@ -157,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
         "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
+        "carUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث السيارة بنجاح"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),
         "cartAttention": MessageLookupByLibrary.simpleMessage(
@@ -374,6 +378,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الساعات"),
         "financeByOrders":
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
+        "financeCategoryDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف باقة عمل كابتن بنجاح"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),

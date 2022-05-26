@@ -78,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
+            "Are sure about deleting this captain finance plan"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "bankAccountNumber":
@@ -157,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
         "carModel": MessageLookupByLibrary.simpleMessage("Car Model"),
+        "carUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Car Updated successfully"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
         "cartAttention": MessageLookupByLibrary.simpleMessage(
@@ -377,6 +381,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Finance by hours"),
         "financeByOrders":
             MessageLookupByLibrary.simpleMessage("Finance by orders"),
+        "financeCategoryDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Finance category deleted successfully"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("Finance on order"),
         "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),

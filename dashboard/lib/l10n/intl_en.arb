@@ -678,7 +678,12 @@
     "deliveryDate": "delivery date",
     "orderCashWithCaptain": "Cash With Captain",
     "captainNote": "Captain Notes",
-    "youNeedToPayExclusively": "Pay Exclusively"
+    "youNeedToPayExclusively": "Pay Exclusively",
+    "carUpdatedSuccessfully": "Car Updated successfully",
+    "financeCategoryDeletedSuccessfully": "Finance category deleted successfully",
+    "areSureAboutDeleteThisFinance": "Are sure about deleting this captain finance plan"
+
+
 
 
 
