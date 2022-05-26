@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest;
+use App\Request\Admin\DeliveryCar\DeliveryCarUpdateRequest;
 use App\Service\Admin\DeliveryCar\AdminDeliveryCarService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -92,6 +93,65 @@ class AdminDeliveryCarController extends BaseController
         $result = $this->adminDeliveryCarService->createDeliveryCarByAdmin($request);
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * admin: update a delivery car by admin
+     * @Route("deliverycar", name="createDeliveryCarByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Delivery Car")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update delivery car by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="carModel"),
+     *          @OA\Property(type="string", property="details"),
+     *          @OA\Property(type="number", property="deliveryCost")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated delivery car info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\DeliveryCar\DeliveryCarGetForAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateDeliveryCarByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, DeliveryCarUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminDeliveryCarService->updateDeliveryCarByAdmin($request);
+
+        return $this->response($result, self::UPDATE);
     }
 
     /**

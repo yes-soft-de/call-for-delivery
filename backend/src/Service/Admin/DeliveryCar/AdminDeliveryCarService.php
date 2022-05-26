@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\DeliveryCarEntity;
 use App\Manager\Admin\DeliveryCar\AdminDeliveryCarManager;
 use App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest;
+use App\Request\Admin\DeliveryCar\DeliveryCarUpdateRequest;
 use App\Response\Admin\DeliveryCar\DeliveryCarGetForAdminResponse;
 
 class AdminDeliveryCarService
@@ -22,6 +23,13 @@ class AdminDeliveryCarService
     public function createDeliveryCarByAdmin(DeliveryCarCreateRequest $request): DeliveryCarGetForAdminResponse
     {
         $deliveryCarEntity = $this->adminDeliveryCarManager->createDeliveryCarByAdmin($request);
+
+        return $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForAdminResponse::class, $deliveryCarEntity);
+    }
+
+    public function updateDeliveryCarByAdmin(DeliveryCarUpdateRequest $request): ?DeliveryCarGetForAdminResponse
+    {
+        $deliveryCarEntity = $this->adminDeliveryCarManager->updateDeliveryCarByAdmin($request);
 
         return $this->autoMapping->map(DeliveryCarEntity::class, DeliveryCarGetForAdminResponse::class, $deliveryCarEntity);
     }

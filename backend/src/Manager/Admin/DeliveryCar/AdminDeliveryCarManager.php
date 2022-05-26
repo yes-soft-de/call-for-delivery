@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\DeliveryCarEntity;
 use App\Repository\DeliveryCarEntityRepository;
 use App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest;
+use App\Request\Admin\DeliveryCar\DeliveryCarUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminDeliveryCarManager
@@ -27,6 +28,19 @@ class AdminDeliveryCarManager
 
         $this->entityManager->persist($deliveryCarEntity);
         $this->entityManager->flush();
+
+        return $deliveryCarEntity;
+    }
+
+    public function updateDeliveryCarByAdmin(DeliveryCarUpdateRequest $request): ?DeliveryCarEntity
+    {
+        $deliveryCarEntity = $this->deliveryCarEntityRepository->find($request->getId());
+
+        if ($deliveryCarEntity) {
+            $deliveryCarEntity = $this->autoMapping->mapToObject(DeliveryCarUpdateRequest::class, DeliveryCarEntity::class, $request, $deliveryCarEntity);
+
+            $this->entityManager->flush();
+        }
 
         return $deliveryCarEntity;
     }
