@@ -23,7 +23,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailManager
         return $this->orderManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
 
-    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, int $countKilometersFrom, int $countKilometersTo)
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo)
     {
         return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }

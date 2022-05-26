@@ -8,7 +8,7 @@ class OrderUpdateByCaptainRequest
 
     private string $state;
 
-    private int|null $kilometer;
+    private float|null $kilometer;
 
     private $captainId;
 

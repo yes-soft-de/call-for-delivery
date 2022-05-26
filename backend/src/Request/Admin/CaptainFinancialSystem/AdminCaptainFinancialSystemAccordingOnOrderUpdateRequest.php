@@ -8,9 +8,9 @@ class AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest
 
     private string $categoryName;
     
-    private int $countKilometersFrom;
+    private float $countKilometersFrom;
 
-    private int $countKilometersTo;
+    private float $countKilometersTo;
 
     private float $amount;
 

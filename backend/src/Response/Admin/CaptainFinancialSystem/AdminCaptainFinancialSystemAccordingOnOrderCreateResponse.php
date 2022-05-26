@@ -8,9 +8,9 @@ class AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
     
     public string $categoryName;
     
-    public int $countKilometersFrom;
+    public float $countKilometersFrom;
 
-    public int $countKilometersTo;
+    public float $countKilometersTo;
 
     public float $amount;
 
