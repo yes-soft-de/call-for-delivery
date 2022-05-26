@@ -476,6 +476,15 @@ App\Request\Admin\DeliveryCar\DeliveryCarCreateRequest:
         deliveryCost:
             - NotBlank: ~
 
+App\Request\Admin\DeliveryCar\DeliveryCarUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        carModel:
+            - NotBlank: ~
+        deliveryCost:
+            - NotBlank: ~
+
 App\Request\Admin\User\UserIdUpdateRequest:
     properties:
         currentUserId:
