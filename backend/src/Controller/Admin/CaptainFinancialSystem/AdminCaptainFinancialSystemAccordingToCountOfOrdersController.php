@@ -243,7 +243,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersController extends Base
      */
     public function deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id): JsonResponse
     {
-        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersService->deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id);
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersService->deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id);
 
         return $this->response($result, self::DELETE);
     }

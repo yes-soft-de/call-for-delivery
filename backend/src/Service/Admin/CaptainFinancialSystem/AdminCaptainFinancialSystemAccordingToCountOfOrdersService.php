@@ -48,9 +48,9 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersService
         return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse::class, $result);
     }
     
-    public function deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id): ?AdminCaptainFinancialSystemDeleteResponse
+    public function deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id): ?AdminCaptainFinancialSystemDeleteResponse
     {
-        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersManager->deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id);
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersManager->deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id);
 
         return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, AdminCaptainFinancialSystemDeleteResponse::class, $result);
     }

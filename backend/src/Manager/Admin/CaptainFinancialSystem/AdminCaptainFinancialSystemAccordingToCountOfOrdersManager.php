@@ -52,7 +52,7 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
         return $captainFinancialSystemAccordingToCountOfOrdersEntity;
     }
     
-    public function deleteCaptainFinancialSystemAccordingToCountOfHoursByAdmin($id): ?CaptainFinancialSystemAccordingToCountOfOrdersEntity
+    public function deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id): ?CaptainFinancialSystemAccordingToCountOfOrdersEntity
     {
         $captainFinancialSystem = $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->find($id);
 
