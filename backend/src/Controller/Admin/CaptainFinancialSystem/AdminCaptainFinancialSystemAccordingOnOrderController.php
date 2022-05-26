@@ -214,4 +214,42 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
 
         return $this->response($result, self::UPDATE);
     }
+
+    /**
+     * admin: delete Captain's Financial System According On Order
+     * @Route("captainfinancialsystemaccordingonorderbyadmin/{id}", name="deleteCaptainFinancialSystemAccordingOnOrderByAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain's Financial System According On Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns Captain's Financial System According On Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *          @OA\Property(type="integer", property="id"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function deleteCaptainFinancialSystemAccordingOnOrder($id): JsonResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->deleteCaptainFinancialSystemAccordingOnOrder($id);
+
+        return $this->response($result, self::DELETE);
+    }
 }
