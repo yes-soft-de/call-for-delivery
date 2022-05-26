@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_delivary_car/model/car_model.dart';
 import 'package:c4d/module_delivary_car/ui/screen/cars_screen.dart';
 import 'package:c4d/module_delivary_car/ui/widget/car_card.dart';
+import 'package:c4d/module_delivary_car/ui/widget/car_form.dart';
 import 'package:c4d/module_notice/model/notice_model.dart';
 import 'package:c4d/module_notice/ui/screen/notice_screen.dart';
 import 'package:c4d/module_notice/ui/widget/filter_bar.dart';
@@ -69,16 +70,16 @@ class CarsLoadedState extends States {
         CarCard(
           model: element,
           edit: () {
-//              showDialog(
-//                  context: context,
-//                  builder: (_) {
-//                    return NoticeForm(
-//                      request: element,
-//                      onSave: (request) {
-//                        screenState.updateNotice(request);
-//                      },
-//                    );
-//                  });
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return CarsForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateCars(request);
+                    },
+                  );
+                });
           },
         ),
       );

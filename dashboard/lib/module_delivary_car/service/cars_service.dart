@@ -39,4 +39,17 @@ class CarsService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> updateCars(CarRequest request) async {
+    ActionResponse? actionResponse = await _manager.updateCar(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

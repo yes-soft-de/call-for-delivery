@@ -45,9 +45,9 @@ class CarsScreenState extends State<CarsScreen> {
     widget._stateManager.addCars(this, request);
   }
 
-//  void updateCars(CarsRequest request) {
-//    widget._stateManager.updateCars(this, request);
-//  }
+  void updateCars(CarRequest request) {
+    widget._stateManager.updateCars(this, request);
+  }
 
   void refresh() {
     if (mounted) {
