@@ -124,7 +124,8 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
-Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
+
+  Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.paymentFromCaptain(request);
 
@@ -164,6 +165,9 @@ Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
     return CaptainFinanceByOrderModel.withData(actionResponse);
   }
 
@@ -177,6 +181,9 @@ Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
     return CaptainFinanceByHoursModel.withData(actionResponse);
   }
 
@@ -189,6 +196,9 @@ Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
     if (actionResponse.statusCode != '200') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
     }
     return CaptainFinanceByOrdersCountModel.withData(actionResponse);
   }
@@ -284,8 +294,54 @@ Future<DataModel> paymentFromCaptain(CaptainPaymentsRequest request) async {
     }
     return DataModel.empty();
   }
+
+  /* DELETE */
+  Future<DataModel> deleteCaptainFinanceByOrder(int id) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deleteCaptainFinanceByOrder(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteCaptainFinanceByHour(int id) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deleteCaptainFinanceByHour(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteCaptainFinanceByOrderCounts(int id) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deleteCaptainFinanceByOrderCounts(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  /* CHANGE CAPTAIN PLAN */
   Future<DataModel> financeRequest(CaptainFinanceRequest request) async {
-    ActionResponse? actionResponse = await _paymentsManager.financeRequest(request);
+    ActionResponse? actionResponse =
+        await _paymentsManager.financeRequest(request);
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }

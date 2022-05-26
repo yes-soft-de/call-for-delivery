@@ -79,4 +79,23 @@ class CaptainFinanceByOrderStateManager {
       }
     });
   }
+
+  void deleteFinance(CaptainFinanceByOrderScreenState screenState, int id) {
+    _stateSubject.add(LoadingState(screenState));
+    _storePaymentsService.deleteCaptainFinanceByOrder(id).then((value) {
+      if (value.hasError) {
+        getFinances(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorHappened)
+            .show(screenState.context);
+      } else {
+        getFinances(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: value.error ?? S.current.financeCategoryDeletedSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
 }

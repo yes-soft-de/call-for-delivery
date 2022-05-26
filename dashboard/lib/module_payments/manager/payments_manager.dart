@@ -58,6 +58,14 @@ class PaymentsManager {
   Future<ActionResponse?> updateCaptainFinanceByOrderCounts(
           CreateCaptainFinanceByCountOrderRequest request) =>
       _paymentsRepository.updateCaptainFinanceByOrderCounts(request);
+  /* DELETE */
+  Future<ActionResponse?> deleteCaptainFinanceByOrder(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByOrder(id);
+  Future<ActionResponse?> deleteCaptainFinanceByHour(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByHour(id);
+  Future<ActionResponse?> deleteCaptainFinanceByOrderCounts(int id) =>
+      _paymentsRepository.deleteCaptainFinanceByOrderCounts(id);
+  /* CHANGE CAPTAIN FINANCE PLAN */
   Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) =>
       _paymentsRepository.financeRequest(request);
   /* ---------------------------------- CAPTAIN PAYMENTS --------------------------------------- */

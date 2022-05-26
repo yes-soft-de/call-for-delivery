@@ -198,6 +198,34 @@ class PaymentsRepository {
     return ActionResponse.fromJson(response);
   }
 
+  /* DELETE */
+  Future<ActionResponse?> deleteCaptainFinanceByOrder(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDERS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteCaptainFinanceByHour(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_HOURS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteCaptainFinanceByOrderCounts(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
