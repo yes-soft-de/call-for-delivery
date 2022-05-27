@@ -1,4 +1,10 @@
 {
+    "aws/aws-crt-php": {
+        "version": "v1.0.2"
+    },
+    "aws/aws-sdk-php": {
+        "version": "3.223.0"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
@@ -178,6 +184,9 @@
     },
     "league/flysystem": {
         "version": "2.4.2"
+    },
+    "league/flysystem-aws-s3-v3": {
+        "version": "3.0.13"
     },
     "league/mime-type-detection": {
         "version": "1.9.0"
