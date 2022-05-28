@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\UserStatus\UserStatusConstant;
 use App\Repository\UserEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -37,6 +38,9 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetPasswordOrderEntity::class)]
     private $resetPasswordOrderEntities;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $status = UserStatusConstant::USER_STATUS_ACTIVATED;
 
     public function __construct($userID)
     {
@@ -225,6 +229,18 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
                 $resetPasswordOrderEntity->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
