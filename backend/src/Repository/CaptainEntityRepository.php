@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\ChatRoomEntity;
@@ -61,9 +62,17 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.completeAccountStatus')
+            ->addSelect('userEntity.status')
 
             ->andWhere('captainEntity.captainId = :captainId')
             ->setParameter('captainId', $captainId)
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = captainEntity.captainId'
+            )
 
             ->getQuery()
             ->getOneOrNullResult();

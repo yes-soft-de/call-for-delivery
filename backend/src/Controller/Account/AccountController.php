@@ -4,10 +4,12 @@ namespace App\Controller\Account;
 
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\Main\MainErrorConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Constant\User\UserRoleConstant;
+use App\Constant\UserStatus\UserStatusConstant;
 use App\Controller\BaseController;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Service\Account\AccountService;
@@ -87,6 +89,12 @@ class AccountController extends BaseController
         if ($this->isGranted(UserRoleConstant::ROLE_OWNER)) {
             $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::STORE_OWNER_USER_TYPE);
 
+            if ($response->status) {
+                if ($response->status === UserStatusConstant::USER_STATUS_MAINTENANCE_MOOD) {
+                    return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_MAINTENANCE_MOOD);
+                }
+            }
+
             if($response->completeAccountStatus) {
                 if($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
                     return $this->response($response, self::STORE_OWNER_PROFILE_CREATED);
@@ -109,6 +117,12 @@ class AccountController extends BaseController
         } elseif ($this->isGranted(UserRoleConstant::ROLE_CAPTAIN)) {
             $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::CAPTAIN_USER_TYPE);
 
+            if ($response->status) {
+                if ($response->status === UserStatusConstant::USER_STATUS_MAINTENANCE_MOOD) {
+                    return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_MAINTENANCE_MOOD);
+                }
+            }
+
             if ($response->completeAccountStatus === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
                 return $this->response($response, self::CAPTAIN_PROFILE_CREATED);
 
@@ -128,6 +142,12 @@ class AccountController extends BaseController
 
         } elseif ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
             $response = $this->accountService->getCompleteAccountStatusByUserId($this->getUserId(), UserRoleConstant::SUPPLIER_USER_TYPE);
+
+            if ($response->status) {
+                if ($response->status === UserStatusConstant::USER_STATUS_MAINTENANCE_MOOD) {
+                    return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_MAINTENANCE_MOOD);
+                }
+            }
 
             if ($response->completeAccountStatus === SupplierProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
                 return $this->response($response, self::SUPPLIER_PROFILE_CREATED);

@@ -50,6 +50,8 @@ class BaseController extends AbstractController
     const ERROR_USER_ALREADY_VERIFIED = ["already verified user!", "9007"];
     const ERROR_USER_CREATED = ["error, not created user","9010"];
     const ERROR_USER_IS_NOT_VERIFIED = ["user is not verified!", "9011"];
+    const ERROR_USER_WRONG_STATUS = ["wrong user status!", "9012"];
+    const ERROR_USER_MAINTENANCE_MOOD = ["user is under maintenance mood", "9013"];
     // error captain
     const ERROR_CAPTAIN_INACTIVE = ["error captain inactive","9100"];
     const CAPTAIN_PROFILE_NOT_EXIST = ["captain profile not exist!", "9101"];
