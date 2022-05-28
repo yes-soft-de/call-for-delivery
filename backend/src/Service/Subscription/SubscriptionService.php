@@ -106,7 +106,7 @@ class SubscriptionService
            if($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
               $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
            }
-           
+
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
            if($subscription['hasExtra'] === true) {
@@ -587,13 +587,9 @@ class SubscriptionService
             $subscription['paymentsFromStore'] = $this->storeOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
             $subscription['captainOffer'] = $this->subscriptionManager->getCaptainOfferFirstTimeBySubscriptionId($subscription['id']);
+            $subscription['captainOffers'] = $this->subscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
 
-            $captainOfferPrice = 0;
-            if ($subscription['captainOffer']) {
-                $captainOfferPrice =  $subscription['captainOffer']['price'];
-            }
-
-            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $captainOfferPrice);
+            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
          
             $response[] = $this->autoMapping->map("array", StoreSubscriptionResponse::class, $subscription);
         }
@@ -601,15 +597,16 @@ class SubscriptionService
         return $response;
     }
     
-    public function getTotal(array $payments, float $packageCost, float $captainOfferPrice): array
+    public function getTotal(array $payments, float $packageCost, array $captainOffers): array
     {
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
+        $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
       
-        $item['captainOfferPrice'] = $captainOfferPrice;
+        $item['captainOfferPrice'] = $sumCaptainOfferPrices;
 
         $item['packageCost'] = $packageCost;
       
-        $total = $item['sumPayments'] - ($packageCost + $captainOfferPrice);
+        $total = $item['sumPayments'] - ($packageCost + $sumCaptainOfferPrices);
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
