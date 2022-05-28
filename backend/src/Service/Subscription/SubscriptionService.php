@@ -23,6 +23,7 @@ use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
 use App\Response\Subscription\StoreSubscriptionResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 
 class SubscriptionService
 {
@@ -99,10 +100,13 @@ class SubscriptionService
        $this->checkSubscription($storeOwnerId);
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-      
+    
        if($subscription) {
-           $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
-        
+
+           if($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
+              $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
+           }
+           
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
            if($subscription['hasExtra'] === true) {
