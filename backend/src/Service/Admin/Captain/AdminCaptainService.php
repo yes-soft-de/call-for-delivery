@@ -41,20 +41,22 @@ class AdminCaptainService
 
         $captainsProfiles = $this->adminCaptainManager->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
 
-        foreach ($captainsProfiles as $captainProfile) {
-            $captainProfile['images'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+        if (! empty($captainsProfiles)) {
+            foreach ($captainsProfiles as $captainProfile) {
+                $captainProfile['images'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
 
-            $captainProfile['drivingLicence'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
+                $captainProfile['drivingLicence'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
 
-            $captainProfile['mechanicLicense'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
+                $captainProfile['mechanicLicense'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
 
-            $captainProfile['identity'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
+                $captainProfile['identity'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captainProfile['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
 
-            if (empty($captainProfile['location'])) {
-                $captainProfile['location'] = null;
+                if (empty($captainProfile['location'])) {
+                    $captainProfile['location'] = null;
+                }
+
+                $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
             }
-
-            $response[] = $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
 
         return $response;

@@ -191,7 +191,7 @@ class CaptainManager
         return $this->captainEntityRepository->findOneBy(["captainId" => $captainId]);
     }
 
-    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
     {
         return $this->captainEntityRepository->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
     }
