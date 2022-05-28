@@ -83,13 +83,13 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
     {
         $query = $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
-                'captainEntity.status', 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay');
+                'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay');
 
-        if($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
+        if ($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
             $query->andWhere('captainEntity.status = :captainProfileStatus');
             $query->setParameter('captainProfileStatus', $captainProfileStatus);
         }

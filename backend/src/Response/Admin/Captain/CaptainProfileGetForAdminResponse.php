@@ -46,7 +46,7 @@ class CaptainProfileGetForAdminResponse
     /**
      * @var float|null
      */
-    public null|float $bounce;
+    public $bounce;
 
     /**
      * @var string|null
