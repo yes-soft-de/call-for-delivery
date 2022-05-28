@@ -27,6 +27,7 @@ class SubOrdersListStateLoaded extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
+          key: ObjectKey(element),
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(25),

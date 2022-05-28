@@ -14,6 +14,7 @@ import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
@@ -95,6 +96,7 @@ class OrderStatusStateManager {
                 title: S.current.warnning, message: S.current.deleteSuccess)
             .show(screenState.context);
         getOrder(screenState, orderId);
+        FireStoreHelper().backgroundThread('Trigger');
       }
     });
   }
@@ -119,4 +121,5 @@ class OrderStatusStateManager {
       }
     });
   }
+
 }

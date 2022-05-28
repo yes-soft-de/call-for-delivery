@@ -43,7 +43,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     });
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       if (mounted) {
-        widget._stateManager.getOrder(this, orderId, false);
+        if (orderId != -1) {
+          widget._stateManager.getOrder(this, orderId, false);
+        }
       }
     });
     super.initState();
@@ -85,11 +87,11 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
                         .orderInfo
-                        .orderIsMain
-                         &&
+                        .orderIsMain &&
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .state != OrderStatusEnum.FINISHED,
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.FINISHED,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.newOrderLink, onTap: () {
                   showDialog(
@@ -116,8 +118,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         .subOrders
                         .isNotEmpty &&
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .state != OrderStatusEnum.FINISHED,
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.FINISHED,
                 child: CustomC4dAppBar.actionIcon(context,
                     message: S.current.unlinkSubOrders, onTap: () {
                   showDialog(

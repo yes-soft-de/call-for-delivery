@@ -24,11 +24,12 @@ class OrderLogsLoadedState extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
+          key: ObjectKey(element),
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-             if (element.orderIsMain == true && element.orders.isNotEmpty) {
+              if (element.orderIsMain == true && element.orders.isNotEmpty) {
                 Navigator.of(screenState.context).pushNamed(
                     OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);

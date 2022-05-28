@@ -16,6 +16,7 @@ import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -67,6 +68,7 @@ class OrderRecyclingStateManager {
       } else {
         getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
+        FireStoreHelper().backgroundThread('Trigger');
       }
     });
   }

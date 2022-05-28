@@ -14,6 +14,7 @@ import 'package:c4d/module_orders/ui/screens/new_order_link.dart';
 import 'package:c4d/module_orders/ui/state/new_order_link/new_order_link_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -42,6 +43,8 @@ class NewOrderLinkStateManager {
       } else {
         value as BranchesModel;
         _stateSubject.add(NewOrderLinkStateLoaded(value.data, screenState));
+        FireStoreHelper().backgroundThread('Trigger');
+      
       }
     });
   }

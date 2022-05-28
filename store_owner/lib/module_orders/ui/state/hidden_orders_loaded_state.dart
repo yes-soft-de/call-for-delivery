@@ -27,6 +27,7 @@ class HiddenOrdersStateLoaded extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
+          key: ObjectKey(element),
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
@@ -42,9 +43,7 @@ class HiddenOrdersStateLoaded extends States {
               }
             },
             child: OwnerOrderCard(
-              primaryTitle: element.orderIsMain
-                  ? S.current.primaryOrder
-                  : null,
+              primaryTitle: element.orderIsMain ? S.current.primaryOrder : null,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
@@ -60,12 +59,10 @@ class HiddenOrdersStateLoaded extends States {
         ),
       ));
       widgets.add(Padding(
-        padding: const EdgeInsets.only(left:50.0,right: 50),
+        padding: const EdgeInsets.only(left: 50.0, right: 50),
         child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              primary: Colors.green,
-              shape: StadiumBorder()
-            ),
+                primary: Colors.green, shape: StadiumBorder()),
             onPressed: () {
               Navigator.of(context).pushNamed(OrdersRoutes.ORDER_OWNER_RECYCLE,
                   arguments: element.id);

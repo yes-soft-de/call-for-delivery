@@ -13,6 +13,7 @@ import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/state/new_order/new_order.state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -62,6 +63,7 @@ class NewOrderStateManager {
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
             .show(screenState.context);
+        FireStoreHelper().backgroundThread('Trigger');
       }
     });
   }

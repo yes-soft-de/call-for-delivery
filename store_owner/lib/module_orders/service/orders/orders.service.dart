@@ -14,7 +14,6 @@ import 'package:c4d/module_orders/response/company_info_response/company_info_re
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
-import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -86,7 +85,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
@@ -97,8 +95,7 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
-    return DataModel.empty();
+   return DataModel.empty();
   }
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
@@ -108,7 +105,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
@@ -119,8 +115,7 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
-    return DataModel.empty();
+   return DataModel.empty();
   }
 
   Future<DataModel> deleteOrder(int id) async {
@@ -130,7 +125,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
