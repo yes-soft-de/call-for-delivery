@@ -595,3 +595,10 @@ App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdate
             - NotNull: ~
         captainFinancialSystemType:
             - NotNull: ~
+
+App\Request\UserStatus\UserStatusUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
