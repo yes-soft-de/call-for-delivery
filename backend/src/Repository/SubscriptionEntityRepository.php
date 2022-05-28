@@ -242,4 +242,24 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+
+    public function getCaptainOffersBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price')
+           
+            ->andWhere('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscriptionCaptainOfferEntity.startDate >= subscription.startDate
+             and 
+             subscriptionCaptainOfferEntity.startDate <= subscription.endDate')
+           
+            ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
+
+            ->getQuery()
+
+            ->getResult();
+    }
 }

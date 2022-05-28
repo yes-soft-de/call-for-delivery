@@ -287,4 +287,9 @@ class SubscriptionManager
 
         return $this->subscribeRepository->getCaptainOfferFirstTimeBySubscriptionId($subscriptionId);
     }
+    
+    public function getCaptainOffersBySubscriptionId(int $subscriptionId): ?array
+    {
+        return $this->subscribeRepository->getCaptainOffersBySubscriptionId($subscriptionId);
+    }
 }

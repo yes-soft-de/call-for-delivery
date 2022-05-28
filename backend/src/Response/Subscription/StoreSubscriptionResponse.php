@@ -40,4 +40,6 @@ class StoreSubscriptionResponse
      * )
      */
     public array $total;
+
+    public array $captainOffers;
 }
