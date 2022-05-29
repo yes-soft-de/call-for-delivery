@@ -13,23 +13,23 @@ class Captain {
   String? bankAccountNumber;
   String? stcPay;
   String? status;
-
-  Captain({
-    this.id,
-    this.captainId,
-    this.captainName,
-    this.location,
-    this.age,
-    this.car,
-    this.salary,
-    this.bounce,
-    this.phone,
-    this.isOnline,
-    this.bankName,
-    this.bankAccountNumber,
-    this.stcPay,
-    this.status,
-  });
+  num? rating;
+  Captain(
+      {this.id,
+      this.captainId,
+      this.captainName,
+      this.location,
+      this.age,
+      this.car,
+      this.salary,
+      this.bounce,
+      this.phone,
+      this.isOnline,
+      this.bankName,
+      this.bankAccountNumber,
+      this.stcPay,
+      this.status,
+      this.rating});
 
   factory Captain.fromJson(Map<String, dynamic> json) => Captain(
         id: json['id'] as int?,
@@ -46,6 +46,7 @@ class Captain {
         bankAccountNumber: json['bankAccountNumber'] as String?,
         stcPay: json['stcPay'] as String?,
         status: json['status'] as String?,
+        rating: json['averageRating'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

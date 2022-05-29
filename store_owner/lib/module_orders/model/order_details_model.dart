@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -36,6 +37,7 @@ class OrderDetailsModel extends DataModel {
   late num? paidToProvider;
   late bool orderIsMain;
   late int branchID;
+  late String captainRating;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -78,7 +80,8 @@ class OrderDetailsModel extends DataModel {
       required this.imagePath,
       required this.branchID,
       required this.captainName,
-      required this.captainPhone});
+      required this.captainPhone,
+      required this.captainRating});
 
   late OrderDetailsModel _orders;
 
@@ -135,6 +138,8 @@ class OrderDetailsModel extends DataModel {
       branchID: element?.storeOwnerBranchId ?? -1,
       captainName: element?.captainName,
       captainPhone: element?.captainDetails?.phone,
+      captainRating:
+          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
     );
     _orders.distance = _distance(_orders, location);
   }
@@ -145,8 +150,9 @@ class OrderDetailsModel extends DataModel {
     List<Step> steps = [];
     orderLogs.orderLogs?.logs?.forEach((element) {
       // step date
-      var stepDate = DateFormat.jm()
-              .format(DateHelper.convert(element.createdAt?.timestamp,)) +
+      var stepDate = DateFormat.jm().format(DateHelper.convert(
+            element.createdAt?.timestamp,
+          )) +
           ' 📅 ' +
           DateFormat.yMd()
               .format(DateHelper.convert(element.createdAt?.timestamp));
