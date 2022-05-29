@@ -586,7 +586,6 @@ class SubscriptionService
 
             $subscription['paymentsFromStore'] = $this->storeOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
-            $subscription['captainOffer'] = $this->subscriptionManager->getCaptainOfferFirstTimeBySubscriptionId($subscription['id']);
             $subscription['captainOffers'] = $this->subscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
 
             $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);

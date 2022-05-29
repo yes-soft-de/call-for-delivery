@@ -41,5 +41,5 @@ class AdminStoreSubscriptionResponse
      */
     public array $total;
 
-    // public array|null $captainOffer;
+    public array $captainOffers;
 }
