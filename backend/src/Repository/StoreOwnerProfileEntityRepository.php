@@ -66,9 +66,17 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('storeOwnerProfile')
             ->select('storeOwnerProfile.completeAccountStatus')
+            ->addSelect('userEntity.status')
 
             ->andWhere('storeOwnerProfile.storeOwnerId = :storeOwnerId')
             ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = storeOwnerProfile.storeOwnerId'
+            )
 
             ->getQuery()
             ->getOneOrNullResult();

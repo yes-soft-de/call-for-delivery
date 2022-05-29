@@ -5,6 +5,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_CAPTAIN', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   captainTwo:
     __construct: false
@@ -12,6 +13,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_CAPTAIN', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   captainThree:
     __construct: false
@@ -19,6 +21,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_CAPTAIN', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   captainFour:
     __construct: false
@@ -26,6 +29,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_CAPTAIN', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   captainFive:
     __construct: false
@@ -33,4 +37,5 @@ App\Entity\UserEntity:
     roles: ['ROLE_CAPTAIN', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 

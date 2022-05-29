@@ -90,9 +90,17 @@ class SupplierProfileEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('supplierProfileEntity')
             ->select('supplierProfileEntity.completeAccountStatus')
+            ->addSelect('userEntity.status')
 
             ->andWhere('supplierProfileEntity.user = :user')
             ->setParameter('user', $supplierId)
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = supplierProfileEntity.user'
+            )
 
             ->getQuery()
             ->getOneOrNullResult();

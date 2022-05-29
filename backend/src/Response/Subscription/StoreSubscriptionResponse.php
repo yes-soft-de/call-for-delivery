@@ -41,5 +41,9 @@ class StoreSubscriptionResponse
      */
     public array $total;
 
-    public array $captainOffers;
+    /**
+     * @OA\Property(type="array", property="captainOffers",
+     *     @OA\Items(type="object"))
+     */
+    public $captainOffers;
 }

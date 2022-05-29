@@ -5,6 +5,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   storeOwnerTwo:
     __construct: false
@@ -12,6 +13,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   storeOwnerThree:
     __construct: false
@@ -19,6 +21,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   storeOwnerFour:
     __construct: false
@@ -26,6 +29,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   storeOwnerFive:
     __construct: false
@@ -33,6 +37,7 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456
     verificationStatus: 1
+    status: activated
 
   storeOwnerGoogle:
     __construct: false
@@ -40,3 +45,4 @@ App\Entity\UserEntity:
     roles: ['ROLE_OWNER', 'ROLE_USER']
     password: 123456789
     verificationStatus: 1
+    status: activated
