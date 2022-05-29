@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order_link_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -21,7 +22,7 @@ class NewOrderLinkScreen extends StatefulWidget {
   NewOrderLinkScreenState createState() => NewOrderLinkScreenState();
 }
 
-class NewOrderLinkScreenState extends State<NewOrderLinkScreen> {
+class NewOrderLinkScreenState extends State<NewOrderLinkScreen> with WidgetsBindingObserver{
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
@@ -46,6 +47,21 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen> {
   int? branch;
   LatLng? customerLocation;
   //
+    @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    Clipboard.hasStrings().asStream().listen((event) async {
+      if (event) {
+        ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
+        String data = clip!.text.toString();
+        if (data.length > 9 && data[0] == '0') {
+          await Clipboard.setData(ClipboardData(text: data.substring(1)));
+          if (mounted) {
+            setState(() {});
+          }
+        }
+      }
+    });
+  }
   @override
   void initState() {
     super.initState();
