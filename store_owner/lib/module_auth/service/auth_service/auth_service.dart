@@ -82,6 +82,10 @@ class AuthService {
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
     await accountStatus();
+    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted'){
+       _authSubject.addError(S.current.invalidCredentials);
+      throw AuthorizationException(S.current.invalidCredentials);
+    }
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 
@@ -254,7 +258,7 @@ class AuthService {
         // account deleted
         case '9013':
           await logout();
-          _prefsHelper.setUserCompetedProfile(SplashRoutes.SPLASH_SCREEN);
+          _prefsHelper.setUserCompetedProfile('userDeleted');
           break;
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
