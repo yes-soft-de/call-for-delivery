@@ -20,15 +20,24 @@ class UploadFileHelperService
 
     public function getImageParams(string|null $imageURL): ?array
     {
-        if(! $imageURL) {
-            return null;
-
-        } else {
+        if ($imageURL !== null) {
+            //return null;
+            $item = [];
             $item['imageURL'] = $imageURL;
             $item['image'] = $this->params . $imageURL;
             $item['baseURL'] = $this->params;
 
             return $item;
+
         }
+//        else {
+//            $item = [];
+//            $item['imageURL'] = $imageURL;
+//            $item['image'] = $this->params . $imageURL;
+//            $item['baseURL'] = $this->params;
+//
+//            return $item;
+//        }
+        return $imageURL;
     }
 }

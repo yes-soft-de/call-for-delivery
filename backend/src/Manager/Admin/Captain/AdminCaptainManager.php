@@ -16,7 +16,7 @@ class AdminCaptainManager
         $this->captainManager = $captainManager;
     }
 
-    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): ?array
+    public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
     {
         return $this->captainManager->getCaptainsProfilesByStatusForAdmin($captainProfileStatus);
     }
