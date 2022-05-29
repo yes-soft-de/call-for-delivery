@@ -625,7 +625,8 @@
     "offerNumber": "رقم العرض",
     "offerStatus": "حالة العرض",
     "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن",
-    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن"
+    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن",
+    "yourBranchMissingPhoneNumber": "فرعك ينقصه رقم الهاتف الرجاء تزويدنا به"
 
 
 

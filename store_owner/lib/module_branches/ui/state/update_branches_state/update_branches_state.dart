@@ -12,6 +12,7 @@ import 'package:c4d/module_branches/ui/widget/edit_branch_dialog.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/google_map_widget.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -155,26 +156,44 @@ class UpdateBranchStateLoaded extends States {
                               ? null
                               : () {
                                   if (flag && branchesModel == null) {
-                                    screenState.createBranch(
-                                        CreateBranchRequest(
-                                            branchName:
-                                                branchLocation?.branchName,
-                                            phone: branchLocation?.branchPhone,
-                                            location: GeoJson(
-                                                lat: branchLocation
-                                                    ?.location.latitude,
-                                                lon: branchLocation
-                                                    ?.location.longitude)));
+                                    if (branchLocation?.branchPhone != null) {
+                                      screenState.createBranch(
+                                          CreateBranchRequest(
+                                              branchName:
+                                                  branchLocation?.branchName,
+                                              phone:
+                                                  branchLocation?.branchPhone,
+                                              location: GeoJson(
+                                                  lat: branchLocation
+                                                      ?.location.latitude,
+                                                  lon: branchLocation
+                                                      ?.location.longitude)));
+                                    } else {
+                                      CustomFlushBarHelper.createError(
+                                              title: S.current.warnning,
+                                              message: S.current
+                                                  .yourBranchMissingPhoneNumber)
+                                          .show(context);
+                                    }
                                   } else {
-                                    screenState.updateBranch(
-                                        UpdateBranchesRequest(
-                                            branchName:
-                                                branchLocation?.branchName,
-                                            location: branchLocation?.location,
-                                            city: branchLocation?.city,
-                                            id: branchesModel?.id,
-                                            phone:
-                                                branchLocation?.branchPhone));
+                                    if (branchLocation?.branchPhone != null) {
+                                      screenState.updateBranch(
+                                          UpdateBranchesRequest(
+                                              branchName:
+                                                  branchLocation?.branchName,
+                                              location:
+                                                  branchLocation?.location,
+                                              city: branchLocation?.city,
+                                              id: branchesModel?.id,
+                                              phone:
+                                                  branchLocation?.branchPhone));
+                                    } else {
+                                      CustomFlushBarHelper.createError(
+                                              title: S.current.warnning,
+                                              message: S.current
+                                                  .yourBranchMissingPhoneNumber)
+                                          .show(context);
+                                    }
                                   }
                                 },
                         ),

@@ -941,6 +941,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك"),
+        "yourBranchMissingPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "فرعك ينقصه رقم الهاتف الرجاء تزويدنا به"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")

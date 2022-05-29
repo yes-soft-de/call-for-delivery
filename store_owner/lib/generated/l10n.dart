@@ -6249,6 +6249,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Your branch missing phone number`
+  String get yourBranchMissingPhoneNumber {
+    return Intl.message(
+      'Your branch missing phone number',
+      name: 'yourBranchMissingPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

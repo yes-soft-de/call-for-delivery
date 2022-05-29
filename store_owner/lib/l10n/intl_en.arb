@@ -623,7 +623,9 @@
     "notificationSound": "Notification sound",
     "ringtone": "Ringtone",
     "orderHandledByCaptain": "Order processing by captain ",
-    "orderHandledDoneByCaptain": "Order processed by captain "
+    "orderHandledDoneByCaptain": "Order processed by captain ",
+    "yourBranchMissingPhoneNumber": "Your branch missing phone number"
+
 
 
 
