@@ -99,9 +99,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                           width: 8,
                         ),
                         Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 240
-                          ),
+                          constraints: BoxConstraints(maxWidth: 240),
                           child: Text.rich(
                             TextSpan(
                               children: [
@@ -112,7 +110,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                         : S.current.orderHandledByCaptain + ' ',
                                     style: TextStyle(color: Colors.white)),
                                 TextSpan(
-                                    text: orderInfo.captainName ,
+                                    text: orderInfo.captainName,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),

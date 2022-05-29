@@ -22,7 +22,8 @@ class NewOrderLinkScreen extends StatefulWidget {
   NewOrderLinkScreenState createState() => NewOrderLinkScreenState();
 }
 
-class NewOrderLinkScreenState extends State<NewOrderLinkScreen> with WidgetsBindingObserver{
+class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
+    with WidgetsBindingObserver {
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
@@ -47,7 +48,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen> with WidgetsBind
   int? branch;
   LatLng? customerLocation;
   //
-    @override
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
       if (event) {
@@ -62,6 +63,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen> with WidgetsBind
       }
     });
   }
+
   @override
   void initState() {
     super.initState();

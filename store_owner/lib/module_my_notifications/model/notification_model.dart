@@ -31,10 +31,11 @@ class NotificationModel extends DataModel {
   NotificationModel.withData(MyNotificationResponse orders) {
     var data = orders.data;
     data?.forEach((element) {
-      String notificationDate = DateFormat.jm().format(
-              DateHelper.convert(element.createdAt?.timestamp)) +
+      String notificationDate = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
-          DateFormat.Md().format(DateHelper.convert(element.createdAt?.timestamp));
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
       models.add(NotificationModel(
         marked: false,
         title: element.title ?? '',

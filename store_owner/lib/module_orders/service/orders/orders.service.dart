@@ -95,7 +95,7 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-   return DataModel.empty();
+    return DataModel.empty();
   }
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
@@ -115,7 +115,7 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-   return DataModel.empty();
+    return DataModel.empty();
   }
 
   Future<DataModel> deleteOrder(int id) async {

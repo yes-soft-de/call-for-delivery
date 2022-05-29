@@ -44,7 +44,6 @@ class NewOrderLinkStateManager {
         value as BranchesModel;
         _stateSubject.add(NewOrderLinkStateLoaded(value.data, screenState));
         FireStoreHelper().backgroundThread('Trigger');
-      
       }
     });
   }

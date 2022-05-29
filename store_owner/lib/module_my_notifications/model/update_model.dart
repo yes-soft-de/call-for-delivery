@@ -22,9 +22,11 @@ class UpdateModel extends DataModel {
     var data = response.data;
 
     data?.forEach((element) {
-      String date = DateFormat.jm().format(DateHelper.convert(element.createdAt?.timestamp)) +
+      String date = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
-          DateFormat.Md().format(DateHelper.convert(element.createdAt?.timestamp));
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
       _model.add(UpdateModel(
           id: element.id ?? -1,
           title: element.title ?? '',

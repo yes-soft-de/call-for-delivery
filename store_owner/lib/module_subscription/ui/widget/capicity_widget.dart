@@ -82,22 +82,22 @@ class CapacityBar extends StatelessWidget {
           ),
           Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '$remainingCount / ',
-                    style: TextStyle(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '$totalCount',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '$remainingCount / ',
+                style: TextStyle(
+                    color: Theme.of(context).disabledColor,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '$totalCount',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
         ],
       ),
     );
