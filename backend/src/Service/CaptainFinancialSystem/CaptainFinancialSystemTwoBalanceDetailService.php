@@ -101,7 +101,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
        
         foreach($detailsOrders as $orderDetail) {
             
-            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $item['amountForStore'] += $orderDetail['captainOrderCost'];
             }
         }
@@ -155,7 +155,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
       
        foreach($detailsOrders as $orderDetail) {
            
-           if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+           if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                $item['amountForStore'] += $orderDetail['captainOrderCost'];
            }
        }

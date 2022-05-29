@@ -90,7 +90,7 @@ class CaptainFinancialSystemThreeBalanceDetailService
         $detailsOrders = $this->captainFinancialSystemThreeBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         foreach($detailsOrders as $orderDetail) {
             
-            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }
         }
@@ -138,8 +138,7 @@ class CaptainFinancialSystemThreeBalanceDetailService
         //get Orders Details On Specific Date
         $detailsOrders = $this->captainFinancialSystemThreeBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         foreach($detailsOrders as $orderDetail) {
-            
-            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }
         }

@@ -32,14 +32,9 @@ class AdminStoreSubscriptionService
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
-            $subscription['captainOffer'] = $this->adminStoreSubscriptionManager->getCaptainOfferFirstTimeBySubscriptionId($subscription['id']);
+            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
 
-            $captainOfferPrice = 0;
-            if ($subscription['captainOffer']) {
-                $captainOfferPrice =  $subscription['captainOffer']['price'];
-            }
-
-            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $captainOfferPrice);
+            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
 
             $response[] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
         }
@@ -47,15 +42,17 @@ class AdminStoreSubscriptionService
         return $response;
     }
 
-    public function getTotal(array $payments, float $packageCost, float $captainOfferPrice): array
+    public function getTotal(array $payments, float $packageCost, array $captainOffers): array
     {
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
+        $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
+      
         $item['packageCost'] = $packageCost;
 
-        $item['captainOfferPrice'] = $captainOfferPrice;
+        $item['captainOfferPrice'] = $sumCaptainOfferPrices;
       
-        $total = ($packageCost + $captainOfferPrice) - $item['sumPayments'];
+        $total = ($packageCost + $sumCaptainOfferPrices) - $item['sumPayments'];
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
