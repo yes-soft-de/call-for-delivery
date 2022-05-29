@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "DeletingYourAccountHint": MessageLookupByLibrary.simpleMessage(
+            "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time"),
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "Expired subscriptions please renew your subscription"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
@@ -72,6 +74,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -247,6 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
@@ -256,6 +261,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dear": MessageLookupByLibrary.simpleMessage("Dear"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
@@ -898,6 +904,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
+        "userDeleted":
+            MessageLookupByLibrary.simpleMessage("User deleted successfully"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),

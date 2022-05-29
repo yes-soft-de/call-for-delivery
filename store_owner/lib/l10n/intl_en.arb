@@ -624,7 +624,14 @@
     "ringtone": "Ringtone",
     "orderHandledByCaptain": "Order processing by captain ",
     "orderHandledDoneByCaptain": "Order processed by captain ",
-    "yourBranchMissingPhoneNumber": "Your branch missing phone number"
+    "yourBranchMissingPhoneNumber": "Your branch missing phone number",
+    "dangerZone": "Danger Zone",
+    "areSureAboutDeletingYourAccount": "Are you sure about deleting your account , you won't be able to login with this credential any more",
+    "deleteAccount": "Delete Account",
+    "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
+    "userDeleted": "User deleted successfully"
+
+
 
 
 

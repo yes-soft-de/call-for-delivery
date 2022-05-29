@@ -626,7 +626,13 @@
     "offerStatus": "حالة العرض",
     "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن",
     "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن",
-    "yourBranchMissingPhoneNumber": "فرعك ينقصه رقم الهاتف الرجاء تزويدنا به"
+    "yourBranchMissingPhoneNumber": "فرعك ينقصه رقم الهاتف الرجاء تزويدنا به",
+    "dangerZone": "منطقة خطرة",
+    "areSureAboutDeletingYourAccount": "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن",
+    "deleteAccount": "حذف الحساب",
+    "DeletingYourAccountHint": "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن",
+    "userDeleted": "تم حذف الحساب بنجاح"
+
 
 
 
