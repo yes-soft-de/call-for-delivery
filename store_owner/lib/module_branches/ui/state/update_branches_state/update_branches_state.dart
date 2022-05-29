@@ -169,6 +169,28 @@ class UpdateBranchStateLoaded extends States {
                                                   lon: branchLocation
                                                       ?.location.longitude)));
                                     } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return EditBranchDialog(
+                                              branchName:
+                                                  branchLocation?.branchName ??
+                                                      '',
+                                              phoneNumber:
+                                                  branchLocation?.branchPhone ??
+                                                      '',
+                                            );
+                                          }).then((result) {
+                                        if (result != null) {
+                                          branchLocation?.branchName =
+                                              result?.name;
+                                          if (result.phone != '') {
+                                            branchLocation?.branchPhone =
+                                                result?.phone;
+                                          }
+                                          screenState.refresh();
+                                        }
+                                      });
                                       CustomFlushBarHelper.createError(
                                               title: S.current.warnning,
                                               message: S.current
@@ -188,6 +210,28 @@ class UpdateBranchStateLoaded extends States {
                                               phone:
                                                   branchLocation?.branchPhone));
                                     } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return EditBranchDialog(
+                                              branchName:
+                                                  branchLocation?.branchName ??
+                                                      '',
+                                              phoneNumber:
+                                                  branchLocation?.branchPhone ??
+                                                      '',
+                                            );
+                                          }).then((result) {
+                                        if (result != null) {
+                                          branchLocation?.branchName =
+                                              result?.name;
+                                          if (result.phone != '') {
+                                            branchLocation?.branchPhone =
+                                                result?.phone;
+                                          }
+                                          screenState.refresh();
+                                        }
+                                      });
                                       CustomFlushBarHelper.createError(
                                               title: S.current.warnning,
                                               message: S.current
