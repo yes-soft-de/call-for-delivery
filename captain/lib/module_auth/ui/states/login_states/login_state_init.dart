@@ -158,36 +158,39 @@ class LoginStateInit extends LoginState {
               Container(
                 height: 16,
               ),
-              InkWell(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    if (usernameController.text.isNotEmpty) {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return CustomAlertDialog(
-                                content: S.of(context).informSendCode,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  screen.restPass(ResetPassRequest(
-                                      userID: countryController.text +
-                                          usernameController.text));
-                                });
-                          });
-                    } else {
-                      CustomFlushBarHelper.createError(
-                              title: S.current.warnning,
-                              message: S.current.pleaseInputPhoneNumber)
-                          .show(context);
-                    }
-                  },
-                  child: Center(
-                      child: Text(
-                    S.of(context).forgotPass,
-                    style: TextStyle(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.bold),
-                  ))),
+              Visibility(
+                visible: false,
+                child: InkWell(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      if (usernameController.text.isNotEmpty) {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return CustomAlertDialog(
+                                  content: S.of(context).informSendCode,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    screen.restPass(ResetPassRequest(
+                                        userID: countryController.text +
+                                            usernameController.text));
+                                  });
+                            });
+                      } else {
+                        CustomFlushBarHelper.createError(
+                                title: S.current.warnning,
+                                message: S.current.pleaseInputPhoneNumber)
+                            .show(context);
+                      }
+                    },
+                    child: Center(
+                        child: Text(
+                      S.of(context).forgotPass,
+                      style: TextStyle(
+                          color: Theme.of(context).disabledColor,
+                          fontWeight: FontWeight.bold),
+                    ))),
+              ),
               Container(
                 height: 150,
               ),
