@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -282,6 +285,100 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
+                 SizedBox(
+                height: 16,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text(
+                          S.current.dangerZone,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text(
+                          S.current.DeletingYourAccountHint,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25))),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return CustomAlertDialog(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          getIt<AuthService>()
+                                              .deleteUser()
+                                              .then((value) {
+                                            if (value.hasError) {
+                                              CustomFlushBarHelper.createError(
+                                                  title: S.current.warnning,
+                                                  message: value.error ??
+                                                      S.current.errorHappened);
+                                            } else {
+                                              widget._authService
+                                                  .logout()
+                                                  .then((value) {
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                        context,
+                                                        AuthorizationRoutes
+                                                            .LOGIN_SCREEN,
+                                                        (route) => false);
+                                              });
+                                                CustomFlushBarHelper.createError(
+                                                  title: S.current.warnning,
+                                                  message: S.current.userDeleted);
+                                            }
+                                          });
+                                        },
+                                        content: S.current
+                                            .areSureAboutDeletingYourAccount);
+                                  });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                S.current.deleteAccount,
+                                style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            
             ],
           ),
         ),

@@ -6969,6 +6969,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Danger Zone`
+  String get dangerZone {
+    return Intl.message(
+      'Danger Zone',
+      name: 'dangerZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting your account , you won't be able to login with this credential any more`
+  String get areSureAboutDeletingYourAccount {
+    return Intl.message(
+      'Are you sure about deleting your account , you won\'t be able to login with this credential any more',
+      name: 'areSureAboutDeletingYourAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time`
+  String get DeletingYourAccountHint {
+    return Intl.message(
+      'This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time',
+      name: 'DeletingYourAccountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User deleted successfully`
+  String get userDeleted {
+    return Intl.message(
+      'User deleted successfully',
+      name: 'userDeleted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

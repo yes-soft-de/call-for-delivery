@@ -114,4 +114,15 @@ class AuthRepository {
     if (result == null) return null;
     return ActionResponse.fromJson(result);
   }
+
+  Future<ActionResponse?> deleteUser() async {
+    var token = await getIt<AuthService>().getToken();
+    dynamic result = await _apiClient.put(
+      Urls.DELETE_USER,
+      {'status': 'maintenanceMood'},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (result == null) return null;
+    return ActionResponse.fromJson(result);
+  }
 }

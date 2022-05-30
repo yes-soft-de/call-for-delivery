@@ -694,7 +694,13 @@
     "notificationSound": "Notification sound",
     "ringtone": "Ringtone",
     "thereIsSomeSubOrderNeedYouAttention": "There is some suborders need your action , reject it or accept it or it will remain pending",
-    "captainPlanNotAcceptedFromAdminYet": "Captain plan not accepted from admin yet"
+    "captainPlanNotAcceptedFromAdminYet": "Captain plan not accepted from admin yet",
+    "dangerZone": "Danger Zone",
+    "areSureAboutDeletingYourAccount": "Are you sure about deleting your account , you won't be able to login with this credential any more",
+    "deleteAccount": "Delete Account",
+    "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
+    "userDeleted": "User deleted successfully"
+
 
 
 

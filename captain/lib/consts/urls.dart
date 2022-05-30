@@ -37,7 +37,7 @@ class Urls {
   static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
   static const CAPTAIN_ORDER_UPDATE_API =
       BASE_API + '/v1/order/orderupdatestate';
-        static const UPDATE_PAID_TO_PROVIDER_API =
+  static const UPDATE_PAID_TO_PROVIDER_API =
       BASE_API + '/v1/order/orderupdatepaidtoprovider';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
@@ -221,4 +221,5 @@ class Urls {
       DOMAIN + '/v1/captainfinancialsystemdetail/captainbalancedetail';
   static const GET_CAPTAIN_FINANCIAL_DUES =
       DOMAIN + '/v1/captainfinancialdues/captainfinancialdues';
+  static const DELETE_USER = DOMAIN + '/v1/userstatus/userstatus';
 }

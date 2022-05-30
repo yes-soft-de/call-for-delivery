@@ -1,7 +1,9 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_init/init_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -79,6 +81,10 @@ class AuthService {
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
     await accountStatus();
+    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted') {
+      _authSubject.addError(S.current.invalidCredentials);
+      throw AuthorizationException(S.current.invalidCredentials);
+    }
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 
@@ -245,6 +251,11 @@ class AuthService {
           _prefsHelper
               .setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           break;
+        // account deleted
+        case '9013':
+          await logout();
+          _prefsHelper.setUserCompetedProfile('userDeleted');
+          break;
         default:
           _prefsHelper
               .setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
@@ -254,5 +265,15 @@ class AuthService {
     }
     _prefsHelper.setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
     return;
+  }
+
+  Future<DataModel> deleteUser() async {
+    ActionResponse? response = await _authManager.deleteUser();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 }
