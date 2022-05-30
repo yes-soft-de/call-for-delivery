@@ -896,7 +896,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "showingCart": MessageLookupByLibrary.simpleMessage("مشاهدة السلة"),
-        "signOut": MessageLookupByLibrary.simpleMessage("تسحيل الخروج"),
+        "signOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتشابهة"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
