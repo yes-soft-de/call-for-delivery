@@ -119,7 +119,13 @@ class CaptainService
  
     public function getCaptain(int $captainProfileId): ?array
     {
-       return $this->captainManager->getCaptain($captainProfileId);
+       $captainResult = $this->captainManager->getCaptain($captainProfileId);
+
+       if (! empty($captainResult)) {
+           $captainResult['averageRating'] = $this->ratingService->getAverageRating($captainResult['captainId']);
+       }
+
+       return $captainResult;
      }
 
      public function getCaptainFinancialSystemStatus(int $captainId): ?CaptainFinancialSystemDetailStatusResponse 
