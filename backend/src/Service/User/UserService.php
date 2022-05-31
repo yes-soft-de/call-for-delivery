@@ -29,9 +29,9 @@ class UserService
         return $this->userManager->getUserRoleByUserId($userID);
     }
 
-    public function checkUserType($userType,$userID): string
+    public function checkUserType(string $userType, int $userId): string
     {
-        return $this->userManager->checkUserType($userType,$userID);
+        return $this->userManager->checkUserType($userType, $userId);
     }
 
     public function filterUsersBySuperAdmin($request): array

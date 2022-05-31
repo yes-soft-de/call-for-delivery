@@ -4,6 +4,7 @@ namespace App\Manager\User;
 
 use App\AutoMapping;
 use App\Constant\User\UserReturnResultConstant;
+use App\Constant\User\UserTypeConstant;
 use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
 use App\Request\Admin\AdminRegisterRequest;
@@ -145,17 +146,19 @@ class UserManager
     }
 
     // This function checks if the type of the user being provided is similar to the stored one
-    public function checkUserType($userType,$userID): string
+    public function checkUserType(string $userType, int $userId): string
     {
-        $user = $this->userRepository->find($userID);
+        $user = $this->userRepository->find($userId);
 
-        if ($user->getRoles()[0] !== $userType) {
-            // the type of the user being retrieved does not match the provided one
-            return "no";
+        if ($user) {
+            if ($user->getRoles()[0] === $userType) {
+                // the type of the user being retrieved matches the provided one
+                return UserTypeConstant::USER_TYPE_MATCHED;
+            }
         }
 
-        // the type of the user being retrieved matches the provided one
-        return "yes";
+        // the type of the user being retrieved does not match the provided one
+        return UserTypeConstant::USER_TYPE_NOT_MATCHED;
     }
 
     public function filterUsersBySuperAdmin($request): ?array
