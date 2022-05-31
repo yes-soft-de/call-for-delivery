@@ -97,7 +97,7 @@ class AdminDeliveryCarController extends BaseController
 
     /**
      * admin: update a delivery car by admin
-     * @Route("deliverycar", name="createDeliveryCarByAdmin", methods={"PUT"})
+     * @Route("deliverycar", name="updateDeliveryCarByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
