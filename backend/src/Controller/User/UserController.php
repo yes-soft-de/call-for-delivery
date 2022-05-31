@@ -7,6 +7,7 @@ use App\Controller\BaseController;
 use App\Service\User\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -58,14 +59,24 @@ class UserController extends BaseController
         $response = $this->userService->checkUserType($userType, $this->getUserId());
 
         if ($response === UserTypeConstant::USER_TYPE_MATCHED) {
-            //$response = "yes is"." ".$userType;
-            return $this->response($response, self::CREATE); 
+            $response = "yes is"." ".$userType;
+            //return $this->response($response, self::CREATE);
+            return new jsonResponse(["status_code" => "201",
+                    "msg" => "created  Successfully.",
+                    "Data" => $response
+                ]
+                , Response::HTTP_OK);
         }
 
 //        if ($response === "no") {
-        //$response = "no not a"." ".$userType;
+        $response = "no not a"." ".$userType;
 
-        return $this->response($response, self::ERROR_USER_CHECK);
+        //return $this->response($response, self::ERROR_USER_CHECK);
+        return new jsonResponse(["status_code" => "9000",
+                "msg" => "error user check Successfully.",
+                "Data" => $response
+            ]
+            , Response::HTTP_OK);
 //        }
     }
 
