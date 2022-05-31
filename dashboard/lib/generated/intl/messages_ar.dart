@@ -140,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNotArrivedToStore":
             MessageLookupByLibrary.simpleMessage("الكابتن لم يصل إلى المتجر"),
         "captainNote": MessageLookupByLibrary.simpleMessage("ملاحظات الكابتن"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainRated":

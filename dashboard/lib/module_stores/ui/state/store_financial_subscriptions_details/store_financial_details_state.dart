@@ -9,6 +9,7 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -357,6 +358,35 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 title: FixedNumber.getFixedNumber(model.total.captainOffer)
                         .toString() +
                     ' ${S.current.sar}')),
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(), primary: Colors.amber),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return AlertDialog(
+                      title: Text(S.current.captainOffers),
+                      scrollable: true,
+                      content: Container(
+                        child: Column(
+                          children: getCaptainOffers(model),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(S.current.cancel))
+                      ],
+                    );
+                  });
+            },
+            child: Text(
+              S.current.captainOffers,
+              style: TextStyle(color: Colors.white),
+            )),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
             secondBubble: verticalBubble(
@@ -405,6 +435,28 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         ],
       ),
     );
+  }
+
+  List<Widget> getCaptainOffers(StoreSubscriptionsFinanceModel model) {
+    var context = screenState.context;
+    List<Widget> widgets = [];
+    model.captainsOffer.forEach((element) {
+      var date = DateFormat.yMEd()
+              .format(DateHelper.convert(element.startDate?.timestamp)) +
+          ' ' +
+          DateFormat.jm()
+              .format(DateHelper.convert(element.startDate?.timestamp));
+      widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          tileColor: Theme.of(context).backgroundColor,
+          title: Text(FixedNumber.getFixedNumber(element.price ?? 0) +
+              ' ${S.current.sar}'),
+          subtitle: Text(date),
+        ),
+      ));
+    });
+    return widgets;
   }
 
   Widget verticalBubble(

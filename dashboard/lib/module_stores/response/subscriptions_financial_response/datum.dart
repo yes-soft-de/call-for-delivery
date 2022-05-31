@@ -1,3 +1,4 @@
+import 'package:c4d/module_stores/response/subscriptions_financial_response/captain_offer.dart';
 import 'package:c4d/module_stores/response/subscriptions_financial_response/payments_from_company.dart';
 
 import 'end_date.dart';
@@ -14,6 +15,7 @@ class Datum {
   dynamic flag;
   List<PaymentsFromStore>? paymentsFromStore;
   Total? total;
+  List<CaptainOffer>? captainOffers;
 
   Datum({
     this.id,
