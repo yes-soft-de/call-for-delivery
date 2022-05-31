@@ -28,11 +28,11 @@ class UserController extends BaseController
 
     /**
      * Check user type.
-     * @Route("checkUserType/{userType}", name="checkUserType", methods={"POST"})
+     * @Route("checkUserType/{userType}", name="checkUserTypeByUser", methods={"POST"})
      * @param string $userType
      * @return JsonResponse
      *
-     * @OA\Tag(name="Check User")
+     * @OA\Tag(name="User")
      *
      * @OA\Parameter(
      *      name="token",
@@ -58,12 +58,12 @@ class UserController extends BaseController
         $response = $this->userService->checkUserType($userType, $this->getUserId());
 
         if ($response === UserTypeConstant::USER_TYPE_MATCHED) {
-            $response = "yes is"." ".$userType;
+            //$response = "yes is"." ".$userType;
             return $this->response($response, self::CREATE); 
         }
 
 //        if ($response === "no") {
-        $response = "no not a"." ".$userType;
+        //$response = "no not a"." ".$userType;
 
         return $this->response($response, self::ERROR_USER_CHECK);
 //        }
