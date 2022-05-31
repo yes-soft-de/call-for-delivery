@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use App\Constant\User\UserTypeConstant;
 use App\Controller\BaseController;
 use App\Service\User\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,7 +18,7 @@ use OpenApi\Annotations as OA;
  */
 class UserController extends BaseController
 {
-    private $userService;
+    private UserService $userService;
    
     public function __construct(SerializerInterface $serializer, UserService $userService)
     {
@@ -26,9 +27,9 @@ class UserController extends BaseController
     }
 
     /**
-     * Check user type. This isn't used anymore.
+     * Check user type.
      * @Route("checkUserType/{userType}", name="checkUserType", methods={"POST"})
-     * @param $userType
+     * @param string $userType
      * @return JsonResponse
      *
      * @OA\Tag(name="Check User")
@@ -40,35 +41,32 @@ class UserController extends BaseController
      *      required=true
      * )
      *
-     * @OA\Parameter(
-     *      name="userType",
-     *      in="path",
-     *      description="ROLE_CLIENT or ROLE_CAPTAIN or ROLE_OWNER"
-     * )
-     *
      * @OA\Response(
      *      response=201,
      *      description="Return String",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="string", property="Data"),
+     *          @OA\Property(type="string", property="Data")
      *      )
      * )
+     *
      * @Security(name="Bearer")
      */
-    public function checkUserType($userType): JsonResponse
+    public function checkUserType(string $userType): JsonResponse
     {
-        $response = $this->userService->checkUserType($userType,$this->getUserId());
-        if($response === "yes") {
-            $response ="yes is"." ".$userType;
+        $response = $this->userService->checkUserType($userType, $this->getUserId());
+
+        if ($response === UserTypeConstant::USER_TYPE_MATCHED) {
+            $response = "yes is"." ".$userType;
             return $this->response($response, self::CREATE); 
         }
 
-        if($response === "no") {
-            $response ="no not a"." ".$userType;
-            return $this->response($response, self::ERROR_USER_CHECK); 
-        }
+//        if ($response === "no") {
+        $response = "no not a"." ".$userType;
+
+        return $this->response($response, self::ERROR_USER_CHECK);
+//        }
     }
 
     /**
