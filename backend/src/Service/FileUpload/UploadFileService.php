@@ -11,6 +11,7 @@ use Gedmo\Sluggable\Util\Urlizer;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\UnableToWriteFile;
+use League\Flysystem\Visibility;
 use Liip\ImagineBundle\Service\FilterService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -44,8 +45,8 @@ class UploadFileService
         $stream = fopen($uploadedFile->getPathname(), 'r');
 
         try {
-            $this->fileSystem->writeStream($path . $newFileName, $stream);
-            // it is ok!
+        $this->fileSystem->writeStream($path . $newFileName, $stream , ['visibility' => Visibility::PUBLIC]);
+        // it is ok!
         } catch (UnableToWriteFile | FilesystemException $exception) {
             throw new Exception(sprintf('Could not write uploaded file "%s"', $newFileName));
         }

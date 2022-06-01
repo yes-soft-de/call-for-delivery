@@ -6,14 +6,21 @@ oneup_flysystem:
                 location: '%kernel.project_dir%/../%upload_dir_name%/'
 #                location: '%kernel.cache_dir%/flysystem'
 
-        resolve_adapter:
-            local:
-                location: '%kernel.project_dir%/../%upload_dir_name%/%image_folder%/%original_image%'
+#        resolve_adapter:
+#            local:
+#                location: '%kernel.project_dir%/../%upload_dir_name%/%image_folder%/%original_image%'
+
+        s3:
+            awss3v3:
+                client: Aws\S3\S3Client
+                bucket: '%env(S3_BUCKET)%'
+                prefix: 'upload'
+                streamReads: true
 
     filesystems:
-        default_filesystem:
-            adapter: default_adapter
+        uploads_filesystem:
+            adapter: s3
 #            alias: League\Flysystem\Filesystem
 
-        resolve_fileSystem:
-            adapter: resolve_adapter
+#        resolve_fileSystem:
+#            adapter: resolve_adapter
