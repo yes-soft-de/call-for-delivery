@@ -29,7 +29,7 @@ class UserController extends BaseController
 
     /**
      * Check user type.
-     * @Route("checkUserType/{userType}", name="checkUserTypeByUser", methods={"POST"})
+     * @Route("checkUserType/{userType}", name="checkUserTypeByUserRami", methods={"POST"})
      * @param string $userType
      * @return JsonResponse
      *
@@ -60,23 +60,23 @@ class UserController extends BaseController
 
         if ($response === UserTypeConstant::USER_TYPE_MATCHED) {
             $response = "yes is"." ".$userType;
-            //return $this->response($response, self::CREATE);
-            return new jsonResponse(["status_code" => "201",
-                    "msg" => "created  Successfully.",
-                    "Data" => $response
-                ]
-                , Response::HTTP_OK);
+            return $this->response($response, self::CREATE);
+//            return new JsonResponse(["status_code" => "201",
+//                    "msg" => "created  Successfully.",
+//                    "Data" => $response
+//                ]
+//                , Response::HTTP_OK);
         }
 
 //        if ($response === "no") {
         $response = "no not a"." ".$userType;
 
-        //return $this->response($response, self::ERROR_USER_CHECK);
-        return new jsonResponse(["status_code" => "9000",
-                "msg" => "error user check Successfully.",
-                "Data" => $response
-            ]
-            , Response::HTTP_OK);
+        return $this->response($response, self::ERROR_USER_CHECK);
+//        return new JsonResponse(["status_code" => "9000",
+//                "msg" => "error user check Successfully.",
+//                "Data" => $response
+//            ]
+//            , Response::HTTP_OK);
 //        }
     }
 
