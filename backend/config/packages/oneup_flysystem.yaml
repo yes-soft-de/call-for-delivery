@@ -18,8 +18,8 @@ oneup_flysystem:
                 streamReads: true
 
     filesystems:
-        default_filesystem:
-            adapter: default_adapter
+        uploads_filesystem:
+            adapter: s3
 #            alias: League\Flysystem\Filesystem
 
 #        resolve_fileSystem:
