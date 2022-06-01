@@ -29,7 +29,7 @@ class UserController extends BaseController
 
     /**
      * Check user type.
-     * @Route("checkUserType/{userType}", name="checkUserTypeByUser", methods={"POST"})
+     * @Route("checkUserType/{userType}", name="checkUserTypeByUserRami", methods={"POST"})
      * @param string $userType
      * @return JsonResponse
      *
