@@ -218,7 +218,7 @@ class AdminPackageCategoryController extends BaseController
 
     /**
      * admin:Update package category by admin
-     * @Route("category", name="updatePackageCategory", methods={"PUT"})
+     * @Route("packagecategory", name="updatePackageCategoryByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
