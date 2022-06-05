@@ -103,7 +103,8 @@ class AuthService {
     }
     _prefsHelper.setUsername(request.userID ?? '');
     _prefsHelper.setPassword(request.password ?? '');
-    _authSubject.add(AuthStatus.CODE_SENT);
+    //_authSubject.add(AuthStatus.CODE_SENT);
+    loginApi(request.userID ?? '', request.password ?? '');
   }
 
   Future<void> verifyCodeApi(VerifyCodeRequest request) async {
