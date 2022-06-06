@@ -114,4 +114,9 @@ class CaptainFinancialSystemDetailService
 
         return $sumPayments;
     }
+
+    public function deleteCaptainFinancialSystemDetailsByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialSystemDetailManager->deleteCaptainFinancialSystemDetailsByCaptainId($captainId);
+    }
 }

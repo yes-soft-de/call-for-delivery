@@ -98,4 +98,26 @@ class CaptainAmountFromOrderCashEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    // for delete captain account and profile API
+    public function getCashOrdersPaymentsByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainAmountFromOrderCashEntity')
+            ->select('captainAmountFromOrderCashEntity.id')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainAmountFromOrderCashEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('captainAmountFromOrderCashEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -143,4 +143,25 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+
+    public function getFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->select('captainFinancialDuesEntity.id')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDuesEntity.captain')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

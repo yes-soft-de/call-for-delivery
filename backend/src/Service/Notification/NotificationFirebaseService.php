@@ -3,6 +3,7 @@
 
 namespace App\Service\Notification;
 
+use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\User\UserService;
@@ -440,5 +441,10 @@ class NotificationFirebaseService
             ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config);
 
         $this->messaging->sendMulticast($message, $token);
+    }
+
+    public function deleteTokenByUserAndAppType(int $userId, int $appType): ?NotificationFirebaseTokenEntity
+    {
+        return $this->notificationFirebaseManager->deleteTokenByUserAndAppType($userId, $appType);
     }
 }
