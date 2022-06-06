@@ -169,6 +169,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       drawer: NavigatorMenu(
         profileModel: currentProfile,
         company: _companyInfo,
+        isUnlimitedPackage: status?.unlimitedPackage ?? false,
       ),
       floatingActionButton: DescribedFeatureOverlay(
         onDismiss: dismiss,

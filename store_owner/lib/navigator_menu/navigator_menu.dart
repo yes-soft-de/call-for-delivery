@@ -24,7 +24,12 @@ class NavigatorMenu extends StatefulWidget {
   final double? width;
   final ProfileModel? profileModel;
   final CompanyInfoModel? company;
-  NavigatorMenu({this.width = 275, this.profileModel, this.company});
+  final bool isUnlimitedPackage;
+  NavigatorMenu(
+      {this.width = 275,
+      this.profileModel,
+      this.company,
+      this.isUnlimitedPackage = false});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -98,13 +103,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 Navigator.of(context).pushNamed(ProfileRoutes.PROFILE_SCREEN);
               },
               title: S.current.myProfile),
-          CustomNavTile(
-              icon: Icons.account_balance_rounded,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
-              },
-              title: S.current.myBalance),
+          Visibility(
+            visible: widget.isUnlimitedPackage == false,
+            child: CustomNavTile(
+                icon: Icons.account_balance_rounded,
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
+                },
+                title: S.current.myBalance),
+          ),
           Divider(
             indent: 32,
             endIndent: 32,
@@ -112,13 +120,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             color: Theme.of(context).backgroundColor,
           ),
           // my work info
-          CustomNavTile(
-              icon: Icons.subscriptions_rounded,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
-              },
-              title: S.current.mySubscription),
+          Visibility(
+            visible: widget.isUnlimitedPackage == false,
+            child: CustomNavTile(
+                icon: Icons.subscriptions_rounded,
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+                },
+                title: S.current.mySubscription),
+          ),
           CustomNavTile(
               icon: Icons.compare_arrows_rounded,
               onTap: () {
