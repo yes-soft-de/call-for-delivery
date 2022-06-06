@@ -152,7 +152,7 @@ class SinglePackageCard extends StatelessWidget {
                     SizedBox(
                       width: 105,
                       child: Text(
-                        '${ordersCount} ' + S.of(context).ordermonth,
+                        '${ordersCount} ' + S.of(context).sOrder,
                         style: TextStyle(
                           color: active
                               ? Theme.of(context).textTheme.button?.color
