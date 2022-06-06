@@ -1,7 +1,8 @@
 class Urls {
-  static const String DOMAIN = 'http://134.209.241.49';
+  static const String DOMAIN = 'http://46.101.100.62';
   static const String BASE_API = DOMAIN + '';
-  static const String IMAGES_ROOT = DOMAIN + '/upload/';
+  
+  static const String IMAGES_ROOT = 'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/v1/captain/captainregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
