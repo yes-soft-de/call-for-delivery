@@ -341,4 +341,16 @@ class CaptainManager
     {
         return $this->captainEntityRepository->getCaptainFinancialSystemStatus($captainId);
     }
+
+    public function deleteCaptainProfileByCaptainId(int $captainId): ?CaptainEntity
+    {
+        $captainProfileEntity = $this->captainEntityRepository->findOneBy(['captainId'=>$captainId]);
+
+        if ($captainProfileEntity !== null) {
+            $this->entityManager->remove($captainProfileEntity);
+            $this->entityManager->flush();
+        }
+
+        return $captainProfileEntity;
+    }
 }

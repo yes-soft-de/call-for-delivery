@@ -55,4 +55,10 @@ class CaptainAmountFromOrderCashService
 
         return $this->captainAmountFromOrderCashManager->updateCaptainAmountFromOrderCash($captainAmountFromOrderCashEntity); 
     }
+
+    // for delete captain account and profile API
+    public function getCashOrdersPaymentsByCaptainId(int $captainId): array
+    {
+        return $this->captainAmountFromOrderCashManager->getCashOrdersPaymentsByCaptainId($captainId);
+    }
 }

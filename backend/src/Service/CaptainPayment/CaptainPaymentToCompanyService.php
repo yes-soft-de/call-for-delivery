@@ -32,8 +32,14 @@ class CaptainPaymentToCompanyService
         return $response;
     }
 
-    public function getSumPaymentsToCompany($captainId): array
+    // This function was commented out because it is not being used in any place
+//    public function getSumPaymentsToCompany($captainId): array
+//    {
+//        return $this->captainPaymentManagerToCompany->getSumPaymentsToCompany($captainId);
+//    }
+
+    public function getPaymentToCompanyByCaptainId(int $captainId): array
     {
-        return $this->captainPaymentManagerToCompany->getSumPaymentsToCompany($captainId);
+        return $this->captainPaymentToCompanyManager->getPaymentToCompanyByCaptainId($captainId);
     }
 }

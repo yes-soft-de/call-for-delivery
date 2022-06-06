@@ -78,4 +78,18 @@ class CaptainFinancialSystemDetailManager
 
         return  $financialSystemDetail;
     }
+
+    public function deleteCaptainFinancialSystemDetailsByCaptainId(int $captainId): array
+    {
+        $financialSystemDetails = $this->captainFinancialSystemDetailEntityRepository->getFinancialSystemDetailsEntitiesByCaptainId($captainId);
+
+        if (! empty($financialSystemDetails)) {
+            foreach ($financialSystemDetails as $financialSystemDetail) {
+                $this->entityManager->remove($financialSystemDetail);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $financialSystemDetails;
+    }
 }
