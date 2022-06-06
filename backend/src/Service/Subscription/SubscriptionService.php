@@ -348,7 +348,9 @@ class SubscriptionService
             }
             
             $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
-            
+         
+            $item['packageName'] = $packageBalance->packageName;
+         
             return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
         }
 
