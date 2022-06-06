@@ -9,4 +9,6 @@ class CanCreateOrderResponse
     public string|null $subscriptionStatus;
   
     public string|null $percentageOfOrdersConsumed;
+    
+    public string|null $packageName;
 }
