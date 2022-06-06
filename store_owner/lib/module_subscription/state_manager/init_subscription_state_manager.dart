@@ -38,11 +38,15 @@ class InitSubscriptionStateManager {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getPackages(screenState);
-        }, title: S.current.storeAccountInit, error: value.error));
+        },
+            canGoBack: screenState.canPop,
+            title: S.current.storeAccountInit,
+            error: value.error));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getPackages(screenState);
         },
+            canGoBack: screenState.canPop,
             title: S.current.storeAccountInit,
             emptyMessage: S.current.homeDataEmpty));
       } else {

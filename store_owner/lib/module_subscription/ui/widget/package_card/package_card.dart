@@ -143,6 +143,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
+                    width: 100,
                     child: Text(
                       '${package.orderCount} ' + S.of(context).ordermonth,
                       style: TextStyle(
@@ -187,6 +188,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
+                    width: 100,
                     child: package.carCount != 0
                         ? Text(
                             '${package.carCount} ' + S.of(context).car,
@@ -239,6 +241,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
+                    width: 100,
                     child: Text(
                       '${package.expired}' +
                           ' ' +
@@ -286,6 +289,7 @@ class PackageCard extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
+                    width: 100,
                     child: Text(
                       '${package.cost} ${S.current.sar}',
                       style: TextStyle(

@@ -26,7 +26,7 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
   States? currentState;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  late bool canPop;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -53,7 +53,8 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
 
   @override
   void initState() {
-    widget._stateManager.stateStream.listen((event) {
+    canPop = Navigator.of(context).canPop();
+   _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});

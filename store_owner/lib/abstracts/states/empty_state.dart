@@ -13,19 +13,27 @@ class EmptyState extends States {
   final VoidCallback? onPressed;
   final String? buttonLabel;
   final double? size;
+  final bool canGoBack;
   EmptyState(this.screenState,
       {required this.emptyMessage,
       required this.title,
       this.hasAppbar = true,
       required this.onPressed,
       this.buttonLabel,
+      this.canGoBack = true,
       this.size})
       : super(screenState);
 
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: hasAppbar ? CustomC4dAppBar.appBar(context, title: title) : null,
+      appBar: hasAppbar
+          ? CustomC4dAppBar.appBar(
+              context,
+              title: title,
+              canGoBack: canGoBack,
+            )
+          : null,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Flex(
