@@ -249,4 +249,18 @@ class ImageManager
 
         return $image;
     }
+
+    public function deleteCaptainProfileImagesByCaptainId(int $captainId): array
+    {
+        $imagesEntities = $this->imageEntityRepository->getAllCaptainProfileImagesEntitiesByCaptainId($captainId);
+
+        if (! empty($imagesEntities)) {
+            foreach ($imagesEntities as $imageEntity) {
+                $this->entityManager->remove($imageEntity);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $imagesEntities;
+    }
 }

@@ -42,4 +42,10 @@ class CaptainAmountFromOrderCashManager
     {       
         return $this->captainAmountFromOrderCashEntityRepository->findOneBy(["orderId" => $orderId]);
     }
+
+    // for delete captain account and profile API
+    public function getCashOrdersPaymentsByCaptainId(int $captainId): array
+    {
+        return $this->captainAmountFromOrderCashEntityRepository->getCashOrdersPaymentsByCaptainId($captainId);
+    }
 }

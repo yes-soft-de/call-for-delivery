@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -80,6 +83,27 @@ class ImageEntityRepository extends ServiceEntityRepository
             ->andWhere('imageEntity.bidOrder IS NOT NULL')
 
             ->orderBy('imageEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllCaptainProfileImagesEntitiesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('imageEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = imageEntity.itemId'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('imageEntity.entityType = :captainProfileType')
+            ->setParameter('captainProfileType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
 
             ->getQuery()
             ->getResult();

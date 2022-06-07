@@ -128,4 +128,24 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
 
         return $query->getQuery()->getOneOrNullResult();
     }
+
+    public function getFinancialSystemDetailsEntitiesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialSystemDetailEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialSystemDetailEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('captainFinancialSystemDetailEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -267,4 +267,16 @@ class UserManager
     {
         return $this->userRepository->getSupplierUsersEntitiesBySupplierCategoryId($supplierCategoryId);
     }
+
+    public function deleteUserById(int $id): ?UserEntity
+    {
+        $userEntity = $this->userRepository->findOneBy(['id'=>$id]);
+
+        if ($userEntity !== null) {
+            $this->entityManager->remove($userEntity);
+            $this->entityManager->flush();
+        }
+
+        return $userEntity;
+    }
 }

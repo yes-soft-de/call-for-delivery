@@ -1295,4 +1295,25 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $orders;
     }
+
+    public function getOrdersByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainProfileEntity',
+                Join::WITH,
+                'captainProfileEntity.id = orderEntity.captainId'
+            )
+
+            ->andWhere('captainProfileEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

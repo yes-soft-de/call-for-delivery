@@ -57,4 +57,9 @@ class OrderChatRoomService
     {
         return $this->orderChatRoomManager->createOrderChatRoomOrUpdateCurrent($order);
     }
+
+    public function deleteOrderChatRoomEntitiesByCaptainId(int $captainId): array
+    {
+        return $this->orderChatRoomManager->deleteOrderChatRoomEntitiesByCaptainId($captainId);
+    }
 }

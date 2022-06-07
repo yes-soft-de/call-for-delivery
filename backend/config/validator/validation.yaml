@@ -602,3 +602,10 @@ App\Request\UserStatus\UserStatusUpdateRequest:
             - NotBlank: ~
         status:
             - NotNull: ~
+
+App\Request\Eraser\DeleteCaptainAccountAndProfileBySuperAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        password:
+            - NotNull: ~

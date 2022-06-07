@@ -51,4 +51,22 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getOrderChatRoomEntitiesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('orderChatRoomEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderChatRoomEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

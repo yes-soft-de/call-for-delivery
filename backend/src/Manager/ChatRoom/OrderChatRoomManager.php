@@ -115,4 +115,18 @@ class OrderChatRoomManager
 
         return $this->create($request);
     }
+
+    public function deleteOrderChatRoomEntitiesByCaptainId(int $captainId): array
+    {
+        $orderChatRoomEntities = $this->orderChatRoomRepository->getOrderChatRoomEntitiesByCaptainId($captainId);
+
+        if (! empty($orderChatRoomEntities)) {
+            foreach ($orderChatRoomEntities as $orderChatRoomEntity) {
+                $this->entityManager->remove($orderChatRoomEntity);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $orderChatRoomEntities;
+    }
 }
