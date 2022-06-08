@@ -43,11 +43,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     globalStateSub?.cancel();
     distanceCalculator.dispose();
     paymentController.dispose();
-    isolates.kill('FireStoreInserter');
     super.dispose();
   }
 
-  final isolates = IsolateHandler();
   OrderStatusStateManager get manager => widget.stateManager;
   @override
   void initState() {
