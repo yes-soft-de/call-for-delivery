@@ -1,3 +1,6 @@
+// Production Domain => http://46.101.100.62
+// Dev Domain => http://134.209.241.49
+
 class Urls {
   static const String DOMAIN = 'http://46.101.100.62';
   static const String BASE_API = DOMAIN + '';
