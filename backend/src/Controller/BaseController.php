@@ -122,6 +122,10 @@ class BaseController extends AbstractController
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS = ["user has payments, we can not delete him/her", "9353"];
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY = ["user has payments to company, we can not delete him/her", "9354"];
     const CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS = ["user has cash orders payments, we can not delete him/her", "9355"];
+
+    // renew database
+    const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
+    const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
