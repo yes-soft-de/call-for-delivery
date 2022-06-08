@@ -50,9 +50,11 @@ class FlutterTextToSpeech {
 
     //    await flutterTts.areLanguagesInstalled(["en-AU", "en-US"]);
 
-    await flutterTts.setQueueMode(1);
+    if (Platform.isAndroid) {
+      await flutterTts.setQueueMode(1);
+      await flutterTts.getMaxSpeechInputLength;
+    }
 
-    await flutterTts.getMaxSpeechInputLength;
     return flutterTts;
   }
 }
