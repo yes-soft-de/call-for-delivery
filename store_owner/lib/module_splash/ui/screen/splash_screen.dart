@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
@@ -25,7 +27,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    _createNewChannel();
+    if (Platform.isAndroid) {
+      _createNewChannel();
+    }
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _getNextRoute().then((route) {
         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
