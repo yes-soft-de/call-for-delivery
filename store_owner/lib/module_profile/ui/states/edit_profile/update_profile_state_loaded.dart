@@ -94,6 +94,7 @@ class UpdateProfileStateLoaded extends States {
                               if (value != null) {
                                 imageBytes = await value.readAsBytes();
                                 imagePath = value.path;
+                                networkImage = null;
                                 screenState.refresh();
                               }
                             });

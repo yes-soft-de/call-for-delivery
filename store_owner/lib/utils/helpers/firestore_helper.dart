@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,22 +48,26 @@ class FireStoreHelper {
   }
 
   Future<void> backgroundThread(String message) async {
-    final isolates = IsolateHandler();
-    try {
-      isolates.spawn(
-        entryPoint,
-        onReceive: (message) async {
-          await Firebase.initializeApp();
-          await FireStoreHelper().insertWatcher();
-          isolates.kill('FireStoreInserter');
-        },
-        onInitialized: () {
-          isolates.send(message, to: 'FireStoreInserter');
-        },
-        name: 'FireStoreInserter',
-      );
-    } catch (e) {
-      log(e.toString());
+    if (Platform.isAndroid) {
+      final isolates = IsolateHandler();
+      try {
+        isolates.spawn(
+          entryPoint,
+          onReceive: (message) async {
+            await Firebase.initializeApp();
+            await FireStoreHelper().insertWatcher();
+            isolates.kill('FireStoreInserter');
+          },
+          onInitialized: () {
+            isolates.send(message, to: 'FireStoreInserter');
+          },
+          name: 'FireStoreInserter',
+        );
+      } catch (e) {
+        log(e.toString());
+      }
+    } else {
+      FireStoreHelper().insertWatcher().ignore();
     }
   }
 }

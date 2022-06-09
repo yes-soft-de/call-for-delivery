@@ -80,10 +80,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<String> _getNextRoute() async {
-    if (getIt<LocalizationService>().choosed()) {
-      return needForLogging(widget._authService.isLoggedIn);
-    } else {
-      return SettingRoutes.CHOOSE_LANGUAGE;
+    try {
+      if (getIt<LocalizationService>().choosed()) {
+        return needForLogging(widget._authService.isLoggedIn);
+      } else {
+        return SettingRoutes.CHOOSE_LANGUAGE;
+      }
+    } catch (e) {
+      return AuthorizationRoutes.LOGIN_SCREEN;
     }
   }
 

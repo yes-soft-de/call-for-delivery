@@ -20,7 +20,6 @@ class ProfileStateInit extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    log(profileModel.openingTime.toString());
     return Scaffold(
         appBar: CustomC4dAppBar.appBar(context, title: S.current.myProfile),
         body: StackedForm(

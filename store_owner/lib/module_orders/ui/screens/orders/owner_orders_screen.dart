@@ -8,6 +8,7 @@ import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
@@ -78,6 +79,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   @override
   void initState() {
     super.initState();
+    getIt<FireNotificationService>().refreshNotificationToken();
     _currentState = LoadingState(this);
     getInitData();
     widget._stateManager.watcher(this, true);
