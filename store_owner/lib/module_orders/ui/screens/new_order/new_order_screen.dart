@@ -54,7 +54,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
     Clipboard.hasStrings().asStream().listen((event) async {
       if (event) {
         ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
-        String data = clip!.text.toString();
+        String data = clip?.text.toString() ?? '';
         if (data.length > 9 && data[0] == '0') {
           await Clipboard.setData(ClipboardData(text: data.substring(1)));
           if (mounted) {
