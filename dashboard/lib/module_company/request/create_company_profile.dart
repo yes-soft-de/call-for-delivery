@@ -25,8 +25,8 @@ class CreateCompanyProfile {
       this.minKilometerBonus,
       this.maxKilometerBonus,
       this.kilometers,
-        this.storeProfitMargin,this.supplierProfitMargin
-      });
+      this.storeProfitMargin,
+      this.supplierProfitMargin});
 
   CreateCompanyProfile.fromJson(dynamic json) {
     id = json['id'];
@@ -41,19 +41,45 @@ class CreateCompanyProfile {
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['id'] = id;
-    map['phone'] = phone;
-    map['phoneTwo'] = phone2;
-    map['whatsapp'] = whatsapp;
-    map['fax'] = fax;
-    map['bankName'] = bankName;
-    map['stc'] = stc;
-    map['email'] = email;
-    map['minKilometerBonus'] = minKilometerBonus;
-    map['maxKilometerBonus'] = maxKilometerBonus;
-    map['kilometers'] = kilometers;
-    map['storeProfitMargin'] = storeProfitMargin;
-    map['supplierProfitMargin'] = supplierProfitMargin;
+    if (id != null) {
+      map['id'] = id;
+    }
+    if (phone != null) {
+      map['phone'] = phone;
+    }
+    if (phone2 != null) {
+      map['phoneTwo'] = phone2;
+    }
+    if (whatsapp != null) {
+      map['whatsapp'] = whatsapp;
+    }
+    if (fax != null) {
+      map['fax'] = fax;
+    }
+    if (bankName != null) {
+      map['bankName'] = bankName;
+    }
+    if (stc != null) {
+      map['stc'] = stc;
+    }
+    if (email != null) {
+      map['email'] = email;
+    }
+    if (minKilometerBonus != null) {
+      map['minKilometerBonus'] = minKilometerBonus;
+    }
+    if (maxKilometerBonus != null) {
+      map['maxKilometerBonus'] = maxKilometerBonus;
+    }
+    if (kilometers != null) {
+      map['kilometers'] = kilometers;
+    }
+    if (storeProfitMargin != null) {
+      map['storeProfitMargin'] = storeProfitMargin;
+    }
+    if (supplierProfitMargin != null) {
+      map['supplierProfitMargin'] = supplierProfitMargin;
+    }
     return map;
   }
 }
