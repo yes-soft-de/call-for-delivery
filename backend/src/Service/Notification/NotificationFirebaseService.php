@@ -59,12 +59,11 @@ class NotificationFirebaseService
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
                 'apns-priority' => '5',
-                'apns-push-type' => 'background',
-                'apns-topic' => "io.flutter.plugins.firebase.messaging"
+                'apns-push-type' => 'alert'
             ],
             'payload' => [
                 'aps' =>[
-                    'content_available' => 1
+                    'content_available' => true
                 ]
             ]
         ]);
@@ -214,15 +213,14 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10',
-                'apns-push-type' => 'background',
-                'apns-topic' => "io.flutter.plugins.firebase.messaging"
+                'apns-priority' => '5',
+                'apns-push-type' => 'alert',
             ],
-            'payload' => [
-                'aps' => [
+            'payload' => json_encode([
+                'aps' =>[
                     'content_available' => 1
                 ]
-            ]
+            ])
         ]);
 
         $message = CloudMessage::new()
@@ -258,15 +256,14 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10',
-                'apns-push-type' => 'background',
-                'apns-topic' => "io.flutter.plugins.firebase.messaging"
+                'apns-priority' => '5',
+                'apns-push-type' => 'alert',
             ],
-            'payload' => [
+            'payload' => json_encode([
                 'aps' =>[
                     'content_available' => 1
                 ]
-            ]
+            ])
         ]);
 
         $message = CloudMessage::new()
