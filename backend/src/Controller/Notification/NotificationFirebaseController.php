@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\User\UserRoleConstant;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\Notification\NotificationFirebaseService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -200,5 +201,41 @@ class NotificationFirebaseController extends BaseController
         $response = $this->notificationFirebaseService->sendNotificationBySuperAdmin($request);
 
         return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * user: delete firebase notification token by user when sign out
+     * @Route("firebasenotificationtoken", name="deleteFirebaseNotificationTokenByUser", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Notification Firebase")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted token info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Notification\NotificationFirebaseTokenDeleteResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteTokenByUserId(): JsonResponse
+    {
+        $response = $this->notificationFirebaseService->deleteTokenByUserId($this->getUserId());
+
+        return $this->response($response, self::DELETE);
     }
 }

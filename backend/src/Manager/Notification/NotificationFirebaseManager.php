@@ -29,4 +29,16 @@ class NotificationFirebaseManager
 
         return $tokenEntity;
     }
+
+    public function deleteTokenByUserId(int $userId): ?NotificationFirebaseTokenEntity
+    {
+        $tokenEntity = $this->notificationFirebaseTokenEntityRepository->getTokenByUserId($userId);
+
+        if ($tokenEntity !== null) {
+            $this->entityManager->remove($tokenEntity);
+            $this->entityManager->flush();
+        }
+
+        return $tokenEntity;
+    }
 }
