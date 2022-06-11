@@ -213,7 +213,7 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10',
+                'apns-priority' => '5',
                 'apns-push-type' => 'alert'
             ],
             'payload' => [
@@ -256,7 +256,7 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10',
+                'apns-priority' => '5',
                 'apns-push-type' => 'alert'
             ],
             'payload' => [
