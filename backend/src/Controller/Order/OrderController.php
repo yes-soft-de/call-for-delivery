@@ -1701,4 +1701,62 @@ class OrderController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+
+    /**
+     * admin: Get pending orders for captain.
+     * @Route("orderpending",   name="getPendingOrdersForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN") 
+     * @return JsonResponse
+     * *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return pending orders.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="object", property="deliveryDate"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="string", property="payment"),
+     *                  @OA\Property(type="number", property="orderCost"),
+     *                  @OA\Property(type="integer", property="orderType"),
+     *                  @OA\Property(type="string", property="note"),
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="boolean", property="orderIsMain"),
+     *                  @OA\Property(type="array", property="subOrder",
+     *                    @OA\Items( 
+     *                        @OA\Property(type="integer", property="id"),
+     *                        @OA\Property(type="object", property="deliveryDate"),
+     *                        @OA\Property(type="object", property="createdAt"),
+     *                        @OA\Property(type="string", property="payment"),
+     *                        @OA\Property(type="number", property="orderCost"),
+     *                        @OA\Property(type="integer", property="orderType"),
+     *                        @OA\Property(type="string", property="note"),
+     *                        @OA\Property(type="string", property="state"),
+     *                          ) 
+     *                      )
+     *                  ),
+     *            )
+     *       )
+     *  )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getPendingOrdersForAdmin(): JsonResponse
+    {
+        $response = $this->orderService->getPendingOrdersForAdmin();
+        
+        return $this->response($response, self::FETCH);
+    }
 }

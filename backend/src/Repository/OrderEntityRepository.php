@@ -1295,4 +1295,32 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $orders;
     }
+
+    public function getPendingOrdersForAdmin(): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+            ->addSelect('bidDetailsEntity as bidDetailsInfo')
+           
+            ->andWhere('orderEntity.state = :pending ')
+
+            ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')            
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+
+            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
+
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->andWhere('orderEntity.isHide = :isHide')
+            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

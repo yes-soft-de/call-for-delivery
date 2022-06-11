@@ -561,4 +561,9 @@ class OrderManager
 
         return  $orderEntity;
     }
+    
+    public function getPendingOrdersForAdmin(): ?array
+    {
+        return $this->orderRepository->getPendingOrdersForAdmin();
+    }
 }
