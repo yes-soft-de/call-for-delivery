@@ -16,6 +16,7 @@ use App\Request\Notification\NotificationFirebaseByUserIdRequest;
 use App\Request\Notification\NotificationFirebaseFromAdminRequest;
 use App\Constant\Notification\NotificationTokenConstant;
 use Kreait\Firebase\Messaging\AndroidConfig;
+use Kreait\Firebase\Messaging\ApnsConfig;
 
 class NotificationFirebaseService
 {
@@ -187,7 +188,8 @@ class NotificationFirebaseService
             'chatNotification' => json_encode([
                 'roomId' => $request->getRoomId(),
                 'userId' => (string) $request->getUserID()
-            ])
+            ]),
+            'content_available' => true
         ];
        
         $config = AndroidConfig::fromArray([
@@ -196,11 +198,18 @@ class NotificationFirebaseService
              ]
         ]);
 
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'content_available' => true
+            ]
+        ]);
+
         $message = CloudMessage::new()
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
         ->withHighestPossiblePriority();
 
-        $message = $message->withData($payload)->withAndroidConfig($config);
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
 
         $this->messaging->sendMulticast($message, $devicesToken);
 
@@ -218,7 +227,8 @@ class NotificationFirebaseService
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
-            'argument' => null
+            'argument' => null,
+            'content_available' => true
         ];
 
         $config = AndroidConfig::fromArray([
