@@ -50,4 +50,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->getSpecificBidOrderByIdForAdmin($id);
     }
+     
+    public function getPendingOrdersForAdmin(): ?array
+    {
+        return $this->orderEntityRepository->getPendingOrdersForAdmin();
+    }
 }
