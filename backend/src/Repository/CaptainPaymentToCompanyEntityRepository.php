@@ -131,4 +131,25 @@ class CaptainPaymentToCompanyEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getPaymentToCompanyByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainPaymentToCompanyEntity')
+            ->select('captainPaymentToCompanyEntity.id')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainPaymentToCompanyEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('captainPaymentToCompanyEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

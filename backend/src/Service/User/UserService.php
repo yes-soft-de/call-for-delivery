@@ -129,4 +129,9 @@ class UserService
     {
         return $this->userManager->getSupplierUsersEntitiesBySupplierCategoryId($supplierCategoryId);
     }
+
+    public function deleteUserById(int $id): ?UserEntity
+    {
+        return $this->userManager->deleteUserById($id);
+    }
 }

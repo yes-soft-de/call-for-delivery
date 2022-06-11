@@ -134,4 +134,9 @@ class CaptainService
  
          return $this->autoMapping->map('array',CaptainFinancialSystemDetailStatusResponse::class, $captainStatus);
       }
+
+    public function deleteCaptainProfileByCaptainId(int $captainId): ?CaptainEntity
+    {
+        return $this->captainManager->deleteCaptainProfileByCaptainId($captainId);
+    }
 }

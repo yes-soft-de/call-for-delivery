@@ -10,6 +10,7 @@ parameters:
     original_image: '%env(ORIGINAL_IMAGE)%'
     malath_username: '%env(MALATH_USERNAME)%'
     malath_password: '%env(MALATH_PASSWORD)%'
+    deletion_user_password: '%env(DELETION_USER_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +20,7 @@ services:
         bind:
             $uploadBaseUrl: '%upload_base_url%'
             $fileSystem: '@oneup_flysystem.uploads_filesystem_filesystem'
+            $deletionUserPassword: '%deletion_user_password%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

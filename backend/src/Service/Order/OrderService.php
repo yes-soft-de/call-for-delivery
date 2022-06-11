@@ -1144,4 +1144,9 @@ class OrderService
 
        return $response;
     }
+    
+    public function getOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderManager->getOrdersByCaptainId($captainId);
+    }
 }

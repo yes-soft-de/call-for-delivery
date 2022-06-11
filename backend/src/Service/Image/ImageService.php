@@ -112,4 +112,9 @@ class ImageService implements ImageServiceInterface
 
         return $this->autoMapping->map(ImageEntity::class, ImageCreateResponse::class, $imageResult);
     }
+
+    public function deleteCaptainProfileImagesByCaptainId(int $captainId): array
+    {
+        return $this->imageManager->deleteCaptainProfileImagesByCaptainId($captainId);
+    }
 }

@@ -67,5 +67,10 @@ class CaptainFinancialDuesManager
     public function getCaptainFinancialDuesByEndDate(int $captainId, DateTime $date): ?array
     {
         return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByEndDate($captainId, $date);
-    } 
+    }
+
+    public function getFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesRepository->getFinancialDuesByCaptainId($captainId);
+    }
 }

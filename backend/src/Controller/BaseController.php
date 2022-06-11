@@ -114,6 +114,14 @@ class BaseController extends AbstractController
     const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = ["not update because financial System is active", "9603"];
     // announcement
     const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
+
+    // erase
+    const DELETION_USER_PASSWORD_INCORRECT = ["deletion user password is not correct", "9350"];
+    const CAN_NOT_DELETE_USER_HAS_ORDERS = ["user has orders, we can not delete him/her", "9351"];
+    const CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES = ["user has financial dues, we can not delete him/her", "9352"];
+    const CAN_NOT_DELETE_USER_HAS_PAYMENTS = ["user has payments, we can not delete him/her", "9353"];
+    const CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY = ["user has payments to company, we can not delete him/her", "9354"];
+    const CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS = ["user has cash orders payments, we can not delete him/her", "9355"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

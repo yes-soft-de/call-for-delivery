@@ -566,4 +566,9 @@ class OrderManager
     {
         return $this->orderRepository->getPendingOrdersForAdmin();
     }
+    
+    public function getOrdersByCaptainId(int $captainId): array
+    {
+        return $this->orderRepository->getOrdersByCaptainId($captainId);
+    }
 }

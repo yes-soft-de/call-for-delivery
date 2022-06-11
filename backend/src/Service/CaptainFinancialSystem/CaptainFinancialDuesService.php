@@ -184,4 +184,9 @@ class CaptainFinancialDuesService
 
        return null;
     }
+
+    public function getFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesManager->getFinancialDuesByCaptainId($captainId);
+    }
 }
