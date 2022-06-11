@@ -63,7 +63,6 @@ use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
-use App\Response\Admin\Order\OrderPendingResponse;
 
 class OrderService
 {
@@ -1120,33 +1119,13 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, BidOrderForStoreOwnerGetResponse::class, $bidOrderResult);
     }
     
-    public function getPendingOrdersForAdmin(): ?array
-    {       
-        $this->showSubOrderIfCarIsAvailable();
-        $this->hideOrderExceededDeliveryTimeByHour();
-
-        $response = [];
-
-        $orders = $this->orderManager->getPendingOrdersForAdmin();
-
-        foreach ($orders as $key=>$value) {
-
-            $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
-
-            $response[$key] = $this->autoMapping->map('array', OrderPendingResponse::class, $value);
-
-            if ($value['bidDetailsInfo']) {
-                $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
-                $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
-                $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
-            }
-        }
-
-       return $response;
-    }
-
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderManager->getOrdersByCaptainId($captainId);
+    }
+    
+    public function getSubOrdersByPrimaryOrderId(int $orderId): array
+    {
+        return $this->orderManager->getSubOrdersByPrimaryOrderId($orderId);
     }
 }
