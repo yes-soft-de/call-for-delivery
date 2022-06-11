@@ -55,6 +55,17 @@ class NotificationFirebaseService
                 "channel_id" => "C4d_Notifications_custom_sound_test"
             ]
         ]);
+       
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10'
+            ],
+            'payload' => [
+                'aps' =>[
+                    'content_available' => true
+                ]
+            ]
+        ]);
 
         $message = CloudMessage::new()
             ->withNotification(
