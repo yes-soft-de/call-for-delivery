@@ -227,13 +227,23 @@ class NotificationFirebaseService
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
-            'argument' => null,
-            'content_available' => true
+            'argument' => null
         ];
 
         $config = AndroidConfig::fromArray([
             "notification" => [
                 "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10'
+            ],
+            'payload' => [
+                'aps' =>[
+                    'content_available' => true
+                ]
             ]
         ]);
 
