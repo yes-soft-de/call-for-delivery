@@ -561,7 +561,7 @@ class OrderManager
 
         return  $orderEntity;
     }
-
+   
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderRepository->getOrdersByCaptainId($captainId);

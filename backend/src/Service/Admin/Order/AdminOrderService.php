@@ -17,6 +17,8 @@ use App\Response\Admin\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\OrderLogs\OrderLogsService;
+use App\Response\Admin\Order\OrderPendingResponse;
+use App\Service\Order\OrderService;
 
 class AdminOrderService
 {
@@ -24,13 +26,15 @@ class AdminOrderService
     private AdminOrderManager $adminOrderManager;
     private UploadFileHelperService $uploadFileHelperService;
     private OrderLogsService $orderLogsService;
+    private OrderService $orderService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService)
+    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService, OrderService $orderService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->orderLogsService = $orderLogsService;
+        $this->orderService = $orderService;
     }
 
     public function getOrdersByStateForAdmin(string $orderStatus): int
@@ -167,5 +171,30 @@ class AdminOrderService
         } else {
             return null;
         }
+    }
+        
+    public function getPendingOrdersForAdmin(): ?array
+    {       
+        $this->orderService->showSubOrderIfCarIsAvailable();
+        $this->orderService->hideOrderExceededDeliveryTimeByHour();
+
+        $response = [];
+
+        $orders = $this->adminOrderManager->getPendingOrdersForAdmin();
+
+        foreach ($orders as $key=>$value) {
+
+            $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value['id']);
+
+            $response[$key] = $this->autoMapping->map('array', OrderPendingResponse::class, $value);
+
+            if ($value['bidDetailsInfo']) {
+                $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
+                $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
+                $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
+            }
+        }
+
+       return $response;
     }
 }

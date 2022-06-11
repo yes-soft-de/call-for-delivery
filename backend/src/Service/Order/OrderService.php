@@ -1118,9 +1118,14 @@ class OrderService
 
         return $this->autoMapping->map(OrderEntity::class, BidOrderForStoreOwnerGetResponse::class, $bidOrderResult);
     }
-
+    
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderManager->getOrdersByCaptainId($captainId);
+    }
+    
+    public function getSubOrdersByPrimaryOrderId(int $orderId): array
+    {
+        return $this->orderManager->getSubOrdersByPrimaryOrderId($orderId);
     }
 }
