@@ -58,11 +58,11 @@ class NotificationFirebaseService
        
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10'
+                'apns-priority' => '5'
             ],
             'payload' => [
                 'aps' =>[
-                    'content_available' => true
+                    'content_available' => 1
                 ]
             ]
         ]);
@@ -70,7 +70,7 @@ class NotificationFirebaseService
         $message = CloudMessage::new()
             ->withNotification(
                 Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config);
+            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
         $this->messaging->sendMulticast($message, $tokens);
     }
 
@@ -212,8 +212,12 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '10',
-                'content_available' => true
+                'apns-priority' => '10'
+            ],
+            'payload' => [
+                'aps' => [
+                    'content_available' => 1
+                ]
             ]
         ]);
 
@@ -254,7 +258,7 @@ class NotificationFirebaseService
             ],
             'payload' => [
                 'aps' =>[
-                    'content_available' => true
+                    'content_available' => 1
                 ]
             ]
         ]);
@@ -263,7 +267,7 @@ class NotificationFirebaseService
         ->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
         ->withHighestPossiblePriority();
 
-        $message = $message->withData($payload)->withAndroidConfig($config);
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
 
         $this->messaging->sendMulticast($message, $devicesToken);
 
