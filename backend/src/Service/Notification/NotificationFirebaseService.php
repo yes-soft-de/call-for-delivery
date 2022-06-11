@@ -216,11 +216,11 @@ class NotificationFirebaseService
                 'apns-priority' => '5',
                 'apns-push-type' => 'alert',
             ],
-            'payload' => [
-                'aps' => [
+            'payload' => json_encode([
+                'aps' =>[
                     'content_available' => 1
                 ]
-            ]
+            ])
         ]);
 
         $message = CloudMessage::new()
