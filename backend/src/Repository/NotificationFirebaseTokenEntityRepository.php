@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\NotificationFirebaseTokenEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -53,6 +55,24 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
 
             ->andWhere('notificationFirebaseTokenEntity.appType = :captainApp')
             ->setParameter('captainApp', $appType)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getTokenByUserId(int $userId): ?NotificationFirebaseTokenEntity
+    {
+        return $this->createQueryBuilder('notificationFirebaseTokenEntity')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = notificationFirebaseTokenEntity.user'
+            )
+
+            ->andWhere('userEntity.id = :userId')
+            ->setParameter('userId', $userId)
 
             ->getQuery()
             ->getOneOrNullResult();

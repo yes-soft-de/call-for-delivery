@@ -4,7 +4,7 @@ namespace App\Response\Notification;
 
 use DateTime;
 
-class NotificationTokenResponse
+class NotificationFirebaseTokenDeleteResponse
 {
     /**
      * @var int

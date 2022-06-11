@@ -3,9 +3,11 @@
 
 namespace App\Service\Notification;
 
+use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
+use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
 use App\Service\User\UserService;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
@@ -21,13 +23,15 @@ use Kreait\Firebase\Messaging\ApnsConfig;
 
 class NotificationFirebaseService
 {
+    private AutoMapping $autoMapping;
     private Messaging $messaging;
     private NotificationFirebaseManager $notificationFirebaseManager;
     private NotificationTokensService $notificationTokensService;
     private UserService $userService;
 
-    public function __construct(Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService)
+    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService)
     {
+        $this->autoMapping = $autoMapping;
         $this->messaging = $messaging;
         $this->notificationFirebaseManager = $notificationFirebaseManager;
         $this->notificationTokensService = $notificationTokensService;
@@ -487,5 +491,12 @@ class NotificationFirebaseService
     public function deleteTokenByUserAndAppType(int $userId, int $appType): ?NotificationFirebaseTokenEntity
     {
         return $this->notificationFirebaseManager->deleteTokenByUserAndAppType($userId, $appType);
+    }
+
+    public function deleteTokenByUserId(int $userId): ?NotificationFirebaseTokenDeleteResponse
+    {
+        $tokenResult = $this->notificationFirebaseManager->deleteTokenByUserId($userId);
+
+        return $this->autoMapping->map(NotificationFirebaseTokenEntity::class, NotificationFirebaseTokenDeleteResponse::class, $tokenResult);
     }
 }
