@@ -312,7 +312,7 @@ class AdminOrderController extends BaseController
     }
     
     /**
-     * admin: Get pending orders for captain.
+     * admin: Get pending orders for admin.
      * @Route("orderpending",   name="getPendingOrdersForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN") 
      * @return JsonResponse
