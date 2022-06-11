@@ -63,7 +63,7 @@ use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
-use App\Response\Order\OrderPendingResponse;
+use App\Response\Admin\Order\OrderPendingResponse;
 
 class OrderService
 {
@@ -1144,7 +1144,7 @@ class OrderService
 
        return $response;
     }
-    
+
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderManager->getOrdersByCaptainId($captainId);

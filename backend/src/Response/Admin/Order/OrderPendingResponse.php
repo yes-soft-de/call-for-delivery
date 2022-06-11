@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Response\Order;
+namespace App\Response\Admin\Order;
 
 class OrderPendingResponse
 {
