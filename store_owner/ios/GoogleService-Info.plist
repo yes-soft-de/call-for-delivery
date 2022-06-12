@@ -32,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:410273886458:ios:4170d7642b2d18821f1943</string>
+	<key>DATABASE_URL</key>
+	<string>https://c4d-app-c299b-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

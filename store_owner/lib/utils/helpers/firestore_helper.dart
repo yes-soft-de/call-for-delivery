@@ -1,20 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isolate_handler/isolate_handler.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 @injectable
 class FireStoreHelper {
   Stream? onInsertChangeWatcher() {
     try {
-      return FirebaseFirestore.instance
-          .collection('c4d_actions')
-          .doc('new_action')
-          .collection('action_history')
-          .snapshots();
+      DatabaseReference ref = FirebaseDatabase.instance.ref('c4d_actions');
+      return ref.onValue;
     } catch (e) {
       return null;
     }
@@ -22,26 +19,10 @@ class FireStoreHelper {
 
   Future<void> insertWatcher() async {
     try {
-      await FirebaseFirestore.instance
-          .collection('c4d_actions')
-          .doc('new_action')
-          .collection('action_history')
-          .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
-              Duration(seconds: 30));
+      DatabaseReference ref = FirebaseDatabase.instance.ref('c4d_actions');
+      ref.set({'action_history': DateTime.now().toUtc().toIso8601String()});
       log('inserted -----------------------------------------------------------!');
       return;
-    } catch (e) {
-      return;
-    }
-  }
-
-  Future<void> insertWatcherOrder(int orderId) async {
-    try {
-      FirebaseFirestore.instance
-          .collection('order_state')
-          .doc(orderId.toString())
-          .collection('order_history')
-          .add({'date': DateTime.now().toLocal().toIso8601String()});
     } catch (e) {
       return;
     }
