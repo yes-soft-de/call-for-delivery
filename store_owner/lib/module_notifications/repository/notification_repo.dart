@@ -17,8 +17,8 @@ class NotificationRepo {
         if (value != null) {
           var sound =
               NotificationsPrefHelper().getNotification().split('/').last;
-          _apiClient.post(
-              Urls.NOTIFICATION_API, {'token': token, 'sound': sound},
+          _apiClient.post(Urls.NOTIFICATION_API,
+              {'token': token.toString(), 'sound': sound},
               headers: {'Authorization': 'Bearer ${value}'});
         }
       },

@@ -722,6 +722,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                     orderInfo
                                             .destinationCoordinate?.longitude ??
                                         0)
+                                .toStringAsFixed(2)
                                 .toString() +
                             ' ${S.current.km}'),
                       ),

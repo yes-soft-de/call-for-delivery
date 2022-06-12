@@ -31,9 +31,9 @@ class CanMakeOrderModel extends DataModel {
             data?.packageName == 'الباقة الذهبية Ultimate' ? true : false);
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
-    var totalOrder = num.tryParse(total)?.floorToDouble() ?? 0;
+    var totalOrder = num.tryParse(total)?.toInt() ?? 0;
     var alert = false;
-    if (totalOrder >= 80.0) {
+    if (totalOrder >= 80) {
       _model.percentageOfOrdersConsumed = '80%';
       totalOrder = 80;
       alert = _subscriptionAlert(totalOrder);

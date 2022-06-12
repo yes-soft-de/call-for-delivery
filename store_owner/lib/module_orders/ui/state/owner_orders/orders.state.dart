@@ -53,6 +53,7 @@ class OrdersListStateOrdersLoaded extends States {
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      screenState.getInitData();
                     },
                     child: Text(S.of(context).confirm)),
               ],
