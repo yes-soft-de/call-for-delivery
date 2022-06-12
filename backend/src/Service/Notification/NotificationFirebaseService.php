@@ -59,35 +59,39 @@ class NotificationFirebaseService
             ]);
 
             foreach ($getTokens as $token) {
-                //$tokens[] = $token['token'];
+                if ($token['token'] !== null) {
+                    $deviceToken = [];
 
-                $sound = $token['sound'];
+                    $deviceToken[] = $token['token'];
 
-                if (! $sound) {
-                    $sound = NotificationTokenConstant::SOUND;
-                }
+                    $sound = $token['sound'];
 
-                $apnsConfig = ApnsConfig::fromArray([
-                    'headers' => [
-                        'apns-priority' => '10',
-                        'apns-push-type' => 'alert'
-                    ],
-                    'payload' => [
-                        'aps' => [
-                            'sound' => $sound
+                    if (! $sound) {
+                        $sound = NotificationTokenConstant::SOUND;
+                    }
+
+                    $apnsConfig = ApnsConfig::fromArray([
+                        'headers' => [
+                            'apns-priority' => '10',
+                            'apns-push-type' => 'alert'
+                        ],
+                        'payload' => [
+                            'aps' => [
+                                'sound' => $sound
+                            ]
                         ]
-                    ]
-                ]);
+                    ]);
 
-                $message = CloudMessage::withTarget('token', $token['token'])->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
-                    NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-                    ->withHighestPossiblePriority()
-                    ->withData($payload)
-                    ->withAndroidConfig($config)
-                    ->withApnsConfig($apnsConfig);
+                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                        ->withHighestPossiblePriority()
+                        ->withData($payload)
+                        ->withAndroidConfig($config)
+                        ->withApnsConfig($apnsConfig);
 //                    ->withChangedTarget('token', $token['token']);
 
-                $this->messaging->send($message);
+                    $this->messaging->sendMulticast($message, $deviceToken);
+                }
             }
         }
     }
@@ -224,8 +228,7 @@ class NotificationFirebaseService
             'chatNotification' => json_encode([
                 'roomId' => $request->getRoomId(),
                 'userId' => (string) $request->getUserID()
-            ]),
-            'content_available' => true
+            ])
         ];
        
         $config = AndroidConfig::fromArray([
@@ -239,11 +242,11 @@ class NotificationFirebaseService
                 'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
-            'payload' => json_encode([
+            'payload' => [
                 'aps' =>[
                     'sound' => $sound
                 ]
-            ])
+            ]
         ]);
 
         $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
@@ -287,11 +290,11 @@ class NotificationFirebaseService
                 'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
-            'payload' => json_encode([
+            'payload' => [
                 'aps' =>[
                     'sound' => $sound
                 ]
-            ])
+            ]
         ]);
 
         $message = CloudMessage::new()
