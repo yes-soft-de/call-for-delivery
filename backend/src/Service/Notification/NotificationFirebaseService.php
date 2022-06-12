@@ -62,12 +62,13 @@ class NotificationFirebaseService
        
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '5',
+                'apns-priority' => '10',
                 'apns-push-type' => 'alert'
             ],
             'payload' => [
                 'aps' =>[
-                    'content_available' => true
+                    'content_available' => true,
+                    'sound' => 'ringtone3.wav'
                 ]
             ]
         ]);
@@ -170,7 +171,8 @@ class NotificationFirebaseService
     public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request, $userType)
     {
         $devicesToken = [];
-       
+        $sound = NotificationTokenConstant::SOUND;
+
         if(! $request->getOtherUserID()){
             $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
        
@@ -196,6 +198,11 @@ class NotificationFirebaseService
             $token = $this->notificationTokensService->getTokenByUserId($user->getId());
        
             $devicesToken[] = $token->getToken();
+
+            $sound = $token->getSound();
+            if(! $sound) {
+               $sound = NotificationTokenConstant::SOUND;
+            }
         }
 
         $payload = [
@@ -217,12 +224,13 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '5',
+                'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
             'payload' => json_encode([
                 'aps' =>[
-                    'content_available' => 1
+                    'content_available' => 1,
+                    'sound' => $sound
                 ]
             ])
         ]);
@@ -241,11 +249,17 @@ class NotificationFirebaseService
     public function notificationNewChatFromAdmin(NotificationFirebaseFromAdminRequest $request)
     {
         $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
 
         $token = $this->notificationTokensService->getTokenByUserId($request->getOtherUserID());
        
         $devicesToken[] = $token->getToken();
         
+        $sound = $token->getSound();
+        if(! $sound) {
+           $sound = NotificationTokenConstant::SOUND;
+        }
+
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
@@ -260,12 +274,13 @@ class NotificationFirebaseService
 
         $apnsConfig = ApnsConfig::fromArray([
             'headers' => [
-                'apns-priority' => '5',
+                'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
             'payload' => json_encode([
                 'aps' =>[
-                    'content_available' => 1
+                    'content_available' => 1,
+                    'sound' => $sound
                 ]
             ])
         ]);
