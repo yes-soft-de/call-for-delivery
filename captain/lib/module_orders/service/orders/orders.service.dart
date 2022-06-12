@@ -61,8 +61,8 @@ class OrdersService {
       _ordersResponse.data?.note =
           await translateService(_ordersResponse.data!.note!);
     }
-    var currentLocation = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.withData(_ordersResponse, currentLocation);
+   // var currentLocation = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(_ordersResponse);
   }
 
   Future<DataModel> getNearbyOrders() async {

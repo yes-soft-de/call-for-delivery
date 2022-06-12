@@ -273,6 +273,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       onTap: () {
+                        getIt<FireNotificationService>().deleteToken();
                         widget._authService.logout().then((value) {
                           Navigator.pushNamedAndRemoveUntil(
                               context,
@@ -345,11 +346,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   message: value.error ??
                                                       S.current.errorHappened);
                                             } else {
+                                              getIt<FireNotificationService>()
+                                                  .deleteToken();
                                               widget._authService
                                                   .logout()
                                                   .then((value) {
-                                                getIt<FireNotificationService>()
-                                                    .deleteToken();
                                                 Navigator
                                                     .pushNamedAndRemoveUntil(
                                                         context,

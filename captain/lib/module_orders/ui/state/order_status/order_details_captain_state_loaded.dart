@@ -23,6 +23,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -352,8 +353,21 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       });
                     },
                     title: Text(S.current.branchLocation),
-                    subtitle: orderInfo.branchDistance != null
-                        ? Text(orderInfo.branchDistance ?? '')
+                    subtitle: orderInfo.branchCoordinate != null &&
+                            screenState.myLocation != null
+                        ? Text(S.current.distance +
+                            ' ' +
+                            (Geolocator.distanceBetween(
+                                        screenState.myLocation?.latitude ?? 0,
+                                        screenState.myLocation?.longitude ?? 0,
+                                        orderInfo.branchCoordinate?.latitude ??
+                                            0,
+                                        orderInfo.branchCoordinate?.longitude ??
+                                            0) /
+                                    1000)
+                                .toStringAsFixed(2)
+                                .toString() +
+                            ' ${S.current.km}')
                         : Text(S.current.destination +
                             ' ' +
                             S.current.destinationUnavailable),
@@ -532,11 +546,61 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     child: ListTile(
                       leading: const Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destination +
+                      subtitle: Visibility(
+                        visible:
+                            StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                                StatusHelper.getOrderStatusIndex(
+                                    OrderStatusEnum.IN_STORE),
+                        replacement: Visibility(
+                          visible: orderInfo.branchCoordinate != null &&
+                              orderInfo.destinationCoordinate != null,
+                          replacement: Text(S.current.distance +
                               ' ' +
                               S.current.destinationUnavailable),
+                          child: Text(S.current.distance +
+                              ' ' +
+                              (Geolocator.distanceBetween(
+                                          orderInfo
+                                                  .branchCoordinate?.latitude ??
+                                              0,
+                                          orderInfo.branchCoordinate
+                                                  ?.longitude ??
+                                              0,
+                                          orderInfo.destinationCoordinate
+                                                  ?.latitude ??
+                                              0,
+                                          orderInfo.destinationCoordinate
+                                                  ?.longitude ??
+                                              0) /
+                                      1000)
+                                  .toStringAsFixed(2)
+                                  .toString() +
+                              ' ${S.current.km}'),
+                        ),
+                        child: Visibility(
+                            visible: screenState.myLocation != null &&
+                                orderInfo.destinationCoordinate != null,
+                            child: Text(S.current.distance +
+                                ' ' +
+                                (Geolocator.distanceBetween(
+                                            screenState.myLocation?.latitude ??
+                                                0,
+                                            screenState.myLocation?.longitude ??
+                                                0,
+                                            orderInfo.destinationCoordinate
+                                                    ?.latitude ??
+                                                0,
+                                            orderInfo.destinationCoordinate
+                                                    ?.longitude ??
+                                                0) /
+                                        1000)
+                                    .toStringAsFixed(2)
+                                    .toString() +
+                                ' ${S.current.km}'),
+                            replacement: Text(S.current.distance +
+                                ' ' +
+                                S.current.destinationUnavailable)),
+                      ),
                       trailing: const Icon(Icons.arrow_forward),
                     ),
                   ),
