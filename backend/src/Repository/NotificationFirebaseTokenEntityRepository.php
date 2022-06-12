@@ -24,7 +24,7 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
     public function  getUsersTokensByAppType(int $appType): ?array
     {
         return $this->createQueryBuilder('notificationFirebaseToken')
-            ->select('notificationFirebaseToken.id', 'notificationFirebaseToken.token', 'notificationFirebaseToken.appType', 'notificationFirebaseToken.createdAt')
+            ->select('notificationFirebaseToken.id', 'notificationFirebaseToken.token', 'notificationFirebaseToken.appType', 'notificationFirebaseToken.createdAt', 'notificationFirebaseToken.sound')
 
             ->where('notificationFirebaseToken.appType = :appType')
 

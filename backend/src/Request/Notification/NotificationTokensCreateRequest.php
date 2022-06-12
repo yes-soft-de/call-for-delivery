@@ -3,6 +3,7 @@
 
 namespace App\Request\Notification;
 
+use App\Constant\Notification\NotificationTokenConstant;
 
 class NotificationTokensCreateRequest
 {
@@ -11,6 +12,8 @@ class NotificationTokensCreateRequest
     private string $token;
 
     private string $appType;
+
+    private string $sound = NotificationTokenConstant::SOUND;
 
     /**
      * @return mixed
@@ -60,6 +63,26 @@ class NotificationTokensCreateRequest
     public function setAppType($appType)
     {
         $this->appType = $appType;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sound
+     */ 
+    public function getSound()
+    {
+        return $this->sound;
+    }
+
+    /**
+     * Set the value of sound
+     *
+     * @return  self
+     */ 
+    public function setSound($sound)
+    {
+        $this->sound = $sound;
 
         return $this;
     }

@@ -8,6 +8,7 @@ use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationTokensManager;
 use App\Response\Notification\NotificationTokenResponse;
 use App\Request\Notification\NotificationTokensCreateRequest;
+use App\Constant\Notification\NotificationTokenConstant;
 
 class NotificationTokensService
 {
@@ -22,6 +23,9 @@ class NotificationTokensService
 
     public function createNotificationToken(NotificationTokensCreateRequest $request): ?NotificationTokenResponse
     {
+        if(! $request->getSound()) {
+            $request->setSound(NotificationTokenConstant::SOUND);
+        }
         $token = $this->notificationTokensManager->createNotificationToken($request);
 
         return $this->autoMapping->map(NotificationFirebaseTokenEntity ::class, NotificationTokenResponse::class, $token);
