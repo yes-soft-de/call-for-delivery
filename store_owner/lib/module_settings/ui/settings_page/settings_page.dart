@@ -363,6 +363,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   message: value.error ??
                                                       S.current.errorHappened);
                                             } else {
+                                              getIt<FireNotificationService>()
+                                                  .deleteToken();
                                               widget._authService
                                                   .logout()
                                                   .then((value) {

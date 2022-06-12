@@ -52,23 +52,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         }
       }
     });
-    // canRequestLocation().then((value) async {
-    //   if (value) {
-    //     Logger().info('Location enabled', '$value');
-    //     Geolocator.getPositionStream(
-    //         locationSettings: LocationSettings(
-    //       distanceFilter: 25,
-    //     )).listen((event) {
-    //       myLocation = LatLng(event.latitude, event.longitude);
-    //       Logger().info(
-    //           'Location with us ', myLocation?.toJson().toString() ?? 'null');
-    //       if (mounted) {
-    //         setState(() {});
-    //       }
-    //     });
-    //   }
-    // });
-
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {

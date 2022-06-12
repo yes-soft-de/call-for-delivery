@@ -714,14 +714,16 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                             orderInfo.destinationCoordinate != null,
                         child: Text(S.current.distance +
                             ' ' +
-                            Geolocator.distanceBetween(
-                                    screenState.myLocation?.latitude ?? 0,
-                                    screenState.myLocation?.longitude ?? 0,
-                                    orderInfo.destinationCoordinate?.latitude ??
-                                        0,
-                                    orderInfo
-                                            .destinationCoordinate?.longitude ??
-                                        0)
+                            (Geolocator.distanceBetween(
+                                        screenState.myLocation?.latitude ?? 0,
+                                        screenState.myLocation?.longitude ?? 0,
+                                        orderInfo.destinationCoordinate
+                                                ?.latitude ??
+                                            0,
+                                        orderInfo.destinationCoordinate
+                                                ?.longitude ??
+                                            0) /
+                                    1000)
                                 .toStringAsFixed(2)
                                 .toString() +
                             ' ${S.current.km}'),
