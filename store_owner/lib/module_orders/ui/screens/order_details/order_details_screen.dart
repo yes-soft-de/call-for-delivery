@@ -2,6 +2,8 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_state_owner_order_loaded.dart';
@@ -9,9 +11,13 @@ import 'package:c4d/module_orders/ui/widgets/custom_remove_sub_order_dialog.dart
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart' as loc;
 
 @injectable
 class OrderDetailsScreen extends StatefulWidget {
@@ -25,16 +31,44 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int orderId = -1;
   late States currentState;
-
+  bool alertFlag = true;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   OrderStatusStateManager get manager => widget._stateManager;
   void deleteOrder() {
     widget._stateManager.deleteOrder(orderId, this);
   }
 
+  LatLng? myLocation;
   @override
   void initState() {
     currentState = LoadingState(this);
+    DeepLinksService.defaultLocation().then((value) {
+      if (value != null) {
+        myLocation = value;
+        Logger().info(
+            'Location with us ', myLocation?.toJson().toString() ?? 'null');
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    });
+    // canRequestLocation().then((value) async {
+    //   if (value) {
+    //     Logger().info('Location enabled', '$value');
+    //     Geolocator.getPositionStream(
+    //         locationSettings: LocationSettings(
+    //       distanceFilter: 25,
+    //     )).listen((event) {
+    //       myLocation = LatLng(event.latitude, event.longitude);
+    //       Logger().info(
+    //           'Location with us ', myLocation?.toJson().toString() ?? 'null');
+    //       if (mounted) {
+    //         setState(() {});
+    //       }
+    //     });
+    //   }
+    // });
+
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -99,10 +133,26 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       builder: (ctx) {
                         return CustomAlertDialog(
                             onPressed: () {
+                              var order = (currentState
+                                      as OrderDetailsStateOwnerOrderLoaded)
+                                  .orderInfo;
+
                               Navigator.of(context).pop();
                               Navigator.of(context).pushNamed(
                                   OrdersRoutes.NEW_SUB_ORDER_SCREEN,
-                                  arguments: orderId);
+                                  arguments: OrderModel(
+                                      branchID: order.branchID,
+                                      branchName: order.branchName,
+                                      state: order.state,
+                                      orderCost: order.orderCost,
+                                      note: order.branchName,
+                                      deliveryDate: order.branchName,
+                                      createdDate: order.branchName,
+                                      id: order.id,
+                                      orderType: 1,
+                                      orderIsMain: order.orderIsMain,
+                                      orders: order.subOrders,
+                                      isHide: 0));
                             },
                             content: S.current.areYouSureAboutCreatingSubOrder);
                       });
@@ -164,5 +214,36 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
             )),
       ),
     );
+  }
+
+  Future<bool> canRequestLocation() async {
+    try {
+      bool serviceEnabled;
+      LocationPermission permission;
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await loc.Location().requestService();
+        if (!serviceEnabled) {
+          return false;
+        }
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return false;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -20,6 +20,7 @@ import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -34,9 +35,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.orderInfo,
   ) : super(screenState) {
     if (confirmMessagesStates.contains(orderInfo.state) &&
-        orderInfo.isCaptainArrived == null) {
+        orderInfo.isCaptainArrived == null &&
+        screenState.alertFlag) {
+      screenState.alertFlag = false;
       showOwnerAlertConfirm();
-    }
+    } else {}
     if (orderInfo.state == OrderStatusEnum.WAITING) {
       screenState.canRemoveIt = orderInfo.canRemove;
     }
@@ -106,7 +109,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                 TextSpan(
                                     text: orderInfo.state ==
                                             OrderStatusEnum.FINISHED
-                                        ? S.current.orderHandledDoneByCaptain
+                                        ? S.current.orderHandledDoneByCaptain +
+                                            ' '
                                         : S.current.orderHandledByCaptain + ' ',
                                     style: TextStyle(color: Colors.white)),
                                 TextSpan(
@@ -704,9 +708,23 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     child: ListTile(
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destinationUnavailable),
+                      subtitle: Visibility(
+                        replacement: Text(S.current.destinationUnavailable),
+                        visible: screenState.myLocation != null &&
+                            orderInfo.destinationCoordinate != null,
+                        child: Text(S.current.distance +
+                            ' ' +
+                            Geolocator.distanceBetween(
+                                    screenState.myLocation?.latitude ?? 0,
+                                    screenState.myLocation?.longitude ?? 0,
+                                    orderInfo.destinationCoordinate?.latitude ??
+                                        0,
+                                    orderInfo
+                                            .destinationCoordinate?.longitude ??
+                                        0)
+                                .toString() +
+                            ' ${S.current.km}'),
+                      ),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),

@@ -81,10 +81,13 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
                   builder: (ctx) {
                     return CustomAlertDialog(
                         onPressed: () {
+                          var getState =
+                              currentState as SubOrdersListStateLoaded;
+                          var order = getState.orders[0];
                           Navigator.of(context).pop();
                           Navigator.of(context).pushNamed(
                               OrdersRoutes.NEW_SUB_ORDER_SCREEN,
-                              arguments: orderId);
+                              arguments: getState.orders[0]);
                         },
                         content: S.current.areYouSureAboutCreatingSubOrder);
                   });

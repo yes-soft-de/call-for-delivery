@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order_link_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -111,7 +112,10 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null && currentState is LoadingState && flag) {
-      orderId = args as int;
+      if (args is OrderModel) {
+        orderId = args.id;
+        branch = args.branchID;
+      }
       flag = false;
     }
     return GestureDetector(

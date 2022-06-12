@@ -63,8 +63,8 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    var location = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.withData(response, location);
+    //var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response);
   }
 
   Future<DataModel> getCompanyInfo() async {

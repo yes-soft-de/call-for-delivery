@@ -19,6 +19,7 @@ class OrderModel extends DataModel {
   late bool orderIsMain;
   late List<OrderModel> orders;
   late num isHide;
+  int? branchID;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -30,7 +31,9 @@ class OrderModel extends DataModel {
       required this.orderType,
       required this.orderIsMain,
       required this.orders,
-      required this.isHide});
+      required this.isHide,
+      this.branchID
+      });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;

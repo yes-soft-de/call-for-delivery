@@ -56,6 +56,7 @@ class SubOrdersStateManager {
             branchName: order.branchName,
             state: order.state,
             orderCost: order.orderCost,
+            branchID: order.branchID,
             note: order.note,
             deliveryDate: DateFormat.jm().format(order.deliveryDate) +
                 ' 📅 ' +

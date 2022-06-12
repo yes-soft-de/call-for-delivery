@@ -85,7 +85,7 @@ class OrderDetailsModel extends DataModel {
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
+  OrderDetailsModel.withData(OrderDetailsResponse response) {
     var element = response.data;
     // date converter
     // created At
@@ -141,7 +141,6 @@ class OrderDetailsModel extends DataModel {
       captainRating:
           FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
     );
-    _orders.distance = _distance(_orders, location);
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
     if (orderLogs == null) {
@@ -175,21 +174,6 @@ class OrderDetailsModel extends DataModel {
       canRemove = false;
     }
     return canRemove;
-  }
-
-  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
-    String? distance;
-    if (orderInfo.destinationCoordinate != null) {
-      var value = DeepLinksService.getInitDistance(
-          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0),
-          location);
-      if (value == null) return null;
-      distance = value.toStringAsFixed(1);
-      distance = S.current.distance + ' $distance ' + S.current.km;
-      return distance;
-    }
-    return null;
   }
 
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
