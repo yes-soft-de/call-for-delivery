@@ -55,6 +55,17 @@ class FireNotificationService {
     await refreshNotificationToken();
   }
 
+  Future<void> refreshToken() async {
+    try {
+      var token = await _fcm.getToken();
+      _notificationRepo.postToken(token);
+    } catch (e) {}
+  }
+
+  Future<void> deleteToken() async {
+    _notificationRepo.postToken(null);
+  }
+
   Future<void> refreshNotificationToken() async {
     var token = await _fcm.getToken();
     log(token.toString());
@@ -67,7 +78,7 @@ class FireNotificationService {
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-         NotificationModel notificationModel =
+          NotificationModel notificationModel =
               NotificationModel.fromJson(message.data);
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {

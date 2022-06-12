@@ -267,6 +267,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          getIt<FireNotificationService>()
+                                              .refreshToken();
                                           setState(() {});
                                         },
                                         child: Text(S.current.confirm)),
@@ -288,6 +290,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       onTap: () {
+                        getIt<FireNotificationService>().deleteToken();
                         widget._authService.logout().then((value) {
                           Navigator.pushNamedAndRemoveUntil(
                               context,
@@ -370,9 +373,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             .LOGIN_SCREEN,
                                                         (route) => false);
                                               });
-                                                CustomFlushBarHelper.createError(
+                                              CustomFlushBarHelper.createError(
                                                   title: S.current.warnning,
-                                                  message: S.current.userDeleted);
+                                                  message:
+                                                      S.current.userDeleted);
                                             }
                                           });
                                         },

@@ -1,3 +1,4 @@
+import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
@@ -14,10 +15,11 @@ class NotificationRepo {
     _authService.getToken().then(
       (value) {
         if (value != null) {
-          if (token != null) {
-            _apiClient.post(Urls.NOTIFICATION_API, {'token': token},
-                headers: {'Authorization': 'Bearer ${value}'});
-          }
+          var sound =
+              NotificationsPrefHelper().getNotification().split('/').last;
+          _apiClient.post(
+              Urls.NOTIFICATION_API, {'token': token, 'sound': sound},
+              headers: {'Authorization': 'Bearer ${value}'});
         }
       },
     );

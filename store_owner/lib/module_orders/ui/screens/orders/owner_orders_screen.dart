@@ -79,7 +79,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   @override
   void initState() {
     super.initState();
-    getIt<FireNotificationService>().refreshNotificationToken();
+    getIt<FireNotificationService>().refreshToken();
     _currentState = LoadingState(this);
     getInitData();
     widget._stateManager.watcher(this, true);
