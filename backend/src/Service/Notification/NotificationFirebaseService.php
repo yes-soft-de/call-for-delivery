@@ -67,7 +67,8 @@ class NotificationFirebaseService
             ],
             'payload' => [
                 'aps' =>[
-                    'content_available' => true
+                    'content_available' => true,
+                    'sound' => 'ringtone3.wav'
                 ]
             ]
         ]);
