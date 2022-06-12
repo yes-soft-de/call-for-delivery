@@ -42,42 +42,58 @@ class NotificationFirebaseService
     {
         $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
 
-        $tokens = [];
+        //$tokens = [];
 
-        foreach ($getTokens as $token) {
-            $tokens[] = $token['token'];
-        }
+        if (! empty($getTokens)) {
 
-        $payload = [
-            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-            'navigate_route' => NotificationFirebaseConstant::URL,
-            'argument' => $orderId,
-        ];
+            $payload = [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'navigate_route' => NotificationFirebaseConstant::URL,
+                'argument' => $orderId,
+            ];
 
-        $config = AndroidConfig::fromArray([
-            "notification" => [
-                "channel_id" => "C4d_Notifications_custom_sound_test"
-            ]
-        ]);
-
-        $apnsConfig = ApnsConfig::fromArray([
-            'headers' => [
-                'apns-priority' => '10',
-                'apns-push-type' => 'alert'
-            ],
-            'payload' => [
-                'aps' =>[
-                    'content_available' => true,
-                    'sound' => 'ringtone3.wav'
+            $config = AndroidConfig::fromArray([
+                "notification" => [
+                    "channel_id" => "C4d_Notifications_custom_sound_test"
                 ]
-            ]
-        ]);
+            ]);
 
-        $message = CloudMessage::new()
-            ->withNotification(
-                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
-        $this->messaging->sendMulticast($message, $tokens);
+            foreach ($getTokens as $token) {
+                if ($token['token'] !== null) {
+                    $deviceToken = [];
+
+                    $deviceToken[] = $token['token'];
+
+                    $sound = $token['sound'];
+
+                    if (! $sound) {
+                        $sound = NotificationTokenConstant::SOUND;
+                    }
+
+                    $apnsConfig = ApnsConfig::fromArray([
+                        'headers' => [
+                            'apns-priority' => '10',
+                            'apns-push-type' => 'alert'
+                        ],
+                        'payload' => [
+                            'aps' => [
+                                'sound' => $sound
+                            ]
+                        ]
+                    ]);
+
+                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                        ->withHighestPossiblePriority()
+                        ->withData($payload)
+                        ->withAndroidConfig($config)
+                        ->withApnsConfig($apnsConfig);
+//                    ->withChangedTarget('token', $token['token']);
+
+                    $this->messaging->sendMulticast($message, $deviceToken);
+                }
+            }
+        }
     }
 
     public function notificationOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
@@ -226,11 +242,11 @@ class NotificationFirebaseService
                 'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
-            'payload' => json_encode([
+            'payload' => [
                 'aps' =>[
                     'sound' => $sound
                 ]
-            ])
+            ]
         ]);
 
         $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
@@ -274,11 +290,11 @@ class NotificationFirebaseService
                 'apns-priority' => '10',
                 'apns-push-type' => 'alert',
             ],
-            'payload' => json_encode([
+            'payload' => [
                 'aps' =>[
                     'sound' => $sound
                 ]
-            ])
+            ]
         ]);
 
         $message = CloudMessage::new()
