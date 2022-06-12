@@ -28,6 +28,9 @@ class NotificationFirebaseTokenEntity
     #[ORM\Column(type: 'integer')]
     private $appType;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $sound;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class NotificationFirebaseTokenEntity
     public function setAppType(int $appType): self
     {
         $this->appType = $appType;
+
+        return $this;
+    }
+
+    public function getSound(): ?string
+    {
+        return $this->sound;
+    }
+
+    public function setSound(?string $sound): self
+    {
+        $this->sound = $sound;
 
         return $this;
     }
