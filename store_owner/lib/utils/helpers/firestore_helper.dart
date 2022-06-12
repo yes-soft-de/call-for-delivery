@@ -4,14 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isolate_handler/isolate_handler.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 @injectable
 class FireStoreHelper {
   Stream? onInsertChangeWatcher() {
     try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref('c4d_actions');
-      return ref.onValue;
+      return FirebaseFirestore.instance
+          .collection('c4d_actions')
+          .doc('new_action')
+          .collection('action_history')
+          .snapshots();
     } catch (e) {
       return null;
     }
@@ -19,8 +21,12 @@ class FireStoreHelper {
 
   Future<void> insertWatcher() async {
     try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref('c4d_actions');
-      ref.set({'action_history': DateTime.now().toUtc().toIso8601String()});
+      await FirebaseFirestore.instance
+          .collection('c4d_actions')
+          .doc('new_action')
+          .collection('action_history')
+          .add({'date': DateTime.now().toUtc().toIso8601String()}).timeout(
+              Duration(seconds: 30));
       log('inserted -----------------------------------------------------------!');
       return;
     } catch (e) {
