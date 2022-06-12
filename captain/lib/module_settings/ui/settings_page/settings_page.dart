@@ -52,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding: const EdgeInsets.only(right: 8.0, left: 8.0),
           child: ListView(
             physics: const BouncingScrollPhysics(
-                parent: const AlwaysScrollableScrollPhysics()),
+                parent: AlwaysScrollableScrollPhysics()),
             children: [
               Container(
                 height: 16,
@@ -123,7 +123,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }),
                     ),
                     ListTile(
-                      leading: Icon(Icons.notifications_active),
+                      leading: const Icon(Icons.notifications_active),
                       title: Text(
                         S.of(context).notificationSound,
                       ),
@@ -249,6 +249,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         child: Text(S.current.cancel)),
                                     ElevatedButton(
                                         onPressed: () {
+                                          getIt<FireNotificationService>()
+                                              .refreshToken();
                                           Navigator.of(context).pop();
                                           setState(() {});
                                         },
@@ -285,7 +287,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-                 SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Container(
@@ -301,7 +303,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         alignment: AlignmentDirectional.topStart,
                         child: Text(
                           S.current.dangerZone,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -311,12 +313,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         alignment: AlignmentDirectional.topStart,
                         child: Text(
                           S.current.DeletingYourAccountHint,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Center(
@@ -346,6 +348,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               widget._authService
                                                   .logout()
                                                   .then((value) {
+                                                getIt<FireNotificationService>()
+                                                    .deleteToken();
                                                 Navigator
                                                     .pushNamedAndRemoveUntil(
                                                         context,
@@ -353,9 +357,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                             .LOGIN_SCREEN,
                                                         (route) => false);
                                               });
-                                                CustomFlushBarHelper.createError(
+                                              CustomFlushBarHelper.createError(
                                                   title: S.current.warnning,
-                                                  message: S.current.userDeleted);
+                                                  message:
+                                                      S.current.userDeleted);
                                             }
                                           });
                                         },
@@ -378,7 +383,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
-            
             ],
           ),
         ),

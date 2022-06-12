@@ -74,7 +74,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
-    getIt<FireNotificationService>().refreshNotificationToken();
+    getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
