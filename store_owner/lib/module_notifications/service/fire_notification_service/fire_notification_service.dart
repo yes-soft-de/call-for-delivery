@@ -40,12 +40,16 @@ class FireNotificationService {
 
   Future<void> init() async {
     if (p.Platform.isIOS) {
-      await _fcm.requestPermission(sound: false);
+      await _fcm.requestPermission(
+        sound: true,
+        criticalAlert: true,
+        announcement: true,
+      );
     }
     await _fcm.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
-      sound: false,
+      sound: true,
     );
     // var isActive = _prefHelper.getIsActive();
     await refreshNotificationToken();
@@ -59,19 +63,11 @@ class FireNotificationService {
       try {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          Logger().info('FireNotificationService', 'onMessage: $message');
-          Logger().info('FireNotificationService',
-              'onMessage: ${message.notification?.android?.channelId}');
-          Logger().info('Message Data', 'onMessage: ${message.data}');
-          Logger().info('FireNotificationService',
-              'onMessage: ${message.notification?.android?.channelId}');
-
           playSound();
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          Logger().info('On Message Opened App', 'onMessage: $message');
-          NotificationModel notificationModel =
+         NotificationModel notificationModel =
               NotificationModel.fromJson(message.data);
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
@@ -107,6 +103,9 @@ class FireNotificationService {
   }
 
   static Future<void> playSound() async {
+    if (p.Platform.isIOS) {
+      return;
+    }
     Soundpool pool = Soundpool.fromOptions();
     var sound = await rootBundle
         .load(NotificationsPrefHelper().getNotification())
