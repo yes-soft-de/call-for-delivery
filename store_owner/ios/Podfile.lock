@@ -360,6 +360,9 @@ PODS:
   - Firebase/Crashlytics (8.11.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 8.11.0)
+  - Firebase/Database (8.11.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 8.11.0)
   - Firebase/Firestore (8.11.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.11.0)
@@ -381,6 +384,10 @@ PODS:
     - Flutter
   - firebase_crashlytics (2.5.1):
     - Firebase/Crashlytics (= 8.11.0)
+    - firebase_core
+    - Flutter
+  - firebase_database (9.0.15):
+    - Firebase/Database (= 8.11.0)
     - firebase_core
     - Flutter
   - firebase_messaging (10.0.9):
@@ -431,6 +438,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseDatabase (8.11.0):
+    - FirebaseCore (~> 8.0)
+    - leveldb-library (~> 1.22)
   - FirebaseFirestore (8.11.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
@@ -598,6 +608,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
+  - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -629,6 +640,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
+    - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
     - FirebaseMessaging
@@ -657,6 +669,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_crashlytics:
     :path: ".symlinks/plugins/firebase_crashlytics/ios"
+  firebase_database:
+    :path: ".symlinks/plugins/firebase_database/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   firebase_performance:
@@ -707,6 +721,7 @@ SPEC CHECKSUMS:
   firebase_analytics: 7f755057493ac8fc386f987c9233a037fb0a8a81
   firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
   firebase_crashlytics: 0df152ee2d96f5a4aeddf2288fb277bbd0833b18
+  firebase_database: 8a232e12c8390b713e901a5a38b0edf22777ba30
   firebase_messaging: c6608162e71bcfd78198a81eac9c2fa27fed3aae
   firebase_performance: 4c003507bee40f6c9066d2a00db9a8798f154fa1
   firebase_remote_config: c3b7c8d3f180a13e2e3eb92edd7c234e467fcf3c
@@ -715,6 +730,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
   FirebaseCoreDiagnostics: fd0c8490f34287229c1d6c103d3a55f81ec85712
   FirebaseCrashlytics: 62268addefae79601057818156e8bc69d71fee41
+  FirebaseDatabase: ff9b4c7bee14d9f561f26c64a28ac083989f03d5
   FirebaseFirestore: 3b2e4b532c68809b3df5f8d39d28b3398ffc196b
   FirebaseInstallations: 7d1d967a307c12f1aadd76844fc321cef699b1ce
   FirebaseMessaging: 02e248e8997f71fa8cc9d78e9d49ec1a701ba14a
