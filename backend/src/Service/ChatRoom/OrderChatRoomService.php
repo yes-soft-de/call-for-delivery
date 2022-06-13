@@ -62,4 +62,9 @@ class OrderChatRoomService
     {
         return $this->orderChatRoomManager->deleteOrderChatRoomEntitiesByCaptainId($captainId);
     }
+    
+    public function getOrderIdByRoomId(string $chatRoom): ?array
+    {
+        return $this->orderChatRoomManager->getOrderIdByRoomId($chatRoom);
+    }
 }

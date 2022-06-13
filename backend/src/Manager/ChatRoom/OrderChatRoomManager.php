@@ -129,4 +129,11 @@ class OrderChatRoomManager
 
         return $orderChatRoomEntities;
     }
+
+    public function getOrderIdByRoomId(string $chatRoom): ?array
+    {
+       $roomId = Uuid::fromBase32($chatRoom);
+
+       return $this->orderChatRoomRepository->getOrderIdByRoomId($roomId);
+    }
 }
