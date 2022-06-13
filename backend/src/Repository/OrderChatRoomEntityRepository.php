@@ -69,4 +69,19 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getOrderIdByRoomId(string $roomId): ?array
+    {
+        return $this->createQueryBuilder('orderChatRoomEntity')
+            ->select('identity(orderChatRoomEntity.orderId) as orderId')
+           
+            ->andWhere('orderChatRoomEntity.roomId = :roomId')
+            ->setParameter('roomId', $roomId)
+           
+            ->orderBy('orderChatRoomEntity.id')
+            ->setMaxResults(1)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
