@@ -60,6 +60,7 @@ class BaseController extends AbstractController
     const CAPTAIN_PROFILE_SYSTEM_FINANCIAL_SELECTED = ["captain profile created!", "9104"];
     const ERROR_SYSTEM_FINANCIAL_INACTIVE = ["error system financial inactive", "9105"];
     const ERROR_NOT_ORDER_CASH = ["error not orders cash", "9106"];
+    const ERROR_CAPTAIN_ONLINE_FALSE = ["captain not online", "9107"];
 
     //error store
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];
@@ -122,6 +123,10 @@ class BaseController extends AbstractController
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS = ["user has payments, we can not delete him/her", "9353"];
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY = ["user has payments to company, we can not delete him/her", "9354"];
     const CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS = ["user has cash orders payments, we can not delete him/her", "9355"];
+
+    // renew database
+    const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
+    const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

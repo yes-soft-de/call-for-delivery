@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest;
 
 /**
  * Create and fetch Captain's Financial System According On Order.
@@ -251,5 +252,60 @@ class AdminCaptainFinancialSystemAccordingOnOrderController extends BaseControll
         $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->deleteCaptainFinancialSystemAccordingOnOrder($id);
 
         return $this->response($result, self::DELETE);
+    }
+
+     /**
+     * admin: Update Status Captain's Financial System According On Order
+     * @Route("captainfinancialsystemaccordingonorderstatusbyadmin", name="updateStatusCaptainFinancialSystemAccordingOnOrderByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain's Financial System According On Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update Captain's Financial System According On Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="status"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns Captain's Financial System According On Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="categoryName"),
+     *          @OA\Property(type="integer", property="countKilometersFrom"),
+     *          @OA\Property(type="integer", property="countKilometersTo"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="number", property="bounce"),
+     *          @OA\Property(type="number", property="bounceCountOrdersInMonth"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function updateStatusCaptainFinancialSystemAccordingOnOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest::class, (object)$data);
+
+        $result = $this->adminCaptainFinancialSystemAccordingOnOrderService->updateStatusCaptainFinancialSystemAccordingOnOrder($request);
+
+        return $this->response($result, self::UPDATE);
     }
 }

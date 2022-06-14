@@ -15,6 +15,6 @@ class CaptainFinancialSystemAccordingToCountOfOrdersManager
 
     public function getAllCaptainFinancialSystemAccordingToCountOfOrders(): ?array
     {
-        return $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->findAll();
+        return $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->findBy(['status' => 1]);
     }
 }

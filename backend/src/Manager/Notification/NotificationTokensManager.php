@@ -63,4 +63,10 @@ class NotificationTokensManager
     {
         return $this->notificationFirebaseTokenEntityRepository->getTokensByUsersArray($usersEntities);
     }
+    
+    public function getCaptainsOnlineTokens(): ?array
+    {
+        return $this->notificationFirebaseTokenEntityRepository->getCaptainsOnlineTokens();
+    }
+
 }

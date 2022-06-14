@@ -129,4 +129,9 @@ class OrderChatRoomManager
 
         return $orderChatRoomEntities;
     }
+
+    public function getOrderIdByRoomId(string $roomId): ?array
+    {
+       return $this->orderChatRoomRepository->getOrderIdByRoomId($roomId);
+    }
 }

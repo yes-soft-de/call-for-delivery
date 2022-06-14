@@ -22,6 +22,9 @@ class CaptainFinancialSystemAccordingToCountOfHoursEntity
     #[ORM\Column(type: 'float')]
     private $salary;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class CaptainFinancialSystemAccordingToCountOfHoursEntity
     public function setSalary(float $salary): self
     {
         $this->salary = $salary;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

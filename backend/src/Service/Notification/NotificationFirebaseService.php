@@ -20,6 +20,7 @@ use App\Request\Notification\NotificationFirebaseFromAdminRequest;
 use App\Constant\Notification\NotificationTokenConstant;
 use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\ApnsConfig;
+use App\Service\ChatRoom\OrderChatRoomService;
 
 class NotificationFirebaseService
 {
@@ -28,22 +29,21 @@ class NotificationFirebaseService
     private NotificationFirebaseManager $notificationFirebaseManager;
     private NotificationTokensService $notificationTokensService;
     private UserService $userService;
+    private OrderChatRoomService $orderChatRoomService;
 
-    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService)
+    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService, OrderChatRoomService $orderChatRoomService)
     {
         $this->autoMapping = $autoMapping;
         $this->messaging = $messaging;
         $this->notificationFirebaseManager = $notificationFirebaseManager;
         $this->notificationTokensService = $notificationTokensService;
         $this->userService = $userService;
+        $this->orderChatRoomService = $orderChatRoomService;
     }
 
     public function notificationToCaptains(int $orderId)
     {
-        $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
-
-        //$tokens = [];
-
+        $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
         if (! empty($getTokens)) {
 
             $payload = [
@@ -88,7 +88,6 @@ class NotificationFirebaseService
                         ->withData($payload)
                         ->withAndroidConfig($config)
                         ->withApnsConfig($apnsConfig);
-//                    ->withChangedTarget('token', $token['token']);
 
                     $this->messaging->sendMulticast($message, $deviceToken);
                 }
@@ -188,7 +187,9 @@ class NotificationFirebaseService
     {
         $devicesToken = [];
         $sound = NotificationTokenConstant::SOUND;
-
+       
+        $orderId = $this->orderChatRoomService->getOrderIdByRoomId($request->getRoomId());
+      
         if(! $request->getOtherUserID()){
             $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
        
@@ -249,7 +250,14 @@ class NotificationFirebaseService
             ]
         ]);
 
-        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, NotificationFirebaseConstant::MESSAGE_NEW_CHAT))
+        if ($orderId !== null || (! empty($orderId))) {
+            $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT." -".NotificationFirebaseConstant::ORDER_ID." ".$orderId;
+
+        } else {
+            $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT;
+        }
+    
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
         ->withHighestPossiblePriority();
 
         $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
