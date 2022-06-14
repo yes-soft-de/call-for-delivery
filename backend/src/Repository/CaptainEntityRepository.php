@@ -82,7 +82,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainEntity')
 
-            ->select('captainEntity.status')
+            ->select('captainEntity.status', 'captainEntity.isOnline')
 
             ->andWhere('captainEntity.captainId = :captainId')
 

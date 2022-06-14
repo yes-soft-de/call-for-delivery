@@ -286,6 +286,11 @@ class OrderService
 
             return $this->autoMapping->map(CaptainStatusResponse::class ,CaptainStatusResponse::class, $captain);
         }
+    //TODO remove comment after yazen is ready
+    //not show orders for captain because not online
+    //    if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
+    //         return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
+    //     }
        
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($userId);
         if ($captainFinancialSystemStatus->status ===  CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
