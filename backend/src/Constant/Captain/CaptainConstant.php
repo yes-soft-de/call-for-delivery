@@ -27,4 +27,6 @@ final class CaptainConstant
     const CAPTAIN_PROFILE_NOT_EXIST = "captainProfileNotExist";
 
     const COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED = "financialSelected";
+
+    const ERROR_CAPTAIN_ONLINE_FALSE = "captainNotOnline";
 }

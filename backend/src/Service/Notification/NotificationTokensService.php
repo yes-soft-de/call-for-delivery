@@ -45,4 +45,9 @@ class NotificationTokensService
     {
         return $this->notificationTokensManager->getTokensByUsersArray($usersEntities);
     }
+    
+    public function getCaptainsOnlineTokens(): ?array
+    {
+        return $this->notificationTokensManager->getCaptainsOnlineTokens();
+    }
 }

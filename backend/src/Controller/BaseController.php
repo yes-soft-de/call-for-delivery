@@ -60,6 +60,7 @@ class BaseController extends AbstractController
     const CAPTAIN_PROFILE_SYSTEM_FINANCIAL_SELECTED = ["captain profile created!", "9104"];
     const ERROR_SYSTEM_FINANCIAL_INACTIVE = ["error system financial inactive", "9105"];
     const ERROR_NOT_ORDER_CASH = ["error not orders cash", "9106"];
+    const ERROR_CAPTAIN_ONLINE_FALSE = ["captain not online", "9107"];
 
     //error store
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];

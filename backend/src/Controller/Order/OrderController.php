@@ -429,8 +429,8 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return captain inactive.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9100 or 9105"),
-     *          @OA\Property(type="string", property="msg", description="error captain inactive Error. or error system financial inactive Error."),
+     *          @OA\Property(type="string", property="status_code", description="9100 or 9105 or 9107"),
+     *          @OA\Property(type="string", property="msg", description="error captain inactive Error. or error system financial inactive Error. or captain not online"),
      *      )
      * )
      *
@@ -442,6 +442,11 @@ class OrderController extends BaseController
         if (isset($response->status)) {
            
            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
+        }
+
+        if ($response === CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE) {
+            
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_ONLINE_FALSE);
         }
 
         if ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
