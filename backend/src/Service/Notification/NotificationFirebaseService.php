@@ -254,10 +254,10 @@ class NotificationFirebaseService
             ]
         ]);
 
-        if($orderId) {
-            $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT." ".NotificationFirebaseConstant::ORDER_ID." ".$orderId['orderId'];
-        }
-        else {
+        if ($orderId !== null || (! empty($orderId))) {
+            $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT." -".NotificationFirebaseConstant::ORDER_ID." ".$orderId;
+
+        } else {
             $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT;
         }
     

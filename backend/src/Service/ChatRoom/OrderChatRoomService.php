@@ -11,6 +11,7 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Request\ChatRoom\OrderChatRoomRequest;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
+use Symfony\Component\Uid\Uuid;
 
 class OrderChatRoomService
 {
@@ -63,8 +64,16 @@ class OrderChatRoomService
         return $this->orderChatRoomManager->deleteOrderChatRoomEntitiesByCaptainId($captainId);
     }
     
-    public function getOrderIdByRoomId(string $chatRoom): ?array
+    public function getOrderIdByRoomId(string $chatRoom): null|string|array
     {
-        return $this->orderChatRoomManager->getOrderIdByRoomId($chatRoom);
+        $roomId = Uuid::fromBase32($chatRoom)->toBinary();
+
+        $result = $this->orderChatRoomManager->getOrderIdByRoomId($roomId);
+
+        if (! empty($result)) {
+            return $result['orderId'];
+        }
+
+        return $result;
     }
 }
