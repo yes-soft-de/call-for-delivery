@@ -2,6 +2,7 @@
 
 namespace App\Controller\Commander;
 
+use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -12,7 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,11 +27,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 class DataCommanderController extends BaseController
 {
     private EntityManagerInterface $entityManager;
+    private ParameterBagInterface $param;
 
-    public function __construct(SerializerInterface $serializer, EntityManagerInterface $entityManager)
+    public function __construct(SerializerInterface $serializer, EntityManagerInterface $entityManager, ParameterBagInterface $param)
     {
         parent::__construct($serializer);
         $this->entityManager = $entityManager;
+        $this->param = $param;
     }
 
     /**
@@ -107,6 +112,13 @@ class DataCommanderController extends BaseController
      *      required=true
      * )
      *
+     * @OA\RequestBody(
+     *      description="Re-new database from scratch request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="password")
+     *      )
+     * )
+     *
      * @OA\Response(
      *      response=200,
      *      description="Returns messege about successfully new schema was created",
@@ -122,37 +134,47 @@ class DataCommanderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function renewDataBaseFromScratch(KernelInterface $kernel): JsonResponse
+    public function renewDataBaseFromScratch(KernelInterface $kernel, Request $request): JsonResponse
     {
         $response = [];
 
-        // First, drop current schema and create a new one
-        $entitiesArray = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        $data = json_decode($request->getContent(), true);
 
-        $tool = new SchemaTool($this->entityManager);
+        if (! empty($data)) {
+            if ($data['password'] !== $this->param->get('renew_database_password')) {
+                return $this->response(MainErrorConstant::ERROR_MSG, self::RENEW_DATABASE_PASSWORD_INCORRECT);
+            }
 
-        $tool->dropSchema($entitiesArray);
-        $tool->createSchema($entitiesArray);
+            // First, drop current schema and create a new one
+            $entitiesArray = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        if($tool) {
-            $response['database'] = "new schema was created";
+            $tool = new SchemaTool($this->entityManager);
+
+            $tool->dropSchema($entitiesArray);
+            $tool->createSchema($entitiesArray);
+
+            if ($tool) {
+                $response['database'] = "new schema was created";
+            }
+
+            // Second, insert fixtures data
+            $application = new Application($kernel);
+            $application->setAutoExit(false);
+
+            $input = new ArrayInput([
+                'command' => 'hautelook:fixtures:load'
+            ]);
+
+            $input->setInteractive(false);
+
+            $output = new BufferedOutput();
+            $application->run($input, $output);
+
+            $response['content'] = $output->fetch();
+
+            return $this->response($response, self::CREATE);
         }
 
-        // Second, insert fixtures data
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
-
-        $input = new ArrayInput([
-            'command' => 'hautelook:fixtures:load'
-        ]);
-
-        $input->setInteractive(false);
-
-        $output = new BufferedOutput();
-        $application->run($input, $output);
-
-        $response['content'] = $output->fetch();
-
-        return $this->response($response, self::CREATE);
+        return $this->response(MainErrorConstant::ERROR_MSG, self::RENEW_DATABASE_PASSWORD_FIELD_MISSING);
     }
 }
