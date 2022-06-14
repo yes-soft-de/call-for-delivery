@@ -1300,7 +1300,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('bidDetailsEntity as bidDetailsInfo')
@@ -1315,8 +1315,13 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
-            ->andWhere('orderEntity.isHide = :isHide')
-            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+            ->andWhere('orderEntity.isHide = :show or orderEntity.isHide = :hide')
+            ->setParameter('show', OrderIsHideConstant::ORDER_SHOW)
+            ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+
+            ->andWhere('orderEntity.orderIsMain = :orderIsMain')
+            ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
+
             ->getQuery()
             ->getResult();
     }

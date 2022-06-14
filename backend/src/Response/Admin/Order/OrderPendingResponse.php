@@ -31,4 +31,6 @@ class OrderPendingResponse
     public array|null $subOrder;
 
     public bool|null $orderIsMain;
+
+    public int $isHide;
 }
