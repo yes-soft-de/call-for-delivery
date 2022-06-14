@@ -31,6 +31,9 @@ class CaptainFinancialSystemAccordingOnOrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $bounceCountOrdersInMonth;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class CaptainFinancialSystemAccordingOnOrderEntity
     public function setBounceCountOrdersInMonth(?int $bounceCountOrdersInMonth): self
     {
         $this->bounceCountOrdersInMonth = $bounceCountOrdersInMonth;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

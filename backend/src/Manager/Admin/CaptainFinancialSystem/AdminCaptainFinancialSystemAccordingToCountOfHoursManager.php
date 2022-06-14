@@ -8,6 +8,7 @@ use App\Repository\CaptainFinancialSystemAccordingToCountOfHoursEntityRepository
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateRequest;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateStatusRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfHoursManager
 {
@@ -25,7 +26,8 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursManager
     public function createCaptainFinancialSystemAccordingToCountOfHours(AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest $request): CaptainFinancialSystemAccordingToCountOfHoursEntity
     {
         $captainFinancialSystemAccordingToCountOfHoursEntity = $this->autoMapping->map(AdminCaptainFinancialSystemAccordingToCountOfHoursCreateRequest::class, CaptainFinancialSystemAccordingToCountOfHoursEntity::class, $request);
-
+        $captainFinancialSystemAccordingToCountOfHoursEntity->setStatus(1);
+        
         $this->entityManager->persist($captainFinancialSystemAccordingToCountOfHoursEntity);
         $this->entityManager->flush();
 
@@ -66,5 +68,21 @@ class AdminCaptainFinancialSystemAccordingToCountOfHoursManager
         $this->entityManager->flush();
        
         return $captainFinancialSystem;
+    }
+  
+    public function updateStatusCaptainFinancialSystemAccordingToCountOfHours(AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateStatusRequest $request): ?CaptainFinancialSystemAccordingToCountOfHoursEntity
+    {
+        $captainFinancialSystemAccordingToCountOfHoursEntity = $this->captainFinancialSystemAccordingToCountOfHoursEntityRepository->find($request->getId());
+
+        if(! $captainFinancialSystemAccordingToCountOfHoursEntity) {
+            
+            return $captainFinancialSystemAccordingToCountOfHoursEntity;
+        }
+        
+        $captainFinancialSystemAccordingToCountOfHoursEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemAccordingToCountOfHoursUpdateStatusRequest::class, CaptainFinancialSystemAccordingToCountOfHoursEntity::class, $request, $captainFinancialSystemAccordingToCountOfHoursEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemAccordingToCountOfHoursEntity;
     }
 }
