@@ -8,6 +8,7 @@ use App\Repository\CaptainFinancialSystemAccordingOnOrderEntityRepository;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateRequest;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest;
 
 class AdminCaptainFinancialSystemAccordingOnOrderManager
 {
@@ -25,7 +26,8 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
     public function createCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderCreateRequest $request): CaptainFinancialSystemAccordingOnOrderEntity
     {
         $captainFinancialSystemAccordingOnOrderEntity = $this->autoMapping->map(AdminCaptainFinancialSystemAccordingOnOrderCreateRequest::class, CaptainFinancialSystemAccordingOnOrderEntity::class, $request);
-
+        $captainFinancialSystemAccordingOnOrderEntity->setStatus(1);
+        
         $this->entityManager->persist($captainFinancialSystemAccordingOnOrderEntity);
         $this->entityManager->flush();
 
@@ -69,5 +71,19 @@ class AdminCaptainFinancialSystemAccordingOnOrderManager
         $this->entityManager->flush();
        
         return $captainFinancialSystem;
+    }
+
+    public function updateStatusCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest $request): ?CaptainFinancialSystemAccordingOnOrderEntity
+    {
+        $captainFinancialSystemAccordingOnOrderEntity = $this->captainFinancialSystemAccordingOnOrderEntityRepository->find($request->getId());
+        if(! $captainFinancialSystemAccordingOnOrderEntity){
+           return $captainFinancialSystemAccordingOnOrderEntity;
+        }
+        
+        $captainFinancialSystemAccordingOnOrderEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest::class, CaptainFinancialSystemAccordingOnOrderEntity::class, $request,  $captainFinancialSystemAccordingOnOrderEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemAccordingOnOrderEntity;
     }
 }

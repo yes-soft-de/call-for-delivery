@@ -16,6 +16,6 @@ class CaptainFinancialSystemAccordingToCountOfHoursManager
 
     public function getAllCaptainFinancialSystemAccordingToCountOfHours(): ?array
     {
-        return $this->captainFinancialSystemAccordingToCountOfHoursEntityRepository->findAll();
+        return $this->captainFinancialSystemAccordingToCountOfHoursEntityRepository->findBy(['status' => 1]);
     }
 }

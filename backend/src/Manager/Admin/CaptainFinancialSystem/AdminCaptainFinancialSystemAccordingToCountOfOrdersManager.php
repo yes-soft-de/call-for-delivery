@@ -8,6 +8,7 @@ use App\Repository\CaptainFinancialSystemAccordingToCountOfOrdersEntityRepositor
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateStatusRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
 {
@@ -25,7 +26,8 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
     public function createCaptainFinancialSystemAccordingToCountOfOrders(AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest $request): CaptainFinancialSystemAccordingToCountOfOrdersEntity
     {
         $captainFinancialSystemAccordingToCountOfOrdersEntity = $this->autoMapping->map(AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateRequest::class, CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, $request);
-
+        $captainFinancialSystemAccordingToCountOfOrdersEntity->setStatus(1);
+        
         $this->entityManager->persist($captainFinancialSystemAccordingToCountOfOrdersEntity);
         $this->entityManager->flush();
 
@@ -65,5 +67,20 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersManager
         $this->entityManager->flush();
        
         return $captainFinancialSystem;
+    }
+    
+    public function updateStatusCaptainFinancialSystemAccordingToCountOfOrders(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateStatusRequest $request): ?CaptainFinancialSystemAccordingToCountOfOrdersEntity
+    {
+        $captainFinancialSystemAccordingToCountOfOrdersEntity =  $this->captainFinancialSystemAccordingToCountOfOrdersEntityRepository->find($request->getId());
+       
+        if(! $captainFinancialSystemAccordingToCountOfOrdersEntity) {
+            return $captainFinancialSystemAccordingToCountOfOrdersEntity;
+        }
+
+        $captainFinancialSystemAccordingToCountOfOrdersEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateStatusRequest::class, CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, $request,  $captainFinancialSystemAccordingToCountOfOrdersEntity);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemAccordingToCountOfOrdersEntity;
     }
 }

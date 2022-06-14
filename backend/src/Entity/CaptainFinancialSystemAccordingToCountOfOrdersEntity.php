@@ -28,6 +28,9 @@ class CaptainFinancialSystemAccordingToCountOfOrdersEntity
     #[ORM\Column(type: 'float')]
     private $bounceMinCountOrdersInMonth;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class CaptainFinancialSystemAccordingToCountOfOrdersEntity
     public function setBounceMinCountOrdersInMonth(float $bounceMinCountOrdersInMonth): self
     {
         $this->bounceMinCountOrdersInMonth = $bounceMinCountOrdersInMonth;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

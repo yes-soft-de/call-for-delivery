@@ -9,6 +9,7 @@ use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordin
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDeleteResponse;
+use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateStatusRequest;
 
 class AdminCaptainFinancialSystemAccordingToCountOfOrdersService
 {
@@ -53,5 +54,12 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersService
         $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersManager->deleteCaptainFinancialSystemAccordingToCountOfOrdersByAdmin($id);
 
         return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, AdminCaptainFinancialSystemDeleteResponse::class, $result);
+    }
+    
+    public function updateStatusCaptainFinancialSystemAccordingToCountOfOrders(AdminCaptainFinancialSystemAccordingToCountOfOrdersUpdateStatusRequest $request): ?AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse
+    {
+        $result = $this->adminCaptainFinancialSystemAccordingToCountOfOrdersManager->updateStatusCaptainFinancialSystemAccordingToCountOfOrders($request);
+
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, AdminCaptainFinancialSystemAccordingToCountOfOrdersCreateResponse::class, $result);
     }
 }
