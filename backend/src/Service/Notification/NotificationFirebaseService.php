@@ -43,10 +43,7 @@ class NotificationFirebaseService
 
     public function notificationToCaptains(int $orderId)
     {
-        $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
-
-        //$tokens = [];
-
+        $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
         if (! empty($getTokens)) {
 
             $payload = [
@@ -91,7 +88,6 @@ class NotificationFirebaseService
                         ->withData($payload)
                         ->withAndroidConfig($config)
                         ->withApnsConfig($apnsConfig);
-//                    ->withChangedTarget('token', $token['token']);
 
                     $this->messaging->sendMulticast($message, $deviceToken);
                 }

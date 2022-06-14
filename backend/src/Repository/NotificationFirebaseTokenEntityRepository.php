@@ -7,6 +7,9 @@ use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Captain\CaptainConstant;
+use App\Entity\CaptainEntity;
 
 /**
  * @method NotificationFirebaseTokenEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -76,5 +79,22 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function  getCaptainsOnlineTokens(): ?array
+    {
+        return $this->createQueryBuilder('notificationFirebaseToken')
+            ->select('notificationFirebaseToken.id', 'notificationFirebaseToken.token', 'notificationFirebaseToken.appType', 'notificationFirebaseToken.createdAt', 'notificationFirebaseToken.sound')
+
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = notificationFirebaseToken.user')
+          
+            ->where('notificationFirebaseToken.appType = :appType')
+            ->setParameter('appType', NotificationTokenConstant::APP_TYPE_CAPTAIN)
+
+            ->andWhere('captainEntity.isOnline = :isOnline')
+            ->setParameter('isOnline', CaptainConstant::CAPTAIN_ONLINE_TRUE)
+
+            ->getQuery()
+            ->getResult();
     }
 }
