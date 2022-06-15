@@ -55,4 +55,17 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->getPendingOrdersForAdmin();
     }
+
+    public function getHiddenOrdersForAdmin(): ?array
+    {
+        return $this->orderEntityRepository->getHiddenOrdersForAdmin();
+    }
+
+    /**
+     * Not delivered orders are all orders which status = on way to pick order, in store, picked, or on going
+     */
+    public function getNotDeliveredOrdersForAdmin(): ?array
+    {
+        return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin();
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Response\Admin\Order;
 
+use DateTime;
+use OpenApi\Annotations as OA;
+
 class OrderPendingResponse
 {
     public int|null $id;
@@ -16,19 +19,27 @@ class OrderPendingResponse
    
     public string|null $note;
    
-    public object $deliveryDate;
+    public DateTime $deliveryDate;
    
-    public object $createdAt;
+    public DateTime $createdAt;
 
-    public array|null $location;
+    /**
+     * @OA\Property(type="array", property="location",
+     *     @OA\Items(type="string"))
+     */
+    public $location;
   
     public string|null $branchName;
 
     public string $storeOwnerName;
 
     public float|null $rating;
-    
-    public array|null $subOrder;
+
+    /**
+     * @OA\Property(type="array", property="subOrder",
+     *     @OA\Items(type="object"))
+     */
+    public $subOrder;
 
     public bool|null $orderIsMain;
 
