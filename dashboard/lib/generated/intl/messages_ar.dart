@@ -592,6 +592,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("طلب"),
+        "orderedNotAccepted":
+            MessageLookupByLibrary.simpleMessage("الطلبات غير المسلمة"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),

@@ -6,6 +6,7 @@ import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
+import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
@@ -163,12 +164,17 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 FontAwesomeIcons.stickyNote),
             customExpansionTile(
                 title: S.current.orders,
-                icon: FontAwesomeIcons.jediOrder,
+                icon: FontAwesomeIcons.boxes,
                 children: [
                   customListTile(
                       getIt<StoresModule>().captainNotArrivedScreen,
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
+                      true),
+                  customListTile(
+                      getIt<OrdersModule>().pendingScreen,
+                      S.current.orderedNotAccepted,
+                      FontAwesomeIcons.box,
                       true),
                 ],
                 page: widget.currentPage),

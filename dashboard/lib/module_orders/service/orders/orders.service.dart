@@ -54,4 +54,15 @@ class OrdersService {
     if (response.data == null) return DataModel.empty();
     return CaptainCashOrdersFinanceModel.withData(response);
   }
+
+  Future<DataModel> getPendingOrder() async {
+    OrdersResponse? response = await _ordersManager.getPendingOrders();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
 }

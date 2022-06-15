@@ -1,0 +1,82 @@
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
+import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:flutter/material.dart';
+
+class OrderPendingLoadedState extends States {
+  OrderPendingScreenState screenState;
+  List<OrderModel> orders;
+  OrderPendingLoadedState(this.screenState, this.orders) : super(screenState);
+
+  @override
+  Widget getUI(BuildContext context) {
+    return CustomListView.custom(children: getOrders());
+  }
+
+  int currentIndex = 0;
+  List<int> hiddenIndex = [];
+  List<Widget> getOrders() {
+    var context = screenState.context;
+    List<Widget> widgets = [];
+    widgets.add(
+      // filter on state
+      FilterBar(
+        cursorRadius: BorderRadius.circular(25),
+        animationDuration: Duration(milliseconds: 350),
+        backgroundColor: Theme.of(context).backgroundColor,
+        currentIndex: currentIndex,
+        borderRadius: BorderRadius.circular(25),
+        floating: true,
+        height: 40,
+        cursorColor: Theme.of(context).colorScheme.primary,
+        items: [
+          FilterItem(
+            label: S.current.pending,
+          ),
+          FilterItem(label: S.current.hidden),
+        ],
+        onItemSelected: (index) {
+          currentIndex = index;
+          getOrders();
+        },
+        selectedContent: Theme.of(context).textTheme.button!.color!,
+        unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+      ),
+    );
+
+    for (var element in orders) {
+      widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              orderCost: element.orderCost,
+              note: element.note,
+            ),
+          ),
+        ),
+      ));
+    }
+    widgets.add(SizedBox(
+      height: 75,
+    ));
+    return widgets;
+  }
+}

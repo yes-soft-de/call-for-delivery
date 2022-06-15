@@ -22,11 +22,13 @@ class OrdersManager {
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
       _repository.getOrderDetails(orderId);
 
-   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
+  Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
-      Future<OrdersCashFinancesForStoreResponse?> getOrderCashFinancesForStore(StoreCashFinanceRequest request) =>
+  Future<OrdersCashFinancesForStoreResponse?> getOrderCashFinancesForStore(
+          StoreCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForStore(request);
-      Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(CaptainCashFinanceRequest request) =>
+  Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(
+          CaptainCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForCaptain(request);
-
+  Future<OrdersResponse?> getPendingOrders() => _repository.getPendingOrder();
 }

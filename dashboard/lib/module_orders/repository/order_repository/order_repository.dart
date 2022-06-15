@@ -64,4 +64,14 @@ class OrderRepository {
     if (response == null) return null;
     return OrdersCashFinancesForStoreResponse.fromJson(response);
   }
+
+  Future<OrdersResponse?> getPendingOrder() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.ORDERS_PENDING_API,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
 }

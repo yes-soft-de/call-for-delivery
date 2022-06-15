@@ -6679,6 +6679,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Ordered not accepted`
+  String get orderedNotAccepted {
+    return Intl.message(
+      'Ordered not accepted',
+      name: 'orderedNotAccepted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

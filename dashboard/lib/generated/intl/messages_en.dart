@@ -595,6 +595,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order Time Line"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
+        "orderedNotAccepted":
+            MessageLookupByLibrary.simpleMessage("Ordered not accepted"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),

@@ -1,8 +1,8 @@
-// Developing Domain ===> 'http://138.197.186.138/';
+// Developing Domain ===> 'http://134.209.241.49';
 
 class Urls {
   /*--------BASES-------------------*/
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const String VERSION_ADMIN = '/v1/admin';
@@ -71,7 +71,8 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/subscription';
 
   /*--------Auth-------------------*/
-  static const String IMAGES_ROOT = DOMAIN + '/upload/';
+  static const String IMAGES_ROOT =
+      'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/createAdmin';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
@@ -109,6 +110,8 @@ class Urls {
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
+  static const ORDERS_PENDING_API =
+      BASE_API_ORDER + '/orderpending';
   static const FILTER_CASH_ORDERS_FINANCES_API =
       BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
   static const FILTER_CASH_ORDERS_FINANCES_CAPTAIN_API =
@@ -195,7 +198,7 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
   static const UPDATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
-        static const CHANGE_CAPTAIN_FINANCE_PLAN =
+  static const CHANGE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
