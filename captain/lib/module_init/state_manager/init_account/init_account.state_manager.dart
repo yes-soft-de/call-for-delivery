@@ -34,12 +34,7 @@ class InitAccountStateManager {
   void submitProfile(
       CreateCaptainProfileRequest request, InitAccountScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
-    Future.wait([
-      _uploadService.uploadImage(request.captainImage!.path),
-      _uploadService.uploadImage(request.driving!.path),
-      _uploadService.uploadImage(request.mechanic!.path),
-      _uploadService.uploadImage(request.idImage!.path)
-    ]).then((value) {
+    uploadingImages(request).then((value) {
       if (value[0] != null &&
           value[1] != null &&
           value[2] != null &&
@@ -62,6 +57,19 @@ class InitAccountStateManager {
         screenState.showMessage(S.current.errorUploadingImages, false);
       }
     });
+  }
+
+  Future<List<String?>> uploadingImages(
+      CreateCaptainProfileRequest request) async {
+    String? captainImage;
+    String? divingImage;
+    String? mechanicImage;
+    String? idImage;
+    captainImage = await _uploadService.uploadImage(request.captainImage!.path);
+    divingImage = await _uploadService.uploadImage(request.driving!.path);
+    mechanicImage = await _uploadService.uploadImage(request.mechanic!.path);
+    idImage = await _uploadService.uploadImage(request.idImage!.path);
+    return [captainImage, divingImage, mechanicImage, idImage];
   }
 
   void getCaptainScreen(InitAccountScreenState screenState) {

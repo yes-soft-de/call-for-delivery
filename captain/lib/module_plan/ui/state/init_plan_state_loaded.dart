@@ -160,11 +160,15 @@ class InitCaptainPlanLoadedState extends States {
                 child: SizedBox(
                   height: getHeight(),
                   width: double.maxFinite,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.horizontal,
-                    children: getPlanes(),
+                  child: Scrollbar(
+                    radius: const Radius.circular(25),
+                    isAlwaysShown: true,
+                    child: ListView(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      scrollDirection: Axis.horizontal,
+                      children: getPlanes(),
+                    ),
                   ),
                 ),
               ),

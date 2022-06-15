@@ -150,7 +150,7 @@ class LoginStateInit extends LoginState {
                       hintText: S.of(context).password,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8.0,
                   )
                 ],

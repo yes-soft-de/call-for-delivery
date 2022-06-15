@@ -23,7 +23,14 @@ class InitAccountScreen extends StatefulWidget {
 class InitAccountScreenState extends State<InitAccountScreen> {
   StreamSubscription? _streamSubscription;
   States? currentState;
-
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final carController = TextEditingController();
+  final phoneController = TextEditingController();
+  final bankNameController = TextEditingController();
+  final bankAccountNumberController = TextEditingController();
+  final stcPayController = TextEditingController();
+  final countryCodeController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void refresh() {
