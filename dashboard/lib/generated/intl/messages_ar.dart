@@ -420,6 +420,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
+        "hidden": MessageLookupByLibrary.simpleMessage("مخفية"),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "homeDataEmpty":
@@ -650,6 +651,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
         "pendingOfferMsg":
             MessageLookupByLibrary.simpleMessage("بإنتظار قبول عرضك"),
+        "pendingOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات في قائمة الانتظار"),
         "personalData":
             MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
         "phone2": MessageLookupByLibrary.simpleMessage("رقم الهاتف 2"),

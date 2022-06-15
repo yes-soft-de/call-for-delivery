@@ -676,7 +676,10 @@
     "carUpdatedSuccessfully": "تم تحديث السيارة بنجاح",
     "financeCategoryDeletedSuccessfully": "تم حذف باقة عمل كابتن بنجاح",
     "areSureAboutDeleteThisFinance": "هل انت متأكد من عملية حذف هذه الخطة",
-    "captainOffers": "عروض الكباتن"
+    "captainOffers": "عروض الكباتن",
+    "pendingOrders": "الطلبات في قائمة الانتظار",
+    "hidden": "مخفية",
+    "orderedNotAccepted": "الطلبات غير المسلمة"
 
 
 

@@ -422,6 +422,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
+        "hidden": MessageLookupByLibrary.simpleMessage("Hidden"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
@@ -655,6 +656,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "pendingOfferMsg": MessageLookupByLibrary.simpleMessage(
             "Waiting to accept your offer"),
+        "pendingOrders": MessageLookupByLibrary.simpleMessage("Pending orders"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phone2": MessageLookupByLibrary.simpleMessage("Phone 2"),
         "phoneIsRequired":

@@ -6659,6 +6659,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Pending orders`
+  String get pendingOrders {
+    return Intl.message(
+      'Pending orders',
+      name: 'pendingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hidden`
+  String get hidden {
+    return Intl.message(
+      'Hidden',
+      name: 'hidden',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
