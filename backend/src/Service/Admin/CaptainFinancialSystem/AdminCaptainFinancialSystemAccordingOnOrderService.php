@@ -61,10 +61,10 @@ class AdminCaptainFinancialSystemAccordingOnOrderService
         return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemDeleteResponse::class, $result);
     }
     
-    public function updateStatusCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest $request): ?array
+    public function updateStatusCaptainFinancialSystemAccordingOnOrder(AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest $request): ?AdminCaptainFinancialSystemAccordingOnOrderCreateResponse
     {
         $result = $this->adminCaptainFinancialSystemAccordingOnOrderManager->updateStatusCaptainFinancialSystemAccordingOnOrder($request);
 
-        return $this->autoMapping->map(AdminCaptainFinancialSystemAccordingOnOrderUpdateStatusRequest::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $result);
+        return $this->autoMapping->map(CaptainFinancialSystemAccordingOnOrderEntity::class, AdminCaptainFinancialSystemAccordingOnOrderCreateResponse::class, $result);
     }
 }

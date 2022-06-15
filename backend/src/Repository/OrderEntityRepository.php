@@ -1305,22 +1305,18 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('bidDetailsEntity as bidDetailsInfo')
            
-            ->andWhere('orderEntity.state = :pending ')
-
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-
+           
+            ->andWhere('orderEntity.state = :pending ')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
             ->andWhere('orderEntity.isHide = :show or orderEntity.isHide = :hide')
             ->setParameter('show', OrderIsHideConstant::ORDER_SHOW)
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
-
-            ->andWhere('orderEntity.orderIsMain = :orderIsMain')
-            ->setParameter('orderIsMain', OrderIsMainConstant::ORDER_MAIN)
 
             ->getQuery()
             ->getResult();
