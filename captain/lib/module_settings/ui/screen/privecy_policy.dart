@@ -6,7 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 @injectable
 class PrivecyPolicy extends StatelessWidget {
   Future<String> getText(String lang) async {
-    return await rootBundle.loadString('assets/text/privecy.txt');
+    return await rootBundle.loadString('assets/text/privacy.txt');
   }
 
   @override
