@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountForStore":
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
+        "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -450,6 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعة"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("أوافق على سياسة"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "اوافق على سياسة الاستخدام والخصوصية"),
@@ -718,7 +720,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
-        "planByHours": MessageLookupByLibrary.simpleMessage("وظيفية ساعية"),
+        "planByHours":
+            MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),
         "planByOrderCount":
             MessageLookupByLibrary.simpleMessage("وظيفة حرة على الطلب"),
         "planByOrders":
@@ -774,6 +777,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب رئيسي"),
+        "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -971,6 +975,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "tax": MessageLookupByLibrary.simpleMessage("القيمة المضافة ال %15"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
+        "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(

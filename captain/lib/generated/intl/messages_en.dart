@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
+        "and": MessageLookupByLibrary.simpleMessage(" & "),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -456,6 +457,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("hour"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("How we work"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("I agree to the"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "I agree to the terms of service & privacy policy"),
@@ -781,6 +783,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
+        "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -978,6 +981,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),
         "tax": MessageLookupByLibrary.simpleMessage("15% vat"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
+        "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(

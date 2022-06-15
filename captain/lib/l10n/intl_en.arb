@@ -699,7 +699,11 @@
     "areSureAboutDeletingYourAccount": "Are you sure about deleting your account , you won't be able to login with this credential any more",
     "deleteAccount": "Delete Account",
     "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
-    "userDeleted": "User deleted successfully"
+    "userDeleted": "User deleted successfully",
+    "iAgreeOn": "I agree to the",
+    "terms": "terms of use",
+    "privacy": "privacy policy",
+    "and": " & "
 
 
 
