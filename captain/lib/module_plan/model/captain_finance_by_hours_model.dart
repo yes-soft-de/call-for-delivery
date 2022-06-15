@@ -3,7 +3,7 @@ import 'package:c4d/module_plan/response/captain_finance_by_hours_response/capta
 
 class CaptainFinanceByHoursModel extends DataModel {
   late int id;
-  late int countHours;
+  late num countHours;
   late num compensationForEveryOrder;
   late num salary;
   CaptainFinanceByHoursModel({

@@ -1,11 +1,11 @@
 class Datum {
   int? id;
   String? categoryName;
-  int? countKilometersFrom;
-  int? countKilometersTo;
+  num? countKilometersFrom;
+  num? countKilometersTo;
   double? amount;
   double? bounce;
-  int? bounceCountOrdersInMonth;
+  num? bounceCountOrdersInMonth;
 
   Datum({
     this.id,
@@ -20,11 +20,11 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
         categoryName: json['categoryName'] as String?,
-        countKilometersFrom: json['countKilometersFrom'] as int?,
-        countKilometersTo: json['countKilometersTo'] as int?,
+        countKilometersFrom: json['countKilometersFrom'] as num?,
+        countKilometersTo: json['countKilometersTo'] as num?,
         amount: (json['amount'] as num?)?.toDouble(),
         bounce: (json['bounce'] as num?)?.toDouble(),
-        bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as int?,
+        bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

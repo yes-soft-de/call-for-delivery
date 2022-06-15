@@ -1,8 +1,8 @@
 class Datum {
   int? id;
-  int? countHours;
-  int? compensationForEveryOrder;
-  int? salary;
+  num? countHours;
+  num? compensationForEveryOrder;
+  num? salary;
 
   Datum({
     this.id,
@@ -13,9 +13,9 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
-        countHours: json['countHours'] as int?,
-        compensationForEveryOrder: json['compensationForEveryOrder'] as int?,
-        salary: json['salary'] as int?,
+        countHours: json['countHours'] as num?,
+        compensationForEveryOrder: json['compensationForEveryOrder'] as num?,
+        salary: json['salary'] as num?,
       );
 
   Map<String, dynamic> toJson() => {
