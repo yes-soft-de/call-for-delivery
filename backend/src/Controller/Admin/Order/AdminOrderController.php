@@ -312,8 +312,8 @@ class AdminOrderController extends BaseController
     }
     
     /**
-     * admin: Get pending orders for admin.
-     * @Route("orderpending",   name="getPendingOrdersForAdmin", methods={"GET"})
+     * admin: Get pending, hidden, and not delivered orders for admin.
+     * @Route("orderpending", name="getPendingOrdersForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN") 
      * @return JsonResponse
      * *
@@ -332,33 +332,26 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="object", property="deliveryDate"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="string", property="payment"),
-     *                  @OA\Property(type="number", property="orderCost"),
-     *                  @OA\Property(type="integer", property="orderType"),
-     *                  @OA\Property(type="string", property="note"),
-     *                  @OA\Property(type="string", property="state"),
-     *                  @OA\Property(type="boolean", property="orderIsMain"),
-     *                  @OA\Property(type="array", property="subOrder",
-     *                    @OA\Items( 
-     *                        @OA\Property(type="integer", property="id"),
-     *                        @OA\Property(type="object", property="deliveryDate"),
-     *                        @OA\Property(type="object", property="createdAt"),
-     *                        @OA\Property(type="string", property="payment"),
-     *                        @OA\Property(type="number", property="orderCost"),
-     *                        @OA\Property(type="integer", property="orderType"),
-     *                        @OA\Property(type="string", property="note"),
-     *                        @OA\Property(type="string", property="state"),
-     *                          ) 
-     *                      )
-     *                  ),
-     *            )
-     *       )
-     *  )
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="array", property="pendingOrders",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
+     *                  )
+     *              ),
+     *              @OA\Property(type="array", property="hiddenOrders",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
+     *                  )
+     *              ),
+     *              @OA\Property(type="array", property="notDeliveredOrdersOrders",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
+     *                  )
+     *              )
+     *           )
+     *        )
+     *    )
+     * )
      *
      * @Security(name="Bearer")
      */
