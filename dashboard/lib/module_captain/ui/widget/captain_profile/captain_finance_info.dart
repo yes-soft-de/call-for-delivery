@@ -43,7 +43,7 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
                         Navigator.of(context).pop();
                         Navigator.of(context).pushNamed(
                             CaptainsRoutes.CAPTAIN_PLAN,
-                            arguments: widget.captainID);
+                            arguments: widget.details.id);
                       },
                       icon: Icon(Icons.change_circle_rounded),
                       color: Colors.white,
