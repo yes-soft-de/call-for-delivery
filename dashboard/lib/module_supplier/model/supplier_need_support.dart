@@ -6,14 +6,15 @@ class SupplierNeedSupportModel extends DataModel {
   String captainName = '';
   String image = '';
   String id = '';
+  late String userId;
   List<SupplierNeedSupportModel> _model = [];
 
-  SupplierNeedSupportModel({
-    required this.roomID,
-    required this.image,
-    required this.captainName,
-    required this.id,
-  });
+  SupplierNeedSupportModel(
+      {required this.roomID,
+      required this.image,
+      required this.captainName,
+      required this.id,
+      required this.userId});
 
   SupplierNeedSupportModel.withData(List<DatumSupplier> data)
       : super.withData() {
@@ -24,6 +25,7 @@ class SupplierNeedSupportModel extends DataModel {
         image: element.images?.image ?? '',
         captainName: element.captainName ?? '',
         id: element.id?.toString() ?? '',
+        userId: element.userId?.toString() ?? '0',
       ));
     }
   }
