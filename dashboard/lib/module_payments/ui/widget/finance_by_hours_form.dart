@@ -62,6 +62,7 @@ class _CategoryFormState extends State<FinanceByHoursForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _hoursCount,
                       hintText: '${S.current.eg} 3',
                       numbers: true,
@@ -76,6 +77,7 @@ class _CategoryFormState extends State<FinanceByHoursForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _salaryController,
                       hintText: '${S.current.eg} 500',
                       numbers: true,
@@ -90,6 +92,7 @@ class _CategoryFormState extends State<FinanceByHoursForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _compensationController,
                       hintText: '${S.current.eg} 100',
                       numbers: true,

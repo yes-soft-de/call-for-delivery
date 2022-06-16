@@ -5,9 +5,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
-import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
 import 'package:c4d/utils/components/costom_search.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
@@ -108,7 +106,9 @@ class StoresLoadedState extends States {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: getTile(element.storeOwnerName),
+                    child: getTile(element.storeOwnerName == '0'
+                        ? element.phone
+                        : element.storeOwnerName),
                   ),
                 ),
 //                InkWell(

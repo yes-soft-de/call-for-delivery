@@ -19,6 +19,7 @@ class CustomFormField extends StatefulWidget {
   final bool last;
   final bool validator;
   final bool phone;
+  final int? maxLength;
   final Function()? onChanged;
   final TextInputAction? textInputAction;
   @override
@@ -38,7 +39,8 @@ class CustomFormField extends StatefulWidget {
       this.validator = true,
       this.phone = false,
       this.onChanged,
-      this.textInputAction});
+      this.textInputAction,
+      this.maxLength});
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -55,6 +57,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       child: Padding(
         padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
         child: TextFormField(
+          maxLength: widget.maxLength,
           autovalidateMode: mode,
           toolbarOptions: ToolbarOptions(
               copy: true, paste: true, selectAll: true, cut: true),
@@ -113,6 +116,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                 }
               : null,
           decoration: InputDecoration(
+            counterText: widget.maxLength != null ? '' : null,
             border: InputBorder.none,
             hintText: widget.hintText,
             prefixIcon: widget.preIcon,

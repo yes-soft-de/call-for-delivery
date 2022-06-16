@@ -86,6 +86,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _amountController,
                       hintText: '${S.current.eg} 100',
                     ),
@@ -99,6 +100,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _orderCountController,
                       hintText: '${S.current.eg} 5',
                       numbers: true,
@@ -113,6 +115,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _minimumKiloMetersController,
                       hintText: '10',
                       numbers: true,
@@ -127,6 +130,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _maxKiloMetersController,
                       hintText: '30',
                       numbers: true,
@@ -141,6 +145,7 @@ class _CategoryFormState extends State<FinanceByOrderForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _bounceController,
                       hintText: S.current.cost,
                       numbers: true,

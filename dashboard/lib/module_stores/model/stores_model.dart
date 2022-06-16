@@ -42,7 +42,7 @@ class StoresModel extends DataModel {
       _models.add(StoresModel(
           id: element.id ?? -1,
           storeOwnerName: element.storeOwnerName ?? S.current.store,
-          phone: element.phone ?? '',
+          phone: element.phone ?? S.current.notCompletedAccount,
           openingTime: DateHelper.convert(element.openingTime?.timestamp),
           closingTime: DateHelper.convert(element.closingTime?.timestamp),
           status: element.status ?? '',
