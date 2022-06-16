@@ -32,7 +32,7 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('chatRoom')
 
             ->select('chatRoom.roomId')
-            ->addSelect('storeOwnerProfile.id as storeOwnerProfileId, storeOwnerProfile.storeOwnerName, storeOwnerProfile.images')
+            ->addSelect('storeOwnerProfile.id as storeOwnerProfileId, storeOwnerProfile.storeOwnerName, storeOwnerProfile.images', 'chatRoom.userId')
           
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfile', Join::WITH, 'chatRoom.userId = storeOwnerProfile.storeOwnerId')
 
@@ -47,7 +47,7 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
     public function getChatRoomsWithCaptains(): ?array
     {
         return $this->createQueryBuilder('chatRoom')
-            ->select('chatRoom.roomId', 'captainEntity.id as captainProfileId, captainEntity.captainName')
+            ->select('chatRoom.roomId', 'captainEntity.id as captainProfileId, captainEntity.captainName', 'chatRoom.userId')
             ->addSelect('imageEntity.imagePath')
         
             ->leftJoin(
@@ -76,7 +76,7 @@ class ChatRoomEntityRepository extends ServiceEntityRepository
     public function getChatRoomsWithSuppliers(): ?array
     {
         return $this->createQueryBuilder('chatRoom')
-            ->select('chatRoom.roomId', 'supplierProfileEntity.id as supplierProfileId, supplierProfileEntity.supplierName')
+            ->select('chatRoom.roomId', 'supplierProfileEntity.id as supplierProfileId, supplierProfileEntity.supplierName', 'chatRoom.userId')
             ->addSelect('imageEntity.imagePath')
 
             ->leftJoin(

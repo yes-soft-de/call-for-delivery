@@ -173,28 +173,41 @@ class AdminOrderService
         }
     }
         
-    public function getPendingOrdersForAdmin(): ?array
-    {       
+    public function getPendingOrdersForAdmin(): array
+    {
+        $response = [];
+
         $this->orderService->showSubOrderIfCarIsAvailable();
         $this->orderService->hideOrderExceededDeliveryTimeByHour();
 
+        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin());
+        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin());
+        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin());
+
+       return $response;
+    }
+
+    public function prepareOrderResponseObject(array $orders): array
+    {
         $response = [];
 
-        $orders = $this->adminOrderManager->getPendingOrdersForAdmin();
+        if (! empty($orders)) {
+            foreach ($orders as $key=>$value) {
+                $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value['id']);
 
-        foreach ($orders as $key=>$value) {
+                $response[$key] = $this->autoMapping->map('array', OrderPendingResponse::class, $value);
 
-            $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value['id']);
+                if ($value['bidDetailsInfo'] !== null) {
+                    if ($value['bidDetailsInfo']->getBranch() !== null) {
+                        $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
+                        $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
+                    }
 
-            $response[$key] = $this->autoMapping->map('array', OrderPendingResponse::class, $value);
-
-            if ($value['bidDetailsInfo']) {
-                $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
-                $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
-                $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
+                    $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
+                }
             }
         }
 
-       return $response;
+        return $response;
     }
 }

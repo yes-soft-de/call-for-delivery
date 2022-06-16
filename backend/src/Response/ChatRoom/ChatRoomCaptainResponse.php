@@ -5,6 +5,11 @@ namespace App\Response\ChatRoom;
 class ChatRoomCaptainResponse
 {
     /**
+     * @var int|null
+     */
+    public $userId;
+
+    /**
      * @var int|null $captainProfileId
      */
     public $captainProfileId;
