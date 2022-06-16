@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
+import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -65,13 +66,13 @@ class OrderRepository {
     return OrdersCashFinancesForStoreResponse.fromJson(response);
   }
 
-  Future<OrdersResponse?> getPendingOrder() async {
+  Future<OrderPendingResponse?> getPendingOrder() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
       Urls.ORDERS_PENDING_API,
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
-    return OrdersResponse.fromJson(response);
+    return OrderPendingResponse.fromJson(response);
   }
 }

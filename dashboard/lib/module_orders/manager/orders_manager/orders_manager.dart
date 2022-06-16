@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
+import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -30,5 +31,5 @@ class OrdersManager {
   Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(
           CaptainCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForCaptain(request);
-  Future<OrdersResponse?> getPendingOrders() => _repository.getPendingOrder();
+  Future<OrderPendingResponse?> getPendingOrders() => _repository.getPendingOrder();
 }

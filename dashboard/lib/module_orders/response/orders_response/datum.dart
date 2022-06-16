@@ -2,7 +2,7 @@ import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
 
-class Datum {
+class DatumOrder {
   int? id;
   String? state;
   String? payment;
@@ -19,7 +19,7 @@ class Datum {
   int? storeOwnerBranchId;
   String? branchName;
 
-  Datum({
+  DatumOrder({
     this.id,
     this.state,
     this.payment,
@@ -37,7 +37,7 @@ class Datum {
     this.branchName,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
         id: json['id'] as int?,
         state: json['state'] as String?,
         payment: json['payment'] as String?,

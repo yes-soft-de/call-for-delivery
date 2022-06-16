@@ -6699,6 +6699,16 @@ class S {
       args: [],
     );
   }
+
+  /// `not accepted`
+  String get notAccepted {
+    return Intl.message(
+      'not accepted',
+      name: 'notAccepted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

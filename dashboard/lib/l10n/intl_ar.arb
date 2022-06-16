@@ -680,7 +680,8 @@
     "pendingOrders": "الطلبات في قائمة الانتظار",
     "hidden": "مخفية",
     "orderedNotAccepted": "الطلبات غير المسلمة",
-    "notCompletedAccount": "حساب غير مكتمل"
+    "notCompletedAccount": "حساب غير مكتمل",
+    "notAccepted": "غير مسلمة"
 
 
 

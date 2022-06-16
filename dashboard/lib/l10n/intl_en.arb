@@ -686,7 +686,8 @@
     "pendingOrders": "Pending orders",
     "hidden": "Hidden",
     "orderedNotAccepted": "Ordered not accepted",
-    "notCompletedAccount": "Not completed account"
+    "notCompletedAccount": "Not completed account",
+    "notAccepted": "not accepted"
 
 
 

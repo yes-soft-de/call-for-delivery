@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_pending_state/order_pending_loaded_state.dart';
@@ -35,7 +36,7 @@ class OrderPendingStateManager {
           getPendingOrders(screenState);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
-        value as OrderModel;
+        value as PendingOrder;
         _stateSubject.add(OrderPendingLoadedState(screenState, value.data));
       }
     });

@@ -9,16 +9,15 @@ class Detail {
   CreatedAt? createdAt;
   num? storeAmount;
   String? captainNote;
-  Detail({
-    this.id,
-    this.storeOwnerName,
-    this.orderId,
-    this.amount,
-    this.flag,
-    this.createdAt,
-    this.captainNote,
-    this.storeAmount
-  });
+  Detail(
+      {this.id,
+      this.storeOwnerName,
+      this.orderId,
+      this.amount,
+      this.flag,
+      this.createdAt,
+      this.captainNote,
+      this.storeAmount});
 
   factory Detail.fromJson(Map<String, dynamic> json) => Detail(
         id: json['id'] as int?,

@@ -1,18 +1,27 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OrderPendingLoadedState extends States {
   OrderPendingScreenState screenState;
-  List<OrderModel> orders;
-  OrderPendingLoadedState(this.screenState, this.orders) : super(screenState);
+  PendingOrder orders;
+  OrderPendingLoadedState(this.screenState, this.orders) : super(screenState) {
+    ordersIndex = [
+      orders.pendingOrders,
+      orders.hiddenOrders,
+      orders.notDeliveredOrders
+    ];
+  }
 
   @override
   Widget getUI(BuildContext context) {
@@ -20,7 +29,7 @@ class OrderPendingLoadedState extends States {
   }
 
   int currentIndex = 0;
-  List<int> hiddenIndex = [];
+  List<List<OrderModel>> ordersIndex = [];
   List<Widget> getOrders() {
     var context = screenState.context;
     List<Widget> widgets = [];
@@ -40,17 +49,17 @@ class OrderPendingLoadedState extends States {
             label: S.current.pending,
           ),
           FilterItem(label: S.current.hidden),
+          FilterItem(label: S.current.notAccepted),
         ],
         onItemSelected: (index) {
           currentIndex = index;
-          getOrders();
+          screenState.refresh();
         },
         selectedContent: Theme.of(context).textTheme.button!.color!,
         unselectedContent: Theme.of(context).textTheme.headline6!.color!,
       ),
     );
-
-    for (var element in orders) {
+    for (var element in ordersIndex[currentIndex]) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -72,6 +81,24 @@ class OrderPendingLoadedState extends States {
             ),
           ),
         ),
+      ));
+    }
+    if (widgets.length == 1) {
+      widgets.add(SizedBox(
+        height: 400,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(S.current.homeDataEmpty),
+              SizedBox(
+                height: 8,
+              ),
+              SvgPicture.asset(
+                SvgAsset.EMPTY_SVG,
+                width: 150,
+              )
+            ]),
       ));
     }
     widgets.add(SizedBox(
