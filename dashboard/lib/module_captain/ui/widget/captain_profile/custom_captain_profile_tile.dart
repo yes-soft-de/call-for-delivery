@@ -37,19 +37,21 @@ class CustomListTile extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.white),
       ),
-      trailing:leading ?? icon ,
-      subtitle:subTitle == '' ? null : Text(
-        subTitle ?? S.current.unknown,
-        style: TextStyle(color: Colors.white),
-        textDirection: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextDirection.ltr
-            : null,
-        textAlign: S.current.phoneNumber == title &&
-                Localizations.localeOf(context).languageCode == 'ar'
-            ? TextAlign.right
-            : null,
-      ),
+      trailing: leading ?? icon,
+      subtitle: subTitle == ''
+          ? null
+          : Text(
+              subTitle ?? S.current.unknown,
+              style: TextStyle(color: Colors.white),
+              textDirection: S.current.phoneNumber == title &&
+                      Localizations.localeOf(context).languageCode == 'ar'
+                  ? TextDirection.ltr
+                  : null,
+              textAlign: S.current.phoneNumber == title &&
+                      Localizations.localeOf(context).languageCode == 'ar'
+                  ? TextAlign.right
+                  : null,
+            ),
     );
   }
 

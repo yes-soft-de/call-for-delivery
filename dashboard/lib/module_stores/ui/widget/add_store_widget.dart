@@ -115,7 +115,6 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         hintText: S.current.city,
                       ),
 
-
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 12.0, bottom: 8, right: 12, top: 16.0),
@@ -506,8 +505,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
         openingTime: openingTime?.toUtc().toIso8601String(),
         status: status,
         id: widget.storesModel?.id ?? -1,
-      profitMargin: profitMargin.text
-    );
+        profitMargin: profitMargin.text);
     widget.updateStore(profileRequest, haveImage);
   }
 }

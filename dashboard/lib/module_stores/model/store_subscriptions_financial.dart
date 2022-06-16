@@ -19,18 +19,17 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late List<CaptainOffer> captainsOffer;
 
   List<StoreSubscriptionsFinanceModel> _data = [];
-  StoreSubscriptionsFinanceModel({
-    required this.id,
-    required this.status,
-    required this.packageName,
-    required this.flag,
-    required this.note,
-    required this.startDate,
-    required this.endDate,
-    required this.paymentsFromStore,
-    required this.total,
-    required this.captainsOffer
-  });
+  StoreSubscriptionsFinanceModel(
+      {required this.id,
+      required this.status,
+      required this.packageName,
+      required this.flag,
+      required this.note,
+      required this.startDate,
+      required this.endDate,
+      required this.paymentsFromStore,
+      required this.total,
+      required this.captainsOffer});
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var datum = response.data;
@@ -52,11 +51,10 @@ class StoreSubscriptionsFinanceModel extends DataModel {
           flag: element.flag,
           note: element.note,
           packageName: element.packageName ?? S.current.unknown,
-          captainsOffer: _getCaptainsOffer(element.captainOffers ?? [])
-          ));
+          captainsOffer: _getCaptainsOffer(element.captainOffers ?? [])));
     });
   }
-   List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {
+  List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {
     List<CaptainOffer> captains = [];
     offers.forEach((element) {
       captains.add(CaptainOffer(

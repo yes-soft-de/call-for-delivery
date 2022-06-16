@@ -94,8 +94,8 @@ class StoreProfileLoadedState extends States {
                               Text(S.current.openingTime + ': ',
                                   style:
                                       TextStyle(color: Colors.green.shade900)),
-                              Text(DateFormat.jm()
-                                  .format(profile?.openingTime ?? DateTime.now())),
+                              Text(DateFormat.jm().format(
+                                  profile?.openingTime ?? DateTime.now())),
                             ],
                           ),
                           Row(
@@ -105,8 +105,8 @@ class StoreProfileLoadedState extends States {
                                 S.current.closingTime + ': ',
                                 style: TextStyle(color: Colors.red.shade900),
                               ),
-                              Text(DateFormat.jm()
-                                  .format(profile?.closingTime ?? DateTime.now())),
+                              Text(DateFormat.jm().format(
+                                  profile?.closingTime ?? DateTime.now())),
                             ],
                           ),
                         ],
@@ -179,21 +179,23 @@ class StoreProfileLoadedState extends States {
               screenState.refresh();
             }),
       ),
-      SizedBox(height: 5,),
-      Container(
-        color:  Colors.grey.shade200,
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(S.of(context).storeProfitMargin),
-            Row(children: [
-              Text(profile?.profitMargin.toString() ??'0' ),
-              Text( ' '+S.current.sar),
-            ],)
-
-          ],
-        )
+      SizedBox(
+        height: 5,
       ),
+      Container(
+          color: Colors.grey.shade200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(S.of(context).storeProfitMargin),
+              Row(
+                children: [
+                  Text(profile?.profitMargin.toString() ?? '0'),
+                  Text(' ' + S.current.sar),
+                ],
+              )
+            ],
+          )),
       Wrap(
         spacing: 30,
         alignment: WrapAlignment.center,
@@ -203,28 +205,28 @@ class StoreProfileLoadedState extends States {
               image: ImageAsset.EDIT_PROFILE,
               title: S.of(context).editProfile,
               onTapCard: () {
-              showDialog(
-                  barrierDismissible: false,
-                  context: screenState.context,
-                  builder: (context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: Scaffold(
-                        appBar: CustomC4dAppBar.appBar(context,
-                            title: S.current.updateStore),
-                        backgroundColor:
-                        Theme.of(context).scaffoldBackgroundColor,
-                        body: UpdateStoreWidget(
-                          storesModel: profile,
-                          updateStore: (request, haveImage) {
-                            Navigator.of(context).pop();
-                            screenState.updateStore(request, haveImage);
-                          },
+                showDialog(
+                    barrierDismissible: false,
+                    context: screenState.context,
+                    builder: (context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: Scaffold(
+                          appBar: CustomC4dAppBar.appBar(context,
+                              title: S.current.updateStore),
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          body: UpdateStoreWidget(
+                            storesModel: profile,
+                            updateStore: (request, haveImage) {
+                              Navigator.of(context).pop();
+                              screenState.updateStore(request, haveImage);
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    });
               }),
           cardTap(
               image: ImageAsset.BID_ORDER,

@@ -26,8 +26,7 @@ class UpdateStoreRequest {
       this.city,
       this.bankName,
       this.employeeCount,
-        this.profitMargin
-      });
+      this.profitMargin});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};

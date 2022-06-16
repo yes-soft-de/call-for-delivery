@@ -84,12 +84,11 @@ class CaptainFinanceByOrderCountStateManager {
       }
     });
   }
-  void deleteFinance(CaptainFinanceByCountOrderScreenState screenState,
-      int id) {
+
+  void deleteFinance(
+      CaptainFinanceByCountOrderScreenState screenState, int id) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService
-        .deleteCaptainFinanceByOrderCounts(id)
-        .then((value) {
+    _storePaymentsService.deleteCaptainFinanceByOrderCounts(id).then((value) {
       if (value.hasError) {
         getFinances(screenState);
         CustomFlushBarHelper.createError(
@@ -100,7 +99,8 @@ class CaptainFinanceByOrderCountStateManager {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.financeCategoryDeletedSuccessfully)
+                message:
+                    value.error ?? S.current.financeCategoryDeletedSuccessfully)
             .show(screenState.context);
       }
     });

@@ -110,8 +110,7 @@ class Urls {
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
-  static const ORDERS_PENDING_API =
-      BASE_API_ORDER + '/orderpending';
+  static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
   static const FILTER_CASH_ORDERS_FINANCES_API =
       BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
   static const FILTER_CASH_ORDERS_FINANCES_CAPTAIN_API =

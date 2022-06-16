@@ -40,5 +40,4 @@ class CaptainPaymentsRequest {
     }
     return map;
   }
-
 }

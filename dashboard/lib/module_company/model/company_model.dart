@@ -35,10 +35,8 @@ class CompanyProfileModel extends DataModel {
       required this.minKilometerBonus,
       required this.maxKilometerBonus,
       required this.kilometers,
-        required this.supplierProfitMargin,
-       required this.storeProfitMargin
-
-      });
+      required this.supplierProfitMargin,
+      required this.storeProfitMargin});
 
   CompanyProfileModel.withData(Data data) : super.withData() {
     _model = CompanyProfileModel(
@@ -54,10 +52,8 @@ class CompanyProfileModel extends DataModel {
         kilometers: data.kilometers ?? 0,
         maxKilometerBonus: data.maxKilometerBonus ?? 0,
         minKilometerBonus: data.minKilometerBonus ?? 0,
-      storeProfitMargin: data.storeProfitMargin ?? 0,
-      supplierProfitMargin: data.supplierProfitMargin ?? 0
-
-    );
+        storeProfitMargin: data.storeProfitMargin ?? 0,
+        supplierProfitMargin: data.supplierProfitMargin ?? 0);
   }
 
   CompanyProfileModel get data {

@@ -52,23 +52,23 @@ class CarsStateManager {
     });
   }
 
- void updateCars(CarsScreenState screenState, CarRequest request) {
-   _stateSubject.add(LoadingState(screenState));
-   _service.updateCars(request).then((value) {
-     if (value.hasError) {
-       getCars(screenState);
-       CustomFlushBarHelper.createError(
-           title: S.current.warnning, message: value.error ?? '')
-         ..show(screenState.context);
-     } else {
-       getCars(screenState);
-       CustomFlushBarHelper.createSuccess(
-           title: S.current.warnning,
-           message: S.current.categoryUpdatedSuccessfully)
-         ..show(screenState.context);
-     }
-   });
- }
+  void updateCars(CarsScreenState screenState, CarRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _service.updateCars(request).then((value) {
+      if (value.hasError) {
+        getCars(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '')
+          ..show(screenState.context);
+      } else {
+        getCars(screenState);
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.categoryUpdatedSuccessfully)
+          ..show(screenState.context);
+      }
+    });
+  }
 
 //  void deleteCategories(CategoriesScreenState screenState, String id) {
 //    _stateSubject.add(LoadingState(screenState));

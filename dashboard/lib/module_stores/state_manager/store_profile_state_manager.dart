@@ -75,29 +75,28 @@ class StoreProfileStateManager {
     }
   }
 
-
   void updateStore(StoreInfoScreenState screenState, UpdateStoreRequest request,
       bool haveImage) {
     _stateSubject.add(LoadingState(screenState));
     if (haveImage) {
       _uploadService.uploadImage(request.image).then((image) {
         if (image == null) {
-          getStore(screenState,request.id);
+          getStore(screenState, request.id);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning,
-              message: S.current.errorUploadingImages)
+                  title: S.current.warnning,
+                  message: S.current.errorUploadingImages)
               .show(screenState.context);
           return;
         } else {
           request.image = image;
           _storesService.updateStore(request).then((value) {
             if (value.hasError) {
-              getStore(screenState,request.id);
+              getStore(screenState, request.id);
               CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.error ?? '')
                 ..show(screenState.context);
             } else {
-              getStore(screenState,request.id);
+              getStore(screenState, request.id);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.storeUpdatedSuccessfully)
@@ -109,12 +108,12 @@ class StoreProfileStateManager {
     } else {
       _storesService.updateStore(request).then((value) {
         if (value.hasError) {
-          getStore(screenState,request.id);
+          getStore(screenState, request.id);
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '')
             ..show(screenState.context);
         } else {
-          getStore(screenState,request.id);
+          getStore(screenState, request.id);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.storeUpdatedSuccessfully)
@@ -123,6 +122,7 @@ class StoreProfileStateManager {
       });
     }
   }
+
   void showSnackFailed(
       StoreInfoScreenState screenState, String message, bool loading) {
     if (loading) {

@@ -534,6 +534,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "notAccepted": MessageLookupByLibrary.simpleMessage("not accepted"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(

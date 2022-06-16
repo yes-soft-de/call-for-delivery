@@ -16,8 +16,7 @@ class CreateStorePaymentsRequest {
       this.storeId,
       this.id,
       this.note,
-      this.flag
-      });
+      this.flag});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};

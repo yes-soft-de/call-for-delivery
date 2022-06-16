@@ -531,6 +531,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
+        "notAccepted": MessageLookupByLibrary.simpleMessage("غير مسلمة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(

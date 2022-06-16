@@ -171,11 +171,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
-                  customListTile(
-                      getIt<OrdersModule>().pendingScreen,
-                      S.current.orderedNotAccepted,
-                      FontAwesomeIcons.box,
-                      true),
+                  customListTile(getIt<OrdersModule>().pendingScreen,
+                      S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
             customListTile(getIt<CarsModule>().carsScreen,
