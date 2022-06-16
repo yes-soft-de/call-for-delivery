@@ -685,7 +685,9 @@
     "captainOffers": "Captain Offers",
     "pendingOrders": "Pending orders",
     "hidden": "Hidden",
-    "orderedNotAccepted": "Ordered not accepted"
+    "orderedNotAccepted": "Ordered not accepted",
+    "notCompletedAccount": "Not completed account"
+
 
 
 

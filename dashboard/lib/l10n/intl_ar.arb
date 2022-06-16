@@ -679,7 +679,8 @@
     "captainOffers": "عروض الكباتن",
     "pendingOrders": "الطلبات في قائمة الانتظار",
     "hidden": "مخفية",
-    "orderedNotAccepted": "الطلبات غير المسلمة"
+    "orderedNotAccepted": "الطلبات غير المسلمة",
+    "notCompletedAccount": "حساب غير مكتمل"
 
 
 

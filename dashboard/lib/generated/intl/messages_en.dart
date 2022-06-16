@@ -538,6 +538,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, The captain received the order"),
+        "notCompletedAccount":
+            MessageLookupByLibrary.simpleMessage("Not completed account"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "You dont have a subscription yet"),
         "notVerified": MessageLookupByLibrary.simpleMessage(

@@ -535,6 +535,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
+        "notCompletedAccount":
+            MessageLookupByLibrary.simpleMessage("حساب غير مكتمل"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":

@@ -6689,6 +6689,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Not completed account`
+  String get notCompletedAccount {
+    return Intl.message(
+      'Not completed account',
+      name: 'notCompletedAccount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
