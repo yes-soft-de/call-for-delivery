@@ -56,7 +56,7 @@ class CaptainsLoadedState extends States {
       widgets.add(CaptainCard(
         key: ValueKey(element.captainID),
         captainId: element.captainID,
-        captainName: element.captainName,
+        captainName: element.captainName == '0' ? element.phoneNumber : element.captainName,
         image: element.image,
       ));
     }

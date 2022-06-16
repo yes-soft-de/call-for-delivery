@@ -88,7 +88,9 @@ class InCaptainActiveLoadedState extends States {
                 ),
                 Expanded(
                   child: Text(
-                    element.captainName,
+                    element.captainName == '0'
+                        ? element.phoneNumber
+                        : element.captainName,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
