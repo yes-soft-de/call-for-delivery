@@ -5,10 +5,12 @@ class Datum {
   String? captainName;
   String? roomId;
   ImageUrl? image;
-  Datum({this.id, this.captainName, this.roomId, this.image});
+  int? userId;
+  Datum({this.id, this.captainName, this.roomId, this.image, this.userId});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['captainProfileId'] as int?,
+      userId: json['userId'] as int?,
       captainName: json['captainName'] as String?,
       roomId: json['roomId'] as String?,
       image: ImageUrl.fromJson(json['images']));

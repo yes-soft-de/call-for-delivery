@@ -6,14 +6,15 @@ class StoresNeedSupportModel extends DataModel {
   String storeName = '';
   String image = '';
   String id = '';
+  late String userId;
   List<StoresNeedSupportModel> _model = [];
 
-  StoresNeedSupportModel({
-    required this.roomID,
-    required this.image,
-    required this.storeName,
-    required this.id,
-  });
+  StoresNeedSupportModel(
+      {required this.roomID,
+      required this.image,
+      required this.storeName,
+      required this.id,
+      required this.userId});
 
   StoresNeedSupportModel.withData(List<Datum> data) : super.withData() {
     _model = [];
@@ -23,6 +24,7 @@ class StoresNeedSupportModel extends DataModel {
         image: element.image?.image ?? '',
         storeName: element.storeOwnerName ?? '',
         id: element.id?.toString() ?? '',
+        userId: element.userId?.toString() ?? '0',
       ));
     }
   }

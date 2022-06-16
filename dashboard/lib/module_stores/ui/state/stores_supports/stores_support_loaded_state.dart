@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
 import 'package:c4d/module_stores/ui/widget/store_card.dart';
+import 'package:c4d/utils/components/costom_search.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -50,7 +51,11 @@ class StoresNeedSupportLoadedState extends States {
 
   List<Widget> getClients(BuildContext context) {
     List<Widget> widgets = [];
+
     for (var element in model ?? <StoresNeedSupportModel>[]) {
+      if (element.storeName.contains(search ?? '') == false) {
+        continue;
+      }
       widgets.add(StoreCard(
         Id: element.id,
         name: element.storeName,
@@ -61,11 +66,31 @@ class StoresNeedSupportLoadedState extends States {
             arguments: ChatArgument(
                 roomID: element.roomID,
                 userType: 'store',
-                userID: int.parse(element.id)),
+                userID: int.parse(element.userId)),
           );
         },
       ));
     }
+    if (model != null) {
+      widgets.insert(
+          0,
+          Padding(
+            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+            child: CustomDeliverySearch(
+              hintText: S.current.searchForStore,
+              onChanged: (s) {
+                if (s == '' || s.isEmpty) {
+                  search = null;
+                  screenState.refresh();
+                } else {
+                  search = s;
+                  screenState.refresh();
+                }
+              },
+            ),
+          ));
+    }
+
     return widgets;
   }
 }
