@@ -5,6 +5,11 @@ namespace App\Response\ChatRoom;
 class ChatRoomsStoreResponse
 {
     /**
+     * @var int|null
+     */
+    public $userId;
+
+    /**
      * @var int|null $storeOwnerProfileId
      */
     public $storeOwnerProfileId;

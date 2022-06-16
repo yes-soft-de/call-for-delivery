@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -48,14 +49,7 @@ class ChatRoomController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *             @OA\Items(
-     *                  @OA\Property(type="integer", property="storeOwnerProfileId"),
-     *                  @OA\Property(type="integer", property="storeOwnerName"),
-     *                  @OA\Property(type="string", property="roomId"),
-     *                  @OA\Property(type="object", property="images",
-     *                    @OA\Property(type="string", property="imageURL"),
-     *                    @OA\Property(type="string", property="image"),
-     *                    @OA\Property(type="string", property="baseURL")
-     *                 ),
+     *                  ref=@Model(type="App\Response\ChatRoom\ChatRoomsStoreResponse")
      *              ),
      *          )
      *      )
@@ -93,14 +87,7 @@ class ChatRoomController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *             @OA\Items(
-     *                  @OA\Property(type="integer", property="captainProfileId"),
-     *                  @OA\Property(type="integer", property="captainName"),
-     *                  @OA\Property(type="string", property="roomId"),
-     *                  @OA\Property(type="object", property="images",
-     *                    @OA\Property(type="string", property="imageURL"),
-     *                    @OA\Property(type="string", property="image"),
-     *                    @OA\Property(type="string", property="baseURL")
-     *                 ),
+     *                  ref=@Model(type="App\Response\ChatRoom\ChatRoomCaptainResponse")
      *              ),
      *          )
      *      )
@@ -138,14 +125,7 @@ class ChatRoomController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *             @OA\Items(
-     *                  @OA\Property(type="integer", property="supplierProfileId"),
-     *                  @OA\Property(type="integer", property="supplierName"),
-     *                  @OA\Property(type="string", property="roomId"),
-     *                  @OA\Property(type="object", property="images",
-     *                    @OA\Property(type="string", property="imageURL"),
-     *                    @OA\Property(type="string", property="image"),
-     *                    @OA\Property(type="string", property="baseURL")
-     *                 )
+     *                  ref=@Model(type="App\Response\ChatRoom\ChatRoomSupplierResponse")
      *              )
      *          )
      *      )
