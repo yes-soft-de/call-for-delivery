@@ -24,6 +24,7 @@ use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
 use App\Response\Subscription\StoreSubscriptionResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
+use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 
 class SubscriptionService
 {
@@ -617,6 +618,11 @@ class SubscriptionService
         $item['total'] = abs($total);
         
         return  $item;
+    }
+     
+    public function updateSubscription(SubscriptionUpdateByAdminRequest $request)
+    {
+        return $this->subscriptionManager->updateSubscription($request);
     }
 }
  

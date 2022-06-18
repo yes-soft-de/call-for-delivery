@@ -133,4 +133,15 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
+    public function updateSubscriptionDetailsByAdmin(SubscriptionEntity $subscription)
+    {     
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $subscription->getId()]);
+     
+        $subscriptionDetailsEntity->setRemainingCars($subscription->getPackage()->getCarCount());
+        $subscriptionDetailsEntity->setRemainingOrders($subscription->getPackage()->getOrderCount());
+
+        $this->entityManager->flush();
+ 
+        return $subscriptionDetailsEntity;
+    }
 }
