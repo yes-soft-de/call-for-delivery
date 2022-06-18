@@ -89,4 +89,15 @@ class SubscriptionHistoryManager
     {
         return $this->subscribeHistoryRepository->findOneBy(["storeOwner"=>$storeOwnerProfileEntity]);
     }
+
+    public function updateSubscriptionHistoryByAdmin($subscriptionId):SubscriptionHistoryEntity
+    { 
+        $subscriptionHistoryEntity = $this->subscribeHistoryRepository->findOneBy(["subscription" => $subscriptionId]);
+             
+        $subscriptionHistoryEntity->setCreatedAt(new DateTime());
+
+        $this->entityManager->flush();
+ 
+        return $subscriptionHistoryEntity;
+    }
 }
