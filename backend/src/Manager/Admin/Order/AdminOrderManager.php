@@ -79,6 +79,7 @@ class AdminOrderManager
         return $this->orderEntityRepository->find($orderId);
     }
 
+    // This function updates the order info according to be become a pending orders
     public function returnOrderToPendingStatus(OrderEntity $orderEntity): OrderEntity
     {
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
