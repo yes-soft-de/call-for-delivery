@@ -7,6 +7,7 @@ use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminOrderManager
@@ -86,6 +87,7 @@ class AdminOrderManager
         $orderEntity->setCaptainId(null);
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(false);
+        $orderEntity->setUpdatedAt(new DateTime('now'));
 
         $this->entityManager->flush();
 

@@ -13,7 +13,10 @@ class OrderByIdGetForAdminResponse
 
     public string $payment;
 
-    public float $orderCost;
+    /**
+     * @var float|null
+     */
+    public $orderCost;
 
     public int $orderType;
 
