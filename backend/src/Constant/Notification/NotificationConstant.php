@@ -6,6 +6,10 @@ final class NotificationConstant
 {
     const NEW_ORDER_TITLE = "طلب جديد";
 
+    const ORDER_RETURNED_PENDING_TITLE = "إلغاء تسليم طلب إلى كابتن";
+
+    const ORDER_RETURNED_PENDING = "تم إلغاء تسليم طلب إلى الكابتن بنجاح";
+
     const CREATE_ORDER_SUCCESS = "تم إنشاء طلب جديد بنجاح";
 
     const NEW_BID_ORDER_TITLE = "طلب مناقصة جديد";

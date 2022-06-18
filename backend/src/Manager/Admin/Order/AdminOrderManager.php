@@ -2,16 +2,21 @@
 
 namespace App\Manager\Admin\Order;
 
+use App\Constant\Order\OrderStateConstant;
+use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminOrderManager
 {
+    private EntityManagerInterface $entityManager;
     private OrderEntityRepository $orderEntityRepository;
 
-    public function __construct(OrderEntityRepository $orderEntityRepository)
+    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository)
     {
+        $this->entityManager = $entityManager;
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
@@ -67,5 +72,22 @@ class AdminOrderManager
     public function getNotDeliveredOrdersForAdmin(): ?array
     {
         return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin();
+    }
+
+    public function getOrderByIdForAdmin(int $orderId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->find($orderId);
+    }
+
+    public function returnOrderToPendingStatus(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setCaptainId(null);
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(false);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }
