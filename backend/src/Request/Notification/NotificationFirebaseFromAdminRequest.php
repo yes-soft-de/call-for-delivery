@@ -7,18 +7,25 @@ class NotificationFirebaseFromAdminRequest
     private int $otherUserID;
 
     /**
-     * @return mixed
+     * @var string|null
      */
-    public function getOtherUserID()
+    private $roomId;
+
+    /**
+     * @return int
+     */
+    public function getOtherUserID(): int
     {
         return $this->otherUserID;
     }
 
-    /**
-     * @param mixed $otherUserID
-     */
-    public function setOtherUserID(int|null $otherUserID): void
+    public function setOtherUserID(int $otherUserID): void
     {
         $this->otherUserID = $otherUserID;
+    }
+
+    public function getRoomId(): ?string
+    {
+        return $this->roomId;
     }
 }
