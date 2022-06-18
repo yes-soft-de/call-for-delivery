@@ -407,7 +407,7 @@ class SubscriptionController extends BaseController
     
     /**
      * store: update subscription.
-     * @Route("subscriptionbyadmin", name="updateSubscription", methods={"PUT"})
+     * @Route("subscriptionbyadmin", name="updateSubscriptionByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -418,9 +418,8 @@ class SubscriptionController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, SubscriptionUpdateByAdminRequest::class, (object)$data);
 
-      
         $result = $this->subscriptionService->updateSubscription($request);
 
-        return $this->response($result, self::CREATE);
+        return $this->response($result, self::UPDATE);
     }
 }
