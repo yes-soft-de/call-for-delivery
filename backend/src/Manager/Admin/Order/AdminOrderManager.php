@@ -21,9 +21,9 @@ class AdminOrderManager
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function getOrdersByStateForAdmin(string $state): int
+    public function getCountOrderOngoingForAdmin(): int
     {
-        return $this->orderEntityRepository->count(["state" => $state]);
+        return $this->orderEntityRepository->getCountOrderOngoingForAdmin();
     }
 
     public function getAllOrdersCountForAdmin(): int
