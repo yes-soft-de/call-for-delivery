@@ -6,6 +6,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -35,7 +36,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   ProfileModel? _currentProfile;
   CompanyInfoResponse? _companyInfo;
   int currentPage = 0;
-  PageController ordersPageController = PageController(initialPage: 0);
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
@@ -43,13 +43,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   final advancedController = AdvancedDrawerController();
 
   void getMyOrders() {
-    ordersPageController = PageController(initialPage: currentPage);
     widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
   }
 
   Future<void> refreshOrders() async {
-    ordersPageController = PageController(initialPage: currentPage);
     widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
   }
@@ -76,6 +74,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
+    getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
@@ -156,9 +155,8 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
               currentIndex: currentPage,
               onTap: (index) {
                 currentPage = index;
-                ordersPageController.animateToPage(currentPage,
-                    duration: const Duration(milliseconds: 750),
-                    curve: Curves.linear);
+                getMyOrders();
+                refresh();
               },
               items: [
                 BottomNavigationBarItem(

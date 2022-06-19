@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -66,12 +68,17 @@ class LocalNotificationService {
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-    flutterLocalNotificationsPlugin.show(
-        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(1000000),
-        notification.title,
-        notification.body,
-        platformChannelSpecifics,
-        payload: json.encode(message.data));
+    try {
+      flutterLocalNotificationsPlugin.show(
+          (int.tryParse(message.messageId ?? '1') ?? Random().nextInt(100000)) % 100000,
+          notification.title,
+          notification.body,
+          platformChannelSpecifics,
+          payload: json.encode(message.data));
+    } catch (e) {
+      Logger().error('Local notification', e.toString(), StackTrace.current);
+    }
+
     playSound();
   }
 

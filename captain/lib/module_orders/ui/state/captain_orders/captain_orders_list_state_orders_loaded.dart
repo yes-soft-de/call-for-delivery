@@ -38,18 +38,10 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         }
       },
       child: Scaffold(
-        body: PageView(
-          controller: screenState.ordersPageController,
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          onPageChanged: (pos) {
-            screenState.currentPage = pos;
-            screenState.refresh();
-          },
-          children: [
-            getMyOrdersList(context),
-            getNearbyOrdersList(context),
-          ],
+        body: Visibility(
+          replacement: getNearbyOrdersList(context),
+          visible: screenState.currentPage == 0,
+          child: getMyOrdersList(context),
         ),
       ),
     );
@@ -105,7 +97,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             },
             child: OrderCard(
               orderIsMain: element.orderIsMain,
-              background:element.orderIsMain ? Colors.red[700] : StatusHelper.getOrderStatusColor(element.state),
+              background: element.orderIsMain
+                  ? Colors.red[700]
+                  : StatusHelper.getOrderStatusColor(element.state),
               deliveryDate: element.deliveryDate,
               note: element.note,
               orderCost: FixedNumber.getFixedNumber(element.orderCost),

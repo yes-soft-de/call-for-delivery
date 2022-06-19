@@ -1,7 +1,11 @@
+// Production Domain => http://46.101.100.62
+// Dev Domain => http://134.209.241.49
+
 class Urls {
-  static const String DOMAIN = 'http://134.209.241.49';
+  static const String DOMAIN = 'http://46.101.100.62';
   static const String BASE_API = DOMAIN + '';
-  static const String IMAGES_ROOT = DOMAIN + '/upload/';
+  
+  static const String IMAGES_ROOT = 'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/v1/captain/captainregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
@@ -37,7 +41,7 @@ class Urls {
   static const ACCEPT_ORDER_API = BASE_API + '/v1/order/orderupdatestate';
   static const CAPTAIN_ORDER_UPDATE_API =
       BASE_API + '/v1/order/orderupdatestate';
-        static const UPDATE_PAID_TO_PROVIDER_API =
+  static const UPDATE_PAID_TO_PROVIDER_API =
       BASE_API + '/v1/order/orderupdatepaidtoprovider';
   static const ORDER_UPDATE_BILL_API =
       BASE_API + '/orderUpdateInvoiceByCaptain';
@@ -221,4 +225,5 @@ class Urls {
       DOMAIN + '/v1/captainfinancialsystemdetail/captainbalancedetail';
   static const GET_CAPTAIN_FINANCIAL_DUES =
       DOMAIN + '/v1/captainfinancialdues/captainfinancialdues';
+  static const DELETE_USER = DOMAIN + '/v1/userstatus/userstatus';
 }

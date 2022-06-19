@@ -82,7 +82,7 @@ class OrderDetailsModel extends DataModel {
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
+  OrderDetailsModel.withData(OrderDetailsResponse response) {
     var element = response.data;
     // date converter
     // created At
@@ -138,45 +138,14 @@ class OrderDetailsModel extends DataModel {
       orderIsMain: element?.orderIsMain,
       createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
     );
-    _orders.distance = _distance(
-        _orders,
-        StatusHelper.getOrderStatusIndex(_orders.state) >=
-                StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
-            ? location
-            : _orders.branchCoordinate);
-    log(_orders.distance.toString());
-    _orders.branchDistance = _branchDistance(_orders, location);
+    // _orders.distance = _distance(
+    //     _orders,
+    //     StatusHelper.getOrderStatusIndex(_orders.state) >=
+    //             StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
+    //         ? location
+    //         : _orders.branchCoordinate);
+ 
   }
-  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
-    String? distance;
-    if (orderInfo.destinationCoordinate != null) {
-      var value = DeepLinksService.getInitDistance(
-          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0),
-          location);
-      if (value == null) return null;
-      distance = value.toStringAsFixed(1);
-      distance = S.current.distance + ' $distance ' + S.current.km;
-      return distance;
-    }
-    return null;
-  }
-
-  String? _branchDistance(OrderDetailsModel orderInfo, LatLng? location) {
-    if (orderInfo.branchCoordinate != null) {
-      String? branchDistance;
-      var value = DeepLinksService.getInitDistance(
-          LatLng(orderInfo.branchCoordinate?.latitude ?? 0,
-              orderInfo.branchCoordinate?.longitude ?? 0),
-          location);
-      if (value == null) return null;
-      branchDistance = value.toStringAsFixed(1);
-      branchDistance = S.current.distance + ' $branchDistance ' + S.current.km;
-      return branchDistance;
-    }
-    return null;
-  }
-
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
     List<OrderModel> orders = [];
     suborder.forEach((element) {

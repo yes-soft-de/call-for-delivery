@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:isolate';
-
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
@@ -22,11 +20,10 @@ import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:isolate_handler/isolate_handler.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -41,14 +38,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       : super(screenState) {
     if (message != null) {
       try {
-        screenState.isolates.spawn(
-          entryPoint,
-          onReceive: triggerFireStore,
-          onInitialized: () {
-            screenState.isolates.send(message, to: 'FireStoreInserter');
-          },
-          name: 'FireStoreInserter',
-        );
+        FireStoreHelper().backgroundThread(message);
       } catch (e) {
         log(e.toString());
       }
@@ -363,8 +353,21 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       });
                     },
                     title: Text(S.current.branchLocation),
-                    subtitle: orderInfo.branchDistance != null
-                        ? Text(orderInfo.branchDistance ?? '')
+                    subtitle: orderInfo.branchCoordinate != null &&
+                            screenState.myLocation != null
+                        ? Text(S.current.distance +
+                            ' ' +
+                            (Geolocator.distanceBetween(
+                                        screenState.myLocation?.latitude ?? 0,
+                                        screenState.myLocation?.longitude ?? 0,
+                                        orderInfo.branchCoordinate?.latitude ??
+                                            0,
+                                        orderInfo.branchCoordinate?.longitude ??
+                                            0) /
+                                    1000)
+                                .toStringAsFixed(2)
+                                .toString() +
+                            ' ${S.current.km}')
                         : Text(S.current.destination +
                             ' ' +
                             S.current.destinationUnavailable),
@@ -543,11 +546,61 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     child: ListTile(
                       leading: const Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destination +
+                      subtitle: Visibility(
+                        visible:
+                            StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                                StatusHelper.getOrderStatusIndex(
+                                    OrderStatusEnum.IN_STORE),
+                        replacement: Visibility(
+                          visible: orderInfo.branchCoordinate != null &&
+                              orderInfo.destinationCoordinate != null,
+                          replacement: Text(S.current.distance +
                               ' ' +
                               S.current.destinationUnavailable),
+                          child: Text(S.current.distance +
+                              ' ' +
+                              (Geolocator.distanceBetween(
+                                          orderInfo
+                                                  .branchCoordinate?.latitude ??
+                                              0,
+                                          orderInfo.branchCoordinate
+                                                  ?.longitude ??
+                                              0,
+                                          orderInfo.destinationCoordinate
+                                                  ?.latitude ??
+                                              0,
+                                          orderInfo.destinationCoordinate
+                                                  ?.longitude ??
+                                              0) /
+                                      1000)
+                                  .toStringAsFixed(2)
+                                  .toString() +
+                              ' ${S.current.km}'),
+                        ),
+                        child: Visibility(
+                            visible: screenState.myLocation != null &&
+                                orderInfo.destinationCoordinate != null,
+                            child: Text(S.current.distance +
+                                ' ' +
+                                (Geolocator.distanceBetween(
+                                            screenState.myLocation?.latitude ??
+                                                0,
+                                            screenState.myLocation?.longitude ??
+                                                0,
+                                            orderInfo.destinationCoordinate
+                                                    ?.latitude ??
+                                                0,
+                                            orderInfo.destinationCoordinate
+                                                    ?.longitude ??
+                                                0) /
+                                        1000)
+                                    .toStringAsFixed(2)
+                                    .toString() +
+                                ' ${S.current.km}'),
+                            replacement: Text(S.current.distance +
+                                ' ' +
+                                S.current.destinationUnavailable)),
+                      ),
                       trailing: const Icon(Icons.arrow_forward),
                     ),
                   ),
@@ -900,25 +953,4 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ));
     }
   }
-
-  void triggerFireStore(String? message) async {
-    await Firebase.initializeApp();
-    await FireStoreHelper().insertWatcher();
-    // We will no longer be needing the isolate, let's dispose of it.
-    screenState.isolates.kill('FireStoreInserter');
-  }
-}
-
-void entryPoint(Map<String, dynamic> context) async {
-  // Calling initialize from the entry point with the context is
-  // required if communication is desired. It returns a messenger which
-  // allows listening and sending information to the main isolate.
-
-  final messenger = HandledIsolate.initialize(context);
-  // Triggered every time data is received from the main isolate.
-  messenger.listen((message) async {
-    // Add one to the count and send the new value back to the main
-    // isolate.
-    messenger.send(message);
-  });
 }

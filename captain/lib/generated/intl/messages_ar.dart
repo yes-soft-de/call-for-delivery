@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "DeletingYourAccountHint": MessageLookupByLibrary.simpleMessage(
+            "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن"),
         "ExpiredSubscriptions": MessageLookupByLibrary.simpleMessage(
             "اشتراكك منتهي الصلاحية الرجاء تجديده"),
         "HisComment": MessageLookupByLibrary.simpleMessage("تعليقه"),
@@ -76,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
@@ -303,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customer": MessageLookupByLibrary.simpleMessage("الزبون"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
+        "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
@@ -315,6 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteSuccess":
@@ -890,7 +896,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "showingCart": MessageLookupByLibrary.simpleMessage("مشاهدة السلة"),
-        "signOut": MessageLookupByLibrary.simpleMessage("تسحيل الخروج"),
+        "signOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتشابهة"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
@@ -1029,6 +1035,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
+        "userDeleted":
+            MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),

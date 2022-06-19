@@ -61,8 +61,8 @@ class OrdersService {
       _ordersResponse.data?.note =
           await translateService(_ordersResponse.data!.note!);
     }
-    var currentLocation = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.withData(_ordersResponse, currentLocation);
+   // var currentLocation = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(_ordersResponse);
   }
 
   Future<DataModel> getNearbyOrders() async {
@@ -82,9 +82,6 @@ class OrdersService {
   Future<ActionStateModel> updateOrder(UpdateOrderRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateOrder(request);
-    Isolate.spawn((message) async {
-      await FireStoreHelper().insertWatcher();
-    }, '');
     if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
     }
@@ -98,9 +95,6 @@ class OrdersService {
   Future<ActionStateModel> updateCashStatus(UpdateOrderRequest request) async {
     OrderActionResponse? actionResponse =
         await _ordersManager.updateCashStatus(request);
-    Isolate.spawn((message) async {
-      await FireStoreHelper().insertWatcher();
-    }, '');
     if (actionResponse == null) {
       return ActionStateModel.error(S.current.networkError);
     }
@@ -156,9 +150,7 @@ class OrdersService {
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
-    Isolate.spawn((message) async {
-      await FireStoreHelper().insertWatcher();
-    }, '');
+    await FireStoreHelper().backgroundThread('Trigger');
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

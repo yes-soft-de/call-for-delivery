@@ -42,4 +42,5 @@ class AuthManager {
       _authRepository.verifyResetPassCodeRequest(request);
 
   Future<ActionResponse?> accountStatus() => _authRepository.accountStatus();
+  Future<ActionResponse?> deleteUser() => _authRepository.deleteUser();
 }

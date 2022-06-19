@@ -53,20 +53,26 @@ class CaptainOrdersListStateManager {
 
   void getMyOrders(CaptainOrdersScreenState screenState,
       [bool loading = true]) {
+    if (screenState.currentPage == 0) {
+      getAcceptedOrders(screenState, loading);
+    } else {
+      getNearbyOrders(screenState, loading);
+    }
+  }
+
+  void getNearbyOrders(CaptainOrdersScreenState screenState,
+      [bool loading = true]) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState, picture: true));
     }
-    Future.wait([
-      _ordersService.getCaptainOrders(),
-      _ordersService.getNearbyOrders(),
-    ]).then((List<DataModel> value) {
-      if (value[0].hasError && value[1].hasError) {
+    _ordersService.getNearbyOrders().then((DataModel value) {
+      if (value.hasError) {
         _stateSubject.add(ErrorState(screenState,
             onPressed: () {
-              getMyOrders(screenState);
+              getNearbyOrders(screenState);
             },
             title: '',
-            errors: [value[0].error!, value[1].error!],
+            error: value.error,
             hasAppbar: false,
             tapApp: () {
               screenState.advancedController.showDrawer();
@@ -74,7 +80,32 @@ class CaptainOrdersListStateManager {
             icon: Icons.sort_rounded));
       } else {
         _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
-            screenState, value[0], value[1]));
+            screenState, DataModel.empty(), value));
+      }
+    });
+  }
+
+  void getAcceptedOrders(CaptainOrdersScreenState screenState,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState, picture: true));
+    }
+    _ordersService.getCaptainOrders().then((DataModel value) {
+      if (value.hasError) {
+        _stateSubject.add(ErrorState(screenState,
+            onPressed: () {
+              getAcceptedOrders(screenState);
+            },
+            title: '',
+            error: value.error,
+            hasAppbar: false,
+            tapApp: () {
+              screenState.advancedController.showDrawer();
+            },
+            icon: Icons.sort_rounded));
+      } else {
+        _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
+            screenState, value, DataModel.empty()));
       }
     });
   }
