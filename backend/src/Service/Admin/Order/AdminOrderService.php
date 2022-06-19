@@ -56,9 +56,9 @@ class AdminOrderService
         $this->notificationLocalService = $notificationLocalService;
     }
 
-    public function getOrdersByStateForAdmin(string $orderStatus): int
+    public function getCountOrderOngoingForAdmin(): int
     {
-        return $this->adminOrderManager->getOrdersByStateForAdmin($orderStatus);
+        return $this->adminOrderManager->getCountOrderOngoingForAdmin();
     }
 
     public function getAllOrdersCountForAdmin(): int

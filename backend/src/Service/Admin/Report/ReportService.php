@@ -29,7 +29,7 @@ class ReportService
         $response['activeStoresCount'] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS);
         $response['inactiveStoresCount'] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS);
 
-        $response['ongoingOrdersCount'] = $this->adminOrderService->getOrdersByStateForAdmin(OrderStateConstant::ORDER_STATE_ONGOING);
+        $response['ongoingOrdersCount'] = $this->adminOrderService->getCountOrderOngoingForAdmin();
         $response['allOrdersCount'] = $this->adminOrderService->getAllOrdersCountForAdmin();
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
