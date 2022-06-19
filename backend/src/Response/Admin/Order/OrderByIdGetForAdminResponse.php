@@ -35,7 +35,10 @@ class OrderByIdGetForAdminResponse
 
     public DateTime $createdAt;
 
-    public DateTime $updatedAt;
+    /**
+     * @var DateTime|null $note
+     */
+    public $updatedAt;
 
     /**
      * @var float|null $kilometer

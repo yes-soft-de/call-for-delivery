@@ -139,4 +139,9 @@ class CaptainService
     {
         return $this->captainManager->deleteCaptainProfileByCaptainId($captainId);
     }
+
+    public function getCaptainProfileByUserId(int $userId): ?CaptainEntity
+    {
+        return $this->captainManager->getCaptainProfileByUserId($userId);
+    }
 }

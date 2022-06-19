@@ -226,4 +226,9 @@ class StoreOwnerProfileManager
     {
         return $this->storeOwnerProfileEntityRepository->getStoreProfitMarginByStoreOwnerId($userId);
     }
+
+    public function getStoreByUserId(int $userId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->findOneBy(["storeOwnerId" => $userId]);
+    }
 }

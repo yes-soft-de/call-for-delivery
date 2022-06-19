@@ -164,4 +164,9 @@ class StoreOwnerProfileService
        
         return $storeProfile->getStatus();
     }
+
+    public function getStoreByUserId($userId): ?StoreOwnerProfileEntity
+    {
+       return $this->storeOwnerProfileManager->getStoreByUserId($userId);
+    }
 }
