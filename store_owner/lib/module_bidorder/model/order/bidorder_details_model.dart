@@ -36,34 +36,34 @@ class BidOrderDetailsModel extends DataModel {
   num? captainOrderCost;
   String? attention;
   late OrderTimeLine? orderLogs;
-  BidOrderDetailsModel(
-      {required this.id,
-      required this.branchName,
-        required this.categoryName,
+  BidOrderDetailsModel({
+    required this.id,
+    required this.branchName,
+    required this.categoryName,
 //      required this.customerName,
 //      required this.customerPhone,
 //      required this.destinationCoordinate,
 //      required this.destinationLink,
-      required this.deliveryDateString,
-      required this.createdDate,
-      required this.note,
-      required this.orderCost,
-      required this.payment,
-      required this.state,
-      required this.roomID,
+    required this.deliveryDateString,
+    required this.createdDate,
+    required this.note,
+    required this.orderCost,
+    required this.payment,
+    required this.state,
+    required this.roomID,
 //      required this.canRemove,
-      required this.deliveryDate,
-      required this.image,
-      required this.captainID,
+    required this.deliveryDate,
+    required this.image,
+    required this.captainID,
 //      required this.distance,
 //      required this.isCaptainArrived,
-      required this.branchPhone,
-      required this.attention,
-      required this.captainOrderCost,
-      required this.orderLogs,
+    required this.branchPhone,
+    required this.attention,
+    required this.captainOrderCost,
+    required this.orderLogs,
 //      required this.kilometer,
 //      required this.paidToProvider
-      });
+  });
 
   late BidOrderDetailsModel _orders;
 
@@ -84,32 +84,32 @@ class BidOrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = BidOrderDetailsModel(
-        image: element?.image?.image,
+      image: element?.image?.image,
 //        isCaptainArrived: element?.isCaptainArrived,
-        branchPhone: element?.branchPhone,
-        branchName: element?.branchName ?? S.current.unknown,
-        createdDate: create,
-        categoryName: element?.supplierCategoryName ?? S.current.unknown,
+      branchPhone: element?.branchPhone,
+      branchName: element?.branchName ?? S.current.unknown,
+      createdDate: create,
+      categoryName: element?.supplierCategoryName ?? S.current.unknown,
 //        customerPhone: element?.recipientPhone ?? '',
-        deliveryDateString: delivery,
-        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+      deliveryDateString: delivery,
+      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
 //        destinationCoordinate: element?.destination?.lat != null &&
 //                element?.destination?.lon != null
 //            ? LatLng(
 //                element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
 //            : null,
 //        destinationLink: element?.destination?.link,
-        note: element?.note ?? '',
-        orderCost: element?.orderCost ?? 0,
-        payment: element?.payment ?? 'cash',
-        roomID: element?.roomId,
-        state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1,
-        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+      note: element?.note ?? '',
+      orderCost: element?.orderCost ?? 0,
+      payment: element?.payment ?? 'cash',
+      roomID: element?.roomId,
+      state: StatusHelper.getStatusEnum(element?.state),
+      id: element?.id ?? -1,
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
 //        distance: null,
-        attention: element?.attention,
-        captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs),
+      attention: element?.attention,
+      captainOrderCost: element?.captainOrderCost,
+      orderLogs: _getOrderLogs(element?.orderLogs),
 //        kilometer: element?.kilometer,
 //        paidToProvider: element?.paidToProvider
     );
@@ -146,7 +146,6 @@ class BidOrderDetailsModel extends DataModel {
     }
     return canRemove;
   }
-
 
   BidOrderDetailsModel get data => _orders;
 }

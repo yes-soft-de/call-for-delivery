@@ -16,6 +16,7 @@ import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -60,18 +61,14 @@ class OrderRecyclingStateManager {
     _ordersService.recycling(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().update();
-        Navigator.pushNamedAndRemoveUntil(
-            context, OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
+        Navigator.of(context).pop();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
         getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+        FireStoreHelper().backgroundThread('Trigger');
       }
     });
   }

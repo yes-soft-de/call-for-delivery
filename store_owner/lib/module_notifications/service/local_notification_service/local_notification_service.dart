@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -15,10 +16,11 @@ class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static final PublishSubject<String> _onNotificationReceived =
+  static final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
       PublishSubject();
 
-  Stream get onLocalNotificationStream => _onNotificationReceived.stream;
+  Stream<Map<String, dynamic>> get onLocalNotificationStream =>
+      _onNotificationReceived.stream;
 
   Future<void> init() async {
     AndroidInitializationSettings initializationSettingsAndroid =
@@ -65,12 +67,18 @@ class LocalNotificationService {
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-    flutterLocalNotificationsPlugin.show(
-        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(1000000),
-        notification.title,
-        notification.body,
-        platformChannelSpecifics,
-        payload: json.encode(message.data));
+    try {
+      flutterLocalNotificationsPlugin.show(
+          (int.tryParse(message.messageId ?? '1') ?? Random().nextInt(100000)) %
+              100000,
+          notification.title,
+          notification.body,
+          platformChannelSpecifics,
+          payload: json.encode(message.data));
+    } catch (e) {
+      Logger().error('Local notification', e.toString(), StackTrace.current);
+    }
+
     playSound();
   }
 
@@ -90,7 +98,10 @@ class LocalNotificationService {
     });
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;
     if (ringerStatus == RingerModeStatus.normal) {
-      pool.play(sound,repeat: NotificationsPrefHelper().getNotification().contains('2') ? 3 : 0);
+      pool.play(sound,
+          repeat: NotificationsPrefHelper().getNotification().contains('2')
+              ? 3
+              : 0);
     }
   }
 }

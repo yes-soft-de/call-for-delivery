@@ -74,10 +74,7 @@ class NewOrderLinkStateLoaded extends States {
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                                 hint: Text(S.current.chooseBranch),
-                                onChanged: (int? value) {
-                                  screenState.branch = value;
-                                  screenState.refresh();
-                                }),
+                                onChanged: null),
                           ),
                         ),
                       ),

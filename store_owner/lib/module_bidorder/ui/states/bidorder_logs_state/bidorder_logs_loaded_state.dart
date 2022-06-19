@@ -37,8 +37,8 @@ class BidOrderLogsLoadedState extends States {
 //                  arguments: element.id);
             },
             child: BidOrderCard(
-              deleteOrder: (){},
-             model: element,
+              deleteOrder: () {},
+              model: element,
               isOpen: screenState.ordersFilter.openToPriceOffer ?? false,
             ),
           ),

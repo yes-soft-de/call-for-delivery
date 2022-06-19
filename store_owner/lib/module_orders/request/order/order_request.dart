@@ -29,8 +29,7 @@ class CreateOrderRequest {
       this.orderType,
       this.orderIsMain,
       this.order,
-      this.cancel
-      });
+      this.cancel});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

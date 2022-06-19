@@ -11,10 +11,9 @@ class OpenOrdersLoaded extends States {
   final List<BidOrderModel> orders;
   final OpenBidOrderScreenState screenState;
   OpenOrdersLoaded(
-      this.screenState, {
-        required this.orders,
-      }) : super(screenState) {
-  }
+    this.screenState, {
+    required this.orders,
+  }) : super(screenState) {}
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(children: getOrders());
@@ -36,7 +35,7 @@ class OpenOrdersLoaded extends States {
 //                  arguments: element.id);
             },
             child: BidOrderCard(
-              deleteOrder: (){
+              deleteOrder: () {
                 showDialog(
                     context: context,
                     builder: (context) {
@@ -48,7 +47,7 @@ class OpenOrdersLoaded extends States {
                           content: S.current.areYouSureAboutDeleteOrder);
                     });
               },
-               model: element,
+              model: element,
               isOpen: screenState.request.openToPriceOffer ?? false,
             ),
           ),

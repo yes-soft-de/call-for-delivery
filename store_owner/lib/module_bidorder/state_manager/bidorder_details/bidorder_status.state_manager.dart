@@ -38,11 +38,8 @@ class BidOrderStatusStateManager {
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as BidOrderDetailsModel;
-        _stateSubject
-            .add(BidOrderDetailsStateLoaded(screenState, value.data));
+        _stateSubject.add(BidOrderDetailsStateLoaded(screenState, value.data));
       }
     });
   }
-
-
 }

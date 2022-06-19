@@ -14,7 +14,6 @@ import 'package:c4d/module_orders/response/company_info_response/company_info_re
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
-import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -64,8 +63,8 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    var location = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.withData(response, location);
+    //var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response);
   }
 
   Future<DataModel> getCompanyInfo() async {
@@ -86,18 +85,16 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
   Future<DataModel> recycling(CreateOrderRequest request) async {
     ActionResponse? response = await _ordersManager.recycling(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '201') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
@@ -108,7 +105,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
@@ -119,7 +115,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 
@@ -130,7 +125,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    await FireStoreHelper().insertWatcher();
     return DataModel.empty();
   }
 

@@ -319,7 +319,7 @@ class OrderRecyclingLoaded extends States {
                           width: 70,
                           height: 70,
                           child: Checked(
-                              checked: memoryBytes != null,
+                              checked: memoryBytes != null || image != null,
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(18),
@@ -346,7 +346,10 @@ class OrderRecyclingLoaded extends States {
                                   borderRadius: BorderRadius.circular(18),
                                   child: Visibility(
                                     visible: image == null,
-                                    replacement: Image.network(image ?? ''),
+                                    replacement: Image.network(
+                                      image ?? '',
+                                      fit: BoxFit.cover,
+                                    ),
                                     child: Image.memory(
                                       memoryBytes ?? Uint8List(0),
                                       fit: BoxFit.cover,
@@ -634,6 +637,8 @@ class OrderRecyclingLoaded extends States {
       screenState.manager.recycle(
           screenState,
           CreateOrderRequest(
+              order: screenState.orderId,
+              cancel: -1,
               orderIsMain: orderIsMain,
               orderType: orderType,
               fromBranch: screenState.branch,
@@ -658,6 +663,8 @@ class OrderRecyclingLoaded extends States {
     screenState.manager.recycle(
         screenState,
         CreateOrderRequest(
+            order: screenState.orderId,
+            cancel: -1,
             orderType: orderType,
             orderIsMain: orderIsMain,
             fromBranch: screenState.branch,
@@ -671,13 +678,15 @@ class OrderRecyclingLoaded extends States {
             note: screenState.orderDetailsController.text.trim(),
             detail: screenState.orderDetailsController.text.trim(),
             orderCost: num.tryParse(screenState.priceController.text.trim()),
-            image: null,
+            image: imagePath ?? null,
             date: orderDate.toUtc().toIso8601String(),
             payment: screenState.payments));
   }
 
   void createOrder() {
     if (imagePath == null) {
+      createOrderWithoutImage();
+    } else if (image != null && imagePath != null && memoryBytes == null) {
       createOrderWithoutImage();
     } else {
       createOrderWithImage();

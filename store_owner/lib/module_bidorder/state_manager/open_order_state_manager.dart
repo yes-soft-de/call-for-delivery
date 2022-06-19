@@ -38,27 +38,26 @@ class OpenBidOrderStateManager {
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as BidOrderModel;
-        _stateSubject
-            .add(OpenOrdersLoaded(screenState, orders: value.data));
+        _stateSubject.add(OpenOrdersLoaded(screenState, orders: value.data));
       }
     });
   }
 
-  void cancelOrder(OpenBidOrderScreenState screenState , int id){
+  void cancelOrder(OpenBidOrderScreenState screenState, int id) {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.cancelBidOrder(id).then((value) {
-      getOpenOrdersFilters(screenState , screenState.request);
-      if(value.hasError){
+      getOpenOrdersFilters(screenState, screenState.request);
+      if (value.hasError) {
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
+                title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-      }else {
-        getOpenOrdersFilters(screenState , screenState.request);
+      } else {
+        getOpenOrdersFilters(screenState, screenState.request);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message:S.current.orderRemovedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.orderRemovedSuccessfully)
             .show(screenState.context);
       }
     });
   }
-
 }

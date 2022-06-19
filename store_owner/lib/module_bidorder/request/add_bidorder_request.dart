@@ -1,5 +1,4 @@
-class AddBidOrderRequest{
-
+class AddBidOrderRequest {
   String? payment;
 
   String? title;
@@ -8,8 +7,13 @@ class AddBidOrderRequest{
   int? supplierCategory;
   int? branch;
 
-  AddBidOrderRequest({this.payment,this.image,   this.title, this.description,
-      this.supplierCategory, this.branch});
+  AddBidOrderRequest(
+      {this.payment,
+      this.image,
+      this.title,
+      this.description,
+      this.supplierCategory,
+      this.branch});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -19,16 +23,15 @@ class AddBidOrderRequest{
     data['branch'] = this.branch;
     data['supplierCategory'] = this.supplierCategory;
     if (this.image != null) {
-      var images= [];
+      var images = [];
       images.add(ImageRequest(image ?? null).toJson());
-      data['images'] =images;
+      data['images'] = images;
     }
     return data;
   }
 }
 
-
-class ImageRequest{
+class ImageRequest {
   String? image;
 
   ImageRequest(this.image);

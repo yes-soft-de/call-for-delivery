@@ -13,7 +13,6 @@ import 'package:injectable/injectable.dart';
 class OrderOfferDetailsScreen extends StatefulWidget {
   final OrderOffersDetailsStateManager _stateManager;
 
-
   OrderOfferDetailsScreen(this._stateManager);
 
   @override
@@ -24,7 +23,7 @@ class OrderOfferDetailsScreenState extends State<OrderOfferDetailsScreen> {
   late States _currentState;
   StreamSubscription? _stateSubscription;
 
-  void updateOfferState(OfferStateRequest request){
+  void updateOfferState(OfferStateRequest request) {
     request.bidOrderId = bidOrderId;
     widget._stateManager.updateOfferState(this, request);
   }
@@ -46,13 +45,12 @@ class OrderOfferDetailsScreenState extends State<OrderOfferDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null    && bidOrderId == -1) {
+    if (args != null && bidOrderId == -1) {
       bidOrderId = args as int;
       widget._stateManager.getOrderOffers(this, bidOrderId);
     }
     return Scaffold(
         appBar: CustomC4dAppBar.appBar(context, title: S.current.orderOffers),
-
-        body:SafeArea(child: _currentState.getUI(context)));
+        body: SafeArea(child: _currentState.getUI(context)));
   }
 }

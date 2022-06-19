@@ -3,9 +3,7 @@ class OfferStateRequest {
   int? offerId;
   String? priceOfferStatus;
 
-
-  OfferStateRequest(
-      { this.offerId, this.priceOfferStatus ,this.bidOrderId} );
+  OfferStateRequest({this.offerId, this.priceOfferStatus, this.bidOrderId});
 
   Map<String, dynamic> toJson() {
     return {
@@ -13,5 +11,4 @@ class OfferStateRequest {
       'priceOfferStatus': this.priceOfferStatus,
     };
   }
-
 }

@@ -109,28 +109,32 @@ class AboutStatePageOwner extends AboutState {
                           : _getPackages(_selectedCity),
                     ),
                   ),
-                  Flex(
-                    direction: Axis.vertical,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          S
-                              .of(context)
-                              .toFindOutMorePleaseLeaveYourPhonenandWeWill,
-                          textAlign: TextAlign.center,
+                  Visibility(
+                    visible: false,
+                    child: Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            S
+                                .of(context)
+                                .toFindOutMorePleaseLeaveYourPhonenandWeWill,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-                        onPressed: () {
-                          //screenState.requestBooking();
-                        },
-                        child: Text(
-                          S.of(context).requestMeeting,
+                        ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(shape: StadiumBorder()),
+                          onPressed: () {
+                            //screenState.requestBooking();
+                          },
+                          child: Text(
+                            S.of(context).requestMeeting,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Container(
                     height: 16,

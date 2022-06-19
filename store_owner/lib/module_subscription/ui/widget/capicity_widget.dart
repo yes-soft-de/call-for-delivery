@@ -81,24 +81,23 @@ class CapacityBar extends StatelessWidget {
                 )),
           ),
           Container(
-              constraints: BoxConstraints(minWidth: 50, maxWidth: 75),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '$remainingCount / ',
-                    style: TextStyle(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '$totalCount',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '$remainingCount / ',
+                style: TextStyle(
+                    color: Theme.of(context).disabledColor,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '$totalCount',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
         ],
       ),
     );

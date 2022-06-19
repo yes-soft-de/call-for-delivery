@@ -53,6 +53,7 @@ class BidOrderService {
     if (response.data == null) return DataModel.empty();
     return BidOrderModel.withData(response);
   }
+
   Future<DataModel> getSupplierCategories() async {
     SupplierCategoriesResponse? response = await _manager.getSupplierCat();
     if (response == null) return DataModel.withError(S.current.networkError);
@@ -75,10 +76,8 @@ class BidOrderService {
     return OfferModel.withData(response);
   }
 
-
   Future<DataModel> getOrderDetails(int orderId) async {
-    BidOrderDetailsResponse? response =
-    await _manager.getOrderDetails(orderId);
+    BidOrderDetailsResponse? response = await _manager.getOrderDetails(orderId);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -88,6 +87,7 @@ class BidOrderService {
 
     return BidOrderDetailsModel.withData(response);
   }
+
   Future<DataModel> cancelBidOrder(int request) async {
     ActionResponse? response = await _manager.cancelBidOrder(request);
     if (response == null) {

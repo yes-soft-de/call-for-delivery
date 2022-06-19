@@ -12,11 +12,9 @@ class OrderOfferDetailsStateLoaded extends States {
   final List<OfferModel> offers;
   final OrderOfferDetailsScreenState screenState;
   OrderOfferDetailsStateLoaded(
-      this.screenState, {
-        required this.offers,
-      }) : super(screenState) {}
-
-
+    this.screenState, {
+    required this.offers,
+  }) : super(screenState) {}
 
   @override
   Widget getUI(BuildContext context) {
@@ -33,27 +31,30 @@ class OrderOfferDetailsStateLoaded extends States {
           color: Colors.transparent,
           child: OfferCard(
             model: element,
-            acceptOffer: (){
+            acceptOffer: () {
               showDialog(
                   context: context,
                   builder: (context) {
                     return CustomAlertDialog(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          screenState.updateOfferState(OfferStateRequest(priceOfferStatus: 'accepted',offerId: element.id));
-
+                          screenState.updateOfferState(OfferStateRequest(
+                              priceOfferStatus: 'accepted',
+                              offerId: element.id));
                         },
                         content: S.current.confirmAcceptOffer);
                   });
             },
-            refuseOffer: (){
+            refuseOffer: () {
               showDialog(
                   context: context,
                   builder: (context) {
                     return CustomAlertDialog(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          screenState.updateOfferState(OfferStateRequest(priceOfferStatus: 'refused',offerId: element.id));
+                          screenState.updateOfferState(OfferStateRequest(
+                              priceOfferStatus: 'refused',
+                              offerId: element.id));
                         },
                         content: S.current.confirmRefuseOffer);
                   });
@@ -67,5 +68,4 @@ class OrderOfferDetailsStateLoaded extends States {
     ));
     return widgets;
   }
-
 }

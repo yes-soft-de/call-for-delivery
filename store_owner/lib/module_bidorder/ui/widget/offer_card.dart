@@ -10,12 +10,15 @@ class OfferCard extends StatelessWidget {
   final Function acceptOffer;
   final Function refuseOffer;
 
-  OfferCard( {required this.model ,required this.acceptOffer , required this.refuseOffer});
+  OfferCard(
+      {required this.model,
+      required this.acceptOffer,
+      required this.refuseOffer});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(start: 8,end: 8,bottom: 5),
+      padding: const EdgeInsetsDirectional.only(start: 8, end: 8, bottom: 5),
       child: Card(
         color: Theme.of(context).cardColor,
         elevation: 5.0,
@@ -23,8 +26,9 @@ class OfferCard extends StatelessWidget {
         child: Container(
           decoration: new BoxDecoration(
             border: BorderDirectional(
-              start:
-              BorderSide(width: 5, color:OfferStatusHelper.getOfferStatusColor(model.state)),
+              start: BorderSide(
+                  width: 5,
+                  color: OfferStatusHelper.getOfferStatusColor(model.state)),
             ),
           ),
           child: ListTile(
@@ -34,9 +38,12 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     verticalTile(context,
-                        title: S.current.offerNumber, subtitle:'#'+ model.id.toString()),
+                        title: S.current.offerNumber,
+                        subtitle: '#' + model.id.toString()),
                     verticalTile(context,
-                        title: S.current.offerStatus, subtitle:OfferStatusHelper.getOfferStatusName(model.state)),
+                        title: S.current.offerStatus,
+                        subtitle:
+                            OfferStatusHelper.getOfferStatusName(model.state)),
                   ],
                 ),
 //                Center(child: Text('#'+model.id.toString(),style: TextStyle(color: Theme.of(context).primaryColor ,fontWeight: FontWeight.bold,fontSize: 18),)),
@@ -45,12 +52,20 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     verticalTile(context,
-                        title: S.current.offerPrice, subtitle: model.priceOfferValue.toString()+' '+ S.current.sar),
+                        title: S.current.offerPrice,
+                        subtitle: model.priceOfferValue.toString() +
+                            ' ' +
+                            S.current.sar),
                     verticalTile(context,
-                        title: S.current.deliverCost, subtitle: model.totalDeliveryCost.toString()+' '+ S.current.sar),
+                        title: S.current.deliverCost,
+                        subtitle: model.totalDeliveryCost.toString() +
+                            ' ' +
+                            S.current.sar),
                     verticalTile(context,
-                        title: S.current.profitMargin, subtitle: model.profitMargin.toString()+' '+ S.current.sar),
-
+                        title: S.current.profitMargin,
+                        subtitle: model.profitMargin.toString() +
+                            ' ' +
+                            S.current.sar),
                   ],
                 ),
                 divider(context),
@@ -58,10 +73,11 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     verticalTile(context,
-                        title: S.current.transCount, subtitle: model.transportationCount.toString()),
+                        title: S.current.transCount,
+                        subtitle: model.transportationCount.toString()),
                     verticalTile(context,
-                        title: S.current.carModel, subtitle: model.carModel.toString()),
-
+                        title: S.current.carModel,
+                        subtitle: model.carModel.toString()),
                   ],
                 ),
                 divider(context),
@@ -69,66 +85,81 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     verticalTile(context,
-                        title: S.current.totalPrice , subtitle: model.totalPrice.toString()+' '+ S.current.sar),
+                        title: S.current.totalPrice,
+                        subtitle:
+                            model.totalPrice.toString() + ' ' + S.current.sar),
                     verticalTile(context,
-                        title: S.current.deliverDate, subtitle: model.deliveryDate),
-
+                        title: S.current.deliverDate,
+                        subtitle: model.deliveryDate),
                   ],
                 ),
                 divider(context),
               ],
             ),
-            subtitle:
-            (model.state !=OfferStatusEnum.PENDING)? Container():
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: (){
-                    acceptOffer();
-                  },
-                  child: Card(
-                    color: Colors.green.shade900,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(FontAwesomeIcons.check,color: Colors.white,size: 18,),
-                    ),),
-                ),
-                SizedBox(width: 5,),
-                InkWell(
-                  onTap: (){
-                    refuseOffer();
-                  },
-                  child: Card(
-                    color: Colors.red.shade900,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(Icons.close,color: Colors.white,size: 18,),
-                    ),),
-                ),
-              ],
-            ),
+            subtitle: (model.state != OfferStatusEnum.PENDING)
+                ? Container()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          acceptOffer();
+                        },
+                        child: Card(
+                          color: Colors.green.shade900,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Icon(
+                              FontAwesomeIcons.check,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          refuseOffer();
+                        },
+                        child: Card(
+                          color: Colors.red.shade900,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),
     );
   }
+
   Widget verticalTile(context,
       {required String title, required String subtitle}) {
     return Column(
       children: [
         Text(
           title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        Text(subtitle,style: TextStyle(fontSize: 14),),
+        Text(
+          subtitle,
+          style: TextStyle(fontSize: 14),
+        ),
       ],
     );
   }

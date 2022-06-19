@@ -9,15 +9,15 @@ class SupplierCategoriesModel extends DataModel {
   SupplierCategoriesModel({
     required this.id,
     required this.name,
-
   });
 
   SupplierCategoriesModel.withData(SupplierCategoriesResponse response) {
     var data = response.data;
     data?.forEach((element) {
       _orders.add(new SupplierCategoriesModel(
-          id: element.id ?? -1,
-          name: element.name ?? '',));
+        id: element.id ?? -1,
+        name: element.name ?? '',
+      ));
     });
   }
   List<SupplierCategoriesModel> get data => _orders;

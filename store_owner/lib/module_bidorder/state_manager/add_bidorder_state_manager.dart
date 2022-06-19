@@ -30,7 +30,6 @@ class AddBidOrderStateManager {
 
   AddBidOrderStateManager(this._ordersService);
 
-
   void getBranches(AddBidOrderScreenState screenState) {
     getIt<BranchesListService>().getBranches().then((branches) {
       if (branches.hasError) {
@@ -49,41 +48,41 @@ class AddBidOrderStateManager {
       } else {
         branches as BranchesModel;
         _ordersService.getSupplierCategories().then((categories) {
-          if(categories.hasError){
+          if (categories.hasError) {
             _stateSubject.add(ErrorState(screenState, onPressed: () {
               getBranches(screenState);
             }, title: '', error: branches.error, hasAppbar: false));
-          }else {
+          } else {
             categories as SupplierCategoriesModel;
-            _stateSubject.add(NewBidOrderStateLoaded(branches.data,categories.data, screenState));
+            _stateSubject.add(NewBidOrderStateLoaded(
+                branches.data, categories.data, screenState));
           }
         });
-
       }
     });
   }
+
 //
   void createOrder(
-      AddBidOrderScreenState screenState, AddBidOrderRequest request,{
-      required  List<BranchesModel> branches,
-    required List<SupplierCategoriesModel> categories}) {
+      AddBidOrderScreenState screenState, AddBidOrderRequest request,
+      {required List<BranchesModel> branches,
+      required List<SupplierCategoriesModel> categories}) {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.addBidOrder(request).then((value) {
       if (value.hasError) {
 //        _stateSubject.add(NewBidOrderStateLoaded(branches,categories, screenState));
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
+                title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
 //        _stateSubject.add(NewBidOrderStateLoaded(branches,categories, screenState));
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning,
-            message: S.current.orderCreatedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.orderCreatedSuccessfully)
             .show(screenState.context);
       }
     });
   }
-
 }

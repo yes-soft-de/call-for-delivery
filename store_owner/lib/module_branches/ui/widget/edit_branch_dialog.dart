@@ -92,6 +92,7 @@ class _EditBranchDialogState extends State<EditBranchDialog> {
                     child: CustomLoginFormField(
                         controller: phoneController,
                         phone: true,
+                        halfField: true,
                         last: true,
                         hintText: '5xxxxxxxx'),
                   ),

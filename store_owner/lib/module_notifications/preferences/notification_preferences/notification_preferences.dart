@@ -7,6 +7,7 @@ class NotificationsPrefHelper {
   void setNotificationPath(String ringtone) {
     box.put('Ringtone', ringtone);
   }
+
   String getNotification() {
     return box.get('Ringtone') ?? 'assets/sounds/ringtone1.wav';
   }

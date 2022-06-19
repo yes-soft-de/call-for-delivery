@@ -5,8 +5,7 @@ class FilterBidOrderRequest {
   bool? openToPriceOffer;
 
   FilterBidOrderRequest(
-  { this.state, this.fromDate, this.toDate,
-      this.openToPriceOffer } );
+      {this.state, this.fromDate, this.toDate, this.openToPriceOffer});
 
   Map<String, dynamic> toJson() {
     return {
@@ -16,5 +15,4 @@ class FilterBidOrderRequest {
       'openToPriceOffer': this.openToPriceOffer,
     };
   }
-
 }

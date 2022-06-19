@@ -1,7 +1,10 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
+import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -79,6 +82,10 @@ class AuthService {
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
     await accountStatus();
+    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted'){
+       _authSubject.addError(S.current.invalidCredentials);
+      throw AuthorizationException(S.current.invalidCredentials);
+    }
     _authSubject.add(AuthStatus.AUTHORIZED);
   }
 
@@ -96,7 +103,8 @@ class AuthService {
     }
     _prefsHelper.setUsername(request.userID ?? '');
     _prefsHelper.setPassword(request.password ?? '');
-    _authSubject.add(AuthStatus.CODE_SENT);
+    //_authSubject.add(AuthStatus.CODE_SENT);
+    loginApi(request.userID ?? '', request.password ?? '');
   }
 
   Future<void> verifyCodeApi(VerifyCodeRequest request) async {
@@ -248,6 +256,11 @@ class AuthService {
         case '9158':
           _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
+        // account deleted
+        case '9013':
+          await logout();
+          _prefsHelper.setUserCompetedProfile('userDeleted');
+          break;
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
@@ -256,5 +269,15 @@ class AuthService {
     }
     _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
     return;
+  }
+
+  Future<DataModel> deleteUser() async {
+    ActionResponse? response = await _authManager.deleteUser();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 }

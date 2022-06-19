@@ -14,12 +14,14 @@ class ErrorState extends States {
   final VoidCallback onPressed;
   final double? size;
   State<StatefulWidget> screenState;
+  final bool canGoBack;
   ErrorState(this.screenState,
       {this.error,
       this.errors,
       required this.onPressed,
       required this.title,
       this.hasAppbar = true,
+      this.canGoBack = true,
       this.size})
       : super(screenState);
 
@@ -28,6 +30,7 @@ class ErrorState extends States {
     return Scaffold(
       appBar: hasAppbar
           ? CustomC4dAppBar.appBar(context,
+              canGoBack: canGoBack,
               title: title, colorIcon: Theme.of(context).colorScheme.error)
           : null,
       body: SingleChildScrollView(

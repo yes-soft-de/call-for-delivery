@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_my_notifications/response/update_response/update_response.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:intl/intl.dart';
 
 class UpdateModel extends DataModel {
@@ -21,15 +22,11 @@ class UpdateModel extends DataModel {
     var data = response.data;
 
     data?.forEach((element) {
-      String date = DateFormat.jm().format(DateTime.fromMillisecondsSinceEpoch(
-              (element.createdAt?.timestamp ??
-                      DateTime.now().millisecondsSinceEpoch) *
-                  1000)) +
+      String date = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
-          DateFormat.Md().format(DateTime.fromMillisecondsSinceEpoch(
-              (element.createdAt?.timestamp ??
-                      DateTime.now().millisecondsSinceEpoch) *
-                  1000));
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
       _model.add(UpdateModel(
           id: element.id ?? -1,
           title: element.title ?? '',

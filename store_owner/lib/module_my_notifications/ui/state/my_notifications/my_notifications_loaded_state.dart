@@ -177,6 +177,7 @@ class MyNotificationsLoadedState extends States {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
+                    scrollable: true,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25)),
                     title: Text(element.title),

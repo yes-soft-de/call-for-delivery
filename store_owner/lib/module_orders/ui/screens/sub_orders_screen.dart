@@ -70,51 +70,48 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.groupOrder,
-            actions: [
-              Visibility(
-                visible: currentState is SubOrdersListStateLoaded ,
-                child: CustomC4dAppBar.actionIcon(context,
-                    message: S.current.newOrderLink, onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return CustomAlertDialog(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pushNamed(
-                                  OrdersRoutes.NEW_SUB_ORDER_SCREEN,
-                                  arguments: orderId);
-                            },
-                            content: S.current.areYouSureAboutCreatingSubOrder);
-                      });
-                }, icon: Icons.link),
-              ),
-              Visibility(
-                visible: currentState is SubOrdersListStateLoaded &&
-                    (currentState as SubOrdersListStateLoaded)
-                        .orders
-                        .isNotEmpty,
-                child: CustomC4dAppBar.actionIcon(context,
-                    message: S.current.unlinkSubOrders, onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return RemoveSubOrderDialog(
-                          primaryOrder: orderId,
-                          orders: (currentState
-                                  as SubOrdersListStateLoaded)
-                              .orders
-                              ,
-                          request: (request) {
-                            manager.removeSubOrder(this, request);
-                          },
-                        );
-                      });
-                }, icon: Icons.link_off),
-              )
-            ]),
+        appBar: CustomC4dAppBar
+            .appBar(context, title: S.current.groupOrder, actions: [
+          Visibility(
+            visible: currentState is SubOrdersListStateLoaded,
+            child: CustomC4dAppBar.actionIcon(context,
+                message: S.current.newOrderLink, onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return CustomAlertDialog(
+                        onPressed: () {
+                          var getState =
+                              currentState as SubOrdersListStateLoaded;
+                          var order = getState.orders[0];
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamed(
+                              OrdersRoutes.NEW_SUB_ORDER_SCREEN,
+                              arguments: getState.orders[0]);
+                        },
+                        content: S.current.areYouSureAboutCreatingSubOrder);
+                  });
+            }, icon: Icons.link),
+          ),
+          Visibility(
+            visible: currentState is SubOrdersListStateLoaded &&
+                (currentState as SubOrdersListStateLoaded).orders.isNotEmpty,
+            child: CustomC4dAppBar.actionIcon(context,
+                message: S.current.unlinkSubOrders, onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return RemoveSubOrderDialog(
+                      primaryOrder: orderId,
+                      orders: (currentState as SubOrdersListStateLoaded).orders,
+                      request: (request) {
+                        manager.removeSubOrder(this, request);
+                      },
+                    );
+                  });
+            }, icon: Icons.link_off),
+          )
+        ]),
         body: currentState.getUI(context),
       ),
     );

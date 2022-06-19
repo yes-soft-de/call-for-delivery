@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -22,7 +23,8 @@ class NewOrderScreen extends StatefulWidget {
   NewOrderScreenState createState() => NewOrderScreenState();
 }
 
-class NewOrderScreenState extends State<NewOrderScreen> {
+class NewOrderScreenState extends State<NewOrderScreen>
+    with WidgetsBindingObserver {
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
@@ -48,9 +50,26 @@ class NewOrderScreenState extends State<NewOrderScreen> {
   LatLng? customerLocation;
   //
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    Clipboard.hasStrings().asStream().listen((event) async {
+      if (event) {
+        ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
+        String data = clip?.text.toString() ?? '';
+        if (data.length > 9 && data[0] == '0') {
+          await Clipboard.setData(ClipboardData(text: data.substring(1)));
+          if (mounted) {
+            setState(() {});
+          }
+        }
+      }
+    });
+  }
+
+  @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    WidgetsBinding.instance?.addObserver(this);
     countryNumberController.text = '966';
     widget._stateManager.getBranches(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
@@ -69,6 +88,17 @@ class NewOrderScreenState extends State<NewOrderScreen> {
             double.parse(link.queryParameters['q']!.split(',')[1]),
           );
           setState(() {});
+        }
+      }
+    });
+    Clipboard.getData(Clipboard.kTextPlain).asStream().listen((event) async {
+      if (event?.text?.length != null) {
+        if (event!.text!.length > 9 && (event.text![0] == '0')) {
+          await Clipboard.setData(
+              ClipboardData(text: event.text!.substring(1)));
+          if (mounted) {
+            setState(() {});
+          }
         }
       }
     });

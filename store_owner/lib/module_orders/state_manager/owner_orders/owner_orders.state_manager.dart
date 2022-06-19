@@ -62,9 +62,6 @@ class OwnerOrdersStateManager {
         value as OrderModel;
         _stateSubject
             .add(OrdersListStateOrdersLoaded(screenState, orders: value.data));
-        if (loading) {
-          watcher(screenState);
-        }
       }
     });
   }
@@ -72,6 +69,10 @@ class OwnerOrdersStateManager {
   void getOrdersFilters(
       OwnerOrdersScreenState screenState, FilterOrderRequest request,
       [bool loading = true]) {
+    // if (request.state == 'pending') {
+    //   getOrders(screenState);
+    //   return;
+    // }
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
     }
@@ -146,8 +147,9 @@ class OwnerOrdersStateManager {
         _subscriptionStatus.add(CanMakeOrderModel(
             canCreateOrder: false,
             status: status.error ?? S.current.errorHappened,
-            percentageOfOrdersConsumed: '0 %',
-            consumingAlert: false));
+            percentageOfOrdersConsumed: '0%',
+            consumingAlert: false,
+            unlimitedPackage: false));
       } else {
         status as CanMakeOrderModel;
         _subscriptionStatus.add(status.data);

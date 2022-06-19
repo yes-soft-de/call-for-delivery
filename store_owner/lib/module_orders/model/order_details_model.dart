@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -36,6 +37,7 @@ class OrderDetailsModel extends DataModel {
   late num? paidToProvider;
   late bool orderIsMain;
   late int branchID;
+  late String captainRating;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -44,6 +46,8 @@ class OrderDetailsModel extends DataModel {
   String? attention;
   late OrderTimeLine? orderLogs;
   late List<OrderModel> subOrders;
+  late String? captainName;
+  late String? captainPhone;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -74,11 +78,14 @@ class OrderDetailsModel extends DataModel {
       required this.subOrders,
       required this.createDateTime,
       required this.imagePath,
-      required this.branchID});
+      required this.branchID,
+      required this.captainName,
+      required this.captainPhone,
+      required this.captainRating});
 
   late OrderDetailsModel _orders;
 
-  OrderDetailsModel.withData(OrderDetailsResponse response, LatLng? location) {
+  OrderDetailsModel.withData(OrderDetailsResponse response) {
     var element = response.data;
     // date converter
     // created At
@@ -95,43 +102,45 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-        image: element?.image?.image,
-        canRemove:
-            _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        isCaptainArrived: element?.isCaptainArrived,
-        branchPhone: element?.branchPhone,
-        branchName: element?.branchName ?? S.current.unknown,
-        createdDate: create,
-        customerName: element?.recipientName ?? S.current.unknown,
-        customerPhone: element?.recipientPhone ?? '',
-        deliveryDateString: delivery,
-        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-        destinationCoordinate: element?.destination?.lat != null &&
-                element?.destination?.lon != null
-            ? LatLng(
-                element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
-            : null,
-        destinationLink: element?.destination?.link,
-        note: element?.note,
-        orderCost: element?.orderCost ?? 0,
-        payment: element?.payment ?? 'cash',
-        roomID: element?.roomId,
-        state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1,
-        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null,
-        attention: element?.attention,
-        captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs),
-        kilometer: element?.kilometer,
-        paidToProvider: element?.paidToProvider,
-        orderIsMain: element?.orderIsMain ?? false,
-        subOrders: _getOrders(element?.subOrders ?? []),
-        createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
-        imagePath: element?.image?.imageUrl,
-        branchID: element?.storeOwnerBranchId ?? -1);
-
-    _orders.distance = _distance(_orders, location);
+      image: element?.image?.image,
+      canRemove: _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
+      isCaptainArrived: element?.isCaptainArrived,
+      branchPhone: element?.branchPhone,
+      branchName: element?.branchName ?? S.current.unknown,
+      createdDate: create,
+      customerName: element?.recipientName ?? S.current.unknown,
+      customerPhone: element?.recipientPhone ?? '',
+      deliveryDateString: delivery,
+      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+      destinationCoordinate: element?.destination?.lat != null &&
+              element?.destination?.lon != null
+          ? LatLng(
+              element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
+          : null,
+      destinationLink: element?.destination?.link,
+      note: element?.note,
+      orderCost: element?.orderCost ?? 0,
+      payment: element?.payment ?? 'cash',
+      roomID: element?.roomId,
+      state: StatusHelper.getStatusEnum(element?.state),
+      id: element?.id ?? -1,
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+      distance: null,
+      attention: element?.attention,
+      captainOrderCost: element?.captainOrderCost,
+      orderLogs: _getOrderLogs(element?.orderLogs),
+      kilometer: element?.kilometer,
+      paidToProvider: element?.paidToProvider,
+      orderIsMain: element?.orderIsMain ?? false,
+      subOrders: _getOrders(element?.subOrders ?? []),
+      createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
+      imagePath: element?.image?.imageUrl,
+      branchID: element?.storeOwnerBranchId ?? -1,
+      captainName: element?.captainName,
+      captainPhone: element?.captainDetails?.phone,
+      captainRating:
+          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
+    );
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
     if (orderLogs == null) {
@@ -140,8 +149,9 @@ class OrderDetailsModel extends DataModel {
     List<Step> steps = [];
     orderLogs.orderLogs?.logs?.forEach((element) {
       // step date
-      var stepDate = DateFormat.jm()
-              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+      var stepDate = DateFormat.jm().format(DateHelper.convert(
+            element.createdAt?.timestamp,
+          )) +
           ' 📅 ' +
           DateFormat.yMd()
               .format(DateHelper.convert(element.createdAt?.timestamp));
@@ -164,21 +174,6 @@ class OrderDetailsModel extends DataModel {
       canRemove = false;
     }
     return canRemove;
-  }
-
-  String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
-    String? distance;
-    if (orderInfo.destinationCoordinate != null) {
-      var value = DeepLinksService.getInitDistance(
-          LatLng(orderInfo.destinationCoordinate?.latitude ?? 0,
-              orderInfo.destinationCoordinate?.longitude ?? 0),
-          location);
-      if (value == null) return null;
-      distance = value.toStringAsFixed(1);
-      distance = S.current.distance + ' $distance ' + S.current.km;
-      return distance;
-    }
-    return null;
   }
 
   List<OrderModel> _getOrders(List<SubOrder> suborder) {

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -30,16 +31,11 @@ class NotificationModel extends DataModel {
   NotificationModel.withData(MyNotificationResponse orders) {
     var data = orders.data;
     data?.forEach((element) {
-      String notificationDate = DateFormat.jm().format(
-              DateTime.fromMillisecondsSinceEpoch(
-                  (element.createdAt?.timestamp ??
-                          DateTime.now().millisecondsSinceEpoch) *
-                      1000)) +
+      String notificationDate = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
           ' 📅 ' +
-          DateFormat.Md().format(DateTime.fromMillisecondsSinceEpoch(
-              (element.createdAt?.timestamp ??
-                      DateTime.now().millisecondsSinceEpoch) *
-                  1000));
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
       models.add(NotificationModel(
         marked: false,
         title: element.title ?? '',

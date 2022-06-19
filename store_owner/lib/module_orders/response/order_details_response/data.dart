@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
@@ -35,6 +36,9 @@ class Data {
   num? paidToProvider;
   bool? orderIsMain;
   List<SubOrder>? subOrders;
+  String? captainName;
+  String? captainPhone;
+  Captain? captainDetails;
   Data(
       {this.id,
       this.state,
@@ -63,7 +67,10 @@ class Data {
       this.kilometer,
       this.paidToProvider,
       this.orderIsMain,
-      this.subOrders});
+      this.subOrders,
+      this.captainName,
+      this.captainPhone,
+      this.captainDetails});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -72,11 +79,16 @@ class Data {
       orderCost: json['orderCost'] as num?,
       orderType: json['orderType'] as int?,
       note: json['note'] as String?,
+      captainName: json['captainName'] as String?,
+      captainPhone: json['captainPhone'] as String?,
       paidToProvider: json['paidToProvider'] as num?,
       kilometer: json['kilometer'] as num?,
       deliveryDate: json['deliveryDate'] == null
           ? null
           : DeliveryDate.fromJson(json['deliveryDate'] as Map<String, dynamic>),
+      captainDetails: json['captain'] == null
+          ? null
+          : Captain.fromJson(json['captain'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),

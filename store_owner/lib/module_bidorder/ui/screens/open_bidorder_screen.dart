@@ -43,9 +43,11 @@ class OpenBidOrderScreenState extends State<OpenBidOrderScreen> {
   void getOrders() {
     widget._stateManager.getOpenOrdersFilters(this, request);
   }
+
   void cancelOrder(int id) {
     widget._stateManager.cancelOrder(this, id);
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -86,12 +88,10 @@ class OpenBidOrderScreenState extends State<OpenBidOrderScreen> {
                   } else if (index == 1) {
                     request.openToPriceOffer = false;
                     request.state = 'initialized';
-                  }
-                  else if (index == 2) {
+                  } else if (index == 2) {
                     request.openToPriceOffer = false;
                     request.state = 'pending';
-                  }
-                  else if (index == 3) {
+                  } else if (index == 3) {
                     request.openToPriceOffer = false;
                     request.state = 'ongoing';
                   }

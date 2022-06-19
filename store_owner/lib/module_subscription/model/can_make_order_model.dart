@@ -10,11 +10,13 @@ class CanMakeOrderModel extends DataModel {
   late String status;
   late String percentageOfOrdersConsumed;
   late bool consumingAlert;
+  late bool unlimitedPackage;
   CanMakeOrderModel(
       {required this.canCreateOrder,
       required this.status,
       required this.percentageOfOrdersConsumed,
-      required this.consumingAlert});
+      required this.consumingAlert,
+      required this.unlimitedPackage});
 
   late CanMakeOrderModel _model;
 
@@ -24,12 +26,14 @@ class CanMakeOrderModel extends DataModel {
         canCreateOrder: data?.canCreateOrder ?? true,
         status: data?.subscriptionStatus ?? 'inactive',
         percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0%',
-        consumingAlert: false);
+        consumingAlert: false,
+        unlimitedPackage:
+            data?.packageName == 'الباقة الذهبية Ultimate' ? true : false);
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
-    var totalOrder = num.tryParse(total)?.floorToDouble() ?? 0;
+    var totalOrder = num.tryParse(total)?.toInt() ?? 0;
     var alert = false;
-    if (totalOrder >= 80.0) {
+    if (totalOrder >= 80) {
       _model.percentageOfOrdersConsumed = '80%';
       totalOrder = 80;
       alert = _subscriptionAlert(totalOrder);

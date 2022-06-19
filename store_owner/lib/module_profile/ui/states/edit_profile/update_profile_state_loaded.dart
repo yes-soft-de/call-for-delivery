@@ -94,6 +94,7 @@ class UpdateProfileStateLoaded extends States {
                               if (value != null) {
                                 imageBytes = await value.readAsBytes();
                                 imagePath = value.path;
+                                networkImage = null;
                                 screenState.refresh();
                               }
                             });
@@ -543,8 +544,8 @@ class UpdateProfileStateLoaded extends States {
         bankName: _bankNameController.text,
         bankAccountNumber: _bankNumberController.text,
         employeeSize: selectedSize,
-        closingTime: closingTime?.toIso8601String(),
-        openingTime: openingTime?.toIso8601String(),
+        closingTime: closingTime?.toUtc().toIso8601String(),
+        openingTime: openingTime?.toUtc().toIso8601String(),
       );
       screenState.saveProfile(profileRequest);
     });

@@ -1,13 +1,13 @@
 // Developing Domain ===> 'http://134.209.241.49/';
-// Production Domain ===> ''
+// Production Domain ===> 'http://46.101.100.62'
 // Named Domain ===> ''
 // Named Domain ===> ''
 
 class Urls {
-  static const String DOMAIN = 'http://134.209.241.49';
+  static const String DOMAIN = 'http://46.101.100.62';
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
-  static const String IMAGES_ROOT = DOMAIN + '/upload/';
+  static const String IMAGES_ROOT = 'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/storeowner';
@@ -208,12 +208,15 @@ class Urls {
   static const NEW_ORDER_API_LINK = DOMAIN + '/v1/order/createsuborder';
   static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsubbyowner';
   static const OWNER_ORDERS_API = DOMAIN + '/v1/order/storeorders';
-  static const OWNER_HIDDEN_ORDERS_API = DOMAIN + '/v1/order/getordershiddenduetoexceedingdeliverytime';
+  static const OWNER_HIDDEN_ORDERS_API =
+      DOMAIN + '/v1/order/getordershiddenduetoexceedingdeliverytime';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
   static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
+      static const DELETE_USER =
+      DOMAIN + '/v1/userstatus/userstatus';
   static const GET_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationsLocal';
   static const GET_UPDATES =
@@ -235,15 +238,16 @@ class Urls {
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
 
-
   /*----------------------------bidorders-----------------------------*/
-  static const GET_SUPPLIER_CATEGORY = DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';
+  static const GET_SUPPLIER_CATEGORY =
+      DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';
 
   static const GET_BID_ORDER = DOMAIN + '/v1/order/filterbidorders';
   static const ADD_BID_ORDER = DOMAIN + '/v1/order/bidorder';
   static const BID_ORDER_DETAILS = DOMAIN + '/v1/order/storebidorder/';
 
-  static const GET_ORDER_OFFERS = DOMAIN + '/v1/priceoffer/priceoffersbybidorderidforstore/';
+  static const GET_ORDER_OFFERS =
+      DOMAIN + '/v1/priceoffer/priceoffersbybidorderidforstore/';
   static const UPDATE_OFFER_STATE = DOMAIN + '/v1/priceoffer/priceofferstatus';
   static const CANCEL_BID_ORDER = DOMAIN + '/v1/order/bidordercancel/';
 }

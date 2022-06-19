@@ -96,6 +96,7 @@ class OrderStatusStateManager {
                 title: S.current.warnning, message: S.current.deleteSuccess)
             .show(screenState.context);
         getOrder(screenState, orderId);
+        FireStoreHelper().backgroundThread('Trigger');
       }
     });
   }
@@ -105,13 +106,13 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
-        getOrder(screenState,screenState.orderId);
+        getOrder(screenState, screenState.orderId);
         getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
-        getOrder(screenState,screenState.orderId);
+        getOrder(screenState, screenState.orderId);
         getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,

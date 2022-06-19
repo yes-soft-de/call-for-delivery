@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -21,6 +20,7 @@ import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -35,9 +35,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.orderInfo,
   ) : super(screenState) {
     if (confirmMessagesStates.contains(orderInfo.state) &&
-        orderInfo.isCaptainArrived == null) {
+        orderInfo.isCaptainArrived == null &&
+        screenState.alertFlag) {
+      screenState.alertFlag = false;
       showOwnerAlertConfirm();
-    }
+    } else {}
     if (orderInfo.state == OrderStatusEnum.WAITING) {
       screenState.canRemoveIt = orderInfo.canRemove;
     }
@@ -75,6 +77,85 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
           ),
         ),
+        // captain name
+        Visibility(
+            visible: orderInfo.captainName != null,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 75,
+                decoration: BoxDecoration(
+                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                    borderRadius: BorderRadius.circular(25)),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.delivery_dining_rounded,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 240),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: orderInfo.state ==
+                                            OrderStatusEnum.FINISHED
+                                        ? S.current.orderHandledDoneByCaptain +
+                                            ' '
+                                        : S.current.orderHandledByCaptain + ' ',
+                                    style: TextStyle(color: Colors.white)),
+                                TextSpan(
+                                    text: orderInfo.captainName,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 75,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,
+                            borderRadius: BorderRadiusDirectional.only(
+                                topEnd: Radius.circular(25),
+                                bottomEnd: Radius.circular(25))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                orderInfo.captainRating,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Icon(
+                                Icons.star_rounded,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )),
         // order status
         Padding(
           padding:
@@ -255,6 +336,60 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   title: Text(S.current.chatRoom),
                   textColor: Theme.of(context).textTheme.button?.color,
                   subtitle: Text(S.current.chatWithCaptain),
+                  trailing: Icon(Icons.arrow_forward_rounded,
+                      color: Theme.of(context).textTheme.button?.color),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // chat with whatsapp
+        Visibility(
+          visible: orderInfo.captainPhone != null,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.green.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(-0.2, 0)),
+                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.green.withOpacity(0.85),
+                    Colors.green.withOpacity(0.85),
+                    Colors.green.withOpacity(0.9),
+                    Colors.green.withOpacity(0.93),
+                    Colors.green.withOpacity(0.95),
+                    Colors.green,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onTap: () {
+                    var url = 'https://wa.me/${orderInfo.captainPhone}';
+                    canLaunch(url).then((value) {
+                      if (value) {
+                        launch(url);
+                      }
+                    });
+                  },
+                  leading: Icon(
+                    Icons.whatsapp,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  title: Text(S.current.whatsapp),
+                  textColor: Theme.of(context).textTheme.button?.color,
+                  subtitle: Text(S.current.whatsappWithCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
                       color: Theme.of(context).textTheme.button?.color),
                 ),
@@ -573,9 +708,26 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     child: ListTile(
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.distance != null
-                          ? Text(orderInfo.distance ?? '')
-                          : Text(S.current.destinationUnavailable),
+                      subtitle: Visibility(
+                        replacement: Text(S.current.destinationUnavailable),
+                        visible: screenState.myLocation != null &&
+                            orderInfo.destinationCoordinate != null,
+                        child: Text(S.current.distance +
+                            ' ' +
+                            (Geolocator.distanceBetween(
+                                        screenState.myLocation?.latitude ?? 0,
+                                        screenState.myLocation?.longitude ?? 0,
+                                        orderInfo.destinationCoordinate
+                                                ?.latitude ??
+                                            0,
+                                        orderInfo.destinationCoordinate
+                                                ?.longitude ??
+                                            0) /
+                                    1000)
+                                .toStringAsFixed(2)
+                                .toString() +
+                            ' ${S.current.km}'),
+                      ),
                       trailing: Icon(Icons.arrow_forward),
                     ),
                   ),

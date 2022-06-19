@@ -27,6 +27,7 @@ class SubOrdersListStateLoaded extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
+          key: ObjectKey(element),
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
@@ -36,7 +37,9 @@ class SubOrdersListStateLoaded extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
-              primaryTitle:element.orderIsMain ? S.current.primaryOrder : S.current.suborder ,
+              primaryTitle: element.orderIsMain
+                  ? S.current.primaryOrder
+                  : S.current.suborder,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,

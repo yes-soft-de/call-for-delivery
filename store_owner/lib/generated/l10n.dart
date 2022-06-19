@@ -6229,6 +6229,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Order processing by captain `
+  String get orderHandledByCaptain {
+    return Intl.message(
+      'Order processing by captain ',
+      name: 'orderHandledByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order processed by captain `
+  String get orderHandledDoneByCaptain {
+    return Intl.message(
+      'Order processed by captain ',
+      name: 'orderHandledDoneByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your branch missing phone number`
+  String get yourBranchMissingPhoneNumber {
+    return Intl.message(
+      'Your branch missing phone number',
+      name: 'yourBranchMissingPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Danger Zone`
+  String get dangerZone {
+    return Intl.message(
+      'Danger Zone',
+      name: 'dangerZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting your account , you won't be able to login with this credential any more`
+  String get areSureAboutDeletingYourAccount {
+    return Intl.message(
+      'Are you sure about deleting your account , you won\'t be able to login with this credential any more',
+      name: 'areSureAboutDeletingYourAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time`
+  String get DeletingYourAccountHint {
+    return Intl.message(
+      'This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time',
+      name: 'DeletingYourAccountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User deleted successfully`
+  String get userDeleted {
+    return Intl.message(
+      'User deleted successfully',
+      name: 'userDeleted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

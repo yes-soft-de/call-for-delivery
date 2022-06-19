@@ -41,19 +41,20 @@ class OrderOffersDetailsStateManager {
     });
   }
 
-
-  void updateOfferState(OrderOfferDetailsScreenState screenState , OfferStateRequest request){
+  void updateOfferState(
+      OrderOfferDetailsScreenState screenState, OfferStateRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateOfferState(request).then((value) {
-      getOrderOffers(screenState , request.bidOrderId ?? -1);
-      if(value.hasError){
+      getOrderOffers(screenState, request.bidOrderId ?? -1);
+      if (value.hasError) {
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
+                title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-      }else {
-        getOrderOffers(screenState , request.bidOrderId ?? -1);
+      } else {
+        getOrderOffers(screenState, request.bidOrderId ?? -1);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message:S.current.offerStatusUpdatedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.offerStatusUpdatedSuccessfully)
             .show(screenState.context);
       }
     });
