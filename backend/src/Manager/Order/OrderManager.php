@@ -194,6 +194,10 @@ class OrderManager
             return $orderEntity;
         }
         
+        if($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return $orderEntity;
+        }
+
         $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
        
         $request->setCaptainId($captainId);

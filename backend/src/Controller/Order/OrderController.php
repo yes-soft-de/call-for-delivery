@@ -743,6 +743,10 @@ class OrderController extends BaseController
         if ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
         }
+
+        if ($response === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+        }
       
         return $this->response($response, self::UPDATE);
     }
