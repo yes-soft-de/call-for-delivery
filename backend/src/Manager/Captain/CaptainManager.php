@@ -103,8 +103,19 @@ class CaptainManager
         $item = $this->captainEntityRepository->getUserProfile($request->getCaptainId());
 
         if ($item) {
-            if ($request->getCaptainName() === null) {
+            // Check if this second update to the captain profile, then denies the update of the captain name
+            if ($item->getCompleteAccountStatus() !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED || $request->getCaptainName() === null) {
                 $request->setCaptainName($item->getCaptainName());
+
+            } else {
+                // its allowed to update the captain name and profile image  while its first update
+                if ($request->getCaptainName() === null) {
+                    $request->setCaptainName($item->getCaptainName());
+                }
+
+                if ($request->getImage()) {
+                    $this->imageManager->createImageOrUpdate($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+                }
             }
 
             $item = $this->autoMapping->mapToObject(CaptainProfileUpdateRequest::class, CaptainEntity::class, $request, $item);
@@ -116,10 +127,6 @@ class CaptainManager
             $this->entityManager->flush();
 
             //save images
-            if ($request->getImage()) {
-                $this->imageManager->createImageOrUpdate($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
-            }
-
             if ($request->getDrivingLicence()) {
                 $this->imageManager->createImageOrUpdate($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
             }

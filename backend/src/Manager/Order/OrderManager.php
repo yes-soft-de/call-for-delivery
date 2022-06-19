@@ -397,7 +397,7 @@ class OrderManager
         $orderEntity = $this->orderRepository->find($orderId);
 
         if ($orderEntity) {
-            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING || $orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return false;
             }
 
