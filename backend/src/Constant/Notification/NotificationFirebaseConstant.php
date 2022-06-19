@@ -79,4 +79,6 @@ final class NotificationFirebaseConstant
     const SUB_ORDER_SHOW = "تم إظهار الطلب للكباتن";
 
     const ORDER_ID = " الطلب رقم";
+
+    const FROM = " من ";
 }
