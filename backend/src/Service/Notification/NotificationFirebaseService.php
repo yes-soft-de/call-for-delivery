@@ -201,7 +201,7 @@ class NotificationFirebaseService
         }
 
         if($request->getOtherUserID()){
-           
+
             if($userType ===  NotificationTokenConstant::APP_TYPE_CAPTAIN) {
                 $user = $this->userService->getUserByCaptainProfileId($request->getOtherUserID());
             }

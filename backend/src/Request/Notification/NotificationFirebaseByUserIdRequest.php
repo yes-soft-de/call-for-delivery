@@ -5,7 +5,7 @@ namespace App\Request\Notification;
 class NotificationFirebaseByUserIdRequest
 {
     /**
-     * @var int|null
+     * @var int|null|string
      */
     private $otherUserID;
 
@@ -19,7 +19,7 @@ class NotificationFirebaseByUserIdRequest
     /**
      * @return int|null
      */
-    public function getOtherUserID(): ?int
+    public function getOtherUserID(): null|int|string
     {
         return $this->otherUserID;
     }
