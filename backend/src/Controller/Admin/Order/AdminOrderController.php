@@ -432,4 +432,44 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
+
+     /**
+     * @Route("updateordertohidden/{id}", name="updateOrderToHidden", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="int", property="id"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateOrderToHidden(int $id): JsonResponse
+    {
+        $result = $this->adminOrderService->updateOrderToHidden($id);
+
+        if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTFOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
 }

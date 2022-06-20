@@ -28,6 +28,7 @@ use App\Service\Order\StoreOrderDetailsService;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
+use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 
 class AdminOrderService
 {
@@ -284,4 +285,14 @@ class AdminOrderService
 
         return $orderEntity;
     }
+
+    public function updateOrderToHidden(int $id): OrderUpdateToHiddenResponse|string
+    {
+       $orderEntity = $this->adminOrderManager->updateOrderToHidden($id);
+       if($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+           return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+       return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }  
 }

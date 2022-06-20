@@ -9,6 +9,8 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Constant\Order\OrderIsHideConstant;
+use App\Constant\Order\OrderResultConstant;
 
 class AdminOrderManager
 {
@@ -88,6 +90,20 @@ class AdminOrderManager
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(false);
         $orderEntity->setUpdatedAt(new DateTime('now'));
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function updateOrderToHidden(int $id): OrderEntity|string
+    {
+        $orderEntity = $this->orderEntityRepository->find($id);
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
 
         $this->entityManager->flush();
 
