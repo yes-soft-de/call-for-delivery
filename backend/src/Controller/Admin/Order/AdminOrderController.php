@@ -3,19 +3,24 @@
 namespace App\Controller\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
+use App\Constant\Order\OrderResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("v1/admin/order/")
@@ -23,12 +28,14 @@ use OpenApi\Annotations as OA;
 class AdminOrderController extends BaseController
 {
     private AutoMapping $autoMapping;
+    private ValidatorInterface $validator;
     private AdminOrderService $adminOrderService;
 
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, AdminOrderService $adminOrderService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminOrderService $adminOrderService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
+        $this->validator = $validator;
         $this->adminOrderService = $adminOrderService;
     }
 
@@ -360,5 +367,69 @@ class AdminOrderController extends BaseController
         $response = $this->adminOrderService->getPendingOrdersForAdmin();
         
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * Return accepted order to pending status by admin
+     * @Route("rependingacceptedorder", name="rependingAcceptedOrderByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new package category create by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="orderId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderByIdGetForAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function rePendingAcceptedOrderByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, RePendingAcceptedOrderByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->rePendingAcceptedOrderByAdmin($request);
+
+        if ($result === OrderResultConstant::ORDER_ACCEPTED_BY_CAPTAIN) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
+        }
+
+        if ($result === OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

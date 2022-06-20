@@ -10,7 +10,10 @@ class BidOrderGetForAdminResponse
 
     public string $state;
 
-    public float $orderCost;
+    /**
+     * @var float|null
+     */
+    public $orderCost;
 
     public int $orderType;
 

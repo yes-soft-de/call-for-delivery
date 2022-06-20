@@ -20,6 +20,7 @@ use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Subscription\SubscriptionDetailsManager;
 use App\Manager\Subscription\SubscriptionHistoryManager;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 
 class SubscriptionManager
 {
@@ -291,5 +292,27 @@ class SubscriptionManager
     public function getCaptainOffersBySubscriptionId(int $subscriptionId): ?array
     {
         return $this->subscribeRepository->getCaptainOffersBySubscriptionId($subscriptionId);
+    }
+
+    public function updateSubscription(SubscriptionUpdateByAdminRequest $request)
+    { 
+       $package = $this->packageManager->getPackage($request->getPackage());
+       $request->setPackage($package);
+
+       $subscriptionEntity = $this->subscribeRepository->find($request->getId());      
+
+       $subscriptionEntity = $this->autoMapping->mapToObject(SubscriptionUpdateByAdminRequest::class, SubscriptionEntity::class, $request, $subscriptionEntity);
+
+       $subscriptionEntity->setStartDate(new DateTime());
+   
+       $subscriptionEntity->setEndDate($this->calculatingSubscriptionExpiryDate($subscriptionEntity->getStartDate(), $package->getExpired()));
+
+       $this->entityManager->flush();
+
+       $this->subscriptionDetailsManager->updateSubscriptionDetailsByAdmin($subscriptionEntity);
+      
+       $this->subscriptionHistoryManager->updateSubscriptionHistoryByAdmin($subscriptionEntity->getId());            
+
+       return "ok";
     }
 }

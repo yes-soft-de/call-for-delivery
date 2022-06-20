@@ -609,3 +609,8 @@ App\Request\Eraser\DeleteCaptainAccountAndProfileBySuperAdminRequest:
             - NotBlank: ~
         password:
             - NotNull: ~
+
+App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~

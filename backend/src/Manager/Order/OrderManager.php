@@ -194,6 +194,10 @@ class OrderManager
             return $orderEntity;
         }
         
+        if($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return $orderEntity;
+        }
+
         $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
        
         $request->setCaptainId($captainId);
@@ -393,7 +397,7 @@ class OrderManager
         $orderEntity = $this->orderRepository->find($orderId);
 
         if ($orderEntity) {
-            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING || $orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return false;
             }
 

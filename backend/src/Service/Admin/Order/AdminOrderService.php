@@ -3,11 +3,16 @@
 namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\Notification\NotificationConstant;
+use App\Constant\Order\OrderResultConstant;
+use App\Constant\Order\OrderStateConstant;
 use App\Entity\BidDetailsEntity;
+use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
@@ -15,7 +20,11 @@ use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
+use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\Notification\NotificationFirebaseService;
+use App\Service\Notification\NotificationLocalService;
+use App\Service\Order\StoreOrderDetailsService;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
@@ -27,19 +36,29 @@ class AdminOrderService
     private UploadFileHelperService $uploadFileHelperService;
     private OrderLogsService $orderLogsService;
     private OrderService $orderService;
+    private OrderChatRoomService $orderChatRoomService;
+    private StoreOrderDetailsService $storeOrderDetailsService;
+    private NotificationFirebaseService $notificationFirebaseService;
+    private NotificationLocalService $notificationLocalService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService, OrderService $orderService)
+    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService,
+                                OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
+                                NotificationLocalService $notificationLocalService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->orderLogsService = $orderLogsService;
         $this->orderService = $orderService;
+        $this->orderChatRoomService = $orderChatRoomService;
+        $this->storeOrderDetailsService = $storeOrderDetailsService;
+        $this->notificationFirebaseService = $notificationFirebaseService;
+        $this->notificationLocalService = $notificationLocalService;
     }
 
-    public function getOrdersByStateForAdmin(string $orderStatus): int
+    public function getCountOrderOngoingForAdmin(): int
     {
-        return $this->adminOrderManager->getOrdersByStateForAdmin($orderStatus);
+        return $this->adminOrderManager->getCountOrderOngoingForAdmin();
     }
 
     public function getAllOrdersCountForAdmin(): int
@@ -209,5 +228,60 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    // This function for returning order which being accepted by captain to pending status under certain circumstances
+    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request): string|null|OrderByIdGetForAdminResponse
+    {
+        // First, check order status if we can return it to pending
+        $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
+
+        if ($orderEntity !== null) {
+            // we need captain id for deleting related order chat room
+            $captainId = $orderEntity->getCaptainId()->getId();
+
+            if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_ON_WAY && $orderEntity->getState() !== OrderStateConstant::ORDER_STATE_IN_STORE) {
+                // captain took the order and on going to deliver it to the client
+                return OrderResultConstant::ORDER_ACCEPTED_BY_CAPTAIN;
+            }
+
+            // ***** reaching here means we can return the order to the pending state ***** //
+            // update order status to pending
+            $orderResult = $this->adminOrderManager->returnOrderToPendingStatus($orderEntity);
+
+            if ($orderResult) {
+                // delete the order chat room of the order that created with the captain
+                $this->orderChatRoomService->deleteChatRoomByOrderIdAndCaptainId($orderResult->getId(), $captainId);
+
+                // insert new order log of the new status
+                $this->orderLogsService->createOrderLogsRequest($orderResult, $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult->getId()));
+
+                // *** send notifications (local and firebase) *** //
+                $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                    NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
+
+                //create firebase notification to store
+                try {
+                    $this->notificationFirebaseService->notificationOrderStateForUser($orderResult->getStoreOwner()->getStoreOwnerId(), $orderResult->getId(),
+                        $orderResult->getState(), NotificationConstant::STORE);
+
+                } catch (\Exception $e) {
+                    error_log($e);
+                }
+                //create firebase notification to captains
+                try {
+                    $this->notificationFirebaseService->notificationToCaptains($orderResult->getId());
+
+                } catch (\Exception $e) {
+                    error_log($e);
+                }
+
+                return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $orderResult);
+            }
+
+            return OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM;
+        }
+
+        return $orderEntity;
     }
 }

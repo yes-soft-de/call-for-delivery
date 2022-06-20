@@ -80,17 +80,19 @@ class NotificationFirebaseController extends BaseController
        
         if( $this->isGranted('ROLE_CAPTAIN') ) {
             $userType = NotificationTokenConstant::APP_TYPE_STORE;
+            $sendByUser = NotificationTokenConstant::APP_TYPE_CAPTAIN;
          }
        
         if( $this->isGranted('ROLE_OWNER') ) {
             $userType = NotificationTokenConstant::APP_TYPE_CAPTAIN;
+            $sendByUser = NotificationTokenConstant::APP_TYPE_STORE;
          }
 
         if ($this->isGranted(UserRoleConstant::ROLE_SUPPLIER)) {
             $userType = NotificationTokenConstant::APP_TYPE_SUPPLIER;
         }
 
-        $response = $this->notificationFirebaseService->notificationNewChatByUserID($request, $userType);
+        $response = $this->notificationFirebaseService->notificationNewChatByUserID($request, $userType, $sendByUser);
 
         return $this->response($response, self::CREATE);
     }

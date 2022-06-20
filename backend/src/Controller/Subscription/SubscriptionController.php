@@ -20,6 +20,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Main\MainErrorConstant;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 
 /**
  * @Route("v1/subscription/")
@@ -402,5 +403,23 @@ class SubscriptionController extends BaseController
         $result = $this->subscriptionService->getSubscriptionsWithPayments($this->getUserId());
 
         return $this->response($result, self::FETCH);
+    }
+    
+    /**
+     * store: update subscription.
+     * @Route("subscriptionbyadmin", name="updateSubscriptionByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateSubscription(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SubscriptionUpdateByAdminRequest::class, (object)$data);
+
+        $result = $this->subscriptionService->updateSubscription($request);
+
+        return $this->response($result, self::UPDATE);
     }
 }

@@ -2,22 +2,28 @@
 
 namespace App\Manager\Admin\Order;
 
+use App\Constant\Order\OrderStateConstant;
+use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminOrderManager
 {
+    private EntityManagerInterface $entityManager;
     private OrderEntityRepository $orderEntityRepository;
 
-    public function __construct(OrderEntityRepository $orderEntityRepository)
+    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository)
     {
+        $this->entityManager = $entityManager;
         $this->orderEntityRepository = $orderEntityRepository;
     }
 
-    public function getOrdersByStateForAdmin(string $state): int
+    public function getCountOrderOngoingForAdmin(): int
     {
-        return $this->orderEntityRepository->count(["state" => $state]);
+        return $this->orderEntityRepository->getCountOrderOngoingForAdmin();
     }
 
     public function getAllOrdersCountForAdmin(): int
@@ -67,5 +73,24 @@ class AdminOrderManager
     public function getNotDeliveredOrdersForAdmin(): ?array
     {
         return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin();
+    }
+
+    public function getOrderByIdForAdmin(int $orderId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->find($orderId);
+    }
+
+    // This function updates the order info according to be become a pending orders
+    public function returnOrderToPendingStatus(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setCaptainId(null);
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(false);
+        $orderEntity->setUpdatedAt(new DateTime('now'));
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }

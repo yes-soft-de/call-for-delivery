@@ -21,4 +21,8 @@ final class OrderResultConstant
     const ORDER_TYPE_BID = "orderIsOfTypeBid";
 
     const ORDER_TYPE_IS_NOT_BID = "orderIsNotOfTypeBid";
+
+    const ORDER_ACCEPTED_BY_CAPTAIN = "orderIsBeingAcceptedByCaptain";
+
+    const ORDER_RETURNING_TO_PENDING_HAS_PROBLEM = "problemInReturningOrderToPendingStatus";
 }

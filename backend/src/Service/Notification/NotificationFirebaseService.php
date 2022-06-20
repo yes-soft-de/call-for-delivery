@@ -21,6 +21,8 @@ use App\Constant\Notification\NotificationTokenConstant;
 use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\ApnsConfig;
 use App\Service\ChatRoom\OrderChatRoomService;
+use App\Service\Captain\CaptainService;
+use App\Service\StoreOwner\StoreOwnerProfileService;
 
 class NotificationFirebaseService
 {
@@ -30,8 +32,10 @@ class NotificationFirebaseService
     private NotificationTokensService $notificationTokensService;
     private UserService $userService;
     private OrderChatRoomService $orderChatRoomService;
+    private CaptainService $captainService;
+    private StoreOwnerProfileService $storeOwnerProfileService;
 
-    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService, OrderChatRoomService $orderChatRoomService)
+    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService, OrderChatRoomService $orderChatRoomService, CaptainService $captainService, StoreOwnerProfileService $storeOwnerProfileService)
     {
         $this->autoMapping = $autoMapping;
         $this->messaging = $messaging;
@@ -39,6 +43,8 @@ class NotificationFirebaseService
         $this->notificationTokensService = $notificationTokensService;
         $this->userService = $userService;
         $this->orderChatRoomService = $orderChatRoomService;
+        $this->captainService = $captainService;
+        $this->storeOwnerProfileService = $storeOwnerProfileService;
     }
 
     public function notificationToCaptains(int $orderId)
@@ -183,23 +189,19 @@ class NotificationFirebaseService
         return $state;
     }
     
-    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request, $userType)
+    public function notificationNewChatByUserID(NotificationFirebaseByUserIdRequest $request, $userType, int $sendByUser)
     {
         $devicesToken = [];
         $sound = NotificationTokenConstant::SOUND;
        
         $orderId = $this->orderChatRoomService->getOrderIdByRoomId($request->getRoomId());
-      
+
         if(! $request->getOtherUserID()){
-            $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
-       
-            foreach ($adminsTokens as $token) {
-                $devicesToken[] = $token['token'];
-            }
+            $this->notificationNewChatToAdmin($request, $sendByUser);
         }
 
         if($request->getOtherUserID()){
-           
+
             if($userType ===  NotificationTokenConstant::APP_TYPE_CAPTAIN) {
                 $user = $this->userService->getUserByCaptainProfileId($request->getOtherUserID());
             }
@@ -284,7 +286,11 @@ class NotificationFirebaseService
         $payload = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
             'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
-            'argument' => null
+            'argument' => null,
+            'chatNotification' => json_encode([
+                'roomId' => $request->getRoomId(),
+                'userId' => (string) $request->getOtherUserID()
+            ])
         ];
 
         $config = AndroidConfig::fromArray([
@@ -529,5 +535,67 @@ class NotificationFirebaseService
         $tokenResult = $this->notificationFirebaseManager->deleteTokenByUserId($userId);
 
         return $this->autoMapping->map(NotificationFirebaseTokenEntity::class, NotificationFirebaseTokenDeleteResponse::class, $tokenResult);
+    }
+    
+    public function notificationNewChatToAdmin(NotificationFirebaseByUserIdRequest $request, int $sendByUser)
+    {
+      $devicesToken = [];
+      $sound = NotificationTokenConstant::SOUND;
+      $userName ="";
+
+        if($sendByUser === NotificationTokenConstant::APP_TYPE_STORE) {
+            $user = $this->storeOwnerProfileService->getStoreByUserId($request->getUserID());
+            $userName = $user->getStoreOwnerName();
+        }
+        
+        if ($sendByUser === NotificationTokenConstant::APP_TYPE_CAPTAIN) {
+            $user = $this->captainService->getCaptainProfileByUserId($request->getUserID());
+            $userName = $user->getCaptainName();
+        }
+        
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+       
+        foreach ($adminsTokens as $token) {
+            $devicesToken[] = $token['token'];
+        }
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => null,
+            'chatNotification' => json_encode([
+                'roomId' => $request->getRoomId(),
+                'userId' => (string) $request->getUserID()
+            ])
+        ];
+       
+        $config = AndroidConfig::fromArray([
+             "notification" => [
+                 "channel_id" => "C4d_Notifications_custom_sound_test"
+             ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msgContent = NotificationFirebaseConstant::MESSAGE_NEW_CHAT.NotificationFirebaseConstant::FROM." ".$userName;
+    
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+        ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
     }
 }
