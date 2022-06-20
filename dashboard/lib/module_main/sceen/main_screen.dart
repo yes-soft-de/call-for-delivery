@@ -1,3 +1,6 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +25,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     selectedPage = widget._homeScreen;
-
+    getIt<FireNotificationService>().refreshToken();
     super.initState();
   }
 

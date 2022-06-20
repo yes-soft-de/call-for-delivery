@@ -42,6 +42,13 @@ class FireNotificationService {
     await refreshNotificationToken();
   }
 
+  Future<void> refreshToken() async {
+    try {
+      var token = await _fcm.getToken();
+      _notificationRepo.postToken(token);
+    } catch (e) {}
+  }
+
   Future<void> refreshNotificationToken() async {
     var token = await _fcm.getToken();
     if (token != null) {
