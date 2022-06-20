@@ -406,7 +406,7 @@ class SubscriptionController extends BaseController
     }
     
     /**
-     * store: update subscription.
+     * admin: update current subscription of a store to a new one
      * @Route("subscriptionbyadmin", name="updateSubscriptionByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request

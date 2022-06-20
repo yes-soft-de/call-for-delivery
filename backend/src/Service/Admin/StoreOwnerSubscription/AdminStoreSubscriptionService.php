@@ -3,8 +3,10 @@
 namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
 use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
+use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 
@@ -63,6 +65,24 @@ class AdminStoreSubscriptionService
         $item['total'] = abs($total);
         
         return  $item;
+    }
+
+    // This functions deletes only future subscriptions of a store according to storeOwnerId
+    public function deleteAllStoreFutureSubscriptionsByStoreOwnerId(int $storeOwnerId): array
+    {
+        $futureSubscriptionsResult = $this->adminStoreSubscriptionManager->deleteAllStoreFutureSubscriptionsByStoreOwnerId($storeOwnerId);
+
+        if (! empty($futureSubscriptionsResult)) {
+            $response = [];
+
+            foreach ($futureSubscriptionsResult as $futureSubscriptionEntity) {
+                $response[] = $this->autoMapping->map(SubscriptionEntity::class, StoreFutureSubscriptionGetForAdminResponse::class, $futureSubscriptionEntity);
+            }
+
+            return $response;
+        }
+
+        return $futureSubscriptionsResult;
     }
 }
  

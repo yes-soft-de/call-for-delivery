@@ -30,6 +30,7 @@ class AdminStoreSubscriptionController extends BaseController
      * admin:get subscriptions with payments.
      * @Route("subscriptionswithpayment/{storeId}", name="getSubscriptionsWithPaymentsForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param int $storeId
      * @return JsonResponse
      *
      * @OA\Tag(name="Subscription")
@@ -40,7 +41,7 @@ class AdminStoreSubscriptionController extends BaseController
      *      description="token to be passed as a header",
      *      required=true
      * )
-     * 
+     *
      * @OA\Response(
      *      response=200,
      *      description="Returns subscriptions with payments",
@@ -51,8 +52,8 @@ class AdminStoreSubscriptionController extends BaseController
      *             ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse"),
      *      )
      *    )
-     *  ) 
-     * 
+     *  )
+     *
      * @Security(name="Bearer")
      */
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): JsonResponse
@@ -60,5 +61,42 @@ class AdminStoreSubscriptionController extends BaseController
         $result = $this->adminStoreSubscriptionService->getSubscriptionsWithPaymentsSpecificStore($storeId);
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: delete all future subscriptions of a store
+     * @Route("deleteallfuturesubscriptionsbyadmin/{storeOwnerId}", name="deleteAllFutureSubscriptionsOfStoreByAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $storeOwnerId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted future subscriptions info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *             ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse"),
+     *      )
+     *    )
+     *  )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteAllStoreFutureSubscriptionsByStoreOwnerId(int $storeOwnerId): JsonResponse
+    {
+        $result = $this->adminStoreSubscriptionService->deleteAllStoreFutureSubscriptionsByStoreOwnerId($storeOwnerId);
+
+        return $this->response($result, self::DELETE);
     }
 }

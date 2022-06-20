@@ -133,12 +133,16 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateSubscriptionDetailsByAdmin(SubscriptionEntity $subscription)
+    public function updateSubscriptionDetailsByAdmin(SubscriptionEntity $subscription, int $oldPackageOrderCount): ?SubscriptionDetailsEntity
     {     
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $subscription->getId()]);
      
         $subscriptionDetailsEntity->setRemainingCars($subscription->getPackage()->getCarCount());
-        $subscriptionDetailsEntity->setRemainingOrders($subscription->getPackage()->getOrderCount());
+
+        // *** calculate remaining orders of the new subscription ***
+        // remaining orders = orderCount of the new package - consumed orders from previous subscription
+        // consumed orders from previous subscription = orderCount of old package - remaining orders from old subscription
+        $subscriptionDetailsEntity->setRemainingOrders($subscription->getPackage()->getOrderCount() - ($oldPackageOrderCount - $subscriptionDetailsEntity->getRemainingOrders()));
 
         $this->entityManager->flush();
  
