@@ -67,6 +67,85 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
           ),
         ),
+        // captain name
+        Visibility(
+            visible: orderInfo.captainName != null,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 75,
+                decoration: BoxDecoration(
+                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                    borderRadius: BorderRadius.circular(25)),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.delivery_dining_rounded,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 240),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: orderInfo.state ==
+                                            OrderStatusEnum.FINISHED
+                                        ? S.current.orderHandledDoneByCaptain +
+                                            ' '
+                                        : S.current.orderHandledByCaptain + ' ',
+                                    style: TextStyle(color: Colors.white)),
+                                TextSpan(
+                                    text: orderInfo.captainName,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                      ],
+                    ),
+                    // Expanded(
+                    //   child: Container(
+                    //     height: 75,
+                    //     decoration: BoxDecoration(
+                    //         color: Colors.yellow,
+                    //         borderRadius: BorderRadiusDirectional.only(
+                    //             topEnd: Radius.circular(25),
+                    //             bottomEnd: Radius.circular(25))),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Row(
+                    //         children: [
+                    //           Text(
+                    //             orderInfo.captainRating,
+                    //             style: TextStyle(color: Colors.white),
+                    //           ),
+                    //           Icon(
+                    //             Icons.star_rounded,
+                    //             color: Colors.white,
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
+                  ],
+                ),
+              ),
+            )),
         // order status
         Padding(
           padding:
@@ -165,7 +244,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails),
+          title: Text(S.current.orderDetails + ' #${screenState.orderId}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),

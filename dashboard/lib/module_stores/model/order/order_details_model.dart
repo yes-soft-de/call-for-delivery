@@ -37,6 +37,7 @@ class OrderDetailsModel extends DataModel {
 
   /// to confirm that captain is really in store
   late bool? showConfirm;
+  String? captainName;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -56,6 +57,7 @@ class OrderDetailsModel extends DataModel {
       required this.deliveryDate,
       required this.image,
       required this.captainID,
+      required this.captainName,
       this.orderLogs});
 
   late OrderDetailsModel _orders;
@@ -102,7 +104,8 @@ class OrderDetailsModel extends DataModel {
         state: StatusHelper.getStatusEnum(element?.state),
         id: element?.id ?? -1,
         captainID: element?.captainId,
-        orderLogs: _getOrderLogs(element?.orderLogs));
+        orderLogs: _getOrderLogs(element?.orderLogs),
+        captainName: element?.captainName);
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
     if (orderLogs == null) {

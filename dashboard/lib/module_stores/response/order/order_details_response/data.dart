@@ -1,6 +1,5 @@
 import 'package:c4d/module_stores/response/order/order_details_response/images.dart';
 import 'package:c4d/module_stores/response/order_logs_response/data.dart';
-
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -24,6 +23,7 @@ class Data {
   Images? image;
   String? roomId;
   String? captainId;
+  String? captainName;
   OrderLogsResponse? orderLogs;
   Data(
       {this.id,
@@ -44,7 +44,8 @@ class Data {
       this.image,
       this.roomId,
       this.captainId,
-      this.orderLogs});
+      this.orderLogs,
+      this.captainName});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
@@ -53,6 +54,7 @@ class Data {
       orderCost: json['orderCost'] as num?,
       orderType: json['orderType'] as int?,
       note: json['note'] as String?,
+      captainName: json['captainName'],
       deliveryDate: json['deliveryDate'] == null
           ? null
           : DeliveryDate.fromJson(json['deliveryDate'] as Map<String, dynamic>),
