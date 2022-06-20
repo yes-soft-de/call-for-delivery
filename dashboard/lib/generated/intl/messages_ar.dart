@@ -574,6 +574,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "اكتب تفاصيل الطلب الذي تريد إرساله"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الطلب"),
+        "orderHandledByCaptain": MessageLookupByLibrary.simpleMessage(
+            "جاري معالجة الطلب من قبل الكابتن"),
+        "orderHandledDoneByCaptain": MessageLookupByLibrary.simpleMessage(
+            "تمت معالجة الطلب من قبل الكابتن"),
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),

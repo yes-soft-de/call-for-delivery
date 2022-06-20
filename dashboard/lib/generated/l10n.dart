@@ -6709,6 +6709,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Order processing by captain `
+  String get orderHandledByCaptain {
+    return Intl.message(
+      'Order processing by captain ',
+      name: 'orderHandledByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order processed by captain `
+  String get orderHandledDoneByCaptain {
+    return Intl.message(
+      'Order processed by captain ',
+      name: 'orderHandledDoneByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -681,7 +681,10 @@
     "hidden": "مخفية",
     "orderedNotAccepted": "الطلبات غير المسلمة",
     "notCompletedAccount": "حساب غير مكتمل",
-    "notAccepted": "غير مسلمة"
+    "notAccepted": "غير مسلمة",
+    "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن",
+    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن"
+
 
 
 

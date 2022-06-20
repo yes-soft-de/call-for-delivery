@@ -687,7 +687,10 @@
     "hidden": "Hidden",
     "orderedNotAccepted": "Ordered not accepted",
     "notCompletedAccount": "Not completed account",
-    "notAccepted": "not accepted"
+    "notAccepted": "not accepted",
+    "orderHandledByCaptain": "Order processing by captain ",
+    "orderHandledDoneByCaptain": "Order processed by captain "
+
 
 
 
