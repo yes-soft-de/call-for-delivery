@@ -67,14 +67,20 @@ class OrderGetForAdminResponse
      */
     public $detail;
 
-    public int $storeOwnerBranchId;
+    /**
+     * @var int|null
+     */
+    public $storeOwnerBranchId;
 
     /**
      * @var array|null
      */
     public $location;
 
-    public string $branchName;
+    /**
+     * @var string|null
+     */
+    public $branchName;
 
     /**
      * @var int|null
