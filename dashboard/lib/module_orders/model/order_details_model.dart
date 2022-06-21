@@ -30,6 +30,9 @@ class OrderDetailsModel extends DataModel {
   late bool? isCaptainArrived;
   late num? kilometer;
   late num? paidToProvider;
+  int? branchId;
+  String? imagePath;
+  late bool orderIsMain;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -37,6 +40,9 @@ class OrderDetailsModel extends DataModel {
   num? captainOrderCost;
   String? attention;
   late OrderTimeLine? orderLogs;
+  late String? captainName;
+  late String storeName;
+  late int storeID;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -62,7 +68,13 @@ class OrderDetailsModel extends DataModel {
       required this.captainOrderCost,
       required this.orderLogs,
       required this.kilometer,
-      required this.paidToProvider});
+      required this.paidToProvider,
+      required this.branchId,
+      required this.imagePath,
+      required this.orderIsMain,
+      required this.captainName,
+      required this.storeName,
+      required this.storeID});
 
   late OrderDetailsModel _orders;
 
@@ -83,36 +95,42 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-        image: element?.image?.image,
-        canRemove:
-            _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
-        isCaptainArrived: element?.isCaptainArrived,
-        branchPhone: element?.branchPhone,
-        branchName: element?.branchName ?? S.current.unknown,
-        createdDate: create,
-        customerName: element?.recipientName ?? S.current.unknown,
-        customerPhone: element?.recipientPhone ?? '',
-        deliveryDateString: delivery,
-        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-        destinationCoordinate: element?.destination?.lat != null &&
-                element?.destination?.lon != null
-            ? LatLng(
-                element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
-            : null,
-        destinationLink: element?.destination?.link,
-        note: element?.note ?? '',
-        orderCost: element?.orderCost ?? 0,
-        payment: element?.payment ?? 'cash',
-        roomID: element?.roomId,
-        state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1,
-        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null,
-        attention: element?.attention,
-        captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs),
-        kilometer: element?.kilometer,
-        paidToProvider: element?.paidToProvider);
+      image: element?.image?.image,
+      canRemove: _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
+      isCaptainArrived: element?.isCaptainArrived,
+      branchPhone: element?.branchPhone,
+      branchName: element?.branchName ?? S.current.unknown,
+      createdDate: create,
+      customerName: element?.recipientName ?? S.current.unknown,
+      customerPhone: element?.recipientPhone ?? '',
+      deliveryDateString: delivery,
+      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+      destinationCoordinate: element?.destination?.lat != null &&
+              element?.destination?.lon != null
+          ? LatLng(
+              element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
+          : null,
+      destinationLink: element?.destination?.link,
+      note: element?.note ?? '',
+      orderCost: element?.orderCost ?? 0,
+      payment: element?.payment ?? 'cash',
+      roomID: element?.roomId,
+      state: StatusHelper.getStatusEnum(element?.state),
+      id: element?.id ?? -1,
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+      distance: null,
+      attention: element?.attention,
+      captainOrderCost: element?.captainOrderCost,
+      orderLogs: _getOrderLogs(element?.orderLogs),
+      kilometer: element?.kilometer,
+      paidToProvider: element?.paidToProvider,
+      branchId: element?.storeOwnerBranchId,
+      imagePath: element?.image?.imageUrl,
+      orderIsMain: element?.orderIsMain ?? false,
+      captainName: element?.captainName,
+      storeName: element?.storeName ?? S.current.unknown,
+      storeID: element?.storeOrderDetailsId ?? -1,
+    );
 
     _orders.distance = _distance(_orders, location);
   }
@@ -130,7 +148,8 @@ class OrderDetailsModel extends DataModel {
               .format(DateHelper.convert(element.createdAt?.timestamp));
       steps.add(Step(
           state: StatusHelper.getStatusEnum(element.orderState),
-          date: stepDate));
+          date: stepDate,
+          isCaptainArrived: element.isCaptainArrived ?? false));
     });
     steps = steps.reversed.toList();
     OrderTimeLine orderTimeLine = OrderTimeLine(
@@ -179,8 +198,9 @@ class OrderTimeLine {
 class Step {
   OrderStatusEnum state;
   String date;
-  Step({
-    required this.state,
-    required this.date,
-  });
+  bool isCaptainArrived;
+  Step(
+      {required this.state,
+      required this.date,
+      required this.isCaptainArrived});
 }

@@ -32,7 +32,13 @@ class OrdersManager {
   Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(
           CaptainCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForCaptain(request);
-  Future<OrderPendingResponse?> getPendingOrders() => _repository.getPendingOrder();
-  Future<ActionResponse?> createOrder(CreateOrderRequest request) => _repository.createOrder(request);
+  Future<OrderPendingResponse?> getPendingOrders() =>
+      _repository.getPendingOrder();
+  Future<ActionResponse?> createOrder(CreateOrderRequest request) =>
+      _repository.createOrder(request);
+  Future<ActionResponse?> updateOrder(CreateOrderRequest request) =>
+      _repository.updateOrder(request);
 
+  Future<ActionResponse?> hideOrder(int orderID) =>
+      _repository.hideOrder(orderID);
 }

@@ -77,12 +77,34 @@ class OrderRepository {
     if (response == null) return null;
     return OrderPendingResponse.fromJson(response);
   }
-  Future<ActionResponse?> createOrder(
-      CreateOrderRequest request) async {
+
+  Future<ActionResponse?> createOrder(CreateOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       '',
       request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateOrder(CreateOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> hideOrder(int id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.HIDE_ORDER_API + '/$id',
+      {},
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
