@@ -237,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في إنشاء طلب جديد"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmUpdateOrder": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من تعديلات الطلب الحالي"),
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المسلمة"),
@@ -605,6 +607,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
+        "orderUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تعديل الطلب بنجاح"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("طلب"),
         "orderedNotAccepted":
             MessageLookupByLibrary.simpleMessage("الطلبات غير المسلمة"),

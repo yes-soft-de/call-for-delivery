@@ -6799,6 +6799,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm update order`
+  String get confirmUpdateOrder {
+    return Intl.message(
+      'Confirm update order',
+      name: 'confirmUpdateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order updated successfully`
+  String get orderUpdatedSuccessfully {
+    return Intl.message(
+      'Order updated successfully',
+      name: 'orderUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

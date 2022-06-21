@@ -238,6 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmUpdateOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("Count orders completed"),
@@ -608,6 +610,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("Order Time Line"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
+        "orderUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
         "orderedNotAccepted":
             MessageLookupByLibrary.simpleMessage("Ordered not accepted"),
