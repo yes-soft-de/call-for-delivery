@@ -15,6 +15,7 @@ use App\Manager\Image\ImageManager;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Request\Image\ImageCreateRequest;
+use App\Request\Order\UpdateOrderRequest;
 
 class StoreOrderDetailsManager
 {
@@ -104,5 +105,33 @@ class StoreOrderDetailsManager
     public function getOrderDetailsByOrderId(int $orderId): ?StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' =>$orderId]);
+    }
+
+    public function updateOrderDetailByStore(OrderEntity $orderEntity, UpdateOrderRequest $request): ?StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId"=>$orderEntity->getId()]);
+
+        if ($storeOrderDetailsEntity) {
+            $request->setId($storeOrderDetailsEntity->getId());
+
+            $branch = $this->storeOwnerBranchManager->getBranchById($request->getBranch());
+
+            if ($branch) {
+                $request->setBranch($branch);
+            }
+
+            if ($request->getImages()) {
+                $imageEntity = $this->createImageOrUpdate($request->getImages(), $orderEntity->getId());
+
+                $request->setImages($imageEntity);
+            }
+
+            $storeOrderDetailsEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, StoreOrderDetailsEntity::class,
+                $request, $storeOrderDetailsEntity);
+
+            $this->entityManager->flush();
+        }
+
+        return $storeOrderDetailsEntity;
     }
 }

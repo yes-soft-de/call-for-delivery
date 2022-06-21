@@ -40,6 +40,8 @@ class BaseController extends AbstractController
     const ERROR_WRONG_ORDER_TYPE = ["wrong order type", "9213"];
     const ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS = ["problem In Returning Order To Pending Status", "9214"];
     const ERROR_ORDER_CANCEL = ["order cancelled", "9215"];
+    const ERROR_UPDATE_BRANCH = ["captain is in store,You can not modify the branch", "9216"];
+    const ERROR_UPDATE_CAPTAIN_ONGOING = ["captain is ongoing,You can not modify detail or destination or deliveryDate", "9217"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
