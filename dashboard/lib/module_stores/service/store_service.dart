@@ -1,5 +1,5 @@
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
-import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
@@ -7,7 +7,6 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
-import 'package:c4d/module_stores/response/order/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import 'package:c4d/module_stores/response/subscriptions_financial_response/subscriptions_financial_response.dart';
@@ -24,6 +23,9 @@ import 'package:c4d/module_stores/response/store_balance_response/store_balance_
 import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/module_stores/response/stores_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+
+import '../../module_orders/model/order_details_model.dart';
+import '../../module_orders/response/order_details_response/order_details_response.dart';
 
 @injectable
 class StoresService {
@@ -158,7 +160,8 @@ class StoresService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    return OrderDetailsModel.withData(response);
+    var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response, location);
   }
 
   Future<DataModel> getSubscriptionsFinance(int storeID) async {

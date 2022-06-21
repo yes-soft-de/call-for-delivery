@@ -1,5 +1,5 @@
 import 'package:c4d/module_bid_order/response/order_details_response/order_logs_response/data.dart';
-import 'package:c4d/module_stores/response/order/order_details_response/images.dart';
+import 'package:c4d/module_orders/response/order_details_response/images.dart';
 
 import '../../../module_captain/response/captain_financial_dues_response/created_at.dart';
 import 'offer_reponse.dart';

@@ -4,7 +4,6 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
@@ -18,6 +17,8 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../module_orders/model/order_details_model.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
@@ -373,6 +374,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             decoration: decoration,
             child: Column(
               children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.store_rounded,
+                  ),
+                  title: Text(S.current.storeName),
+                  subtitle: Text(orderInfo.storeName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.store_rounded,
