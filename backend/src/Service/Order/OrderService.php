@@ -384,11 +384,17 @@ class OrderService
         return $response;
     }
 
-    public function getSpecificOrderForCaptain(int $id, int $userId): ?SpecificOrderForCaptainResponse
+    public function getSpecificOrderForCaptain(int $id, int $userId): SpecificOrderForCaptainResponse|string
     {
         $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
         if($order) {
-            
+           
+            if($order[0]->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
+                if($order[0]->getCaptainId()->getCaptainId() !== $userId) {
+                    return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED; 
+                }
+            }
+
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
