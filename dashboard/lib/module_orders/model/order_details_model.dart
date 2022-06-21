@@ -105,11 +105,11 @@ class OrderDetailsModel extends DataModel {
       customerPhone: element?.recipientPhone ?? '',
       deliveryDateString: delivery,
       deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-      destinationCoordinate: element?.destination?.lat != null &&
-              element?.destination?.lon != null
-          ? LatLng(
-              element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
-          : null,
+      destinationCoordinate:
+          element?.destination?.lat != null && element?.destination?.lon != null
+              ? LatLng(element?.destination?.lat?.toDouble() ?? 0,
+                  element?.destination?.lon?.toDouble() ?? 0)
+              : null,
       destinationLink: element?.destination?.link,
       note: element?.note ?? '',
       orderCost: element?.orderCost ?? 0,
@@ -129,7 +129,7 @@ class OrderDetailsModel extends DataModel {
       orderIsMain: element?.orderIsMain ?? false,
       captainName: element?.captainName,
       storeName: element?.storeName ?? S.current.unknown,
-      storeID: element?.storeOrderDetailsId ?? -1,
+      storeID: element?.storeId ?? -1,
     );
 
     _orders.distance = _distance(_orders, location);

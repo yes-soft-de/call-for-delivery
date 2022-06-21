@@ -36,6 +36,7 @@ class Data {
   bool? orderIsMain;
   String? captainName;
   String? storeName;
+  int? storeId;
   Data(
       {this.id,
       this.state,
@@ -66,11 +67,13 @@ class Data {
       this.branchId,
       this.orderIsMain,
       this.captainName,
-      this.storeName});
+      this.storeName,
+      this.storeId});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],
       id: json['id'] as int?,
+      storeId: json['storeOwnerId'] as int?,
       orderIsMain: json['orderIsMain'] as bool?,
       captainName: json['captainName'],
       state: json['state'] as String?,

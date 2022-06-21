@@ -76,7 +76,7 @@ class StoreBalanceLoadedState extends States {
             controller: _note,
             hintText: S.current.note,
             last: true,
-            textInputAction: TextInputAction.done,
+            keyAction: TextInputAction.done,
           ),
           SizedBox(
             height: 16,

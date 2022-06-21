@@ -12,8 +12,10 @@ class CreateOrderRequest {
   String? image;
   int? orderID;
   bool? orderIsMain;
+  int? id;
   CreateOrderRequest(
-      {this.storeId,
+      {this.id,
+      this.storeId,
       this.fromBranch,
       this.note,
       this.payment,
@@ -29,7 +31,12 @@ class CreateOrderRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['storeId'] = this.storeId;
+    if (this.storeId != null) {
+      data['storeId'] = this.storeId;
+    }
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
     data['branch'] = this.fromBranch;
     if (this.destination != null) {
       data['destination'] = this.destination?.toJson();

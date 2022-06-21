@@ -99,8 +99,27 @@ class UpdateOrderLoaded extends States {
                 Column(
                   children: [
                     ListTile(
-                        title: LabelText(S.of(context).branch),
-                        subtitle: Text(orderInfo.branchName)),
+                      title: LabelText(S.of(context).branch),
+                      subtitle: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).backgroundColor),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 16),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                                value: screenState.branch,
+                                items: _getBranches(),
+                                hint: Text(S.current.chooseBranch),
+                                onChanged: (int? value) {
+                                  screenState.branch = value;
+                                  screenState.refresh();
+                                }),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 // name
@@ -170,7 +189,6 @@ class UpdateOrderLoaded extends States {
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
                     validator: false,
-                    contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
                     controller: screenState.toController,
@@ -499,7 +517,7 @@ class UpdateOrderLoaded extends States {
             ),
           ),
         ),
-        label: S.current.createNewOrder,
+        label: S.current.update,
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
@@ -512,7 +530,7 @@ class UpdateOrderLoaded extends States {
                       Navigator.of(context).pop();
                       createOrder();
                     },
-                    content: S.current.confirmMakeOrder,
+                    content: S.current.confirmUpdateOrder,
                     oneAction: false,
                   );
                 });
@@ -638,7 +656,7 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
-          orderID: orderInfo.id,
+          id: orderInfo.id,
           orderIsMain: orderIsMain,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
@@ -660,7 +678,7 @@ class UpdateOrderLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
-        orderID: orderInfo.id,
+        id: orderInfo.id,
         orderIsMain: orderIsMain,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
@@ -708,5 +726,19 @@ class UpdateOrderLoaded extends States {
       imagePath = value?.path;
       screenState.refresh();
     });
+  }
+
+  List<DropdownMenuItem<int>> _getBranches() {
+    var branchDropDown = <DropdownMenuItem<int>>[];
+    branches.forEach((element) {
+      branchDropDown.add(DropdownMenuItem(
+        child: Text(
+          element.branchName,
+          overflow: TextOverflow.ellipsis,
+        ),
+        value: element.id,
+      ));
+    });
+    return branchDropDown;
   }
 }

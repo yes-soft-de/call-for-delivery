@@ -52,7 +52,8 @@ class UpdateOrderStateManager {
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();
-        Navigator.pop(screenState.context);
+        Navigator.of(screenState.context)
+            .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
