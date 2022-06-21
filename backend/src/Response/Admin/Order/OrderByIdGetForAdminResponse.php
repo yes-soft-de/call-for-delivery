@@ -103,4 +103,6 @@ class OrderByIdGetForAdminResponse
     public int|null $paidToProvider;
 
     public int $storeOwnerId;
+
+    public string|null $storeOwnerName;
 }

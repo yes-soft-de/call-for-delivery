@@ -619,7 +619,11 @@ class OrderController extends BaseController
     public function getSpecificOrderForCaptain(int $id): JsonResponse
     {
         $result = $this->orderService->getSpecificOrderForCaptain($id, $this->getUserId());
-
+       
+        if ($result === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
+        }
+       
         return $this->response($result, self::FETCH);
     }
 

@@ -500,7 +500,10 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider')
+
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
                 'storeOrderDetails',
@@ -530,6 +533,13 @@ class OrderEntityRepository extends ServiceEntityRepository
             )
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
