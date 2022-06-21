@@ -598,4 +598,50 @@ class NotificationFirebaseService
 
         return $devicesToken;
     }
+
+    public function notificationToUser(int $userId, int $orderId, string $text)
+    { 
+        $token = [];
+        $sound = NotificationTokenConstant::SOUND;
+        
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msg = $text." ".$orderId;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $token);
+    }
 }

@@ -29,6 +29,10 @@ use App\Service\OrderLogs\OrderLogsService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
+use App\Request\Admin\Order\UpdateOrderByAdminRequest;
+use App\Constant\Order\OrderResultForAdminUpdateOrderConstant;
+use DateTime;
+use App\Constant\Notification\NotificationFirebaseConstant;
 
 class AdminOrderService
 {
@@ -295,4 +299,40 @@ class AdminOrderService
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }  
+
+    public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request): string|null|OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->getOrderByIdWithStoreOrderDetailForAdmin($request->getId());
+        if($order) {
+
+            if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
+              if( $request->getBranch() !== $order['storeOwnerBranchId']) {
+
+                return OrderResultForAdminUpdateOrderConstant::ERROR_UPDATE_BRANCH;
+              }
+            }
+
+            if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
+                if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
+
+                    return OrderResultForAdminUpdateOrderConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
+                  }
+            }
+
+            $order = $this->adminOrderManager->orderUpdateByAdmin($request, $order);
+
+            if ($order) {
+                if ($order->getCaptainId()) {
+                    // create firebase notification to captain
+                    try {
+                        $this->notificationFirebaseService->notificationToUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ORDER_UPDATE_BY_ADMIN);
+                    } catch (\Exception $e) {
+                        error_log($e);
+                }
+              }
+            }
+        }
+      
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class,  $order);
+      }
 }

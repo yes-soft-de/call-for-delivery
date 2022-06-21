@@ -81,4 +81,6 @@ final class NotificationFirebaseConstant
     const ORDER_ID = " الطلب رقم";
 
     const FROM = " من ";
+
+    const ORDER_UPDATE_BY_ADMIN = "تم إجراء تعديلات بواسطة الإدارة على الطلب رقم ";
 }

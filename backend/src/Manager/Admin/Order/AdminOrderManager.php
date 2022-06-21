@@ -11,16 +11,23 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Constant\Order\OrderResultConstant;
+use App\Request\Admin\Order\UpdateOrderByAdminRequest;
+use App\AutoMapping;
+use App\Manager\Admin\Order\AdminStoreOrderDetailsManager;
 
 class AdminOrderManager
 {
+    private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
     private OrderEntityRepository $orderEntityRepository;
+    private AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager;
 
-    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository)
+    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository, AutoMapping $autoMapping, AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager)
     {
         $this->entityManager = $entityManager;
         $this->orderEntityRepository = $orderEntityRepository;
+        $this->autoMapping = $autoMapping;
+        $this->adminStoreOrderDetailsManager = $adminStoreOrderDetailsManager;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -107,6 +114,27 @@ class AdminOrderManager
 
         $this->entityManager->flush();
 
+        return $orderEntity;
+    }
+
+    public function getOrderByIdWithStoreOrderDetailForAdmin(int $orderId): ?array
+    {
+        return $this->orderEntityRepository->getOrderByIdWithStoreOrderDetailForAdmin($orderId);
+    }
+
+    public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request): OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        $orderEntity = $this->autoMapping->mapToObject(UpdateOrderByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+        $orderEntity->setDeliveryDate($request->getDeliveryDate());
+        
+        $this->entityManager->flush();
+
+        $this->adminStoreOrderDetailsManager->updateOrderDetail($orderEntity, $request);
+        
         return $orderEntity;
     }
 }

@@ -614,3 +614,12 @@ App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest:
     properties:
         orderId:
             - NotBlank: ~
+
+App\Request\Admin\Order\UpdateOrderByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        payment:
+            - NotBlank: ~
+        branch:
+            - NotBlank: ~
