@@ -683,7 +683,12 @@
     "notCompletedAccount": "حساب غير مكتمل",
     "notAccepted": "غير مسلمة",
     "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن",
-    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن"
+    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن",
+    "orderCreatedSuccessfully": "تم إنشاء طلب جديد بنجاح",
+    "camera": "الكاميرا",
+    "gallery": "المعرض",
+    "thisOrderCanBeLinked": "الطلب من الممكن أن يحتوي على طلبات فرعية",
+    "confirmMakeOrder": "هل انت متأكد من رغبتك في إنشاء طلب جديد"
 
 
 

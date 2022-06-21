@@ -689,7 +689,13 @@
     "notCompletedAccount": "Not completed account",
     "notAccepted": "not accepted",
     "orderHandledByCaptain": "Order processing by captain ",
-    "orderHandledDoneByCaptain": "Order processed by captain "
+    "orderHandledDoneByCaptain": "Order processed by captain ",
+    "orderCreatedSuccessfully": "Order created successfully",
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "thisOrderCanBeLinked": "Order can contains a sub orders",
+    "confirmMakeOrder": "Are you sure about creating new order"
+
 
 
 

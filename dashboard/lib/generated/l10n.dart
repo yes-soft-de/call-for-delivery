@@ -6729,6 +6729,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Order created successfully`
+  String get orderCreatedSuccessfully {
+    return Intl.message(
+      'Order created successfully',
+      name: 'orderCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get camera {
+    return Intl.message(
+      'Camera',
+      name: 'camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery`
+  String get gallery {
+    return Intl.message(
+      'Gallery',
+      name: 'gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order can contains a sub orders`
+  String get thisOrderCanBeLinked {
+    return Intl.message(
+      'Order can contains a sub orders',
+      name: 'thisOrderCanBeLinked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new order`
+  String get confirmMakeOrder {
+    return Intl.message(
+      'Are you sure about creating new order',
+      name: 'confirmMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
