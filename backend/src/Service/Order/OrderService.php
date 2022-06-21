@@ -870,7 +870,15 @@ class OrderService
                 if($order) {
                     if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                         $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
-                    }                   
+                    }
+                    //create firebase notification to store
+                    try {
+                        $this->notificationFirebaseService->orderVisibilityNotificationToUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
+                            NotificationFirebaseConstant::ORDER_IS_BEING_HIDDEN);
+
+                    } catch (\Exception $e) {
+                        error_log($e);
+                    }
                 }
             }
         }  

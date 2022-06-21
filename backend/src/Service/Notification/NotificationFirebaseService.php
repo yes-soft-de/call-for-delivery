@@ -4,6 +4,7 @@
 namespace App\Service\Notification;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderIsHideConstant;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
@@ -597,5 +598,45 @@ class NotificationFirebaseService
         $this->messaging->sendMulticast($message, $devicesToken);
 
         return $devicesToken;
+    }
+
+    public function orderVisibilityNotificationToUser(int $userId, int $orderId, string $orderVisibility)
+    {
+//        if($userType === NotificationConstant::STORE) {
+//            $text = $this->getOrderStateForStore($orderState);
+//        }
+//
+//        if($userType === NotificationConstant::CAPTAIN) {
+//            $text = $this->getOrderStateForCaptain($orderState);
+//        }
+
+        $token = [];
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $msg = $orderVisibility." ".$orderId;
+
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config);
+
+        $this->messaging->sendMulticast($message, $token);
     }
 }
