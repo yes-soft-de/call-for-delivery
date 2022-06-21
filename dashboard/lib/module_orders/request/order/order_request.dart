@@ -1,4 +1,5 @@
 class CreateOrderRequest {
+  int? storeId;
   int? fromBranch;
   String? note;
   String? payment;

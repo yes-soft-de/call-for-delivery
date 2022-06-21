@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/captain_cash_orders_finance.dart';
@@ -6,6 +7,7 @@ import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
@@ -66,5 +68,15 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return PendingOrder.withData(response);
+  }
+
+  Future<DataModel> createOrder(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.createOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 }

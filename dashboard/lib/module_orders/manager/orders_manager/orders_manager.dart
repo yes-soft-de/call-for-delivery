@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
@@ -32,4 +33,6 @@ class OrdersManager {
           CaptainCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForCaptain(request);
   Future<OrderPendingResponse?> getPendingOrders() => _repository.getPendingOrder();
+  Future<ActionResponse?> createOrder(CreateOrderRequest request) => _repository.createOrder(request);
+
 }
