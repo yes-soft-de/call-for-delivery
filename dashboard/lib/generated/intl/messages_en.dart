@@ -333,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
@@ -967,6 +968,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "If you will continue this process , this order will be hide from captains until you confirm new adjustment"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updatePackageSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Package updated successfully"),

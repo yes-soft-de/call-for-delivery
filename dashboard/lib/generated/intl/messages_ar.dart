@@ -333,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("تعديل الطلب"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال :"),
@@ -962,6 +963,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد "),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updatePackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل الباقة بنجاح"),

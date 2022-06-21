@@ -6779,6 +6779,26 @@ class S {
       args: [],
     );
   }
+
+  /// `If you will continue this process , this order will be hide from captains until you confirm new adjustment`
+  String get updateOrderWarning {
+    return Intl.message(
+      'If you will continue this process , this order will be hide from captains until you confirm new adjustment',
+      name: 'updateOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit order`
+  String get editOrder {
+    return Intl.message(
+      'Edit order',
+      name: 'editOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
