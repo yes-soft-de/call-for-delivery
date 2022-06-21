@@ -534,13 +534,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->leftJoin(
-                StoreOwnerProfileEntity::class,
-                'storeOwnerProfileEntity',
-                Join::WITH,
-                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
-            )
-
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
 
