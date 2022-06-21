@@ -28,6 +28,7 @@ use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
+use App\Request\Order\UpdateOrderRequest;
 
 class OrderManager
 {
@@ -569,5 +570,40 @@ class OrderManager
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderRepository->getOrdersByCaptainId($captainId);
+    }
+
+    public function getOrderByIdWithStoreOrderDetail(int $captainId): array
+    {
+        return $this->orderRepository->getOrderByIdWithStoreOrderDetail($captainId);
+    }
+
+    public function orderUpdate(UpdateOrderRequest $request): OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
+        $orderEntity->setDeliveryDate($request->getDeliveryDate());
+        
+        $this->entityManager->flush();
+
+        $this->storeOrderDetailsManager->updateOrderDetailByStore($orderEntity, $request);
+        
+        return $orderEntity;
+    }
+
+    public function updateOrderToHiddenForStore(int $id): OrderEntity|string
+    {
+        $orderEntity = $this->orderRepository->find($id);
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }

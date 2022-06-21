@@ -119,7 +119,7 @@ class AdminOrderManager
 
     public function getOrderByIdWithStoreOrderDetailForAdmin(int $orderId): ?array
     {
-        return $this->orderEntityRepository->getOrderByIdWithStoreOrderDetailForAdmin($orderId);
+        return $this->orderEntityRepository->getOrderByIdWithStoreOrderDetail($orderId);
     }
 
     public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request): OrderEntity

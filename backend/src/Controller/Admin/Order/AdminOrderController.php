@@ -22,7 +22,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
-use App\Constant\Order\OrderResultForAdminUpdateOrderConstant;
 
 /**
  * @Route("v1/admin/order/")
@@ -520,6 +519,17 @@ class AdminOrderController extends BaseController
      *   )
      * )
      * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9216 or 9217"),
+     *          @OA\Property(type="string", property="msg", description="errorMsg"),
+     *      )
+     * )
+     * 
      * @Security(name="Bearer") 
      */
     public function orderUpdateByAdmin(Request $request): JsonResponse
@@ -538,11 +548,11 @@ class AdminOrderController extends BaseController
 
         $result = $this->adminOrderService->orderUpdateByAdmin($request);
 
-        if ($result === OrderResultForAdminUpdateOrderConstant::ERROR_UPDATE_BRANCH) {
+        if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
         }
 
-        if ($result === OrderResultForAdminUpdateOrderConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
+        if ($result === OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_CAPTAIN_ONGOING);
         }
 

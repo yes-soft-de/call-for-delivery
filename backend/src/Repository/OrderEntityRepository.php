@@ -1405,7 +1405,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getOrderByIdWithStoreOrderDetailForAdmin(int $id): ?array
+    public function getOrderByIdWithStoreOrderDetail(int $id): ?array
     {   
        return $this->createQueryBuilder('orderEntity')
            ->select('IDENTITY (orderEntity.captainId) as captainUserId')
