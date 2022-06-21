@@ -476,7 +476,7 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     *Admin: order update by admin. 
+     * Admin: order update by admin. 
      * @Route("orderupdatebyadmin", name="orderUpdateByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -519,6 +519,8 @@ class AdminOrderController extends BaseController
      *      )
      *   )
      * )
+     * 
+     * @Security(name="Bearer") 
      */
     public function orderUpdateByAdmin(Request $request): JsonResponse
     {
