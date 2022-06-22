@@ -224,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "confirmRefuseOffer": MessageLookupByLibrary.simpleMessage(
             "هل انت متاكد من رفض هذا العرض"),
+        "confirmUpdateOrder": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من تعديلات الطلب الحالي"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
@@ -289,6 +291,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "بعد اتمامك المهمة ستكافئ جهودك بالمال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("تعديل الطلب"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
@@ -879,6 +882,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد "),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),

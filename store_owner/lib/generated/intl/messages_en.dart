@@ -228,6 +228,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmRefuseOffer": MessageLookupByLibrary.simpleMessage(
             "Are you sure about refuse this offer"),
+        "confirmUpdateOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "Are sure about subscribe with this offer"),
         "confirmed": MessageLookupByLibrary.simpleMessage("confirmed"),
@@ -295,6 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "After you doing your job your effort will be rewarded by earning money"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "eg": MessageLookupByLibrary.simpleMessage("eg"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -887,6 +890,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "If you will continue this process , this order will be hide from captains until you confirm new adjustment"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("Update profile"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
