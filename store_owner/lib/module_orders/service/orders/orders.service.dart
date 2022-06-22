@@ -14,6 +14,7 @@ import 'package:c4d/module_orders/response/company_info_response/company_info_re
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:c4d/utils/response/action_response.dart';
@@ -159,5 +160,26 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return OrderModel.withData(response);
+  }
+
+  Future<DataModel> updateOrder(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.updateOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> hideOrder(int orderID) async {
+    ActionResponse? response = await _ordersManager.hideOrder(orderID);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    FireStoreHelper().backgroundThread('Trigger');
+    return DataModel.empty();
   }
 }

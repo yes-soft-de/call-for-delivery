@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/hidden_orders_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
+import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order_link.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
@@ -23,6 +24,8 @@ class OrdersModule extends YesModule {
   final SubOrdersScreen _subOrdersScreen;
   final HiddenOrdersScreen _hiddenOrdersScreen;
   final OrderRecyclingScreen _recyclingScreen;
+  final UpdateOrderScreen _updateOrderScreen;
+
   OrdersModule(
       this._newOrderScreen,
       this._orderStatus,
@@ -32,7 +35,8 @@ class OrdersModule extends YesModule {
       this._orderTimeLineScreen,
       this._logsScreen,
       this._hiddenOrdersScreen,
-      this._recyclingScreen) {
+      this._recyclingScreen,
+      this._updateOrderScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -47,6 +51,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => _subOrdersScreen,
       OrdersRoutes.OWNER_HIDDEN_ORDERS_SCREEN: (context) => _hiddenOrdersScreen,
       OrdersRoutes.ORDER_OWNER_RECYCLE: (context) => _recyclingScreen,
+      OrdersRoutes.ORDER_OWNER_UPDATE: (context) => _updateOrderScreen,
     };
   }
 }
