@@ -35,6 +35,7 @@ use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
+use App\Constant\Order\OrderIsHideConstant;
 
 
 /**
@@ -751,6 +752,10 @@ class OrderController extends BaseController
 
         if ($response === OrderStateConstant::ORDER_STATE_CANCEL) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+        }
+
+        if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
       
         return $this->response($response, self::UPDATE);

@@ -110,7 +110,7 @@ class AdminOrderManager
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
 
         $this->entityManager->flush();
 
