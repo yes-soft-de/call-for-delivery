@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -46,9 +47,11 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
     Clipboard.hasStrings().asStream().listen((event) async {
       if (event) {
         ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
-        String data = clip!.text.toString();
-        if (data.length > 9 && data[0] == '0') {
-          await Clipboard.setData(ClipboardData(text: data.substring(1)));
+        String data = clip?.text.toString() ?? '';
+        if (data.length > 9) {
+          var result = PhoneNumberDetection.getPhoneNumber(data);
+          await Clipboard.setData(ClipboardData(text: result));
+          phoneNumberController.text = result;
           if (mounted) {
             setState(() {});
           }
