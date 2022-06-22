@@ -93,4 +93,14 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function getPendingOrdersCountForAdmin(): int
+    {
+        return $this->orderEntityRepository->getPendingOrdersCountForAdmin();
+    }
+
+    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    {
+        return $this->orderEntityRepository->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate);
+    }
 }

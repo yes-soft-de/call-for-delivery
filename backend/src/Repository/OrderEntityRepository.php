@@ -1404,4 +1404,32 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getPendingOrdersCountForAdmin(): int
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('count (orderEntity.id) as pendingOrdersCount')
+
+            ->andWhere('orderEntity.state = :pending')
+            ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('count (orderEntity.id) as deliveredOrdersCount')
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.updatedAt BETWEEN :fromDate AND :toDate')
+            ->setParameter('fromDate', $fromDate)
+            ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

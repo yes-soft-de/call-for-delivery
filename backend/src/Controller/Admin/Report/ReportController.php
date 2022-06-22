@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin\Report;
 
-use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Service\Admin\Report\ReportService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -10,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 
 /**
@@ -43,15 +42,12 @@ class ReportController extends BaseController
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns packages",
+     *      description="Returns general statistics",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="activeStoresCount"),
-     *              @OA\Property(type="integer", property="inactiveStoresCount"),
-     *              @OA\Property(type="integer", property="ongoingOrdersCount"),
-     *              @OA\Property(type="integer", property="allOrdersCount")
+     *              ref=@Model(type="App\Response\Admin\Report\StatisticsForAdminGetResponse")
      *       )
      *    )
      * )

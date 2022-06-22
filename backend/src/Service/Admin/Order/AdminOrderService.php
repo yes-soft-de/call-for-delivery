@@ -28,6 +28,7 @@ use App\Service\Order\StoreOrderDetailsService;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
+use DateTime;
 
 class AdminOrderService
 {
@@ -283,5 +284,15 @@ class AdminOrderService
         }
 
         return $orderEntity;
+    }
+
+    public function getPendingOrdersCountForAdmin(): int
+    {
+        return $this->adminOrderManager->getPendingOrdersCountForAdmin();
+    }
+
+    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    {
+        return $this->adminOrderManager->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate);
     }
 }

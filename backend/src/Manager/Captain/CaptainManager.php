@@ -360,4 +360,9 @@ class CaptainManager
 
         return $captainProfileEntity;
     }
+
+    public function getCaptainsCountByStatusForAdmin(string $status): int
+    {
+        return $this->captainEntityRepository->count(['status'=>$status]);
+    }
 }
