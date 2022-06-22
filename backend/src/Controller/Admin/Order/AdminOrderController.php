@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Request\Admin\Order\UpdateOrderByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")
@@ -428,6 +429,131 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+     /**
+     * @Route("updateordertohidden/{id}", name="updateOrderToHidden", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="int", property="id"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateOrderToHidden(int $id): JsonResponse
+    {
+        $result = $this->adminOrderService->updateOrderToHidden($id);
+
+        if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTFOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * Admin: order update by admin. 
+     * @Route("orderupdatebyadmin", name="orderUpdateByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new package category create by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *      )
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderByIdGetForAdminResponse")
+     *      )
+     *   )
+     * )
+     * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9216 or 9217"),
+     *          @OA\Property(type="string", property="msg", description="errorMsg"),
+     *      )
+     * )
+     * 
+     * @Security(name="Bearer") 
+     */
+    public function orderUpdateByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, UpdateOrderByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->orderUpdateByAdmin($request);
+
+        if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
+        }
+
+        if ($result === OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_CAPTAIN_ONGOING);
         }
 
         return $this->response($result, self::UPDATE);

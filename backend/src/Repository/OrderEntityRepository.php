@@ -501,6 +501,9 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider')
 
+            ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
                 'storeOrderDetails',
@@ -528,6 +531,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'captainEntity.id = orderEntity.captainId'
             )
+
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
@@ -1432,4 +1437,32 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getOrderByIdWithStoreOrderDetail(int $id): ?array
+    {   
+       return $this->createQueryBuilder('orderEntity')
+           ->select('IDENTITY (orderEntity.captainId) as captainUserId')
+           ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
+            'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+           ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+            'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
+           ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
+           ->addSelect('orderChatRoomEntity.roomId')
+           ->addSelect('imageEntity.imagePath')
+           ->addSelect('captainEntity.captainName', 'captainEntity.phone')
+
+           ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
+           ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
+           ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = orderEntity.captainId')
+           ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.id = storeOrderDetails.images')
+           ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
+           
+           ->andWhere('orderEntity.id = :id')
+
+           ->setParameter('id', $id)
+
+           ->getQuery()
+           
+           ->getOneOrNullResult();
+   }
 }

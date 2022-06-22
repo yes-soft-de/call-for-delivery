@@ -7,14 +7,17 @@ use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\Admin\StoreOwnerBranch\StoreOwnerBranchUpdateByAdminRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchDeleteRequest;
+use App\Repository\StoreOwnerBranchEntityRepository;
 
 class AdminStoreOwnerBranchManager
 {
     private StoreOwnerBranchManager $storeOwnerBranchManager;
+    private StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository;
 
-    public function __construct(StoreOwnerBranchManager $storeOwnerBranchManager)
+    public function __construct(StoreOwnerBranchManager $storeOwnerBranchManager, StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository)
     {
         $this->storeOwnerBranchManager = $storeOwnerBranchManager;
+        $this->storeOwnerBranchEntityRepository = $storeOwnerBranchEntityRepository;
     }
 
     public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request): ?StoreOwnerBranchEntity
@@ -35,5 +38,10 @@ class AdminStoreOwnerBranchManager
     public function deleteBranchByAdmin(StoreOwnerBranchDeleteRequest $request): StoreOwnerBranchEntity|string
     {
         return $this->storeOwnerBranchManager->deleteBranch($request);
+    }
+
+    public function getBranchById($id): ?StoreOwnerBranchEntity
+    {
+       return $this->storeOwnerBranchEntityRepository->find($id);
     }
 }

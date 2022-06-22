@@ -101,4 +101,8 @@ class OrderByIdGetForAdminResponse
     public $phone;
 
     public int|null $paidToProvider;
+
+    public int $storeOwnerId;
+
+    public string|null $storeOwnerName;
 }
