@@ -64,7 +64,6 @@ class OrderManager
      
        $orderEntity = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
-       $orderEntity->setCreatedAt(new DateTime());
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
@@ -85,7 +84,6 @@ class OrderManager
 
         $orderEntity = $this->autoMapping->map(BidDetailsCreateRequest::class, OrderEntity::class, $request);
 
-        $orderEntity->setCreatedAt(new DateTime());
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_INITIALIZED);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
@@ -429,7 +427,6 @@ class OrderManager
      
        $orderEntity = $this->autoMapping->map(SubOrderCreateRequest::class, OrderEntity::class, $request);
 
-       $orderEntity->setCreatedAt(new DateTime());
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
