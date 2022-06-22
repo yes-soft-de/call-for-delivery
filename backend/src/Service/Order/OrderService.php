@@ -384,7 +384,7 @@ class OrderService
         return $response;
     }
 
-    public function getSpecificOrderForCaptain(int $id, int $userId): SpecificOrderForCaptainResponse|string
+    public function getSpecificOrderForCaptain(int $id, int $userId): null|SpecificOrderForCaptainResponse|string
     {
         $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
         if($order) {
@@ -440,7 +440,7 @@ class OrderService
         return $this->autoMapping->map("array", BidOrderByIdGetForCaptainResponse::class, $order);
     }
 
-     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
+     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string|int|null
     {
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
             // check if order is not being accepted by a captain yet
@@ -466,6 +466,10 @@ class OrderService
 
             if( $order->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return OrderStateConstant::ORDER_STATE_CANCEL;
+            }
+            
+            if($order->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+                return OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE;
             }
 
             if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {

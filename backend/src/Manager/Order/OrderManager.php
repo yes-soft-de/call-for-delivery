@@ -199,6 +199,10 @@ class OrderManager
             return $orderEntity;
         }
 
+        if($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+            return $orderEntity;
+        }
+
         $captainId = $this->captainManager->getCaptainProfileByUserId($request->getCaptainId());
        
         $request->setCaptainId($captainId);
@@ -600,7 +604,7 @@ class OrderManager
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
 
         $this->entityManager->flush();
 
