@@ -61,7 +61,7 @@ class UpdateOrderStateManager {
             OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.orderCreatedSuccessfully)
+                message: S.current.updateOrderSuccess)
             .show(screenState.context);
         FireStoreHelper().backgroundThread('Trigger');
       }
