@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class NavigatorMenu extends StatefulWidget {
   final double? width;
@@ -159,32 +160,44 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             color: Theme.of(context).backgroundColor,
           ),
           //BID-ORDER
-          CustomNavTile(
-              icon: Icons.production_quantity_limits,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(BidOrdersRoutes.OPEN_ORDERS_SCREEN);
-              },
-              title: S.current.openOrder),
-          CustomNavTile(
-              icon: Icons.bookmark_border,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(BidOrdersRoutes.NEW_ORDER_SCREEN);
-              },
-              title: S.current.newBidOrder),
-          CustomNavTile(
-              icon: Icons.compare_arrows_rounded,
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(BidOrdersRoutes.LOGS_BID_ORDERS_SCREEN);
-              },
-              title: S.current.myBidOrder),
-          Divider(
-            indent: 32,
-            endIndent: 32,
-            thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+          Visibility(
+            visible: false,
+            child: CustomNavTile(
+                icon: Icons.production_quantity_limits,
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(BidOrdersRoutes.OPEN_ORDERS_SCREEN);
+                },
+                title: S.current.openOrder),
+          ),
+          Visibility(
+            visible: false,
+            child: CustomNavTile(
+                icon: Icons.bookmark_border,
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(BidOrdersRoutes.NEW_ORDER_SCREEN);
+                },
+                title: S.current.newBidOrder),
+          ),
+          Visibility(
+            visible: false,
+            child: CustomNavTile(
+                icon: Icons.compare_arrows_rounded,
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(BidOrdersRoutes.LOGS_BID_ORDERS_SCREEN);
+                },
+                title: S.current.myBidOrder),
+          ),
+          Visibility(
+            visible: false,
+            child: Divider(
+              indent: 32,
+              endIndent: 32,
+              thickness: 2.5,
+              color: Theme.of(context).backgroundColor,
+            ),
           ),
 
           // support
@@ -253,7 +266,44 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   Navigator.of(context).pushNamed(AboutRoutes.ROUTE_COMPANY);
                 },
                 title: S.current.companyInfo),
-          )
+          ),
+          FutureBuilder(
+              future: getVersion(),
+              builder: (ctx, AsyncSnapshot<PackageInfo> snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return Container();
+                } else if (snap.hasData) {
+                  PackageInfo packageInfo = snap.data!;
+                  String appName = packageInfo.appName;
+                  String packageName = packageInfo.packageName;
+                  String version = packageInfo.version;
+                  String buildNumber = packageInfo.buildNumber;
+                  return Column(
+                    children: [
+                      ClipOval(
+                        child: Image.asset(
+                          'assets/icon/logo.jpg',
+                          width: 75,
+                          height: 75,
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                      Text(appName),
+                      Text(
+                        version,
+                        style:
+                            TextStyle(color: Theme.of(context).disabledColor),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              })
         ]));
+  }
+
+  Future<PackageInfo> getVersion() async {
+    return await PackageInfo.fromPlatform();
   }
 }
