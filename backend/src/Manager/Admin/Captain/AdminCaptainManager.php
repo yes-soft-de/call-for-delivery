@@ -35,4 +35,9 @@ class AdminCaptainManager
     {
         return $this->captainManager->updateCaptainProfileByAdmin($request);
     }
+
+    public function getCaptainsCountByStatusForAdmin(string $status): int
+    {
+        return $this->captainManager->getCaptainsCountByStatusForAdmin($status);
+    }
 }

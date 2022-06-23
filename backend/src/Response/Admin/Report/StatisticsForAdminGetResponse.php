@@ -11,4 +11,14 @@ class StatisticsForAdminGetResponse
     public int $ongoingOrdersCount;
 
     public int $allOrdersCount;
+
+    public int $pendingOrdersCount;
+
+    public int $todayDeliveredOrdersCount;
+
+    public int $previousWeekDeliveredOrdersCount;
+
+    public int $activeCaptainsCount;
+
+    public int $inactiveCaptainsCount;
 }

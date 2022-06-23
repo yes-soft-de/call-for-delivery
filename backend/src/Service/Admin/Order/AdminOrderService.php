@@ -28,9 +28,9 @@ use App\Service\Order\StoreOrderDetailsService;
 use App\Service\OrderLogs\OrderLogsService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
+use DateTime;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
-use DateTime;
 use App\Constant\Notification\NotificationFirebaseConstant;
 
 class AdminOrderService
@@ -287,6 +287,16 @@ class AdminOrderService
         }
 
         return $orderEntity;
+    }
+
+    public function getPendingOrdersCountForAdmin(): int
+    {
+        return $this->adminOrderManager->getPendingOrdersCountForAdmin();
+    }
+
+    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    {
+        return $this->adminOrderManager->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate);
     }
 
     public function updateOrderToHidden(int $id): OrderUpdateToHiddenResponse|string

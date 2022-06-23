@@ -197,4 +197,9 @@ class AdminCaptainService
 
         $this->imageService->update($imageUpdateRequest);
     }
+
+    public function getCaptainsCountByStatusForAdmin(string $status): int
+    {
+        return $this->adminCaptainManager->getCaptainsCountByStatusForAdmin($status);
+    }
 }
