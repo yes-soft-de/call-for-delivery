@@ -6,20 +6,24 @@ use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
+use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
-use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
+use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
-use App\Response\Admin\StoreOwnerBranch\StoreOwnerBranchGetForAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
+use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Notification\NotificationFirebaseService;
@@ -30,6 +34,9 @@ use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
+use App\Service\StoreOwner\StoreOwnerProfileService;
+use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
+use App\Service\Subscription\SubscriptionService;
 use DateTime;
 use App\Constant\Notification\NotificationFirebaseConstant;
 
@@ -44,10 +51,13 @@ class AdminOrderService
     private StoreOrderDetailsService $storeOrderDetailsService;
     private NotificationFirebaseService $notificationFirebaseService;
     private NotificationLocalService $notificationLocalService;
+    private StoreOwnerProfileService $storeOwnerProfileService;
+    private SubscriptionService $subscriptionService;
+    private StoreOwnerBranchService $storeOwnerBranchService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
-                                NotificationLocalService $notificationLocalService)
+                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -58,6 +68,9 @@ class AdminOrderService
         $this->storeOrderDetailsService = $storeOrderDetailsService;
         $this->notificationFirebaseService = $notificationFirebaseService;
         $this->notificationLocalService = $notificationLocalService;
+        $this->storeOwnerProfileService = $storeOwnerProfileService;
+        $this->subscriptionService = $subscriptionService;
+        $this->storeOwnerBranchService = $storeOwnerBranchService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -334,4 +347,56 @@ class AdminOrderService
       
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class,  $order);
       }
+
+    public function createOrderByAdmin(OrderCreateByAdminRequest $request): string|CanCreateOrderResponse|OrderCreateByAdminResponse
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileService->getStoreOwnerProfileEntityByIdForAdmin($request->getStoreOwner());
+
+        if ($storeOwnerProfile === null) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $canCreateOrder = $this->subscriptionService->canCreateOrder($storeOwnerProfile->getStoreOwnerId());
+
+        if ($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+            return $canCreateOrder;
+        }
+
+        $request->setStoreOwner($storeOwnerProfile);
+
+        $branch = $this->storeOwnerBranchService->getBranchEntityById($request->getBranch());
+
+        if ($branch === null) {
+            return StoreOwnerBranch::BRANCH_NOT_FOUND;
+        }
+
+        $request->setBranch($branch);
+
+        $order = $this->adminOrderManager->createOrderByAdmin($request);
+
+        if ($order) {
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS,
+                $order->getId());
+
+            $this->orderLogsService->createOrderLogsRequest($order);
+            //create firebase notification to store
+            try{
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+            }
+            catch (\Exception $e){
+                error_log($e);
+            }
+            //create firebase notification to captains
+            try{
+                $this->notificationFirebaseService->notificationToCaptains($order->getId());
+            }
+            catch (\Exception $e){
+                error_log($e);
+            }
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
+    }
 }
