@@ -331,7 +331,7 @@ class AdminOrderService
                   }
             }
 
-            $order = $this->adminOrderManager->orderUpdateByAdmin($request, $order);
+            $order = $this->adminOrderManager->orderUpdateByAdmin($request);
 
             if ($order) {
                 if ($order->getCaptainId()) {
