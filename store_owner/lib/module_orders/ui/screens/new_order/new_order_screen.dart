@@ -94,18 +94,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
         }
       }
     });
-    Clipboard.getData(Clipboard.kTextPlain).asStream().listen((event) async {
-      if (event?.text?.length != null) {
-        if (event!.text!.length >= 9) {
-          var result = PhoneNumberDetection.getPhoneNumber(event.text!);
-          await Clipboard.setData(ClipboardData(text: result));
-          phoneNumberController.text = result;
-          if (mounted) {
-            setState(() {});
-          }
-        }
-      }
-    });
   }
 
   @override

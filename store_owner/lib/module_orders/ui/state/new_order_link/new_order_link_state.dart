@@ -15,7 +15,9 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
+import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -100,6 +102,26 @@ class NewOrderLinkStateLoaded extends States {
                         child: CustomLoginFormField(
                             controller: screenState.phoneNumberController,
                             phone: true,
+                            sufIcon: Material(
+                              color: Colors.transparent,
+                              shape: CircleBorder(),
+                              child: IconButton(
+                                focusNode: FocusNode(skipTraversal: true),
+                                splashRadius: 20,
+                                onPressed: () async {
+                                  ClipboardData? data = await Clipboard.getData(
+                                      Clipboard.kTextPlain);
+                                  screenState.phoneNumberController.text =
+                                      PhoneNumberDetection.getPhoneNumber(
+                                          data?.text ?? '');
+                                  screenState.refresh();
+                                },
+                                icon: Icon(
+                                  Icons.paste_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ),
                             hintText: '5xxxxxxxx'),
                       ),
                       Padding(
@@ -120,18 +142,31 @@ class NewOrderLinkStateLoaded extends States {
                               sufIcon: Padding(
                                 padding: const EdgeInsets.only(
                                     right: 4.0, left: 4.0),
-                                child: Container(
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Theme.of(context).primaryColor),
-                                  child: Center(
-                                    child: Text(
-                                      '+',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .button
-                                          ?.copyWith(color: Colors.white),
+                                child: InkWell(
+                                  radius: 20,
+                                  customBorder: CircleBorder(),
+                                  onTap: () {
+                                    ContactsHelper.getContactsDialog(context,
+                                        (phone) {
+                                      screenState.phoneNumberController.text =
+                                          PhoneNumberDetection.getPhoneNumber(
+                                              phone);
+                                      screenState.refresh();
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Theme.of(context).primaryColor),
+                                    child: Center(
+                                      child: Text(
+                                        '+',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            ?.copyWith(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -503,7 +538,7 @@ class NewOrderLinkStateLoaded extends States {
               lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),
           detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.parse(screenState.priceController.text.trim()),
+          orderCost: num.tryParse(screenState.priceController.text.trim()),
           image: value,
           date: orderDate.toUtc().toIso8601String(),
           payment: screenState.payments));
