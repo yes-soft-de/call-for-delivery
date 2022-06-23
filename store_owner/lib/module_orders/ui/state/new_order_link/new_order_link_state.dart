@@ -125,51 +125,31 @@ class NewOrderLinkStateLoaded extends States {
                             hintText: '5xxxxxxxx'),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 28.0),
-                        child: SizedBox(
-                          width: 125,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomLoginFormField(
-                              halfField: true,
-                              contentPadding:
-                                  EdgeInsets.only(left: 8.0, right: 8.0),
-                              controller: screenState.countryNumberController,
-                              numbers: true,
-                              phoneHint: false,
-                              maxLength: 3,
-                              hintText: S.current.countryCode,
-                              sufIcon: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 4.0, left: 4.0),
-                                child: InkWell(
-                                  radius: 20,
-                                  customBorder: CircleBorder(),
-                                  onTap: () {
-                                    ContactsHelper.getContactsDialog(context,
-                                        (phone) {
-                                      screenState.phoneNumberController.text =
-                                          PhoneNumberDetection.getPhoneNumber(
-                                              phone);
-                                      screenState.refresh();
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context).primaryColor),
-                                    child: Center(
-                                      child: Text(
-                                        '+',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .button
-                                            ?.copyWith(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                        padding: const EdgeInsets.only(
+                            right: 4.0, left: 4.0, bottom: 28),
+                        child: InkWell(
+                          radius: 20,
+                          customBorder: CircleBorder(),
+                          onTap: () {
+                            ContactsHelper.getContactsDialog(context, (phone) {
+                              screenState.phoneNumberController.text =
+                                  PhoneNumberDetection.getPhoneNumber(phone);
+                              screenState.refresh();
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Theme.of(context).primaryColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '+',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    ?.copyWith(
+                                        color: Colors.white, fontSize: 20),
                               ),
                             ),
                           ),

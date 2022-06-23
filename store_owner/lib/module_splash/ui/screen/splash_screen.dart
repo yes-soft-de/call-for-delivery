@@ -30,11 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> someChecks() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        _getNextRoute().then((route) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(route, (route) => false);
-        });
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
       });
     } else {
       showDialog(
@@ -59,7 +56,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (Platform.isAndroid) {
       _createNewChannel();
     }
-    someChecks();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      someChecks();
+    });
     super.initState();
   }
 
