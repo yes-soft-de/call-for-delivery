@@ -6339,6 +6339,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Contacts`
+  String get contacts {
+    return Intl.message(
+      'Contacts',
+      name: 'contacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search in contacts`
+  String get searchInContacts {
+    return Intl.message(
+      'Search in contacts',
+      name: 'searchInContacts',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

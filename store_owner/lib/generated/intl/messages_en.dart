@@ -237,6 +237,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -761,6 +762,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "search for order by order number"),
+        "searchInContacts":
+            MessageLookupByLibrary.simpleMessage("Search in contacts"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "second": MessageLookupByLibrary.simpleMessage("second"),

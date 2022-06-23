@@ -632,7 +632,10 @@
     "userDeleted": "User deleted successfully",
     "updateOrderWarning": "If you will continue this process , this order will be hide from captains until you confirm new adjustment",
     "editOrder": "Edit order",
-    "confirmUpdateOrder": "Confirm update order"
+    "confirmUpdateOrder": "Confirm update order",
+    "contacts": "Contacts",
+    "searchInContacts": "Search in contacts"
+
 
 
 

@@ -233,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -752,6 +753,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ابحث عن إشعار"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "ابحث عن طلب بإدخال رقم الطلب"),
+        "searchInContacts":
+            MessageLookupByLibrary.simpleMessage("ابحث في جهات الاتصال"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
         "second": MessageLookupByLibrary.simpleMessage("ثانية"),
