@@ -1561,11 +1561,11 @@ class OrderController extends BaseController
         return $this->response($result, self::UPDATE);
     }
 
-    
     /**
      * store: Order Non Sub by store.
      * @Route("ordernonsubbyowner/{subOderId}", name="orderNonSubByStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
+     * @param int $subOderId
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -1588,7 +1588,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * or
      *
      * @OA\Response(
@@ -1598,8 +1598,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="status_code", description="9211"),
      *          @OA\Property(type="string", property="msg", description="error, The captain received the order Error."),
      *        )
-     *     ) 
-     * 
+     *     )
+     *
      * @Security(name="Bearer")
      */
     public function orderNonSubByStore(int $subOderId): JsonResponse
@@ -1778,7 +1778,7 @@ class OrderController extends BaseController
      * ) 
      * @Security(name="Bearer") 
      */
-    public function orderUpdateByAdmin(Request $request): JsonResponse
+    public function orderUpdateByStoreOwner(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -1804,11 +1804,11 @@ class OrderController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
-    
+
     /** store: update order to hidden
      * @Route("updateordertohidden/{id}", name="updateOrderToHiddenForStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")

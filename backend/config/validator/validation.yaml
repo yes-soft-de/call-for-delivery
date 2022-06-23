@@ -632,3 +632,10 @@ App\Request\Order\UpdateOrderRequest:
             - NotBlank: ~
         branch:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderCreateByAdminRequest:
+    properties:
+        branch:
+            - NotBlank: ~
+        storeOwner:
+            - NotBlank: ~

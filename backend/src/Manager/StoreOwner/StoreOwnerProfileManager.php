@@ -231,4 +231,9 @@ class StoreOwnerProfileManager
     {
         return $this->storeOwnerProfileEntityRepository->findOneBy(["storeOwnerId" => $userId]);
     }
+
+    public function getStoreOwnerProfileEntityByIdForAdmin(int $id): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->find($id);
+    }
 }

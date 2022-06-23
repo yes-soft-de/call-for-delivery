@@ -3,9 +3,11 @@
 namespace App\Manager\Admin\Order;
 
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -145,6 +147,23 @@ class AdminOrderManager
 
         $this->adminStoreOrderDetailsManager->updateOrderDetail($orderEntity, $request);
         
+        return $orderEntity;
+    }
+
+    public function createOrderByAdmin(OrderCreateByAdminRequest $request): OrderEntity
+    {
+        $orderEntity = $this->autoMapping->map(OrderCreateByAdminRequest::class, OrderEntity::class, $request);
+
+        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        $this->entityManager->persist($orderEntity);
+        $this->entityManager->flush();
+
+        $this->adminStoreOrderDetailsManager->createOrderDetailsByAdmin($orderEntity, $request);
+
         return $orderEntity;
     }
 }
