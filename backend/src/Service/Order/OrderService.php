@@ -63,6 +63,8 @@ use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
+use App\Request\Order\UpdateOrderRequest;
+use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 
 class OrderService
 {
@@ -382,11 +384,17 @@ class OrderService
         return $response;
     }
 
-    public function getSpecificOrderForCaptain(int $id, int $userId): ?SpecificOrderForCaptainResponse
+    public function getSpecificOrderForCaptain(int $id, int $userId): null|SpecificOrderForCaptainResponse|string
     {
         $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
         if($order) {
-            
+           
+            if($order[0]->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
+                if($order[0]->getCaptainId()->getCaptainId() !== $userId) {
+                    return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED; 
+                }
+            }
+
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
@@ -432,7 +440,7 @@ class OrderService
         return $this->autoMapping->map("array", BidOrderByIdGetForCaptainResponse::class, $order);
     }
 
-     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string
+     public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string|int|null
     {
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
             // check if order is not being accepted by a captain yet
@@ -458,6 +466,10 @@ class OrderService
 
             if( $order->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return OrderStateConstant::ORDER_STATE_CANCEL;
+            }
+            
+            if($order->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+                return OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE;
             }
 
             if( $order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
@@ -870,7 +882,15 @@ class OrderService
                 if($order) {
                     if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                         $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
-                    }                   
+                    }
+                    //create firebase notification to store
+                    try {
+                        $this->notificationFirebaseService->orderVisibilityNotificationToUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
+                            NotificationFirebaseConstant::ORDER_IS_BEING_HIDDEN);
+
+                    } catch (\Exception $e) {
+                        error_log($e);
+                    }
                 }
             }
         }  
@@ -1041,12 +1061,12 @@ class OrderService
                  $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
      
                  //create firebase notification to store
-                  try{
-                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
-                       }
-                  catch (\Exception $e){
-                       error_log($e);
-                     }
+//                  try{
+//                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+//                       }
+//                  catch (\Exception $e){
+//                       error_log($e);
+//                     }
                   //create firebase notification to captains
                   try{
                        $this->notificationFirebaseService->notificationToCaptains($order->getId());
@@ -1138,4 +1158,50 @@ class OrderService
     {
         return $this->orderManager->getSubOrdersByPrimaryOrderId($orderId);
     }
+
+    public function orderUpdate(UpdateOrderRequest $request): string|null|OrderResponse
+    {
+        $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
+        if($order) {
+
+            if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
+              if( $request->getBranch() !== $order['storeOwnerBranchId']) {
+
+                return OrderResultConstant::ERROR_UPDATE_BRANCH;
+              }
+            }
+
+            if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
+                if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
+
+                    return OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
+                  }
+            }
+
+            $order = $this->orderManager->orderUpdate($request, $order);
+
+            if ($order) {
+                if ($order->getCaptainId()) {
+                    // create firebase notification to captain
+                    try {
+                        $this->notificationFirebaseService->notificationToUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ORDER_UPDATE_BY_STORE);
+                    } catch (\Exception $e) {
+                        error_log($e);
+                }
+              }
+            }
+        }
+      
+        return $this->autoMapping->map(OrderEntity::class, OrderResponse::class,  $order);
+    }
+
+    public function updateOrderToHiddenForStore(int $id): OrderUpdateToHiddenResponse|string
+    {
+       $orderEntity = $this->orderManager->updateOrderToHiddenForStore($id);
+       if($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+           return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+       return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }  
 }

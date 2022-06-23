@@ -28,6 +28,7 @@ use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
+use App\Request\Order\UpdateOrderRequest;
 
 class OrderManager
 {
@@ -64,7 +65,6 @@ class OrderManager
      
        $orderEntity = $this->autoMapping->map(OrderCreateRequest::class, OrderEntity::class, $request);
 
-       $orderEntity->setCreatedAt(new DateTime());
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
@@ -85,7 +85,6 @@ class OrderManager
 
         $orderEntity = $this->autoMapping->map(BidDetailsCreateRequest::class, OrderEntity::class, $request);
 
-        $orderEntity->setCreatedAt(new DateTime());
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_INITIALIZED);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
@@ -195,6 +194,10 @@ class OrderManager
         }
         
         if($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return $orderEntity;
+        }
+
+        if($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
             return $orderEntity;
         }
 
@@ -429,7 +432,6 @@ class OrderManager
      
        $orderEntity = $this->autoMapping->map(SubOrderCreateRequest::class, OrderEntity::class, $request);
 
-       $orderEntity->setCreatedAt(new DateTime());
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
@@ -569,5 +571,40 @@ class OrderManager
     public function getOrdersByCaptainId(int $captainId): array
     {
         return $this->orderRepository->getOrdersByCaptainId($captainId);
+    }
+
+    public function getOrderByIdWithStoreOrderDetail(int $captainId): array
+    {
+        return $this->orderRepository->getOrderByIdWithStoreOrderDetail($captainId);
+    }
+
+    public function orderUpdate(UpdateOrderRequest $request): OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
+        $orderEntity->setDeliveryDate($request->getDeliveryDate());
+        
+        $this->entityManager->flush();
+
+        $this->storeOrderDetailsManager->updateOrderDetailByStore($orderEntity, $request);
+        
+        return $orderEntity;
+    }
+
+    public function updateOrderToHiddenForStore(int $id): OrderEntity|string
+    {
+        $orderEntity = $this->orderRepository->find($id);
+        if(! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }

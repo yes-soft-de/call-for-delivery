@@ -34,6 +34,8 @@ use App\Constant\Order\OrderStateConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Request\Order\UpdateOrderRequest;
+use App\Constant\Order\OrderIsHideConstant;
 
 
 /**
@@ -618,7 +620,11 @@ class OrderController extends BaseController
     public function getSpecificOrderForCaptain(int $id): JsonResponse
     {
         $result = $this->orderService->getSpecificOrderForCaptain($id, $this->getUserId());
-
+       
+        if ($result === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
+        }
+       
         return $this->response($result, self::FETCH);
     }
 
@@ -746,6 +752,10 @@ class OrderController extends BaseController
 
         if ($response === OrderStateConstant::ORDER_STATE_CANCEL) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+        }
+
+        if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
       
         return $this->response($response, self::UPDATE);
@@ -1551,11 +1561,11 @@ class OrderController extends BaseController
         return $this->response($result, self::UPDATE);
     }
 
-    
     /**
      * store: Order Non Sub by store.
      * @Route("ordernonsubbyowner/{subOderId}", name="orderNonSubByStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
+     * @param int $subOderId
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -1578,7 +1588,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * or
      *
      * @OA\Response(
@@ -1588,8 +1598,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="status_code", description="9211"),
      *          @OA\Property(type="string", property="msg", description="error, The captain received the order Error."),
      *        )
-     *     ) 
-     * 
+     *     )
+     *
      * @Security(name="Bearer")
      */
     public function orderNonSubByStore(int $subOderId): JsonResponse
@@ -1709,5 +1719,129 @@ class OrderController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+    
+    /**
+     * store: order update by store. 
+     * @Route("orderupdate", name="orderUpdate", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new package category create by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *      )
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderByIdGetForAdminResponse")
+     *      )
+     *   )
+     * )
+   
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9216 or 9217"),
+     *          @OA\Property(type="string", property="msg", description="errorMsg"),
+     *      )
+     * ) 
+     * @Security(name="Bearer") 
+     */
+    public function orderUpdateByStoreOwner(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, UpdateOrderRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->orderUpdate($request);
+
+        if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
+        }
+
+        if ($result === OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_CAPTAIN_ONGOING);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /** store: update order to hidden
+     * @Route("updateordertohidden/{id}", name="updateOrderToHiddenForStore", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param int $id
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="int", property="id"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateOrderToHiddenForStore(int $id): JsonResponse
+    {
+        $result = $this->orderService->updateOrderToHiddenForStore($id);
+
+        if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTFOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

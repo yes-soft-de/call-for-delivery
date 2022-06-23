@@ -299,7 +299,10 @@ class SubscriptionManager
        $package = $this->packageManager->getPackage($request->getPackage());
        $request->setPackage($package);
 
-       $subscriptionEntity = $this->subscribeRepository->find($request->getId());      
+       $subscriptionEntity = $this->subscribeRepository->find($request->getId());
+
+       // save order count of old package in order to calculate the remaining orders lately
+       $oldPackageOrderCount = $subscriptionEntity->getPackage()->getOrderCount();
 
        $subscriptionEntity = $this->autoMapping->mapToObject(SubscriptionUpdateByAdminRequest::class, SubscriptionEntity::class, $request, $subscriptionEntity);
 
@@ -309,7 +312,7 @@ class SubscriptionManager
 
        $this->entityManager->flush();
 
-       $this->subscriptionDetailsManager->updateSubscriptionDetailsByAdmin($subscriptionEntity);
+       $this->subscriptionDetailsManager->updateSubscriptionDetailsByAdmin($subscriptionEntity, $oldPackageOrderCount);
       
        $this->subscriptionHistoryManager->updateSubscriptionHistoryByAdmin($subscriptionEntity->getId());            
 

@@ -40,6 +40,9 @@ class BaseController extends AbstractController
     const ERROR_WRONG_ORDER_TYPE = ["wrong order type", "9213"];
     const ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS = ["problem In Returning Order To Pending Status", "9214"];
     const ERROR_ORDER_CANCEL = ["order cancelled", "9215"];
+    const ERROR_UPDATE_BRANCH = ["captain is in store,You can not modify the branch", "9216"];
+    const ERROR_UPDATE_CAPTAIN_ONGOING = ["captain is ongoing,You can not modify detail or destination or deliveryDate", "9217"];
+    const ERROR_ORDER_HIDE = ["order hide", "9218"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
@@ -74,6 +77,7 @@ class BaseController extends AbstractController
     const STORE_OWNER_SUBSCRIPTION_CREATED = ["store owner profile created", "9159"];
     const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
     const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
+    const STORE_BRANCH_NOT_EXIST = ["store branch is not exist", "9162"];
     // client
     const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
     // subscription

@@ -6,6 +6,7 @@ use App\Repository\OrderEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderEntityRepository::class)]
 class OrderEntity
@@ -36,9 +37,11 @@ class OrderEntity
     #[ORM\Column(type: 'datetime')]
     private $deliveryDate;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
+    #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 

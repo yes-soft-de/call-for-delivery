@@ -614,3 +614,28 @@ App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest:
     properties:
         orderId:
             - NotBlank: ~
+
+App\Request\Admin\Order\UpdateOrderByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        payment:
+            - NotBlank: ~
+        branch:
+            - NotBlank: ~
+
+App\Request\Order\UpdateOrderRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        payment:
+            - NotBlank: ~
+        branch:
+            - NotBlank: ~
+
+App\Request\Admin\Order\OrderCreateByAdminRequest:
+    properties:
+        branch:
+            - NotBlank: ~
+        storeOwner:
+            - NotBlank: ~

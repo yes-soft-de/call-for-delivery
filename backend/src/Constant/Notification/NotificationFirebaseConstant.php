@@ -30,6 +30,8 @@ final class NotificationFirebaseConstant
 
     const UPDATE_ORDER_ERROR_CAPTAIN_IN_STORE = "عذرا لا تستطيع تعديل الطلب , الكابتن في المتجر.";
 
+    const ORDER_IS_BEING_HIDDEN = "تم إخفاء الطلب ";
+
     //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 
@@ -81,4 +83,8 @@ final class NotificationFirebaseConstant
     const ORDER_ID = " الطلب رقم";
 
     const FROM = " من ";
+
+    const ORDER_UPDATE_BY_ADMIN = "تم إجراء تعديلات بواسطة الإدارة على الطلب رقم ";
+  
+    const ORDER_UPDATE_BY_STORE = "تم إجراء تعديلات بواسطة المتجر على الطلب رقم ";
 }
