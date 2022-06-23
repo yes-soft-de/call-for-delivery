@@ -634,7 +634,11 @@
     "editOrder": "Edit order",
     "confirmUpdateOrder": "Confirm update order",
     "contacts": "Contacts",
-    "searchInContacts": "Search in contacts"
+    "searchInContacts": "Search in contacts",
+    "pleaseCheckYourInternetConnection": "Please check your internet connection , and try again",
+    "tryAgain": "Try again"
+
+
 
 
 

@@ -625,6 +625,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
@@ -866,6 +869,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "transCount": MessageLookupByLibrary.simpleMessage("عدد النقلات"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),

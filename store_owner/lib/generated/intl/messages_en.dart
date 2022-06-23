@@ -634,6 +634,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "Please check your internet connection , and try again"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
@@ -873,6 +876,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "transCount":
             MessageLookupByLibrary.simpleMessage("Transportation Count"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),

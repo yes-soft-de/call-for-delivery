@@ -6359,6 +6359,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Please check your internet connection , and try again`
+  String get pleaseCheckYourInternetConnection {
+    return Intl.message(
+      'Please check your internet connection , and try again',
+      name: 'pleaseCheckYourInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get tryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
