@@ -1053,12 +1053,12 @@ class OrderService
                  $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
      
                  //create firebase notification to store
-                  try{
-                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
-                       }
-                  catch (\Exception $e){
-                       error_log($e);
-                     }
+//                  try{
+//                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+//                       }
+//                  catch (\Exception $e){
+//                       error_log($e);
+//                     }
                   //create firebase notification to captains
                   try{
                        $this->notificationFirebaseService->notificationToCaptains($order->getId());
