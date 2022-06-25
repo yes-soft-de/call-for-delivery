@@ -387,7 +387,7 @@ class AdminCaptainController extends BaseController
      * )
      * 
      * @OA\Response(
-     *      response=204,
+     *      response=200,
      *      description="Returns ready captains and the count of their current orders",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),

@@ -83,4 +83,6 @@ final class SubscriptionConstant
     const OPERATION_TYPE_SUBTRACTION = "subtraction";   
 
     const CAN_NOT_CREATE_SUB_ORDER = "canNotCreateSubOrder";
+
+    const CARS_FINISHED_INT = 0;
 }

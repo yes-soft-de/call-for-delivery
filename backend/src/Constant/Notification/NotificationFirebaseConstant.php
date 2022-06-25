@@ -87,4 +87,6 @@ final class NotificationFirebaseConstant
     const ORDER_UPDATE_BY_ADMIN = "تم إجراء تعديلات بواسطة الإدارة على الطلب رقم ";
   
     const ORDER_UPDATE_BY_STORE = "تم إجراء تعديلات بواسطة المتجر على الطلب رقم ";
+
+    const ORDER_ASSIGN_BY_ADMIN = "تم إسناد طلب من قبل الإدارة إليك, يرجى توصيل الطلب رقم ";
 }
