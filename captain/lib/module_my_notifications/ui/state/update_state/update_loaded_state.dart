@@ -5,12 +5,14 @@ import 'package:c4d/module_my_notifications/ui/screen/update_screen.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/text_style/text_style.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpdatesLoadedState extends States {
   UpdateScreenState screenState;
@@ -175,7 +177,16 @@ class UpdatesLoadedState extends States {
                         borderRadius: BorderRadius.circular(25)),
                     title: Text(element.title),
                     content: Container(
-                      child: Text(element.msg),
+                      child: Linkify(
+                        text: element.msg,
+                        onOpen: (link) async {
+                          if (await canLaunch(link.url)) {
+                            await launch(link.url);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                      ),
                     ),
                     actionsAlignment: MainAxisAlignment.center,
                     actions: [
