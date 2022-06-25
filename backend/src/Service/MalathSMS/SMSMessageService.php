@@ -30,7 +30,7 @@ class SMSMessageService
         $this->malathSMSService->setUserName($this->params->get('malath_username'));
         $this->malathSMSService->setPassword($this->params->get('malath_password'));
 
-        $result = $this->malathSMSService->sendSMS($phone, "MANDOB-AD", $messageText);
+        $result = $this->malathSMSService->sendSMS($phone, "C4+DELIVERY", $messageText);
 
         if($result)
         {
