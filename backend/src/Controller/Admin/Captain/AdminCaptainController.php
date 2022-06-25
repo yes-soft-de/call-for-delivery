@@ -377,6 +377,32 @@ class AdminCaptainController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      * @return JsonResponse
      *
+     * @OA\Tag(name="Captain Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns ready captains and the count of their current orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="captainId"),
+     *              @OA\Property(type="string", property="captainName"),
+     *              @OA\Property(type="integer", property="countOngoingOrders"),
+     *              @OA\Property(type="object", property="images"),
+     *          )
+     *      )
+     * ) 
+     * 
+     * @Security(name="Bearer")
      */
     public function getReadyCaptainsAndCountOfTheirCurrentOrders(): JsonResponse
     {
