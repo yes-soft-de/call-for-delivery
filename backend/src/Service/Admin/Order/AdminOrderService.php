@@ -409,4 +409,9 @@ class AdminOrderService
 
         return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
     }
+
+    public function getOrdersOngoingCountByCaptainIdForAdmin(int $captainId): int
+    {
+        return $this->adminOrderManager->getOrdersOngoingCountByCaptainIdForAdmin($captainId);
+    }
 }

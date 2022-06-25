@@ -40,4 +40,10 @@ class AdminCaptainManager
     {
         return $this->captainManager->getCaptainsCountByStatusForAdmin($status);
     }
+
+    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
+    {
+        return $this->captainManager->getReadyCaptainsAndCountOfTheirCurrentOrders();
+    }
+    
 }

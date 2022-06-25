@@ -365,4 +365,9 @@ class CaptainManager
     {
         return $this->captainEntityRepository->count(['status'=>$status]);
     }
+
+    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
+    {
+        return $this->captainEntityRepository->getReadyCaptainsAndCountOfTheirCurrentOrders();
+    }
 }

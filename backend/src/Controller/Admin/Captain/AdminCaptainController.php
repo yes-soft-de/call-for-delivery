@@ -370,4 +370,18 @@ class AdminCaptainController extends BaseController
 
         return $this->response($response, self::UPDATE);
     }
+    
+    /**
+     * admin: Get ready captains and the count of their current orders.
+     * @Route("getreadycaptainsandcountoftheircurrentorders", name="getReadyCaptainsAndCountOfTheirCurrentOrders", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     */
+    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): JsonResponse
+    {
+        $response = $this->adminCaptainService->getReadyCaptainsAndCountOfTheirCurrentOrders();
+
+        return $this->response($response, self::FETCH);
+    }
 }

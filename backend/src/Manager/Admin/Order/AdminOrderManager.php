@@ -166,4 +166,9 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+    
+    public function getOrdersOngoingCountByCaptainIdForAdmin(int $captainId): int
+    {
+        return $this->orderEntityRepository->getOrdersOngoingCountByCaptainIdForAdmin($captainId);
+    }
 }
