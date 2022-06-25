@@ -9,6 +9,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
+import 'package:c4d/module_orders/ui/state/order_status/order_status_warning_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +41,29 @@ class OrderStatusStateManager {
     }
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
-          getOrderDetails(orderId, screenState);
-        }, title: S.current.orderDetails, error: value.error, hasAppbar: true));
+        if (value.error == S.current.thisOrderAcceptedByAnotherCaptain) {
+          _stateSubject.add(OrderStatusWarningState(screenState, onPressed: () {
+            getOrderDetails(orderId, screenState);
+          },
+              title: S.current.orderDetails,
+              error: value.error,
+              hasAppbar: true));
+          showDialog(
+              context: screenState.context,
+              builder: (ctx) {
+                return CustomFlushBarHelper.warningDialog(
+                    title: S.current.warnning,
+                    message: value.error ?? '',
+                    context: ctx);
+              });
+        } else {
+          _stateSubject.add(ErrorState(screenState, onPressed: () {
+            getOrderDetails(orderId, screenState);
+          },
+              title: S.current.orderDetails,
+              error: value.error,
+              hasAppbar: true));
+        }
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);

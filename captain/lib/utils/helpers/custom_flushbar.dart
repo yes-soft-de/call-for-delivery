@@ -1,8 +1,30 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 
 class CustomFlushBarHelper {
+  static Widget warningDialog({
+    required String title,
+    required String message,
+    required BuildContext context,
+  }) {
+    return AlertDialog(
+      title: Text(title),
+      scrollable: true,
+      content: Container(child: Text(message)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      actionsAlignment: MainAxisAlignment.center,
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(S.current.cancel))
+      ],
+    );
+  }
+
   static Flushbar createSuccess(
       {required String title,
       required String message,
@@ -15,7 +37,7 @@ class CustomFlushBarHelper {
       maxWidth: 600,
       title: title,
       message: message,
-      icon: Icon(
+      icon: const Icon(
         Icons.info,
         size: 28.0,
         color: Colors.white,
@@ -24,8 +46,8 @@ class CustomFlushBarHelper {
       duration: Duration(seconds: timeout),
       borderRadius: BorderRadius.circular(25),
       flushbarStyle: FlushbarStyle.FLOATING,
-      margin: margin ?? EdgeInsets.all(8),
-      padding: padding ?? EdgeInsets.all(16),
+      margin: margin ?? const EdgeInsets.all(8),
+      padding: padding ?? const EdgeInsets.all(16),
       flushbarPosition: top ? FlushbarPosition.TOP : FlushbarPosition.BOTTOM,
     );
   }
@@ -36,7 +58,7 @@ class CustomFlushBarHelper {
       maxWidth: 600,
       title: title,
       message: message,
-      icon: Icon(
+      icon: const Icon(
         Icons.info,
         size: 28.0,
         color: Colors.white,
@@ -45,7 +67,7 @@ class CustomFlushBarHelper {
       duration: Duration(seconds: timeout),
       borderRadius: BorderRadius.circular(25),
       flushbarStyle: FlushbarStyle.FLOATING,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
     );
   }
 }
