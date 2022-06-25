@@ -1164,19 +1164,19 @@ class OrderService
         $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
         if($order) {
 
-            if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
-              if( $request->getBranch() !== $order['storeOwnerBranchId']) {
+            // if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            //   if( $request->getBranch() !== $order['storeOwnerBranchId']) {
 
-                return OrderResultConstant::ERROR_UPDATE_BRANCH;
-              }
-            }
+            //     return OrderResultConstant::ERROR_UPDATE_BRANCH;
+            //   }
+            // }
 
-            if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
-                if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
+            // if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
+            //     if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
 
-                    return OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
-                  }
-            }
+            //         return OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
+            //       }
+            // }
 
             $order = $this->orderManager->orderUpdate($request, $order);
 
