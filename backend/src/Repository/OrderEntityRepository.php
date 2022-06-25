@@ -1418,6 +1418,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.state = :pending')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
+            ->andWhere('orderEntity.isHide = :orderShow')
+            ->setParameter('orderShow', OrderIsHideConstant::ORDER_SHOW)
+
             ->getQuery()
             ->getSingleScalarResult();
     }
