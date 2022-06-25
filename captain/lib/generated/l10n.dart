@@ -7059,6 +7059,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Going Back To Home`
+  String get goingBackToHome {
+    return Intl.message(
+      'Going Back To Home',
+      name: 'goingBackToHome',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
