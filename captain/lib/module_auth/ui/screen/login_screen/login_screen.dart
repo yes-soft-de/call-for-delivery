@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
+import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
@@ -98,7 +99,9 @@ class LoginScreenState extends State<LoginScreen> {
   void loginClient(String email, String password) {
     widget._stateManager.loginClient(email, password, this);
   }
-
+ void resendCode(VerifyCodeRequest request) {
+    widget._stateManager.resendCode(request, this);
+  }
   void moveToNext() {
     Navigator.of(context).pushNamedAndRemoveUntil(
         AuthPrefsHelper().getAccountStatusPhase(), (route) => false,

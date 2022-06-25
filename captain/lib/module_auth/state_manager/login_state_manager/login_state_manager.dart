@@ -1,3 +1,5 @@
+import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
+import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -61,6 +63,15 @@ class LoginStateManager {
     _screenState = _loginScreenState;
     _authService
         .resetPassRequest(request)
+        .whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
+  }
+
+  void resendCode(
+      VerifyCodeRequest request, LoginScreenState _loginScreenState) {
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    _screenState = _loginScreenState;
+    _authService
+        .resendCode(request)
         .whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
   }
 }

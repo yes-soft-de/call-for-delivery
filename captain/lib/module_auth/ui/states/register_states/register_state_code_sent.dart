@@ -125,12 +125,11 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 SplashRoutes.SPLASH_SCREEN, (route) => false);
                           }
-
-                          // screen.verifyClient(VerifyCodeRequest(
-                          //     userID: getIt<AuthService>().username,
-                          //     code: codeController.text,
-                          //     password:
-                          //         getIt<AuthPrefsHelper>().getPassword()));
+                          screen.verifyClient(VerifyCodeRequest(
+                              userID: getIt<AuthService>().username,
+                              code: codeController.text,
+                              password:
+                                  getIt<AuthPrefsHelper>().getPassword()));
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
