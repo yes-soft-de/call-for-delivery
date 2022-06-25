@@ -1794,13 +1794,13 @@ class OrderController extends BaseController
 
         $result = $this->orderService->orderUpdate($request);
 
-        if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
-        }
+        // if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
+        //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
+        // }
 
-        if ($result === OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_CAPTAIN_ONGOING);
-        }
+        // if ($result === OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING) {
+        //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_CAPTAIN_ONGOING);
+        // }
 
         return $this->response($result, self::UPDATE);
     }
