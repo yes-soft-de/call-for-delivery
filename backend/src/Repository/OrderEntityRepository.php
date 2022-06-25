@@ -667,6 +667,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
 
+        $query->groupBy('orderEntity.id');
+
         return $query->getQuery()->getResult();
     }
     
@@ -1344,6 +1346,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.isHide = :hide')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+           
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
             ->getQuery()
             ->getResult();
