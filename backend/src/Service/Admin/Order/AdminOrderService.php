@@ -39,6 +39,7 @@ use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Subscription\SubscriptionService;
+use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 
 class AdminOrderService
 {
@@ -408,5 +409,57 @@ class AdminOrderService
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
+    }
+
+    public function getOrdersOngoingCountByCaptainIdForAdmin(int $captainId): int
+    {
+        return $this->adminOrderManager->getOrdersOngoingCountByCaptainIdForAdmin($captainId);
+    }
+
+    public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request): null|OrderUpdateToHiddenResponse|int
+    {
+        $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
+        if ($orderEntity) {
+            if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
+                return OrderStateConstant::ORDER_STATE_PENDING_INT;
+            }
+
+            $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($request->getOrderId());
+
+            if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+                return SubscriptionConstant::CARS_FINISHED_INT;
+            }
+
+            $order = $this->adminOrderManager->assignOrderToCaptain($request, $orderEntity);       
+
+            if($order) {
+                //create order chatRoom
+                $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
+
+                //create Notification Local for store
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
+                //create Notification Local for captain
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+
+                //create order log
+                $this->orderLogsService->createOrderLogsRequest($order);
+                //create firebase notification to store
+                try{
+                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+                // create firebase notification to captain
+                try{
+                    $this->notificationFirebaseService->notificationToUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ORDER_ASSIGN_BY_ADMIN);
+
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+            }
+        }
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }
 }

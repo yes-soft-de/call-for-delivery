@@ -17,6 +17,8 @@ use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailService;
+use App\Response\Admin\Captain\ReadyCaptainsAndCountOfTheirCurrentOrdersResponse;
+use App\Service\Admin\Order\AdminOrderService;
 
 class AdminCaptainService
 {
@@ -25,14 +27,16 @@ class AdminCaptainService
     private UploadFileHelperService $uploadFileHelperService;
     private ImageService $imageService;
     private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
+    private AdminOrderService $adminOrderService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService, AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService, AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService, AdminOrderService $adminOrderService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainManager = $adminCaptainManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->imageService = $imageService;
         $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
+        $this->adminOrderService = $adminOrderService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -201,5 +205,21 @@ class AdminCaptainService
     public function getCaptainsCountByStatusForAdmin(string $status): int
     {
         return $this->adminCaptainManager->getCaptainsCountByStatusForAdmin($status);
+    }
+
+    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
+    {
+        $response = [];
+
+        $captains = $this->adminCaptainManager->getReadyCaptainsAndCountOfTheirCurrentOrders();
+
+        foreach($captains as $captain) {
+            $captain['images'] = $this->imageService->getOneImageByItemIdAndEntityTypeAndImageAim($captain['id'], ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+            $captain['countOngoingOrders'] = $this->adminOrderService->getOrdersOngoingCountByCaptainIdForAdmin($captain['id']);
+            $response[] = $this->autoMapping->map("array", ReadyCaptainsAndCountOfTheirCurrentOrdersResponse::class, $captain);
+
+        }
+
+        return $response;
     }
 }

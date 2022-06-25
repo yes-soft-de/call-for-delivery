@@ -12,7 +12,8 @@ use App\Entity\ChatRoomEntity;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Entity\CaptainFinancialSystemDetailEntity;
-
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Image\ImageUseAsConstant;
 /**
  * @method CaptainEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -167,5 +168,38 @@ class CaptainEntityRepository extends ServiceEntityRepository
             
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
+    {
+        return $this->createQueryBuilder('captainEntity')
+
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+        'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+        'captainEntity.status')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+            ->addSelect('chatRoomEntity.roomId')
+           
+            ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = captainEntity.captainId')
+            ->andWhere('captainEntity.status = :status')
+            ->setParameter('status', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->andWhere('captainEntity.isOnline = :isOnline')
+            ->setParameter('isOnline', CaptainConstant::CAPTAIN_ONLINE_TRUE)
+
+            ->leftJoin(CaptainFinancialSystemDetailEntity::class, 'captainFinancialSystemDetailEntity', Join::WITH, 'captainFinancialSystemDetailEntity.captain = captainEntity.id')
+
+            ->andWhere('captainFinancialSystemDetailEntity.status = :financialSystemStatus')
+            ->setParameter('financialSystemStatus', CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE)
+         
+            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs')
+        
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            
+            ->orderBy('captainEntity.id', 'DESC')
+            
+            ->getQuery()
+            ->getResult();
     }
 }

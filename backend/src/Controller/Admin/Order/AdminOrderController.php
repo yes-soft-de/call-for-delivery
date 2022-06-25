@@ -25,6 +25,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
+use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
+use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Order\OrderStateConstant;
 
 /**
  * @Route("v1/admin/order/")
@@ -674,5 +677,80 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+     /**
+     * admin: Assign a order to a captain.
+     * @Route("assignordertocaptain", name="assignOrderToCaptain", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Assign a order to a captain",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="orderId"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return order.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9207 OR 9306"),
+     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error. OR error"),
+     *      )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function assignOrderToCaptain(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderAssignToCaptainByAdminRequest::class, (object) $data);
+            
+        $violations = $this->validator->validate($request);
+       
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
+
+        $response = $this->adminOrderService->assignOrderToCaptain($request);
+
+        if($response === OrderStateConstant::ORDER_STATE_PENDING_INT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
+        }
+
+        if ($response === SubscriptionConstant::CARS_FINISHED_INT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }

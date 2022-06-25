@@ -1470,4 +1470,19 @@ class OrderEntityRepository extends ServiceEntityRepository
            
            ->getOneOrNullResult();
    }
+   
+   public function getOrdersOngoingCountByCaptainIdForAdmin($captainId): int
+   {
+       return $this->createQueryBuilder('orderEntity')
+           ->select('count (orderEntity.id) as ongoingOrdersCount')
+          
+           ->andWhere('orderEntity.state IN (:statesArray)')
+           ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+         
+           ->andWhere('orderEntity.captainId = :captainId')
+           ->setParameter('captainId', $captainId)
+
+           ->getQuery()
+           ->getSingleScalarResult();
+   }
 }
