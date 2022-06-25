@@ -7,9 +7,4 @@ class OrderCancelByAdminResponse
     public int $id;
 
     public string $state;
-
-    /**
-     * @var string|null
-     */
-    public $statusError;
 }
