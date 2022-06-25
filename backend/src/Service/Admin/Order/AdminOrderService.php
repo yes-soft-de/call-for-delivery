@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -20,6 +21,7 @@ use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
+use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
@@ -461,5 +463,50 @@ class AdminOrderService
             }
         }
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }
+
+    // This function currently cancel NORMAL order exclusively (not a bid order)
+    public function orderCancelByAdmin(int $id): string|OrderCancelByAdminResponse
+    {
+        $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($id);
+
+        if ($orderEntity !== null) {
+            // if order of type bid, then use another api in order to cancel it
+            if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+                return OrderResultConstant::ORDER_TYPE_BID;
+            }
+
+            if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
+                // we can not cancel the order, because it may received by a captain and delivered or will be delivered to client
+                return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
+            }
+
+            $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+
+            if ($newUpdatedOrder) {
+                $this->orderLogsService->createOrderLogsRequest($newUpdatedOrder);
+
+                //create local notification to store
+                $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+
+                //create firebase notification to store
+                try {
+                    $this->notificationFirebaseService->notificationOrderStateForUser($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS,
+                        NotificationConstant::STORE);
+
+                } catch (\Exception $e) {
+                    error_log($e);
+                }
+
+                $this->subscriptionService->updateRemainingOrders($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $newUpdatedOrder);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 }
