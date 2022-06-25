@@ -629,6 +629,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
+        "orderCanceled": MessageLookupByLibrary.simpleMessage(
+            "Order has been canceled you can\'t accept it any more please go back to home screen "),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
@@ -647,6 +649,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
         "orderIsFinished":
             MessageLookupByLibrary.simpleMessage("Order is finished"),
+        "orderIsHidden": MessageLookupByLibrary.simpleMessage(
+            "This order has been hided you cannot accept it please wait until to recycle it"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
@@ -1086,6 +1090,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youAreOffline": MessageLookupByLibrary.simpleMessage(
+            "You are offline you can\'t accept any order right now"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

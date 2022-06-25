@@ -704,7 +704,12 @@
     "terms": "terms of use",
     "privacy": "privacy policy",
     "and": " & ",
-    "goingBackToHome": "Going Back To Home"
+    "goingBackToHome": "Going Back To Home",
+    "youAreOffline": "You are offline you can't accept any order right now",
+    "orderCanceled": "Order has been canceled you can't accept it any more please go back to home screen ",
+    "orderIsHidden": "This order has been hided you cannot accept it please wait until to recycle it"
+
+
 
 
 

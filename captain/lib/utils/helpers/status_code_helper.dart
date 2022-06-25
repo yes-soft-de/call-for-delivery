@@ -45,6 +45,12 @@ class StatusCodeHelper {
         return S.current.thisOrderAcceptedByAnotherCaptain;
       case '9105':
         return S.current.captainPlanNotAcceptedFromAdminYet;
+      case '9107':
+        return S.current.youAreOffline;
+      case '9125':
+        return S.current.orderCanceled;
+      case '9218':
+        return S.current.orderIsHidden;
       case '-1':
         return S.current.dataDecodeError;
       default:

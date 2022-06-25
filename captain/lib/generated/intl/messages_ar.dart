@@ -622,6 +622,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسداد الدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
+        "orderCanceled": MessageLookupByLibrary.simpleMessage(
+            "تم إلغاء الطلب من قبل المتجر ، لذلك لا يمكنك قبوله بعد الآن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":
@@ -639,6 +641,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
         "orderIsFinished":
             MessageLookupByLibrary.simpleMessage("تم انهاء الطلب"),
+        "orderIsHidden": MessageLookupByLibrary.simpleMessage(
+            "الطلب تم إخفاءه حاليا الرجاء انتظار إعادة نشره لاحقا"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
@@ -1083,6 +1087,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youAreOffline": MessageLookupByLibrary.simpleMessage(
+            "الحالة الحالية لك (غير نشط) لاتسمح لك بقبول طلبات حاليا الرجاء تغييرها ثم المحاولة لاحقا"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
