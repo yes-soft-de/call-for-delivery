@@ -52,8 +52,8 @@ class VerificationService
         if ($verificationEntity) {
             // send sms message with verification code if sending sms feature is activated
             if ($this->appFeatureService->getAppFeatureStatusByAppFeatureName(AppFeatureNameConstant::APP_FEATURE_SMS_NAME)) {
-//                $result = $this->sendSMSMessage($request->getUser()->getUserId(), $verificationEntity->getCode());
-//                $response->smsMessageStatus = $result;
+                $result = $this->SMSMessageService->sendSMSMessage($request->getUser()->getUserId(), $verificationEntity->getCode(), MessageUsedAsConstant::USER_VERIFICATION_MESSAGE);
+                $response->smsMessageStatus = $result;
             }
         }
 

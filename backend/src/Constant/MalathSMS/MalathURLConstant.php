@@ -15,4 +15,6 @@ final class MalathURLConstant
 
     // Url 4 Get & ADD Sender Names
     const URL_GATEWAY_SENDER = "/apis/users.aspx";
+
+    const SENDER_NAME_CONST = "C4+DELIVERY";
 }

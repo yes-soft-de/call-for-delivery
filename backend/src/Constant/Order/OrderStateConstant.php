@@ -27,4 +27,8 @@ final class OrderStateConstant
     const ORDER_STATE_CANCEL= "cancelled";
 
     const ORDER_STATE_ONGOING_FILTER_ARRAY = ["ongoing", "on way to pick order", "in store", "picked"];
+
+    const ORDER_STATE_PENDING_INT = 1;
+
+    const ORDER_STATE_CANCEL_INT = 0;
 }

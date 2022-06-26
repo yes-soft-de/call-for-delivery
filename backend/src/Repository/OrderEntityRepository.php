@@ -667,6 +667,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
         }
 
+        $query->groupBy('orderEntity.id');
+
         return $query->getQuery()->getResult();
     }
     
@@ -1344,6 +1346,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.isHide = :hide')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+           
+            ->andWhere('orderEntity.state != :cancelledState')
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
             ->getQuery()
             ->getResult();
@@ -1418,6 +1423,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.state = :pending')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
+            ->andWhere('orderEntity.isHide = :orderShow')
+            ->setParameter('orderShow', OrderIsHideConstant::ORDER_SHOW)
+
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -1464,5 +1472,20 @@ class OrderEntityRepository extends ServiceEntityRepository
            ->getQuery()
            
            ->getOneOrNullResult();
+   }
+   
+   public function getOrdersOngoingCountByCaptainIdForAdmin($captainId): int
+   {
+       return $this->createQueryBuilder('orderEntity')
+           ->select('count (orderEntity.id) as ongoingOrdersCount')
+          
+           ->andWhere('orderEntity.state IN (:statesArray)')
+           ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+         
+           ->andWhere('orderEntity.captainId = :captainId')
+           ->setParameter('captainId', $captainId)
+
+           ->getQuery()
+           ->getSingleScalarResult();
    }
 }

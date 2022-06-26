@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -20,6 +21,7 @@ use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
+use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
@@ -39,6 +41,7 @@ use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Subscription\SubscriptionService;
+use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 
 class AdminOrderService
 {
@@ -327,19 +330,19 @@ class AdminOrderService
         $order = $this->adminOrderManager->getOrderByIdWithStoreOrderDetailForAdmin($request->getId());
         if($order) {
 
-            if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
-              if( $request->getBranch() !== $order['storeOwnerBranchId']) {
+            // if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            //   if( $request->getBranch() !== $order['storeOwnerBranchId']) {
 
-                return OrderResultConstant::ERROR_UPDATE_BRANCH;
-              }
-            }
+            //     return OrderResultConstant::ERROR_UPDATE_BRANCH;
+            //   }
+            // }
 
-            if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
-                if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
+            // if( $order['state'] === OrderStateConstant::ORDER_STATE_ONGOING) {
+            //     if( new DateTime($request->getDeliveryDate()) != $order['deliveryDate'] || $request->getDestination() !== $order['destination'] || $request->getDetail() !== $order['detail']) {
 
-                    return OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
-                  }
-            }
+            //         return OrderResultConstant::ERROR_UPDATE_CAPTAIN_ONGOING;
+            //       }
+            // }
 
             $order = $this->adminOrderManager->orderUpdateByAdmin($request);
 
@@ -355,7 +358,7 @@ class AdminOrderService
             }
         }
       
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class,  $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
       }
 
     public function createOrderByAdmin(OrderCreateByAdminRequest $request): string|CanCreateOrderResponse|OrderCreateByAdminResponse
@@ -408,5 +411,102 @@ class AdminOrderService
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
+    }
+
+    public function getOrdersOngoingCountByCaptainIdForAdmin(int $captainId): int
+    {
+        return $this->adminOrderManager->getOrdersOngoingCountByCaptainIdForAdmin($captainId);
+    }
+
+    public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request): null|OrderUpdateToHiddenResponse|int
+    {
+        $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
+        if ($orderEntity) {
+            if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
+                return OrderStateConstant::ORDER_STATE_PENDING_INT;
+            }
+
+            $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($request->getOrderId());
+
+            if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
+                return SubscriptionConstant::CARS_FINISHED_INT;
+            }
+
+            $order = $this->adminOrderManager->assignOrderToCaptain($request, $orderEntity);       
+
+            if($order) {
+                //create order chatRoom
+                $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
+
+                //create Notification Local for store
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
+                //create Notification Local for captain
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+
+                //create order log
+                $this->orderLogsService->createOrderLogsRequest($order);
+                //create firebase notification to store
+                try{
+                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+                // create firebase notification to captain
+                try{
+                    $this->notificationFirebaseService->notificationToUser($order->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ORDER_ASSIGN_BY_ADMIN);
+
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+            }
+        }
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }
+
+    // This function currently cancel NORMAL order exclusively (not a bid order)
+    public function orderCancelByAdmin(int $id): string|OrderCancelByAdminResponse
+    {
+        $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($id);
+
+        if ($orderEntity !== null) {
+            // if order of type bid, then use another api in order to cancel it
+            if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+                return OrderResultConstant::ORDER_TYPE_BID;
+            }
+
+            if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
+                // we can not cancel the order, because it may received by a captain and delivered or will be delivered to client
+                return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
+            }
+
+            $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+
+            if ($newUpdatedOrder) {
+                $this->orderLogsService->createOrderLogsRequest($newUpdatedOrder);
+
+                //create local notification to store
+                $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+
+                //create firebase notification to store
+                try {
+                    $this->notificationFirebaseService->notificationOrderStateForUser($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS,
+                        NotificationConstant::STORE);
+
+                } catch (\Exception $e) {
+                    error_log($e);
+                }
+
+                $this->subscriptionService->updateRemainingOrders($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $newUpdatedOrder);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 }

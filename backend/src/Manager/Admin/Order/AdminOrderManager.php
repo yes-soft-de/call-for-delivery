@@ -16,6 +16,8 @@ use App\Constant\Order\OrderResultConstant;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
 use App\AutoMapping;
 use App\Manager\Admin\Order\AdminStoreOrderDetailsManager;
+use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
+use App\Manager\Admin\Captain\AdminCaptainManager;
 
 class AdminOrderManager
 {
@@ -23,13 +25,15 @@ class AdminOrderManager
     private EntityManagerInterface $entityManager;
     private OrderEntityRepository $orderEntityRepository;
     private AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager;
+    private AdminCaptainManager $adminCaptainManager;
 
-    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository, AutoMapping $autoMapping, AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager)
+    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository, AutoMapping $autoMapping, AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager, AdminCaptainManager $adminCaptainManager)
     {
         $this->entityManager = $entityManager;
         $this->orderEntityRepository = $orderEntityRepository;
         $this->autoMapping = $autoMapping;
         $this->adminStoreOrderDetailsManager = $adminStoreOrderDetailsManager;
+        $this->adminCaptainManager = $adminCaptainManager;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -163,6 +167,37 @@ class AdminOrderManager
         $this->entityManager->flush();
 
         $this->adminStoreOrderDetailsManager->createOrderDetailsByAdmin($orderEntity, $request);
+
+        return $orderEntity;
+    }
+    
+    public function getOrdersOngoingCountByCaptainIdForAdmin(int $captainId): int
+    {
+        return $this->orderEntityRepository->getOrdersOngoingCountByCaptainIdForAdmin($captainId);
+    }
+
+    public function getOrderById(int $orderId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->find($orderId);
+    }
+
+    public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, OrderEntity $orderEntity): OrderEntity
+    {
+        $captain = $this->adminCaptainManager->getCaptainProfileById($request->getId());
+       
+        $orderEntity->setCaptainId($captain);
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_ON_WAY);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function updateOrderStatusToCancelled(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        $this->entityManager->flush();
 
         return $orderEntity;
     }

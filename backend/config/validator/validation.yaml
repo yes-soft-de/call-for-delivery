@@ -639,3 +639,10 @@ App\Request\Admin\Order\OrderCreateByAdminRequest:
             - NotBlank: ~
         storeOwner:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        orderId:
+            - NotBlank: ~
