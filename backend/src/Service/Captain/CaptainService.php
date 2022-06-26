@@ -51,7 +51,7 @@ class CaptainService
         }
 
         // create verification code for the user
-        //$this->createVerificationCodeForCaptain($userRegister);
+        $this->createVerificationCodeForCaptain($userRegister);
       
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
     }

@@ -3,6 +3,7 @@
 namespace App\Service\MalathSMS;
 
 use App\Constant\MalathSMS\MalathSendMessageResultConstant;
+use App\Constant\MalathSMS\MalathURLConstant;
 use App\Constant\MalathSMS\MessageUsedAsConstant;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -30,7 +31,7 @@ class SMSMessageService
         $this->malathSMSService->setUserName($this->params->get('malath_username'));
         $this->malathSMSService->setPassword($this->params->get('malath_password'));
 
-        $result = $this->malathSMSService->sendSMS($phone, "MANDOB-AD", $messageText);
+        $result = $this->malathSMSService->sendSMS($phone, MalathURLConstant::SENDER_NAME_CONST, $messageText);
 
         if($result)
         {

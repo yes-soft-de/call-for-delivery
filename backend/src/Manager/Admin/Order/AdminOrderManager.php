@@ -192,4 +192,13 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function updateOrderStatusToCancelled(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }
