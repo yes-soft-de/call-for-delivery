@@ -21,9 +21,7 @@ class ForgotStateUpdatePassword extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return Stack(
-      children: [
-        Form(
+    return    Form(
           key: _verifyKey,
           child: ListView(
             physics: const BouncingScrollPhysics(
@@ -50,17 +48,17 @@ class ForgotStateUpdatePassword extends States {
                   style: tileStyle,
                 ),
               ),
-              ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                    preIcon: const Icon(Icons.lock),
-                    last: false,
-                    controller: passwordController,
-                    password: true,
-                    contentPadding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    hintText: S.of(context).newPassword,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomLoginFormField(
+                  preIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).disabledColor,
                   ),
+                  confirmationPassword: confirmPasswordController.text,
+                  controller: passwordController,
+                  password: true,
+                  hintText: S.of(context).newPassword,
                 ),
               ),
               Padding(
@@ -71,17 +69,18 @@ class ForgotStateUpdatePassword extends States {
                   style: tileStyle,
                 ),
               ),
-              ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomLoginFormField(
-                    preIcon: const Icon(Icons.lock),
-                    last: true,
-                    controller: confirmPasswordController,
-                    password: true,
-                    contentPadding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    hintText: S.of(context).confirmNewPass,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomLoginFormField(
+                  preIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).disabledColor,
                   ),
+                  last: true,
+                  controller: confirmPasswordController,
+                  confirmationPassword: passwordController.text,
+                  password: true,
+                  hintText: S.of(context).confirmNewPass,
                 ),
               ),
               Padding(
@@ -92,9 +91,7 @@ class ForgotStateUpdatePassword extends States {
                   height: 50,
                   child: ElevatedButton(
                       onPressed: () {
-                        if (_verifyKey.currentState!.validate() &&
-                            passwordController.text ==
-                                confirmPasswordController.text) {
+                        if (_verifyKey.currentState!.validate()) {
                           screenState.updatePassword(UpdatePassRequest(
                               userID: getIt<AuthService>().username,
                               newPassword: passwordController.text));
@@ -107,7 +104,6 @@ class ForgotStateUpdatePassword extends States {
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        primary: Theme.of(context).accentColor,
                         textStyle: const TextStyle(color: Colors.white),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -132,8 +128,7 @@ class ForgotStateUpdatePassword extends States {
               ),
             ],
           ),
-        ),
-      ],
-    );
+        )
+     ;
   }
 }

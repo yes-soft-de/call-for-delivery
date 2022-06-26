@@ -104,7 +104,7 @@ class AuthService {
     _prefsHelper.setUsername(request.userID ?? '');
     _prefsHelper.setPassword(request.password ?? '');
     //_authSubject.add(AuthStatus.CODE_SENT);
-     loginApi(request.userID ?? '', request.password ?? '');
+    loginApi(request.userID ?? '', request.password ?? '');
   }
 
   Future<void> verifyCodeApi(VerifyCodeRequest request) async {
@@ -183,7 +183,7 @@ class AuthService {
   }
 
   Future<void> resetPassRequest(ResetPassRequest request) async {
-    request.role = 'ROLE_CLIENT';
+    request.role = 'ROLE_CAPTAIN';
     // Create the profile in our database
     RegisterResponse? registerResponse =
         await _authManager.resetPassRequest(request);
@@ -231,7 +231,9 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           registerResponse.statusCode ?? '0'));
     } else {
-      loginApi(username, request.newPassword);
+      loginApi(username, request.newPassword).whenComplete(() {
+        _authSubject.add(AuthStatus.PASSWORD_RESET);
+      });
     }
   }
 
