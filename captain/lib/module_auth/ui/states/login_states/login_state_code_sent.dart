@@ -51,11 +51,16 @@ class LoginStateCodeSent extends LoginState {
                 ? () {
                     screen.resendCode(VerifyCodeRequest(
                         userID: getIt<AuthService>().username,
-                        code: _confirmationController.text.trim(),
                         password: getIt<AuthPrefsHelper>().getPassword()));
                   }
                 : null,
-            child: Text(S.of(context).resendCode),
+            child: Text(
+              S.of(context).resendCode,
+              style: TextStyle(
+                color:
+                    retryEnabled ? Theme.of(context).colorScheme.primary : null,
+              ),
+            ),
           ),
           loading
               ? Text(S.of(context).loading)
@@ -66,11 +71,13 @@ class LoginStateCodeSent extends LoginState {
                     splashColor: Colors.transparent,
                     onTap: () {
                       loading = true;
-                      Future.delayed(Duration(seconds: 10), () {
+                      Future.delayed(const Duration(seconds: 10), () {
                         loading = false;
                       });
                       screen.refresh();
-                      //screen.confirmCaptainSMS(_confirmationController.text);
+                      screen.verifyClient(VerifyCodeRequest(
+                          userID: getIt<AuthService>().username,
+                          code: _confirmationController.text));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

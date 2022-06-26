@@ -1054,6 +1054,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("User deleted successfully"),
+        "userNotVerified":
+            MessageLookupByLibrary.simpleMessage("User not verified"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),

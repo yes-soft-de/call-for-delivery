@@ -7099,6 +7099,16 @@ class S {
       args: [],
     );
   }
+
+  /// `User not verified`
+  String get userNotVerified {
+    return Intl.message(
+      'User not verified',
+      name: 'userNotVerified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

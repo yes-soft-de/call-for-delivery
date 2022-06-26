@@ -75,7 +75,8 @@ class RegisterScreenState extends State<RegisterScreen> {
         appBar: CustomC4dAppBar.appBar(
           context,
           title: S.of(context).register,
-          canGoBack: canPop,
+          canGoBack:
+              _currentState is RegisterStatePhoneCodeSent ? false : canPop,
         ),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting

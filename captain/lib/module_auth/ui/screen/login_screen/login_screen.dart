@@ -99,9 +99,11 @@ class LoginScreenState extends State<LoginScreen> {
   void loginClient(String email, String password) {
     widget._stateManager.loginClient(email, password, this);
   }
- void resendCode(VerifyCodeRequest request) {
+
+  void resendCode(VerifyCodeRequest request) {
     widget._stateManager.resendCode(request, this);
   }
+
   void moveToNext() {
     Navigator.of(context).pushNamedAndRemoveUntil(
         AuthPrefsHelper().getAccountStatusPhase(), (route) => false,
@@ -118,12 +120,20 @@ class LoginScreenState extends State<LoginScreen> {
           context, SplashRoutes.SPLASH_SCREEN, (route) => false);
       return;
     } else {
-      Navigator.pushNamed(context, AuthorizationRoutes.REGISTER_SCREEN,
-          arguments: {'username': '$userID', 'password': '$password'});
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AuthorizationRoutes.REGISTER_SCREEN,
+        (route) => false,
+        arguments: {'username': '$userID', 'password': '$password'},
+      );
       CustomFlushBarHelper.createError(
               title: S.current.warnning, message: S.current.notVerifiedNumber)
           .show(context);
     }
+  }
+
+  void verifyClient(VerifyCodeRequest request) {
+    widget._stateManager.verifyClient(request, this);
   }
 
   void restPass(ResetPassRequest request) {

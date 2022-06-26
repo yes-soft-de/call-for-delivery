@@ -70,8 +70,15 @@ class LoginStateManager {
       VerifyCodeRequest request, LoginScreenState _loginScreenState) {
     _loadingStateSubject.add(AsyncSnapshot.waiting());
     _screenState = _loginScreenState;
-    _authService
-        .resendCode(request)
-        .whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
+    _authService.resendCode(request).whenComplete(
+        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
+  }
+
+  void verifyClient(
+      VerifyCodeRequest request, LoginScreenState _loginScreenState) {
+    _loadingStateSubject.add(const AsyncSnapshot.waiting());
+    _screenState = _loginScreenState;
+    _authService.verifyCodeApi(request).whenComplete(
+        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
   }
 }

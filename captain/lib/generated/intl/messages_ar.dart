@@ -1048,6 +1048,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
+        "userNotVerified":
+            MessageLookupByLibrary.simpleMessage("المستخدم يحتاج لتأكيد هويته"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
