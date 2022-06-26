@@ -47,7 +47,7 @@ class ResetPasswordOrderService
 
             if ($resetPasswordOrder) {
                 // send code in SMS message
-                //$this->SMSMessageService->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode(), MessageUsedAsConstant::RESET_PASSWORD_MESSAGE);
+                $this->SMSMessageService->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode(), MessageUsedAsConstant::RESET_PASSWORD_MESSAGE);
 
                 return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetResponse::class, $resetPasswordOrder);
             }
