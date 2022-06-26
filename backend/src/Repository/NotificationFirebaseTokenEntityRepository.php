@@ -97,4 +97,16 @@ class NotificationFirebaseTokenEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function  getTokens(): ?array
+    {
+        return $this->createQueryBuilder('notificationFirebaseToken')
+            ->select('notificationFirebaseToken.id', 'notificationFirebaseToken.token', 'notificationFirebaseToken.appType', 'notificationFirebaseToken.createdAt', 'notificationFirebaseToken.sound')
+          
+            ->where('notificationFirebaseToken.appType != :appType')
+            ->setParameter('appType', NotificationTokenConstant::APP_TYPE_ADMIN)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
