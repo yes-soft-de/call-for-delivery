@@ -689,4 +689,75 @@ class NotificationFirebaseService
 
         $this->messaging->sendMulticast($message, $token);
     }
+
+    //Admin Notification To Apps
+    public function notificationToAppsFromAdmin(string $appType, string  $text)
+    {
+        
+        if($appType === NotificationConstant::APP_TYPE_ALL) {
+            $getTokens = $this->notificationTokensService->getTokens();
+        }
+
+        if($appType === NotificationConstant::APP_TYPE_CAPTAIN) {
+            $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_CAPTAIN);
+        }
+        
+        if($appType === NotificationConstant::APP_TYPE_STORE) {
+            $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_STORE);
+        }
+
+        if($appType === NotificationConstant::APP_TYPE_SUPPLIER) {
+            $getTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_SUPPLIER);
+        }
+
+        if (! empty($getTokens)) {
+
+            $payload = [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'navigate_route' => NotificationFirebaseConstant::URL_NOTIFICATION,
+                'argument' => null,
+            ];
+
+            $config = AndroidConfig::fromArray([
+                "notification" => [
+                    "channel_id" => "C4d_Notifications_custom_sound_test"
+                ]
+            ]);
+
+            foreach ($getTokens as $token) {
+                if ($token['token'] !== null) {
+                    $deviceToken = [];
+
+                    $deviceToken[] = $token['token'];
+
+                    $sound = $token['sound'];
+
+                    if (! $sound) {
+                        $sound = NotificationTokenConstant::SOUND;
+                    }
+
+                    $apnsConfig = ApnsConfig::fromArray([
+                        'headers' => [
+                            'apns-priority' => '10',
+                            'apns-push-type' => 'alert'
+                        ],
+                        'payload' => [
+                            'aps' => [
+                                'sound' => $sound
+                            ]
+                        ]
+                    ]);
+
+                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                        $text))
+                        ->withHighestPossiblePriority()
+                        ->withData($payload)
+                        ->withAndroidConfig($config)
+                        ->withApnsConfig($apnsConfig);
+dd($message);
+                    $this->messaging->sendMulticast($message, $deviceToken);
+                }
+            }
+        }
+    }
 }

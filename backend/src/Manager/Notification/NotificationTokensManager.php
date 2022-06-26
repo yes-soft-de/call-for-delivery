@@ -9,6 +9,7 @@ use App\Repository\NotificationFirebaseTokenEntityRepository;
 use App\Request\Notification\NotificationTokensCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\User\UserManager;
+use App\Constant\Notification\NotificationTokenConstant;
 
 class NotificationTokensManager
 {
@@ -69,4 +70,8 @@ class NotificationTokensManager
         return $this->notificationFirebaseTokenEntityRepository->getCaptainsOnlineTokens();
     }
 
+    public function getTokens(): ?array
+    {
+        return $this->notificationFirebaseTokenEntityRepository->getTokens();
+    }
 }
