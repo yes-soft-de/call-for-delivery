@@ -754,8 +754,8 @@ class NotificationFirebaseService
                         ->withData($payload)
                         ->withAndroidConfig($config)
                         ->withApnsConfig($apnsConfig);
-dd($message);
-                    $this->messaging->sendMulticast($message, $deviceToken);
+
+                        $this->messaging->sendMulticast($message, $deviceToken);
                 }
             }
         }
