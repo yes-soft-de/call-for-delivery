@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FilterBar extends StatefulWidget {
+class FilterDetailsBar extends StatefulWidget {
   /// current index of the selected item
   int currentIndex;
 
@@ -8,7 +8,7 @@ class FilterBar extends StatefulWidget {
   final Function(int) onItemSelected;
 
   /// the item list
-  final List<FilterItem> items;
+  final List<FilterDetailsItem> items;
 
   /// color of the selected item content
   final Color selectedContent;
@@ -40,7 +40,7 @@ class FilterBar extends StatefulWidget {
   /// height
   final double? height;
 
-  FilterBar(
+  FilterDetailsBar(
       {required this.currentIndex,
       required this.onItemSelected,
       required this.items,
@@ -61,10 +61,10 @@ class FilterBar extends StatefulWidget {
   }
 
   @override
-  _FilterBarState createState() => _FilterBarState();
+  _FilterDetailsBarState createState() => _FilterDetailsBarState();
 }
 
-class _FilterBarState extends State<FilterBar> {
+class _FilterDetailsBarState extends State<FilterDetailsBar> {
   late Duration animationDuration;
   BorderRadius? cursorRadius;
   late bool floating;
@@ -80,7 +80,6 @@ class _FilterBarState extends State<FilterBar> {
   String? myLocalChanges;
   @override
   void initState() {
-    firstUse = true;
     _reset();
     super.initState();
   }
@@ -92,7 +91,7 @@ class _FilterBarState extends State<FilterBar> {
     borderRadius = widget.borderRadius;
     padding = widget.padding;
     firstUse = true;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       try {
         if (firstUse) {
           _keys.forEach((element) {
@@ -114,7 +113,7 @@ class _FilterBarState extends State<FilterBar> {
   }
 
   @override
-  void didUpdateWidget(FilterBar oldWidget) {
+  void didUpdateWidget(FilterDetailsBar oldWidget) {
     if (myLocalChanges != Localizations.localeOf(context).languageCode) {
       myLocalChanges = Localizations.localeOf(context).languageCode;
       _reset();
@@ -145,8 +144,10 @@ class _FilterBarState extends State<FilterBar> {
                   end = true;
                   setState(() {});
                 },
-                left: firstUse ? null : (initialOffset?.dx ?? 0),
-                duration: animationDuration,
+                left: initialOffset?.dx ?? 0,
+                duration: firstUse
+                    ? const Duration(milliseconds: 1)
+                    : animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
                   height: itemSize.isEmpty
@@ -187,19 +188,14 @@ class _FilterBarState extends State<FilterBar> {
       _keys.add(GlobalKey(debugLabel: element.label));
       barItems.add(
         Expanded(
-          child: InkWell(
-              splashColor: Colors.transparent,
+          child: GestureDetector(
               key: _keys[element.index],
               onTap: () {
                 if (widget.currentIndex != element.index) {
-                  if (firstUse == false) {
-                    end = false;
-                  }
+                  end = false;
                 }
                 widget.currentIndex = element.index;
-                if (firstUse) {
-                  firstUse = false;
-                }
+                firstUse = false;
                 try {
                   RenderBox render = _keys[element.index]
                       .currentContext
@@ -250,9 +246,9 @@ class _FilterBarState extends State<FilterBar> {
   }
 }
 
-class FilterItem {
+class FilterDetailsItem {
   final String label;
   late int index;
 
-  FilterItem({required this.label});
+  FilterDetailsItem({required this.label});
 }

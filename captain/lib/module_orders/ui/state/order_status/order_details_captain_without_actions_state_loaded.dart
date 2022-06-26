@@ -6,6 +6,7 @@ import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
@@ -175,7 +176,7 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
               child: Column(
                 children: [
                   // select bar
-                  FilterBar(
+                  FilterDetailsBar(
                     cursorRadius: BorderRadius.circular(25),
                     animationDuration: const Duration(milliseconds: 350),
                     backgroundColor: Theme.of(context).backgroundColor,
@@ -185,8 +186,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                     height: 40,
                     cursorColor: Theme.of(context).colorScheme.primary,
                     items: [
-                      FilterItem(label: S.current.controlPanel),
-                      FilterItem(label: S.current.orderDetails),
+                      FilterDetailsItem(label: S.current.controlPanel),
+                      FilterDetailsItem(label: S.current.orderDetails),
                     ],
                     onItemSelected: (index) {
                       screenState.currentIndex = index;
