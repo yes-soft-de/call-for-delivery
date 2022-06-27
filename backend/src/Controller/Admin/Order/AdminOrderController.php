@@ -28,6 +28,7 @@ use App\Request\Admin\Order\UpdateOrderByAdminRequest;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")
@@ -833,5 +834,66 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Admin: update order state by admin. 
+     * @Route("orderstateupdatebyadmin", name="updateOrderStateByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new package category create by admin request",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="state", description="on way to pick order or in store or ongoing or delivered"),
+     *              @OA\Property(type="number", property="kilometer"),
+     *              @OA\Property(type="number", property="captainOrderCost"),
+     *              @OA\Property(type="string", property="noteCaptainOrderCost"),
+     *              @OA\Property(type="integer", property="paidToProvider"),
+     *      )
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer") 
+     */
+    public function updateOrderStateByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStateUpdateByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->updateOrderStateByAdmin($request);
+
+        return $this->response($result, self::UPDATE);
     }
 }

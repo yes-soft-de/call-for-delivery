@@ -42,6 +42,10 @@ use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Subscription\SubscriptionService;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
+use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
+use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
+use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 
 class AdminOrderService
 {
@@ -57,10 +61,13 @@ class AdminOrderService
     private StoreOwnerProfileService $storeOwnerProfileService;
     private SubscriptionService $subscriptionService;
     private StoreOwnerBranchService $storeOwnerBranchService;
+    private CaptainFinancialDuesService $captainFinancialDuesService;
+    private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
+    private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
-                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService)
+                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService,CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -74,6 +81,9 @@ class AdminOrderService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->subscriptionService = $subscriptionService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
+       $this->captainFinancialDuesService = $captainFinancialDuesService;
+       $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
+       $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -509,4 +519,36 @@ class AdminOrderService
 
         return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
+
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): ?OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateOrderStateByAdmin($request);
+       
+        if($order) {
+            if($order->getCaptainId()) {
+
+                if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    //create or update captainFinancialDues
+                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
+                  
+                    //save the price of the order in cash in case the captain does not pay the store
+                    if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
+                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
+                    }
+                }
+
+                // create firebase notification to captain
+                try{
+                    $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+                //TODO create log after task 407 is done
+            }
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+      }
 }
