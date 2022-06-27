@@ -760,4 +760,77 @@ class NotificationFirebaseService
             }
         }
     }
+    //when admin update state order 
+    public function notificationOrderStateForUserByAdmin(int $userId, int $orderId, string $orderState, string $userType)
+    {
+        if($userType === NotificationConstant::CAPTAIN) {
+            $text = $this->getOrderStateForCaptainWhenAdminUpdateOrderState($orderState);
+        }
+
+        $token = [];
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $msg = $text." ".$orderId;
+      
+        $sound = $token['sound'];
+
+        if (! $sound) {
+            $sound = NotificationTokenConstant::SOUND;
+        }
+        
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert'
+            ],
+            'payload' => [
+                'aps' => [
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);;
+
+        $this->messaging->sendMulticast($message, $token);
+    }
+
+    public function getOrderStateForCaptainWhenAdminUpdateOrderState($state): string
+     {
+         if ($state === OrderStateConstant::ORDER_STATE_ON_WAY){
+             $state = NotificationFirebaseConstant::STATE_ON_WAY_PICK_ORDER_BY_ADMIN;
+         }
+         if ($state === OrderStateConstant::ORDER_STATE_IN_STORE){
+             $state =  NotificationFirebaseConstant::STATE_IN_STORE_BY_ADMIN;
+         }
+         if ($state === OrderStateConstant::ORDER_STATE_ONGOING){
+             $state =  NotificationFirebaseConstant::STATE_ONGOING_BY_ADMIN;
+         }
+         if ($state === OrderStateConstant::ORDER_STATE_DELIVERED){
+             $state =  NotificationFirebaseConstant::STATE_DELIVERED_BY_ADMIN;
+         }
+ 
+         return $state;
+     }
 }

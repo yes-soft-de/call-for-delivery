@@ -646,3 +646,10 @@ App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest:
             - NotBlank: ~
         orderId:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderStateUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        state:
+            - NotBlank: ~
