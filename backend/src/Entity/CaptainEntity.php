@@ -63,7 +63,7 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: OrderChatRoomEntity::class)]
     private $orderChatRoomEntity;
 
-    #[ORM\OneToMany(mappedBy: 'captainProfile', targetEntity: OrderLogsEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'captainProfile', targetEntity: OrderTimeLineEntity::class)]
     private $OrderLogsEntity;
 
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainPaymentEntity::class)]
@@ -327,14 +327,14 @@ class CaptainEntity
     }
 
     /**
-     * @return Collection|OrderLogsEntity[]
+     * @return Collection|OrderTimeLineEntity[]
      */
     public function getOrderLogsEntity(): Collection
     {
         return $this->OrderLogsEntity;
     }
 
-    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    public function addOrderLogsEntity(OrderTimeLineEntity $orderLogsEntity): self
     {
         if (!$this->OrderLogsEntity->contains($orderLogsEntity)) {
             $this->OrderLogsEntity[] = $orderLogsEntity;
@@ -344,7 +344,7 @@ class CaptainEntity
         return $this;
     }
 
-    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    public function removeOrderLogsEntity(OrderTimeLineEntity $orderLogsEntity): self
     {
         if ($this->OrderLogsEntity->removeElement($orderLogsEntity)) {
             // set the owning side to null (unless already changed)

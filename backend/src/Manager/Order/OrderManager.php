@@ -7,9 +7,9 @@ use App\Constant\Order\OrderResultConstant;
 use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
-use App\Entity\OrderLogsEntity;
+use App\Entity\OrderTimeLineEntity;
 use App\Manager\BidDetails\BidDetailsManager;
-use App\Manager\OrderLogs\OrderLogsManager;
+use App\Manager\OrderTimeLine\OrderTimeLineManager;
 use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -18,7 +18,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
-use App\Request\OrderLogs\OrderLogsCreateRequest;
+use App\Request\OrderTimeLine\OrderLogsCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Manager\Captain\CaptainManager;
@@ -39,10 +39,10 @@ class OrderManager
    private StoreOrderDetailsManager $storeOrderDetailsManager;
    private CaptainManager $captainManager;
    private BidDetailsManager $bidDetailsManager;
-   private OrderLogsManager $orderLogsManager;
+   private OrderTimeLineManager $orderTimeLineManager;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager, OrderLogsManager $orderLogsManager)
+                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager, OrderTimeLineManager $orderTimeLineManager)
     {
       $this->autoMapping = $autoMapping;
       $this->entityManager = $entityManager;
@@ -51,7 +51,7 @@ class OrderManager
       $this->storeOrderDetailsManager = $storeOrderDetailsManager;
       $this->captainManager = $captainManager;
       $this->bidDetailsManager = $bidDetailsManager;
-      $this->orderLogsManager = $orderLogsManager;
+      $this->orderTimeLineManager = $orderTimeLineManager;
     }
     
     /**
@@ -361,7 +361,7 @@ class OrderManager
         return $this->orderRepository->getSpecificBidOrderForStore($id);
     }
 
-    public function createOrderLog(OrderEntity $orderEntity): ?OrderLogsEntity
+    public function createOrderLog(OrderEntity $orderEntity): ?OrderTimeLineEntity
     {
         $request = new OrderLogsCreateRequest();
 
@@ -381,7 +381,7 @@ class OrderManager
             }
         }
 
-        return $this->orderLogsManager->createOrderLogs($request);
+        return $this->orderTimeLineManager->createOrderLogs($request);
     }
 
     public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
