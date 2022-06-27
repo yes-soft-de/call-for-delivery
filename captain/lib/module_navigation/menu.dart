@@ -13,6 +13,7 @@ import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
@@ -198,10 +199,47 @@ class MenuScreen extends StatelessWidget {
                 leading: const Icon(Icons.privacy_tip),
                 title: Text(S.of(context).privacyPolicy),
               ),
+              FutureBuilder(
+                  future: getVersion(),
+                  builder: (ctx, AsyncSnapshot<PackageInfo> snap) {
+                    if (snap.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else if (snap.hasData) {
+                      PackageInfo packageInfo = snap.data!;
+                      String appName = packageInfo.appName;
+                      String packageName = packageInfo.packageName;
+                      String version = packageInfo.version;
+                      String buildNumber = packageInfo.buildNumber;
+                      return Column(
+                        children: [
+                          ClipOval(
+                            child: Image.asset(
+                              'assets/icon/logo.jpg',
+                              width: 75,
+                              height: 75,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                          Text(appName),
+                          Text(
+                            version,
+                            style: TextStyle(
+                                color: Theme.of(context).disabledColor),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })
             ],
           ),
         ),
       ],
     ));
+  }
+
+  Future<PackageInfo> getVersion() async {
+    return await PackageInfo.fromPlatform();
   }
 }

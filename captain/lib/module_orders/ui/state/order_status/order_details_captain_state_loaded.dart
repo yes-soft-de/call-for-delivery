@@ -430,7 +430,6 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     child: IconButton(
                       onPressed: () async {
                         screenState.speak(orderInfo.note);
-
                         screenState.refresh();
                       },
                       icon: const Icon(Icons.record_voice_over_rounded),

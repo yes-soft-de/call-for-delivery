@@ -55,13 +55,15 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   dynamic args;
-
+  var flag = true;
   @override
   Widget build(BuildContext context) {
     args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null) {
+    if (args != null && flag) {
       if (args is Map) {
         _currentState = RegisterStatePhoneCodeSent(this);
+        flag = false;
+        refresh();
       }
     }
     return GestureDetector(

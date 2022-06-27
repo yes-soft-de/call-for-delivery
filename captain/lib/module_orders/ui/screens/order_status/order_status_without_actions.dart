@@ -13,6 +13,7 @@ import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as loc;
+
 @injectable
 class OrderStatusWithoutActionsScreen extends StatefulWidget {
   final OrderStatusWithoutActionsStateManager stateManager;
@@ -44,6 +45,7 @@ class OrderStatusWithoutActionsScreenState
     paymentController.dispose();
     super.dispose();
   }
+
   LatLng? myLocation;
   @override
   void initState() {
@@ -83,6 +85,9 @@ class OrderStatusWithoutActionsScreenState
   }
 
   Future speak(String speak) async {
+    if (speak == '') {
+      return;
+    }
     await flutterTts.speak(speak);
   }
 
