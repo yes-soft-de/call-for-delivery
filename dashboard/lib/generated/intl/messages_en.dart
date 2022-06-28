@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this captain finance plan"),
+        "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "Are sure about deleting this order ? "),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "bankAccountNumber":
@@ -204,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please choose your plan"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("Choose Receipt Location"),
+        "chooseStore": MessageLookupByLibrary.simpleMessage("Choose store"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
@@ -971,6 +974,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("offer updated successfully"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
+        "updateOrderState":
+            MessageLookupByLibrary.simpleMessage("Update order state"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrderWarning": MessageLookupByLibrary.simpleMessage(

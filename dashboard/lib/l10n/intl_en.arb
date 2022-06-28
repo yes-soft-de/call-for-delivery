@@ -699,7 +699,13 @@
     "editOrder": "Edit order",
     "confirmUpdateOrder": "Confirm update order",
     "orderUpdatedSuccessfully": "Order updated successfully",
-    "lastWeek": "Last week"
+    "lastWeek": "Last week",
+    "chooseStore": "Choose store",
+    "areYouSureAboutDeleteOrder": "Are sure about deleting this order ? ",
+    "updateOrderState": "Update order state"
+
+
+
 
 
 

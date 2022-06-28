@@ -6829,6 +6829,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Choose store`
+  String get chooseStore {
+    return Intl.message(
+      'Choose store',
+      name: 'chooseStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about deleting this order ? `
+  String get areYouSureAboutDeleteOrder {
+    return Intl.message(
+      'Are sure about deleting this order ? ',
+      name: 'areYouSureAboutDeleteOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update order state`
+  String get updateOrderState {
+    return Intl.message(
+      'Update order state',
+      name: 'updateOrderState',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

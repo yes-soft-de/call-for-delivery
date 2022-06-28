@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من عملية حذف هذه الخطة"),
+        "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "bankAccountNumber":
@@ -193,7 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "chooseAddressNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
-        "chooseBranch": MessageLookupByLibrary.simpleMessage("Choose Branch"),
+        "chooseBranch": MessageLookupByLibrary.simpleMessage("اختر فرع"),
         "chooseCategory": MessageLookupByLibrary.simpleMessage("أختر تصنيف"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
@@ -202,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر الخطة المناسبة لك"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع الاستلام"),
+        "chooseStore": MessageLookupByLibrary.simpleMessage("اختر المتجر"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("اختر مدينة تواجدك"),
         "chooseYourSize":
@@ -966,6 +969,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل العرض بنجاح"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
+        "updateOrderState":
+            MessageLookupByLibrary.simpleMessage("تحديث حالة الطلب"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
         "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
