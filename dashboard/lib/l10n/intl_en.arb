@@ -698,7 +698,8 @@
     "updateOrderWarning": "If you will continue this process , this order will be hide from captains until you confirm new adjustment",
     "editOrder": "Edit order",
     "confirmUpdateOrder": "Confirm update order",
-    "orderUpdatedSuccessfully": "Order updated successfully"
+    "orderUpdatedSuccessfully": "Order updated successfully",
+    "lastWeek": "Last week"
 
 
 

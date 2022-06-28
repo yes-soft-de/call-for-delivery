@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
@@ -8,6 +9,7 @@ import 'package:c4d/module_stores/state_manager/order/order_status.state_manager
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -124,10 +126,15 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
             title: S.current.orderDetails,
             actions: [
               Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded,
+                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                    StatusHelper.getOrderStatusIndex(
+                            (currentState as OrderDetailsStateOwnerOrderLoaded)
+                                .orderInfo
+                                .state) <
+                        StatusHelper.getOrderStatusIndex(
+                            OrderStatusEnum.DELIVERING),
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {
                   var s = currentState as OrderDetailsStateOwnerOrderLoaded;
-
                   showDialog(
                       context: context,
                       builder: (ctx) {

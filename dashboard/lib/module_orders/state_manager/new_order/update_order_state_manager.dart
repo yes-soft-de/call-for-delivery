@@ -63,7 +63,7 @@ class UpdateOrderStateManager {
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.orderCreatedSuccessfully)
+                message: S.current.orderUpdatedSuccessfully)
             .show(screenState.context);
         FireStoreHelper().backgroundThread('Trigger');
       }

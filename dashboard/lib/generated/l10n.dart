@@ -6819,6 +6819,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Last week`
+  String get lastWeek {
+    return Intl.message(
+      'Last week',
+      name: 'lastWeek',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

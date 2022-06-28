@@ -692,7 +692,8 @@
     "confirmUpdateOrder": "هل انت متأكد من تعديلات الطلب الحالي",
     "updateOrderWarning": "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد ",
     "editOrder": "تعديل الطلب",
-    "orderUpdatedSuccessfully": "تم تعديل الطلب بنجاح"
+    "orderUpdatedSuccessfully": "تم تعديل الطلب بنجاح",
+    "lastWeek": "الأسبوع الماضي"
 
 
 
