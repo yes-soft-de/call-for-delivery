@@ -7,6 +7,7 @@ import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
+import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -22,9 +23,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NewOrderStateBranchesLoaded extends States {
+  List<StoresModel> stores;
   List<BranchesModel> branches;
   final NewOrderScreenState screenState;
-  NewOrderStateBranchesLoaded(this.branches, this.screenState)
+  NewOrderStateBranchesLoaded(this.stores, this.branches, this.screenState)
       : super(screenState) {
     if (branches.isNotEmpty) {
       screenState.branch = branches[0].id;
@@ -58,6 +60,35 @@ class NewOrderStateBranchesLoaded extends States {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // stores
+                Column(
+                  children: [
+                    ListTile(
+                      title: LabelText(S.of(context).store),
+                      subtitle: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).backgroundColor),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 16),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                                value: screenState.storeID,
+                                items: _getStores(),
+                                hint: Text(S.current.chooseStore),
+                                onChanged: (int? value) {
+                                  screenState.storeID = value;
+                                  screenState.branch = null;
+                                  screenState.getBranches(stores);
+                                  screenState.refresh();
+                                }),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 // branches
                 Column(
                   children: [
@@ -524,6 +555,7 @@ class NewOrderStateBranchesLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+          storeId: screenState.storeID,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
@@ -544,6 +576,7 @@ class NewOrderStateBranchesLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+        storeId: screenState.storeID,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
@@ -588,6 +621,20 @@ class NewOrderStateBranchesLoaded extends States {
       imagePath = value?.path;
       screenState.refresh();
     });
+  }
+
+  List<DropdownMenuItem<int>> _getStores() {
+    var branchDropDown = <DropdownMenuItem<int>>[];
+    stores.forEach((element) {
+      branchDropDown.add(DropdownMenuItem(
+        child: Text(
+          element.storeOwnerName,
+          overflow: TextOverflow.ellipsis,
+        ),
+        value: element.id,
+      ));
+    });
+    return branchDropDown;
   }
 
   List<DropdownMenuItem<int>> _getBranches() {

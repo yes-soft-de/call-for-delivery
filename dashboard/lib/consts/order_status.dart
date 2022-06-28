@@ -5,5 +5,4 @@ enum OrderStatusEnum {
   DELIVERING,
   FINISHED,
   CANCELLED,
-  GOT_CASH
 }

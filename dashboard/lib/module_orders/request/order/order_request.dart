@@ -32,7 +32,7 @@ class CreateOrderRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (this.storeId != null) {
-      data['storeId'] = this.storeId;
+      data['storeOwner'] = this.storeId;
     }
     if (this.id != null) {
       data['id'] = this.id;

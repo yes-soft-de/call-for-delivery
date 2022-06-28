@@ -78,15 +78,15 @@ class OrderRepository {
     return OrderPendingResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> createOrder(CreateOrderRequest request) async {
+  Future<OrderDetailsResponse?> createOrder(CreateOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-      '',
+      Urls.CREATE_ORDER_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
-    return ActionResponse.fromJson(response);
+    return OrderDetailsResponse.fromJson(response);
   }
 
   Future<ActionResponse?> updateOrder(CreateOrderRequest request) async {
@@ -107,6 +107,14 @@ class OrderRepository {
       {},
       headers: {'Authorization': 'Bearer ${token}'},
     );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteOrder(int orderId) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put('${Urls.DELETE_ORDER}/$orderId', {},
+        headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }

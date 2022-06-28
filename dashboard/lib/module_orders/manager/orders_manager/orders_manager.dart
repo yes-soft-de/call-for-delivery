@@ -34,11 +34,14 @@ class OrdersManager {
       _repository.getOrderCashFinancesForCaptain(request);
   Future<OrderPendingResponse?> getPendingOrders() =>
       _repository.getPendingOrder();
-  Future<ActionResponse?> createOrder(CreateOrderRequest request) =>
+  Future<OrderDetailsResponse?> createOrder(CreateOrderRequest request) =>
       _repository.createOrder(request);
   Future<ActionResponse?> updateOrder(CreateOrderRequest request) =>
       _repository.updateOrder(request);
 
   Future<ActionResponse?> hideOrder(int orderID) =>
       _repository.hideOrder(orderID);
+
+  Future<ActionResponse?> deleteOrder(int orderId) =>
+      _repository.deleteOrder(orderId);
 }

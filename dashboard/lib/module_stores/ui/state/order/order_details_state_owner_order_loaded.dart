@@ -28,6 +28,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
+    screenState.canRemoveOrder = orderInfo.canRemove;
     if (orderInfo.destinationCoordinate != null) {
       distance = S.current.calculating;
       screenState.refresh();

@@ -53,6 +53,7 @@ class OrderPendingLoadedState extends States {
         ],
         onItemSelected: (index) {
           currentIndex = index;
+          screenState.getOrders(false);
           screenState.refresh();
         },
         selectedContent: Theme.of(context).textTheme.button!.color!,

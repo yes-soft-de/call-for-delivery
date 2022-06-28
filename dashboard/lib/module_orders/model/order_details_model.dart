@@ -35,7 +35,7 @@ class OrderDetailsModel extends DataModel {
   late bool orderIsMain;
 
   /// this field to know if we can remove order
-  late bool canRemove;
+  bool canRemove = false;
   String? distance;
   num? captainOrderCost;
   String? attention;
@@ -96,7 +96,7 @@ class OrderDetailsModel extends DataModel {
     //
     _orders = OrderDetailsModel(
       image: element?.image?.image,
-      canRemove: _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
+      canRemove: false,
       isCaptainArrived: element?.isCaptainArrived,
       branchPhone: element?.branchPhone,
       branchName: element?.branchName ?? S.current.unknown,
@@ -131,7 +131,7 @@ class OrderDetailsModel extends DataModel {
       storeName: element?.storeName ?? S.current.unknown,
       storeID: element?.storeId ?? -1,
     );
-
+    _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
@@ -160,10 +160,9 @@ class OrderDetailsModel extends DataModel {
     return orderTimeLine;
   }
 
-  bool _canRemove(DateTime date) {
-    bool canRemove = true;
-    if (DateTime.now().difference(date).inMinutes > 30) {
-      canRemove = false;
+  bool _canRemove(OrderStatusEnum state) {
+    if (state == OrderStatusEnum.WAITING) {
+      return true;
     }
     return canRemove;
   }

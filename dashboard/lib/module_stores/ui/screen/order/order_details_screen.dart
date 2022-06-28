@@ -105,6 +105,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   void rateCaptain() {}
 
   bool flag = true;
+  bool canRemoveOrder = false;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -125,6 +126,41 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         appBar: CustomC4dAppBar.appBar(context,
             title: S.current.orderDetails,
             actions: [
+              CustomC4dAppBar.actionIcon(context,
+                  icon: Icons.rotate_left_rounded, onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      var orderStatus =
+                          (currentState as OrderDetailsStateOwnerOrderLoaded)
+                              .orderInfo
+                              .state;
+                      return StatefulBuilder(builder: (ctx, refreshFul) {
+                        return AlertDialog(
+                          title: Text(S.current.updateOrderState),
+                          scrollable: true,
+                          content: Column(
+                            children: getStates(orderStatus, (v) {
+                              orderStatus = v;
+                              refreshFul(() {});
+                            }),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(S.current.update)),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(S.current.cancel)),
+                          ],
+                        );
+                      });
+                    });
+              }),
               Visibility(
                 visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
                     StatusHelper.getOrderStatusIndex(
@@ -132,7 +168,11 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 .orderInfo
                                 .state) <
                         StatusHelper.getOrderStatusIndex(
-                            OrderStatusEnum.DELIVERING),
+                            OrderStatusEnum.FINISHED) &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.CANCELLED,
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {
                   var s = currentState as OrderDetailsStateOwnerOrderLoaded;
                   showDialog(
@@ -152,8 +192,56 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 }, icon: Icons.edit),
               )
             ]),
+        floatingActionButton: Visibility(
+          visible: canRemoveOrder,
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return CustomAlertDialog(
+                      content: S.current.areYouSureAboutDeleteOrder,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        widget._stateManager.deleteOrder(orderId, this);
+                      },
+                      oneAction: false,
+                    );
+                  });
+            },
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
+        ),
         body: currentState.getUI(context),
       ),
     );
+  }
+
+  List<Widget> getStates(
+      OrderStatusEnum currentStatus, Function(OrderStatusEnum) onValue) {
+    List<Widget> widgets = [];
+    OrderStatusEnum.values.forEach((element) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RadioListTile(
+            tileColor: Theme.of(context).backgroundColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: Text(StatusHelper.getOrderStatusMessages(element)),
+            value: element,
+            groupValue: currentStatus,
+            onChanged: (OrderStatusEnum? value) {
+              onValue(value ?? OrderStatusEnum.WAITING);
+            },
+          ),
+        ),
+      );
+    });
+    return widgets;
   }
 }

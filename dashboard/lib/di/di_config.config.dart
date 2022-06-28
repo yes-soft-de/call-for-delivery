@@ -548,7 +548,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i80.OrdersCashCaptainScreen>(),
       get<_i136.OrdersCashStoreScreen>(),
       get<_i100.UpdateOrderScreen>(),
-      get<_i133.OrderPendingScreen>()));
+      get<_i133.OrderPendingScreen>(),
+      get<_i128.NewOrderScreen>()));
   gh.factory<_i138.PackagesScreen>(
       () => _i138.PackagesScreen(get<_i83.PackagesStateManager>()));
   gh.factory<_i139.PaymentsToCaptainScreen>(() =>

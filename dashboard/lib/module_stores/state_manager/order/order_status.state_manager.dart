@@ -3,8 +3,10 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
@@ -17,20 +19,20 @@ import '../../../module_orders/model/order_details_model.dart';
 
 @injectable
 class OrderStatusStateManager {
-  final StoresService _ordersService;
+  final StoresService _storeService;
   final AuthService _authService;
 
   final PublishSubject<States> _stateSubject = new PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderStatusStateManager(this._ordersService, this._authService);
+  OrderStatusStateManager(this._storeService, this._authService);
   void getOrder(OrderDetailsScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
     }
-    _ordersService.getOrderDetails(id).then((value) {
+    _storeService.getOrderDetails(id).then((value) {
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrder(screenState, id);
@@ -70,6 +72,25 @@ class OrderStatusStateManager {
   void watcher(OrderDetailsScreenState screenState, int id) {
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       getOrder(screenState, id, false);
+    });
+  }
+
+  void deleteOrder(int orderId, OrderDetailsScreenState screenState) {
+    screenState.canRemoveOrder = false;
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().deleteOrder(orderId).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.deleteSuccess)
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+        FireStoreHelper().backgroundThread('Trigger');
+      }
     });
   }
 }

@@ -231,4 +231,7 @@ class Urls {
   static const GET_BID_ORDER = BASE_API_ORDER + '/filterbidordersbyadmin';
   static const GET_BID_ORDER_DETAILS =
       BASE_API_ORDER + '/bidorderbyidforadmin/';
+  /*-----------------------------order----------------------------*/
+  static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
 }
