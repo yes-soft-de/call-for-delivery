@@ -64,4 +64,16 @@ class AdminCaptainFinancialDuesController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * for remove after used
+     * @Route("statetoactive", name="stateToActive", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function stateToActive(): JsonResponse
+    {
+        $result = $this->adminCaptainFinancialDuesService->stateToActive();
+
+        return $this->response($result, self::FETCH);
+    }
 }
