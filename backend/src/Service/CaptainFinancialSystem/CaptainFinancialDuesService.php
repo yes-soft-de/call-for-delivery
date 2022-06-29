@@ -51,7 +51,7 @@ class CaptainFinancialDuesService
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
-       
+        
         if($financialSystemDetail) {
             //Get Captain's Active Financial Dues 
             $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
@@ -162,7 +162,8 @@ class CaptainFinancialDuesService
         return $this->captainFinancialDuesManager->getLatestCaptainFinancialDues($captainId);
     }
     // Deactivation of the financial system in the event of the end of the financial cycle date
-    public function updateCaptainFinancialSystemDetail(int $userId): CaptainFinancialSystemDetailEntity|null      
+    // public function updateCaptainFinancialSystemDetail(int $userId): CaptainFinancialSystemDetailEntity|null      
+    public function updateCaptainFinancialSystemDetail(int $userId)      
     {     
        $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
  
@@ -172,7 +173,7 @@ class CaptainFinancialDuesService
             if($captainFinancialDues['endDate'] < new datetime('now')) {
                $this->captainFinancialDuesManager->updateCaptainFinancialDuesStateToInactive($captainFinancialDues['id']);
               
-               return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);
+            //    return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);
             }
        }
 
