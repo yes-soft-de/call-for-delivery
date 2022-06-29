@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Response\OrderLogs;
+namespace App\Response\OrderTimeLine;
 
 class OrderLogTimeLineResponse
 {

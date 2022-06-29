@@ -36,7 +36,7 @@ class StoreOwnerBranchEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $branchPhone;
 
-    #[ORM\OneToMany(mappedBy: 'storeOwnerBranch', targetEntity: OrderLogsEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'storeOwnerBranch', targetEntity: OrderTimeLineEntity::class)]
     private $orderLogsEntity;
 
     #[ORM\OneToMany(mappedBy: 'branch', targetEntity: BidDetailsEntity::class)]
@@ -157,14 +157,14 @@ class StoreOwnerBranchEntity
     }
 
     /**
-     * @return Collection|OrderLogsEntity[]
+     * @return Collection|OrderTimeLineEntity[]
      */
     public function getOrderLogsEntity(): Collection
     {
         return $this->orderLogsEntity;
     }
 
-    public function addOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    public function addOrderLogsEntity(OrderTimeLineEntity $orderLogsEntity): self
     {
         if (!$this->orderLogsEntity->contains($orderLogsEntity)) {
             $this->orderLogsEntity[] = $orderLogsEntity;
@@ -174,7 +174,7 @@ class StoreOwnerBranchEntity
         return $this;
     }
 
-    public function removeOrderLogsEntity(OrderLogsEntity $orderLogsEntity): self
+    public function removeOrderLogsEntity(OrderTimeLineEntity $orderLogsEntity): self
     {
         if ($this->orderLogsEntity->removeElement($orderLogsEntity)) {
             // set the owning side to null (unless already changed)

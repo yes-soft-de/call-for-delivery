@@ -2,27 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderLogsEntityRepository;
+use App\Repository\OrderTimeLineEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: OrderLogsEntityRepository::class)]
-class OrderLogsEntity
+#[ORM\Entity(repositoryClass: OrderTimeLineEntityRepository::class)]
+class OrderTimeLineEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'OrderLogsEntity')]
+    #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'OrderTimeLineEntity')]
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 
-    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'OrderLogsEntity')]
+    #[ORM\ManyToOne(targetEntity: CaptainEntity::class, inversedBy: 'OrderTimeLineEntity')]
     #[ORM\JoinColumn(nullable: true)]
     private $captainProfile;
 
-    #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'OrderLogsEntity')]
+    #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'OrderTimeLineEntity')]
     #[ORM\JoinColumn(nullable: true)]
     private $storeOwnerProfile;
 
@@ -36,7 +36,7 @@ class OrderLogsEntity
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isCaptainArrived;
 
-    #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'orderLogsEntity')]
+    #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'OrderTimeLineEntity')]
     private $storeOwnerBranch;
 
     public function getId(): ?int

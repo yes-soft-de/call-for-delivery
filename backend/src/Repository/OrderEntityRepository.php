@@ -9,7 +9,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
-use App\Entity\OrderLogsEntity;
+use App\Entity\OrderTimeLineEntity;
 use App\Entity\PriceOfferEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
@@ -641,7 +641,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             )
 
             ->leftJoin(
-                OrderLogsEntity::class,
+                OrderTimeLineEntity::class,
                 'orderLogEntity',
                 Join::WITH,
                 'orderLogEntity.orderId = orderEntity.id'

@@ -17,7 +17,6 @@ use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
-use App\Response\Order\BidOrderClosestGetResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
 use App\Response\Order\FilterBidOrderByStoreOwnerResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
@@ -47,7 +46,7 @@ use App\Response\Order\OrderUpdateCaptainOrderCostResponse;
 use App\Constant\Order\OrderAttentionConstant;
 use App\Request\Order\OrderUpdateCaptainArrivedRequest;
 use App\Response\Order\OrderUpdateCaptainArrivedResponse;
-use App\Service\OrderLogs\OrderLogsService;
+use App\Service\OrderTimeLine\OrderTimeLineService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Response\Order\OrderCancelResponse;
 use DateTime;
@@ -62,7 +61,6 @@ use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
-use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusResponse;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 
@@ -75,7 +73,7 @@ class OrderService
     private UploadFileHelperService $uploadFileHelperService;
     private CaptainService $captainService;
     private OrderChatRoomService $orderChatRoomService;
-    private OrderLogsService $orderLogsService;
+    private OrderTimeLineService $orderTimeLineService;
     private NotificationFirebaseService $notificationFirebaseService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
@@ -83,7 +81,7 @@ class OrderService
     private BidOrderFinancialService $bidOrderFinancialService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
-                                CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderLogsService $orderLogsService, NotificationFirebaseService $notificationFirebaseService,
+                                CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService,
                                 CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
                                 BidOrderFinancialService $bidOrderFinancialService)
     {
@@ -94,7 +92,7 @@ class OrderService
        $this->uploadFileHelperService = $uploadFileHelperService;
        $this->captainService = $captainService;
        $this->orderChatRoomService = $orderChatRoomService;
-       $this->orderLogsService = $orderLogsService;
+       $this->orderTimeLineService = $orderTimeLineService;
        $this->notificationFirebaseService = $notificationFirebaseService;
        $this->captainFinancialDuesService = $captainFinancialDuesService;
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
@@ -122,7 +120,7 @@ class OrderService
  
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderTimeLineService->createOrderLogsRequest($order);
             //create firebase notification to store
              try{
                   $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -156,7 +154,7 @@ class OrderService
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_BID_ORDER_TITLE,
                 NotificationConstant::CREATE_BID_ORDER_SUCCESS, $orderAndBidDetailsEntities[0]->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
+            $this->orderTimeLineService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
             //create firebase notification to store
             try{
                 $this->notificationFirebaseService->notificationOrderStateForUser($orderAndBidDetailsEntities[0]->getStoreOwner()->getStoreOwnerId(), $orderAndBidDetailsEntities[0]->getId(), $orderAndBidDetailsEntities[0]->getState(), NotificationConstant::STORE);
@@ -224,7 +222,7 @@ class OrderService
                 $order['roomId'] = $order['roomId']->toBase32();
             }
          
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
            
             $order['captain'] = null;
 
@@ -407,7 +405,7 @@ class OrderService
                 $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
             }
 
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
@@ -434,7 +432,7 @@ class OrderService
                 $order['usedAs'] = ChatRoomConstant::CHAT_ENQUIRE_NOT_USE;
             }
 
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
         }
 
         return $this->autoMapping->map("array", BidOrderByIdGetForCaptainResponse::class, $order);
@@ -499,7 +497,7 @@ class OrderService
             }
 
             //create order log
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderTimeLineService->createOrderLogsRequest($order);
             //create firebase notification to store
              try{
                 $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -578,7 +576,7 @@ class OrderService
         $order = $this->orderManager->updateCaptainArrived($request);
         
         if($order) {
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderTimeLineService->createOrderLogsRequest($order);
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
@@ -637,7 +635,7 @@ class OrderService
 
             if($order) {
            
-                $this->orderLogsService->createOrderLogsRequest($order);
+                $this->orderTimeLineService->createOrderLogsRequest($order);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
@@ -707,7 +705,7 @@ class OrderService
         $bidOrder = $this->orderManager->getOrderByIdForSupplier($orderId);
 
         if ($bidOrder) {
-            $bidOrder['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($bidOrder['id']);
+            $bidOrder['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($bidOrder['id']);
 
             $bidOrder['bidDetailsId'] = $bidOrder['bidDetails']->getId();
             $bidOrder['bidDetailsImages'] = $this->customizeBidOrderImages($bidOrder['bidDetails']->getImages()->toArray());
@@ -843,7 +841,7 @@ class OrderService
                 $order['deliveryDate'] = $priceOfferDeadlineResult;
             }
 
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderId($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
 
             $order['orderCost'] = $this->bidOrderFinancialService->getBidOrderTotalCostForStoreOwnerByBidDetailsId($order['bidDetails'], $userId);
         }
@@ -934,7 +932,7 @@ class OrderService
                 $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(), NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());  
             }
           
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderTimeLineService->createOrderLogsRequest($order);
 
             try{
                 // create firebase notification to store
@@ -1029,7 +1027,7 @@ class OrderService
                 $order = $this->orderManager->orderCancel($orderEntity);
                 
                 if($order) {
-                    $this->orderLogsService->createOrderLogsRequest($order);
+                    $this->orderTimeLineService->createOrderLogsRequest($order);
 
                     //create local notification to store
                     $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
