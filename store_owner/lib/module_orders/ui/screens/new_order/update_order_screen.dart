@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/state_manager/new_order/update_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -57,8 +58,10 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
       if (event) {
         ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
         String data = clip?.text.toString() ?? '';
-        if (data.length > 9 && data[0] == '0') {
-          await Clipboard.setData(ClipboardData(text: data.substring(1)));
+        if (data.length > 9 && PhoneNumberDetection.isMobileNumberValid(data)) {
+          var result = PhoneNumberDetection.getPhoneNumber(data);
+          await Clipboard.setData(ClipboardData(text: result));
+          phoneNumberController.text = result;
           if (mounted) {
             setState(() {});
           }
@@ -89,17 +92,6 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
             double.parse(link.queryParameters['q']!.split(',')[1]),
           );
           setState(() {});
-        }
-      }
-    });
-    Clipboard.getData(Clipboard.kTextPlain).asStream().listen((event) async {
-      if (event?.text?.length != null) {
-        if (event!.text!.length > 9 && (event.text![0] == '0')) {
-          await Clipboard.setData(
-              ClipboardData(text: event.text!.substring(1)));
-          if (mounted) {
-            setState(() {});
-          }
         }
       }
     });

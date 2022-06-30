@@ -3,7 +3,7 @@ import 'package:the_country_number/the_country_number.dart';
 class PhoneNumberDetection {
   static String getPhoneNumber(String phone) {
     var result = '';
-    if (!isMobileNumberValid(phone.replaceAll(RegExp(r'[()-\s]'), ''))) {
+    if (!isMobileNumberValid(phone)) {
       return result;
     }
     // remove white spaces
@@ -30,10 +30,11 @@ class PhoneNumberDetection {
 
   static bool isMobileNumberValid(String phoneNumber) {
     String regexPattern = r'^(?:[+0][1-9])?[0-9]{9,14}$';
-    var regExp =  RegExp(regexPattern);
+    var regExp = RegExp(regexPattern);
     if (phoneNumber.length == 0) {
       return false;
-    } else if (regExp.hasMatch(phoneNumber)) {
+    } else if (regExp
+        .hasMatch(phoneNumber.replaceAll(RegExp(r'[()-\s]'), ''))) {
       return true;
     }
     return false;

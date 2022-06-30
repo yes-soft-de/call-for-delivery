@@ -91,6 +91,7 @@ class _FilterBarState extends State<FilterBar> {
     floating = widget.floating;
     borderRadius = widget.borderRadius;
     padding = widget.padding;
+    firstUse = true;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       try {
         if (firstUse) {
@@ -105,7 +106,6 @@ class _FilterBarState extends State<FilterBar> {
         if (initialOffset != null) {
           initialOffset = Offset(initialOffset!.dx, initialOffset!.dx);
         }
-        firstUse = false;
         setState(() {});
       } catch (e) {
         print(e);

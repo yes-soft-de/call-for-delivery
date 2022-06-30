@@ -48,7 +48,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
       if (event) {
         ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
         String data = clip?.text.toString() ?? '';
-        if (data.length > 9) {
+        if (data.length > 9 && PhoneNumberDetection.isMobileNumberValid(data)) {
           var result = PhoneNumberDetection.getPhoneNumber(data);
           await Clipboard.setData(ClipboardData(text: result));
           phoneNumberController.text = result;

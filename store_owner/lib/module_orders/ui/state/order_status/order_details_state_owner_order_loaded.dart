@@ -343,7 +343,6 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
-
         // chat with whatsapp
         Visibility(
           visible: orderInfo.captainPhone != null,
