@@ -109,4 +109,6 @@ class OrderByIdGetForAdminResponse
     public float|null $captainOrderCost;
 
     public string|null $noteCaptainOrderCost;
+
+    public null|array $captain;
 }
