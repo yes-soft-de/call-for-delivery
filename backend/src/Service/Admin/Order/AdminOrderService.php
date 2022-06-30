@@ -554,8 +554,9 @@ class AdminOrderService
                 catch (\Exception $e){
                     error_log($e);
                 }
-                //TODO create log after task 407 is done
             }
+            // insert new order log
+            $this->orderTimeLineService->createOrderLogsRequest($order, $this->storeOrderDetailsService->getStoreBranchByOrderId($order->getId()));
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
