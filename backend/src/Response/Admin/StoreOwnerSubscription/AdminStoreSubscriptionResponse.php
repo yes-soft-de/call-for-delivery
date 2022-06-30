@@ -46,4 +46,14 @@ class AdminStoreSubscriptionResponse
      *     @OA\Items(type="object"))
      */
     public $captainOffers;
+
+    public int $packageCarCount;
+
+    public int $packageOrderCount;
+
+    public int $packageExpired;
+
+    public string $packageNote;
+
+    public bool $isFuture;
 }
