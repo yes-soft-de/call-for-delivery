@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\OrderTimeLine\OrderTimLineVisibleToConstant;
 use App\Repository\OrderTimeLineEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -38,6 +39,12 @@ class OrderTimeLineEntity
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'OrderTimeLineEntity')]
     private $storeOwnerBranch;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $visibleTo;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isVisible;
 
     public function getId(): ?int
     {
@@ -124,6 +131,30 @@ class OrderTimeLineEntity
     public function setIsCaptainArrived(?bool $isCaptainArrived): self
     {
         $this->isCaptainArrived = $isCaptainArrived;
+        return $this;
+    }
+
+    public function getVisibleTo(): ?int
+    {
+        return $this->visibleTo;
+    }
+
+    public function setVisibleTo(int $visibleTo): self
+    {
+        $this->visibleTo = $visibleTo;
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
+
         return $this;
     }
 }
