@@ -318,4 +318,9 @@ class SubscriptionManager
 
        return "ok";
     }
+
+    public function getUserId(int $storeOwnerProfileId): ?StoreOwnerProfileEntity
+    {
+       return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
+    }
 }

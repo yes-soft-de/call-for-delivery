@@ -29,6 +29,8 @@ class AdminStoreSubscriptionService
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
     {
        $response = [];
+       //check Subscription
+       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
 
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 

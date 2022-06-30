@@ -56,4 +56,8 @@ class AdminStoreSubscriptionResponse
     public string $packageNote;
 
     public bool $isFuture;
+
+    public int $remainingCars;
+
+    public int $remainingOrders;
 }

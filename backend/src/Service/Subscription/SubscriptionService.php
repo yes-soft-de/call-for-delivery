@@ -624,5 +624,24 @@ class SubscriptionService
     {
         return $this->subscriptionManager->updateSubscription($request);
     }
+
+    public function packageBalanceForAdminByStoreOwnerProfileId(int $storeOwnerProfileId)
+    {
+        $store = $this->subscriptionManager->getUserId($storeOwnerProfileId);
+
+        $packageBalance = $this->packageBalance($store->getStoreOwnerId());
+       
+        $balance = [];
+        $balance['remainingOrders'] = 0;
+        $balance['remainingCars'] = 0;
+        
+        if($packageBalance->status !== SubscriptionConstant::UNSUBSCRIBED) {
+           
+            $balance['remainingOrders'] = $packageBalance->remainingOrders;
+            $balance['remainingCars'] = $packageBalance->remainingCars;
+        }
+
+        return $balance;
+    }
 }
  
