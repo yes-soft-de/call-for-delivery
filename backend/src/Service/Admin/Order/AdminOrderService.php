@@ -46,6 +46,7 @@ use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
+use App\Service\Captain\CaptainService;
 
 class AdminOrderService
 {
@@ -64,10 +65,11 @@ class AdminOrderService
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
+    private CaptainService $captainService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
-                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService)
+                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -81,9 +83,10 @@ class AdminOrderService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->subscriptionService = $subscriptionService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
-       $this->captainFinancialDuesService = $captainFinancialDuesService;
-       $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
-       $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
+        $this->captainFinancialDuesService = $captainFinancialDuesService;
+        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
+        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
+        $this->captainService = $captainService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -123,6 +126,12 @@ class AdminOrderService
             }
           
             $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderIdForAdmin($id);
+           
+            $order['captain'] = null;
+
+            if($order['captainUserId']) {
+                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+            }
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
