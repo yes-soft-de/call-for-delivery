@@ -448,13 +448,16 @@ class OrderService
                 return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
             }
 
-            if ($this->orderManager->getOrderTypeByOrderId($request->getId()) === OrderTypeConstant::ORDER_TYPE_NORMAL) {
-                // Following if block will be executed only when the order is of type 1,
-                // otherwise, we will move to update statement directly
-                $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
+            $orderEntity = $this->orderManager->getOrderTypeByOrderId($request->getId());
+            if($orderEntity) {
+                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getIsHide() === OrderIsHideConstant::ORDER_SHOW) {
+                    // Following if block will be executed only when the order is of type 1 and of type show,
+                    // otherwise, we will move to update statement directly
+                    $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
-                if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
-                    return $canAcceptOrder;
+                    if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
+                        return $canAcceptOrder;
+                    }
                 }
             }
         }
