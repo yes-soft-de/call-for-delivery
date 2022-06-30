@@ -520,9 +520,13 @@ class AdminOrderService
         return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 
-    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): ?OrderByIdGetForAdminResponse
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|OrderByIdGetForAdminResponse|null
     {
         $order = $this->adminOrderManager->updateOrderStateByAdmin($request);
+
+        if ($order === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
+            return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
+        }
        
         if($order) {
             if($order->getCaptainId()) {
