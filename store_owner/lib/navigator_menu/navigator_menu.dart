@@ -252,11 +252,15 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               title: S.current.settings),
           CustomNavTile(
               icon: Icons.privacy_tip_rounded,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(SettingRoutes.PRIVECY);
+              },
               title: S.current.privacyPolicy),
           CustomNavTile(
               icon: Icons.verified_user_rounded,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(SettingRoutes.TERMS);
+              },
               title: S.current.termsOfService),
           Visibility(
             visible: widget.company != null,
