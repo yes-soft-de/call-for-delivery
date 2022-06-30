@@ -345,7 +345,7 @@ class OrderManager
         return $orderEntity;
     }
 
-    public function getOrderTypeByOrderId(int $orderId): int
+    public function getOrderTypeByOrderId(int $orderId): OrderEntity|int
     {
         $orderEntity = $this->orderRepository->find($orderId);
 
@@ -353,7 +353,7 @@ class OrderManager
             return 0;
         }
 
-        return $orderEntity->getOrderType();
+        return $orderEntity;
     }
 
     public function getSpecificBidOrderForStore(int $id): ?array

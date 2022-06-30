@@ -63,6 +63,7 @@ use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
+use App\Constant\Order\OrderIsMainConstant;
 
 class OrderService
 {
@@ -448,13 +449,16 @@ class OrderService
                 return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
             }
 
-            if ($this->orderManager->getOrderTypeByOrderId($request->getId()) === OrderTypeConstant::ORDER_TYPE_NORMAL) {
-                // Following if block will be executed only when the order is of type 1,
-                // otherwise, we will move to update statement directly
-                $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
+            $orderEntity = $this->orderManager->getOrderTypeByOrderId($request->getId());
+            if($orderEntity) {
+                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN) {
+                    // Following if block will be executed only when the order is of type 1 and of type show,
+                    // otherwise, we will move to update statement directly
+                    $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
-                if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
-                    return $canAcceptOrder;
+                    if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
+                        return $canAcceptOrder;
+                    }
                 }
             }
         }
