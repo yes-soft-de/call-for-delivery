@@ -636,7 +636,12 @@
     "contacts": "Contacts",
     "searchInContacts": "Search in contacts",
     "pleaseCheckYourInternetConnection": "Please check your internet connection , and try again",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "iAgreeOn": "I agree to the",
+    "terms": "terms of use",
+    "privacy": "privacy policy",
+    "and": " & "
+
 
 
 

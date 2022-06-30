@@ -129,7 +129,7 @@
     "pickAJob": "اختار عملي",
     "paymentMethod": "طريقة الدفع",
     "pleaseSelectABranch": "الرجاء اختيار فرع تجاري",
-    "privacyPolicy": "شروط الخصوصية",
+    "privacyPolicy": "سياسة الخصوصية",
     "termsOfService": "شروط الاستخدام",
     "created": "تم الانشاء",
     "unknown": "غير معروف",
@@ -638,7 +638,11 @@
     "contacts": "جهات الاتصال",
     "searchInContacts": "ابحث في جهات الاتصال",
     "pleaseCheckYourInternetConnection": "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا",
-    "tryAgain": "إعادة المحاولة"
+    "tryAgain": "إعادة المحاولة",
+    "iAgreeOn": "أوافق على سياسة",
+    "terms": "الاستخدام",
+    "privacy": "الخصوصية",
+    "and": " و "
 
 
 

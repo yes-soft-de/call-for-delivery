@@ -6379,6 +6379,46 @@ class S {
       args: [],
     );
   }
+
+  /// `I agree to the`
+  String get iAgreeOn {
+    return Intl.message(
+      'I agree to the',
+      name: 'iAgreeOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `terms of use`
+  String get terms {
+    return Intl.message(
+      'terms of use',
+      name: 'terms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `privacy policy`
+  String get privacy {
+    return Intl.message(
+      'privacy policy',
+      name: 'privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` & `
+  String get and {
+    return Intl.message(
+      ' & ',
+      name: 'and',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
+        "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -369,6 +370,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("أوافق على سياسة"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "اوافق على سياسة الاستخدام والخصوصية"),
@@ -665,7 +667,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
-        "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
+        "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "productDetails": MessageLookupByLibrary.simpleMessage("تفاصيل منتج"),
@@ -848,6 +851,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "tax": MessageLookupByLibrary.simpleMessage("القيمة المضافة ال %15"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
+        "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
