@@ -210,6 +210,12 @@ class AdminOrderManager
         if(! $orderEntity) {
             return $orderEntity;
         }
+        
+        if($request->getState() === OrderStateConstant::ORDER_STATE_PENDING){
+            $orderEntity->setCaptainId(null);
+            $orderEntity->setDateCaptainArrived(null);
+            $orderEntity->setIsCaptainArrived(false);
+        }
 
         $orderEntity = $this->autoMapping->mapToObject(OrderStateUpdateByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
         
