@@ -103,9 +103,11 @@ class OrderTimeLineService
 
     public function getOrderLogsByOrderIdForAdmin($orderId): ?array
     {
-      $orderLogs = $this->orderTimeLineManager->getOrderTimeLineByOrderId($orderId);
-     
-      $currentStage = $this->orderTimeLineManager->getCurrentStage($orderId);
+        $orderLogs = $this->orderTimeLineManager->getOrderTimeLineByOrderId($orderId);
+
+        $orderLogs = $this->removeDuplicated($orderLogs);
+
+        $currentStage = $this->orderTimeLineManager->getCurrentStage($orderId);
    
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
