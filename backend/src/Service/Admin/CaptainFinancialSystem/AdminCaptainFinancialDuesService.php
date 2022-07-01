@@ -67,9 +67,4 @@ class AdminCaptainFinancialDuesService
     {
         return $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($captainFinancialDue, $status); 
     }
-
-    public function stateToActive()
-    {
-        return $this->adminCaptainFinancialDuesManager->stateToActive(); 
-    }
 }

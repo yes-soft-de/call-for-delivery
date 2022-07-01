@@ -40,20 +40,4 @@ class AdminCaptainFinancialDuesManager
     {
         return $this->captainFinancialDuesRepository->getSumCaptainFinancialDuesById($id);
     } 
-
-    public function stateToActive()
-    { 
-       $items = $this->captainFinancialDuesRepository->findAll();
-
-       foreach($items as $captainFinancialDuesEntity) {
-        
-        if($captainFinancialDuesEntity) {
-            $captainFinancialDuesEntity->setState(1);
-         }
-
-         $this->entityManager->flush();
-       }
-       
-        return "ok";
-    } 
 }

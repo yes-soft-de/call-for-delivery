@@ -123,7 +123,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getCaptainFinancialDuesByEndDate(int $userId, DateTime $date): ?array
+    public function getCaptainFinancialDuesByEndDate(int $captainId, DateTime $date): ?array
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
@@ -131,9 +131,9 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
 
-            ->andWhere('captainEntity.captainId = :userId')
+            ->andWhere('captainEntity.captainId = :captainId')
 
-            ->setParameter('userId', $userId)
+            ->setParameter('captainId', $captainId)
             
             ->andWhere('captainFinancialDuesEntity.endDate = :date')
 

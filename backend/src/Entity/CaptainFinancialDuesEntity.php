@@ -38,9 +38,6 @@ class CaptainFinancialDuesEntity
 
     #[ORM\OneToMany(mappedBy: 'captainFinancialDues', targetEntity: CaptainPaymentEntity::class)]
     private $captainPaymentEntities;
-    //active = 1, inactive = 0
-    #[ORM\Column(type: 'integer')]
-    private $state;
 
     public function __construct()
     {
@@ -162,18 +159,6 @@ class CaptainFinancialDuesEntity
                 $captainPaymentEntity->setCaptainFinancialDues(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getState(): ?int
-    {
-        return $this->state;
-    }
-
-    public function setState(int $state): self
-    {
-        $this->state = $state;
 
         return $this;
     }

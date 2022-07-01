@@ -293,15 +293,14 @@ class OrderService
             return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
         }
        
-        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
-       
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($userId);
-        if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
+        if ($captainFinancialSystemStatus->status ===  CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
        
         $this->showSubOrderIfCarIsAvailable();
         $this->hideOrderExceededDeliveryTimeByHour();
+        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         $response = [];
 
