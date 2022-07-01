@@ -18,6 +18,7 @@ use App\AutoMapping;
 use App\Manager\Admin\Order\AdminStoreOrderDetailsManager;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Manager\Admin\Captain\AdminCaptainManager;
+use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 
 class AdminOrderManager
 {
@@ -199,6 +200,27 @@ class AdminOrderManager
 
         $this->entityManager->flush();
 
+        return $orderEntity;
+    }
+    
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+        
+        if($request->getState() === OrderStateConstant::ORDER_STATE_PENDING){
+            $orderEntity->setCaptainId(null);
+            $orderEntity->setDateCaptainArrived(null);
+            $orderEntity->setIsCaptainArrived(false);
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderStateUpdateByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+        
+        $this->entityManager->flush();
+        
         return $orderEntity;
     }
 }

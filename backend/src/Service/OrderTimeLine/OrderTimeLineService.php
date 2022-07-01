@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Service\OrderLogs;
+namespace App\Service\OrderTimeLine;
 
 use App\AutoMapping;
-use App\Manager\OrderLogs\OrderLogsManager;
-use App\Request\OrderLogs\OrderLogsCreateRequest;
-use App\Entity\OrderLogsEntity;
+use App\Manager\OrderTimeLine\OrderTimeLineManager;
+use App\Request\OrderTimeLine\OrderLogsCreateRequest;
+use App\Entity\OrderTimeLineEntity;
 use App\Entity\OrderEntity;
-use App\Response\OrderLogs\OrderLogsResponse;
-use App\Response\OrderLogs\OrderLogsByOrderIdResponse;
+use App\Response\OrderTimeLine\OrderLogsResponse;
+use App\Response\OrderTimeLine\OrderLogsByOrderIdResponse;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Constant\Order\OrderStateConstant;
-use App\Response\OrderLogs\OrderLogTimeLineResponse;
+use App\Response\OrderTimeLine\OrderLogTimeLineResponse;
 use App\Service\DateFactory\DateFactoryService;
 
-class OrderLogsService
+class OrderTimeLineService
 {
     private AutoMapping $autoMapping;
-    private OrderLogsManager $orderLogsManager;
+    private OrderTimeLineManager $orderTimeLineManager;
     private StoreOwnerBranchService $storeOwnerBranchService;
     private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, OrderLogsManager $orderLogsManager, StoreOwnerBranchService $storeOwnerBranchService, DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, OrderTimeLineManager $orderTimeLineManager, StoreOwnerBranchService $storeOwnerBranchService, DateFactoryService $dateFactoryService)
     {
        $this->autoMapping = $autoMapping;
-       $this->orderLogsManager = $orderLogsManager;
+       $this->orderTimeLineManager = $orderTimeLineManager;
        $this->storeOwnerBranchService = $storeOwnerBranchService;
        $this->dateFactoryService = $dateFactoryService;
     }
 
     public function createOrderLogs(OrderLogsCreateRequest $request): OrderLogsResponse
     {
-       $orderLog = $this->orderLogsManager->createOrderLogs($request);
+       $orderLog = $this->orderTimeLineManager->createOrderLogs($request);
     
-       return $this->autoMapping->map(OrderLogsEntity::class, OrderLogsResponse::class, $orderLog);
+       return $this->autoMapping->map(OrderTimeLineEntity::class, OrderLogsResponse::class, $orderLog);
     }
     
     public function createOrderLogsRequest(OrderEntity $order, StoreOwnerBranchEntity $branch = null): OrderLogsResponse
@@ -55,11 +55,11 @@ class OrderLogsService
 
     public function getOrderLogsByOrderId($orderId): ?array
     {
-      $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
+      $orderLogs = $this->orderTimeLineManager->getOrderTimeLineByOrderId($orderId);
   
       $orderLogs = $this->removeDuplicated($orderLogs);
   
-      $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
+      $currentStage = $this->orderTimeLineManager->getCurrentStage($orderId);
    
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
@@ -103,9 +103,9 @@ class OrderLogsService
 
     public function getOrderLogsByOrderIdForAdmin($orderId): ?array
     {
-      $orderLogs = $this->orderLogsManager->getOrderLogsByOrderId($orderId);
+      $orderLogs = $this->orderTimeLineManager->getOrderTimeLineByOrderId($orderId);
      
-      $currentStage = $this->orderLogsManager->getCurrentStage($orderId);
+      $currentStage = $this->orderTimeLineManager->getCurrentStage($orderId);
    
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }

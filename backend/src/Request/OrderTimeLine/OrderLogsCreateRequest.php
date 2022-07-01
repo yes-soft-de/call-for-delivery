@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\OrderLogs;
+namespace App\Request\OrderTimeLine;
 
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;

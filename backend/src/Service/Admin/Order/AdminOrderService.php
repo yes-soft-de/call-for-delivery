@@ -31,7 +31,7 @@ use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Order\StoreOrderDetailsService;
-use App\Service\OrderLogs\OrderLogsService;
+use App\Service\OrderTimeLine\OrderTimeLineService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
 use DateTime;
@@ -42,13 +42,18 @@ use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Subscription\SubscriptionService;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
+use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
+use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
+use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
+use App\Service\Captain\CaptainService;
 
 class AdminOrderService
 {
     private AutoMapping $autoMapping;
     private AdminOrderManager $adminOrderManager;
     private UploadFileHelperService $uploadFileHelperService;
-    private OrderLogsService $orderLogsService;
+    private OrderTimeLineService $orderTimeLineService;
     private OrderService $orderService;
     private OrderChatRoomService $orderChatRoomService;
     private StoreOrderDetailsService $storeOrderDetailsService;
@@ -57,15 +62,19 @@ class AdminOrderService
     private StoreOwnerProfileService $storeOwnerProfileService;
     private SubscriptionService $subscriptionService;
     private StoreOwnerBranchService $storeOwnerBranchService;
+    private CaptainFinancialDuesService $captainFinancialDuesService;
+    private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
+    private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
+    private CaptainService $captainService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderLogsService $orderLogsService,
+    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
-                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService)
+                                NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService, StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
-        $this->orderLogsService = $orderLogsService;
+        $this->orderTimeLineService = $orderTimeLineService;
         $this->orderService = $orderService;
         $this->orderChatRoomService = $orderChatRoomService;
         $this->storeOrderDetailsService = $storeOrderDetailsService;
@@ -74,6 +83,10 @@ class AdminOrderService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->subscriptionService = $subscriptionService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
+        $this->captainFinancialDuesService = $captainFinancialDuesService;
+        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
+        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
+        $this->captainService = $captainService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -112,7 +125,13 @@ class AdminOrderService
                 $order['location'] = null;
             }
           
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderIdForAdmin($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderIdForAdmin($id);
+           
+            $order['captain'] = null;
+
+            if($order['captainUserId']) {
+                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+            }
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
@@ -169,7 +188,7 @@ class AdminOrderService
         $order = $this->adminOrderManager->getSpecificBidOrderByIdForAdmin($id);
 
         if ($order) {
-            $order['orderLogs'] = $this->orderLogsService->getOrderLogsByOrderIdForAdmin($id);
+            $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderIdForAdmin($id);
 
             // get bid details info
             $order['bidDetails'] = $this->autoMapping->map(BidDetailsEntity::class, BidDetailsGetForAdminResponse::class, $order['bidOrderDetails']);
@@ -274,7 +293,7 @@ class AdminOrderService
                 $this->orderChatRoomService->deleteChatRoomByOrderIdAndCaptainId($orderResult->getId(), $captainId);
 
                 // insert new order log of the new status
-                $this->orderLogsService->createOrderLogsRequest($orderResult, $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult->getId()));
+                $this->orderTimeLineService->createOrderLogsRequest($orderResult, $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult->getId()));
 
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
@@ -393,7 +412,7 @@ class AdminOrderService
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS,
                 $order->getId());
 
-            $this->orderLogsService->createOrderLogsRequest($order);
+            $this->orderTimeLineService->createOrderLogsRequest($order);
             //create firebase notification to store
             try{
                 $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -444,7 +463,7 @@ class AdminOrderService
                 $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
 
                 //create order log
-                $this->orderLogsService->createOrderLogsRequest($order);
+                $this->orderTimeLineService->createOrderLogsRequest($order);
                 //create firebase notification to store
                 try{
                     $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -484,7 +503,7 @@ class AdminOrderService
             $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
 
             if ($newUpdatedOrder) {
-                $this->orderLogsService->createOrderLogsRequest($newUpdatedOrder);
+                $this->orderTimeLineService->createOrderLogsRequest($newUpdatedOrder);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -509,4 +528,37 @@ class AdminOrderService
 
         return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
+
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): ?OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateOrderStateByAdmin($request);
+       
+        if($order) {
+            if($order->getCaptainId()) {
+
+                if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    //create or update captainFinancialDues
+                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
+                  
+                    //save the price of the order in cash in case the captain does not pay the store
+                    if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
+                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
+                    }
+                }
+
+                // create firebase notification to captain
+                try{
+                    $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+                }
+                catch (\Exception $e){
+                    error_log($e);
+                }
+            }
+            // insert new order log
+            $this->orderTimeLineService->createOrderLogsRequest($order, $this->storeOrderDetailsService->getStoreBranchByOrderId($order->getId()));
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+      }
 }

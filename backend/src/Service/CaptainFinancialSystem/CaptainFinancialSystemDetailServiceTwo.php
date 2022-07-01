@@ -18,8 +18,8 @@ class CaptainFinancialSystemDetailServiceTwo
         $this->autoMapping = $autoMapping;
     }
 
-    public function updateCaptainFinancialSystemDetail(bool $status, int $captainId): CaptainFinancialSystemDetailEntity|null
+    public function updateCaptainFinancialSystemDetail(bool $status, int $userId): CaptainFinancialSystemDetailEntity|null
     {
-       return $this->captainFinancialSystemDetailManager->updateCaptainFinancialSystemDetail($status, $captainId);
+       return $this->captainFinancialSystemDetailManager->updateCaptainFinancialSystemDetail($status, $userId);
     }
 }

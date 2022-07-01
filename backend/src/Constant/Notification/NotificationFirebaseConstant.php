@@ -93,4 +93,13 @@ final class NotificationFirebaseConstant
     const NOTIFICATION_FROM_ADMIN = "يوجد تحديث جديد من الإدارة يرجى الإطلاع ";
 
     const URL_NOTIFICATION = '/update_screen';
+
+    //when admin update state order 
+    const STATE_ON_WAY_PICK_ORDER_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى قبل الكابتن الطلب ";
+
+    const STATE_IN_STORE_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن في المتجر";
+  
+    const STATE_ONGOING_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن في طريقه إلى تسليم الطلب";
+ 
+    const STATE_DELIVERED_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن سلم الطلب";
 }

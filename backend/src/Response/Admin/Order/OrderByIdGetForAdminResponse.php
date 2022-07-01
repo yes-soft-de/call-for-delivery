@@ -105,4 +105,10 @@ class OrderByIdGetForAdminResponse
     public int $storeOwnerId;
 
     public string|null $storeOwnerName;
+
+    public float|null $captainOrderCost;
+
+    public string|null $noteCaptainOrderCost;
+
+    public null|array $captain;
 }

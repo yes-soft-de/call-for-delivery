@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 
 class CaptainFinancialDuesManager
 {
@@ -29,17 +30,19 @@ class CaptainFinancialDuesManager
     {
         $request->setCaptain($this->captainManager->getCaptainProfileById($request->getCaptain()));
       
-        $captainFinancialSystemDetailEntity = $this->autoMapping->map(CreateCaptainFinancialDuesRequest::class, CaptainFinancialDuesEntity::class, $request);
-
-        $this->entityManager->persist($captainFinancialSystemDetailEntity);
+        $captainFinancialDuesEntity = $this->autoMapping->map(CreateCaptainFinancialDuesRequest::class, CaptainFinancialDuesEntity::class, $request);
+       
+        $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+       
+        $this->entityManager->persist($captainFinancialDuesEntity);
         $this->entityManager->flush();
 
-        return $captainFinancialSystemDetailEntity;
+        return $captainFinancialDuesEntity;
     }
 
-    public function getCaptainFinancialDues(int $captainId, array $date): ?CaptainFinancialDuesEntity
+    public function getCaptainFinancialDues(int $captainId, int $state): ?CaptainFinancialDuesEntity
     {
-        return $this->captainFinancialDuesRepository->findOneBy(["captain" => $captainId, "startDate" => $date['fromDate'], "endDate" => $date['toDate']]);
+        return $this->captainFinancialDuesRepository->findOneBy(["captain" => $captainId, "state" => $state]);
     } 
 
     public function updateCaptainFinancialDues(CaptainFinancialDuesEntity $captainFinancialDues): CaptainFinancialDuesEntity
@@ -64,13 +67,35 @@ class CaptainFinancialDuesManager
         return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDues($captainId);
     } 
 
-    public function getCaptainFinancialDuesByEndDate(int $captainId, DateTime $date): ?array
+    public function getCaptainFinancialDuesByEndDate(int $userId, DateTime $date): ?array
     {
-        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByEndDate($captainId, $date);
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByEndDate($userId, $date);
     }
 
     public function getFinancialDuesByCaptainId(int $captainId): array
     {
         return $this->captainFinancialDuesRepository->getFinancialDuesByCaptainId($captainId);
     }
+
+    public function updateCaptainFinancialDuesStateToInactive(int $id): ?CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity = $this->captainFinancialDuesRepository->find($id);
+     
+        if(! $captainFinancialDuesEntity) {
+            return $captainFinancialDuesEntity;
+        }
+
+        $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
+      
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+    
+    public function getCaptainFinancialDuesByUserIDAndState(int $userId, int $state): ?CaptainFinancialDuesEntity
+    {
+        $captain = $this->captainManager->getCaptainProfileByUserId($userId);
+  
+        return $this->getCaptainFinancialDues($captain->getId(), $state);
+    } 
 }
