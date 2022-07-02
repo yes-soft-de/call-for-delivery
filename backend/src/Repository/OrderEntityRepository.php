@@ -258,7 +258,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function closestOrders(int $captainId): ?array
+    public function closestOrders(int $captainId, DateTime $date): ?array
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
@@ -285,6 +285,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.isHide = :isHide')
             ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+
+            ->andWhere('orderEntity.deliveryDate <= :date')
+            ->setParameter('date', $date)
 
             ->orderBy('orderEntity.id', 'DESC')
 
