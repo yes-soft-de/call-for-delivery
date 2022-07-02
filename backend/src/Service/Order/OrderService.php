@@ -304,8 +304,10 @@ class OrderService
         $this->hideOrderExceededDeliveryTimeByHour();
 
         $response = [];
-
-        $orders = $this->orderManager->closestOrders($userId);
+        //get closest orders half an hour in advance
+        $date = date_modify(new DateTime('now'), '+30 minutes');
+     
+        $orders = $this->orderManager->closestOrders($userId, $date);
 
         foreach ($orders as $key=>$value) {
 
