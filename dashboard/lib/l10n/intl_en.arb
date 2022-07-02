@@ -702,7 +702,12 @@
     "lastWeek": "Last week",
     "chooseStore": "Choose store",
     "areYouSureAboutDeleteOrder": "Are sure about deleting this order ? ",
-    "updateOrderState": "Update order state"
+    "updateOrderState": "Update order state",
+    "confirmCaptainLocation": "Is captain in store",
+    "unconfirmed": "Unconfirmed",
+    "captainPaidToProvider": "Captain paid to provider ?"
+
+
 
 
 

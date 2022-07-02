@@ -144,6 +144,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Captain not arrived to store"),
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
+        "captainPaidToProvider":
+            MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
@@ -234,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmCaptainLocation":
+            MessageLookupByLibrary.simpleMessage("Is captain in store"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
@@ -958,6 +962,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
+        "unconfirmed": MessageLookupByLibrary.simpleMessage("Unconfirmed"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),

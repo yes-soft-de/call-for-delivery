@@ -696,7 +696,10 @@
     "lastWeek": "الأسبوع الماضي",
     "chooseStore": "اختر المتجر",
     "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
-    "updateOrderState": "تحديث حالة الطلب"
+    "updateOrderState": "تحديث حالة الطلب",
+    "confirmCaptainLocation": "وصول الكابتن للمتجر",
+    "unconfirmed": "لم يتم التأكيد",
+    "captainPaidToProvider": "هل تم دفع تكلفة الطلب للمتجر"
 
 
 

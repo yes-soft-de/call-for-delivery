@@ -6859,6 +6859,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Is captain in store`
+  String get confirmCaptainLocation {
+    return Intl.message(
+      'Is captain in store',
+      name: 'confirmCaptainLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unconfirmed`
+  String get unconfirmed {
+    return Intl.message(
+      'Unconfirmed',
+      name: 'unconfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain paid to provider ?`
+  String get captainPaidToProvider {
+    return Intl.message(
+      'Captain paid to provider ?',
+      name: 'captainPaidToProvider',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
