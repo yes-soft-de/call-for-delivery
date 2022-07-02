@@ -875,6 +875,17 @@ class AdminOrderController extends BaseController
      *      )
      *   )
      * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns the error msg",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9219"),
+     *          @OA\Property(type="string", property="msg")
+     *   )
+     * )
      * 
      * @Security(name="Bearer") 
      */
@@ -893,6 +904,10 @@ class AdminOrderController extends BaseController
         }
 
         $result = $this->adminOrderService->updateOrderStateByAdmin($request);
+
+        if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
+        }
 
         return $this->response($result, self::UPDATE);
     }

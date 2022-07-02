@@ -31,4 +31,6 @@ final class OrderResultConstant
     const ERROR_UPDATE_CAPTAIN_ONGOING = "captain is ongoing,You can't modify detail or destination or deliveryDate";
 
     const ORDER_UPDATE_PROBLEM = "problemInUpdatingOrder";
+
+    const ORDER_IS_BEING_DELIVERED = 1;
 }

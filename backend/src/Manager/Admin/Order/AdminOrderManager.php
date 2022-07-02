@@ -203,9 +203,14 @@ class AdminOrderManager
         return $orderEntity;
     }
     
-    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): ?OrderEntity
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|OrderEntity|null
     {
         $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        // currently, we can not update an order that its status is delivered
+        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
+        }
 
         if(! $orderEntity) {
             return $orderEntity;
