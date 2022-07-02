@@ -88,7 +88,6 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                 ),
                 Visibility(
                   visible: [
-                    OrderStatusEnum.DELIVERING,
                     OrderStatusEnum.FINISHED
                   ].contains(StatusHelper.getStatusEnum(request.state)),
                   child: Column(
