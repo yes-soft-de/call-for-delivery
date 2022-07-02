@@ -89,7 +89,7 @@ class VerificationService
         if ($result !== null) {
            if ($result['verificationStatus'] === 0) {
                // send SMS message with verification code
-               $this->initializeVerificationCodeResendRequestAndResendingNewCod($request->getUserId());
+               $this->initializeVerificationCodeResendRequestAndResendingNewCode($request->getUserId());
            }
         }
 
@@ -170,7 +170,7 @@ class VerificationService
         return $response;
     }
 
-    public function initializeVerificationCodeResendRequestAndResendingNewCod(string $userId)
+    public function initializeVerificationCodeResendRequestAndResendingNewCode(string $userId)
     {
         $verificationCodeResendRequest = new VerificationCodeResendRequest();
 
