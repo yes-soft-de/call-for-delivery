@@ -110,5 +110,9 @@ class OrderByIdGetForAdminResponse
 
     public string|null $noteCaptainOrderCost;
 
-    public null|array $captain;
+    /**
+     * @OA\Property(type="array", property="captain",
+     *     @OA\Items(type="object"))
+     */
+    public $captain;
 }
