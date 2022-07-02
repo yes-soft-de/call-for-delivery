@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Constant\OrderTimeLine\OrderTimLineVisibleToConstant;
 use App\Repository\OrderTimeLineEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
