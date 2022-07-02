@@ -1,14 +1,14 @@
 import 'data.dart';
 
-class OrderDetailsResponse {
+class OrderPendingResponse {
   String? statusCode;
   String? msg;
   Data? data;
 
-  OrderDetailsResponse({this.statusCode, this.msg, this.data});
+  OrderPendingResponse({this.statusCode, this.msg, this.data});
 
-  factory OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
-    return OrderDetailsResponse(
+  factory OrderPendingResponse.fromJson(Map<String, dynamic> json) {
+    return OrderPendingResponse(
       statusCode: json['status_code'] as String?,
       msg: json['msg'] as String?,
       data: json['Data'] == null

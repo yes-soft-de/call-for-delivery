@@ -51,9 +51,8 @@ class Data {
       this.kilometers,
       this.maxKilometerBonus,
       this.minKilometerBonus,
-        this.storeProfitMargin,
-        this.supplierProfitMargin
-      });
+      this.storeProfitMargin,
+      this.supplierProfitMargin});
 
   Data.fromJson(dynamic json) {
     id = json['id'];

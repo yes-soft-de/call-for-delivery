@@ -43,12 +43,20 @@ class StoreNeedsSupportScreenState extends State<StoresNeedsSupportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).directSupport, icon: Icons.menu, onTap: () {
-        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }),
-      body: currentState.getUI(context),
+    return GestureDetector(
+      onTap: () {
+        var focus = FocusScope.of(context);
+        if (focus.canRequestFocus) {
+          focus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.of(context).directSupport, icon: Icons.menu, onTap: () {
+          GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+        }),
+        body: currentState.getUI(context),
+      ),
     );
   }
 }

@@ -33,8 +33,9 @@ class StoreProfileModel extends DataModel {
       required this.bankNumber,
       this.employeeCount,
       this.city,
-      this.status,required this.profitMargin,this.imageUrl
-      });
+      this.status,
+      required this.profitMargin,
+      this.imageUrl});
 
   StoreProfileModel.withData(Data data) : super.withData() {
     _models = StoreProfileModel(
@@ -50,8 +51,7 @@ class StoreProfileModel extends DataModel {
         employeeCount: data.employeeCount,
         city: data.city,
         status: data.status,
-      profitMargin: data.profitMargin ?? 0
-    );
+        profitMargin: data.profitMargin ?? 0);
   }
 
   StoreProfileModel get data {

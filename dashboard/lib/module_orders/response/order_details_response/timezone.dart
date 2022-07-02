@@ -10,12 +10,6 @@ class Timezone {
 
   factory Timezone.fromJson(Map<String, dynamic> json) => Timezone(
         name: json['name'] as String?,
-        transitions: (json['transitions'] as List<dynamic>?)
-            ?.map((e) => Transition.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        location: json['location'] == null
-            ? null
-            : Location.fromJson(json['location'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {

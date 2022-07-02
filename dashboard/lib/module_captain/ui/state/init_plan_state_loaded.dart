@@ -44,9 +44,10 @@ class InitCaptainPlanLoadedState extends States {
       captainID = args;
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.changeCaptainPlan,
-        ),
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.changeCaptainPlan,
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),

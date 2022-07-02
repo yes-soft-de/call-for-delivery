@@ -14,19 +14,16 @@ class StackedForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        child,
-        Visibility(
-          visible: visible,
-          child: Align(
+    if (visible) {
+      return Stack(
+        children: [
+          child,
+          Align(
               alignment: Alignment.bottomCenter,
-              child: FadedButtonBar(
-                onPressed: onTap,
-                text: label,
-              )),
-        ),
-      ],
-    );
+              child: FadedButtonBar(onPressed: onTap, text: label)),
+        ],
+      );
+    }
+    return child;
   }
 }

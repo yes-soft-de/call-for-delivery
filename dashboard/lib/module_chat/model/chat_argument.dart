@@ -1,6 +1,6 @@
 class ChatArgument {
   String roomID;
-  String userType;
+  String? userType;
   bool support;
   int? userID;
   bool guest;

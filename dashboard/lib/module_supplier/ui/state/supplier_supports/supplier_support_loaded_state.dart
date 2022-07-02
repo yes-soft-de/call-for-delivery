@@ -60,8 +60,8 @@ class SupplierNeedSupportLoadedState extends States {
             ChatRoutes.chatRoute,
             arguments: ChatArgument(
                 roomID: element.roomID,
-                userType: 'captain',
-                userID: int.parse(element.id)),
+                userType: 'supplier',
+                userID: int.parse(element.userId)),
           );
         },
       ));

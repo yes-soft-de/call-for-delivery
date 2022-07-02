@@ -46,8 +46,7 @@ class Data {
       this.bankAccountNumber,
       this.bankName,
       this.employeeCount,
-        this.profitMargin
-      });
+      this.profitMargin});
 
   Data.fromJson(dynamic json) {
     id = json['id'];

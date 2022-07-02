@@ -131,7 +131,9 @@ class StoresInActiveLoadedState extends States {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: getTile(element.storeOwnerName),
+                    child: getTile(element.storeOwnerName == '0'
+                        ? element.phone
+                        : element.storeOwnerName),
                   ),
                 ),
 //                InkWell(

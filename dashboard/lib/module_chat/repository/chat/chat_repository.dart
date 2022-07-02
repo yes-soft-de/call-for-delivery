@@ -45,8 +45,11 @@ class ChatRepository {
         await _apiClient.post(
           Urls.NOTIFICATIONNEWCHAT_API,
           chatArgument.userID == null
-              ? {'otherUserID': ''}
-              : {'otherUserID': chatArgument.userID},
+              ? {'otherUserID': '', 'roomId': chatArgument.roomID}
+              : {
+                  'otherUserID': chatArgument.userID,
+                  'roomId': chatArgument.roomID
+                },
           headers: {'Authorization': 'Bearer ' + '$token'},
         );
       }

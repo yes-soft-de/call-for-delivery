@@ -1,15 +1,23 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/captain_cash_orders_finance.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
+import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
 
@@ -53,5 +61,59 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return CaptainCashOrdersFinanceModel.withData(response);
+  }
+
+  Future<DataModel> getPendingOrder() async {
+    OrderPendingResponse? response = await _ordersManager.getPendingOrders();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return PendingOrder.withData(response);
+  }
+
+  Future<DataModel> createOrder(CreateOrderRequest request) async {
+    OrderDetailsResponse? response = await _ordersManager.createOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response, location);
+  }
+
+  Future<DataModel> updateOrder(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.updateOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> hideOrder(int orderID) async {
+    ActionResponse? response = await _ordersManager.hideOrder(orderID);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    FireStoreHelper().backgroundThread('Trigger');
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteOrder(int id) async {
+    ActionResponse? response = await _ordersManager.deleteOrder(id);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 }

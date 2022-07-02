@@ -5,12 +5,13 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
-import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
 import 'package:c4d/module_stores/ui/state/order/order_time_line.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../module_orders/model/order_details_model.dart';
 
 @injectable
 class OrderTimeLineStateManager {

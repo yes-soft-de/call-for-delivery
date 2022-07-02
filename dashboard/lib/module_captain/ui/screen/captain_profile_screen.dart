@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -26,7 +28,7 @@ class CaptainProfileScreen extends StatefulWidget {
 
 class CaptainProfileScreenState extends State<CaptainProfileScreen> {
   late States currentState;
-
+  StreamSubscription? global;
   @override
   void initState() {
     currentState = LoadingState(this);
@@ -34,7 +36,7 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       currentState = event;
       refresh();
     });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
+    global = getIt<GlobalStateManager>().stateStream.listen((event) {
       getCaptain();
     });
     super.initState();
@@ -85,5 +87,11 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       ]),
       body: currentState.getUI(context),
     );
+  }
+
+  @override
+  void dispose() {
+    global?.cancel();
+    super.dispose();
   }
 }

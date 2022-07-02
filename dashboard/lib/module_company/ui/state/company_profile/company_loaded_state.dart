@@ -36,6 +36,9 @@ class CompanyLoadedState extends States {
       kilometerLimt.text = model?.kilometers.toString() ?? '';
       minkilometerLimt.text = model?.minKilometerBonus.toString() ?? '';
       maxkilometerLimt.text = model?.maxKilometerBonus.toString() ?? '';
+
+      storeProfitMargin.text = model?.storeProfitMargin.toString() ?? '';
+      supplierProfitMargin.text = model?.supplierProfitMargin.toString() ?? '';
       screenState.refresh();
     }
   }
@@ -53,6 +56,9 @@ class CompanyLoadedState extends States {
   var kilometerLimt = TextEditingController();
   var minkilometerLimt = TextEditingController();
   var maxkilometerLimt = TextEditingController();
+
+  var storeProfitMargin = TextEditingController();
+  var supplierProfitMargin = TextEditingController();
 
   @override
   Widget getUI(BuildContext context) {
@@ -201,18 +207,19 @@ class CompanyLoadedState extends States {
               ));
             } else {
               screenState.updateProfile(CreateCompanyProfile(
-                id: model?.id,
-                phone: phoneController.text.trim(),
-                phone2: phone2Controller.text.trim(),
-                whatsapp: whatsappController.text.trim(),
-                fax: faxController.text.trim(),
-                bankName: bankController.text.trim(),
-                stc: stcController.text.trim(),
-                email: emailController.text.trim(),
-                minKilometerBonus: minkilometerLimt.text,
-                maxKilometerBonus: maxkilometerLimt.text,
-                kilometers: kilometerLimt.text,
-              ));
+                  id: model?.id,
+                  phone: phoneController.text.trim(),
+                  phone2: phone2Controller.text.trim(),
+                  whatsapp: whatsappController.text.trim(),
+                  fax: faxController.text.trim(),
+                  bankName: bankController.text.trim(),
+                  stc: stcController.text.trim(),
+                  email: emailController.text.trim(),
+                  minKilometerBonus: minkilometerLimt.text,
+                  maxKilometerBonus: maxkilometerLimt.text,
+                  kilometers: kilometerLimt.text,
+                  storeProfitMargin: storeProfitMargin.text,
+                  supplierProfitMargin: supplierProfitMargin.text));
             }
           } else {
             CustomFlushBarHelper.createError(

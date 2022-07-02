@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
 import 'package:c4d/module_stores/ui/widget/custom_step.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +8,8 @@ import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/helpers/translating.dart';
+
+import '../../../../module_orders/model/order_details_model.dart';
 
 class OrderTimLineLoadedState extends States {
   OrderTimeLineScreenState screenState;

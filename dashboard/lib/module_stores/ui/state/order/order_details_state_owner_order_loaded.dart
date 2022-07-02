@@ -4,7 +4,6 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_stores/model/order/order_details_model.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
@@ -19,6 +18,8 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../module_orders/model/order_details_model.dart';
+
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
   final _distanceCalculator = TextEditingController();
@@ -27,6 +28,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
+    screenState.canRemoveOrder = orderInfo.canRemove;
     if (orderInfo.destinationCoordinate != null) {
       distance = S.current.calculating;
       screenState.refresh();
@@ -67,6 +69,85 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
           ),
         ),
+        // captain name
+        Visibility(
+            visible: orderInfo.captainName != null,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 75,
+                decoration: BoxDecoration(
+                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                    borderRadius: BorderRadius.circular(25)),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.delivery_dining_rounded,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 240),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: orderInfo.state ==
+                                            OrderStatusEnum.FINISHED
+                                        ? S.current.orderHandledDoneByCaptain +
+                                            ' '
+                                        : S.current.orderHandledByCaptain + ' ',
+                                    style: TextStyle(color: Colors.white)),
+                                TextSpan(
+                                    text: orderInfo.captainName,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                      ],
+                    ),
+                    // Expanded(
+                    //   child: Container(
+                    //     height: 75,
+                    //     decoration: BoxDecoration(
+                    //         color: Colors.yellow,
+                    //         borderRadius: BorderRadiusDirectional.only(
+                    //             topEnd: Radius.circular(25),
+                    //             bottomEnd: Radius.circular(25))),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Row(
+                    //         children: [
+                    //           Text(
+                    //             orderInfo.captainRating,
+                    //             style: TextStyle(color: Colors.white),
+                    //           ),
+                    //           Icon(
+                    //             Icons.star_rounded,
+                    //             color: Colors.white,
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
+                  ],
+                ),
+              ),
+            )),
         // order status
         Padding(
           padding:
@@ -165,7 +246,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails),
+          title: Text(S.current.orderDetails + ' #${screenState.orderId}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -294,6 +375,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             decoration: decoration,
             child: Column(
               children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.store_rounded,
+                  ),
+                  title: Text(S.current.storeName),
+                  subtitle: Text(orderInfo.storeName),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: DottedLine(
+                      dashColor: Theme.of(context).disabledColor,
+                      lineThickness: 2.5,
+                      dashRadius: 25),
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.store_rounded,

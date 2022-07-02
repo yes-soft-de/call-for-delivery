@@ -1,5 +1,5 @@
-// Developing Domain ===> 'http://138.197.186.138/';
-
+// Developing Domain ===> 'http://134.209.241.49';
+// Production Domain ===> 'http://46.101.100.62';
 class Urls {
   /*--------BASES-------------------*/
   static const String DOMAIN = 'http://134.209.241.49';
@@ -71,7 +71,8 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/subscription';
 
   /*--------Auth-------------------*/
-  static const String IMAGES_ROOT = DOMAIN + '/upload/';
+  static const String IMAGES_ROOT =
+      'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/createAdmin';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
@@ -106,9 +107,12 @@ class Urls {
       BASE_API_STORE + '/storeownersprofilesbyidforadmin/';
   static const ACTIVATE_STORE = BASE_API_STORE + '/storeownerprofilestatus';
   static const UPDATE_STORE_INFO = BASE_API_STORE + '/storeownerprofilebyadmin';
+  static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
+  static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
+  static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
   static const FILTER_CASH_ORDERS_FINANCES_API =
       BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
   static const FILTER_CASH_ORDERS_FINANCES_CAPTAIN_API =
@@ -195,7 +199,7 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
   static const UPDATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
-        static const CHANGE_CAPTAIN_FINANCE_PLAN =
+  static const CHANGE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
@@ -227,4 +231,7 @@ class Urls {
   static const GET_BID_ORDER = BASE_API_ORDER + '/filterbidordersbyadmin';
   static const GET_BID_ORDER_DETAILS =
       BASE_API_ORDER + '/bidorderbyidforadmin/';
+  /*-----------------------------order----------------------------*/
+  static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
 }

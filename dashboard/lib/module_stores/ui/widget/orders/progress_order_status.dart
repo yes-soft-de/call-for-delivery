@@ -28,11 +28,6 @@ class OrderProgressionHelper {
           SvgAsset.ACCEPT_ORDER,
           height: height,
         );
-      case OrderStatusEnum.GOT_CASH:
-        return SvgPicture.asset(
-          SvgAsset.EARN_CASH,
-          height: height,
-        );
       case OrderStatusEnum.FINISHED:
         return SvgPicture.asset(
           SvgAsset.SUCCESS_SVG,

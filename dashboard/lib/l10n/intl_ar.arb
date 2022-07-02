@@ -489,7 +489,7 @@
     "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
     "confirmDeletionBranch": "هل تريد حذف هذا الفرع",
     "deleteBranchSuccess": "تم حذف الفرع بنجاح",
-    "chooseBranch": "Choose Branch",
+    "chooseBranch": "اختر فرع",
     "thereIsNoBranches": "لا يوجد أفرع متاحة",
 
     "addNote": "إضافة تحديث",
@@ -675,7 +675,31 @@
     "youNeedToPayExclusively": "يجب دفع حصرا",
     "carUpdatedSuccessfully": "تم تحديث السيارة بنجاح",
     "financeCategoryDeletedSuccessfully": "تم حذف باقة عمل كابتن بنجاح",
-    "areSureAboutDeleteThisFinance": "هل انت متأكد من عملية حذف هذه الخطة"
+    "areSureAboutDeleteThisFinance": "هل انت متأكد من عملية حذف هذه الخطة",
+    "captainOffers": "عروض الكباتن",
+    "pendingOrders": "الطلبات في قائمة الانتظار",
+    "hidden": "مخفية",
+    "orderedNotAccepted": "الطلبات غير المسلمة",
+    "notCompletedAccount": "حساب غير مكتمل",
+    "notAccepted": "غير مسلمة",
+    "orderHandledByCaptain": "جاري معالجة الطلب من قبل الكابتن",
+    "orderHandledDoneByCaptain": "تمت معالجة الطلب من قبل الكابتن",
+    "orderCreatedSuccessfully": "تم إنشاء طلب جديد بنجاح",
+    "camera": "الكاميرا",
+    "gallery": "المعرض",
+    "thisOrderCanBeLinked": "الطلب من الممكن أن يحتوي على طلبات فرعية",
+    "confirmMakeOrder": "هل انت متأكد من رغبتك في إنشاء طلب جديد",
+    "confirmUpdateOrder": "هل انت متأكد من تعديلات الطلب الحالي",
+    "updateOrderWarning": "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد ",
+    "editOrder": "تعديل الطلب",
+    "orderUpdatedSuccessfully": "تم تعديل الطلب بنجاح",
+    "lastWeek": "الأسبوع الماضي",
+    "chooseStore": "اختر المتجر",
+    "areYouSureAboutDeleteOrder": "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟",
+    "updateOrderState": "تحديث حالة الطلب"
+
+
+
 
 
 

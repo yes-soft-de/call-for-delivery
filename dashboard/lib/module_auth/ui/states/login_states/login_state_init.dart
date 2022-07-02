@@ -64,14 +64,13 @@ class LoginStateInit extends LoginState {
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomLoginFormField(
-                      sufIcon: const Padding(
-                        padding: EdgeInsets.only(top: 15.0),
+                      sufIcon: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(end: 16, top: 0),
                         child: Text(CountryCode.COUNTRY_CODE_KSA),
                       ),
                       controller: usernameController,
                       phone: true,
-                      contentPadding:
-                          const EdgeInsets.only(top: 15, right: 8.0, left: 8.0),
                       hintText: '5xxxxxxxx'),
                 ),
               ),
@@ -100,7 +99,6 @@ class LoginStateInit extends LoginState {
                     last: true,
                     controller: passwordController,
                     password: true,
-                    contentPadding: const EdgeInsets.fromLTRB(16, 13, 16, 0),
                     hintText: S.of(context).password,
                   ),
                 ),

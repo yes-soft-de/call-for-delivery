@@ -681,7 +681,42 @@
     "youNeedToPayExclusively": "Pay Exclusively",
     "carUpdatedSuccessfully": "Car Updated successfully",
     "financeCategoryDeletedSuccessfully": "Finance category deleted successfully",
-    "areSureAboutDeleteThisFinance": "Are sure about deleting this captain finance plan"
+    "areSureAboutDeleteThisFinance": "Are sure about deleting this captain finance plan",
+    "captainOffers": "Captain Offers",
+    "pendingOrders": "Pending orders",
+    "hidden": "Hidden",
+    "orderedNotAccepted": "Ordered not accepted",
+    "notCompletedAccount": "Not completed account",
+    "notAccepted": "not accepted",
+    "orderHandledByCaptain": "Order processing by captain ",
+    "orderHandledDoneByCaptain": "Order processed by captain ",
+    "orderCreatedSuccessfully": "Order created successfully",
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "thisOrderCanBeLinked": "Order can contains a sub orders",
+    "confirmMakeOrder": "Are you sure about creating new order",
+    "updateOrderWarning": "If you will continue this process , this order will be hide from captains until you confirm new adjustment",
+    "editOrder": "Edit order",
+    "confirmUpdateOrder": "Confirm update order",
+    "orderUpdatedSuccessfully": "Order updated successfully",
+    "lastWeek": "Last week",
+    "chooseStore": "Choose store",
+    "areYouSureAboutDeleteOrder": "Are sure about deleting this order ? ",
+    "updateOrderState": "Update order state"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

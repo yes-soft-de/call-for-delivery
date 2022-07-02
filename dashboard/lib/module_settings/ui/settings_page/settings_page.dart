@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:c4d/di/di_config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -130,6 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       onTap: () {
+                        getIt<FireNotificationService>().deleteToken();
                         widget._authService.logout().then((value) {
                           Navigator.pushNamedAndRemoveUntil(
                               context,

@@ -125,37 +125,34 @@ class CompanyFinanceLoadedState extends States {
                   hintText: S.current.kilometerLimtMax,
                   numbers: true,
                 ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, bottom: 8, right: 12, top: 16.0),
-                      child: Text(
-                        S.current.supplierProfitMargin,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomFormField(
-                      controller: supplierProfitMargin,
-                      hintText: S.current.supplierProfitMargin,
-                      numbers: true,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, bottom: 8, right: 12, top: 16.0),
-                      child: Text(
-                        S.current.storeProfitMargin,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomFormField(
-                      controller: storeProfitMargin,
-                      hintText: S.current.storeProfitMargin,
-                      numbers: true,
-                    ),
-
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.supplierProfitMargin,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: supplierProfitMargin,
+                  hintText: S.current.supplierProfitMargin,
+                  numbers: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.storeProfitMargin,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: storeProfitMargin,
+                  hintText: S.current.storeProfitMargin,
+                  numbers: true,
+                ),
                 SizedBox(
                   height: 100,
                 ),
@@ -166,30 +163,26 @@ class CompanyFinanceLoadedState extends States {
           if (_key.currentState!.validate()) {
             if (empty || error != null) {
               screenState.createProfile(CreateCompanyProfile(
-                phone: phoneController.text.trim(),
-                phone2: phone2Controller.text.trim(),
-                whatsapp: whatsappController.text.trim(),
-                fax: faxController.text.trim(),
-                bankName: bankController.text.trim(),
-                stc: stcController.text.trim(),
-                email: emailController.text.trim(),
-              ));
+                  minKilometerBonus: minkilometerLimt.text,
+                  maxKilometerBonus: maxkilometerLimt.text,
+                  kilometers: kilometerLimt.text,
+                  supplierProfitMargin: supplierProfitMargin.text,
+                  storeProfitMargin: storeProfitMargin.text));
             } else {
               screenState.UpdateCompanyProfile(CreateCompanyProfile(
-                id: model?.id,
-                phone: phoneController.text.trim(),
-                phone2: phone2Controller.text.trim(),
-                whatsapp: whatsappController.text.trim(),
-                fax: faxController.text.trim(),
-                bankName: bankController.text.trim(),
-                stc: stcController.text.trim(),
-                email: emailController.text.trim(),
-                minKilometerBonus: minkilometerLimt.text,
-                maxKilometerBonus: maxkilometerLimt.text,
-                kilometers: kilometerLimt.text,
-                supplierProfitMargin: supplierProfitMargin.text,
-                storeProfitMargin: storeProfitMargin.text
-              ));
+                  id: model?.id,
+                  phone: phoneController.text.trim(),
+                  phone2: phone2Controller.text.trim(),
+                  whatsapp: whatsappController.text.trim(),
+                  fax: faxController.text.trim(),
+                  bankName: bankController.text.trim(),
+                  stc: stcController.text.trim(),
+                  email: emailController.text.trim(),
+                  minKilometerBonus: minkilometerLimt.text,
+                  maxKilometerBonus: maxkilometerLimt.text,
+                  kilometers: kilometerLimt.text,
+                  supplierProfitMargin: supplierProfitMargin.text,
+                  storeProfitMargin: storeProfitMargin.text));
             }
           } else {
             CustomFlushBarHelper.createError(

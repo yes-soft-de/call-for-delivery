@@ -32,7 +32,8 @@ class CarsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
-   Future<ActionResponse?> updateCar(CarRequest request) async {
+
+  Future<ActionResponse?> updateCar(CarRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.ADD_DELIVERY_CARS, request.toJson(),

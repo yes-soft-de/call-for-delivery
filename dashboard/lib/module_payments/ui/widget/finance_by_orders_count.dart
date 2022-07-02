@@ -73,6 +73,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _orderCountController,
                       hintText: '${S.current.eg} 10',
                       numbers: true,
@@ -87,6 +88,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _salaryController,
                       hintText: '${S.current.eg} 500',
                       numbers: true,
@@ -101,6 +103,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _minMonthCompensationController,
                       hintText: '${S.current.eg} 10',
                       numbers: true,
@@ -115,6 +118,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _maxMonthCompensationController,
                       hintText: '${S.current.eg} 30',
                       numbers: true,
@@ -129,6 +133,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       ),
                     ),
                     CustomFormField(
+                      maxLength: 10,
                       controller: _monthCompensationController,
                       hintText: '${S.current.eg} 500',
                       numbers: true,

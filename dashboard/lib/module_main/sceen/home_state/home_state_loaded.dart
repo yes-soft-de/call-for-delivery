@@ -43,8 +43,30 @@ class HomeLoadedState extends States {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
+              widgetTile(model?.pendingOrdersCount.toString() ?? '',
+                  S.current.pending),
               widgetTile(model?.ongoingOrdersCount.toString() ?? '',
                   S.current.countOngoingOrders),
+              Padding(
+                padding: const EdgeInsets.only(right: 32, left: 32),
+                child: Divider(
+                  thickness: 2.5,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                ),
+              ),
+              widgetTile(model?.allOrdersCount.toString() ?? '',
+                  S.current.allOrdersCount),
+              Padding(
+                padding: const EdgeInsets.only(right: 32, left: 32),
+                child: Divider(
+                  thickness: 2.5,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                ),
+              ),
+              widgetTile(model?.todayDeliveredOrdersCount.toString() ?? '',
+                  S.current.countTodayOrder),
+              widgetTile(model?.previousWeekDeliveredOrdersCount.toString() ?? '',
+                  S.current.lastWeek),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(
@@ -63,15 +85,10 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(model?.allOrdersCount.toString() ?? '',
-                  S.current.allOrdersCount),
-              Padding(
-                padding: const EdgeInsets.only(right: 32, left: 32),
-                child: Divider(
-                  thickness: 2.5,
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                ),
-              ),
+              widgetTile(model?.inactiveCaptainsCount.toString() ?? '',
+                  S.current.inActiveCaptains),
+              widgetTile(model?.activeCaptainsCount.toString() ?? '',
+                  S.current.captains),
             ]),
       ),
     );

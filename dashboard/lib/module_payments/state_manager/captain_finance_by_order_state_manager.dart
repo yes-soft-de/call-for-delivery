@@ -93,7 +93,8 @@ class CaptainFinanceByOrderStateManager {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: value.error ?? S.current.financeCategoryDeletedSuccessfully)
+                message:
+                    value.error ?? S.current.financeCategoryDeletedSuccessfully)
             .show(screenState.context);
       }
     });

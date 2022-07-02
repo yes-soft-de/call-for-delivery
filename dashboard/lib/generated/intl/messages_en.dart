@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this captain finance plan"),
+        "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
+            "Are sure about deleting this order ? "),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "bankAccountNumber":
@@ -105,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
+        "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -140,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNotArrivedToStore": MessageLookupByLibrary.simpleMessage(
             "Captain not arrived to store"),
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
+        "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
@@ -202,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please choose your plan"),
         "chooseReceiptPoint":
             MessageLookupByLibrary.simpleMessage("Choose Receipt Location"),
+        "chooseStore": MessageLookupByLibrary.simpleMessage("Choose store"),
         "chooseYourCity":
             MessageLookupByLibrary.simpleMessage("Choose Your City"),
         "chooseYourSize":
@@ -232,8 +237,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
+        "confirmMakeOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmUpdateOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("Count orders completed"),
@@ -329,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
@@ -416,11 +426,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Be the first one to send message"),
         "forgotPass": MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
+        "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
+        "hidden": MessageLookupByLibrary.simpleMessage("Hidden"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
@@ -479,6 +491,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
+        "lastWeek": MessageLookupByLibrary.simpleMessage("Last week"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
@@ -532,10 +545,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "notAccepted": MessageLookupByLibrary.simpleMessage("not accepted"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, The captain received the order"),
+        "notCompletedAccount":
+            MessageLookupByLibrary.simpleMessage("Not completed account"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "You dont have a subscription yet"),
         "notVerified": MessageLookupByLibrary.simpleMessage(
@@ -565,12 +581,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
             "Order Created, Return to Orders"),
+        "orderCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+        "orderHandledByCaptain": MessageLookupByLibrary.simpleMessage(
+            "Order processing by captain "),
+        "orderHandledDoneByCaptain":
+            MessageLookupByLibrary.simpleMessage("Order processed by captain "),
         "orderImage": MessageLookupByLibrary.simpleMessage("Order Image"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
@@ -592,7 +614,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("Order Time Line"),
         "orderType": MessageLookupByLibrary.simpleMessage("Order Type"),
+        "orderUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
+        "orderedNotAccepted":
+            MessageLookupByLibrary.simpleMessage("Ordered not accepted"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
@@ -654,6 +680,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
         "pendingOfferMsg": MessageLookupByLibrary.simpleMessage(
             "Waiting to accept your offer"),
+        "pendingOrders": MessageLookupByLibrary.simpleMessage("Pending orders"),
         "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
         "phone2": MessageLookupByLibrary.simpleMessage("Phone 2"),
         "phoneIsRequired":
@@ -917,6 +944,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
+        "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
+            "Order can contains a sub orders"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
@@ -945,8 +974,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("offer updated successfully"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
+        "updateOrderState":
+            MessageLookupByLibrary.simpleMessage("Update order state"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "If you will continue this process , this order will be hide from captains until you confirm new adjustment"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updatePackageSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Package updated successfully"),

@@ -6649,6 +6649,216 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Offers`
+  String get captainOffers {
+    return Intl.message(
+      'Captain Offers',
+      name: 'captainOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending orders`
+  String get pendingOrders {
+    return Intl.message(
+      'Pending orders',
+      name: 'pendingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hidden`
+  String get hidden {
+    return Intl.message(
+      'Hidden',
+      name: 'hidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ordered not accepted`
+  String get orderedNotAccepted {
+    return Intl.message(
+      'Ordered not accepted',
+      name: 'orderedNotAccepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not completed account`
+  String get notCompletedAccount {
+    return Intl.message(
+      'Not completed account',
+      name: 'notCompletedAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `not accepted`
+  String get notAccepted {
+    return Intl.message(
+      'not accepted',
+      name: 'notAccepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order processing by captain `
+  String get orderHandledByCaptain {
+    return Intl.message(
+      'Order processing by captain ',
+      name: 'orderHandledByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order processed by captain `
+  String get orderHandledDoneByCaptain {
+    return Intl.message(
+      'Order processed by captain ',
+      name: 'orderHandledDoneByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order created successfully`
+  String get orderCreatedSuccessfully {
+    return Intl.message(
+      'Order created successfully',
+      name: 'orderCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get camera {
+    return Intl.message(
+      'Camera',
+      name: 'camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery`
+  String get gallery {
+    return Intl.message(
+      'Gallery',
+      name: 'gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order can contains a sub orders`
+  String get thisOrderCanBeLinked {
+    return Intl.message(
+      'Order can contains a sub orders',
+      name: 'thisOrderCanBeLinked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new order`
+  String get confirmMakeOrder {
+    return Intl.message(
+      'Are you sure about creating new order',
+      name: 'confirmMakeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you will continue this process , this order will be hide from captains until you confirm new adjustment`
+  String get updateOrderWarning {
+    return Intl.message(
+      'If you will continue this process , this order will be hide from captains until you confirm new adjustment',
+      name: 'updateOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit order`
+  String get editOrder {
+    return Intl.message(
+      'Edit order',
+      name: 'editOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm update order`
+  String get confirmUpdateOrder {
+    return Intl.message(
+      'Confirm update order',
+      name: 'confirmUpdateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order updated successfully`
+  String get orderUpdatedSuccessfully {
+    return Intl.message(
+      'Order updated successfully',
+      name: 'orderUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last week`
+  String get lastWeek {
+    return Intl.message(
+      'Last week',
+      name: 'lastWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose store`
+  String get chooseStore {
+    return Intl.message(
+      'Choose store',
+      name: 'chooseStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about deleting this order ? `
+  String get areYouSureAboutDeleteOrder {
+    return Intl.message(
+      'Are sure about deleting this order ? ',
+      name: 'areYouSureAboutDeleteOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update order state`
+  String get updateOrderState {
+    return Intl.message(
+      'Update order state',
+      name: 'updateOrderState',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

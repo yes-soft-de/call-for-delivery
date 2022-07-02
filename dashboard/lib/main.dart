@@ -5,10 +5,13 @@ import 'package:c4d/module_bid_order/bid_order_module.dart';
 import 'package:c4d/module_branches/branches_module.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
+import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
@@ -163,8 +166,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     widget._fireNotificationService.onNotificationStream.listen((event) {
       widget._localNotificationService.showNotification(event);
     });
-    widget._localNotificationService.onLocalNotificationStream
-        .listen((event) {});
+    widget._localNotificationService.onLocalNotificationStream.listen((event) {
+      NotificationModel notificationModel = NotificationModel.fromJson(event);
+      if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
+            arguments: ChatArgument(
+                roomID: notificationModel.chatNotification?.roomID ?? '',
+                userID: notificationModel.chatNotification?.senderID,
+                userType: null));
+      } else {
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
+            arguments: notificationModel.argument);
+      }
+    });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       if (mounted) {
         setState(() {});

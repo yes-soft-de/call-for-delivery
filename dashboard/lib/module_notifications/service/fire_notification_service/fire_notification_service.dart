@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:io' as p;
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -42,6 +45,17 @@ class FireNotificationService {
     await refreshNotificationToken();
   }
 
+  Future<void> refreshToken() async {
+    try {
+      var token = await _fcm.getToken();
+      _notificationRepo.postToken(token);
+    } catch (e) {}
+  }
+
+  Future<void> deleteToken() async {
+    _notificationRepo.postToken(null);
+  }
+
   Future<void> refreshNotificationToken() async {
     var token = await _fcm.getToken();
     if (token != null) {
@@ -53,11 +67,23 @@ class FireNotificationService {
           Logger().info('FireNotificationService', 'onMessage: $message');
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          NotificationModel notificationModel =
+              NotificationModel.fromJson(message.data);
           SchedulerBinding.instance?.addPostFrameCallback(
             (_) {
-              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                  message.data['navigate_route'].toString(),
-                  arguments: message.data['argument']);
+              if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: ChatArgument(
+                        roomID:
+                            notificationModel.chatNotification?.roomID ?? '',
+                        userID: notificationModel.chatNotification?.senderID,
+                        userType: null));
+              } else {
+                Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                    notificationModel.navigateRoute ?? '',
+                    arguments: notificationModel.argument);
+              }
             },
           );
         });

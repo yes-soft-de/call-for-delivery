@@ -1,4 +1,5 @@
 import 'package:c4d/module_main/main_routes.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -20,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    FireStoreHelper().deleteWatcher();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _getNextRoute().then((route) {
         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);

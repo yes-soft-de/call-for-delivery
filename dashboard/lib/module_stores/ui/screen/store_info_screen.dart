@@ -51,9 +51,11 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
       setState(() {});
     }
   }
+
   void updateStore(UpdateStoreRequest request, bool haveImage) {
     widget.stateManager.updateStore(this, request, haveImage);
   }
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
