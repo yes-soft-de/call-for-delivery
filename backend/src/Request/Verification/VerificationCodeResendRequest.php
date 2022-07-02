@@ -10,4 +10,9 @@ class VerificationCodeResendRequest
     {
         return $this->userId;
     }
+
+    public function setUserId(string $userId): void
+    {
+        $this->userId = $userId;
+    }
 }
