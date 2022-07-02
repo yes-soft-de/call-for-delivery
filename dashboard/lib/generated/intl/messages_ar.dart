@@ -217,6 +217,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
+        "collectedPayment":
+            MessageLookupByLibrary.simpleMessage("المبلغ المقبوض"),
+        "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
+            "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه"),
+        "collectedPaymentNote": MessageLookupByLibrary.simpleMessage(
+            "ملاحظات الكابتن حول سعر الطلبية"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "companyFinance":
@@ -420,6 +426,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishedDate": MessageLookupByLibrary.simpleMessage(
             "لقد انتهت صلاحية اشتراكك الرجاء تجديد الاشتراك من الإعدادات"),
         "finishedOrdering": MessageLookupByLibrary.simpleMessage("إنهاء الطلب"),
+        "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"),
+        "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب"),
         "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":
@@ -976,6 +986,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("تحديث حالة الطلب"),
+        "updateOrderStatusSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث حالة الطلب بنجاح"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
         "updateOrderWarning": MessageLookupByLibrary.simpleMessage(

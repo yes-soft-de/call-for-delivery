@@ -108,6 +108,7 @@ class Urls {
   static const ACTIVATE_STORE = BASE_API_STORE + '/storeownerprofilestatus';
   static const UPDATE_STORE_INFO = BASE_API_STORE + '/storeownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
+  static const UPDATE_ORDER_STATUS_API = BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
   static const FILTER_OWNER_ORDERS_API =

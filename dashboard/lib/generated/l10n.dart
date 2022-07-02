@@ -6889,6 +6889,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Collected payment note`
+  String get collectedPaymentNote {
+    return Intl.message(
+      'Collected payment note',
+      name: 'collectedPaymentNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collected Payment`
+  String get collectedPayment {
+    return Intl.message(
+      'Collected Payment',
+      name: 'collectedPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collected payment not match with bill that you should receive`
+  String get collectedPaymentNotMatch {
+    return Intl.message(
+      'Collected payment not match with bill that you should receive',
+      name: 'collectedPaymentNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide us with distance you reached out and collected payment with this order To finish the order`
+  String get finishingOrderMessageWithPayment {
+    return Intl.message(
+      'Please provide us with distance you reached out and collected payment with this order To finish the order',
+      name: 'finishingOrderMessageWithPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide us with distance you reached out with this order To finish the order`
+  String get finishingOrderMessage {
+    return Intl.message(
+      'Please provide us with distance you reached out with this order To finish the order',
+      name: 'finishingOrderMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order status updated successfully`
+  String get updateOrderStatusSuccessfully {
+    return Intl.message(
+      'Order status updated successfully',
+      name: 'updateOrderStatusSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

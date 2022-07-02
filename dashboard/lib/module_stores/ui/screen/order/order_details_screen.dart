@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/widgets/update_order_status_form.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
@@ -131,32 +132,14 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      var orderStatus =
-                          (currentState as OrderDetailsStateOwnerOrderLoaded)
-                              .orderInfo
-                              .state;
                       return StatefulBuilder(builder: (ctx, refreshFul) {
-                        return AlertDialog(
-                          title: Text(S.current.updateOrderState),
-                          scrollable: true,
-                          content: Column(
-                            children: getStates(orderStatus, (v) {
-                              orderStatus = v;
-                              refreshFul(() {});
-                            }),
-                          ),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(S.current.update)),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(S.current.cancel)),
-                          ],
+                        return UpdateOrderStatusForm(
+                          callBack: (request) {
+                            
+                          },
+                          orderInfo: (currentState
+                                  as OrderDetailsStateOwnerOrderLoaded)
+                              .orderInfo,
                         );
                       });
                     });
@@ -219,29 +202,5 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         body: currentState.getUI(context),
       ),
     );
-  }
-
-  List<Widget> getStates(
-      OrderStatusEnum currentStatus, Function(OrderStatusEnum) onValue) {
-    List<Widget> widgets = [];
-    OrderStatusEnum.values.forEach((element) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RadioListTile(
-            tileColor: Theme.of(context).backgroundColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title: Text(StatusHelper.getOrderStatusMessages(element)),
-            value: element,
-            groupValue: currentStatus,
-            onChanged: (OrderStatusEnum? value) {
-              onValue(value ?? OrderStatusEnum.WAITING);
-            },
-          ),
-        ),
-      );
-    });
-    return widgets;
   }
 }
