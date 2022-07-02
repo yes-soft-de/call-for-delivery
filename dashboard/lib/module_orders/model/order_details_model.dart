@@ -43,6 +43,7 @@ class OrderDetailsModel extends DataModel {
   late String? captainName;
   late String storeName;
   late int storeID;
+  String? noteCaptainOrderCost;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -74,7 +75,8 @@ class OrderDetailsModel extends DataModel {
       required this.orderIsMain,
       required this.captainName,
       required this.storeName,
-      required this.storeID});
+      required this.storeID,
+      required this.noteCaptainOrderCost});
 
   late OrderDetailsModel _orders;
 
@@ -130,6 +132,7 @@ class OrderDetailsModel extends DataModel {
       captainName: element?.captainName,
       storeName: element?.storeName ?? S.current.unknown,
       storeID: element?.storeId ?? -1,
+      noteCaptainOrderCost: element?.noteCaptainOrderCost,
     );
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);

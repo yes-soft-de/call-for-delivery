@@ -8,9 +8,12 @@ import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/helpers/finance_status_helper.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -451,6 +454,116 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
+        // entered
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            decoration: decoration,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.storefront,
+                  ),
+                  title: Text(S.current.confirmCaptainLocation),
+                  subtitle: Visibility(
+                      replacement: Text(S.current.unknown),
+                      visible: orderInfo.isCaptainArrived != null,
+                      child: Text(orderInfo.isCaptainArrived == true
+                          ? S.current.confirmed
+                          : S.current.unconfirmed)),
+                ),
+                Visibility(
+                    visible: orderInfo.paidToProvider != null &&
+                        orderInfo.payment == 'cash',
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.money),
+                          title: Text(S.current.captainPaidToProvider),
+                          subtitle: Text(FinanceHelper.getStatusString(
+                              orderInfo.paidToProvider?.toInt() ?? -1)),
+                        ),
+                      ],
+                    )),
+                Visibility(
+                    visible: orderInfo.kilometer != null,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(FontAwesomeIcons.locationArrow),
+                          title: Text(S.current.ProvideDistanceInKm),
+                          subtitle: Text(FixedNumber.getFixedNumber(
+                                  orderInfo.kilometer ?? 0) +
+                              ' ${S.current.km}'),
+                        ),
+                      ],
+                    )),
+                Visibility(
+                    visible: orderInfo.captainOrderCost != null &&
+                        orderInfo.payment == 'cash',
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(FontAwesomeIcons.moneyBill),
+                          title: Text(S.current.orderCashWithCaptain),
+                          subtitle: Text(FixedNumber.getFixedNumber(
+                                  orderInfo.captainOrderCost ?? 0) +
+                              ' ${S.current.sar}'),
+                        ),
+                      ],
+                    )),
+                Visibility(
+                    visible: orderInfo.captainOrderCost != null &&
+                        orderInfo.payment == 'cash' &&
+                        orderInfo.captainOrderCost != orderInfo.orderCost &&
+                        orderInfo.noteCaptainOrderCost != null,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: DottedLine(
+                              dashColor: Theme.of(context).disabledColor,
+                              lineThickness: 2.5,
+                              dashRadius: 25),
+                        ),
+                        ListTile(
+                          leading: Icon(FontAwesomeIcons.info),
+                          title: Text(S.current.captainNote),
+                          subtitle: Text(orderInfo.noteCaptainOrderCost ?? ''),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          ),
+        ),
+
         // payments
         Padding(
           padding: const EdgeInsets.all(16.0),

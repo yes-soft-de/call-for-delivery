@@ -37,6 +37,7 @@ class Data {
   String? captainName;
   String? storeName;
   int? storeId;
+  String? noteCaptainOrderCost;
   Data(
       {this.id,
       this.state,
@@ -68,7 +69,9 @@ class Data {
       this.orderIsMain,
       this.captainName,
       this.storeName,
-      this.storeId});
+      this.storeId,
+      this.noteCaptainOrderCost
+      });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],
@@ -76,6 +79,7 @@ class Data {
       storeId: json['storeOwnerId'] as int?,
       orderIsMain: json['orderIsMain'] as bool?,
       captainName: json['captainName'],
+      noteCaptainOrderCost: json['noteCaptainOrderCost'],
       state: json['state'] as String?,
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
@@ -93,9 +97,9 @@ class Data {
       destination: json['destination'] == null
           ? null
           : Destination.fromJson(json['destination'] as Map<String, dynamic>),
-      image: json['images'] == null
+      image: json['orderImage'] == null
           ? null
-          : Images.fromJson(json['images'] as Map<String, dynamic>),
+          : Images.fromJson(json['orderImage'] as Map<String, dynamic>),
       recipientName: json['recipientName'] as String?,
       recipientPhone: json['recipientPhone'] as String?,
       detail: json['detail'] as String?,
