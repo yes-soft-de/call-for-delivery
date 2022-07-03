@@ -29,7 +29,10 @@ class CaptainAssignOrderScreenState extends State<CaptainAssignOrderScreen> {
     currentState = LoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
-      refresh();
+      if (mounted){
+        setState(() {
+        });
+      }
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getCaptains();
@@ -49,7 +52,7 @@ class CaptainAssignOrderScreenState extends State<CaptainAssignOrderScreen> {
   }
 
   int? orderID;
-
+  CaptainAssignOrderStateManager get manager => widget._stateManager;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -58,9 +61,7 @@ class CaptainAssignOrderScreenState extends State<CaptainAssignOrderScreen> {
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).captains, icon: Icons.menu, onTap: () {
-        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }),
+          title: S.of(context).assignCaptain,),
       body: currentState.getUI(context),
     );
   }

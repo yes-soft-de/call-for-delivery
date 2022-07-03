@@ -1,3 +1,4 @@
+import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
@@ -64,10 +65,13 @@ class CaptainAssignOrderLoadedState extends States {
                         onPressed: () {
                           var request = AssignOrderToCaptainRequest(
                               id: int.tryParse(id ?? ''),
-                              orderId: screenState.orderID);
-                          Navigator.pop(context);
+                              orderId: int.tryParse(
+                                  ArgumentHiveHelper().getCurrentOrderID() ??
+                                      ''));
+                          screenState.manager
+                              .assignOrderToCaptain(screenState, request);
                         },
-                        child: Text(S.current.update)),
+                        child: Text(S.current.assign)),
                   ),
                   Divider(
                     color: Theme.of(context).backgroundColor,
@@ -97,75 +101,96 @@ class CaptainAssignOrderLoadedState extends States {
       if (!element.captainName.contains(search ?? '') && search != null) {
         continue;
       }
-      widgets.add(InkWell(
-        borderRadius: BorderRadius.circular(25),
-        onTap: () {
-          if (element.chosen == false) {
-            model?.forEach((element) {
-              element.chosen = false;
-            });
-            element.chosen = true;
-            id = element.captainID;
-          } else {
-            model?.forEach((element) {
-              element.chosen = false;
-            });
-            id = null;
-          }
-          screenState.refresh();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: element.chosen
-                  ? [
-                      BoxShadow(
-                        color: Theme.of(context).primaryColor.withOpacity(0.3),
-                        spreadRadius: 1.5,
-                        offset: Offset(0.5, 0.5),
-                        blurRadius: 6,
+      widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(25),
+          onTap: () {
+            if (element.chosen == false) {
+              model?.forEach((element) {
+                element.chosen = false;
+              });
+              element.chosen = true;
+              id = element.captainID;
+            } else {
+              model?.forEach((element) {
+                element.chosen = false;
+              });
+              id = null;
+            }
+            screenState.refresh();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: element.chosen
+                    ? [
+                        BoxShadow(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.3),
+                          spreadRadius: 1.5,
+                          offset: Offset(0.5, 0.5),
+                          blurRadius: 6,
+                        ),
+                      ]
+                    : null,
+                gradient: element.chosen
+                    ? LinearGradient(colors: [
+                        Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                        Theme.of(context).colorScheme.primary,
+                      ])
+                    : null),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 75),
+                    child: ClipOval(
+                      child: CustomNetworkImage(
+                        width: 75,
+                        height: 75,
+                        imageSource: element.image,
                       ),
-                    ]
-                  : null,
-              gradient: element.chosen
-                  ? LinearGradient(colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                      Theme.of(context).colorScheme.primary,
-                    ])
-                  : null),
-          child: Row(
-            children: [
-              CircleAvatar(
-                child: CustomNetworkImage(
-                  width: 50,
-                  height: 50,
-                  imageSource: element.image,
-                ),
-              ),
-              Text(element.captainName),
-              Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.boxes,
-                      color: element.chosen ? Colors.white : null,
                     ),
-                    Text(
-                      element.countOngoingOrders.toString() +
-                          ' ${S.current.order}',
-                      style: element.chosen ? activeStyle : null,
-                    )
-                  ],
-                ),
-              )
-            ],
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Text(
+                    element.captainName,
+                    style: element.chosen ? activeStyle : null,
+                  ),
+                  Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).backgroundColor,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.boxes,
+                            color: Theme.of(context).disabledColor,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            element.countOngoingOrders.toString() +
+                                ' ${S.current.sOrder}',
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ));

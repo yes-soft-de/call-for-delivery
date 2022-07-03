@@ -1,12 +1,17 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/hive/util/argument_hive_helper.dart';
+import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -74,6 +79,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // captain name
         Visibility(
+            replacement: OrderButton(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        ArgumentHiveHelper()
+                            .setCurrentOrderID(screenState.orderId.toString());
+                        return getIt<CaptainAssignOrderScreen>();
+                      });
+                },
+                backgroundColor: Colors.orange,
+                icon: Icons.delivery_dining_rounded,
+                subtitle: S.current.assignCaptainHint,
+                title: S.current.assignCaptain),
             visible: orderInfo.captainName != null,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -85,68 +104,68 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 16,
+                      width: 8,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.delivery_dining_rounded,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 240),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: orderInfo.state ==
-                                            OrderStatusEnum.FINISHED
-                                        ? S.current.orderHandledDoneByCaptain +
-                                            ' '
-                                        : S.current.orderHandledByCaptain + ' ',
-                                    style: TextStyle(color: Colors.white)),
-                                TextSpan(
-                                    text: orderInfo.captainName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.delivery_dining_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Container(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: orderInfo.state ==
+                                              OrderStatusEnum.FINISHED
+                                          ? S.current
+                                                  .orderHandledDoneByCaptain +
+                                              ' '
+                                          : S.current.orderHandledByCaptain +
+                                              ' ',
+                                      style: TextStyle(color: Colors.white)),
+                                  TextSpan(
+                                      text: orderInfo.captainName,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                      ],
+                          SizedBox(
+                            width: 8,
+                          ),
+                        ],
+                      ),
                     ),
-                    // Expanded(
-                    //   child: Container(
-                    //     height: 75,
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.yellow,
-                    //         borderRadius: BorderRadiusDirectional.only(
-                    //             topEnd: Radius.circular(25),
-                    //             bottomEnd: Radius.circular(25))),
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Row(
-                    //         children: [
-                    //           Text(
-                    //             orderInfo.captainRating,
-                    //             style: TextStyle(color: Colors.white),
-                    //           ),
-                    //           Icon(
-                    //             Icons.star_rounded,
-                    //             color: Colors.white,
-                    //           )
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: Icon(Icons.remove_circle),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager.unAssignedOrder(
+                                          screenState.orderId, screenState);
+                                    },
+                                    content:
+                                        S.current.areYouSureAboutRependingOrder,
+                                    oneAction: false);
+                              });
+                        },
+                        color: Colors.white,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -563,7 +582,6 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
-
         // payments
         Padding(
           padding: const EdgeInsets.all(16.0),

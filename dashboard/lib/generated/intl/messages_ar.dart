@@ -82,8 +82,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من عملية حذف هذه الخطة"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
+        "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
+        "assign": MessageLookupByLibrary.simpleMessage("إسناد"),
+        "assignCaptain": MessageLookupByLibrary.simpleMessage("إسناد كابتن"),
+        "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
+            "اسناد هذا الطلب لكابتن لتوصيله"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),

@@ -30,7 +30,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void deleteOrder(model) {}
-
+  OrderStatusStateManager get manager => widget._stateManager;
   @override
   void initState() {
     currentState = LoadingState(this);

@@ -707,7 +707,10 @@
     "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب",
     "updateOrderStatusSuccessfully": "تم تحديث حالة الطلب بنجاح",
     "orderAssignedSuccessfully": "تم إسناد الطلب للكابتن المختار بنجاح",
-    "areYouSureAboutRependingOrder": "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"
+    "areYouSureAboutRependingOrder": "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن",
+    "assignCaptainHint": "اسناد هذا الطلب لكابتن لتوصيله",
+    "assignCaptain": "إسناد كابتن",
+    "assign": "إسناد"
 
 
 

@@ -133,7 +133,8 @@ class OrderRepository {
 
   Future<ActionResponse?> unAssignCaptain(int orderId) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put('${Urls.UNASSIGNED_ORDER_FROM_CAPTAIN}/$orderId', {},
+    dynamic response = await _apiClient.put(
+        '${Urls.UNASSIGNED_ORDER_FROM_CAPTAIN}', {'orderId': orderId},
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

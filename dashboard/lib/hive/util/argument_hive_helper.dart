@@ -27,6 +27,14 @@ class ArgumentHiveHelper {
     return _box.get('storeID');
   }
 
+  void setCurrentOrderID(String id) {
+    _box.put('orderID', id);
+  }
+
+  String? getCurrentOrderID() {
+    return _box.get('orderID');
+  }
+
   Future<void> clean() async {
     await _box.clear();
     return;

@@ -6959,6 +6959,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure about reset this order and remove it form captain`
+  String get areYouSureAboutRependingOrder {
+    return Intl.message(
+      'Are you sure about reset this order and remove it form captain',
+      name: 'areYouSureAboutRependingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign captain to handle this order`
+  String get assignCaptainHint {
+    return Intl.message(
+      'Assign captain to handle this order',
+      name: 'assignCaptainHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign Captain`
+  String get assignCaptain {
+    return Intl.message(
+      'Assign Captain',
+      name: 'assignCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign`
+  String get assign {
+    return Intl.message(
+      'Assign',
+      name: 'assign',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -5,6 +5,7 @@ import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_order_assign.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -25,7 +26,7 @@ class CaptainAssignOrderStateManager {
   void getCaptains(CaptainAssignOrderScreenState screenState) {
     _captainsScreenState = screenState;
     _stateSubject.add(LoadingState(screenState));
-    _captainsService.getCaptains().then((value) {
+    _captainsService.getCaptainOrder().then((value) {
       if (value.hasError) {
         _stateSubject.add(CaptainAssignOrderLoadedState(screenState, null,
             error: value.error));
@@ -49,16 +50,12 @@ class CaptainAssignOrderStateManager {
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
         getCaptains(screenState);
-      } else if (value.isEmpty) {
-        _stateSubject.add(CaptainAssignOrderLoadedState(screenState, null,
-            empty: value.isEmpty));
       } else {
-        CaptainOrderModel _model = value as CaptainOrderModel;
+        Navigator.of(screenState.context).pop();
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message:S.current.orderAssignedSuccessfully)
+                title: S.current.warnning,
+                message: S.current.orderAssignedSuccessfully)
             .show(screenState.context);
-        _stateSubject
-            .add(CaptainAssignOrderLoadedState(screenState, _model.data));
       }
     });
   }

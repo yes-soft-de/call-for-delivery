@@ -82,8 +82,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are sure about deleting this captain finance plan"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this order ? "),
+        "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about reset this order and remove it form captain"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
+        "assign": MessageLookupByLibrary.simpleMessage("Assign"),
+        "assignCaptain": MessageLookupByLibrary.simpleMessage("Assign Captain"),
+        "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
+            "Assign captain to handle this order"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
