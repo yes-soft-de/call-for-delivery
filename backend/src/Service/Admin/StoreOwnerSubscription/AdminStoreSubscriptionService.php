@@ -9,24 +9,28 @@ use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\Subscription\SubscriptionService;
 
 class AdminStoreSubscriptionService
 {
     private AutoMapping $autoMapping;
     private AdminStoreSubscriptionManager $adminStoreSubscriptionManager;
     private AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService;
+    private SubscriptionService $subscriptionService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService, SubscriptionService $subscriptionService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
         $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
-    
+        $this->subscriptionService = $subscriptionService;
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
     {
        $response = [];
+       //check Subscription
+       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
 
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
