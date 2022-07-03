@@ -655,5 +655,15 @@ class SubscriptionService
 
         return $this->createSubscription($request);
     }
+
+    public function extraSubscriptionForDayByAdmin(int $storeOwnerProfileId): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    {  
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
+        if (! $store) {
+            return StoreProfileConstant::STORE_NOT_FOUND;
+        }
+       
+        return $this->subscriptionForOneDay($store->getStoreOwnerId());
+    }
 }
  

@@ -660,3 +660,8 @@ App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest:
             - NotBlank: ~
         packageId:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminExtraSubscriptionForDayptionRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~

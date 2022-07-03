@@ -10,11 +10,12 @@ use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdmin
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Subscription\SubscriptionService;
-use App\Response\Admin\StoreOwnerSubscription\CreateSubscriptionByAdminResponse;
 use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
+use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayptionRequest;
+use App\Response\Subscription\SubscriptionExtendResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -101,6 +102,12 @@ class AdminStoreSubscriptionService
       $request->setNote($requestByAdmin->getNote());
 
       return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
+    }
+
+    public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayptionRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    {
+
+      return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 
     }
 }
  
