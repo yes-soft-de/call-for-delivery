@@ -161,7 +161,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                           request = UpdateOrderRequest(
                               id: orderInfo.id,
                               state:
-                                  StatusHelper.getStatusString(orderInfo.state),
+                                  request.state,
                               distance: distanceCalculator.text,
                               paid: paid ? 1 : 2,
                               orderCost:
