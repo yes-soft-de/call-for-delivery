@@ -53,7 +53,7 @@ class AdminStoreSubscriptionResponse
 
     public int $packageExpired;
 
-    public string $packageNote;
+    public string|null $packageNote;
 
     public bool $isFuture;
 

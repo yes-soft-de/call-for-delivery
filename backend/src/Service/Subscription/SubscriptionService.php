@@ -625,9 +625,9 @@ class SubscriptionService
         return $this->subscriptionManager->updateSubscription($request);
     }
 
-    public function packageBalanceForAdminByStoreOwnerProfileId(int $storeOwnerProfileId)
+    public function packageBalanceForAdminByStoreOwnerProfileId(int $storeOwnerProfileId): array
     {
-        $store = $this->subscriptionManager->getUserId($storeOwnerProfileId);
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
 
         $packageBalance = $this->packageBalance($store->getStoreOwnerId());
        

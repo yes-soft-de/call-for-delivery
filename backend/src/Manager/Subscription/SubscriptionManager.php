@@ -319,7 +319,7 @@ class SubscriptionManager
        return "ok";
     }
 
-    public function getUserId(int $storeOwnerProfileId): ?StoreOwnerProfileEntity
+    public function getStoreOwnerProfileByStoreOwnerProfileId(int $storeOwnerProfileId): ?StoreOwnerProfileEntity
     {
        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
     }
