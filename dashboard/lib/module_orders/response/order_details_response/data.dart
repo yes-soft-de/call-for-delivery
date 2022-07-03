@@ -70,8 +70,7 @@ class Data {
       this.captainName,
       this.storeName,
       this.storeId,
-      this.noteCaptainOrderCost
-      });
+      this.noteCaptainOrderCost});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],

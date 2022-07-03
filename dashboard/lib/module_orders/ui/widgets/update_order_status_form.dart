@@ -87,9 +87,8 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                   ],
                 ),
                 Visibility(
-                  visible: [
-                    OrderStatusEnum.FINISHED
-                  ].contains(StatusHelper.getStatusEnum(request.state)),
+                  visible: [OrderStatusEnum.FINISHED]
+                      .contains(StatusHelper.getStatusEnum(request.state)),
                   child: Column(
                     children: [
                       AlertContainer(
@@ -160,8 +159,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                         onPressed: () {
                           request = UpdateOrderRequest(
                               id: orderInfo.id,
-                              state:
-                                  request.state,
+                              state: request.state,
                               distance: distanceCalculator.text,
                               paid: paid ? 1 : 2,
                               orderCost:

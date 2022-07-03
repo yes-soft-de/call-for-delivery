@@ -741,5 +741,4 @@ class UpdateOrderLoaded extends States {
     });
     return branchDropDown;
   }
-
 }
