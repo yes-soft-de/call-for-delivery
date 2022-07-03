@@ -47,4 +47,7 @@ class OrdersManager {
 
   Future<ActionResponse?> deleteOrder(int orderId) =>
       _repository.deleteOrder(orderId);
+
+  Future<ActionResponse?> unAssignCaptain(int orderId) =>
+      _repository.unAssignCaptain(orderId);
 }

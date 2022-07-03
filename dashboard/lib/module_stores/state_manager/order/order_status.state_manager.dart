@@ -114,4 +114,22 @@ class OrderStatusStateManager {
       }
     });
   }
+
+  void unAssignedOrder(int orderId, OrderDetailsScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().deleteOrder(orderId).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.deleteSuccess)
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+        FireStoreHelper().backgroundThread('Trigger');
+      }
+    });
+  }
 }

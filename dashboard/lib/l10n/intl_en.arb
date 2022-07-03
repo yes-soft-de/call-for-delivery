@@ -711,7 +711,10 @@
     "collectedPaymentNotMatch": "Collected payment not match with bill that you should receive",
     "finishingOrderMessageWithPayment": "Please provide us with distance you reached out and collected payment with this order To finish the order",
     "finishingOrderMessage": "Please provide us with distance you reached out with this order To finish the order",
-    "updateOrderStatusSuccessfully": "Order status updated successfully"
+    "updateOrderStatusSuccessfully": "Order status updated successfully",
+    "orderAssignedSuccessfully": "Order Assigned Successfully",
+    "areYouSureAboutRependingOrder": "Are you sure about reset this order and remove it form captain"
+
 
 
 

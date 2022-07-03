@@ -127,4 +127,14 @@ class OrdersService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> unAssignCaptain(int id) async {
+    ActionResponse? response = await _ordersManager.unAssignCaptain(id);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

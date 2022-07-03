@@ -108,7 +108,8 @@ class Urls {
   static const ACTIVATE_STORE = BASE_API_STORE + '/storeownerprofilestatus';
   static const UPDATE_STORE_INFO = BASE_API_STORE + '/storeownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
-  static const UPDATE_ORDER_STATUS_API = BASE_API_ORDER + '/orderstateupdatebyadmin';
+  static const UPDATE_ORDER_STATUS_API =
+      BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
   static const FILTER_OWNER_ORDERS_API =
@@ -165,8 +166,12 @@ class Urls {
 
   /*------------------------CAPTAINS------------------------*/
   static const GET_CAPTAINS = BASE_API_CAPTAIN + '/captainsprofilesbystatus/';
+  static const GET_CAPTAINS_ORDERS =
+      BASE_API_CAPTAIN + '/getreadycaptainsandcountoftheircurrentorders';
   static const GET_CAPTAIN_PROFILE = BASE_API_CAPTAIN + '/captainprofilebyid/';
   static const ACTIVATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofilestatus';
+  static const ASSIGN_ORDER_TO_CAPTAIN =
+      BASE_API_ORDER + '/assignordertocaptain';
   static const UPDATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofile';
   /*------------------------STORE PAYMENTS------------------------*/
   static const CREATE_STORE_PAYMENTS =
@@ -235,4 +240,5 @@ class Urls {
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
+  static const UNASSIGNED_ORDER_FROM_CAPTAIN = BASE_API_ORDER + '/rependingacceptedorder';
 }

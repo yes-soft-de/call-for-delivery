@@ -65,7 +65,8 @@ class HomeLoadedState extends States {
               ),
               widgetTile(model?.todayDeliveredOrdersCount.toString() ?? '',
                   S.current.countTodayOrder),
-              widgetTile(model?.previousWeekDeliveredOrdersCount.toString() ?? '',
+              widgetTile(
+                  model?.previousWeekDeliveredOrdersCount.toString() ?? '',
                   S.current.lastWeek),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),

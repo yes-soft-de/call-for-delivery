@@ -6949,6 +6949,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order Assigned Successfully`
+  String get orderAssignedSuccessfully {
+    return Intl.message(
+      'Order Assigned Successfully',
+      name: 'orderAssignedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
