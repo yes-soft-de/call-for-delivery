@@ -643,5 +643,17 @@ class SubscriptionService
 
         return $balance;
     }
+
+    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {  
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
+        if (! $store) {
+            return StoreProfileConstant::STORE_NOT_FOUND;
+        }
+       
+        $request->setStoreOwner($store->getStoreOwnerId());
+
+        return $this->createSubscription($request);
+    }
 }
  

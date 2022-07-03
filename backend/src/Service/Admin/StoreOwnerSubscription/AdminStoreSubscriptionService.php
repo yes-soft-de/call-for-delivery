@@ -10,6 +10,11 @@ use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdmin
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Subscription\SubscriptionService;
+use App\Response\Admin\StoreOwnerSubscription\CreateSubscriptionByAdminResponse;
+use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
+use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\SubscriptionResponse;
+use App\Response\Subscription\SubscriptionErrorResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -87,6 +92,15 @@ class AdminStoreSubscriptionService
         }
 
         return $futureSubscriptionsResult;
+    }
+
+    public function createSubscription(AdminCreateStoreSubscriptionRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+      $request = new SubscriptionCreateRequest(); 
+      $request->setPackage($requestByAdmin->getPackageId());
+      $request->setNote($requestByAdmin->getNote());
+
+      return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
     }
 }
  
