@@ -144,6 +144,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Captain not arrived to store"),
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
+        "captainPaidToProvider":
+            MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
@@ -216,6 +218,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
+        "collectedPayment":
+            MessageLookupByLibrary.simpleMessage("Collected Payment"),
+        "collectedPaymentNotMatch": MessageLookupByLibrary.simpleMessage(
+            "Collected payment not match with bill that you should receive"),
+        "collectedPaymentNote":
+            MessageLookupByLibrary.simpleMessage("Collected payment note"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("Company finance"),
@@ -234,6 +242,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedOrders":
             MessageLookupByLibrary.simpleMessage("Completed Orders"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmCaptainLocation":
+            MessageLookupByLibrary.simpleMessage("Is captain in store"),
         "confirmCode": MessageLookupByLibrary.simpleMessage("Confirm Code"),
         "confirmDeletionBranch": MessageLookupByLibrary.simpleMessage(
             "Confirm deletion of this branch"),
@@ -420,6 +430,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription is out of date please renew your subscription"),
         "finishedOrdering":
             MessageLookupByLibrary.simpleMessage("Finish Order"),
+        "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
+            "Please provide us with distance you reached out with this order To finish the order"),
+        "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
+            "Please provide us with distance you reached out and collected payment with this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
@@ -958,6 +972,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
+        "unconfirmed": MessageLookupByLibrary.simpleMessage("Unconfirmed"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
@@ -976,6 +991,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("Update order state"),
+        "updateOrderStatusSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Order status updated successfully"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrderWarning": MessageLookupByLibrary.simpleMessage(

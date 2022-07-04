@@ -28,7 +28,6 @@ class OrderPendingLoadedState extends States {
     return CustomListView.custom(children: getOrders());
   }
 
-  int currentIndex = 0;
   List<List<OrderModel>> ordersIndex = [];
   List<Widget> getOrders() {
     var context = screenState.context;
@@ -39,7 +38,7 @@ class OrderPendingLoadedState extends States {
         cursorRadius: BorderRadius.circular(25),
         animationDuration: Duration(milliseconds: 350),
         backgroundColor: Theme.of(context).backgroundColor,
-        currentIndex: currentIndex,
+        currentIndex: screenState.currentIndex,
         borderRadius: BorderRadius.circular(25),
         floating: true,
         height: 40,
@@ -52,7 +51,7 @@ class OrderPendingLoadedState extends States {
           FilterItem(label: S.current.notAccepted),
         ],
         onItemSelected: (index) {
-          currentIndex = index;
+          screenState.currentIndex = index;
           screenState.getOrders(false);
           screenState.refresh();
         },
@@ -60,7 +59,7 @@ class OrderPendingLoadedState extends States {
         unselectedContent: Theme.of(context).textTheme.headline6!.color!,
       ),
     );
-    for (var element in ordersIndex[currentIndex]) {
+    for (var element in ordersIndex[screenState.currentIndex]) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(

@@ -10,6 +10,7 @@ import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
@@ -88,6 +89,16 @@ class OrdersService {
 
   Future<DataModel> updateOrder(CreateOrderRequest request) async {
     ActionResponse? response = await _ordersManager.updateOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateOrderStatus(UpdateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.updateOrderStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

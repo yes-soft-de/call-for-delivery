@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/widgets/update_order_status_form.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
@@ -123,75 +124,56 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderDetails,
-            actions: [
-              CustomC4dAppBar.actionIcon(context,
-                  icon: Icons.rotate_left_rounded, onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      var orderStatus =
+        appBar: CustomC4dAppBar
+            .appBar(context, title: S.current.orderDetails, actions: [
+          CustomC4dAppBar.actionIcon(context, icon: Icons.rotate_left_rounded,
+              onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return StatefulBuilder(builder: (ctx, refreshFul) {
+                    return UpdateOrderStatusForm(
+                      callBack: (request) {
+                        widget._stateManager.updateOrderStatus(this, request);
+                      },
+                      orderInfo:
                           (currentState as OrderDetailsStateOwnerOrderLoaded)
-                              .orderInfo
-                              .state;
-                      return StatefulBuilder(builder: (ctx, refreshFul) {
-                        return AlertDialog(
-                          title: Text(S.current.updateOrderState),
-                          scrollable: true,
-                          content: Column(
-                            children: getStates(orderStatus, (v) {
-                              orderStatus = v;
-                              refreshFul(() {});
-                            }),
-                          ),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(S.current.update)),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(S.current.cancel)),
-                          ],
-                        );
-                      });
-                    });
-              }),
-              Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    StatusHelper.getOrderStatusIndex(
-                            (currentState as OrderDetailsStateOwnerOrderLoaded)
-                                .orderInfo
-                                .state) <
-                        StatusHelper.getOrderStatusIndex(
-                            OrderStatusEnum.FINISHED) &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                              .orderInfo,
+                    );
+                  });
+                });
+          }),
+          Visibility(
+            visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                StatusHelper.getOrderStatusIndex(
+                        (currentState as OrderDetailsStateOwnerOrderLoaded)
                             .orderInfo
-                            .state !=
-                        OrderStatusEnum.CANCELLED,
-                child: CustomC4dAppBar.actionIcon(context, onTap: () {
-                  var s = currentState as OrderDetailsStateOwnerOrderLoaded;
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return CustomAlertDialog(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  OrdersRoutes.UPDATE_ORDERS_SCREEN,
-                                  (route) => false,
-                                  arguments: s.orderInfo);
-                            },
-                            content: S.current.updateOrderWarning,
-                            oneAction: false);
-                      });
-                }, icon: Icons.edit),
-              )
-            ]),
+                            .state) <
+                    StatusHelper.getOrderStatusIndex(
+                        OrderStatusEnum.FINISHED) &&
+                (currentState as OrderDetailsStateOwnerOrderLoaded)
+                        .orderInfo
+                        .state !=
+                    OrderStatusEnum.CANCELLED,
+            child: CustomC4dAppBar.actionIcon(context, onTap: () {
+              var s = currentState as OrderDetailsStateOwnerOrderLoaded;
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return CustomAlertDialog(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              OrdersRoutes.UPDATE_ORDERS_SCREEN,
+                              (route) => false,
+                              arguments: s.orderInfo);
+                        },
+                        content: S.current.updateOrderWarning,
+                        oneAction: false);
+                  });
+            }, icon: Icons.edit),
+          )
+        ]),
         floatingActionButton: Visibility(
           visible: canRemoveOrder,
           child: FloatingActionButton(
@@ -219,29 +201,5 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         body: currentState.getUI(context),
       ),
     );
-  }
-
-  List<Widget> getStates(
-      OrderStatusEnum currentStatus, Function(OrderStatusEnum) onValue) {
-    List<Widget> widgets = [];
-    OrderStatusEnum.values.forEach((element) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RadioListTile(
-            tileColor: Theme.of(context).backgroundColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title: Text(StatusHelper.getOrderStatusMessages(element)),
-            value: element,
-            groupValue: currentStatus,
-            onChanged: (OrderStatusEnum? value) {
-              onValue(value ?? OrderStatusEnum.WAITING);
-            },
-          ),
-        ),
-      );
-    });
-    return widgets;
   }
 }

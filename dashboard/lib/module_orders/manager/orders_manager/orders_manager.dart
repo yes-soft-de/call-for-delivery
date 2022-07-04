@@ -3,6 +3,7 @@ import 'package:c4d/module_orders/repository/order_repository/order_repository.d
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -38,6 +39,8 @@ class OrdersManager {
       _repository.createOrder(request);
   Future<ActionResponse?> updateOrder(CreateOrderRequest request) =>
       _repository.updateOrder(request);
+  Future<ActionResponse?> updateOrderStatus(UpdateOrderRequest request) =>
+      _repository.updateOrderStatus(request);
 
   Future<ActionResponse?> hideOrder(int orderID) =>
       _repository.hideOrder(orderID);

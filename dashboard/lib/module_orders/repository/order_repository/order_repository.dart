@@ -4,6 +4,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
@@ -93,6 +94,17 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       Urls.UPDATE_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateOrderStatus(UpdateOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_ORDER_STATUS_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
