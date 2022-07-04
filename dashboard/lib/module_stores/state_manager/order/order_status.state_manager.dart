@@ -110,7 +110,7 @@ class OrderStatusStateManager {
                 message: S.current.updateOrderStatusSuccessfully)
             .show(screenState.context);
         getOrder(screenState, request.id ?? -1);
-        FireStoreHelper().backgroundThread('Trigger');
+        FireStoreHelper().backgroundThread('Trigger').ignore();
       }
     });
   }

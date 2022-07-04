@@ -1,11 +1,9 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/update_order_status_form.dart';
-import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -26,65 +24,21 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int orderId = -1;
   late States currentState;
-
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  void deleteOrder(model) {}
   OrderStatusStateManager get manager => widget._stateManager;
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
-      currentState = event;
-      if (mounted) {
-        setState(() {});
-      }
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      widget._stateManager.stateStream.listen((event) {
+        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          currentState = event;
+          if (mounted) {
+            setState(() {});
+          }
+        });
+      });
     });
     super.initState();
-  }
-
-  void sendOrderReportState(var orderId, bool answar) {}
-
-  void sendState(bool success) {
-    if (success) {
-      Flushbar(
-        title: S.of(context).warnning,
-        message: 'S.of(context).sendToRecordSuccess',
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
-      )..show(context);
-    } else {
-      Flushbar(
-        title: S.of(context).warnning,
-        message: 'S.of(context).sendToRecordFaild',
-        icon: Icon(
-          Icons.info,
-          size: 28.0,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      )..show(context);
-    }
-  }
-
-  void goBack(String error) {
-    Flushbar(
-      title: S.of(context).errorHappened,
-      message: error,
-      icon: Icon(
-        Icons.info,
-        size: 28.0,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.red,
-      duration: Duration(seconds: 3),
-    )..show(context);
   }
 
   void refresh() {
@@ -92,18 +46,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       setState(() {});
     }
   }
-
-  void requestOrderProgress() {}
-
-  void getOrderDetails(var orderId) {}
-
-  void changeStateToLoaded(OrderModel order) {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void rateCaptain() {}
 
   bool flag = true;
   bool canRemoveOrder = false;
