@@ -14,7 +14,7 @@ use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
-use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayptionRequest;
+use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Response\Subscription\SubscriptionExtendResponse;
 
 class AdminStoreSubscriptionService
@@ -104,7 +104,7 @@ class AdminStoreSubscriptionService
       return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
     }
 
-    public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayptionRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
     {
 
       return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 

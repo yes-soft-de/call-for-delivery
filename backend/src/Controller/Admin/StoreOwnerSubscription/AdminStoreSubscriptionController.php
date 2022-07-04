@@ -19,7 +19,7 @@ use App\AutoMapping;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use stdClass;
 use App\Constant\StoreOwner\StoreProfileConstant;
-use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayptionRequest;
+use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Constant\Subscription\SubscriptionConstant;
 
 /**
@@ -133,16 +133,11 @@ class AdminStoreSubscriptionController extends BaseController
      * @OA\RequestBody(
      *      description="create subscription",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="storeProfileId"),
-     *              @OA\Property(type="integer", property="packageId"),
-     *              @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="integer", property="storeProfileId"),
+     *          @OA\Property(type="integer", property="packageId"),
+     *          @OA\Property(type="string", property="note"),
      *      )
-     *    )
-     *  )
-     *
+     * )
      *
      * @OA\Response(
      *      response=201,
@@ -211,18 +206,13 @@ class AdminStoreSubscriptionController extends BaseController
      *      description="token to be passed as a header",
      *      required=true
      * )
-     *
+     * 
      * @OA\RequestBody(
-     *      description="create subscription For Day",
+     *      description="create extra Subscription",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="storeProfileId"),
+     *          @OA\Property(type="integer", property="storeProfileId"),
      *      )
-     *    )
-     *  )
-     *
+     * )
      *
      * @OA\Response(
      *      response=201,
@@ -253,7 +243,7 @@ class AdminStoreSubscriptionController extends BaseController
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, AdminExtraSubscriptionForDayptionRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, AdminExtraSubscriptionForDayRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
         if (\count($violations) > 0) {

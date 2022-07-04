@@ -2,7 +2,7 @@
 
 namespace App\Request\Admin\Subscription;
 
-class AdminExtraSubscriptionForDayptionRequest
+class AdminExtraSubscriptionForDayRequest
 {
     private int $storeProfileId;
 
