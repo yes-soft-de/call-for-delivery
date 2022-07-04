@@ -86,6 +86,13 @@ class VerificationService
     {
         $result = $this->userService->getUserVerificationStatusByUserId($request->getUserId());
 
+        if ($result !== null) {
+           if ($result['verificationStatus'] === 0) {
+               // send SMS message with verification code
+               $this->initializeVerificationCodeResendRequestAndResendingNewCode($request->getUserId());
+           }
+        }
+
         return $this->autoMapping->map('array', UserVerificationStatusGetResponse::class, $result);
     }
 
@@ -161,5 +168,14 @@ class VerificationService
         }
 
         return $response;
+    }
+
+    public function initializeVerificationCodeResendRequestAndResendingNewCode(string $userId)
+    {
+        $verificationCodeResendRequest = new VerificationCodeResendRequest();
+
+        $verificationCodeResendRequest->setUserId($userId);
+
+        $this->reSendNewVerificationCode($verificationCodeResendRequest);
     }
 }
