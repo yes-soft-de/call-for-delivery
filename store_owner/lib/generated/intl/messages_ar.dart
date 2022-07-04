@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyExtended": MessageLookupByLibrary.simpleMessage(
             "تم تمديد الاشتراك مسبقا ولا يمكن تمديده مرة أخرى"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
+        "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -224,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "confirmRefuseOffer": MessageLookupByLibrary.simpleMessage(
             "هل انت متاكد من رفض هذا العرض"),
+        "confirmUpdateOrder": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من تعديلات الطلب الحالي"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد في رغبتك بالاشتراك في هذا العرض"),
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
@@ -231,6 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -289,6 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "بعد اتمامك المهمة ستكافئ جهودك بالمال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("تعديل الطلب"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
@@ -365,6 +370,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("أوافق على سياسة"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "اوافق على سياسة الاستخدام والخصوصية"),
@@ -621,6 +627,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
@@ -658,7 +667,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
-        "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
+        "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "productDetails": MessageLookupByLibrary.simpleMessage("تفاصيل منتج"),
@@ -749,6 +759,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ابحث عن إشعار"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "ابحث عن طلب بإدخال رقم الطلب"),
+        "searchInContacts":
+            MessageLookupByLibrary.simpleMessage("ابحث في جهات الاتصال"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
         "second": MessageLookupByLibrary.simpleMessage("ثانية"),
@@ -839,6 +851,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "tax": MessageLookupByLibrary.simpleMessage("القيمة المضافة ال %15"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
+        "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -860,6 +873,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "transCount": MessageLookupByLibrary.simpleMessage("عدد النقلات"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
@@ -879,6 +893,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("نم تعديل طلبك بنجاح"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد "),
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),

@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/ui/widgets/custom_remove_sub_order_dialog.dart
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
@@ -96,106 +97,143 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderDetails,
-            actions: [
-              Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .orderIsMain &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                            .orderInfo
-                            .state !=
-                        OrderStatusEnum.FINISHED,
-                child: CustomC4dAppBar.actionIcon(context,
-                    message: S.current.newOrderLink, onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return CustomAlertDialog(
-                            onPressed: () {
-                              var order = (currentState
-                                      as OrderDetailsStateOwnerOrderLoaded)
-                                  .orderInfo;
-
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pushNamed(
-                                  OrdersRoutes.NEW_SUB_ORDER_SCREEN,
-                                  arguments: OrderModel(
-                                      branchID: order.branchID,
-                                      branchName: order.branchName,
-                                      state: order.state,
-                                      orderCost: order.orderCost,
-                                      note: order.branchName,
-                                      deliveryDate: order.branchName,
-                                      createdDate: order.branchName,
-                                      id: order.id,
-                                      orderType: 1,
-                                      orderIsMain: order.orderIsMain,
-                                      orders: order.subOrders,
-                                      isHide: 0));
-                            },
-                            content: S.current.areYouSureAboutCreatingSubOrder);
-                      });
-                }, icon: Icons.link),
-              ),
-              Visibility(
-                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .orderIsMain &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                        .orderInfo
-                        .subOrders
-                        .isNotEmpty &&
-                    (currentState as OrderDetailsStateOwnerOrderLoaded)
-                            .orderInfo
-                            .state !=
-                        OrderStatusEnum.FINISHED,
-                child: CustomC4dAppBar.actionIcon(context,
-                    message: S.current.unlinkSubOrders, onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return RemoveSubOrderDialog(
-                          primaryOrder: orderId,
-                          orders: (currentState
-                                  as OrderDetailsStateOwnerOrderLoaded)
-                              .orderInfo
-                              .subOrders,
-                          request: (request) {
-                            manager.removeSubOrder(this, request);
-                          },
-                        );
-                      });
-                }, icon: Icons.link_off),
-              )
-            ]),
-        body: currentState.getUI(context),
-        floatingActionButton: Visibility(
-            visible: canRemoveIt,
-            child: FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.error,
-              child: Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-              onPressed: () {
+          resizeToAvoidBottomInset: false,
+          appBar: CustomC4dAppBar
+              .appBar(context, title: S.current.orderDetails, actions: [
+            Visibility(
+              visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                  (currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .orderIsMain &&
+                  (currentState as OrderDetailsStateOwnerOrderLoaded)
+                          .orderInfo
+                          .state !=
+                      OrderStatusEnum.FINISHED,
+              child: CustomC4dAppBar.actionIcon(context,
+                  message: S.current.newOrderLink, onTap: () {
                 showDialog(
                     context: context,
-                    builder: (_) {
+                    builder: (ctx) {
                       return CustomAlertDialog(
                           onPressed: () {
+                            var order = (currentState
+                                    as OrderDetailsStateOwnerOrderLoaded)
+                                .orderInfo;
+
                             Navigator.of(context).pop();
-                            deleteOrder();
+                            Navigator.of(context).pushNamed(
+                                OrdersRoutes.NEW_SUB_ORDER_SCREEN,
+                                arguments: OrderModel(
+                                    branchID: order.branchID,
+                                    branchName: order.branchName,
+                                    state: order.state,
+                                    orderCost: order.orderCost,
+                                    note: order.branchName,
+                                    deliveryDate: order.branchName,
+                                    createdDate: order.branchName,
+                                    id: order.id,
+                                    orderType: 1,
+                                    orderIsMain: order.orderIsMain,
+                                    orders: order.subOrders,
+                                    isHide: 0));
                           },
-                          content: S.current.areYouSureAboutDeleteOrder);
+                          content: S.current.areYouSureAboutCreatingSubOrder);
                     });
-              },
-            )),
-      ),
+              }, icon: Icons.link),
+            ),
+            Visibility(
+              visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                  (currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .orderIsMain &&
+                  (currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .subOrders
+                      .isNotEmpty &&
+                  (currentState as OrderDetailsStateOwnerOrderLoaded)
+                          .orderInfo
+                          .state !=
+                      OrderStatusEnum.FINISHED,
+              child: CustomC4dAppBar.actionIcon(context,
+                  message: S.current.unlinkSubOrders, onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return RemoveSubOrderDialog(
+                        primaryOrder: orderId,
+                        orders:
+                            (currentState as OrderDetailsStateOwnerOrderLoaded)
+                                .orderInfo
+                                .subOrders,
+                        request: (request) {
+                          manager.removeSubOrder(this, request);
+                        },
+                      );
+                    });
+              }, icon: Icons.link_off),
+            ),
+          ]),
+          body: currentState.getUI(context),
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Visibility(
+                  visible: canRemoveIt,
+                  child: FloatingActionButton(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  deleteOrder();
+                                },
+                                content: S.current.areYouSureAboutDeleteOrder);
+                          });
+                    },
+                  )),
+              SizedBox(width: 8,),
+              Visibility(
+                visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
+                    StatusHelper.getOrderStatusIndex(
+                            (currentState as OrderDetailsStateOwnerOrderLoaded)
+                                .orderInfo
+                                .state) <
+                        StatusHelper.getOrderStatusIndex(
+                            OrderStatusEnum.DELIVERING),
+                child: FloatingActionButton(
+                    tooltip: S.current.editOrder,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return CustomAlertDialog(
+                              content: S.current.updateOrderWarning,
+                              onPressed: () {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    OrdersRoutes.ORDER_OWNER_UPDATE,
+                                    (route) => false,
+                                    arguments: (currentState
+                                            as OrderDetailsStateOwnerOrderLoaded)
+                                        .orderInfo);
+                              },
+                            );
+                          });
+                    },
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    )),
+              )
+            ],
+          )),
     );
   }
 

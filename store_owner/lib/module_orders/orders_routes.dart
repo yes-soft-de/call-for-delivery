@@ -8,4 +8,6 @@ class OrdersRoutes {
   static const OWNER_TIME_LINE_SCREEN = '/owner_time_line_screen';
   static const OWNER_HIDDEN_ORDERS_SCREEN = '/owner_hidden_orders_screen';
   static const ORDER_OWNER_RECYCLE = '/owner_recycling_order';
+  static const ORDER_OWNER_UPDATE = '/owner_update_order';
+
 }

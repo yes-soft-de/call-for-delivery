@@ -4,10 +4,11 @@
 // Named Domain ===> ''
 
 class Urls {
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
-  static const String IMAGES_ROOT = 'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
+  static const String IMAGES_ROOT =
+      'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/storeowner';
@@ -215,8 +216,7 @@ class Urls {
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
       DOMAIN + '/v1/account/profilecompleteaccountstatus';
-      static const DELETE_USER =
-      DOMAIN + '/v1/userstatus/userstatus';
+  static const DELETE_USER = DOMAIN + '/v1/userstatus/userstatus';
   static const GET_MY_NOTIFICATION =
       DOMAIN + '/v1/notificationlocal/notificationsLocal';
   static const GET_UPDATES =
@@ -237,7 +237,9 @@ class Urls {
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
-
+  static const UPDATE_ORDER_API = DOMAIN + '/v1/order/orderupdate';
+  static const HIDE_ORDER_API = DOMAIN + '/v1/order/updateordertohidden';
+ 
   /*----------------------------bidorders-----------------------------*/
   static const GET_SUPPLIER_CATEGORY =
       DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';

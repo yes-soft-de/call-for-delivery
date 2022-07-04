@@ -49,4 +49,9 @@ class OrdersManager {
           ConfirmCaptainLocationRequest request) =>
       _repository.confirmCaptainLocation(request);
   Future<OrdersResponse?> getHiddenOrder() => _repository.getHiddenOrder();
+  Future<ActionResponse?> updateOrder(CreateOrderRequest request) =>
+      _repository.updateOrder(request);
+
+  Future<ActionResponse?> hideOrder(int orderID) =>
+      _repository.hideOrder(orderID);
 }

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/state_manager/new_order_link_state_manager.dart';
+import 'package:c4d/module_orders/service/orders/orders.service.dart';
+import 'package:c4d/module_orders/state_manager/new_order/update_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +15,24 @@ import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
 @injectable
-class NewOrderLinkScreen extends StatefulWidget {
-  final NewOrderLinkStateManager _stateManager;
-
-  NewOrderLinkScreen(
+class UpdateOrderScreen extends StatefulWidget {
+  final UpdateOrderStateManager _stateManager;
+  UpdateOrderScreen(
     this._stateManager,
   );
 
   @override
-  NewOrderLinkScreenState createState() => NewOrderLinkScreenState();
+  UpdateOrderScreenState createState() => UpdateOrderScreenState();
 }
 
-class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
+class UpdateOrderScreenState extends State<UpdateOrderScreen>
     with WidgetsBindingObserver {
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
-    widget._stateManager.createOrder(this, request);
+    widget._stateManager.updateOrder(this, request);
   }
 
   void refresh() {
@@ -50,6 +51,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   int? branch;
   LatLng? customerLocation;
   //
+  late OrderDetailsModel orderInfo;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -72,8 +74,8 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    WidgetsBinding.instance?.addObserver(this);
     countryNumberController.text = '966';
-    widget._stateManager.getBranches(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -109,17 +111,19 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   }
 
   void saveInfo(String info) {}
-  int orderId = -1;
-  bool flag = true;
+  bool hideFlag = true;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && currentState is LoadingState && flag) {
-      if (args is OrderModel) {
-        orderId = args.id;
-        branch = args.branchID;
+    if (args != null) {
+      if (args is OrderDetailsModel) {
+        orderInfo = args;
+        if (hideFlag) {
+          hideFlag = false;
+          getIt<OrdersService>().hideOrder(orderInfo.id).ignore();
+          widget._stateManager.getBranches(this);
+        }
       }
-      flag = false;
     }
     return GestureDetector(
       onTap: () {
@@ -128,11 +132,17 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
           focus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomC4dAppBar.appBar(context, title: S.current.newOrderLink),
-        key: _scaffoldKey,
-        body: SafeArea(
-          child: currentState.getUI(context),
+      child: WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
+          appBar: CustomC4dAppBar.appBar(context,
+              title: S.current.editOrder, canGoBack: false),
+          key: _scaffoldKey,
+          body: SafeArea(
+            child: currentState.getUI(context),
+          ),
         ),
       ),
     );

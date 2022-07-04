@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your subscription already extended , You can\'t extend it again"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
+        "and": MessageLookupByLibrary.simpleMessage(" & "),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -228,6 +229,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmRefuseOffer": MessageLookupByLibrary.simpleMessage(
             "Are you sure about refuse this offer"),
+        "confirmUpdateOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmationCaptainOffers": MessageLookupByLibrary.simpleMessage(
             "Are sure about subscribe with this offer"),
         "confirmed": MessageLookupByLibrary.simpleMessage("confirmed"),
@@ -235,6 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Confirm with yes and no if captain reach you"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -295,6 +299,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "After you doing your job your effort will be rewarded by earning money"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "eg": MessageLookupByLibrary.simpleMessage("eg"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -373,6 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("hour"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("How we work"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("I agree to the"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "I Agree To The Terms Of Service & privacy policy"),
@@ -630,6 +636,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "Please check your internet connection , and try again"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
@@ -667,6 +676,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
+        "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -758,6 +768,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search for a notification"),
         "searchForOrder": MessageLookupByLibrary.simpleMessage(
             "search for order by order number"),
+        "searchInContacts":
+            MessageLookupByLibrary.simpleMessage("Search in contacts"),
         "searchingForCaptain":
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
@@ -845,6 +857,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),
         "tax": MessageLookupByLibrary.simpleMessage("15% vat"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
+        "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -867,6 +880,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "transCount":
             MessageLookupByLibrary.simpleMessage("Transportation Count"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
@@ -887,6 +901,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderSuccess":
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
+        "updateOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "If you will continue this process , this order will be hide from captains until you confirm new adjustment"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("Update profile"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),

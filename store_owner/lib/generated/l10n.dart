@@ -6309,6 +6309,116 @@ class S {
       args: [],
     );
   }
+
+  /// `If you will continue this process , this order will be hide from captains until you confirm new adjustment`
+  String get updateOrderWarning {
+    return Intl.message(
+      'If you will continue this process , this order will be hide from captains until you confirm new adjustment',
+      name: 'updateOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit order`
+  String get editOrder {
+    return Intl.message(
+      'Edit order',
+      name: 'editOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm update order`
+  String get confirmUpdateOrder {
+    return Intl.message(
+      'Confirm update order',
+      name: 'confirmUpdateOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contacts`
+  String get contacts {
+    return Intl.message(
+      'Contacts',
+      name: 'contacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search in contacts`
+  String get searchInContacts {
+    return Intl.message(
+      'Search in contacts',
+      name: 'searchInContacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your internet connection , and try again`
+  String get pleaseCheckYourInternetConnection {
+    return Intl.message(
+      'Please check your internet connection , and try again',
+      name: 'pleaseCheckYourInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get tryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I agree to the`
+  String get iAgreeOn {
+    return Intl.message(
+      'I agree to the',
+      name: 'iAgreeOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `terms of use`
+  String get terms {
+    return Intl.message(
+      'terms of use',
+      name: 'terms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `privacy policy`
+  String get privacy {
+    return Intl.message(
+      'privacy policy',
+      name: 'privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` & `
+  String get and {
+    return Intl.message(
+      ' & ',
+      name: 'and',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

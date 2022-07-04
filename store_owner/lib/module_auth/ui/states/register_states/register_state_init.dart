@@ -5,6 +5,8 @@ import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/auth_buttons.dart';
 import 'package:c4d/utils/effect/hidder.dart';
@@ -220,16 +222,51 @@ class RegisterStateInit extends RegisterState {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: CheckboxListTile(
-                    value: agreed,
-                    title: Text(
-                        S.of(context).iAgreeToTheTermsOfServicePrivacyPolicy),
-                    onChanged: (v) {
-                      agreed = v ?? false;
-                      screen.refresh();
-                    }),
-              ),
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(text: S.current.iAgreeOn + ' '),
+                              TextSpan(
+                                text: S.current.terms,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context)
+                                        .pushNamed(SettingRoutes.TERMS);
+                                  },
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              TextSpan(text: S.current.and),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context)
+                                        .pushNamed(SettingRoutes.PRIVECY);
+                                  },
+                                text: S.current.privacy,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ),
+                      Checkbox(
+                          value: agreed,
+                          onChanged: (v) {
+                            agreed = v ?? false;
+                            screen.refresh();
+                          })
+                    ],
+                  )),
               Container(
                 height: 175,
               ),

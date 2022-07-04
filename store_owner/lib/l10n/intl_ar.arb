@@ -129,7 +129,7 @@
     "pickAJob": "اختار عملي",
     "paymentMethod": "طريقة الدفع",
     "pleaseSelectABranch": "الرجاء اختيار فرع تجاري",
-    "privacyPolicy": "شروط الخصوصية",
+    "privacyPolicy": "سياسة الخصوصية",
     "termsOfService": "شروط الاستخدام",
     "created": "تم الانشاء",
     "unknown": "غير معروف",
@@ -631,7 +631,19 @@
     "areSureAboutDeletingYourAccount": "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن",
     "deleteAccount": "حذف الحساب",
     "DeletingYourAccountHint": "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن",
-    "userDeleted": "تم حذف الحساب بنجاح"
+    "userDeleted": "تم حذف الحساب بنجاح",
+    "confirmUpdateOrder": "هل انت متأكد من تعديلات الطلب الحالي",
+    "updateOrderWarning": "في حال المتابعة في عملية تعديل الطلب سيتم إخفاء الطلب من الكباتن حتى يتم تأكيد تعديل الطلب من جديد ",
+    "editOrder": "تعديل الطلب",
+    "contacts": "جهات الاتصال",
+    "searchInContacts": "ابحث في جهات الاتصال",
+    "pleaseCheckYourInternetConnection": "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا",
+    "tryAgain": "إعادة المحاولة",
+    "iAgreeOn": "أوافق على سياسة",
+    "terms": "الاستخدام",
+    "privacy": "الخصوصية",
+    "and": " و "
+
 
 
 

@@ -80,6 +80,7 @@ class _FilterBarState extends State<FilterBar> {
   String? myLocalChanges;
   @override
   void initState() {
+    firstUse = true;
     _reset();
     super.initState();
   }
@@ -91,7 +92,7 @@ class _FilterBarState extends State<FilterBar> {
     borderRadius = widget.borderRadius;
     padding = widget.padding;
     firstUse = true;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       try {
         if (firstUse) {
           _keys.forEach((element) {
@@ -144,10 +145,8 @@ class _FilterBarState extends State<FilterBar> {
                   end = true;
                   setState(() {});
                 },
-                left: initialOffset?.dx ?? 0,
-                duration: firstUse
-                    ? const Duration(milliseconds: 1)
-                    : animationDuration,
+                left: firstUse ? null : (initialOffset?.dx ?? 0),
+                duration: animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
                   height: itemSize.isEmpty
@@ -188,14 +187,19 @@ class _FilterBarState extends State<FilterBar> {
       _keys.add(GlobalKey(debugLabel: element.label));
       barItems.add(
         Expanded(
-          child: GestureDetector(
+          child: InkWell(
+              splashColor: Colors.transparent,
               key: _keys[element.index],
               onTap: () {
                 if (widget.currentIndex != element.index) {
-                  end = false;
+                  if (firstUse == false) {
+                    end = false;
+                  }
                 }
                 widget.currentIndex = element.index;
-                firstUse = false;
+                if (firstUse) {
+                  firstUse = false;
+                }
                 try {
                   RenderBox render = _keys[element.index]
                       .currentContext

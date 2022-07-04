@@ -6,10 +6,10 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
-import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart';
+import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
@@ -25,23 +25,24 @@ import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
 
-class OrderRecyclingLoaded extends States {
+class UpdateOrderLoaded extends States {
+  List<BranchesModel> branches;
   OrderDetailsModel orderInfo;
-  final OrderRecyclingScreenState screenState;
-  OrderRecyclingLoaded(
+  final UpdateOrderScreenState screenState;
+  UpdateOrderLoaded(
     this.screenState,
+    this.branches,
     this.orderInfo,
   ) : super(screenState) {
     screenState.orderDetailsController.text = orderInfo.note ?? '';
     screenState.noteController.text = orderInfo.note ?? '';
     screenState.receiptNameController.text = orderInfo.customerName;
-
     var number = orderInfo.customerPhone;
     if (number == S.current.unknown) number = '';
     if (number.isNotEmpty || number != '') {
@@ -100,8 +101,27 @@ class OrderRecyclingLoaded extends States {
                 Column(
                   children: [
                     ListTile(
-                        title: LabelText(S.of(context).branch),
-                        subtitle: Text(orderInfo.branchName)),
+                      title: LabelText(S.of(context).branch),
+                      subtitle: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).backgroundColor),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0, right: 16),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                                value: screenState.branch,
+                                items: _getBranches(),
+                                hint: Text(S.current.chooseBranch),
+                                onChanged: (int? value) {
+                                  screenState.branch = value;
+                                  screenState.refresh();
+                                }),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 // name
@@ -145,7 +165,7 @@ class OrderRecyclingLoaded extends States {
                             ),
                             hintText: '5xxxxxxxx'),
                       ),
-                      Padding(
+                     Padding(
                         padding: const EdgeInsets.only(
                             right: 4.0, left: 4.0, bottom: 28),
                         child: InkWell(
@@ -176,7 +196,7 @@ class OrderRecyclingLoaded extends States {
                           ),
                         ),
                       ),
-                    ],
+                     ],
                   ),
                 ),
                 // to
@@ -184,7 +204,6 @@ class OrderRecyclingLoaded extends States {
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
                     validator: false,
-                    contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
                     controller: screenState.toController,
@@ -513,7 +532,7 @@ class OrderRecyclingLoaded extends States {
             ),
           ),
         ),
-        label: S.current.republish,
+        label: S.current.update,
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
@@ -522,11 +541,12 @@ class OrderRecyclingLoaded extends States {
                 context: context,
                 builder: (context) {
                   return CustomAlertDialog(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        createOrder();
-                      },
-                      content: S.current.confirmMakeOrder);
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      createOrder();
+                    },
+                    content: S.current.confirmUpdateOrder,
+                  );
                 });
           } else if (screenState.payments == null) {
             CustomFlushBarHelper.createError(
@@ -649,53 +669,45 @@ class OrderRecyclingLoaded extends States {
                 message: S.current.errorUploadingImages)
             .show(screenState.context);
       }
-      screenState.manager.recycle(
-          screenState,
-          CreateOrderRequest(
-              order: screenState.orderId,
-              cancel: -1,
-              orderIsMain: orderIsMain,
-              orderType: orderType,
-              fromBranch: screenState.branch,
-              recipientName: screenState.receiptNameController.text.trim(),
-              recipientPhone: screenState.countryNumberController.text.trim() +
-                  screenState.phoneNumberController.text.trim(),
-              destination: GeoJson(
-                  link: screenState.toController.text.trim(),
-                  lat: screenState.customerLocation?.latitude,
-                  lon: screenState.customerLocation?.longitude),
-              note: screenState.orderDetailsController.text.trim(),
-              detail: screenState.orderDetailsController.text.trim(),
-              orderCost: num.tryParse(screenState.priceController.text.trim()),
-              image: value,
-              date: orderDate.toUtc().toIso8601String(),
-              payment: screenState.payments));
+      screenState.addNewOrder(CreateOrderRequest(
+          order: orderInfo.id,
+          orderIsMain: orderIsMain,
+          fromBranch: screenState.branch,
+          recipientName: screenState.receiptNameController.text.trim(),
+          recipientPhone: screenState.countryNumberController.text.trim() +
+              screenState.phoneNumberController.text.trim(),
+          destination: GeoJson(
+              link: screenState.toController.text.trim(),
+              lat: screenState.customerLocation?.latitude,
+              lon: screenState.customerLocation?.longitude),
+          note: screenState.orderDetailsController.text.trim(),
+          detail: screenState.orderDetailsController.text.trim(),
+          orderCost: num.tryParse(screenState.priceController.text.trim()),
+          image: value,
+          date: orderDate.toUtc().toIso8601String(),
+          payment: screenState.payments));
     });
   }
 
   // function create order without upload image
   void createOrderWithoutImage() {
-    screenState.manager.recycle(
-        screenState,
-        CreateOrderRequest(
-            order: screenState.orderId,
-            cancel: -1,
-            orderType: orderType,
-            orderIsMain: orderIsMain,
-            fromBranch: screenState.branch,
-            recipientName: screenState.receiptNameController.text.trim(),
-            recipientPhone: screenState.countryNumberController.text.trim() +
-                screenState.phoneNumberController.text.trim(),
-            destination: GeoJson(
-                link: screenState.toController.text.trim(),
-                lat: screenState.customerLocation?.latitude,
-                lon: screenState.customerLocation?.longitude),
-            note: screenState.orderDetailsController.text.trim(),
-            detail: screenState.orderDetailsController.text.trim(),
-            orderCost: num.tryParse(screenState.priceController.text.trim()),
-            image: imagePath ?? null,
-            date: orderDate.toUtc().toIso8601String(),
-            payment: screenState.payments));
+    screenState.addNewOrder(CreateOrderRequest(
+        order: orderInfo.id,
+        orderIsMain: orderIsMain,
+        fromBranch: screenState.branch,
+        recipientName: screenState.receiptNameController.text.trim(),
+        recipientPhone: screenState.countryNumberController.text.trim() +
+            screenState.phoneNumberController.text.trim(),
+        destination: GeoJson(
+            link: screenState.toController.text.trim(),
+            lat: screenState.customerLocation?.latitude,
+            lon: screenState.customerLocation?.longitude),
+        note: screenState.orderDetailsController.text.trim(),
+        detail: screenState.orderDetailsController.text.trim(),
+        orderCost: num.tryParse(screenState.priceController.text.trim()),
+        image: imagePath ?? null,
+        date: orderDate.toUtc().toIso8601String(),
+        payment: screenState.payments));
   }
 
   void createOrder() {
@@ -728,5 +740,19 @@ class OrderRecyclingLoaded extends States {
       imagePath = value?.path;
       screenState.refresh();
     });
+  }
+
+  List<DropdownMenuItem<int>> _getBranches() {
+    var branchDropDown = <DropdownMenuItem<int>>[];
+    branches.forEach((element) {
+      branchDropDown.add(DropdownMenuItem(
+        child: Text(
+          element.branchName,
+          overflow: TextOverflow.ellipsis,
+        ),
+        value: element.id,
+      ));
+    });
+    return branchDropDown;
   }
 }

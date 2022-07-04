@@ -164,7 +164,7 @@ class OwnerOrdersStateManager {
       getOrdersFilters(
           screenState,
           FilterOrderRequest(state: screenState.orderFilter ?? 'pending'),
-          loading);
+          false);
     });
   }
 }

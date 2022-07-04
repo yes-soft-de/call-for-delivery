@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/text_style/text_style.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 class UpdatesLoadedState extends States {
   UpdateScreenState screenState;
   List<UpdateModel> model;
@@ -175,7 +176,16 @@ class UpdatesLoadedState extends States {
                         borderRadius: BorderRadius.circular(25)),
                     title: Text(element.title),
                     content: Container(
-                      child: Text(element.msg),
+                      child: Linkify(
+                        text: element.msg,
+                        onOpen: (link) async {
+                          if (await canLaunch(link.url)) {
+                            await launch(link.url);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                      ),
                     ),
                     actionsAlignment: MainAxisAlignment.center,
                     actions: [

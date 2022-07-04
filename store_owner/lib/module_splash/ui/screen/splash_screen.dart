@@ -1,5 +1,7 @@
 import 'dart:io';
-
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
@@ -25,15 +27,37 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Future<void> someChecks() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result) {
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) {
+            return CustomAlertDialog(
+                forceQuit: true,
+                primaryButton: S.current.tryAgain,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  someChecks();
+                },
+                title: S.current.warnning,
+                content: S.current.pleaseCheckYourInternetConnection);
+          });
+    }
+  }
+
   @override
   void initState() {
     if (Platform.isAndroid) {
       _createNewChannel();
     }
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      _getNextRoute().then((route) {
-        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-      });
+      someChecks();
     });
     super.initState();
   }
@@ -92,13 +116,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<String> needForLogging(bool login) async {
-    if (login) {
-      await getIt<AuthService>().accountStatus();
-      return AuthPrefsHelper().getAccountStatusPhase();
-    } else if (AboutHiveHelper().getWelcome()) {
+    try {
+      if (login) {
+        await getIt<AuthService>().accountStatus();
+        return AuthPrefsHelper().getAccountStatusPhase();
+      } else if (AboutHiveHelper().getWelcome()) {
+        return AuthorizationRoutes.LOGIN_SCREEN;
+      } else {
+        return welcomePage();
+      }
+    } catch (e) {
       return AuthorizationRoutes.LOGIN_SCREEN;
-    } else {
-      return welcomePage();
     }
   }
 
