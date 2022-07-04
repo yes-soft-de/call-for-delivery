@@ -47,6 +47,7 @@ use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 use App\Service\Captain\CaptainService;
+use App\Constant\Captain\CaptainConstant;
 
 class AdminOrderService
 {
@@ -451,8 +452,11 @@ class AdminOrderService
                 return SubscriptionConstant::CARS_FINISHED_INT;
             }
 
-            $order = $this->adminOrderManager->assignOrderToCaptain($request, $orderEntity);       
-
+            $order = $this->adminOrderManager->assignOrderToCaptain($request, $orderEntity);    
+              
+            if($order === CaptainConstant::CAPTAIN_NOT_FOUND) {
+                return CaptainConstant::CAPTAIN_NOT_FOUND;
+            }
             if($order) {
                 //create order chatRoom
                 $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
