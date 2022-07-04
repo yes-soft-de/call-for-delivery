@@ -85,6 +85,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   Future speak(String speak) async {
+    if (speak == '') {
+      return;
+    }
     await flutterTts.speak(speak);
   }
 

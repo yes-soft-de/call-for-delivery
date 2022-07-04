@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountForStore":
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "amountYouOwn": MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),
+        "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -440,6 +441,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
+        "goingBackToHome":
+            MessageLookupByLibrary.simpleMessage("الرجوع للقائمة الرئيسية"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
@@ -450,6 +453,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعة"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("كيف يعمل التطبيق"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("أوافق على سياسة"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "اوافق على سياسة الاستخدام والخصوصية"),
@@ -618,6 +622,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسداد الدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
+        "orderCanceled": MessageLookupByLibrary.simpleMessage(
+            "تم إلغاء الطلب من قبل المتجر ، لذلك لا يمكنك قبوله بعد الآن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":
@@ -635,6 +641,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
         "orderIsFinished":
             MessageLookupByLibrary.simpleMessage("تم انهاء الطلب"),
+        "orderIsHidden": MessageLookupByLibrary.simpleMessage(
+            "الطلب تم إخفاءه حاليا الرجاء انتظار إعادة نشره لاحقا"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
@@ -718,7 +726,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
-        "planByHours": MessageLookupByLibrary.simpleMessage("وظيفية ساعية"),
+        "planByHours":
+            MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),
         "planByOrderCount":
             MessageLookupByLibrary.simpleMessage("وظيفة حرة على الطلب"),
         "planByOrders":
@@ -774,6 +783,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب رئيسي"),
+        "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -971,6 +981,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("سوريا"),
         "tax": MessageLookupByLibrary.simpleMessage("القيمة المضافة ال %15"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
+        "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1037,6 +1048,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
+        "userNotVerified":
+            MessageLookupByLibrary.simpleMessage("المستخدم يحتاج لتأكيد هويته"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
@@ -1076,6 +1089,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youAreOffline": MessageLookupByLibrary.simpleMessage(
+            "الحالة الحالية لك (غير نشط) لاتسمح لك بقبول طلبات حاليا الرجاء تغييرها ثم المحاولة لاحقا"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

@@ -22,22 +22,14 @@ class InitAccountCaptainInitProfile extends States {
   Uri? mechanicLicence;
   Uri? identity;
   final InitAccountScreenState screen;
-  final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _carController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _bankNameController = TextEditingController();
-  final _bankAccountNumberController = TextEditingController();
-  final _stcPayController = TextEditingController();
-  final _countryCodeController = TextEditingController();
 
   InitAccountCaptainInitProfile(this.screen) : super(screen) {
     var number = getIt<AuthService>().username;
     if (number.isNotEmpty) {
       final sNumber =
           TheCountryNumber().parseNumber(internationalNumber: '+' + number);
-      _countryCodeController.text = sNumber.dialCode.substring(1);
-      _phoneController.text = sNumber.number;
+      screen.countryCodeController.text = sNumber.dialCode.substring(1);
+      screen.phoneController.text = sNumber.number;
       screen.refresh();
     }
   }
@@ -96,7 +88,7 @@ class InitAccountCaptainInitProfile extends States {
                 ),
                 // name
                 InitField(
-                  controller: _nameController,
+                  controller: screen.nameController,
                   icon: Icons.person,
                   hint: S.current.eg + ' : ' + S.current.nameHint,
                   title: S.current.captainName,
@@ -132,7 +124,7 @@ class InitAccountCaptainInitProfile extends States {
                     ),
                     Expanded(
                       child: CustomLoginFormField(
-                        controller: _phoneController,
+                        controller: screen.phoneController,
                         hintText: '5xxxxxxxxx',
                         phone: true,
                       ),
@@ -146,7 +138,7 @@ class InitAccountCaptainInitProfile extends States {
                           child: CustomLoginFormField(
                             contentPadding:
                                 const EdgeInsets.only(left: 8.0, right: 8.0),
-                            controller: _countryCodeController,
+                            controller: screen.countryCodeController,
                             phone: true,
                             phoneHint: false,
                             maxLength: 3,
@@ -179,7 +171,7 @@ class InitAccountCaptainInitProfile extends States {
                 ),
                 // age
                 InitField(
-                  controller: _ageController,
+                  controller: screen.ageController,
                   icon: Icons.calendar_month_rounded,
                   hint: S.current.eg + ' : ' + '36',
                   title: S.current.age,
@@ -187,7 +179,7 @@ class InitAccountCaptainInitProfile extends States {
                 ),
                 // car
                 InitField(
-                  controller: _carController,
+                  controller: screen.carController,
                   icon: Icons.local_taxi_rounded,
                   hint: S.current.eg + ' : ' + 'Kia Rio',
                   title: S.current.car,
@@ -257,21 +249,21 @@ class InitAccountCaptainInitProfile extends States {
                 ),
                 // Bank name
                 InitField(
-                  controller: _bankNameController,
+                  controller: screen.bankNameController,
                   icon: Icons.account_balance_rounded,
                   hint: S.current.eg + ' : ' + S.current.bankNameHint,
                   title: S.current.bankName,
                 ),
                 // Bank Account Number
                 InitField(
-                  controller: _bankAccountNumberController,
+                  controller: screen.bankAccountNumberController,
                   icon: Icons.password_rounded,
                   hint: S.current.eg + ' : ' + '3123235145313',
                   title: S.current.bankAccountNumber,
                 ),
                 // Stc Pay
                 InitField(
-                    controller: _stcPayController,
+                    controller: screen.stcPayController,
                     icon: Icons.credit_card_rounded,
                     hint: S.current.eg + ' : ' + '059796748',
                     title: S.current.stcPayCode,
@@ -295,19 +287,19 @@ class InitAccountCaptainInitProfile extends States {
                           mechanicLicence != null) {
                         screen.submitProfile(
                             CreateCaptainProfileRequest.withUriImages(
-                                name: _nameController.text.trim(),
-                                age: int.parse(_ageController.text),
-                                car: _carController.text,
+                                name: screen.nameController.text.trim(),
+                                age: int.parse(screen.ageController.text),
+                                car: screen.carController.text,
                                 captainImage: captainImage,
                                 driving: driverLicence,
                                 mechanic: mechanicLicence,
                                 idImage: identity,
-                                phone: _countryCodeController.text +
-                                    _phoneController.text,
+                                phone: screen.countryCodeController.text +
+                                    screen.phoneController.text,
                                 bankAccountNumber:
-                                    _bankAccountNumberController.text,
-                                bankName: _bankNameController.text,
-                                stcPay: _stcPayController.text));
+                                    screen.bankAccountNumberController.text,
+                                bankName: screen.bankNameController.text,
+                                stcPay: screen.stcPayController.text));
                       } else {
                         if (captainImage == null) {
                           CustomFlushBarHelper.createError(

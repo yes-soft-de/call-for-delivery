@@ -30,10 +30,10 @@ class AuthRepository {
   }
 
   Future<RegisterResponse?> verifyUser(VerifyCodeRequest request) async {
+    var token = await getIt<AuthService>().getToken();
     dynamic result = await _apiClient.post(
-      Urls.VERIFY_CODE_API,
-      request.toJson(),
-    );
+        Urls.VERIFY_CODE_API, request.toJson(),
+        headers: {'Authorization': 'Bearer $token'});
     if (result == null) return null;
     return RegisterResponse.fromJson(result);
   }

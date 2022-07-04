@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/ui/widgets/home_widgets/icon_info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -214,35 +215,66 @@ class NearbyOrdersCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Visibility(
-              visible: orderIsMain || primaryTitle != null,
-              child: Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.tag,
-                    color: Colors.amber,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.amber),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        primaryTitle ?? S.current.groupOrder,
-                        style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Visibility(
+                  visible: orderIsMain || primaryTitle != null,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.tag,
+                        color: Colors.amber,
                       ),
-                    ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            primaryTitle ?? S.current.groupOrder,
+                            style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Spacer(),
-                ],
-              ),
+                ),
+                Spacer(),
+                Visibility(
+                  visible: note != null,
+                  child: InfoButtonOrder(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              scrollable: true,
+                              title: Text(S.current.note),
+                              content: Container(child: Text(note ?? '')),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              actionsAlignment: MainAxisAlignment.center,
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(S.current.close)),
+                              ],
+                            );
+                          });
+                    },
+                  ),
+                ),
+              ],
             ),
             // order number & order status
             Row(

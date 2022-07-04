@@ -10,13 +10,13 @@ class Urls {
   static const SIGN_UP_API = BASE_API + '/v1/captain/captainregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
-  static const VERIFY_CODE_API = BASE_API + '/verifycode';
-  static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';
-  static const RESEND_CODE_API = BASE_API + '/resendnewverificationcode';
-  static const RESET_PASSWORD = BASE_API + '/resetpasswordorder';
+  static const VERIFY_CODE_API = BASE_API + '/v1/verification/verifycode';
+  static const CHECK_USER_VERIFIED_API = BASE_API + '/v1/verification/checkverificationstatus';
+  static const RESEND_CODE_API = BASE_API + '/v1/verification/resendnewverificationcode';
+  static const RESET_PASSWORD = BASE_API + '/v1/resetpassword/resetpasswordorder';
   static const VERIFY_RESET_PASSWORD_CODE =
-      BASE_API + '/verifyresetpasswordcode';
-  static const UPDATE_PASSWORD = BASE_API + '/updatepassword';
+      BASE_API + '/v1/resetpassword/verifyresetpasswordcode';
+  static const UPDATE_PASSWORD = BASE_API + '/v1/resetpassword/updatepassword';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
   static const NOTIFICATION_API =

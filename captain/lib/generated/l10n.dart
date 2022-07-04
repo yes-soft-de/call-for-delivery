@@ -7019,6 +7019,96 @@ class S {
       args: [],
     );
   }
+
+  /// `I agree to the`
+  String get iAgreeOn {
+    return Intl.message(
+      'I agree to the',
+      name: 'iAgreeOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `terms of use`
+  String get terms {
+    return Intl.message(
+      'terms of use',
+      name: 'terms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `privacy policy`
+  String get privacy {
+    return Intl.message(
+      'privacy policy',
+      name: 'privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` & `
+  String get and {
+    return Intl.message(
+      ' & ',
+      name: 'and',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Going Back To Home`
+  String get goingBackToHome {
+    return Intl.message(
+      'Going Back To Home',
+      name: 'goingBackToHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are offline you can't accept any order right now`
+  String get youAreOffline {
+    return Intl.message(
+      'You are offline you can\'t accept any order right now',
+      name: 'youAreOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order has been canceled you can't accept it any more please go back to home screen `
+  String get orderCanceled {
+    return Intl.message(
+      'Order has been canceled you can\'t accept it any more please go back to home screen ',
+      name: 'orderCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has been hided you cannot accept it please wait until to recycle it`
+  String get orderIsHidden {
+    return Intl.message(
+      'This order has been hided you cannot accept it please wait until to recycle it',
+      name: 'orderIsHidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User not verified`
+  String get userNotVerified {
+    return Intl.message(
+      'User not verified',
+      name: 'userNotVerified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

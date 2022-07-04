@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "amountYouOwn":
             MessageLookupByLibrary.simpleMessage("My Actual Balance"),
+        "and": MessageLookupByLibrary.simpleMessage(" & "),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
@@ -446,6 +447,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "goingBackToHome":
+            MessageLookupByLibrary.simpleMessage("Going Back To Home"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
@@ -456,6 +459,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("hour"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "howWeWork": MessageLookupByLibrary.simpleMessage("How we work"),
+        "iAgreeOn": MessageLookupByLibrary.simpleMessage("I agree to the"),
         "iAgreeToTheTermsOfServicePrivacyPolicy":
             MessageLookupByLibrary.simpleMessage(
                 "I agree to the terms of service & privacy policy"),
@@ -625,6 +629,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You have consumed 75%"),
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
+        "orderCanceled": MessageLookupByLibrary.simpleMessage(
+            "Order has been canceled you can\'t accept it any more please go back to home screen "),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(
@@ -643,6 +649,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
         "orderIsFinished":
             MessageLookupByLibrary.simpleMessage("Order is finished"),
+        "orderIsHidden": MessageLookupByLibrary.simpleMessage(
+            "This order has been hided you cannot accept it please wait until to recycle it"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
@@ -781,6 +789,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
+        "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -978,6 +987,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "syria": MessageLookupByLibrary.simpleMessage("Syria"),
         "tax": MessageLookupByLibrary.simpleMessage("15% vat"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
+        "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1044,6 +1054,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("User deleted successfully"),
+        "userNotVerified":
+            MessageLookupByLibrary.simpleMessage("User not verified"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
@@ -1080,6 +1092,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youAreOffline": MessageLookupByLibrary.simpleMessage(
+            "You are offline you can\'t accept any order right now"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

@@ -24,7 +24,15 @@ class InitCaptainPlanLoadedState extends States {
       this.financeByOrderCount,
       this.error,
       this.empty})
-      : super(screenState);
+      : super(screenState) {
+    try {
+      _scrollController.addListener(() {
+        screenState.refresh();
+      });
+    } catch (e) {
+      //
+    }
+  }
   String? appBarTitle;
   int? _selectedPlanId;
   List<CaptainFinanceByOrderModel>? financeByOrder = [];
@@ -37,6 +45,7 @@ class InitCaptainPlanLoadedState extends States {
     S.current.planByOrders,
     S.current.planByOrderCount
   ];
+  ScrollController _scrollController = ScrollController();
   @override
   Widget getUI(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -152,30 +161,86 @@ class InitCaptainPlanLoadedState extends States {
               height: 8,
             ),
             //package
-            Visibility(
-              visible: screenState.selectedPlan != null,
-              child: ScalingWidget(
-                fade: true,
-                milliseconds: 1000,
-                child: SizedBox(
-                  height: getHeight(),
-                  width: double.maxFinite,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.horizontal,
-                    children: getPlanes(),
+            Stack(
+              children: [
+                AnimatedPadding(
+                  duration: const Duration(milliseconds: 350),
+                  padding: EdgeInsetsDirectional.only(
+                      end: maxOffset() ? 20 : 0, start: minOffset() ? 20 : 0),
+                  child: SizedBox(
+                    height: getHeight(),
+                    width: double.maxFinite,
+                    child: Scrollbar(
+                      radius: const Radius.circular(25),
+                      isAlwaysShown: true,
+                      child: ListView(
+                        controller: _scrollController,
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        scrollDirection: Axis.horizontal,
+                        children: getPlanes(),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Visibility(
+                  visible: screenState.selectedPlan != null &&
+                      maxOffset() &&
+                      getPlanes().length > 1,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Container(
+                      height: getHeight(),
+                      color: Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.3),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: maxOffset()
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: screenState.selectedPlan != null &&
+                      minOffset() &&
+                      getPlanes().length > 1,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Container(
+                        height: getHeight() - 8,
+                        color: Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.6),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: minOffset()
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).disabledColor,
+                          ),
+                        )),
+                  ),
+                ),
+              ],
             ),
             // Submit Package
+            const SizedBox(
+              height: 16,
+            ),
             Visibility(
               visible: _selectedPlanId != null ||
                   screenState.selectedPlan == S.current.planByOrderCount,
               child: ScalingWidget(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, top: 16, right: 16),
                   child: SizedBox(
                     width: double.maxFinite,
                     child: ElevatedButton(
@@ -312,6 +377,9 @@ class InitCaptainPlanLoadedState extends States {
   }
 
   List<Widget> getPlanes() {
+    if (screenState.selectedPlan == null) {
+      return [];
+    }
     if (screenState.selectedPlan == S.current.planByOrders) {
       return _getPlanByOrderCount();
     } else if (screenState.selectedPlan == S.current.planByHours) {
@@ -328,6 +396,24 @@ class InitCaptainPlanLoadedState extends States {
       return 135;
     } else {
       return 250;
+    }
+  }
+
+  bool maxOffset() {
+    if (_scrollController.hasClients) {
+      return _scrollController.position.maxScrollExtent >
+          _scrollController.offset;
+    } else {
+      return false;
+    }
+  }
+
+  bool minOffset() {
+    if (_scrollController.hasClients) {
+      return _scrollController.position.minScrollExtent <
+          _scrollController.offset;
+    } else {
+      return false;
     }
   }
 }

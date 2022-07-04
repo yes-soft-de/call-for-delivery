@@ -699,7 +699,18 @@
     "areSureAboutDeletingYourAccount": "Are you sure about deleting your account , you won't be able to login with this credential any more",
     "deleteAccount": "Delete Account",
     "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
-    "userDeleted": "User deleted successfully"
+    "userDeleted": "User deleted successfully",
+    "iAgreeOn": "I agree to the",
+    "terms": "terms of use",
+    "privacy": "privacy policy",
+    "and": " & ",
+    "goingBackToHome": "Going Back To Home",
+    "youAreOffline": "You are offline you can't accept any order right now",
+    "orderCanceled": "Order has been canceled you can't accept it any more please go back to home screen ",
+    "orderIsHidden": "This order has been hided you cannot accept it please wait until to recycle it",
+    "userNotVerified": "User not verified"
+
+
 
 
 

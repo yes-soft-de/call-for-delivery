@@ -1,7 +1,12 @@
+import 'package:c4d/consts/urls.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatBubbleWidget extends StatefulWidget {
   final bool? showImage;
@@ -32,16 +37,16 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
     return Container(
       alignment: widget.me ? Alignment.centerLeft : Alignment.centerRight,
       child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 minWidth: 100,
                 maxWidth: 240,
               ),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
                   color: widget.me
                       ? Theme.of(context).primaryColor.withOpacity(0.25)
                       : Theme.of(context).backgroundColor),
@@ -54,7 +59,7 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                         ? m.TextDirection.rtl
                         : m.TextDirection.ltr,
                     children: [
-                      widget.message.contains('http')
+                      widget.message.contains(Urls.IMAGES_ROOT)
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: CustomNetworkImage(
@@ -69,12 +74,20 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                 width: 240,
                               ),
                             )
-                          : Text(
-                              '${widget.message}',
+                          : SelectableLinkify(
+                              onOpen: (link) async {
+                                if (await canLaunch(link.url)) {
+                                  await launch(link.url);
+                                } else {
+                                  Fluttertoast.showToast(msg: 'Invalid link');
+                                }
+                              },
+                              text: widget.message,
                               textAlign: reg.hasMatch(widget.message)
                                   ? TextAlign.right
                                   : TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.w400),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w400),
                             ),
                     ],
                   ),
@@ -86,7 +99,7 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
               child: Text(
                 format.format(widget.sentDate),
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
           ])),

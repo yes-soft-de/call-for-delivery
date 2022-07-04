@@ -9,6 +9,7 @@ class CustomC4dAppBar {
       GestureTapCallback? onTap,
       Color? colorIcon,
       Color? buttonBackground,
+      Color? background,
       IconData? icon,
       Widget? widget,
       bool canGoBack = true,
@@ -22,7 +23,7 @@ class CustomC4dAppBar {
     }
     return AppBar(
       bottom: bottom,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: background ?? Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
       title: Text(
         title,

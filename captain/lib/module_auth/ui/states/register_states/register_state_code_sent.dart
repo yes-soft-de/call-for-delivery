@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
@@ -7,19 +6,15 @@ import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
-import 'package:c4d/module_init/init_routes.dart';
-import 'package:c4d/module_profile/profile_routes.dart';
-import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:c4d/utils/text_style/text_style.dart';
 
 class RegisterStatePhoneCodeSent extends RegisterState {
   bool retryEnabled = false;
   RegisterStatePhoneCodeSent(RegisterScreenState screen, {String? error})
       : super(screen) {
-    Future.delayed(const Duration(seconds: 60), () {
+    Future.delayed(const Duration(seconds: 60), () {}).whenComplete(() {
       retryEnabled = true;
       screen.refresh();
     });
@@ -109,28 +104,11 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                     height: 50,
                     child: ElevatedButton(
                         onPressed: () {
-                          try {
-                            getIt<AuthService>()
-                                .loginApi(
-                                    getIt<AuthService>().username,
-                                    getIt<AuthPrefsHelper>().getPassword() ??
-                                        '')
-                                .then((value) {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  InitAccountRoutes.INIT_ACCOUNT_SCREEN,
-                                  (route) => false);
-                            });
-                          } catch (e) {
-                            getIt<AuthService>().logout();
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                SplashRoutes.SPLASH_SCREEN, (route) => false);
-                          }
-
-                          // screen.verifyClient(VerifyCodeRequest(
-                          //     userID: getIt<AuthService>().username,
-                          //     code: codeController.text,
-                          //     password:
-                          //         getIt<AuthPrefsHelper>().getPassword()));
+                          screen.verifyClient(VerifyCodeRequest(
+                              userID: getIt<AuthService>().username,
+                              code: codeController.text,
+                              password:
+                                  getIt<AuthPrefsHelper>().getPassword()));
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
