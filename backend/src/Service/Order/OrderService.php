@@ -134,7 +134,7 @@ class OrderService
                   $this->notificationFirebaseService->notificationToCaptains($order->getId());
 
                   // scheduled notification to captain
-                  $this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
+                  //$this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
                 }
              catch (\Exception $e){
                     error_log($e);
