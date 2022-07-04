@@ -111,7 +111,7 @@ class CaptainAssignOrderLoadedState extends States {
                 element.chosen = false;
               });
               element.chosen = true;
-              id = element.captainID;
+              id = element.id;
             } else {
               model?.forEach((element) {
                 element.chosen = false;
