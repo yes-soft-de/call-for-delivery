@@ -149,11 +149,11 @@ class OrderManager
         }
     }
 
-    public function closestOrders(int $userId): ?array
+    public function closestOrders(int $userId, DateTime $date): ?array
     {
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId);
 
-        return $this->orderRepository->closestOrders($captainId->getId());
+        return $this->orderRepository->closestOrders($captainId->getId(), $date);
     }
 
     // Currently we do not need this function
