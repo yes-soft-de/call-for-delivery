@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<StoresModel> stores;
@@ -60,7 +61,6 @@ class NewOrderStateBranchesLoaded extends States {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // stores
                 Column(
                   children: [
                     ListTile(
@@ -72,18 +72,51 @@ class NewOrderStateBranchesLoaded extends States {
                             color: Theme.of(context).backgroundColor),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                value: screenState.storeID,
-                                items: _getStores(),
-                                hint: Text(S.current.chooseStore),
-                                onChanged: (int? value) {
-                                  screenState.storeID = value;
-                                  screenState.branch = null;
-                                  screenState.getBranches(stores);
-                                  screenState.refresh();
-                                }),
-                          ),
+                          child: DropdownSearch<StoresModel>(
+                              showSearchBox: true,
+                              enabled: stores.isNotEmpty,
+                              dropdownBuilder: (context, model) {
+                                return Text(
+                                  model?.storeOwnerName ??
+                                      S.current.chooseStore,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                );
+                              },
+                              dropdownSearchDecoration: InputDecoration(
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      hintText: S.current.chooseStore,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25)))),
+                              popupShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              mode: Mode.MENU,
+                              items: stores,
+                              filterFn: (model, filter) {
+                                return model!.storeOwnerName
+                                    .contains(filter ?? '');
+                              },
+                              itemAsString: (model) =>
+                                  model?.storeOwnerName ?? S.current.unknown,
+                              onChanged: (v) {
+                                v as StoresModel;
+                                screenState.storeID = v.id;
+                                screenState.branch = null;
+                                screenState.getBranches(stores);
+                                screenState.refresh();
+                              },
+                              selectedItem: screenState.storeID != null
+                                  ? stores.firstWhere((element) =>
+                                      element.id == screenState.storeID)
+                                  : null), // stores
                         ),
                       ),
                     ),
