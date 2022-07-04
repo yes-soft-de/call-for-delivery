@@ -29,6 +29,7 @@ use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
+use App\Constant\Captain\CaptainConstant;
 
 /**
  * @Route("v1/admin/order/")
@@ -721,8 +722,8 @@ class AdminOrderController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9207 OR 9306"),
-     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error. OR error"),
+     *          @OA\Property(type="string", property="status_code", description="9306 OR 9207 OR 9101"),
+     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error. OR error OR captain profile not exist!"),
      *      )
      * )
      * 
@@ -750,6 +751,10 @@ class AdminOrderController extends BaseController
 
         if ($response === SubscriptionConstant::CARS_FINISHED_INT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
+        }
+
+        if ($response === CaptainConstant::CAPTAIN_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
         return $this->response($response, self::UPDATE);

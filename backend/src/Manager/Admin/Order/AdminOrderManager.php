@@ -19,6 +19,8 @@ use App\Manager\Admin\Order\AdminStoreOrderDetailsManager;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
+use App\Constant\Captain\CaptainConstant;
+
 
 class AdminOrderManager
 {
@@ -182,10 +184,14 @@ class AdminOrderManager
         return $this->orderEntityRepository->find($orderId);
     }
 
-    public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, OrderEntity $orderEntity): OrderEntity
+    public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, OrderEntity $orderEntity): OrderEntity|int
     {
         $captain = $this->adminCaptainManager->getCaptainProfileById($request->getId());
        
+        if(! $captain) {
+            return CaptainConstant::CAPTAIN_NOT_FOUND;
+        }
+
         $orderEntity->setCaptainId($captain);
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_ON_WAY);
 

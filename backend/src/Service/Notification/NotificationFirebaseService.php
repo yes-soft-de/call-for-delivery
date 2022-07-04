@@ -8,7 +8,10 @@ use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
+use App\Service\DateFactory\DateFactoryService;
 use App\Service\User\UserService;
+use DateTime;
+use DateTimeInterface;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -34,8 +37,11 @@ class NotificationFirebaseService
     private OrderChatRoomService $orderChatRoomService;
     private CaptainService $captainService;
     private StoreOwnerProfileService $storeOwnerProfileService;
+    private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService, UserService $userService, OrderChatRoomService $orderChatRoomService, CaptainService $captainService, StoreOwnerProfileService $storeOwnerProfileService)
+    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService,
+                                UserService $userService, OrderChatRoomService $orderChatRoomService, CaptainService $captainService, StoreOwnerProfileService $storeOwnerProfileService,
+                                DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
         $this->messaging = $messaging;
@@ -45,6 +51,7 @@ class NotificationFirebaseService
         $this->orderChatRoomService = $orderChatRoomService;
         $this->captainService = $captainService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
+        $this->dateFactoryService = $dateFactoryService;
     }
 
     public function notificationToCaptains(int $orderId)
@@ -833,4 +840,62 @@ class NotificationFirebaseService
  
          return $state;
      }
+
+    public function scheduledNotificationToCaptains(int $orderId, ?DateTimeInterface $deliveryDateTimeInterface)
+    {
+        $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
+
+        if (! empty($getTokens)) {
+            $date = $this->dateFactoryService->getDateTimeMinusThirteenMinutesByDateTimeInterface($deliveryDateTimeInterface);
+
+            $payload = [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'navigate_route' => NotificationFirebaseConstant::URL,
+                'argument' => $orderId,
+                "isScheduled" => "true",
+                "scheduledTime" => $date->format('Y-m-d H:i:s')
+            ];
+
+            $config = AndroidConfig::fromArray([
+                "notification" => [
+                    "channel_id" => "C4d_Notifications_custom_sound_test"
+                ]
+            ]);
+
+            foreach ($getTokens as $token) {
+                if ($token['token'] !== null) {
+                    $deviceToken = [];
+
+                    $deviceToken[] = $token['token'];
+
+                    $sound = $token['sound'];
+
+                    if (! $sound) {
+                        $sound = NotificationTokenConstant::SOUND;
+                    }
+
+                    $apnsConfig = ApnsConfig::fromArray([
+                        'headers' => [
+                            'apns-priority' => '10',
+                            'apns-push-type' => 'alert'
+                        ],
+                        'payload' => [
+                            'aps' => [
+                                'sound' => $sound
+                            ]
+                        ]
+                    ]);
+
+                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                        ->withHighestPossiblePriority()
+                        ->withData($payload)
+                        ->withAndroidConfig($config)
+                        ->withApnsConfig($apnsConfig);
+
+                    $this->messaging->sendMulticast($message, $deviceToken);
+                }
+            }
+        }
+    }
 }
