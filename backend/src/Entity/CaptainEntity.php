@@ -81,6 +81,9 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainAmountFromOrderCashEntity::class)]
     private $captainAmountFromOrderCash;
 
+    #[ORM\OneToMany(mappedBy: 'captainProfile', targetEntity: OrderLogEntity::class)]
+    private $orderLogEntities;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -91,6 +94,7 @@ class CaptainEntity
         $this->captainPaymentToCompanyEntity = new ArrayCollection();
         $this->captainFinancialDuesEntity = new ArrayCollection();
         $this->captainAmountFromOrderCash = new ArrayCollection();
+        $this->orderLogEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -500,6 +504,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainAmountFromOrderCash->getCaptain() === $this) {
                 $captainAmountFromOrderCash->setCaptain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderLogEntity>
+     */
+    public function getOrderLogEntities(): Collection
+    {
+        return $this->orderLogEntities;
+    }
+
+    public function addOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if (!$this->orderLogEntities->contains($orderLogEntity)) {
+            $this->orderLogEntities[] = $orderLogEntity;
+            $orderLogEntity->setCaptainProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if ($this->orderLogEntities->removeElement($orderLogEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogEntity->getCaptainProfile() === $this) {
+                $orderLogEntity->setCaptainProfile(null);
             }
         }
 
