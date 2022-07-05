@@ -17,17 +17,17 @@ class Datum {
   Total? total;
   List<CaptainOffer>? captainOffers;
 
-  Datum({
-    this.id,
-    this.packageName,
-    this.startDate,
-    this.endDate,
-    this.status,
-    this.note,
-    this.flag,
-    this.paymentsFromStore,
-    this.total,
-  });
+  Datum(
+      {this.id,
+      this.packageName,
+      this.startDate,
+      this.endDate,
+      this.status,
+      this.note,
+      this.flag,
+      this.paymentsFromStore,
+      this.total,
+      this.captainOffers});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -41,6 +41,9 @@ class Datum {
         status: json['status'] as String?,
         note: json['note'] as dynamic,
         flag: json['flag'] as dynamic,
+        captainOffers: (json['captainOffers'] as List<dynamic>?)
+            ?.map((e) => CaptainOffer.fromJson(e as Map<String, dynamic>))
+            .toList(),
         paymentsFromStore: (json['paymentsFromStore'] as List<dynamic>?)
             ?.map((e) => PaymentsFromStore.fromJson(e as Map<String, dynamic>))
             .toList(),

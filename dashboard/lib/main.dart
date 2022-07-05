@@ -169,7 +169,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     widget._localNotificationService.onLocalNotificationStream.listen((event) {
       NotificationModel notificationModel = NotificationModel.fromJson(event);
       if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
-        print('wow');
         Navigator.pushNamed(GlobalVariable.navState.currentContext!,
             notificationModel.navigateRoute ?? '',
             arguments: ChatArgument(
