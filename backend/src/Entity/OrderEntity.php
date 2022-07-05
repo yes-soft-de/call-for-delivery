@@ -91,12 +91,16 @@ class OrderEntity
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $orderIsMain;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderLogEntity::class)]
+    private $orderLogEntities;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
         $this->rateEntity = new ArrayCollection();
         $this->OrderLogsEntity = new ArrayCollection();
         $this->orderEntities = new ArrayCollection();
+        $this->orderLogEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -463,6 +467,36 @@ class OrderEntity
     public function setOrderIsMain(?bool $orderIsMain): self
     {
         $this->orderIsMain = $orderIsMain;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderLogEntity>
+     */
+    public function getOrderLogEntities(): Collection
+    {
+        return $this->orderLogEntities;
+    }
+
+    public function addOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if (!$this->orderLogEntities->contains($orderLogEntity)) {
+            $this->orderLogEntities[] = $orderLogEntity;
+            $orderLogEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if ($this->orderLogEntities->removeElement($orderLogEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogEntity->getOrderId() === $this) {
+                $orderLogEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }
