@@ -94,6 +94,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderLogEntity::class)]
     private $orderLogEntities;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $storeBranchToClientDistance;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -497,6 +500,18 @@ class OrderEntity
                 $orderLogEntity->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStoreBranchToClientDistance(): ?float
+    {
+        return $this->storeBranchToClientDistance;
+    }
+
+    public function setStoreBranchToClientDistance(?float $storeBranchToClientDistance): self
+    {
+        $this->storeBranchToClientDistance = $storeBranchToClientDistance;
 
         return $this;
     }

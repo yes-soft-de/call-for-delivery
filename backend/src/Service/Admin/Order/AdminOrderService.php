@@ -121,6 +121,7 @@ class AdminOrderService
 
         if ($order) {
             $order['orderImage'] = $this->uploadFileHelperService->getImageParams($order['orderImage']);
+            $order['filePdf'] = $this->uploadFileHelperService->getFileParams($order['filePdf']);
 
             if (empty($order['location'])) {
                 $order['location'] = null;

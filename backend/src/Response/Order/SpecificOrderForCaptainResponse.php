@@ -61,4 +61,8 @@ class SpecificOrderForCaptainResponse
     public array|null $subOrder;
 
     public bool|null $orderIsMain;
+ 
+    public array|null $filePdf;
+
+    public float|null $storeBranchToClientDistance;
 }
