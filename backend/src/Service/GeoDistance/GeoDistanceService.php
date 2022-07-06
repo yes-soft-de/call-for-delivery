@@ -5,7 +5,6 @@ namespace App\Service\GeoDistance;
 use App\AutoMapping;
 use App\Constant\GeoDistance\GeoDistanceConstant;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
-use App\Request\GeoDistance\GeoDistanceGetRequest;
 use App\Response\GeoDistance\GeoDistanceInfoGetResponse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -23,11 +22,11 @@ class GeoDistanceService
         $this->key = $params->get('google_maps_api_key');
     }
 
-    public function getGeoDistanceBetweenTwoLocations(GeoDistanceGetRequest $request): GeoDistanceInfoGetResponse|int
+    public function getGeoDistanceBetweenTwoLocations(float $originLat, float $originLng, float $destinationLat, float $destinationLng): GeoDistanceInfoGetResponse|int
     {
         $url = GeoDistanceConstant::GOOGLE_MAPS_DISTANCE_MATRIX_URL_CONST
-            .'destinations='.$request->getOriginLat().'%2C'.$request->getOriginLng()
-            .'&origins='.$request->getDestinationLat().'%2C'.$request->getDestinationLng()
+            .'destinations='.$originLat.'%2C'.$originLng
+            .'&origins='.$destinationLat.'%2C'.$destinationLng
             .'&key='.$this->key;
 
         $response = $this->httpClient->request('GET', $url);
