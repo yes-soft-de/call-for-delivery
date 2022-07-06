@@ -116,6 +116,10 @@ class OrderByIdGetForAdminResponse
      */
     public $captain;
 
+    /**
+     * @OA\Property(type="array", property="filePdf",
+     *     @OA\Items(type="string"))
+     */
     public array|null $filePdf;
 
     public float|null $storeBranchToClientDistance;
