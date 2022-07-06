@@ -134,6 +134,10 @@ class BaseController extends AbstractController
     // renew database
     const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
     const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
+
+    // geo distance
+    const ERROR_BAD_REQUEST = ["bad request", "9370"];
+    const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
