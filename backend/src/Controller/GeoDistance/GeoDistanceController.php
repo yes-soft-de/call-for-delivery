@@ -69,7 +69,7 @@ class GeoDistanceController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function updateAdminProfile(float $originLat, float $originLng, float $destinationLat, float $destinationLng): JsonResponse
+    public function getGeoDistanceBetweenTwoLocations(float $originLat, float $originLng, float $destinationLat, float $destinationLng): JsonResponse
     {
         $response = $this->geoDistanceService->getGeoDistanceBetweenTwoLocations($originLat, $originLng, $destinationLat, $destinationLng);
 
