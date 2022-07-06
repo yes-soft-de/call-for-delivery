@@ -19,4 +19,16 @@ class ImageUploadService {
     }
     return null;
   }
+
+  Future<String?> uploadPdf(String? filePath) async {
+    if (filePath != null && filePath != '') {
+      ImgBBResponse? response = await _manager.uploadPDF(filePath);
+      if (response == null) {
+        return null;
+      } else {
+        return response.url;
+      }
+    }
+    return null;
+  }
 }

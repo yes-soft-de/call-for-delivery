@@ -6419,6 +6419,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

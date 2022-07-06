@@ -87,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
+        "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),
         "balanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات التي قمت بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيتها"),
         "bankAccountNumber":
