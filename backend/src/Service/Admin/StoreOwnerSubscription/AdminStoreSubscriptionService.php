@@ -16,6 +16,7 @@ use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Response\Subscription\SubscriptionExtendResponse;
+use App\Constant\Subscription\SubscriptionConstant;
 
 class AdminStoreSubscriptionService
 {
@@ -41,6 +42,15 @@ class AdminStoreSubscriptionService
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
        foreach ($subscriptions as $subscription) {
+      
+            $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
+            
+            if($subscription['subscriptionDetailsId']) {
+                
+                $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT_BOOLEAN;
+                $subscription['subscriptionRemainingCars'] = $subscription['remainingCars'];
+                $subscription['subscriptionRemainingOrders'] = $subscription['remainingOrders'];
+            }
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           

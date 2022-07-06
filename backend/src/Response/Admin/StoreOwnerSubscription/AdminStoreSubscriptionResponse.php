@@ -43,7 +43,15 @@ class AdminStoreSubscriptionResponse
 
     /**
      * @OA\Property(type="array", property="captainOffers",
-     *     @OA\Items(type="object"))
+     *     @OA\Items(type="object",
+     *          @OA\Property(type="integer", property="id"),  
+     *          @OA\Property(type="object", property="startDate"),  
+     *          @OA\Property(type="number", property="price"),  
+     *          @OA\Property(type="integer", property="carCount"),  
+     *          @OA\Property(type="integer", property="expired"),  
+     *          @OA\Property(type="string", property="status"),  
+     *      )
+     *   )
      */
     public $captainOffers;
 
@@ -57,7 +65,9 @@ class AdminStoreSubscriptionResponse
 
     public bool $isFuture;
 
-    public int $remainingCars;
+    public int $subscriptionRemainingOrders;
 
-    public int $remainingOrders;
+    public int $subscriptionRemainingCars;
+
+    public bool $isCurrent;
 }
