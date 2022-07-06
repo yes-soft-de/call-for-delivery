@@ -198,15 +198,19 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           });
                     },
                   )),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Visibility(
                 visible: currentState is OrderDetailsStateOwnerOrderLoaded &&
-                    StatusHelper.getOrderStatusIndex(
-                            (currentState as OrderDetailsStateOwnerOrderLoaded)
-                                .orderInfo
-                                .state) <
-                        StatusHelper.getOrderStatusIndex(
-                            OrderStatusEnum.DELIVERING),
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.FINISHED &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.CANCELLED,
                 child: FloatingActionButton(
                     tooltip: S.current.editOrder,
                     onPressed: () {

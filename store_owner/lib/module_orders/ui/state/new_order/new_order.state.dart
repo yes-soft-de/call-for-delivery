@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -32,6 +33,8 @@ class NewOrderStateBranchesLoaded extends States {
       : super(screenState) {
     if (branches.isNotEmpty) {
       screenState.branch = branches[0].id;
+      activeBranch =
+          branches.firstWhere((element) => element.id == screenState.branch);
       screenState.refresh();
     }
   }
@@ -41,7 +44,7 @@ class NewOrderStateBranchesLoaded extends States {
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Branch? activeBranch;
+  BranchesModel? activeBranch;
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
@@ -84,6 +87,8 @@ class NewOrderStateBranchesLoaded extends States {
                                 hint: Text(S.current.chooseBranch),
                                 onChanged: (int? value) {
                                   screenState.branch = value;
+                                  activeBranch = branches.firstWhere(
+                                      (element) => element.id == value);
                                   screenState.refresh();
                                 }),
                           ),
@@ -186,6 +191,41 @@ class NewOrderStateBranchesLoaded extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.customerLocation != null &&
+                        activeBranch != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            S.current.distance +
+                                ' ' +
+                                (Geolocator.distanceBetween(
+                                            activeBranch?.location.latitude ??
+                                                0,
+                                            activeBranch?.location.longitude ??
+                                                0,
+                                            screenState.customerLocation
+                                                    ?.latitude ??
+                                                0,
+                                            screenState.customerLocation
+                                                    ?.longitude ??
+                                                0) /
+                                        1000)
+                                    .toStringAsFixed(2)
+                                    .toString() +
+                                ' ${S.current.km}',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )),
                 // order details
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),

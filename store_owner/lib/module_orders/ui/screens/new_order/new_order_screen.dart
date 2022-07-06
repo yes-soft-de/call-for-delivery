@@ -91,7 +91,13 @@ class NewOrderScreenState extends State<NewOrderScreen>
             double.parse(link.queryParameters['q']!.split(',')[1]),
           );
           setState(() {});
+        } else {
+          customerLocation = null;
+          setState(() {});
         }
+      } else {
+        customerLocation = null;
+        setState(() {});
       }
     });
   }
