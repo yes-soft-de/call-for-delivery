@@ -36,6 +36,9 @@ class StoreOrderDetailsEntity
     #[ORM\OneToOne(targetEntity: ImageEntity::class, cascade: ['persist', 'remove'])]
     private $images;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $filePdf;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +124,18 @@ class StoreOrderDetailsEntity
     public function setImages(?ImageEntity $images): self
     {
         $this->images = $images;
+
+        return $this;
+    }
+
+    public function getFilePdf(): ?string
+    {
+        return $this->filePdf;
+    }
+
+    public function setFilePdf(?string $filePdf): self
+    {
+        $this->filePdf = $filePdf;
 
         return $this;
     }

@@ -28,6 +28,10 @@ class OrderCreateRequest
 
     private bool|null $orderIsMain;
 
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
+
     /**
      * Get the value of storeOwner
      */ 

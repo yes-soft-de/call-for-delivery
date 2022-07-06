@@ -28,6 +28,10 @@ class UpdateOrderByAdminRequest
    
     private StoreOwnerBranchEntity|int $branch;
 
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
+    
     /**
      * Get the value of id
      */ 

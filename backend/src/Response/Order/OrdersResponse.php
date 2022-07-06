@@ -65,4 +65,8 @@ class OrdersResponse
     public null|bool $orderIsMain;
 
     public array|null $subOrder;
+
+    public array|null $filePdf;
+
+    public float|null $storeBranchToClientDistance;
 }

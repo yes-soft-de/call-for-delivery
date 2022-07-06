@@ -221,6 +221,8 @@ class OrderService
             $order['attention'] = $order['noteCaptainOrderCost'];
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
+           
+            $order['filePdf'] = $this->uploadFileHelperService->getFileParams($order['filePdf']);
             
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
@@ -403,6 +405,7 @@ class OrderService
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($order['id']);
             
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
+            $order['filePdf'] = $this->uploadFileHelperService->getFileParams($order['filePdf']);
                       
             if($order['roomId']) {
                 $order['roomId'] = $order['roomId']->toBase32();
