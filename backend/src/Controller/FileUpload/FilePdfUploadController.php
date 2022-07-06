@@ -2,7 +2,8 @@
 
 namespace App\Controller\FileUpload;
 
-use App\Request\Image\UploadImageRequest;
+use App\Constant\File\FileTypeConstant;
+use App\Request\File\UploadPDFFileRequest;
 use App\Service\FileUpload\UploadFileService;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,8 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FilePdfUploadController extends AbstractController
 {
-    private $uploadFile;
-    private $validator;
+    private UploadFileService $uploadFile;
+    private ValidatorInterface $validator;
 
     public function __construct(UploadFileService $uploadFile, ValidatorInterface $validator)
     {
@@ -24,14 +25,14 @@ class FilePdfUploadController extends AbstractController
     }
 
     /**
-     * @Route("uploadpdffile", name="filePdfUpload", methods={"POST"})
+     * @Route("uploadpdffile", name="uploadPDFFile", methods={"POST"})
      * @param Request $request
      * @return jsonResponse
      *
-     * @OA\Tag(name="File Upload")
+     * @OA\Tag(name="PDF File Upload")
      *
      * @OA\RequestBody(
-     *      description="Upload a file",
+     *      description="Upload a PDF file",
      *     @OA\MediaType(
      *          mediaType="multipart/form-data",
      *             @OA\Schema(
@@ -49,12 +50,13 @@ class FilePdfUploadController extends AbstractController
      *      description="Returns the path of the file on the host server"
      * )
      */
-    public function fileUpload(Request $request): JsonResponse
+    public function pdfFileUpload(Request $request): JsonResponse
     {
-        $uploadedFile = $request->files->get('filePdf');
+        $uploadedFile = $request->files->get('file');
 
         if ($uploadedFile) {
-            $imageUploadRequest = new UploadImageRequest();
+            $imageUploadRequest = new UploadPDFFileRequest();
+
             $imageUploadRequest->setUploadedFile($uploadedFile);
 
             $violations = $this->validator->validate($imageUploadRequest);
@@ -64,7 +66,7 @@ class FilePdfUploadController extends AbstractController
                 return new JsonResponse($violationsString, Response::HTTP_OK);
             }
 
-            $filePath = $this->uploadFile->uploadImage($uploadedFile, null);
+            $filePath = $this->uploadFile->uploadImage($uploadedFile, FileTypeConstant::PDF_FILE_TYPE_CONST, null);
 
             return new JsonResponse($filePath, Response::HTTP_OK);
         }

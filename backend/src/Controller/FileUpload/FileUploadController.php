@@ -2,6 +2,7 @@
 
 namespace App\Controller\FileUpload;
 
+use App\Constant\File\FileTypeConstant;
 use App\Request\Image\UploadImageRequest;
 use App\Service\FileUpload\UploadFileService;
 use OpenApi\Annotations as OA;
@@ -64,7 +65,7 @@ class FileUploadController extends AbstractController
                 return new JsonResponse($violationsString, Response::HTTP_OK);
             }
 
-            $filePath = $this->uploadFile->uploadImage($uploadedFile, null);
+            $filePath = $this->uploadFile->uploadImage($uploadedFile, FileTypeConstant::IMAGE_FILE_TYPE_CONST, null);
 
             return new JsonResponse($filePath, Response::HTTP_OK);
         }
