@@ -40,7 +40,11 @@ class GeoDistanceService
                         if (! empty($jsonResponse['rows'][0]['elements'])) {
                             if (! empty($jsonResponse['rows'][0]['elements'])) {
                                 if (! empty($jsonResponse['rows'][0]['elements'][0])) {
-                                    return $this->autoMapping->map('array', GeoDistanceInfoGetResponse::class, $jsonResponse['rows'][0]['elements'][0]);
+                                    $response = [];
+
+                                    $response['distance'] = trim($jsonResponse['rows'][0]['elements'][0]['distance']['text'], " km");
+
+                                    return $this->autoMapping->map('array', GeoDistanceInfoGetResponse::class, $response);
                                 }
                             }
                         }
