@@ -6429,6 +6429,16 @@ class S {
       args: [],
     );
   }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

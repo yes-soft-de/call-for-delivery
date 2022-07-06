@@ -8,7 +8,6 @@ import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
-import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -29,7 +28,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:pdfx/pdfx.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
@@ -56,7 +54,6 @@ class NewOrderStateBranchesLoaded extends States {
   int orderType = 1;
   bool orderIsMain = false;
   PdfModel? pdfModel;
-  late PdfController pdfController;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -444,24 +441,22 @@ class NewOrderStateBranchesLoaded extends States {
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 16.0, left: 16, top: 8, bottom: 16),
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        onPressed: () async {
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(18),
+                        onTap: () {
                           var isDark =
                               getIt<ThemePreferencesHelper>().isDarkMode();
-                          FilePickerResult? result =
-                              await FilePicker.platform.pickFiles();
-                          if (result != null) {
-                            File file = File(result.files.single.path!);
-                            pdfModel?.pdfFilePath = file.path;
-                            pdfController = PdfController(
-                                document: PdfDocument.openFile(
-                                    pdfModel?.pdfFilePath ?? ''));
-                          } else {
-                            // User canceled the picker
-                          }
+                          FilePicker.platform.pickFiles(
+                              allowedExtensions: ['pdf'],
+                              type: FileType.custom).then((result) async {
+                            if (result != null) {
+                              File file = File(result.files.single.path!);
+                              pdfModel = PdfModel(pdfFilePath: file.path);
+                              screenState.refresh();
+                            } else {
+                              // User canceled the picker
+                            }
+                          });
                         },
                         child: SizedBox(
                           width: 70,
@@ -490,11 +485,31 @@ class NewOrderStateBranchesLoaded extends States {
                                   ],
                                 ),
                               ),
-                              checkedWidget: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18),
-                                  child: PdfView(
-                                    controller: pdfController,
-                                  ))),
+                              checkedWidget: Visibility(
+                                visible: pdfModel?.pdfFilePath != null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        FontAwesomeIcons.filePdf,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Icon(
+                                        FontAwesomeIcons.check,
+                                        color: Colors.green,
+                                        size: 15,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
                         ),
                       ),
                     ), // send
@@ -678,32 +693,33 @@ class NewOrderStateBranchesLoaded extends States {
   Future<void> createOrderWithImage() async {
     screenState.currentState = LoadingState(screenState);
     screenState.refresh();
-    await pdfModel?.uploadPdf();
-    getIt<ImageUploadService>().uploadImage(imagePath).then((value) {
-      if (value == null) {
-        CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: S.current.errorUploadingImages)
-            .show(screenState.context);
-      }
-      screenState.addNewOrder(CreateOrderRequest(
-          pdf: pdfModel?.getPdfRequest(),
-          orderIsMain: orderIsMain,
-          orderType: orderType,
-          fromBranch: screenState.branch,
-          recipientName: screenState.receiptNameController.text.trim(),
-          recipientPhone: screenState.countryNumberController.text.trim() +
-              screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(
-              link: screenState.toController.text.trim(),
-              lat: screenState.customerLocation?.latitude,
-              lon: screenState.customerLocation?.longitude),
-          note: screenState.orderDetailsController.text.trim(),
-          detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.tryParse(screenState.priceController.text.trim()),
-          image: value,
-          date: orderDate.toUtc().toIso8601String(),
-          payment: screenState.payments));
+    await pdfModel?.uploadPdf().whenComplete(() {
+      getIt<ImageUploadService>().uploadImage(imagePath).then((value) {
+        if (value == null) {
+          CustomFlushBarHelper.createError(
+                  title: S.current.warnning,
+                  message: S.current.errorUploadingImages)
+              .show(screenState.context);
+        }
+        screenState.addNewOrder(CreateOrderRequest(
+            pdf: pdfModel?.getPdfRequest(),
+            orderIsMain: orderIsMain,
+            orderType: orderType,
+            fromBranch: screenState.branch,
+            recipientName: screenState.receiptNameController.text.trim(),
+            recipientPhone: screenState.countryNumberController.text.trim() +
+                screenState.phoneNumberController.text.trim(),
+            destination: GeoJson(
+                link: screenState.toController.text.trim(),
+                lat: screenState.customerLocation?.latitude,
+                lon: screenState.customerLocation?.longitude),
+            note: screenState.orderDetailsController.text.trim(),
+            detail: screenState.orderDetailsController.text.trim(),
+            orderCost: num.tryParse(screenState.priceController.text.trim()),
+            image: value,
+            date: orderDate.toUtc().toIso8601String(),
+            payment: screenState.payments));
+      });
     });
   }
 
@@ -712,26 +728,27 @@ class NewOrderStateBranchesLoaded extends States {
     if (pdfModel?.pdfFilePath != null) {
       screenState.currentState = LoadingState(screenState);
       screenState.refresh();
-      await pdfModel?.uploadPdf();
+      await pdfModel?.uploadPdf().whenComplete(() {
+        screenState.addNewOrder(CreateOrderRequest(
+            pdf: pdfModel?.getPdfRequest(),
+            orderType: orderType,
+            orderIsMain: orderIsMain,
+            fromBranch: screenState.branch,
+            recipientName: screenState.receiptNameController.text.trim(),
+            recipientPhone: screenState.countryNumberController.text.trim() +
+                screenState.phoneNumberController.text.trim(),
+            destination: GeoJson(
+                link: screenState.toController.text.trim(),
+                lat: screenState.customerLocation?.latitude,
+                lon: screenState.customerLocation?.longitude),
+            note: screenState.orderDetailsController.text.trim(),
+            detail: screenState.orderDetailsController.text.trim(),
+            orderCost: num.tryParse(screenState.priceController.text.trim()),
+            image: null,
+            date: orderDate.toUtc().toIso8601String(),
+            payment: screenState.payments));
+      });
     }
-    screenState.addNewOrder(CreateOrderRequest(
-        pdf: pdfModel?.getPdfRequest(),
-        orderType: orderType,
-        orderIsMain: orderIsMain,
-        fromBranch: screenState.branch,
-        recipientName: screenState.receiptNameController.text.trim(),
-        recipientPhone: screenState.countryNumberController.text.trim() +
-            screenState.phoneNumberController.text.trim(),
-        destination: GeoJson(
-            link: screenState.toController.text.trim(),
-            lat: screenState.customerLocation?.latitude,
-            lon: screenState.customerLocation?.longitude),
-        note: screenState.orderDetailsController.text.trim(),
-        detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.tryParse(screenState.priceController.text.trim()),
-        image: null,
-        date: orderDate.toUtc().toIso8601String(),
-        payment: screenState.payments));
   }
 
   void createOrder() {

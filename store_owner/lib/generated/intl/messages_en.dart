@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure you want to delete this payment"),
         "at": MessageLookupByLibrary.simpleMessage("At"),
         "attachFile": MessageLookupByLibrary.simpleMessage("Attach file"),
+        "attachedFile": MessageLookupByLibrary.simpleMessage(
+            "This order has attached file"),
         "balanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your subscriptions financial information with included all payments "),
         "bankAccountNumber":

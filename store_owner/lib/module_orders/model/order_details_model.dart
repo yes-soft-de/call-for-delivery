@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -38,6 +39,7 @@ class OrderDetailsModel extends DataModel {
   late bool orderIsMain;
   late int branchID;
   late String captainRating;
+  PdfModel? pdf;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -81,7 +83,8 @@ class OrderDetailsModel extends DataModel {
       required this.branchID,
       required this.captainName,
       required this.captainPhone,
-      required this.captainRating});
+      required this.captainRating,
+      this.pdf});
 
   late OrderDetailsModel _orders;
 
@@ -138,6 +141,10 @@ class OrderDetailsModel extends DataModel {
       branchID: element?.storeOwnerBranchId ?? -1,
       captainName: element?.captainName,
       captainPhone: element?.captainDetails?.phone,
+      pdf: PdfModel(
+          pdfOnServerPath: element?.pdf?.fileUrl,
+          pdfPreview: element?.pdf?.file,
+          pdfBaseUrl: element?.pdf?.baseUrl),
       captainRating:
           FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
     );

@@ -32,8 +32,7 @@ class OrderModel extends DataModel {
       required this.orderIsMain,
       required this.orders,
       required this.isHide,
-      this.branchID
-      });
+      this.branchID});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;

@@ -10,6 +10,7 @@ class PdfModel {
     this.pdfFilePath,
     this.pdfOnServerPath,
     this.pdfPreview,
+    this.pdfBaseUrl
   });
   Future<void> uploadPdf() async {
     if (pdfFilePath != null) {
@@ -20,9 +21,9 @@ class PdfModel {
       return;
     }
   }
+
   // please before call this you need to be sure that your are upload any path available
   String? getPdfRequest() {
     return pdfOnServerPath;
   }
-
 }

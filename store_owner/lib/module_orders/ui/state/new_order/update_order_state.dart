@@ -165,7 +165,7 @@ class UpdateOrderLoaded extends States {
                             ),
                             hintText: '5xxxxxxxx'),
                       ),
-                     Padding(
+                      Padding(
                         padding: const EdgeInsets.only(
                             right: 4.0, left: 4.0, bottom: 28),
                         child: InkWell(
@@ -196,7 +196,7 @@ class UpdateOrderLoaded extends States {
                           ),
                         ),
                       ),
-                     ],
+                    ],
                   ),
                 ),
                 // to

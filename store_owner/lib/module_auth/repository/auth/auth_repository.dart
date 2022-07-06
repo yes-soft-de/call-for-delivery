@@ -119,7 +119,7 @@ class AuthRepository {
     var token = await getIt<AuthService>().getToken();
     dynamic result = await _apiClient.put(
       Urls.DELETE_USER,
-      {'status':'maintenanceMood'},
+      {'status': 'maintenanceMood'},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (result == null) return null;

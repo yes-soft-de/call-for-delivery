@@ -240,7 +240,7 @@ class Urls {
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
   static const UPDATE_ORDER_API = DOMAIN + '/v1/order/orderupdate';
   static const HIDE_ORDER_API = DOMAIN + '/v1/order/updateordertohidden';
- 
+
   /*----------------------------bidorders-----------------------------*/
   static const GET_SUPPLIER_CATEGORY =
       DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';

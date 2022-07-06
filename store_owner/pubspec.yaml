@@ -125,7 +125,7 @@ dependencies:
   firebase_database: ^9.0.15
   dropdown_search: ^3.0.1
   file_picker: ^4.6.1
-  pdfx: ^2.0.1+2
+  open_file: ^3.2.1
 
 
 

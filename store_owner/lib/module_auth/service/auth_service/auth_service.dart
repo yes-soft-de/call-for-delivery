@@ -82,8 +82,8 @@ class AuthService {
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
     await accountStatus();
-    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted'){
-       _authSubject.addError(S.current.invalidCredentials);
+    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted') {
+      _authSubject.addError(S.current.invalidCredentials);
       throw AuthorizationException(S.current.invalidCredentials);
     }
     _authSubject.add(AuthStatus.AUTHORIZED);
