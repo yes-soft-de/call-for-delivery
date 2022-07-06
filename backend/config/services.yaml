@@ -9,7 +9,6 @@ parameters:
     image_folder: '%env(IMAGE_FOLDER)%'
     original_image: '%env(ORIGINAL_IMAGE)%'
     files_folder: '%env(FILES_FOLDER)%'
-    original_file: '%env(ORIGINAL_FILE)%'
     malath_username: '%env(MALATH_USERNAME)%'
     malath_password: '%env(MALATH_PASSWORD)%'
     deletion_user_password: '%env(DELETION_USER_PASSWORD)%'
