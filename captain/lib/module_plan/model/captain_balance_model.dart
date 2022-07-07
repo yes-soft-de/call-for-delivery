@@ -56,7 +56,7 @@ class CaptainAccountBalanceModel extends DataModel {
             countKilometersFrom: element.countKilometersFrom ?? 0,
             countKilometersTo: element.countKilometersTo ?? 0,
             countOfOrdersLeft: element.countOfOrdersLeft ?? 0,
-            message: element.message ?? ''));
+            message: element.message));
       });
       _data = CaptainAccountBalanceModel(
           orderCountsDetails: details,
@@ -117,7 +117,7 @@ class OrderCountsSystemDetails {
   num captainTotalCategory;
   num contOrderCompleted;
   num countOfOrdersLeft;
-  String message;
+  String? message;
   OrderCountsSystemDetails({
     required this.categoryName,
     required this.countKilometersFrom,

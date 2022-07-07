@@ -3,8 +3,8 @@ class Datum {
   String? categoryName;
   num? countKilometersFrom;
   num? countKilometersTo;
-  double? amount;
-  double? bounce;
+  num? amount;
+  num? bounce;
   num? bounceCountOrdersInMonth;
 
   Datum({
@@ -22,8 +22,8 @@ class Datum {
         categoryName: json['categoryName'] as String?,
         countKilometersFrom: json['countKilometersFrom'] as num?,
         countKilometersTo: json['countKilometersTo'] as num?,
-        amount: (json['amount'] as num?)?.toDouble(),
-        bounce: (json['bounce'] as num?)?.toDouble(),
+        amount: (json['amount'] as num?),
+        bounce: (json['bounce'] as num?),
         bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as num?,
       );
 
