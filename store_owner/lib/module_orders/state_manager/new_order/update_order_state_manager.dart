@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
 import 'package:c4d/module_orders/ui/state/new_order/update_order_state.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -51,14 +52,16 @@ class UpdateOrderStateManager {
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         FireStoreHelper().backgroundThread('Trigger');
-        Navigator.popUntil(screenState.context, (route) => false);
+        Navigator.popUntil(screenState.context,
+            (route) => route.settings.name == OrdersRoutes.OWNER_ORDERS_SCREEN);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
-        Navigator.popUntil(screenState.context, (route) => false);
+        Navigator.popUntil(screenState.context,
+            (route) => route.settings.name == OrdersRoutes.OWNER_ORDERS_SCREEN);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(

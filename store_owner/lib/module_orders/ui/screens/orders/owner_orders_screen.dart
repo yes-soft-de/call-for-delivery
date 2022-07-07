@@ -82,7 +82,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     getIt<FireNotificationService>().refreshToken();
     _currentState = LoadingState(this);
     getInitData();
-    widget._stateManager.watcher(this, true);
+     widget._stateManager.watcher(this, true);
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
