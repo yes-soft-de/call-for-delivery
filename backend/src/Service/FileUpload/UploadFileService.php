@@ -87,10 +87,7 @@ class UploadFileService
 
     public function getFilesFolderDestinationPath(): string
     {
-        $filesFolder = $this->params->get('files_folder');
-        $originalFileFolder = $this->params->get('original_file');
-
-        return $filesFolder.'/'.$originalFileFolder;
+        return $this->params->get('files_folder');
     }
 
     public function subFolder(): string
