@@ -10,6 +10,8 @@ use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdmin
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Subscription\SubscriptionService;
+use App\Constant\Payment\PaymentConstant;
+use App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest;
 
 class AdminStoreSubscriptionService
 {
@@ -87,6 +89,34 @@ class AdminStoreSubscriptionService
         }
 
         return $futureSubscriptionsResult;
+    }
+
+    public function deleteSubscriptionByAdmin(AdminDeleteSubscriptionRequest $request): StoreFutureSubscriptionGetForAdminResponse|null|int
+    {
+        //delete subscription with payments
+        if($request->getDeletePayment() === PaymentConstant::DELETE_SUBSCRIPTION_WITH_PAYMENT) {
+            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
+          
+            $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+            foreach($payments as $payment){
+                $this->adminStoreOwnerPaymentService->deleteStoreOwnerPayment($payment->id);
+            }
+
+            return $this->autoMapping->map(SubscriptionEntity::class, StoreFutureSubscriptionGetForAdminResponse::class, $subscription); 
+        }
+
+        // get payments with subscription id
+        $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+
+        if($payments) {
+            return PaymentConstant::THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION;
+        }
+        //if not found payments , delete subscription
+        if(! $payments) {
+            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
+          
+            return $this->autoMapping->map(SubscriptionEntity::class, StoreFutureSubscriptionGetForAdminResponse::class, $subscription); 
+        }
     }
 }
  
