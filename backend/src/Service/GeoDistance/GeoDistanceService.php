@@ -38,14 +38,17 @@ class GeoDistanceService
                 if (! empty($jsonResponse['rows'])) {
                     if (! empty($jsonResponse['rows'][0])) {
                         if (! empty($jsonResponse['rows'][0]['elements'])) {
-                            if (! empty($jsonResponse['rows'][0]['elements'])) {
-                                if (! empty($jsonResponse['rows'][0]['elements'][0])) {
-                                    $response = [];
+                            if (! empty($jsonResponse['rows'][0]['elements'][0])) {
+                                $response = [];
 
+                                if ($jsonResponse['rows'][0]['elements'][0]['status'] === GeoDistanceResultConstant::ZERO_RESULTS_STATUS_CONST) {
+                                    $response['distance'] = GeoDistanceResultConstant::ZERO_DISTANCE_CONST;
+
+                                } elseif ($jsonResponse['rows'][0]['elements'][0]['status'] === GeoDistanceResultConstant::OK_STATUS_CONST) {
                                     $response['distance'] = trim($jsonResponse['rows'][0]['elements'][0]['distance']['text'], " km");
-
-                                    return $this->autoMapping->map('array', GeoDistanceInfoGetResponse::class, $response);
                                 }
+
+                                return $this->autoMapping->map('array', GeoDistanceInfoGetResponse::class, $response);
                             }
                         }
                     }
