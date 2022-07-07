@@ -311,6 +311,8 @@ class AdminOrderService
                 }
                 //create firebase notification to captains
                 try {
+                    $this->notificationFirebaseService->notificationToUser($orderEntity->getCaptainId()->getCaptainId(), $orderResult->getId(), NotificationFirebaseConstant::CANCEL_ASSIGN_BY_ADMIN);
+
                     $this->notificationFirebaseService->notificationToCaptains($orderResult->getId());
 
                 } catch (\Exception $e) {
