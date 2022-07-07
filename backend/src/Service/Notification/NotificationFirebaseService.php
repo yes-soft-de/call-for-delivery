@@ -898,4 +898,53 @@ class NotificationFirebaseService
             }
         }
     }
+
+    public function notificationCreateCaptainOfferSubscriptionToAdmin(string $storeOwnerName, int $captainOfferId): array
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        if (! empty($adminsTokens)) {
+            foreach ($adminsTokens as $token) {
+                $devicesToken[] = $token['token'];
+            }
+
+            $payload = [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+                'argument' => null,
+            ];
+
+            $config = AndroidConfig::fromArray([
+                "notification" => [
+                    "channel_id" => "C4d_Notifications_custom_sound_test"
+                ]
+            ]);
+
+            $apnsConfig = ApnsConfig::fromArray([
+                'headers' => [
+                    'apns-priority' => '10',
+                    'apns-push-type' => 'alert',
+                ],
+                'payload' => [
+                    'aps' => [
+                        'sound' => $sound
+                    ]
+                ]
+            ]);
+
+            $msgContent = NotificationFirebaseConstant::STORE_HAS_DONE.$storeOwnerName.NotificationFirebaseConstant::SUBSCRIBED_WITH_CAPTAIN_OFFER.$captainOfferId;
+
+            $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+                ->withHighestPossiblePriority();
+
+            $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+            $this->messaging->sendMulticast($message, $devicesToken);
+        }
+
+        return $devicesToken;
+    }
 }
