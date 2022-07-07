@@ -10,28 +10,34 @@ use App\Manager\Subscription\SubscriptionCaptainOfferManager;
 use App\Request\Subscription\SubscriptionCaptainOfferCreateRequest;
 use App\Response\Subscription\SubscriptionCaptainOfferCreateResponse;
 use App\Response\Subscription\SubscriptionIsReadyResponse;
+use App\Service\Notification\NotificationFirebaseService;
 
 class SubscriptionCaptainOfferService
 {
     private AutoMapping $autoMapping;
     private SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager;
+    private NotificationFirebaseService $notificationFirebaseService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager)
+    public function __construct(AutoMapping $autoMapping, SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager, NotificationFirebaseService $notificationFirebaseService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionCaptainOfferManager = $subscriptionCaptainOfferManager;
+        $this->notificationFirebaseService = $notificationFirebaseService;
     }
 
     public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): SubscriptionCaptainOfferCreateResponse|SubscriptionIsReadyResponse 
     {
-        $canCreateSubscriptionCaptainOffer = $this->isThereSubscription($request->getStoreOwner()); 
-     
+        $canCreateSubscriptionCaptainOffer = $this->isThereSubscription($request->getStoreOwner());
+
         if($canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND || $canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION) {
-      
+
             return  $canCreateSubscriptionCaptainOffer;
         }
 
         $captainOffer = $this->subscriptionCaptainOfferManager->createSubscriptionCaptainOffer($request);
+
+        // send two firebase notifications to admin
+        $this->sendDoubledFirebaseNotificationToAdmin($request->getStoreOwner()->getStoreOwnerName(), $request->getCaptainOffer()->getId());
 
         return $this->autoMapping->map(SubscriptionCaptainOfferEntity::class, SubscriptionCaptainOfferCreateResponse::class, $captainOffer);
     }
@@ -61,5 +67,13 @@ class SubscriptionCaptainOfferService
         }
         
          return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribe);
+    }
+
+    public function sendDoubledFirebaseNotificationToAdmin(string $storeOwnerName, int $captainOfferId)
+    {
+        for ($i = 0; $i < 2; $i++)
+        {
+            $this->notificationFirebaseService->notificationCreateCaptainOfferSubscriptionToAdmin($storeOwnerName, $captainOfferId);
+        }
     }
 }

@@ -80,9 +80,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('IDENTITY (orderEntity.captainId) as captainUserId')
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
-             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
+             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.filePdf')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId')
             ->addSelect('imageEntity.imagePath')
@@ -138,18 +138,18 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+            $query->setParameter('createdAt', new DateTime($request->getFromDate()));
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('createdAt', new DateTime($request->getToDate()));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
+            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('toDate', new DateTime($request->getToDate()));
         }
 
         if ($request->getState() !== null && $request->getState() !== "" && $request->getState() !== OrderStateConstant::ORDER_STATE_ONGOING) {
@@ -360,9 +360,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
 
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.paidToProvider', 'orderEntity.orderIsMain')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.paidToProvider', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
-             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
+             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.filePdf')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
             ->addSelect('imageEntity.imagePath')
@@ -479,18 +479,18 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+            $query->setParameter('createdAt', new DateTime($request->getFromDate()));
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('createdAt', new DateTime($request->getToDate()));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
+            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('toDate', new DateTime($request->getToDate()));
         }
 
         return $query->getQuery()->getResult();
@@ -502,7 +502,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('IDENTITY (orderEntity.captainId) as captainUserId', 'orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
                 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost')
+                'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost', 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance')
 
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')

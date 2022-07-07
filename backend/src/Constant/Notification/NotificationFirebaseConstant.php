@@ -102,4 +102,11 @@ final class NotificationFirebaseConstant
     const STATE_ONGOING_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن في طريقه إلى تسليم الطلب";
  
     const STATE_DELIVERED_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن سلم الطلب";
+
+    const CANCEL_ASSIGN_BY_ADMIN = "تم إلغاء إسناد الطلب من قبل الإدارة ,الطلب رقم ";
+
+    // when a store subscribe with a captain offer
+    const STORE_HAS_DONE = 'قام المتجر ';
+
+    const SUBSCRIBED_WITH_CAPTAIN_OFFER = ' بالاشتراك بعرض الكابتن ';
 }

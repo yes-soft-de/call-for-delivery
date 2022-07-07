@@ -30,7 +30,10 @@ class RecyclingOrCancelOrderRequest
 
     private int|null $cancel;
 
+    private string|null $filePdf;
 
+    private float|null $storeBranchToClientDistance;
+    
     /**
      * Get the value of id
      */ 

@@ -121,6 +121,7 @@ class AdminOrderService
 
         if ($order) {
             $order['orderImage'] = $this->uploadFileHelperService->getImageParams($order['orderImage']);
+            $order['filePdf'] = $this->uploadFileHelperService->getFileParams($order['filePdf']);
 
             if (empty($order['location'])) {
                 $order['location'] = null;
@@ -280,6 +281,9 @@ class AdminOrderService
             // we need captain id for deleting related order chat room
             $captainId = $orderEntity->getCaptainId()->getId();
 
+            // we need also the user id of the captain in order to send a firebase notification later after updating the order
+            $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+
             if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_ON_WAY && $orderEntity->getState() !== OrderStateConstant::ORDER_STATE_IN_STORE) {
                 // captain took the order and on going to deliver it to the client
                 return OrderResultConstant::ORDER_ACCEPTED_BY_CAPTAIN;
@@ -310,6 +314,8 @@ class AdminOrderService
                 }
                 //create firebase notification to captains
                 try {
+                    $this->notificationFirebaseService->notificationToUser($captainUserId, $orderResult->getId(), NotificationFirebaseConstant::CANCEL_ASSIGN_BY_ADMIN);
+
                     $this->notificationFirebaseService->notificationToCaptains($orderResult->getId());
 
                 } catch (\Exception $e) {

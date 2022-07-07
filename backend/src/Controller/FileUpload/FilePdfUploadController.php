@@ -3,7 +3,7 @@
 namespace App\Controller\FileUpload;
 
 use App\Constant\File\FileTypeConstant;
-use App\Request\Image\UploadImageRequest;
+use App\Request\File\UploadPDFFileRequest;
 use App\Service\FileUpload\UploadFileService;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class FileUploadController extends AbstractController
+class FilePdfUploadController extends AbstractController
 {
-    private $uploadFile;
-    private $validator;
+    private UploadFileService $uploadFile;
+    private ValidatorInterface $validator;
 
     public function __construct(UploadFileService $uploadFile, ValidatorInterface $validator)
     {
@@ -25,21 +25,21 @@ class FileUploadController extends AbstractController
     }
 
     /**
-     * @Route("uploadfile", name="fileUpload", methods={"POST"})
+     * @Route("uploadpdffile", name="uploadPDFFile", methods={"POST"})
      * @param Request $request
      * @return jsonResponse
      *
-     * @OA\Tag(name="File Upload")
+     * @OA\Tag(name="PDF File Upload")
      *
      * @OA\RequestBody(
-     *      description="Upload a file",
+     *      description="Upload a PDF file",
      *     @OA\MediaType(
      *          mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 type="object",
      *                   @OA\Property(
-     *                     property="image",
-     *                     type="image/png"
+     *                     property="filePdf",
+     *                     type="file/pdf"
      *                 )
      *             )
      *      )
@@ -47,15 +47,16 @@ class FileUploadController extends AbstractController
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns the path of the image on the host server"
+     *      description="Returns the path of the file on the host server"
      * )
      */
-    public function fileUpload(Request $request): JsonResponse
+    public function pdfFileUpload(Request $request): JsonResponse
     {
-        $uploadedFile = $request->files->get('image');
+        $uploadedFile = $request->files->get('file');
 
         if ($uploadedFile) {
-            $imageUploadRequest = new UploadImageRequest();
+            $imageUploadRequest = new UploadPDFFileRequest();
+
             $imageUploadRequest->setUploadedFile($uploadedFile);
 
             $violations = $this->validator->validate($imageUploadRequest);
@@ -65,7 +66,7 @@ class FileUploadController extends AbstractController
                 return new JsonResponse($violationsString, Response::HTTP_OK);
             }
 
-            $filePath = $this->uploadFile->uploadImage($uploadedFile, FileTypeConstant::IMAGE_FILE_TYPE_CONST, null);
+            $filePath = $this->uploadFile->uploadImage($uploadedFile, FileTypeConstant::PDF_FILE_TYPE_CONST, null);
 
             return new JsonResponse($filePath, Response::HTTP_OK);
         }

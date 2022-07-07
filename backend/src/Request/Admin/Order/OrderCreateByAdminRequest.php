@@ -61,6 +61,10 @@ class OrderCreateByAdminRequest
      * @var bool|null
      */
     private $orderIsMain;
+     
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
 
     public function getStoreOwner(): int|StoreOwnerProfileEntity
     {

@@ -2,6 +2,7 @@
 
 namespace App\Service\FileUpload;
 
+use App\Constant\File\FileTypeConstant;
 use App\Request\Setting\SettingRequest;
 use App\Response\Setting\SettingResponse;
 use App\Service\Setting\SettingService;
@@ -32,11 +33,16 @@ class UploadFileService
         $this->settingService = $settingService;
     }
 
-    public function uploadImage(UploadedFile $uploadedFile, ?string $existingFileName): string
+    public function uploadImage(UploadedFile $uploadedFile, int $fileType, ?string $existingFileName): string
     {
         $subFolder = $this->subFolder();
 
-        $path = $this->getImageDestinationPath().'/'.$subFolder.'/';
+        if ($fileType === FileTypeConstant::IMAGE_FILE_TYPE_CONST) {
+            $path = $this->getImageDestinationPath() . '/' . $subFolder . '/';
+
+        } elseif ($fileType === FileTypeConstant::PDF_FILE_TYPE_CONST) {
+            $path = $this->getFilesFolderDestinationPath() . '/' . $subFolder . '/';
+        }
 
         $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
 
@@ -77,6 +83,11 @@ class UploadFileService
         $originalImageFolder = $this->params->get('original_image');
 
         return $imageFolder.'/'.$originalImageFolder;
+    }
+
+    public function getFilesFolderDestinationPath(): string
+    {
+        return $this->params->get('files_folder');
     }
 
     public function subFolder(): string
