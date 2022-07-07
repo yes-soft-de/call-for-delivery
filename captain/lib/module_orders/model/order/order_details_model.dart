@@ -7,6 +7,7 @@ import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -98,7 +99,9 @@ class OrderDetailsModel extends DataModel {
         DateFormat.yMMMEd()
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     _orders = OrderDetailsModel(
-      rating: element?.rating,
+      rating: element?.rating != null
+          ? FixedNumber.getFixedNumber(element?.rating ?? 0)
+          : null,
       image: element?.image?.image,
       branchName: element?.branchName ?? S.current.unknown,
       createdDate: create,
@@ -144,7 +147,6 @@ class OrderDetailsModel extends DataModel {
     //             StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
     //         ? location
     //         : _orders.branchCoordinate);
- 
   }
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
     List<OrderModel> orders = [];

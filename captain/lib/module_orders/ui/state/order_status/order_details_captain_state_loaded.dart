@@ -152,28 +152,34 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         const SizedBox(
                           height: 8,
                         ),
-                        Text(
-                          S.current.HisComment,
-                          style: Theme.of(context).textTheme.button,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            child: Padding(
+                        Visibility(
+                          visible: orderInfo.ratingComment != null,
+                            child: Column(
+                          children: [
+                            Text(
+                              S.current.HisComment,
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                orderInfo.ratingComment ?? '',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
+                              child: Container(
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    orderInfo.ratingComment ?? '',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          ],
+                        ))
                       ],
                     ),
                   ),

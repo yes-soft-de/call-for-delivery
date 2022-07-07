@@ -1,4 +1,5 @@
 import 'package:c4d/module_profile/response/profile_response.dart';
+import 'package:c4d/utils/components/fixed_numbers.dart';
 
 class ProfileModel {
   String? image;
@@ -52,7 +53,7 @@ class ProfileModel {
         drivingLicence: data.drivingLicence?.imageUrl,
         identity: data.identity?.imageUrl,
         isOnline: data.isOnline,
-        averageRating: data.rate ?? 0,
+        averageRating: num.tryParse(FixedNumber.getFixedNumber(data.rate ?? 0)),
         roomID: data.roomID);
   }
   bool get hasError => _error != null;

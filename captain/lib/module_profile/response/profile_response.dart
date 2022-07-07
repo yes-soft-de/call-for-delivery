@@ -40,7 +40,7 @@ class ProfileResponseModel {
   num? salary;
   String? status;
   List<CountOrdersDeliverd>? countOrdersDeliverd;
-  String? rating;
+  num? rating;
   dynamic state;
   num? bounce;
   dynamic totalBounce;

@@ -27,7 +27,7 @@ class Data {
   Destination? location;
   String? phone;
   String? usedAs;
-  String? rating;
+  num? rating;
   String? ratingComment;
   String? branchPhone;
   int? storeId;
@@ -96,7 +96,7 @@ class Data {
       captainId: json['captainUserId']?.toString(),
       phone: json['phone'] as String?,
       storeOwnerName: json['storeOwnerName'] as String?,
-      rating: json['rating']?.toString(),
+      rating: json['rating'],
       ratingComment: json['ratingComment'] as String?,
       branchPhone: json['branchPhone'] as String?,
       location: json['location'] == null
