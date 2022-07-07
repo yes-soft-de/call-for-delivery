@@ -249,12 +249,16 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price')
            
-            ->andWhere('subscription.id = :subscriptionId')
-            ->setParameter('subscriptionId', $subscriptionId)
+//            ->andWhere('subscription.id = :subscriptionId')
+//            ->setParameter('subscriptionId', $subscriptionId)
             
             ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscriptionCaptainOfferEntity.startDate >= subscription.startDate
              and 
              subscriptionCaptainOfferEntity.startDate <= subscription.endDate')
+
+            ->andWhere('subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+            ->andWhere('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
            
             ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
 
