@@ -752,7 +752,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   subtitle: S.current.whatsappWithStoreOwner,
                   title: S.current.whatsapp,
                   onTap: () {
-                    var url = 'https://wa.me/${orderInfo.storePhone}';
+                    var url = 'https://wa.me/${orderInfo.branchPhone}';
                     canLaunch(url).then((value) {
                       if (value) {
                         launch(url);

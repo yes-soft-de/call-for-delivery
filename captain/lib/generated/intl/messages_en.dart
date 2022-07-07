@@ -234,6 +234,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
+        "codeSendToYou":
+            MessageLookupByLibrary.simpleMessage("Code sent to your device"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "collectedPayment":
             MessageLookupByLibrary.simpleMessage("Collected Payment"),
@@ -372,6 +374,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no packages in this category"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "enterCodeSentToYou":
+            MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -1094,6 +1098,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youAreOffline": MessageLookupByLibrary.simpleMessage(
             "You are offline you can\'t accept any order right now"),
+        "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
+            "You can resend verification after"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

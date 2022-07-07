@@ -7109,6 +7109,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Code sent to your device`
+  String get codeSendToYou {
+    return Intl.message(
+      'Code sent to your device',
+      name: 'codeSendToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter verification code`
+  String get enterCodeSentToYou {
+    return Intl.message(
+      'Enter verification code',
+      name: 'enterCodeSentToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can resend verification after`
+  String get youCanResendAfter {
+    return Intl.message(
+      'You can resend verification after',
+      name: 'youCanResendAfter',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

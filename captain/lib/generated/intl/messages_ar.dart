@@ -228,6 +228,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+        "codeSendToYou":
+            MessageLookupByLibrary.simpleMessage("رمز التحقق المرسل لجوالك"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "collectedPayment":
@@ -367,6 +369,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("قائمة فارغة"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "enterCodeSentToYou":
+            MessageLookupByLibrary.simpleMessage("ادخل رمز التحقق"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -1091,6 +1095,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youAreOffline": MessageLookupByLibrary.simpleMessage(
             "الحالة الحالية لك (غير نشط) لاتسمح لك بقبول طلبات حاليا الرجاء تغييرها ثم المحاولة لاحقا"),
+        "youCanResendAfter":
+            MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

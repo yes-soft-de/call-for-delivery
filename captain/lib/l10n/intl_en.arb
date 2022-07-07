@@ -708,7 +708,11 @@
     "youAreOffline": "You are offline you can't accept any order right now",
     "orderCanceled": "Order has been canceled you can't accept it any more please go back to home screen ",
     "orderIsHidden": "This order has been hided you cannot accept it please wait until to recycle it",
-    "userNotVerified": "User not verified"
+    "userNotVerified": "User not verified",
+    "codeSendToYou": "Code sent to your device",
+    "enterCodeSentToYou": "Enter verification code",
+    "youCanResendAfter": "You can resend verification after"
+
 
 
 
