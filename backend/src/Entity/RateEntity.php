@@ -13,7 +13,7 @@ class RateEntity
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $rating;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -34,12 +34,12 @@ class RateEntity
         return $this->id;
     }
 
-    public function getRating(): ?int
+    public function getRating(): ?float
     {
         return $this->rating;
     }
 
-    public function setRating(int $rating): self
+    public function setRating(float $rating): self
     {
         $this->rating = $rating;
 
