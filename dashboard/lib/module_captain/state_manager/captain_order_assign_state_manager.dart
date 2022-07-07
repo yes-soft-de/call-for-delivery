@@ -5,6 +5,7 @@ import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_order_assign.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -51,6 +52,7 @@ class CaptainAssignOrderStateManager {
             .show(screenState.context);
         getCaptains(screenState);
       } else {
+        FireStoreHelper().backgroundThread('Trigger');
         Navigator.of(screenState.context).pop();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,

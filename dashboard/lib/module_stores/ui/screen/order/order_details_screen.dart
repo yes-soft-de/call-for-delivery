@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -8,6 +9,7 @@ import 'package:c4d/module_stores/state_manager/order/order_status.state_manager
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -24,6 +26,7 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int orderId = -1;
   late States currentState;
+  StreamSubscription? firebaseStream;
   OrderStatusStateManager get manager => widget._stateManager;
   @override
   void initState() {
@@ -37,8 +40,20 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
           }
         });
       });
+      firebaseStream =
+          FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
+        if (flag == false) {
+          widget._stateManager.getOrder(this, orderId,false);
+        }
+      });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    firebaseStream?.cancel();
+    super.dispose();
   }
 
   void refresh() {

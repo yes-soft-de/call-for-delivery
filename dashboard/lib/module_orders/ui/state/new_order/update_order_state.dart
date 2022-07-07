@@ -28,6 +28,7 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class UpdateOrderLoaded extends States {
   List<BranchesModel> branches;
@@ -107,16 +108,47 @@ class UpdateOrderLoaded extends States {
                             color: Theme.of(context).backgroundColor),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                value: screenState.branch,
-                                items: _getBranches(),
-                                hint: Text(S.current.chooseBranch),
-                                onChanged: (int? value) {
-                                  screenState.branch = value;
-                                  screenState.refresh();
-                                }),
-                          ),
+                          child: DropdownSearch<BranchesModel>(
+                              showSearchBox: true,
+                              enabled: branches.isNotEmpty,
+                              dropdownBuilder: (context, model) {
+                                return Text(
+                                  model?.branchName ?? S.current.chooseBranch,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                );
+                              },
+                              dropdownSearchDecoration: InputDecoration(
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      hintText: S.current.chooseBranch,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25)))),
+                              popupShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              mode: Mode.MENU,
+                              items: branches,
+                              filterFn: (model, filter) {
+                                return model!.branchName.contains(filter ?? '');
+                              },
+                              itemAsString: (model) =>
+                                  model?.branchName ?? S.current.unknown,
+                              onChanged: (v) {
+                                v as BranchesModel;
+                                screenState.branch = v.id;
+                                screenState.refresh();
+                              },
+                              selectedItem: screenState.branch != null
+                                  ? branches.firstWhere((element) =>
+                                      element.id == screenState.branch)
+                                  : null), // stores
                         ),
                       ),
                     ),
