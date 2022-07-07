@@ -51,12 +51,14 @@ class UpdateOrderStateManager {
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         FireStoreHelper().backgroundThread('Trigger');
+        Navigator.popUntil(screenState.context, (route) => false);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
       } else {
+        Navigator.popUntil(screenState.context, (route) => false);
         Navigator.of(screenState.context).pushNamedAndRemoveUntil(
             OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(

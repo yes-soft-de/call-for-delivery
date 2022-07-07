@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -22,6 +23,7 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -65,6 +67,8 @@ class UpdateOrderLoaded extends States {
     orderIsMain = orderInfo.orderIsMain;
     imagePath = orderInfo.imagePath;
     image = orderInfo.image;
+    activeBranch =
+        branches.firstWhere((element) => element.id == orderInfo.branchID);
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
@@ -73,13 +77,14 @@ class UpdateOrderLoaded extends States {
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Branch? activeBranch;
+  BranchesModel? activeBranch;
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
   String? image;
+  String? distance;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -109,16 +114,49 @@ class UpdateOrderLoaded extends States {
                             color: Theme.of(context).backgroundColor),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                value: screenState.branch,
-                                items: _getBranches(),
-                                hint: Text(S.current.chooseBranch),
-                                onChanged: (int? value) {
-                                  screenState.branch = value;
-                                  screenState.refresh();
-                                }),
-                          ),
+                          child: DropdownSearch<BranchesModel>(
+                              showSearchBox: true,
+                              enabled: branches.isNotEmpty,
+                              dropdownBuilder: (context, model) {
+                                return Text(
+                                  model?.branchName ?? S.current.chooseBranch,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                );
+                              },
+                              dropdownSearchDecoration: InputDecoration(
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      hintText: S.current.chooseBranch,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25)))),
+                              popupShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              mode: Mode.MENU,
+                              items: branches,
+                              filterFn: (model, filter) {
+                                return model!.branchName.contains(filter ?? '');
+                              },
+                              itemAsString: (model) =>
+                                  model?.branchName ?? S.current.unknown,
+                              onChanged: (v) {
+                                v as BranchesModel;
+                                screenState.branch = v.id;
+                                activeBranch = branches.firstWhere(
+                                    (element) => element.id == v.id);
+                                screenState.refresh();
+                              },
+                              selectedItem: screenState.branch != null
+                                  ? branches.firstWhere((element) =>
+                                      element.id == screenState.branch)
+                                  : null), // stores
                         ),
                       ),
                     ),
@@ -217,6 +255,28 @@ class UpdateOrderLoaded extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.customerLocation != null &&
+                        activeBranch != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              destance: (d) {
+                                distance = d;
+                              },
+                            )),
+                      ),
+                    )),
                 // order details
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
@@ -671,6 +731,7 @@ class UpdateOrderLoaded extends States {
       }
       screenState.addNewOrder(CreateOrderRequest(
           order: orderInfo.id,
+          distance: distance,
           orderIsMain: orderIsMain,
           fromBranch: screenState.branch,
           recipientName: screenState.receiptNameController.text.trim(),
@@ -693,6 +754,7 @@ class UpdateOrderLoaded extends States {
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
         order: orderInfo.id,
+        distance: distance,
         orderIsMain: orderIsMain,
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),

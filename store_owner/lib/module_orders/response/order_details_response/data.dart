@@ -3,6 +3,7 @@ import 'package:c4d/module_orders/response/order_details_response/file_pdf_respo
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 
 import 'created_at.dart';
 import 'delivery_date.dart';
@@ -41,6 +42,7 @@ class Data {
   String? captainName;
   String? captainPhone;
   Captain? captainDetails;
+  String? storeBranchToClientDistance;
   Data(
       {this.id,
       this.state,
@@ -73,12 +75,16 @@ class Data {
       this.captainName,
       this.captainPhone,
       this.captainDetails,
-      this.pdf
-      });
+      this.pdf,
+      this.storeBranchToClientDistance});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
       state: json['state'] as String?,
+      storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
+          ? FixedNumber.getFixedNumber(
+              json['storeBranchToClientDistance'])
+          : null,
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
       orderType: json['orderType'] as int?,

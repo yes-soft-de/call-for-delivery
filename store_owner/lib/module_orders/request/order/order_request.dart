@@ -15,6 +15,7 @@ class CreateOrderRequest {
   int? cancel;
   int? order;
   String? pdf;
+  String? distance;
   CreateOrderRequest(
       {this.fromBranch,
       this.note,
@@ -31,7 +32,8 @@ class CreateOrderRequest {
       this.orderIsMain,
       this.order,
       this.cancel,
-      this.pdf});
+      this.pdf,
+      this.distance});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -74,6 +76,10 @@ class CreateOrderRequest {
     }
     if (orderIsMain != null) {
       data['orderIsMain'] = this.orderIsMain;
+    }
+    if (distance != null) {
+      data['storeBranchToClientDistance'] =
+          double.tryParse(this.distance!.replaceAll(',', ''));
     }
     return data;
   }

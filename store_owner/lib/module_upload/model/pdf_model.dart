@@ -6,18 +6,18 @@ class PdfModel {
   String? pdfOnServerPath;
   String? pdfPreview;
   String? pdfBaseUrl;
-  PdfModel({
-    this.pdfFilePath,
-    this.pdfOnServerPath,
-    this.pdfPreview,
-    this.pdfBaseUrl
-  });
+  PdfModel(
+      {this.pdfFilePath,
+      this.pdfOnServerPath,
+      this.pdfPreview,
+      this.pdfBaseUrl});
   Future<void> uploadPdf() async {
     if (pdfFilePath != null) {
       pdfOnServerPath =
           await getIt<ImageUploadService>().uploadPdf(pdfFilePath);
       return;
     } else {
+      
       return;
     }
   }

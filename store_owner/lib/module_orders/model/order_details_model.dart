@@ -40,6 +40,7 @@ class OrderDetailsModel extends DataModel {
   late int branchID;
   late String captainRating;
   PdfModel? pdf;
+  String? storeBranchToClientDistance;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -84,7 +85,8 @@ class OrderDetailsModel extends DataModel {
       required this.captainName,
       required this.captainPhone,
       required this.captainRating,
-      this.pdf});
+      this.pdf,
+      this.storeBranchToClientDistance});
 
   late OrderDetailsModel _orders;
 
@@ -141,10 +143,13 @@ class OrderDetailsModel extends DataModel {
       branchID: element?.storeOwnerBranchId ?? -1,
       captainName: element?.captainName,
       captainPhone: element?.captainDetails?.phone,
-      pdf: PdfModel(
-          pdfOnServerPath: element?.pdf?.fileUrl,
-          pdfPreview: element?.pdf?.file,
-          pdfBaseUrl: element?.pdf?.baseUrl),
+      storeBranchToClientDistance: element?.storeBranchToClientDistance,
+      pdf: element?.pdf != null
+          ? PdfModel(
+              pdfOnServerPath: element?.pdf?.fileUrl,
+              pdfPreview: element?.pdf?.file,
+              pdfBaseUrl: element?.pdf?.baseUrl)
+          : null,
       captainRating:
           FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
     );

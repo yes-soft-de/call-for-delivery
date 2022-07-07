@@ -7,6 +7,7 @@ import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
@@ -25,9 +26,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:latlong2/latlong.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
@@ -54,6 +55,7 @@ class NewOrderStateBranchesLoaded extends States {
   int orderType = 1;
   bool orderIsMain = false;
   PdfModel? pdfModel;
+  String? distance;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -233,28 +235,15 @@ class NewOrderStateBranchesLoaded extends States {
                             borderRadius: BorderRadius.circular(25),
                             color: Colors.amber),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            S.current.distance +
-                                ' ' +
-                                (Geolocator.distanceBetween(
-                                            activeBranch?.location.latitude ??
-                                                0,
-                                            activeBranch?.location.longitude ??
-                                                0,
-                                            screenState.customerLocation
-                                                    ?.latitude ??
-                                                0,
-                                            screenState.customerLocation
-                                                    ?.longitude ??
-                                                0) /
-                                        1000)
-                                    .toStringAsFixed(2)
-                                    .toString() +
-                                ' ${S.current.km}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              destance: (d) {
+                                distance = d;
+                              },
+                            )),
                       ),
                     )),
                 // order details
@@ -428,65 +417,43 @@ class NewOrderStateBranchesLoaded extends States {
                   ],
                 ),
                 // upload pdf
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 24.0, left: 24),
-                      child: Text(
-                        S.current.attachFile,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                Visibility(
+                  visible: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0, left: 24),
+                        child: Text(
+                          S.current.attachFile,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 16.0, left: 16, top: 8, bottom: 16),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(18),
-                        onTap: () {
-                          var isDark =
-                              getIt<ThemePreferencesHelper>().isDarkMode();
-                          FilePicker.platform.pickFiles(
-                              allowedExtensions: ['pdf'],
-                              type: FileType.custom).then((result) async {
-                            if (result != null) {
-                              File file = File(result.files.single.path!);
-                              pdfModel = PdfModel(pdfFilePath: file.path);
-                              screenState.refresh();
-                            } else {
-                              // User canceled the picker
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                          width: 70,
-                          height: 70,
-                          child: Checked(
-                              checked: pdfModel?.pdfFilePath != null,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    color: Theme.of(context).backgroundColor),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.attach_file_rounded,
-                                      color: Theme.of(context).disabledColor,
-                                    ),
-                                    Text(
-                                      S.current.pressHere,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              Theme.of(context).disabledColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              checkedWidget: Visibility(
-                                visible: pdfModel?.pdfFilePath != null,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 16),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            var isDark =
+                                getIt<ThemePreferencesHelper>().isDarkMode();
+                            FilePicker.platform.pickFiles(
+                                allowedExtensions: ['pdf'],
+                                type: FileType.custom).then((result) async {
+                              if (result != null) {
+                                File file = File(result.files.single.path!);
+                                pdfModel = PdfModel(pdfFilePath: file.path);
+                                screenState.refresh();
+                              } else {
+                                // User canceled the picker
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Checked(
+                                checked: pdfModel?.pdfFilePath != null,
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(18),
@@ -495,25 +462,52 @@ class NewOrderStateBranchesLoaded extends States {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
-                                        FontAwesomeIcons.filePdf,
-                                        color: Colors.red,
+                                        Icons.attach_file_rounded,
+                                        color: Theme.of(context).disabledColor,
                                       ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Icon(
-                                        FontAwesomeIcons.check,
-                                        color: Colors.green,
-                                        size: 15,
+                                      Text(
+                                        S.current.pressHere,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .disabledColor),
                                       ),
                                     ],
                                   ),
                                 ),
-                              )),
+                                checkedWidget: Visibility(
+                                  visible: pdfModel?.pdfFilePath != null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.filePdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
                         ),
-                      ),
-                    ), // send
-                  ],
+                      ), // send
+                    ],
+                  ),
                 ),
                 // delivery date
                 Padding(
@@ -691,64 +685,56 @@ class NewOrderStateBranchesLoaded extends States {
 
   // function to upload image then create order
   Future<void> createOrderWithImage() async {
-    screenState.currentState = LoadingState(screenState);
-    screenState.refresh();
-    await pdfModel?.uploadPdf().whenComplete(() {
-      getIt<ImageUploadService>().uploadImage(imagePath).then((value) {
-        if (value == null) {
-          CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.errorUploadingImages)
-              .show(screenState.context);
-        }
-        screenState.addNewOrder(CreateOrderRequest(
-            pdf: pdfModel?.getPdfRequest(),
-            orderIsMain: orderIsMain,
-            orderType: orderType,
-            fromBranch: screenState.branch,
-            recipientName: screenState.receiptNameController.text.trim(),
-            recipientPhone: screenState.countryNumberController.text.trim() +
-                screenState.phoneNumberController.text.trim(),
-            destination: GeoJson(
-                link: screenState.toController.text.trim(),
-                lat: screenState.customerLocation?.latitude,
-                lon: screenState.customerLocation?.longitude),
-            note: screenState.orderDetailsController.text.trim(),
-            detail: screenState.orderDetailsController.text.trim(),
-            orderCost: num.tryParse(screenState.priceController.text.trim()),
-            image: value,
-            date: orderDate.toUtc().toIso8601String(),
-            payment: screenState.payments));
-      });
+    getIt<ImageUploadService>().uploadImage(imagePath).then((value) {
+      if (value == null) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: S.current.errorUploadingImages)
+            .show(screenState.context);
+      }
+      screenState.addNewOrder(CreateOrderRequest(
+          pdf: pdfModel?.getPdfRequest(),
+          orderIsMain: orderIsMain,
+          distance: distance,
+          orderType: orderType,
+          fromBranch: screenState.branch,
+          recipientName: screenState.receiptNameController.text.trim(),
+          recipientPhone: screenState.countryNumberController.text.trim() +
+              screenState.phoneNumberController.text.trim(),
+          destination: GeoJson(
+              link: screenState.toController.text.trim(),
+              lat: screenState.customerLocation?.latitude,
+              lon: screenState.customerLocation?.longitude),
+          note: screenState.orderDetailsController.text.trim(),
+          detail: screenState.orderDetailsController.text.trim(),
+          orderCost: num.tryParse(screenState.priceController.text.trim()),
+          image: value,
+          date: orderDate.toUtc().toIso8601String(),
+          payment: screenState.payments));
     });
   }
 
   // function create order without upload image
   Future<void> createOrderWithoutImage() async {
-    if (pdfModel?.pdfFilePath != null) {
-      screenState.currentState = LoadingState(screenState);
-      screenState.refresh();
-      await pdfModel?.uploadPdf().whenComplete(() {
-        screenState.addNewOrder(CreateOrderRequest(
-            pdf: pdfModel?.getPdfRequest(),
-            orderType: orderType,
-            orderIsMain: orderIsMain,
-            fromBranch: screenState.branch,
-            recipientName: screenState.receiptNameController.text.trim(),
-            recipientPhone: screenState.countryNumberController.text.trim() +
-                screenState.phoneNumberController.text.trim(),
-            destination: GeoJson(
-                link: screenState.toController.text.trim(),
-                lat: screenState.customerLocation?.latitude,
-                lon: screenState.customerLocation?.longitude),
-            note: screenState.orderDetailsController.text.trim(),
-            detail: screenState.orderDetailsController.text.trim(),
-            orderCost: num.tryParse(screenState.priceController.text.trim()),
-            image: null,
-            date: orderDate.toUtc().toIso8601String(),
-            payment: screenState.payments));
-      });
-    }
+    screenState.addNewOrder(CreateOrderRequest(
+        pdf: pdfModel?.getPdfRequest(),
+        orderType: orderType,
+        orderIsMain: orderIsMain,
+        distance: distance,
+        fromBranch: screenState.branch,
+        recipientName: screenState.receiptNameController.text.trim(),
+        recipientPhone: screenState.countryNumberController.text.trim() +
+            screenState.phoneNumberController.text.trim(),
+        destination: GeoJson(
+            link: screenState.toController.text.trim(),
+            lat: screenState.customerLocation?.latitude,
+            lon: screenState.customerLocation?.longitude),
+        note: screenState.orderDetailsController.text.trim(),
+        detail: screenState.orderDetailsController.text.trim(),
+        orderCost: num.tryParse(screenState.priceController.text.trim()),
+        image: null,
+        date: orderDate.toUtc().toIso8601String(),
+        payment: screenState.payments));
   }
 
   void createOrder() {
