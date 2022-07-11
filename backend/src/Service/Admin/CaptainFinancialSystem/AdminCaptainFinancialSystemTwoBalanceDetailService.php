@@ -23,12 +23,13 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
      {
         //get Count Orders Within Thirty Days
         $countOrders = $this->getCountOrdersByCaptainIdWithinThirtyDays($captainId, $date);
-       
         //get Orders Details On Specific Date
         $detailsOrders = $this->adminCaptainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
-
+       
         $balanceDetail = $this->getBalanceDetail($countOrders['countOrder'], $financialSystemDetail, $sumPayments, $date, $detailsOrders);
-              
+        //get Orders Details On Specific Date
+        $balanceDetail['orders'] = $this->adminCaptainFinancialSystemTwoBalanceDetailManager->getOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+
         return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class,  $balanceDetail);
     }
 
@@ -99,7 +100,6 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         $item['total'] = abs($total);
 
         foreach($detailsOrders as $orderDetail) {
-            
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
                 $item['amountForStore'] += $orderDetail['captainOrderCost'];
             }

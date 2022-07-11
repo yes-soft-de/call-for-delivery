@@ -22,4 +22,9 @@ class AdminCaptainFinancialSystemTwoBalanceDetailManager
     {
         return $this->orderManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
+
+    public function getOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate)
+    {
+        return $this->orderManager->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }
 }
