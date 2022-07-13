@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -22,6 +23,7 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -67,8 +69,11 @@ class OrderRecyclingLoaded extends States {
         pdfPreview: orderInfo.pdf?.pdfPreview,
         pdfOnServerPath: orderInfo.pdf?.pdfOnServerPath);
     distance = orderInfo.storeBranchToClientDistance;
-    activeBranch =
-        branches.firstWhere((element) => element.id == screenState.branch);
+    print(screenState.branch);
+    try {
+      activeBranch =
+          branches.firstWhere((element) => element.id == orderInfo.branchID);
+    } catch (e) {}
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
@@ -404,6 +409,101 @@ class OrderRecyclingLoaded extends States {
                     ), // send
                   ],
                 ),
+                // upload pdf
+                Visibility(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0, left: 24),
+                        child: Text(
+                          S.current.attachFile,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 16),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            var isDark =
+                                getIt<ThemePreferencesHelper>().isDarkMode();
+                            FilePicker.platform.pickFiles(
+                                allowedExtensions: ['pdf'],
+                                type: FileType.custom).then((result) async {
+                              if (result != null) {
+                                File file = File(result.files.single.path!);
+                                pdfModel = PdfModel(pdfFilePath: file.path);
+                                screenState.refresh();
+                              } else {
+                                // User canceled the picker
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Checked(
+                                checked: pdfModel?.pdfFilePath != null ||
+                                    pdfModel?.pdfOnServerPath != null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.attach_file_rounded,
+                                        color: Theme.of(context).disabledColor,
+                                      ),
+                                      Text(
+                                        S.current.pressHere,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .disabledColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                checkedWidget: Visibility(
+                                  visible: pdfModel?.pdfFilePath != null ||
+                                      pdfModel?.pdfOnServerPath != null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.filePdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ), // send
+                    ],
+                  ),
+                ),
+
                 // delivery date
                 Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),

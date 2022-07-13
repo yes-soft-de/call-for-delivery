@@ -523,7 +523,8 @@ class UpdateOrderLoaded extends States {
                                   ),
                                 ),
                                 checkedWidget: Visibility(
-                                  visible: pdfModel?.pdfFilePath != null,
+                                  visible: pdfModel?.pdfFilePath != null ||
+                                      pdfModel?.pdfOnServerPath != null,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(18),
