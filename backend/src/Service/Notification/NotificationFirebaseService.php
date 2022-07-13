@@ -53,15 +53,15 @@ class NotificationFirebaseService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->dateFactoryService = $dateFactoryService;
     }
-
+    // send notifications to captains when create order
     public function notificationToCaptains(int $orderId)
     {
         $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
         if (! empty($getTokens)) {
 
             $payload = [
-                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'navigate_route' => NotificationFirebaseConstant::URL,
+                // 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                // 'navigate_route' => NotificationFirebaseConstant::URL,
                 'argument' => $orderId,
             ];
 
