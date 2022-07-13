@@ -740,6 +740,8 @@ class OrderRecyclingLoaded extends States {
   void createOrder() {
     if (imagePath == null) {
       if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
         pdfModel?.uploadPdf().then((value) {
           createOrderWithoutImage();
         });
@@ -748,6 +750,8 @@ class OrderRecyclingLoaded extends States {
       }
     } else if (image != null && imagePath != null && memoryBytes == null) {
       if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
         pdfModel?.uploadPdf().then((value) {
           createOrderWithoutImage();
         });
@@ -756,6 +760,8 @@ class OrderRecyclingLoaded extends States {
       }
     } else {
       if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
         pdfModel?.uploadPdf().then((value) {
           createOrderWithImage();
         });

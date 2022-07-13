@@ -550,7 +550,9 @@ class NewOrderStateBranchesLoaded extends States {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                             orderDate == null ? S.current.now : time.format(context).toString(),
+                              orderDate == null
+                                  ? S.current.now
+                                  : time.format(context).toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -745,6 +747,8 @@ class NewOrderStateBranchesLoaded extends States {
   void createOrder() {
     if (imagePath == null) {
       if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
         pdfModel?.uploadPdf().then((value) {
           createOrderWithoutImage();
         });
@@ -753,6 +757,8 @@ class NewOrderStateBranchesLoaded extends States {
       }
     } else {
       if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
         pdfModel?.uploadPdf().then((value) {
           createOrderWithImage();
         });
