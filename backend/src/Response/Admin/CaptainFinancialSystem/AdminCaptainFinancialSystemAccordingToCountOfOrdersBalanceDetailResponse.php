@@ -27,4 +27,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float|null $sumPayments;
     
     public float|null $amountForStore;
+
+    public array $orders;
 }

@@ -302,6 +302,11 @@ class OrderManager
         return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 
+    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+    {
+        return $this->orderRepository->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    }
+
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
     {
@@ -607,4 +612,9 @@ class OrderManager
 
         return $orderEntity;
     }
+
+    public function getOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderRepository->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }    
 }
