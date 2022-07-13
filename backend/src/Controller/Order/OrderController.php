@@ -717,7 +717,7 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9306 OR 9100 OR 9107 OR 9105 OR 9207 OR 9215 OR 9218"),
+     *          @OA\Property(type="string", property="status_code", description="9306 OR 9100 OR 9107 OR 9105 OR 9207 OR 9215 OR 9218 OR 9220"),
      *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error."),
      *      )
      * )
@@ -741,6 +741,11 @@ class OrderController extends BaseController
          }
 
         $response = $this->orderService->orderUpdateStateByCaptain($request);
+
+        if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_COMPLETED) {
+
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PROFILE_NOT_COMPLETED);
+        }
 
         if ($response === CaptainConstant::CAPTAIN_INACTIVE) {
            
