@@ -25,6 +25,8 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
 
         foreach ($financialSystemThreeDetails as $financialSystemThreeDetail) {
              
+                //get orders arranged according to the categories of the financial system
+                $financialSystemThreeDetail['orders'] = $this->getOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $date['fromDate'], $date['toDate']);
                 //get the number of orders arranged according to the categories of the financial system
                 $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $financialSystemThreeDetail, $date['fromDate'], $date['toDate']);
                //Amount payable to the captain in the absence of a bounce
@@ -66,6 +68,11 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
     public function getCountOrdersByFinancialSystemThree(int $captainId, array $financialSystemThreeDetail, $fromDate, $toDate)
     {
         return $this->adminCaptainFinancialSystemThreeBalanceDetailManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+    }
+
+    public function getOrdersByFinancialSystemThree(int $captainId, array $financialSystemThreeDetail, $fromDate, $toDate)
+    {
+        return $this->adminCaptainFinancialSystemThreeBalanceDetailManager->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
     }
 
     public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails, int $captainId, array $date): array

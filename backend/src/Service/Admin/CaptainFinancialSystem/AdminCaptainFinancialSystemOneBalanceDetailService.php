@@ -28,6 +28,8 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $countOrders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         //get Orders Details On Specific Date
         $detailsOrders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
+        //get Orders Details On Specific Date
+        $orders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
            if($detailOrder['kilometer'] > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
@@ -46,6 +48,8 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $financialSystemDetail['sumPayments'] = $sumPayments;
              
         $financialSystemDetail['countOrders'] = $countOrders['countOrder'];
+
+        $financialSystemDetail['orders'] = $orders;
 
         $financialSystemDetail['countOrdersMaxFromNineteen'] = $countOrdersMaxFromNineteen;
 

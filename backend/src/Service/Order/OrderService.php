@@ -450,7 +450,36 @@ class OrderService
 
      public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): OrderUpdateByCaptainResponse|string|int|null
     {
+        // check captain complete account status
+        $captainStatusResult = $this->captainService->getCompleteAccountStatusOfCaptainProfile($request->getCaptainId());
+
+        if ($captainStatusResult !== null) {
+            if ($captainStatusResult['completeAccountStatus'] === CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED) {
+                return CaptainConstant::CAPTAIN_PROFILE_NOT_COMPLETED;
+            }
+        }
+        // end check captain complete account status
+
+        // check captain profile status
+        $captain = $this->captainService->captainIsActive($request->getCaptainId());
+        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
+ 
+             return CaptainConstant::CAPTAIN_INACTIVE;
+        }
+        // end check captain profile status
+        
+         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
+        
+         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($request->getCaptainId());
+         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
+             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
+         }
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            
+            //not show orders for captain because not online
+            if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
+                return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
+            }
             // check if order is not being accepted by a captain yet
             if ($this->orderManager->isOrderAcceptedByCaptain($request->getId()) === true) {
                 // order is already being accepted by another captain
