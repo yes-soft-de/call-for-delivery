@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -7,9 +8,11 @@ import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order_link.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -19,28 +22,36 @@ import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 class NewOrderLinkStateLoaded extends States {
   List<BranchesModel> branches;
   final NewOrderLinkScreenState screenState;
-  NewOrderLinkStateLoaded(this.branches, this.screenState) : super(screenState);
+  NewOrderLinkStateLoaded(this.branches, this.screenState)
+      : super(screenState) {
+    activeBranch =
+        branches.firstWhere((element) => element.id == screenState.branch);
+    screenState.refresh();
+  }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
   DateTime orderDate = DateTime.now();
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Branch? activeBranch;
+  BranchesModel? activeBranch;
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
-
+  PdfModel? pdfModel;
+  String? distance;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -177,6 +188,28 @@ class NewOrderLinkStateLoaded extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.customerLocation != null &&
+                        activeBranch != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              destance: (d) {
+                                distance = d;
+                              },
+                            )),
+                      ),
+                    )),
                 // order details
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
@@ -347,6 +380,98 @@ class NewOrderLinkStateLoaded extends States {
                     ), // send
                   ],
                 ),
+                // upload pdf
+                Visibility(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0, left: 24),
+                        child: Text(
+                          S.current.attachFile,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 16),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            var isDark =
+                                getIt<ThemePreferencesHelper>().isDarkMode();
+                            FilePicker.platform.pickFiles(
+                                allowedExtensions: ['pdf'],
+                                type: FileType.custom).then((result) async {
+                              if (result != null) {
+                                File file = File(result.files.single.path!);
+                                pdfModel = PdfModel(pdfFilePath: file.path);
+                                screenState.refresh();
+                              } else {
+                                // User canceled the picker
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Checked(
+                                checked: pdfModel?.pdfFilePath != null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.attach_file_rounded,
+                                        color: Theme.of(context).disabledColor,
+                                      ),
+                                      Text(
+                                        S.current.pressHere,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .disabledColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                checkedWidget: Visibility(
+                                  visible: pdfModel?.pdfFilePath != null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.filePdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ), // send
+                    ],
+                  ),
+                ),
                 // delivery date
                 Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
@@ -508,7 +633,9 @@ class NewOrderLinkStateLoaded extends States {
       }
       screenState.addNewOrder(CreateOrderRequest(
           orderID: screenState.orderId,
+          pdf: pdfModel?.getPdfRequest(),
           fromBranch: screenState.branch,
+          distance: distance,
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
@@ -530,6 +657,8 @@ class NewOrderLinkStateLoaded extends States {
     screenState.addNewOrder(CreateOrderRequest(
         orderID: screenState.orderId,
         fromBranch: screenState.branch,
+        pdf: pdfModel?.getPdfRequest(),
+        distance: distance,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
@@ -547,9 +676,21 @@ class NewOrderLinkStateLoaded extends States {
 
   void createOrder() {
     if (imagePath == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else {
-      createOrderWithImage();
+      if (pdfModel?.pdfFilePath != null) {
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithImage();
+        });
+      } else {
+        createOrderWithImage();
+      }
     }
   }
 

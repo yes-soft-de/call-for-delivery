@@ -418,7 +418,6 @@ class NewOrderStateBranchesLoaded extends States {
                 ),
                 // upload pdf
                 Visibility(
-                  visible: false,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -739,9 +738,21 @@ class NewOrderStateBranchesLoaded extends States {
 
   void createOrder() {
     if (imagePath == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else {
-      createOrderWithImage();
+      if (pdfModel?.pdfFilePath != null) {
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithImage();
+        });
+      } else {
+        createOrderWithImage();
+      }
     }
   }
 
