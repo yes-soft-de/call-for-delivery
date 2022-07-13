@@ -6,11 +6,9 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order_link.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
-import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -28,7 +26,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 class NewOrderLinkStateLoaded extends States {
@@ -42,7 +39,7 @@ class NewOrderLinkStateLoaded extends States {
   }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
-  DateTime orderDate = DateTime.now();
+  DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -512,7 +509,9 @@ class NewOrderLinkStateLoaded extends States {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              time.format(context).toString(),
+                              orderDate == null
+                                  ? S.current.now
+                                  : time.format(context).toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -647,7 +646,9 @@ class NewOrderLinkStateLoaded extends States {
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.tryParse(screenState.priceController.text.trim()),
           image: value,
-          date: orderDate.toUtc().toIso8601String(),
+          date: orderDate == null
+              ? DateTime.now().toUtc().toIso8601String()
+              : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments));
     });
   }
@@ -670,7 +671,9 @@ class NewOrderLinkStateLoaded extends States {
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: null,
-        date: orderDate.toUtc().toIso8601String(),
+        date: orderDate == null
+            ? DateTime.now().toUtc().toIso8601String()
+            : orderDate?.toUtc().toIso8601String(),
         payment: screenState.payments));
   }
 

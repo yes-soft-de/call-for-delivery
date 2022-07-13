@@ -44,7 +44,9 @@ class NewOrderStateBranchesLoaded extends States {
   }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
-  DateTime orderDate = DateTime.now();
+  // delivery date
+  DateTime? orderDate;
+  // init history
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -548,7 +550,7 @@ class NewOrderStateBranchesLoaded extends States {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              time.format(context).toString(),
+                             orderDate == null ? S.current.now : time.format(context).toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -708,7 +710,9 @@ class NewOrderStateBranchesLoaded extends States {
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.tryParse(screenState.priceController.text.trim()),
           image: value,
-          date: orderDate.toUtc().toIso8601String(),
+          date: orderDate == null
+              ? DateTime.now().toUtc().toIso8601String()
+              : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments));
     });
   }
@@ -732,7 +736,9 @@ class NewOrderStateBranchesLoaded extends States {
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: null,
-        date: orderDate.toUtc().toIso8601String(),
+        date: orderDate == null
+            ? DateTime.now().toUtc().toIso8601String()
+            : orderDate?.toUtc().toIso8601String(),
         payment: screenState.payments));
   }
 

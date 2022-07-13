@@ -499,6 +499,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
+        "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "هذا العرض لم يعد متاح بعد الآن للتجديد"),
         "offerNumber": MessageLookupByLibrary.simpleMessage("رقم العرض"),

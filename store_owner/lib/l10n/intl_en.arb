@@ -397,10 +397,8 @@
     "yourRequestSent": "Your Request have been sent",
     "forgotPass": "Forgot password?",
     "partners": "Our partners",
-
     "paymentsVia": "Payments via",
     "newPassword": "New password",
-
     "confirmNewPass": "Confirm new password",
     "passwordUpdatedSuccess": "Password updated successfully",
     "informSendCode": "We will send a verification code to your number",
@@ -607,11 +605,9 @@
     "offerStatusUpdatedSuccessfully": "Offer Status Updated Successfully",
     "waitingSupplier": "Waiting Supplier",
     "waitingCaptain": "Waiting Captain",
-
     "offerPrice": "Offer price",
     "deliverCost": "Deliver Cost",
     "profitMargin": "Profit Margin",
-
     "transCount": "Transportation Count",
     "carModel": "Car model",
     "pendingOffer": "pending",
@@ -642,64 +638,6 @@
     "privacy": "privacy policy",
     "and": " & ",
     "attachFile": "Attach file",
-    "attachedFile": "This order has attached file"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "attachedFile": "This order has attached file",
+    "now": "Now"
 }
