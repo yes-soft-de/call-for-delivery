@@ -16,9 +16,7 @@ final class CaptainConstant
 
     const CAPTAIN_ONLINE_FALSE = false;
 
-    const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
-
-    const COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED = "branchCreated";
+    const CAPTAIN_PROFILE_NOT_COMPLETED = "captainProfileNotCompleted";
 
     const WRONG_COMPLETE_ACCOUNT_STATUS = "wrong complete account status";
 
