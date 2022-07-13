@@ -15,4 +15,6 @@ class FilterUserResponse
      *     @OA\Items(type="string"))
      */
     public $roles = [];
+
+    public string $completeAccountStatus;
 }

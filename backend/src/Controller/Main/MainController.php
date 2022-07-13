@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -106,11 +107,7 @@ class MainController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="userId"),
-     *                  @OA\Property(type="array", property="roles",
-     *                      @OA\Items()
-     *                  )
+     *                  ref=@Model(type="App\Response\User\FilterUserResponse")
      *              )
      *          )
      *      )
