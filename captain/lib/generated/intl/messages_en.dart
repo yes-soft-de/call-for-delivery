@@ -1115,6 +1115,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "You are offline you can\'t accept any order right now"),
         "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
             "You can resend verification after"),
+        "youCannotAcceptAnotherOrderFromThisStore":
+            MessageLookupByLibrary.simpleMessage(
+                "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

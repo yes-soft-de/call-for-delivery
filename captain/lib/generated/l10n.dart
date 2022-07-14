@@ -7229,6 +7229,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You cannot accept another order from this store , before you delivering orders belongs to this store after that try again`
+  String get youCannotAcceptAnotherOrderFromThisStore {
+    return Intl.message(
+      'You cannot accept another order from this store , before you delivering orders belongs to this store after that try again',
+      name: 'youCannotAcceptAnotherOrderFromThisStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

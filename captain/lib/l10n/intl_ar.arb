@@ -719,5 +719,6 @@
     "attachFile": "إرفاق ملف",
     "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
     "captainProfileNotCompleted": "حابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك",
-    "orderCanceledYouCannotAccept": "تم إلغاء لطلب لايمكنك قبوله بعد الآن"
+    "orderCanceledYouCannotAccept": "تم إلغاء لطلب لايمكنك قبوله بعد الآن",
+    "youCannotAcceptAnotherOrderFromThisStore":"لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"
 }

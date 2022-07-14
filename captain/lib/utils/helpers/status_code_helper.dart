@@ -57,6 +57,8 @@ class StatusCodeHelper {
         return S.current.captainProfileNotCompleted;
       case '9215':
         return S.current.orderCanceledYouCannotAccept;
+      case '9200':
+        return S.current.youCannotAcceptAnotherOrderFromThisStore;
       case '-1':
         return S.current.dataDecodeError;
       default:
