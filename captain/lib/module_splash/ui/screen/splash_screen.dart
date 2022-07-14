@@ -1,9 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
-
+import 'package:c4d/global_nav_key.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/services.dart';
@@ -25,15 +28,38 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+ 
+  Future<void> someChecks() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result) {
+      _getNextRoute().then((route) async {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) {
+            return CustomAlertDialog(
+                forceQuit: true,
+                primaryButton: S.current.tryAgain,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  someChecks();
+                },
+                title: S.current.warnning,
+                content: S.current.pleaseCheckYourInternetConnection);
+          });
+    }
+  }
+
   @override
   void initState() {
     if (Platform.isAndroid) {
       _createNewChannel();
     }
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      _getNextRoute().then((route) {
-        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-      });
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      someChecks();
     });
     super.initState();
   }
@@ -90,6 +116,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String> needForLogging(bool login) async {
     if (login) {
       try {
+        await widget._authService.refreshToken();
         await getIt<AuthService>().accountStatus();
         return AuthPrefsHelper().getAccountStatusPhase();
       } catch (e) {

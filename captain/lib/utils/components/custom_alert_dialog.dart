@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:flutter/services.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final VoidCallback? onPressed;
   final String content;
   final String? title;
-  const CustomAlertDialog(
-      {required this.onPressed, required this.content, this.title});
+  final String? primaryButton;
+  final bool forceQuit;
+  CustomAlertDialog(
+      {required this.onPressed,
+      this.forceQuit = false,
+      this.primaryButton,
+      required this.content,
+      this.title});
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      duration: const Duration(milliseconds: 750),
+      duration: Duration(milliseconds: 750),
       tween: Tween<double>(begin: 0, end: 1),
       curve: Curves.bounceIn,
       builder: (context, double val, child) {
@@ -26,15 +33,16 @@ class CustomAlertDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        actionsAlignment: onPressed == null ? MainAxisAlignment.center : null,
         actions: [
-          Visibility(
-              visible: onPressed != null,
-              child: TextButton(
-                  onPressed: onPressed, child: Text(S.current.confirm))),
+          TextButton(
+              onPressed: onPressed,
+              child: Text(primaryButton ?? S.current.confirm)),
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                if (forceQuit) {
+                  SystemNavigator.pop();
+                }
               },
               child: Text(S.current.cancel)),
         ],
