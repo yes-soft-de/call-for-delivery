@@ -7139,6 +7139,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Please check your internet connection , and try again`
+  String get pleaseCheckYourInternetConnection {
+    return Intl.message(
+      'Please check your internet connection , and try again',
+      name: 'pleaseCheckYourInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get tryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New version`
+  String get newVersion {
+    return Intl.message(
+      'New version',
+      name: 'newVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future`
+  String get newVersionHint {
+    return Intl.message(
+      'There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future',
+      name: 'newVersionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get later {
+    return Intl.message(
+      'Later',
+      name: 'later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

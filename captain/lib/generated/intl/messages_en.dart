@@ -92,6 +92,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
             "Are you sure about dispose your changes"),
         "at": MessageLookupByLibrary.simpleMessage("At"),
+        "attachFile": MessageLookupByLibrary.simpleMessage("Attach file"),
+        "attachedFile": MessageLookupByLibrary.simpleMessage(
+            "This order has attached file"),
         "balanceDetails":
             MessageLookupByLibrary.simpleMessage("Balance Details"),
         "bankAccountNumber":
@@ -526,6 +529,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastMonth": MessageLookupByLibrary.simpleMessage("Last Month"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
+        "later": MessageLookupByLibrary.simpleMessage("Later"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
@@ -589,6 +593,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrderHint": MessageLookupByLibrary.simpleMessage(
             "This button let you to make a new order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
+        "newVersion": MessageLookupByLibrary.simpleMessage("New version"),
+        "newVersionHint": MessageLookupByLibrary.simpleMessage(
+            "There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
@@ -744,6 +751,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "In this screen you can see our work planes "),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "Please check your internet connection , and try again"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
@@ -1019,6 +1029,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),

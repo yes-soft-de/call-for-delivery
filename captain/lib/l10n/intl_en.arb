@@ -207,7 +207,6 @@
     "notSubscription": "You dont have a subscription yet",
     "subscribe": "Subscribe",
     "captainNotActive": "Your account not activated yet please wait",
-
     "failureRenew": "Your renew has been failed please try again",
     "store": "Store",
     "updateBranches": "Update Branches",
@@ -220,7 +219,6 @@
     "addBranch": "Add Branch",
     "addBranchSuccess": "Branch has been added successfully",
     "addBranchFailure": "Sorry your request for add branch faild please try again",
-
     "ourService": "Our Service",
     "mostSoldProduct": "Most Sold Product",
     "bestStore": "Best Store",
@@ -493,7 +491,6 @@
     "send": "Send",
     "yourRequestSent": "Your Request have been sent",
     "partners": "Our partners",
-
     "paymentsVia": "Payments via",
     "similarProducts": "Similar Products",
     "paymentPortalHint": "All prices in payments portal are included with 15% vat",
@@ -711,49 +708,14 @@
     "userNotVerified": "User not verified",
     "codeSendToYou": "Code sent to your device",
     "enterCodeSentToYou": "Enter verification code",
-    "youCanResendAfter": "You can resend verification after"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "youCanResendAfter": "You can resend verification after",
+    "pleaseCheckYourInternetConnection": "Please check your internet connection , and try again",
+    "tryAgain": "Try again",
+    "newVersion":"New version",
+    "newVersionHint":"There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future",
+    "later":"Later",
+    "attachFile": "Attach file",
+    "attachedFile": "This order has attached file"
+    
 
 }

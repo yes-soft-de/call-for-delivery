@@ -92,6 +92,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من إنك تريد تجاهل هذه التغييرات في بياناتك الشخصية"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
+        "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),
+        "attachedFile": MessageLookupByLibrary.simpleMessage(
+            "هذا الطلب يحتوي على ملف مرفق"),
         "balanceDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل المدفوعات"),
         "bankAccountNumber":
@@ -517,6 +520,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastMonth": MessageLookupByLibrary.simpleMessage("الماضي"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
+        "later": MessageLookupByLibrary.simpleMessage("لاحقا"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "launch": MessageLookupByLibrary.simpleMessage("شغل تطبيقنا"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
@@ -581,6 +585,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "بإمكانك عن طريق هذا الزر إضافة طلبات جديدة"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
+        "newVersion": MessageLookupByLibrary.simpleMessage("نسخة جديدة"),
+        "newVersionHint": MessageLookupByLibrary.simpleMessage(
+            "تتوفر نسخة جديدة من تطبيقنا الرجاء التحديث من النسخة ^ إلى النسخة & لضمان جودة الخدمة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
@@ -738,6 +745,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح خطط العمل المتاحة"),
+        "pleaseCheckYourInternetConnection":
+            MessageLookupByLibrary.simpleMessage(
+                "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا"),
         "pleaseCompleteField":
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
@@ -1013,6 +1023,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("الراتب"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),

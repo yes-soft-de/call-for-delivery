@@ -712,7 +712,15 @@
     "userNotVerified": "المستخدم يحتاج لتأكيد هويته",
     "codeSendToYou": "رمز التحقق المرسل لجوالك",
     "enterCodeSentToYou": "ادخل رمز التحقق",
-    "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور"
+    "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
+    "pleaseCheckYourInternetConnection": "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا",
+    "tryAgain": "إعادة المحاولة",
+    "newVersion":"نسخة جديدة",
+    "newVersionHint":"تتوفر نسخة جديدة من تطبيقنا الرجاء التحديث من النسخة ^ إلى النسخة & لضمان جودة الخدمة",
+    "later":"لاحقا",
+    "attachFile": "إرفاق ملف",
+    "attachedFile": "هذا الطلب يحتوي على ملف مرفق"
+    
 
 
 
