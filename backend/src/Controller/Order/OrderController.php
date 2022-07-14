@@ -777,6 +777,10 @@ class OrderController extends BaseController
         if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
+
+        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        }
       
         return $this->response($response, self::UPDATE);
     }
