@@ -165,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainPlanNotAcceptedFromAdminYet": MessageLookupByLibrary.simpleMessage(
             "خطة العمل المختارة من الكابتن لم يتم اعتمادها من قبل الإدارة بعد  يرجى الانتظار"),
+        "captainProfileNotCompleted": MessageLookupByLibrary.simpleMessage(
+            "حابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
@@ -635,6 +637,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تذكير ثاني لسداد الدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
         "orderCanceled": MessageLookupByLibrary.simpleMessage(
             "تم إلغاء الطلب من قبل المتجر ، لذلك لا يمكنك قبوله بعد الآن"),
+        "orderCanceledYouCannotAccept": MessageLookupByLibrary.simpleMessage(
+            "تم إلغاء لطلب لايمكنك قبوله بعد الآن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCreatedReturnToOrders":

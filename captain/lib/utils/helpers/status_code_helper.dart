@@ -53,6 +53,10 @@ class StatusCodeHelper {
         return S.current.orderIsHidden;
       case '9011':
         return S.current.userNotVerified;
+      case '9220':
+        return S.current.captainProfileNotCompleted;
+      case '9215':
+        return S.current.orderCanceledYouCannotAccept;
       case '-1':
         return S.current.dataDecodeError;
       default:

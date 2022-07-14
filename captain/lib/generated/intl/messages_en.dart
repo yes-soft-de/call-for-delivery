@@ -168,6 +168,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainPlanNotAcceptedFromAdminYet":
             MessageLookupByLibrary.simpleMessage(
                 "Captain plan not accepted from admin yet"),
+        "captainProfileNotCompleted": MessageLookupByLibrary.simpleMessage(
+            "Captain profile note completed yet , so you cannot accept it now "),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
@@ -642,6 +644,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
         "orderCanceled": MessageLookupByLibrary.simpleMessage(
             "Order has been canceled you can\'t accept it any more please go back to home screen "),
+        "orderCanceledYouCannotAccept": MessageLookupByLibrary.simpleMessage(
+            "This order cancelled , You cannot accept any more"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCreatedReturnToOrders": MessageLookupByLibrary.simpleMessage(

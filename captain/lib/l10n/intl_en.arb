@@ -711,11 +711,11 @@
     "youCanResendAfter": "You can resend verification after",
     "pleaseCheckYourInternetConnection": "Please check your internet connection , and try again",
     "tryAgain": "Try again",
-    "newVersion":"New version",
-    "newVersionHint":"There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future",
-    "later":"Later",
+    "newVersion": "New version",
+    "newVersionHint": "There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future",
+    "later": "Later",
     "attachFile": "Attach file",
-    "attachedFile": "This order has attached file"
-    
-
+    "attachedFile": "This order has attached file",
+    "captainProfileNotCompleted": "Captain profile note completed yet , so you cannot accept it now ",
+    "orderCanceledYouCannotAccept": "This order cancelled , You cannot accept any more"
 }

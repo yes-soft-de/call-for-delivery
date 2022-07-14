@@ -7209,6 +7209,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain profile note completed yet , so you cannot accept it now `
+  String get captainProfileNotCompleted {
+    return Intl.message(
+      'Captain profile note completed yet , so you cannot accept it now ',
+      name: 'captainProfileNotCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order cancelled , You cannot accept any more`
+  String get orderCanceledYouCannotAccept {
+    return Intl.message(
+      'This order cancelled , You cannot accept any more',
+      name: 'orderCanceledYouCannotAccept',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
