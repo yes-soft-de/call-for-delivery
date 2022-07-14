@@ -109,4 +109,6 @@ final class NotificationFirebaseConstant
     const STORE_HAS_DONE = 'قام المتجر ';
 
     const SUBSCRIBED_WITH_CAPTAIN_OFFER = ' بالاشتراك بعرض الكابتن ';
+
+    const STORE_DENIED_CAPTAIN_ARRIVAL = 'تم نفي وصول الكابتن للمتجر من أجل الطلب رقم ';
 }
