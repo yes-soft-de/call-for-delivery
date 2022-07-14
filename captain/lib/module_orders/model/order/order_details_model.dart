@@ -47,6 +47,7 @@ class OrderDetailsModel extends DataModel {
   late List<OrderModel> subOrders;
   late bool? orderIsMain;
   late DateTime createDateTime;
+  PdfModel? pdf;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -79,7 +80,8 @@ class OrderDetailsModel extends DataModel {
       required this.subOrders,
       required this.isHide,
       required this.orderIsMain,
-      required this.createDateTime});
+      required this.createDateTime,
+      required this.pdf});
 
   late OrderDetailsModel _orders;
 
@@ -140,6 +142,12 @@ class OrderDetailsModel extends DataModel {
       subOrders: _getOrders(element?.subOrders ?? []),
       orderIsMain: element?.orderIsMain,
       createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
+      pdf: element?.pdf != null
+          ? PdfModel(
+              pdfOnServerPath: element?.pdf?.fileUrl,
+              pdfPreview: element?.pdf?.file,
+              pdfBaseUrl: element?.pdf?.baseUrl)
+          : null,
     );
     // _orders.distance = _distance(
     //     _orders,
@@ -175,10 +183,22 @@ class OrderDetailsModel extends DataModel {
           distance: S.current.destinationUnavailable,
           location: LatLng(element.location?.latitude?.toDouble() ?? 0,
               element.location?.longitude?.toDouble() ?? 0),
-          paymentMethod: ''));
+          paymentMethod: element.payment ?? 'cash'));
     });
     return orders;
   }
 
   OrderDetailsModel get data => _orders;
+}
+
+class PdfModel {
+  String? pdfFilePath;
+  String? pdfOnServerPath;
+  String? pdfPreview;
+  String? pdfBaseUrl;
+  PdfModel(
+      {this.pdfFilePath,
+      this.pdfOnServerPath,
+      this.pdfPreview,
+      this.pdfBaseUrl});
 }

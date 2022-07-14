@@ -64,7 +64,7 @@ class SubOrdersStateManager {
             isHide: -1,
             distance: order.distance ?? '0.0',
             location: order.branchCoordinate,
-            paymentMethod: '');
+            paymentMethod: order.payment);
         List<OrderModel> orders = [];
         orders.addAll(order.subOrders);
         orders.insert(0, primaryOrder);

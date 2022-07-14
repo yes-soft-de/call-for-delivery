@@ -4,23 +4,18 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
-import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
-import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
-import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:c4d/utils/effect/scaling.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -394,6 +389,56 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                                 height: 100,
                                 imageSource: orderInfo.image ?? '',
                                 width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: orderInfo.pdf != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.attach_file_rounded,
+                        ),
+                        title: Text(S.current.attachedFile),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          var url = orderInfo.pdf?.pdfPreview;
+                          canLaunch(url ?? '').then((value) {
+                            if (value) {
+                              launch(url ?? '');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.unavailable);
+                            }
+                          });
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: const Icon(
+                                  FontAwesomeIcons.filePdf,
+                                  color: Colors.red,
+                                  size: 95,
+                                ),
                               ),
                             ),
                           ),

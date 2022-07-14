@@ -20,6 +20,7 @@ import 'package:c4d/module_navigation/menu.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:new_version/new_version.dart';
 
 @injectable
 class CaptainOrdersScreen extends StatefulWidget {
@@ -41,6 +42,20 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _companySubscription;
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
+  Future<void> checkForUpdates(context) async {
+    final newVersion = NewVersion();
+    final VersionStatus? status = await newVersion.getVersionStatus();
+    newVersion.showUpdateDialog(
+      context: context,
+      versionStatus: status!,
+      dialogTitle: S.current.newVersion,
+      dialogText: S.current.newVersionHint
+          .replaceAll('^', status.localVersion)
+          .replaceAll('&', status.storeVersion),
+      updateButtonText: S.current.update,
+      dismissButtonText: S.current.later,
+    );
+  }
 
   void getMyOrders() {
     widget._stateManager.getProfile(this);
@@ -102,6 +117,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         setState(() {});
       }
     });
+    checkForUpdates(context);
   }
 
   @override
