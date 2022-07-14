@@ -626,7 +626,13 @@ class OrderService
         $order = $this->orderManager->updateCaptainArrived($request);
         
         if($order) {
+            // create order log in order time line
             $this->orderTimeLineService->createOrderLogsRequest($order);
+
+            // send firebase notification to admin if isCaptainArrived = false
+            if ($order->getIsCaptainArrived() === false) {
+                $this->notificationFirebaseService->notificationCaptainNotArrivedStoreToAdmin($order->getId());
+            }
         }
      
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
