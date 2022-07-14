@@ -499,9 +499,12 @@ class OrderService
                 }
             }
         }
-
+        //Check whether the captain has received an order for a specific store
+        $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId());
+        if($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
+            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
+        }
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
-        
         if($order) {
 
             if( $order->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
@@ -1243,5 +1246,16 @@ class OrderService
         }
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }  
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): int
+    {
+       $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
+      
+       if($orderEntity ) {
+           return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+        }
+
+        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
     }  
 }
