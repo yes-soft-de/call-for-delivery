@@ -44,7 +44,7 @@ class BaseController extends AbstractController
     const ERROR_UPDATE_CAPTAIN_ONGOING = ["captain is ongoing,You can not modify detail or destination or deliveryDate", "9217"];
     const ERROR_ORDER_HIDE = ["order hide", "9218"];
     const ERROR_ORDER_ALREADY_DELIVERED = ["order is already delivered", "9219"];
-    const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["order is already delivered", "9200"];
+    const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["previous order from same store still ongoing", "9200"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
