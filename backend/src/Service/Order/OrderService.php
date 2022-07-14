@@ -467,7 +467,7 @@ class OrderService
              return CaptainConstant::CAPTAIN_INACTIVE;
         }
         // end check captain profile status
-        
+
          $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
         
          $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($request->getCaptainId());
@@ -487,7 +487,16 @@ class OrderService
             }
 
             $orderEntity = $this->orderManager->getOrderTypeByOrderId($request->getId());
+
             if($orderEntity) {
+                // Check whether the captain has received an order for a specific store
+                $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId());
+
+                if($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
+                    return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
+                }
+                // end check
+
                 if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN) {
                     // Following if block will be executed only when the order is of type 1 and of type show,
                     // otherwise, we will move to update statement directly
@@ -499,11 +508,7 @@ class OrderService
                 }
             }
         }
-        //Check whether the captain has received an order for a specific store
-        $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId());
-        if($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
-            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
-        }
+
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
         if($order) {
 
@@ -1252,10 +1257,10 @@ class OrderService
     {
        $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
       
-       if($orderEntity ) {
+       if(! empty($orderEntity)) {
            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-        }
+       }
 
-        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+       return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
     }  
 }
