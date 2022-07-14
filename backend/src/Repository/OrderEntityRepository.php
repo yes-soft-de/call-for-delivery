@@ -1438,10 +1438,17 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('count (orderEntity.id) as deliveredOrdersCount')
 
-            ->andWhere('orderEntity.state = :delivered')
+            ->leftJoin(
+                OrderTimeLineEntity::class,
+                'orderTimeLineEntity',
+                Join::WITH,
+                'orderTimeLineEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('orderTimeLineEntity.orderState = :delivered')
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
 
-            ->andWhere('orderEntity.updatedAt BETWEEN :fromDate AND :toDate')
+            ->andWhere('orderTimeLineEntity.createdAt BETWEEN :fromDate AND :toDate')
             ->setParameter('fromDate', $fromDate)
             ->setParameter('toDate', $toDate)
 
