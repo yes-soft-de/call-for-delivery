@@ -947,4 +947,52 @@ class NotificationFirebaseService
 
         return $devicesToken;
     }
+
+    // notification to admin when store owner confirm that captain did not arrive to store
+    public function notificationCaptainNotArrivedStoreToAdmin(int $orderId)
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        foreach ($adminsTokens as $token) {
+            $devicesToken[] = $token['token'];
+        }
+
+        $payload = [
+//            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+//            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => $orderId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msgContent = NotificationFirebaseConstant::STORE_DENIED_CAPTAIN_ARRIVAL.$orderId;
+
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+            ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
 }

@@ -87,6 +87,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="boolean", property="orderIsMain"),
+     *          @OA\Property(type="string", property="filePdf"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
      *      )
      * )
      *
@@ -777,6 +779,10 @@ class OrderController extends BaseController
         if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
+
+        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        }
       
         return $this->response($response, self::UPDATE);
     }
@@ -1384,6 +1390,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="integer", property="primaryOrder"),
+      *         @OA\Property(type="string", property="filePdf"),
+      *         @OA\Property(type="number", property="storeBranchToClientDistance"),
      *      )
      * )
      *

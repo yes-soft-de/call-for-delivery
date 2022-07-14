@@ -68,8 +68,8 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
 
-            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
-            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            // ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
+            // ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
             
             ->getQuery()
             ->getResult();

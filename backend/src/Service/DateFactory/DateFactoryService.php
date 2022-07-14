@@ -28,25 +28,25 @@ class DateFactoryService
         return $result;
     }
 
-    public function getStartAndEndDatesAndTimeOfToday(): array
-    {
-        return [
-            // to get start date and time of today
-            new \DateTime('midnight today'),
-            // to get start date and time of tomorrow
-            new \DateTime('midnight tomorrow')
-        ];
-    }
+//    public function getStartAndEndDatesAndTimeOfToday(): array
+//    {
+//        return [
+//            // to get start date and time of today
+//            new \DateTime('midnight today'),
+//            // to get start date and time of tomorrow
+//            new \DateTime('midnight tomorrow')
+//        ];
+//    }
 
-    public function getStartAndEndDatesAndTimeOfPreviousWeek(): array
-    {
-        return [
-            // to get start date and time of first day of previous week (last 7 days)
-            new \DateTime("midnight -1 week"),
-            // to get start date and time of yesterday
-            new \DateTime("midnight yesterday")
-        ];
-    }
+//    public function getStartAndEndDatesAndTimeOfPreviousWeek(): array
+//    {
+//        return [
+//            // to get start date and time of first day of previous week (last 7 days)
+//            new \DateTime("midnight -1 week"),
+//            // to get start date and time of yesterday
+//            new \DateTime("midnight yesterday")
+//        ];
+//    }
 
     public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
     {

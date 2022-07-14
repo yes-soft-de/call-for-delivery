@@ -4,13 +4,11 @@ namespace App\Service\Admin\Report;
 
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
-use App\Constant\Order\OrderStateConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
-use App\Service\DateFactory\DateFactoryService;
 
 class ReportService
 {
@@ -18,16 +16,15 @@ class ReportService
     private AdminStoreOwnerService $adminStoreOwnerService;
     private AdminOrderService $adminOrderService;
     private AdminCaptainService $adminCaptainService;
-    private DateFactoryService $dateFactoryService;
+    //private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService,
-                                DateFactoryService $dateFactoryService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
         $this->adminOrderService = $adminOrderService;
         $this->adminCaptainService = $adminCaptainService;
-        $this->dateFactoryService = $dateFactoryService;
+        //$this->dateFactoryService = $dateFactoryService;
     }
 
     public function getStatisticsForAdmin(): StatisticsForAdminGetResponse
@@ -44,11 +41,11 @@ class ReportService
         $response['allOrdersCount'] = $this->adminOrderService->getAllOrdersCountForAdmin();
         $response['pendingOrdersCount'] = $this->adminOrderService->getPendingOrdersCountForAdmin();
 
-        $todayStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfToday();
-        $response['todayDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin($todayStartAndEndDatesAndTime[0], $todayStartAndEndDatesAndTime[1]);
+        //$todayStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfToday();
+        $response['todayDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('now'), new \DateTime('-24 hour'));
 
-        $previousWeekStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfPreviousWeek();
-        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin($previousWeekStartAndEndDatesAndTime[0], $previousWeekStartAndEndDatesAndTime[1]);
+        //$previousWeekStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfPreviousWeek();
+        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('now'), new \DateTime('-7 day'));
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
     }

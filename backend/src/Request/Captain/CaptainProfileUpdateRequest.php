@@ -12,34 +12,61 @@ class CaptainProfileUpdateRequest
 
     private array $location = [];
 
-    private int $age;
+    /**
+     * @var int|null
+     */
+    private $age;
 
-    private string $car;
+    /**
+     * @var string|null
+     */
+    private $car;
 
-    private float $salary;
-   
-    private float $bounce;
+    /**
+     * @var float|null
+     */
+    private $salary;
+
+    /**
+     * @var float|null
+     */
+    private $bounce;
    
     private string $phone;
 
     private bool $isOnline;
-   
-    private string $bankName;
-   
-    private string $bankAccountNumber;
-
-    private string $stcPay;
-   
-    private string $mechanicLicense;
-    
-    private string $identity;
-
-    private string $drivingLicence;
 
     /**
-     * @return mixed
+     * @var string|null
      */
-    public function getImage()
+    private $bankName;
+
+    /**
+     * @var string|null
+     */
+    private $bankAccountNumber;
+
+    /**
+     * @var string|null
+     */
+    private $stcPay;
+
+    /**
+     * @var string|null
+     */
+    private $mechanicLicense;
+
+    /**
+     * @var string|null
+     */
+    private $identity;
+
+    /**
+     * @var string|null
+     */
+    private $drivingLicence;
+
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -52,7 +79,7 @@ class CaptainProfileUpdateRequest
     /**
      * Get the value of captainName
      */ 
-    public function getCaptainName()
+    public function getCaptainName(): string
     {
         return $this->captainName;
     }
@@ -92,7 +119,7 @@ class CaptainProfileUpdateRequest
     /**
      * Get the value of drivingLicence
      */ 
-    public function getDrivingLicence()
+    public function getDrivingLicence(): ?string
     {
         return $this->drivingLicence;
     }
@@ -102,7 +129,7 @@ class CaptainProfileUpdateRequest
      *
      * @return  self
      */ 
-    public function setDrivingLicence($drivingLicence)
+    public function setDrivingLicence(?string $drivingLicence)
     {
         $this->drivingLicence = $drivingLicence;
 
@@ -112,7 +139,7 @@ class CaptainProfileUpdateRequest
     /**
      * Get the value of identity
      */ 
-    public function getIdentity()
+    public function getIdentity(): ?string
     {
         return $this->identity;
     }
@@ -122,7 +149,7 @@ class CaptainProfileUpdateRequest
      *
      * @return  self
      */ 
-    public function setIdentity($identity)
+    public function setIdentity(?string $identity)
     {
         $this->identity = $identity;
 
@@ -132,7 +159,7 @@ class CaptainProfileUpdateRequest
     /**
      * Get the value of mechanicLicense
      */ 
-    public function getMechanicLicense()
+    public function getMechanicLicense(): ?string
     {
         return $this->mechanicLicense;
     }
@@ -142,10 +169,70 @@ class CaptainProfileUpdateRequest
      *
      * @return  self
      */ 
-    public function setMechanicLicense($mechanicLicense)
+    public function setMechanicLicense(?string $mechanicLicense)
     {
         $this->mechanicLicense = $mechanicLicense;
 
         return $this;
+    }
+
+    public function getCar(): ?string
+    {
+        return $this->car;
+    }
+
+    public function setCar(?string $car): void
+    {
+        $this->car = $car;
+    }
+
+    public function getSalary(): ?float
+    {
+        return $this->salary;
+    }
+
+    public function setSalary(?float $salary): void
+    {
+        $this->salary = $salary;
+    }
+
+    public function getBounce(): ?float
+    {
+        return $this->bounce;
+    }
+
+    public function setBounce(?float $bounce): void
+    {
+        $this->bounce = $bounce;
+    }
+
+    public function getBankName(): ?string
+    {
+        return $this->bankName;
+    }
+
+    public function setBankName(?string $bankName): void
+    {
+        $this->bankName = $bankName;
+    }
+
+    public function getBankAccountNumber(): ?string
+    {
+        return $this->bankAccountNumber;
+    }
+
+    public function setBankAccountNumber(?string $bankAccountNumber): void
+    {
+        $this->bankAccountNumber = $bankAccountNumber;
+    }
+
+    public function getStcPay(): ?string
+    {
+        return $this->stcPay;
+    }
+
+    public function setStcPay(?string $stcPay): void
+    {
+        $this->stcPay = $stcPay;
     }
 }

@@ -8,6 +8,7 @@ use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersF
 use App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyService;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminStoreOwnerDuesFromCashOrdersService
 {
@@ -26,18 +27,26 @@ class AdminStoreOwnerDuesFromCashOrdersService
     {
         $detail = [];
         $sumAmountStorOwnerDues = 0;
+        $finishedPayments = [];
        
         $items = $this->adminStoreOwnerDuesFromCashOrdersManager->filterStoreOwnerDuesFromCashOrders($request);
-
+       
         foreach ($items as $storeOwnerDuesFromCashOrders) {
-            $sumAmountStorOwnerDues = $sumAmountStorOwnerDues + $storeOwnerDuesFromCashOrders['storeAmount'];
+            //Unfinished Payments
+            if($storeOwnerDuesFromCashOrders['flag'] ===  OrderAmountCashConstant::ORDER_PAID_FLAG_NO){
+                $sumAmountStorOwnerDues = $sumAmountStorOwnerDues + $storeOwnerDuesFromCashOrders['storeAmount'];
 
-            $detail[] = $this->autoMapping->map("array", StoreOwnerDuesFromCashOrdersResponse::class, $storeOwnerDuesFromCashOrders);
+                $detail[] = $this->autoMapping->map("array", StoreOwnerDuesFromCashOrdersResponse::class, $storeOwnerDuesFromCashOrders);
+            }
+            //Finished Payments
+            else{
+                $finishedPayments[] = $this->autoMapping->map("array", StoreOwnerDuesFromCashOrdersResponse::class, $storeOwnerDuesFromCashOrders);
+            }
         }
 
         $total = $this->getTotal($sumAmountStorOwnerDues, $request->getStoreId(), $request->getFromDate(), $request->getToDate());
 
-        return ['detail' => $detail, 'total' => $total];
+        return ['detail' => $detail, 'finishedPayments' => $finishedPayments, 'total' => $total];
     }
     
     public function getTotal(float $sumAmountStorOwnerDues, int $storeId, string $fromDate, string $toDate): array

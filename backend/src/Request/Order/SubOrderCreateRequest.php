@@ -33,6 +33,16 @@ class SubOrderCreateRequest
     private null|CaptainEntity $captainId;
 
     /**
+     * @var string|null
+     */
+    private $filePdf;
+
+    /**
+     * @var float|null
+     */
+    private $storeBranchToClientDistance;
+
+    /**
      * Get the value of storeOwner
      */ 
     public function getStoreOwner()
