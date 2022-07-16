@@ -479,7 +479,7 @@ class OrderService
              return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
          }
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
-            
+           
             //not show orders for captain because not online
             if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
                 return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
@@ -494,8 +494,7 @@ class OrderService
 
             if($orderEntity) {
                 // Check whether the captain has received an order for a specific store
-                $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId());
-
+                $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
                 if($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
                     return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
                 }
@@ -1263,12 +1262,21 @@ class OrderService
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }  
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): int
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId, int|null $primaryOrderId): int
     {
        $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
-      
        if(! empty($orderEntity)) {
-           return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+           //if the order not main
+            if ($orderEntity->getOrderIsMain() !== true) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+           //if the order main and (request order) related 
+            if($primaryOrderId === $orderEntity->getId()) {
+
+                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+           //if the order main and (request order) not related 
+            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
        }
 
        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
