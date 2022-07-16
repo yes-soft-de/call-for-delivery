@@ -618,7 +618,7 @@ class OrderManager
         return $this->orderRepository->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }    
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): array
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): ?OrderEntity
     {
         $captainId = $this->captainManager->getCaptainProfileByUserId($captainId);
 
