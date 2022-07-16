@@ -64,5 +64,8 @@ class SpecificOrderForCaptainResponse
  
     public array|null $filePdf;
 
-    public float|null $storeBranchToClientDistance;
+    /**
+     * @var string|null
+     */
+    public $storeBranchToClientDistance;
 }
