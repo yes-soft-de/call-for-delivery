@@ -416,6 +416,10 @@ class OrderService
             }
 
             $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
+
+            if ($order['storeBranchToClientDistance'] !== null) {
+                $order['storeBranchToClientDistance'] = (string) $order['storeBranchToClientDistance'];
+            }
         }
 
         return $this->autoMapping->map("array", SpecificOrderForCaptainResponse::class, $order);
