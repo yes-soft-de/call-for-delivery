@@ -841,7 +841,7 @@ class NotificationFirebaseService
          return $state;
      }
 
-    public function scheduledNotificationToCaptains(int $orderId, ?DateTimeInterface $deliveryDateTimeInterface)
+    public function scheduledNotificationToCaptains(int $orderId, DateTimeInterface $deliveryDateTimeInterface)
     {
         $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
 
@@ -887,7 +887,7 @@ class NotificationFirebaseService
                     ]);
 
                     $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
-                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                        NotificationFirebaseConstant::SCHEDULED_NOTIFICATION.NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
                         ->withHighestPossiblePriority()
                         ->withData($payload)
                         ->withAndroidConfig($config)
