@@ -9,6 +9,7 @@ use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Service\Admin\Captain\AdminCaptainService;
 use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
@@ -61,40 +62,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="captainName"),
-     *                  @OA\Property(type="object", property="location"),
-     *                  @OA\Property(type="string", property="age"),
-     *                  @OA\Property(type="string", property="car"),
-     *                  @OA\Property(type="number", property="salary"),
-     *                  @OA\Property(type="string", property="status"),
-     *                  @OA\Property(type="number", property="bounce"),
-     *                  @OA\Property(type="string", property="phone"),
-     *                  @OA\Property(type="string", property="bankName"),
-     *                  @OA\Property(type="string", property="bankAccountNumber"),
-     *                  @OA\Property(type="string", property="stcPay"),
-     *                  @OA\Property(type="object", property="images",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
-     *                  @OA\Property(type="boolean", property="isOnline"),
-     *                  @OA\Property(type="object", property="mechanicLicense",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
-     *                  @OA\Property(type="object", property="identity",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
-     *                  @OA\Property(type="object", property="drivingLicence",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
-     *                  @OA\Property(type="string", property="roomId")
+     *                  ref=@Model(type="App\Response\Admin\Captain\CaptainProfileGetForAdminResponse")
      *              )
      *          )
      *      )
@@ -132,40 +100,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="captainName"),
-     *              @OA\Property(type="object", property="location"),
-     *              @OA\Property(type="string", property="age"),
-     *              @OA\Property(type="string", property="car"),
-     *              @OA\Property(type="number", property="salary"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="number", property="bounce"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="object", property="images",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="boolean", property="isOnline"),
-     *              @OA\Property(type="object", property="mechanicLicense",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="object", property="identity",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="object", property="drivingLicence",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="string", property="roomId")
+     *              ref=@Model(type="App\Response\Admin\Captain\CaptainProfileGetForAdminResponse")
      *          )
      *      )
      * )
