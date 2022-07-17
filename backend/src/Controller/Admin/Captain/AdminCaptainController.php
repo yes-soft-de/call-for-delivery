@@ -4,9 +4,11 @@ namespace App\Controller\Admin\Captain;
 
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\Eraser\EraserResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
+use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
 use App\Service\Admin\Captain\AdminCaptainService;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -344,5 +346,79 @@ class AdminCaptainController extends BaseController
         $response = $this->adminCaptainService->getReadyCaptainsAndCountOfTheirCurrentOrders();
 
         return $this->response($response, self::FETCH);
+    }
+
+    /**
+     * Admin: delete captain account and profile by admin
+     * @Route("deletecaptainprofilebyadmin", name="deleteCaptainAccountAndProfileByAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @OA\Tag(name="Captain Profile")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="delete request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="captainId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted user info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Eraser\DeleteCaptainAccountAndProfileBySuperAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteCaptainAccountAndProfileByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, DeleteCaptainAccountAndProfileByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminCaptainService->deleteCaptainAccountAndProfileByAdmin($request);
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_ORDERS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_ORDERS);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY);
+        }
+
+        return $this->response($response, self::DELETE);
     }
 }

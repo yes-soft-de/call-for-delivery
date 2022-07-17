@@ -653,3 +653,8 @@ App\Request\Admin\Order\OrderStateUpdateByAdminRequest:
             - NotBlank: ~
         state:
             - NotBlank: ~
+
+App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest:
+    properties:
+        captainId:
+            - NotBlank: ~
