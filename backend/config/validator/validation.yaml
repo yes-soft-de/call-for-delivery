@@ -660,3 +660,15 @@ App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
             - NotBlank: ~
         deletePayment:
             - NotBlank: ~
+            
+App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~
+        packageId:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~

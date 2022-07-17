@@ -128,4 +128,24 @@ class SubscriptionCreateRequest
 
         return $this;
     }
+
+    /**
+     * Get the value of note
+     */ 
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set the value of note
+     *
+     * @return  self
+     */ 
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
 }
