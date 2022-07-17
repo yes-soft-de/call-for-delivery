@@ -16,7 +16,11 @@ class Datum {
   List<PaymentsFromStore>? paymentsFromStore;
   Total? total;
   List<CaptainOffer>? captainOffers;
-
+  num? remainingOrders;
+  num? remainingCars;
+  num? packageOrderCount;
+  num? packageCarCount;
+  bool? isFuture;
   Datum(
       {this.id,
       this.packageName,
@@ -27,10 +31,20 @@ class Datum {
       this.flag,
       this.paymentsFromStore,
       this.total,
-      this.captainOffers});
+      this.captainOffers,
+      this.packageCarCount,
+      this.packageOrderCount,
+      this.remainingCars,
+      this.remainingOrders,
+      this.isFuture});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
+        isFuture: json['isFuture'] as bool?,
+        remainingOrders: json['remainingOrders'] as num?,
+        remainingCars: json['remainingCars'] as num?,
+        packageOrderCount: json['packageOrderCount'] as num?,
+        packageCarCount: json['packageCarCount'] as num?,
         packageName: json['packageName'] as String?,
         startDate: json['startDate'] == null
             ? null

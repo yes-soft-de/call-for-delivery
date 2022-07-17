@@ -711,7 +711,12 @@
     "assignCaptainHint": "اسناد هذا الطلب لكابتن لتوصيله",
     "assignCaptain": "إسناد كابتن",
     "assign": "إسناد",
-    "now":"الآن"
+    "now":"الآن",
+    "packageOrderStatus":"استهلاك طلبات الباقة",
+    "packageCaptainsStatus":"استهلاك كباتن الباقة",
+    "isFutureSubscriptions":"اشتراك مستقبلي",
+    "yes":"نعم",
+    "no":"كلا"
 
 
 

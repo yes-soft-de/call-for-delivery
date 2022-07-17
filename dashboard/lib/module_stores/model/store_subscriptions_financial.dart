@@ -17,6 +17,11 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late List<PaymentModel> paymentsFromStore;
   late Total total;
   late List<CaptainOffer> captainsOffer;
+  late int packageCarCount;
+  late int packageOrderCount;
+  late int remainingCars;
+  late int remainingOrders;
+  late bool isFuture;
 
   List<StoreSubscriptionsFinanceModel> _data = [];
   StoreSubscriptionsFinanceModel(
@@ -29,7 +34,12 @@ class StoreSubscriptionsFinanceModel extends DataModel {
       required this.endDate,
       required this.paymentsFromStore,
       required this.total,
-      required this.captainsOffer});
+      required this.captainsOffer,
+      required this.packageCarCount,
+      required this.packageOrderCount,
+      required this.remainingCars,
+      required this.remainingOrders,
+      required this.isFuture});
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var datum = response.data;
@@ -51,7 +61,12 @@ class StoreSubscriptionsFinanceModel extends DataModel {
           flag: element.flag,
           note: element.note,
           packageName: element.packageName ?? S.current.unknown,
-          captainsOffer: _getCaptainsOffer(element.captainOffers ?? [])));
+          captainsOffer: _getCaptainsOffer(element.captainOffers ?? []),
+          packageCarCount: element.packageCarCount?.toInt() ?? 0,
+          packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
+          remainingCars: element.remainingCars?.toInt() ?? 0,
+          remainingOrders: element.remainingOrders?.toInt() ?? 0,
+          isFuture: element.isFuture ?? false));
     });
   }
   List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {

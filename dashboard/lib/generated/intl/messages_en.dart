@@ -498,6 +498,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidNumber": MessageLookupByLibrary.simpleMessage("Invalid number"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
+        "isFutureSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Is Future Subscriptions"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
         "kilometerLimt":
             MessageLookupByLibrary.simpleMessage("Kilometers limit"),
@@ -564,6 +566,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("not accepted"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -655,11 +658,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription from settings"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
+        "packageCaptainsStatus":
+            MessageLookupByLibrary.simpleMessage("Package Captain"),
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("Packages categories\'s"),
         "packageCost": MessageLookupByLibrary.simpleMessage("Package Cost"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package info"),
         "packageName": MessageLookupByLibrary.simpleMessage("Package name"),
+        "packageOrderStatus":
+            MessageLookupByLibrary.simpleMessage("Package Orders "),
         "packages": MessageLookupByLibrary.simpleMessage("Packages"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
@@ -1056,6 +1063,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "You can change captain financial request here"),

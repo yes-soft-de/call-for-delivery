@@ -25,7 +25,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../module_orders/model/order_details_model.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {

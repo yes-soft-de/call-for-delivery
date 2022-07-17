@@ -717,7 +717,12 @@
     "assignCaptainHint": "Assign captain to handle this order",
     "assignCaptain": "Assign Captain",
     "assign": "Assign",
-    "now":"Now"
+    "now":"Now",
+    "packageOrderStatus":"Package Orders ",
+    "packageCaptainsStatus":"Package Captain",
+    "isFutureSubscriptions":"Is Future Subscriptions",
+    "yes":"Yes",
+    "no":"No"
 
 
 

@@ -493,6 +493,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
+        "isFutureSubscriptions":
+            MessageLookupByLibrary.simpleMessage("اشتراك مستقبلي"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
         "kilometerLimt":
             MessageLookupByLibrary.simpleMessage("عدد الكيلومترات"),
@@ -561,6 +563,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
+        "no": MessageLookupByLibrary.simpleMessage("كلا"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("غير مسلمة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -652,11 +655,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك من الإعدادات"),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
+        "packageCaptainsStatus":
+            MessageLookupByLibrary.simpleMessage("استهلاك كباتن الباقة"),
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("تصنيفات الباقات"),
         "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراك"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الباقة"),
         "packageName": MessageLookupByLibrary.simpleMessage("اسم الباقة"),
+        "packageOrderStatus":
+            MessageLookupByLibrary.simpleMessage("استهلاك طلبات الباقة"),
         "packages": MessageLookupByLibrary.simpleMessage("الباقات"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
@@ -1056,6 +1063,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withoutTax": MessageLookupByLibrary.simpleMessage(
             "السعر غير شامل القيمة المضافة"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
+        "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),

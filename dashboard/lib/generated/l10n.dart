@@ -7009,6 +7009,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Package Orders `
+  String get packageOrderStatus {
+    return Intl.message(
+      'Package Orders ',
+      name: 'packageOrderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Captain`
+  String get packageCaptainsStatus {
+    return Intl.message(
+      'Package Captain',
+      name: 'packageCaptainsStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Future Subscriptions`
+  String get isFutureSubscriptions {
+    return Intl.message(
+      'Is Future Subscriptions',
+      name: 'isFutureSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
