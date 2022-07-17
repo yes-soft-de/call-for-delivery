@@ -81,12 +81,11 @@ class OrderService
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private BidOrderFinancialService $bidOrderFinancialService;
-    private DateFactoryService $dateFactoryService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
                                 CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService,
                                 CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
-                                BidOrderFinancialService $bidOrderFinancialService, DateFactoryService $dateFactoryService)
+                                BidOrderFinancialService $bidOrderFinancialService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -101,7 +100,6 @@ class OrderService
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
        $this->bidOrderFinancialService = $bidOrderFinancialService;
-       $this->dateFactoryService = $dateFactoryService;
     }
 
     /**
