@@ -506,6 +506,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
+        "last24CountOrder":
+            MessageLookupByLibrary.simpleMessage("الطلبات آخر ٢٤ ساعة"),
+        "last7WeekOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات آخر ٧ أيام"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("الأسبوع الماضي"),

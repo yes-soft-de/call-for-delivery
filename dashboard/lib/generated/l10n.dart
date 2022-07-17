@@ -7059,6 +7059,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Last 24h orders`
+  String get last24CountOrder {
+    return Intl.message(
+      'Last 24h orders',
+      name: 'last24CountOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 7 days orders`
+  String get last7WeekOrders {
+    return Intl.message(
+      'Last 7 days orders',
+      name: 'last7WeekOrders',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

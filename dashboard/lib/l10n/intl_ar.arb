@@ -716,7 +716,10 @@
     "packageCaptainsStatus":"استهلاك كباتن الباقة",
     "isFutureSubscriptions":"اشتراك مستقبلي",
     "yes":"نعم",
-    "no":"كلا"
+    "no":"كلا",
+    "last24CountOrder":"الطلبات آخر ٢٤ ساعة",
+    "last7WeekOrders":"الطلبات آخر ٧ أيام"
+
 
 
 

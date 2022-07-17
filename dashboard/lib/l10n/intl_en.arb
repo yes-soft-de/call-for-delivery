@@ -722,7 +722,9 @@
     "packageCaptainsStatus":"Package Captain",
     "isFutureSubscriptions":"Is Future Subscriptions",
     "yes":"Yes",
-    "no":"No"
+    "no":"No",
+    "last24CountOrder":"Last 24h orders",
+    "last7WeekOrders":"Last 7 days orders"
 
 
 

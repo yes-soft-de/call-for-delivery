@@ -511,6 +511,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
+        "last24CountOrder":
+            MessageLookupByLibrary.simpleMessage("Last 24h orders"),
+        "last7WeekOrders":
+            MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("Last week"),
