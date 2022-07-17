@@ -710,7 +710,8 @@
     "areYouSureAboutRependingOrder": "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن",
     "assignCaptainHint": "اسناد هذا الطلب لكابتن لتوصيله",
     "assignCaptain": "إسناد كابتن",
-    "assign": "إسناد"
+    "assign": "إسناد",
+    "now":"الآن"
 
 
 

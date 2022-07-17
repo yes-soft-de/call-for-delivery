@@ -716,7 +716,9 @@
     "areYouSureAboutRependingOrder": "Are you sure about reset this order and remove it form captain",
     "assignCaptainHint": "Assign captain to handle this order",
     "assignCaptain": "Assign Captain",
-    "assign": "Assign"
+    "assign": "Assign",
+    "now":"Now"
+
 
 
 

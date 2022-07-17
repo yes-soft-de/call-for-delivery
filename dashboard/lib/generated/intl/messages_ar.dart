@@ -580,6 +580,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),

@@ -583,6 +583,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please place your order notes"),
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "now": MessageLookupByLibrary.simpleMessage("Now"),
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
