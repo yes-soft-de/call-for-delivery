@@ -11,17 +11,20 @@ class PendingOrder extends DataModel {
   List<OrderModel> hiddenOrders = [];
   List<OrderModel> pendingOrders = [];
   List<OrderModel> notDeliveredOrders = [];
+  late int totalOrderCount;
   PendingOrder(
       {required this.hiddenOrders,
       required this.notDeliveredOrders,
-      required this.pendingOrders});
+      required this.pendingOrders,
+      required this.totalOrderCount});
   late PendingOrder _data;
   PendingOrder.withData(OrderPendingResponse response) {
     var element = response.data;
     _data = PendingOrder(
         hiddenOrders: _getOrders(element?.hiddenOrders ?? []),
         notDeliveredOrders: _getOrders(element?.notDeliveredOrders ?? []),
-        pendingOrders: _getOrders(element?.pendingOrders ?? []));
+        pendingOrders: _getOrders(element?.pendingOrders ?? []),
+        totalOrderCount: element?.totalOrderCount?.toInt() ?? 0);
   }
   List<OrderModel> _getOrders(List<DatumOrder> orders) {
     List<OrderModel> ordersModels = [];

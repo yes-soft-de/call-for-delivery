@@ -29,9 +29,8 @@ class CaptainAssignOrderScreenState extends State<CaptainAssignOrderScreen> {
     currentState = LoadingState(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
-      if (mounted){
-        setState(() {
-        });
+      if (mounted) {
+        setState(() {});
       }
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
@@ -60,8 +59,10 @@ class CaptainAssignOrderScreenState extends State<CaptainAssignOrderScreen> {
       orderID = args;
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.of(context).assignCaptain,),
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.of(context).assignCaptain,
+      ),
       body: currentState.getUI(context),
     );
   }

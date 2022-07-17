@@ -181,7 +181,7 @@ class AccountBalanceDetailsCard extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                    decoration: TextDecoration.underline,
+                    decoration: toOrder ? TextDecoration.underline : null,
                     fontWeight: FontWeight.bold,
                     color: active ? Colors.white : null),
               ),

@@ -11,6 +11,7 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OrderPendingLoadedState extends States {
   OrderPendingScreenState screenState;
@@ -32,6 +33,37 @@ class OrderPendingLoadedState extends States {
   List<Widget> getOrders() {
     var context = screenState.context;
     List<Widget> widgets = [];
+    widgets.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: SizedBox(
+          width: 175,
+          child: Column(
+            children: [
+              Icon(
+                FontAwesomeIcons.boxes,
+                color: Theme.of(context).disabledColor,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
+                child: Text(
+                  S.current.countOrders,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                  child: Text(
+                orders.totalOrderCount.toString(),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).disabledColor,
+                    fontWeight: FontWeight.bold),
+              ))
+            ],
+          ),
+        ),
+      ),
+    ));
     widgets.add(
       // filter on state
       FilterBar(
