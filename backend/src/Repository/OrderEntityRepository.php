@@ -572,14 +572,14 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('createdAt', ($request->getToDate()));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt >= :fromDate');
             $query->setParameter('fromDate', $request->getFromDate());
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('toDate', ($request->getToDate()));
         }
 
         if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
@@ -660,14 +660,14 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('createdAt', ($request->getToDate()));
 
         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $query->andWhere('orderEntity.createdAt >= :fromDate');
             $query->setParameter('fromDate', $request->getFromDate());
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', (new DateTime($request->getToDate()))->modify('+1 day')->format('Y-m-d'));
+            $query->setParameter('toDate', ($request->getToDate()));
         }
 
         $query->groupBy('orderEntity.id');
