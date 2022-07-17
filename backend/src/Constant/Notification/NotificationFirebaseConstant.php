@@ -112,5 +112,5 @@ final class NotificationFirebaseConstant
 
     const STORE_DENIED_CAPTAIN_ARRIVAL = 'تم نفي وصول الكابتن للمتجر من أجل الطلب رقم ';
 
-    const SCHEDULED_NOTIFICATION = 'إعلان مجدول - ';
+    const SCHEDULED_NOTIFICATION = 'إشعار مجدول - ';
 }

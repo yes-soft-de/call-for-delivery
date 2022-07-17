@@ -48,10 +48,10 @@ class DateFactoryService
 //        ];
 //    }
 
-    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
+    public function getSendNotificationDateTimeDependingOnDeliveredDateTime(DateTimeInterface $deliveryDateTimeInterface): DateTime|bool
     {
-        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+        $deliveryDateTime = DateTime::createFromInterface($deliveryDateTimeInterface);
 
-        return date_modify($dateTime, '-30 minutes');
+        return date_modify($deliveryDateTime, '30 minutes ago');
     }
 }
