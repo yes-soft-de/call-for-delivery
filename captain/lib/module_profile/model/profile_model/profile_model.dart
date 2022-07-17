@@ -12,7 +12,7 @@ class ProfileModel {
   String? car;
   String? identity;
   String? mechanicLicense;
-  int? age;
+  String? age;
   bool? isOnline;
   num? averageRating;
   String? roomID;
@@ -48,7 +48,7 @@ class ProfileModel {
         bankName: data.bankName,
         bankNumber: data.bankAccountNumber,
         car: data.car,
-        age: data.age,
+        age: data.age?.toString() ?? '',
         mechanicLicense: data.mechanicLicense?.imageUrl,
         drivingLicence: data.drivingLicence?.imageUrl,
         identity: data.identity?.imageUrl,

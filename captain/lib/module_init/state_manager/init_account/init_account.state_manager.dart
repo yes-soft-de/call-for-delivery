@@ -35,9 +35,9 @@ class InitAccountStateManager {
       CreateCaptainProfileRequest request, InitAccountScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     uploadingImages(request).then((value) {
-      if (value[0] != null &&
-          value[1] != null &&
-          value[2] != null &&
+      if (value[0] != null ||
+          value[1] != null ||
+          value[2] != null ||
           value[3] != null) {
         request.image = value[0];
         request.drivingLicence = value[1];
@@ -65,10 +65,10 @@ class InitAccountStateManager {
     String? divingImage;
     String? mechanicImage;
     String? idImage;
-    captainImage = await _uploadService.uploadImage(request.captainImage!.path);
-    divingImage = await _uploadService.uploadImage(request.driving!.path);
-    mechanicImage = await _uploadService.uploadImage(request.mechanic!.path);
-    idImage = await _uploadService.uploadImage(request.idImage!.path);
+    captainImage = await _uploadService.uploadImage(request.captainImage?.path);
+    divingImage = await _uploadService.uploadImage(request.driving?.path);
+    mechanicImage = await _uploadService.uploadImage(request.mechanic?.path);
+    idImage = await _uploadService.uploadImage(request.idImage?.path);
     return [captainImage, divingImage, mechanicImage, idImage];
   }
 

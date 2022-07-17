@@ -624,6 +624,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
+        "optional": MessageLookupByLibrary.simpleMessage("اختياري"),
         "order": MessageLookupByLibrary.simpleMessage("الطلب"),
         "orderAverage": MessageLookupByLibrary.simpleMessage(
             "بالمئة من عدد الطلبيات المسموحة"),

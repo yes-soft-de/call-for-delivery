@@ -631,6 +631,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
+        "optional": MessageLookupByLibrary.simpleMessage("Optional"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAverage": MessageLookupByLibrary.simpleMessage(
             "percent of your orders limit"),

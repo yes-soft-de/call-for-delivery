@@ -45,16 +45,18 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   Future<void> checkForUpdates(context) async {
     final newVersion = NewVersion();
     final VersionStatus? status = await newVersion.getVersionStatus();
-    newVersion.showUpdateDialog(
-      context: context,
-      versionStatus: status!,
-      dialogTitle: S.current.newVersion,
-      dialogText: S.current.newVersionHint
-          .replaceAll('^', status.localVersion)
-          .replaceAll('&', status.storeVersion),
-      updateButtonText: S.current.update,
-      dismissButtonText: S.current.later,
-    );
+    if (status?.canUpdate == true) {
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status!,
+        dialogTitle: S.current.newVersion,
+        dialogText: S.current.newVersionHint
+            .replaceAll('^', status.localVersion)
+            .replaceAll('&', status.storeVersion),
+        updateButtonText: S.current.update,
+        dismissButtonText: S.current.later,
+      );
+    }
   }
 
   void getMyOrders() {

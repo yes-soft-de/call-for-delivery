@@ -37,6 +37,7 @@ class Data {
   bool? orderIsMain;
   List<SubOrder>? subOrders;
   FilePdfResponse? pdf;
+  String? storeBranchToClientDistance;
   Data(
       {this.id,
       this.state,
@@ -68,11 +69,14 @@ class Data {
       this.isHide,
       this.orderIsMain,
       this.subOrders,
-      this.pdf});
+      this.pdf,
+      this.storeBranchToClientDistance});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
       state: json['state'] as String?,
+      storeBranchToClientDistance:
+          json['storeBranchToClientDistance'] as String?,
       pdf: json['filePdf'] == null
           ? null
           : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),

@@ -616,22 +616,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                               S.current.destinationUnavailable),
                           child: Text(S.current.distance +
                               ' ' +
-                              (Geolocator.distanceBetween(
-                                          orderInfo
-                                                  .branchCoordinate?.latitude ??
-                                              0,
-                                          orderInfo.branchCoordinate
-                                                  ?.longitude ??
-                                              0,
-                                          orderInfo.destinationCoordinate
-                                                  ?.latitude ??
-                                              0,
-                                          orderInfo.destinationCoordinate
-                                                  ?.longitude ??
-                                              0) /
-                                      1000)
-                                  .toStringAsFixed(2)
-                                  .toString() +
+                              (orderInfo.storeBranchToClientDistance ??
+                                  S.current.unknown) +
                               ' ${S.current.km}'),
                         ),
                         child: Visibility(

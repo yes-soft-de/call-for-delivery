@@ -48,6 +48,7 @@ class OrderDetailsModel extends DataModel {
   late bool? orderIsMain;
   late DateTime createDateTime;
   PdfModel? pdf;
+  String? storeBranchToClientDistance;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -81,7 +82,8 @@ class OrderDetailsModel extends DataModel {
       required this.isHide,
       required this.orderIsMain,
       required this.createDateTime,
-      required this.pdf});
+      required this.pdf,
+      required this.storeBranchToClientDistance});
 
   late OrderDetailsModel _orders;
 
@@ -148,6 +150,7 @@ class OrderDetailsModel extends DataModel {
               pdfPreview: element?.pdf?.file,
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
+      storeBranchToClientDistance: element?.storeBranchToClientDistance ,
     );
     // _orders.distance = _distance(
     //     _orders,

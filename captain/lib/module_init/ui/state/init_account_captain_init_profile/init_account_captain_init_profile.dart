@@ -174,7 +174,8 @@ class InitAccountCaptainInitProfile extends States {
                   controller: screen.ageController,
                   icon: Icons.calendar_month_rounded,
                   hint: S.current.eg + ' : ' + '36',
-                  title: S.current.age,
+                  title: S.current.age + ' (${S.current.optional}) ',
+                  optional: true,
                   number: true,
                 ),
                 // car
@@ -182,7 +183,8 @@ class InitAccountCaptainInitProfile extends States {
                   controller: screen.carController,
                   icon: Icons.local_taxi_rounded,
                   hint: S.current.eg + ' : ' + 'Kia Rio',
-                  title: S.current.car,
+                  title: S.current.car + ' (${S.current.optional}) ',
+                  optional: true,
                   last: true,
                 ),
                 // Identity
@@ -191,8 +193,8 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).identity,
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        S.of(context).identity + ' (${S.current.optional}) ',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
                     ),
@@ -211,7 +213,8 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).driverLicence,
+                        S.of(context).driverLicence +
+                            ' (${S.current.optional}) ',
                         style: TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
@@ -230,7 +233,8 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).mechanichLicence,
+                        S.of(context).mechanichLicence +
+                            ' (${S.current.optional}) ',
                         style: TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
@@ -252,21 +256,25 @@ class InitAccountCaptainInitProfile extends States {
                   controller: screen.bankNameController,
                   icon: Icons.account_balance_rounded,
                   hint: S.current.eg + ' : ' + S.current.bankNameHint,
-                  title: S.current.bankName,
+                  optional: true,
+                  title: S.current.bankName + ' (${S.current.optional}) ',
                 ),
                 // Bank Account Number
                 InitField(
                   controller: screen.bankAccountNumberController,
                   icon: Icons.password_rounded,
                   hint: S.current.eg + ' : ' + '3123235145313',
-                  title: S.current.bankAccountNumber,
+                  title:
+                      S.current.bankAccountNumber + ' (${S.current.optional}) ',
+                  optional: true,
                 ),
                 // Stc Pay
                 InitField(
                     controller: screen.stcPayController,
                     icon: Icons.credit_card_rounded,
                     hint: S.current.eg + ' : ' + '059796748',
-                    title: S.current.stcPayCode,
+                    title: S.current.stcPayCode + ' (${S.current.optional}) ',
+                    optional: true,
                     last: true),
                 const SizedBox(
                   height: 75,
@@ -281,14 +289,11 @@ class InitAccountCaptainInitProfile extends States {
                   text: S.of(context).uploadAndSubmit,
                   onPressed: () {
                     if (_initKey.currentState!.validate()) {
-                      if (identity != null &&
-                          driverLicence != null &&
-                          captainImage != null &&
-                          mechanicLicence != null) {
+                      if (captainImage != null) {
                         screen.submitProfile(
                             CreateCaptainProfileRequest.withUriImages(
                                 name: screen.nameController.text.trim(),
-                                age: int.parse(screen.ageController.text),
+                                age: int.tryParse(screen.ageController.text),
                                 car: screen.carController.text,
                                 captainImage: captainImage,
                                 driving: driverLicence,
@@ -305,24 +310,6 @@ class InitAccountCaptainInitProfile extends States {
                           CustomFlushBarHelper.createError(
                                   title: S.current.warnning,
                                   message: S.current.pleaseProvideProfileImage)
-                              .show(context);
-                        }
-                        if (mechanicLicence == null) {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.pleaseProvideMechImage)
-                              .show(context);
-                        }
-                        if (identity == null) {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.pleaseProvideIdentityImage)
-                              .show(context);
-                        }
-                        if (driverLicence == null) {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.pleaseProvideDrivingImage)
                               .show(context);
                         }
                       }
