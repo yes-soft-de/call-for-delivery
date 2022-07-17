@@ -79,97 +79,101 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // captain name
         Visibility(
-            replacement: OrderButton(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        ArgumentHiveHelper()
-                            .setCurrentOrderID(screenState.orderId.toString());
-                        return getIt<CaptainAssignOrderScreen>();
-                      });
-                },
-                backgroundColor: Colors.orange,
-                icon: Icons.delivery_dining_rounded,
-                subtitle: S.current.assignCaptainHint,
-                title: S.current.assignCaptain),
-            visible: orderInfo.captainName != null,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 75,
-                decoration: BoxDecoration(
-                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
-                    borderRadius: BorderRadius.circular(25)),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.delivery_dining_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Container(
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: orderInfo.state ==
-                                              OrderStatusEnum.FINISHED
-                                          ? S.current
-                                                  .orderHandledDoneByCaptain +
-                                              ' '
-                                          : S.current.orderHandledByCaptain +
-                                              ' ',
-                                      style: TextStyle(color: Colors.white)),
-                                  TextSpan(
-                                      text: orderInfo.captainName,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                ],
+          visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+              orderInfo.state != OrderStatusEnum.CANCELLED,
+          child: Visibility(
+              replacement: OrderButton(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          ArgumentHiveHelper().setCurrentOrderID(
+                              screenState.orderId.toString());
+                          return getIt<CaptainAssignOrderScreen>();
+                        });
+                  },
+                  backgroundColor: Colors.orange,
+                  icon: Icons.delivery_dining_rounded,
+                  subtitle: S.current.assignCaptainHint,
+                  title: S.current.assignCaptain),
+              visible: orderInfo.captainName != null,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(
+                      color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.delivery_dining_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Container(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        text: orderInfo.state ==
+                                                OrderStatusEnum.FINISHED
+                                            ? S.current
+                                                    .orderHandledDoneByCaptain +
+                                                ' '
+                                            : S.current.orderHandledByCaptain +
+                                                ' ',
+                                        style: TextStyle(color: Colors.white)),
+                                    TextSpan(
+                                        text: orderInfo.captainName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                        ],
+                            SizedBox(
+                              width: 8,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: Icon(Icons.remove_circle),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.manager.unAssignedOrder(
-                                          screenState.orderId, screenState);
-                                    },
-                                    content:
-                                        S.current.areYouSureAboutRependingOrder,
-                                    oneAction: false);
-                              });
-                        },
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          icon: Icon(Icons.remove_circle),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        screenState.manager.unAssignedOrder(
+                                            screenState.orderId, screenState);
+                                      },
+                                      content: S.current
+                                          .areYouSureAboutRependingOrder,
+                                      oneAction: false);
+                                });
+                          },
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            )),
+              )),
+        ),
         // order status
         Padding(
           padding:

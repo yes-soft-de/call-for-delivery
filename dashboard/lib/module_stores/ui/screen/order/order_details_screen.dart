@@ -43,7 +43,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       firebaseStream =
           FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
         if (flag == false) {
-          widget._stateManager.getOrder(this, orderId,false);
+          widget._stateManager.getOrder(this, orderId, false);
         }
       });
     });
@@ -89,7 +89,11 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     (currentState as OrderDetailsStateOwnerOrderLoaded)
                             .orderInfo
                             .state !=
-                        OrderStatusEnum.CANCELLED,
+                        OrderStatusEnum.CANCELLED &&
+                    (currentState as OrderDetailsStateOwnerOrderLoaded)
+                            .orderInfo
+                            .state !=
+                        OrderStatusEnum.FINISHED,
                 child: CustomC4dAppBar.actionIcon(context,
                     icon: Icons.rotate_left_rounded, onTap: () {
                   showDialog(

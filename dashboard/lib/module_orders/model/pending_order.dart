@@ -1,4 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_response/datum.dart';
@@ -46,7 +47,8 @@ class PendingOrder extends DataModel {
           note: element.note ?? '',
           deliveryDate: delivery,
           createdDate: create,
-          id: element.id ?? -1));
+          id: element.id ?? -1,
+          storeName: element.storeOwnerName ?? S.current.unknown));
     });
 
     return ordersModels;

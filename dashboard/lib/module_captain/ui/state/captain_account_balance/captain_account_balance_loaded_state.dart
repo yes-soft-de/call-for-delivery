@@ -115,6 +115,7 @@ class AccountBalanceStateLoaded extends States {
         countKilometersTo: e.countKilometersTo,
         countOfOrdersLeft: e.countOfOrdersLeft,
         message: e.message,
+        orders: e.orders,
       ));
     });
     return Visibility(

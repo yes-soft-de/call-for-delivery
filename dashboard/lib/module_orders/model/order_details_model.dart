@@ -44,6 +44,7 @@ class OrderDetailsModel extends DataModel {
   late String storeName;
   late int storeID;
   String? noteCaptainOrderCost;
+  
   OrderDetailsModel(
       {required this.id,
       required this.branchName,

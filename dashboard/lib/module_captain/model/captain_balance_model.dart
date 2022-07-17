@@ -1,5 +1,13 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:intl/intl.dart';
+
+import '../../module_orders/model/order/order_model.dart';
 
 class CaptainAccountBalanceModel extends DataModel {
   late num? countOrders;
@@ -55,7 +63,8 @@ class CaptainAccountBalanceModel extends DataModel {
             countKilometersFrom: element.countKilometersFrom ?? 0,
             countKilometersTo: element.countKilometersTo ?? 0,
             countOfOrdersLeft: element.countOfOrdersLeft ?? 0,
-            message: element.message ?? ''));
+            message: element.message ?? '',
+            orders: _getOrders(element.orders ?? [])));
       });
       _data = CaptainAccountBalanceModel(
           orderCountsDetails: details,
@@ -96,6 +105,33 @@ class CaptainAccountBalanceModel extends DataModel {
     }
   }
   CaptainAccountBalanceModel get data => _data;
+  List<OrderModel> _getOrders(List<DatumOrder> o) {
+    List<OrderModel> orders = [];
+    o.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      // delivery date
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      //
+      orders.add(OrderModel(
+          branchName: element.branchName ?? S.current.unknown,
+          id: element.id ?? -1,
+          createdDate: create,
+          deliveryDate: delivery,
+          note: element.note ?? '',
+          orderCost: element.orderCost ?? 0,
+          state: StatusHelper.getStatusEnum(element.state),
+          storeName: element.storeOwnerName));
+    });
+    return orders;
+  }
 }
 
 class OrderCountsSystemDetails {
@@ -109,16 +145,17 @@ class OrderCountsSystemDetails {
   num contOrderCompleted;
   num countOfOrdersLeft;
   String message;
-  OrderCountsSystemDetails({
-    required this.categoryName,
-    required this.countKilometersFrom,
-    required this.countKilometersTo,
-    required this.amount,
-    required this.bounce,
-    required this.bounceCountOrdersInMonth,
-    required this.captainTotalCategory,
-    required this.contOrderCompleted,
-    required this.countOfOrdersLeft,
-    required this.message,
-  });
+  List<OrderModel> orders;
+  OrderCountsSystemDetails(
+      {required this.categoryName,
+      required this.countKilometersFrom,
+      required this.countKilometersTo,
+      required this.amount,
+      required this.bounce,
+      required this.bounceCountOrdersInMonth,
+      required this.captainTotalCategory,
+      required this.contOrderCompleted,
+      required this.countOfOrdersLeft,
+      required this.message,
+      required this.orders});
 }
