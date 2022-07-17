@@ -244,7 +244,9 @@ class AdminOrderService
         $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin());
         $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin());
 
-       return $response;
+        $response['totalOrderCount'] = count($response['pendingOrders']) + count($response['hiddenOrders']) + count($response['notDeliveredOrders']);
+
+        return $response;
     }
 
     public function prepareOrderResponseObject(array $orders): array

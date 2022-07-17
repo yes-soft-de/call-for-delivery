@@ -130,15 +130,15 @@ class OrderService
                   error_log($e);
                 }
              //create firebase notification to captains
-             try{
-                  $this->notificationFirebaseService->notificationToCaptains($order->getId());
+             try {
+                 $this->notificationFirebaseService->notificationToCaptains($order->getId());
 
-                  // scheduled notification to captain
-                  //$this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
-                }
-             catch (\Exception $e){
-                    error_log($e);
-                }
+                 // scheduled notification to captain
+                 $this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
+
+             }  catch (\Exception $e) {
+                 error_log($e);
+             }
         }
         
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
