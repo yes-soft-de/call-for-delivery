@@ -236,4 +236,16 @@ class StoreOwnerProfileManager
     {
         return $this->storeOwnerProfileEntityRepository->find($id);
     }
+
+    public function deleteStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileEntityRepository->findOneBy(["storeOwnerId"=>$storeOwnerId]);
+
+        if ($storeOwnerProfile !== null) {
+            $this->entityManager->remove($storeOwnerProfile);
+            $this->entityManager->flush();
+        }
+
+        return $storeOwnerProfile;
+    }
 }

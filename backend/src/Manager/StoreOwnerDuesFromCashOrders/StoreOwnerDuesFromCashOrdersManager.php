@@ -42,4 +42,9 @@ class StoreOwnerDuesFromCashOrdersManager
     {       
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->findOneBy(["orderId" => $orderId]);
     }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrdersByStoreOwnerId($storeOwnerId);
+    }
 }

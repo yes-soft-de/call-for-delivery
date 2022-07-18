@@ -30,4 +30,9 @@ class StoreOwnerPaymentService
 
         return $response;
     }
+
+    public function getPaymentsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerPaymentManager->getPaymentsByStoreOwnerId($storeOwnerId);
+    }
 }

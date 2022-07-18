@@ -1579,4 +1579,23 @@ class OrderEntityRepository extends ServiceEntityRepository
         //    ->getResult();
            ->getOneOrNullResult();
    }
+
+   public function getStoreOrdersByStoreOwnerId(int $storeOwnerId): array
+   {
+       return $this->createQueryBuilder('orderEntity')
+
+           ->leftJoin(
+               StoreOwnerProfileEntity::class,
+               'storeOwnerProfileEntity',
+               Join::WITH,
+               'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+           )
+
+           ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+           ->setParameter('storeOwnerId', $storeOwnerId)
+
+           ->getQuery()
+           ->getResult();
+
+   }
 }

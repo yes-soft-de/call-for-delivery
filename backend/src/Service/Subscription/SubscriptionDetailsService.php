@@ -2,33 +2,36 @@
 
 namespace App\Service\Subscription;
 
-use App\AutoMapping;
-use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Subscription\SubscriptionDetailsManager;
-use App\Request\Subscription\SubscriptionDetailsCreateRequest;
-use App\Response\Subscription\SubscriptionDetailsResponse;
-use Doctrine\ORM\NonUniqueResultException;
+//use App\Response\Subscription\SubscriptionDetailsResponse;
 
 class SubscriptionDetailsService
 {
-    private $autoMapping;
-    private $subscriptionDetailsManager;
+    private SubscriptionDetailsManager $subscriptionDetailsManager;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionDetailsManager $subscriptionDetailsManager)
+    public function __construct(SubscriptionDetailsManager $subscriptionDetailsManager)
     {
-        $this->autoMapping = $autoMapping;
         $this->subscriptionDetailsManager = $subscriptionDetailsManager;
     }
 
     /**
-     * @param SubscriptionDetailsCreateRequest $request
-     * @return mixed
-     * @throws NonUniqueResultException
+     * The following function is commented out because it is not being used anywhere, besides the response which
+     * is using is not exists anymore!
      */
-    public function createSubscriptionDetails(SubscriptionDetailsCreateRequest $request): mixed
-    {
-        $subscriptionResult = $this->subscriptionDetailsManager->createSubscriptionDetails($request);
+//    /**
+//     * @param SubscriptionDetailsCreateRequest $request
+//     * @return mixed
+//     * @throws NonUniqueResultException
+//     */
+//    public function createSubscriptionDetails(SubscriptionDetailsCreateRequest $request): mixed
+//    {
+//        $subscriptionResult = $this->subscriptionDetailsManager->createSubscriptionDetails($request);
+//
+//        return $this->autoMapping->map(SubscriptionDetailsEntity::class, SubscriptionDetailsResponse::class, $subscriptionResult);
+//    }
 
-        return $this->autoMapping->map(SubscriptionDetailsEntity::class, SubscriptionDetailsResponse::class, $subscriptionResult);
+    public function deleteSubscriptionDetailsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->subscriptionDetailsManager->deleteSubscriptionDetailsByStoreOwnerId($storeOwnerId);
     }
 }

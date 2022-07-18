@@ -100,4 +100,19 @@ class SubscriptionHistoryManager
  
         return $subscriptionHistoryEntity;
     }
+
+    public function deleteSubscriptionHistoryByStoreOwnerId(int $storeOwnerId): array
+    {
+        $subscriptionHistoryResult = $this->subscribeHistoryRepository->getSubscriptionsHistoryByStoreOwnerId($storeOwnerId);
+
+        if (! empty($subscriptionHistoryResult)) {
+            foreach ($subscriptionHistoryResult as $subscriptionHistory) {
+                $subscriptionHistory->setSubscription(null);
+                $this->entityManager->remove($subscriptionHistory);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $subscriptionHistoryResult;
+    }
 }
