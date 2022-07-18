@@ -708,5 +708,6 @@
     "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
     "unavailable": "غير معروفة",
     "accountUnVerified": "غير مؤكد",
-    "accountVerified": "مؤكد"
+    "accountVerified": "مؤكد",
+    "more":"المزيد"
 }

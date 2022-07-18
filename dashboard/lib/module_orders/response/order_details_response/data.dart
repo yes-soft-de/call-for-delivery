@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/utils/responses/file_pdf_response.dart';
@@ -40,6 +41,7 @@ class Data {
   int? storeId;
   String? noteCaptainOrderCost;
   FilePdfResponse? pdf;
+  Captain? captain;
 
   Data(
       {this.id,
@@ -74,7 +76,8 @@ class Data {
       this.storeName,
       this.storeId,
       this.noteCaptainOrderCost,
-      this.pdf});
+      this.pdf,
+      this.captain});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],
@@ -82,6 +85,9 @@ class Data {
       pdf: json['filePdf'] == null
           ? null
           : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
+      captain: json['captain'] == null
+          ? null
+          : Captain.fromJson(json['captain'] as Map<String, dynamic>),
       storeId: json['storeOwnerId'] as int?,
       orderIsMain: json['orderIsMain'] as bool?,
       captainName: json['captainName'],

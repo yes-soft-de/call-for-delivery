@@ -731,7 +731,9 @@
     "attachedFile": "This order has attached file",
     "unavailable": "Unavailable",
     "accountUnVerified":"Unverified",
-    "accountVerified":"Verified"
+    "accountVerified":"Verified",
+    "more":"More"
+
     
 
 

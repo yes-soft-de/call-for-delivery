@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:intl/intl.dart';
@@ -46,6 +47,7 @@ class OrderDetailsModel extends DataModel {
   late int storeID;
   String? noteCaptainOrderCost;
   PdfModel? pdf;
+  Captain? captain;
 
   OrderDetailsModel(
       {required this.id,
@@ -80,7 +82,8 @@ class OrderDetailsModel extends DataModel {
       required this.storeName,
       required this.storeID,
       required this.noteCaptainOrderCost,
-      required this.pdf});
+      required this.pdf,
+      required this.captain});
 
   late OrderDetailsModel _orders;
 
@@ -143,6 +146,7 @@ class OrderDetailsModel extends DataModel {
               pdfPreview: element?.pdf?.file,
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
+      captain: element?.captain 
     );
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);

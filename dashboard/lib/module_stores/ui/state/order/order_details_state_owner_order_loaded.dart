@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
+import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -16,7 +17,9 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/phone_number_formtter.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,101 +82,148 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // captain name
         Visibility(
-          visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-              orderInfo.state != OrderStatusEnum.CANCELLED,
-          child: Visibility(
-              replacement: OrderButton(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          ArgumentHiveHelper().setCurrentOrderID(
-                              screenState.orderId.toString());
-                          return getIt<CaptainAssignOrderScreen>();
-                        });
-                  },
-                  backgroundColor: Colors.orange,
-                  icon: Icons.delivery_dining_rounded,
-                  subtitle: S.current.assignCaptainHint,
-                  title: S.current.assignCaptain),
-              visible: orderInfo.captainName != null,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                      color: StatusHelper.getOrderStatusColor(orderInfo.state),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.delivery_dining_rounded,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Container(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                        text: orderInfo.state ==
-                                                OrderStatusEnum.FINISHED
-                                            ? S.current
-                                                    .orderHandledDoneByCaptain +
-                                                ' '
-                                            : S.current.orderHandledByCaptain +
-                                                ' ',
-                                        style: TextStyle(color: Colors.white)),
-                                    TextSpan(
-                                        text: orderInfo.captainName,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                          ],
+            replacement: OrderButton(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        ArgumentHiveHelper()
+                            .setCurrentOrderID(screenState.orderId.toString());
+                        return getIt<CaptainAssignOrderScreen>();
+                      });
+                },
+                backgroundColor: Colors.orange,
+                icon: Icons.delivery_dining_rounded,
+                subtitle: S.current.assignCaptainHint,
+                title: S.current.assignCaptain),
+            visible: orderInfo.captainName != null &&
+                orderInfo.state != OrderStatusEnum.FINISHED &&
+                orderInfo.state != OrderStatusEnum.CANCELLED,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                constraints: BoxConstraints(minHeight: 75),
+                decoration: BoxDecoration(
+                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                    borderRadius: BorderRadius.circular(25)),
+                child: Row(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 8,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                          icon: Icon(Icons.remove_circle),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (ctx) {
-                                  return CustomAlertDialog(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        screenState.manager.unAssignedOrder(
-                                            screenState.orderId, screenState);
-                                      },
-                                      content: S.current
-                                          .areYouSureAboutRependingOrder,
-                                      oneAction: false);
-                                });
-                          },
+                        Icon(
+                          Icons.delivery_dining_rounded,
                           color: Colors.white,
                         ),
-                      )
-                    ],
-                  ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          width: 200,
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: orderInfo.state ==
+                                            OrderStatusEnum.FINISHED
+                                        ? S.current.orderHandledDoneByCaptain +
+                                            ' '
+                                        : S.current.orderHandledByCaptain + ' ',
+                                    style: TextStyle(color: Colors.white)),
+                                TextSpan(
+                                    text: orderInfo.captainName,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (ctx) {
+                                              return AlertDialog(
+                                                scrollable: true,
+                                                title: Text(S.current.profile),
+                                                content: Column(
+                                                  children: [
+                                                    Text(
+                                                        orderInfo.captainName ??
+                                                            S.current.unknown),
+                                                    SelectableText(
+                                                      PhoneNumberFormatter
+                                                              .format(orderInfo
+                                                                  .captain
+                                                                  ?.phone) ??
+                                                          '',
+                                                      textDirection:
+                                                          TextDirection.ltr,
+                                                      style: TextStyle(
+                                                        locale:
+                                                            Locale.fromSubtags(
+                                                                languageCode:
+                                                                    'en'),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                actionsAlignment:
+                                                    MainAxisAlignment.center,
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                CaptainsRoutes
+                                                                    .CAPTAIN_PROFILE,
+                                                                arguments:
+                                                                    orderInfo
+                                                                        .captain
+                                                                        ?.id);
+                                                      },
+                                                      child:
+                                                          Text(S.current.more))
+                                                ],
+                                              );
+                                            });
+                                      },
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                            overflow: TextOverflow.clip,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Visibility(
+                      visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                          orderInfo.state != OrderStatusEnum.CANCELLED,
+                      child: IconButton(
+                        icon: Icon(Icons.remove_circle),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager.unAssignedOrder(
+                                          screenState.orderId, screenState);
+                                    },
+                                    content:
+                                        S.current.areYouSureAboutRependingOrder,
+                                    oneAction: false);
+                              });
+                        },
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
                 ),
-              )),
-        ),
+              ),
+            )),
         // order status
         Padding(
           padding:

@@ -547,6 +547,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Month compensation"),
         "monthTargetSuccess":
             MessageLookupByLibrary.simpleMessage("Monthly target"),
+        "more": MessageLookupByLibrary.simpleMessage("More"),
         "mostSoldProduct":
             MessageLookupByLibrary.simpleMessage("Most Sold Product"),
         "mostWanted": MessageLookupByLibrary.simpleMessage("Most wanted"),
