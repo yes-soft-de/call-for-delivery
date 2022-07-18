@@ -718,7 +718,13 @@
     "yes":"نعم",
     "no":"كلا",
     "last24CountOrder":"الطلبات آخر ٢٤ ساعة",
-    "last7WeekOrders":"الطلبات آخر ٧ أيام"
+    "last7WeekOrders":"الطلبات آخر ٧ أيام",
+    "paidOrder":"طلبات مدفوعة",
+    "unPaidOrder":"طلبات غير مدفوعة",
+    "attachFile": "إرفاق ملف",
+    "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
+    "unavailable": "غير معروفة"
+   
 
 
 

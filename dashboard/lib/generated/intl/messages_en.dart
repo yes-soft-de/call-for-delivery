@@ -90,6 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignCaptain": MessageLookupByLibrary.simpleMessage("Assign Captain"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
             "Assign captain to handle this order"),
+        "attachFile": MessageLookupByLibrary.simpleMessage("Attach file"),
+        "attachedFile": MessageLookupByLibrary.simpleMessage(
+            "This order has attached file"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
@@ -672,6 +675,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageOrderStatus":
             MessageLookupByLibrary.simpleMessage("Package Orders "),
         "packages": MessageLookupByLibrary.simpleMessage("Packages"),
+        "paidOrder": MessageLookupByLibrary.simpleMessage("Paid Order"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -990,8 +994,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "unPaidOrder": MessageLookupByLibrary.simpleMessage("Unpaid Order"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
+        "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
         "unconfirmed": MessageLookupByLibrary.simpleMessage("Unconfirmed"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":

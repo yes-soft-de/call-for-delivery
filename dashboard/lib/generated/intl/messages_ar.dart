@@ -90,6 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignCaptain": MessageLookupByLibrary.simpleMessage("إسناد كابتن"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
             "اسناد هذا الطلب لكابتن لتوصيله"),
+        "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),
+        "attachedFile": MessageLookupByLibrary.simpleMessage(
+            "هذا الطلب يحتوي على ملف مرفق"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
@@ -669,6 +672,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageOrderStatus":
             MessageLookupByLibrary.simpleMessage("استهلاك طلبات الباقة"),
         "packages": MessageLookupByLibrary.simpleMessage("الباقات"),
+        "paidOrder": MessageLookupByLibrary.simpleMessage("طلبات مدفوعة"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -986,8 +990,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
+        "unPaidOrder": MessageLookupByLibrary.simpleMessage("طلبات غير مدفوعة"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
+        "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
         "unconfirmed": MessageLookupByLibrary.simpleMessage("لم يتم التأكيد"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":

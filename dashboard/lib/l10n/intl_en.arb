@@ -724,7 +724,13 @@
     "yes":"Yes",
     "no":"No",
     "last24CountOrder":"Last 24h orders",
-    "last7WeekOrders":"Last 7 days orders"
+    "last7WeekOrders":"Last 7 days orders",
+    "paidOrder":"Paid Order",
+    "unPaidOrder":"Unpaid Order",
+    "attachFile": "Attach file",
+    "attachedFile": "This order has attached file",
+    "unavailable": "Unavailable"
+    
 
 
 

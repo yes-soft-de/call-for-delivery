@@ -7079,6 +7079,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Paid Order`
+  String get paidOrder {
+    return Intl.message(
+      'Paid Order',
+      name: 'paidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid Order`
+  String get unPaidOrder {
+    return Intl.message(
+      'Unpaid Order',
+      name: 'unPaidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unavailable`
+  String get unavailable {
+    return Intl.message(
+      'Unavailable',
+      name: 'unavailable',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
