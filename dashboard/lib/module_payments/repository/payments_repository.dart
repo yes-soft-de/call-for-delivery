@@ -92,6 +92,15 @@ class PaymentsRepository {
   Future<ActionResponse?> deletePaymentToCaptain(String id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.delete(
+        Urls.DELETE_CAPTAIN_PAYMENTS_TO_COMPANY + '/$id',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deletePaymentFROMCaptain(String id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
         Urls.CREATE_CAPTAIN_PAYMENTS + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
@@ -102,7 +111,7 @@ class PaymentsRepository {
       int captainId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-        Urls.GET_CAPTAIN_PAYMENTS + '/$captainId',
+        Urls.GET_CAPTAIN_PAYMENTS_FROM_CASH + '/$captainId',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainPaymentsResponse.fromJson(response);
