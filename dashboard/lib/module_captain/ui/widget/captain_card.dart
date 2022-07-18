@@ -1,3 +1,4 @@
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -6,13 +7,14 @@ class CaptainCard extends StatelessWidget {
   final int captainId;
   final String image;
   final String captainName;
-
+  final bool verificationStatus;
   CaptainCard(
       {Key? key,
       required this.captainId,
       required this.image,
       required this.captainName,
-      this.onTap});
+      this.onTap,
+      required this.verificationStatus});
 
   final Function()? onTap;
 
@@ -56,6 +58,24 @@ class CaptainCard extends StatelessWidget {
                   captainName,
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: verificationStatus ? Colors.green : Colors.orange,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      verificationStatus
+                          ? S.current.accountVerified
+                          : S.current.accountUnVerified,
+                      style: TextStyle(color: Colors.white,fontSize: 10),
+                    ),
+                  ),
                 ),
               ),
               Padding(

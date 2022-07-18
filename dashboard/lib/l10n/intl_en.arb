@@ -729,7 +729,9 @@
     "unPaidOrder":"Unpaid Order",
     "attachFile": "Attach file",
     "attachedFile": "This order has attached file",
-    "unavailable": "Unavailable"
+    "unavailable": "Unavailable",
+    "accountUnVerified":"Unverified",
+    "accountVerified":"Verified"
     
 
 

@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
+        "accountUnVerified": MessageLookupByLibrary.simpleMessage("غير مؤكد"),
+        "accountVerified": MessageLookupByLibrary.simpleMessage("مؤكد"),
         "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),

@@ -224,7 +224,6 @@
     "addBranch": "إضافة فرع",
     "addBranchSuccess": "تمت إضافة الفرع بنجاح",
     "addBranchFailure": "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا",
-
     "ourService": "خدماتنا",
     "mostSoldProduct": "المنتجات الأكثر مبيعا",
     "bestStore": "أفضل المتاجر",
@@ -398,7 +397,6 @@
     "forgotPass": "هل نسيت كلمة المرور؟",
     "partners": "شركائنا",
     "paymentsVia": "إيصال المدفوعات عبر",
-
     "newPassword": "كلمة السر الجديدة",
     "confirmNewPass": "تأكيد كلمة السر الجديدة",
     "passwordUpdatedSuccess": "تم تحديث كلمة المرور بنجاح",
@@ -427,7 +425,6 @@
     "countProducts": "عدد المنتجات",
     "countStores": "عدد المتاجر",
     "countTodayOrder": "الطلبات اليوم",
-
     "storeBalance": "حساب المتجر",
     "paymentsForStore": "دفعات للمتجر",
     "remainingAmountForStore": "المبلغ المتبقي للمتجر",
@@ -447,12 +444,9 @@
     "storeUpdatedSuccessfully": "تم تعديل المتجر بنجاح",
     "active": "هذا المتجر  فعال",
     "city": "المدينة",
-
-
     "emptyStaff": "قائمة فارغة",
     "paymentAmount": "قيمة الدفعة",
     "areYouSureToDeleteThisPayment": "هل انت متأكد بإنك تريد حذف هذه الدفعة",
-
     "packageCategory": "تصنيفات الباقات",
     "addCategory": "إضاف تصنيف",
     "ok": "حسناً",
@@ -464,7 +458,6 @@
     "close": "إغلاق",
     "carCount": "عدد السيارات",
     "orderCount": "عدد الطلبات",
-
     "packageName": "اسم الباقة",
     "dayCount": "عدد أيام صلاحية الباقة",
     "packages": "الباقات",
@@ -472,18 +465,15 @@
     "addPackageSuccessfully": "تم إضافة الباقة بنجاح",
     "updatePackageSuccessfully": "تم تعديل الباقة بنجاح",
     "chooseCategory": "أختر تصنيف",
-
     "companyProfileCreatedSuccessfully": "تم إنشاء ملف تعريف الشركة بنجاح",
     "companyProfileUpdatedSuccessfully": "تم تعديل ملف تعريف الشركة بنجاح",
     "companyInfo": "معلومات الشركة",
-
     "phone2": "رقم الهاتف 2",
     "fax": "الفاكس",
     "whatsapp": "واتساب",
     "kilometerLimt": "عدد الكيلومترات",
     "kilometerLimtMax": "قيمة التعويض في حال تجاوز حد الكيلومترات",
     "kilometerLimtMin": "قيمة التعويض في حال عدم تجاوز حد الكيلومترات",
-
     "branchManagement": "إدارة الأفرع",
     "selectedBranchesMenu": "My Selected Branches",
     "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
@@ -491,7 +481,6 @@
     "deleteBranchSuccess": "تم حذف الفرع بنجاح",
     "chooseBranch": "اختر فرع",
     "thereIsNoBranches": "لا يوجد أفرع متاحة",
-
     "addNote": "إضافة تحديث",
     "title": "عنوان",
     "sendTo": "إرسال إلى",
@@ -503,7 +492,6 @@
     "addOffer": "إضافة عرض",
     "updateOfferSuccessfully": "تم تعديل العرض بنجاح",
     "addOfferSuccessfully": "تم إضافة العرض بنجاح",
-
     "storesActive": "المتاجر الفعالة",
     "allOrdersCount": "عدد الطلبات",
     "inActiveCaptains": "الكباتن الغير مفعلين",
@@ -521,7 +509,6 @@
     "sOrder": "طلب",
     "captainUpdatedSuccessfully": "تم تحديث الكابتن بنجاح",
     "bounce": "مكافأة",
-
     "firstDate": "من تاريخ",
     "endDate": "إلى تاريخ",
     "pending": "قيد الانتظار",
@@ -619,20 +606,16 @@
     "deliveryCarsCost": "أجرة التوصيل",
     "carModel": "نوع السيارة",
     "profit": "الأرباح",
-
     "price": "السعر",
     "deadLine": "تاريخ التسليم",
     "offerLog": "سجل العروض",
     "onGoingOrder": "الطلبات الجارية",
-
-
     "pendingOfferMsg": "بإنتظار قبول عرضك",
     "rejectOfferMsg": "المتجر رفض عرضك",
     "acceptOfferMsg": "المتجر قبل عرضك",
     "confirmed": "مُأكد",
     "open": "مفتوح",
     "supplierOffer": "عروض الموردين",
-
     "bidOrder": "طلبات المناقصات",
     "editProfile": "تعديل معلومات المتجر",
     "manageBranch": "إدارة الأفرع",
@@ -711,26 +694,19 @@
     "assignCaptainHint": "اسناد هذا الطلب لكابتن لتوصيله",
     "assignCaptain": "إسناد كابتن",
     "assign": "إسناد",
-    "now":"الآن",
-    "packageOrderStatus":"استهلاك طلبات الباقة",
-    "packageCaptainsStatus":"استهلاك كباتن الباقة",
-    "isFutureSubscriptions":"اشتراك مستقبلي",
-    "yes":"نعم",
-    "no":"كلا",
-    "last24CountOrder":"الطلبات آخر ٢٤ ساعة",
-    "last7WeekOrders":"الطلبات آخر ٧ أيام",
-    "paidOrder":"طلبات مدفوعة",
-    "unPaidOrder":"طلبات غير مدفوعة",
+    "now": "الآن",
+    "packageOrderStatus": "استهلاك طلبات الباقة",
+    "packageCaptainsStatus": "استهلاك كباتن الباقة",
+    "isFutureSubscriptions": "اشتراك مستقبلي",
+    "yes": "نعم",
+    "no": "كلا",
+    "last24CountOrder": "الطلبات آخر ٢٤ ساعة",
+    "last7WeekOrders": "الطلبات آخر ٧ أيام",
+    "paidOrder": "طلبات مدفوعة",
+    "unPaidOrder": "طلبات غير مدفوعة",
     "attachFile": "إرفاق ملف",
     "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
-    "unavailable": "غير معروفة"
-   
-
-
-
-
-
-
-
-
+    "unavailable": "غير معروفة",
+    "accountUnVerified": "غير مؤكد",
+    "accountVerified": "مؤكد"
 }

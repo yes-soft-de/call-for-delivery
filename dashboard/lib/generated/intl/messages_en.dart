@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
+        "accountUnVerified": MessageLookupByLibrary.simpleMessage("Unverified"),
+        "accountVerified": MessageLookupByLibrary.simpleMessage("Verified"),
         "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),

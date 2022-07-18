@@ -7,13 +7,17 @@ class InActiveModel extends DataModel {
   String captainName = '';
   String image = '';
   late String phoneNumber;
+  String? userID;
+  late bool verificationStatus;
   List<InActiveModel> _model = [];
 
   InActiveModel(
       {required this.captainID,
       required this.image,
       required this.captainName,
-      required this.phoneNumber});
+      required this.phoneNumber,
+      required this.userID,
+      required this.verificationStatus});
 
   InActiveModel.withData(List<Data> data) : super.withData() {
     _model = [];
@@ -22,7 +26,10 @@ class InActiveModel extends DataModel {
           captainID: element.id ?? -1,
           image: element.image?.image ?? '',
           captainName: element.captainName ?? '',
-          phoneNumber: element.phone ?? S.current.notCompletedAccount));
+          phoneNumber:
+              element.phone ?? element.userId ?? S.current.notCompletedAccount,
+          userID: element.userId,
+          verificationStatus: element.verificationStatus == 1 ? true : false));
     }
   }
   List<InActiveModel> get data => _model;

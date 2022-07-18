@@ -93,9 +93,30 @@ class CaptainProfileLoadedState extends States {
                           subTitle: model?.age?.toString(),
                           iconData: Icons.calendar_today_rounded),
                       CustomListTile(
-                          title: S.of(context).phoneNumber,
-                          subTitle: model?.phone,
-                          iconData: Icons.phone),
+                        title: S.of(context).phoneNumber,
+                        subTitle: model?.phone,
+                        iconData: Icons.phone,
+                        leading: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: model?.verificationStatus == true
+                                  ? Colors.green
+                                  : Colors.orange,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                model?.verificationStatus == true
+                                    ? S.current.accountVerified
+                                    : S.current.accountUnVerified,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       CustomListTile(
                           title: S.of(context).car,
                           subTitle: model?.car,

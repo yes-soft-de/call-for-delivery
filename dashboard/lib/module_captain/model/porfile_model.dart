@@ -23,6 +23,7 @@ class ProfileModel extends DataModel {
   num? bounce;
   String? createDate;
   OrderCountsSystemDetails? captainFinance;
+  bool? verificationStatus;
   ProfileModel(
       {required this.id,
       this.image,
@@ -41,7 +42,8 @@ class ProfileModel extends DataModel {
       this.bounce,
       this.salary,
       this.createDate,
-      this.captainFinance});
+      this.captainFinance,
+      this.verificationStatus});
 
   ProfileModel? _models;
 
@@ -68,7 +70,8 @@ class ProfileModel extends DataModel {
                 .format(DateHelper.convert(data.createDate?.timestamp)) +
             '   ' +
             DateFormat.yMd()
-                .format(DateHelper.convert(data.createDate?.timestamp)));
+                .format(DateHelper.convert(data.createDate?.timestamp)),
+        verificationStatus: data.verificationStatus == 1 ? true : false);
   }
 
   ProfileModel get data => _models ?? ProfileModel(id: -1);

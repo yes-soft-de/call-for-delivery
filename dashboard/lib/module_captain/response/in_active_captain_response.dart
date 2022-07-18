@@ -58,7 +58,8 @@ class Data {
   String? stcPay;
   ImageUrl? mechanicLicense;
   ImageUrl? identity;
-
+  String? userId;
+  int? verificationStatus;
   Data(
       {this.id,
       this.captainID,
@@ -81,10 +82,14 @@ class Data {
       this.bankAccountNumber,
       this.stcPay,
       this.mechanicLicense,
-      this.identity});
+      this.identity,
+      this.userId,
+      this.verificationStatus});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
+    userId = json['userId'];
+    verificationStatus = json['verificationStatus'];
     captainID = json['captainId'];
     captainName = json['captainName'];
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;

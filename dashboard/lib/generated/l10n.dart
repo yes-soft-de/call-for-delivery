@@ -7129,6 +7129,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Unverified`
+  String get accountUnVerified {
+    return Intl.message(
+      'Unverified',
+      name: 'accountUnVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verified`
+  String get accountVerified {
+    return Intl.message(
+      'Verified',
+      name: 'accountVerified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
