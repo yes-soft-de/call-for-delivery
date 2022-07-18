@@ -91,4 +91,9 @@ class OrderGetForAdminResponse
      * @var array|null
      */
     public $images;
+    
+    /**
+     * @var int
+     */
+    public $countOrders;
 }
