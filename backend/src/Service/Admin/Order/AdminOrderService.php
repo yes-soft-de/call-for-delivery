@@ -48,6 +48,7 @@ use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 use App\Service\Captain\CaptainService;
 use App\Constant\Captain\CaptainConstant;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 class AdminOrderService
 {
@@ -577,4 +578,24 @@ class AdminOrderService
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
       }
+      
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    {
+        $response = [];
+        $result = [];
+
+        $orders = $this->adminOrderManager->filterCaptainOrdersByAdmin($request);
+        // $countOrders = count($orders);
+      
+        foreach ($orders as $order) {
+            $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
+
+            $result[] = $this->autoMapping->map("array", OrderGetForAdminResponse::class, $order);
+        }
+
+        $response['orders'] = $result;
+        $response['countOrders'] = count($orders);
+
+        return $response;
+    }
 }

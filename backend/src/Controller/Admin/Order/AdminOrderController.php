@@ -30,6 +30,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")
@@ -916,5 +917,57 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: filter captain orders by admin
+     * @Route("filtercaptainordersbyadmin", name="filterCaptainOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="captainProfileId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accommodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderGetForAdminResponse")
+     *              )
+     *      )
+     *      )
+     *   )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderCaptainFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterCaptainOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
     }
 }

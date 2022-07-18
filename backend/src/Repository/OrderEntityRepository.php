@@ -30,6 +30,7 @@ use App\Entity\RateEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Constant\Order\OrderIsMainConstant;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -1596,6 +1597,60 @@ class OrderEntityRepository extends ServiceEntityRepository
 
            ->getQuery()
            ->getResult();
+   }
+   
+   public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+   {
+       $query = $this->createQueryBuilder('orderEntity')
+           ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+               'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+               'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+               'imageEntity.id as imageId', 'imageEntity.imagePath as images')
 
+           ->leftJoin(
+               StoreOrderDetailsEntity::class,
+               'storeOrderDetails',
+               Join::WITH,
+               'orderEntity.id = storeOrderDetails.orderId')
+
+           ->leftJoin(
+               StoreOwnerBranchEntity::class,
+               'storeOwnerBranch',
+               Join::WITH,
+               'storeOrderDetails.branch = storeOwnerBranch.id')
+
+           ->leftJoin(
+               ImageEntity::class,
+               'imageEntity',
+               Join::WITH,
+               'imageEntity.id = storeOrderDetails.images')
+
+           ->orderBy('orderEntity.id', 'DESC');
+
+       if ($request->getCaptainProfileId()) {
+           $query->andWhere('orderEntity.captainId = :captainId');
+           $query->setParameter('captainId', $request->getCaptainProfileId());
+       }
+
+       $query->andWhere('orderEntity.state = :state');
+       $query->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED);
+
+       if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+           $query->andWhere('orderEntity.deliveryDate >= :deliveryDate');
+           $query->setParameter('deliveryDate', new DateTime($request->getFromDate()));
+
+       } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+           $query->andWhere('orderEntity.deliveryDate <= :deliveryDate');
+           $query->setParameter('deliveryDate', new DateTime($request->getToDate()));
+
+       } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+           $query->andWhere('orderEntity.deliveryDate >= :fromDate');
+           $query->setParameter('fromDate', new DateTime($request->getFromDate()));
+
+           $query->andWhere('orderEntity.deliveryDate <= :toDate');
+           $query->setParameter('toDate', new DateTime($request->getToDate()));
+       }
+
+       return $query->getQuery()->getResult();
    }
 }
