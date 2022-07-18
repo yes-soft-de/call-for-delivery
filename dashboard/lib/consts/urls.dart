@@ -73,7 +73,9 @@ class Urls {
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT =
       'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
+
   static const UPLOAD_API = BASE_API + '/uploadfile';
+  static const UPLOAD_PDF_API = BASE_API + '/uploadpdffile';
   static const SIGN_UP_API = BASE_API + '/createAdmin';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
@@ -189,7 +191,11 @@ class Urls {
       BASE_CAPTAIN_PAYMENT + '/captainpayment';
   static const CREATE_CAPTAIN_PAYMENTS_TO_COMPANY =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompany';
+  static const DELETE_CAPTAIN_PAYMENTS_TO_COMPANY =
+      BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompnay';
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
+  static const GET_CAPTAIN_PAYMENTS_FROM_CASH =
+      BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymentstocompany';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 

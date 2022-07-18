@@ -8,6 +8,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
@@ -178,6 +179,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
+            onTap: () {
+              Navigator.of(screenState.context).pushNamed(
+                  StoresRoutes.ORDER_TIMELINE_SCREEN,
+                  arguments: orderInfo.id);
+            },
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -450,6 +456,56 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                 height: 100,
                                 imageSource: orderInfo.image ?? '',
                                 width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: orderInfo.pdf != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.attach_file_rounded,
+                        ),
+                        title: Text(S.current.attachedFile),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          var url = orderInfo.pdf?.pdfPreview;
+                          canLaunch(url ?? '').then((value) {
+                            if (value) {
+                              launch(url ?? '');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.unavailable);
+                            }
+                          });
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: Icon(
+                                  FontAwesomeIcons.filePdf,
+                                  color: Colors.red,
+                                  size: 100,
+                                ),
                               ),
                             ),
                           ),

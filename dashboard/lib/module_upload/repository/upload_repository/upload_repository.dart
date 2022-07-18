@@ -32,4 +32,29 @@ class UploadRepository {
       return null;
     }
   }
+
+  Future<ImgBBResponse?> uploadPDF(String filePath) async {
+    var client = Dio();
+    MultipartFile? multi;
+    if (kIsWeb) {
+      var file = await XFile(filePath).readAsBytes();
+      multi = MultipartFile.fromBytes(file,
+          filename: DateTime.now().toIso8601String() + '-pdf');
+    }
+    FormData data = FormData.fromMap({
+      'file': kIsWeb ? multi : await MultipartFile.fromFile(filePath),
+    });
+
+    Logger().info('UploadRepo', 'Uploading: ' + filePath);
+    try {
+      Response? response = await client.post(
+        Urls.UPLOAD_PDF_API,
+        data: data,
+      );
+      Logger().info('Got a Response', response.toString());
+      return ImgBBResponse(url: response.data);
+    } catch (e) {
+      return null;
+    }
+  }
 }
