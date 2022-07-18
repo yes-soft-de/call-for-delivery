@@ -1,5 +1,6 @@
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:c4d/utils/responses/file_pdf_response.dart';
 
 import 'created_at.dart';
 import 'delivery_date.dart';
@@ -38,6 +39,8 @@ class Data {
   String? storeName;
   int? storeId;
   String? noteCaptainOrderCost;
+  FilePdfResponse? pdf;
+
   Data(
       {this.id,
       this.state,
@@ -70,11 +73,15 @@ class Data {
       this.captainName,
       this.storeName,
       this.storeId,
-      this.noteCaptainOrderCost});
+      this.noteCaptainOrderCost,
+      this.pdf});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],
       id: json['id'] as int?,
+      pdf: json['filePdf'] == null
+          ? null
+          : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
       storeId: json['storeOwnerId'] as int?,
       orderIsMain: json['orderIsMain'] as bool?,
       captainName: json['captainName'],

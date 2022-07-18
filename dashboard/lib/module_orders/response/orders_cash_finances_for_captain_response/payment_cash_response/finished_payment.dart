@@ -4,9 +4,9 @@ class FinishedPayment {
   int? id;
   String? captainName;
   int? orderId;
-  int? amount;
+  num? amount;
   int? flag;
-  int? storeAmount;
+  num? storeAmount;
   String? captainNote;
   CreatedAt? createdAt;
 
@@ -26,9 +26,9 @@ class FinishedPayment {
       id: json['id'] as int?,
       captainName: json['captainName'] as String?,
       orderId: json['orderId'] as int?,
-      amount: json['amount'] as int?,
+      amount: json['amount'] as num?,
       flag: json['flag'] as int?,
-      storeAmount: json['storeAmount'] as int?,
+      storeAmount: json['storeAmount'] as num?,
       captainNote: json['captainNote'] as String?,
       createdAt: json['createdAt'] == null
           ? null
