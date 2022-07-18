@@ -20,7 +20,7 @@ use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
-
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 class AdminOrderManager
 {
@@ -233,5 +233,10 @@ class AdminOrderManager
         $this->entityManager->flush();
         
         return $orderEntity;
+    }
+
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterCaptainOrdersByAdmin($request);
     }
 }
