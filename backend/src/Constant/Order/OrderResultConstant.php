@@ -39,4 +39,6 @@ final class OrderResultConstant
     const CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT = 0;
 
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = "the captain has received an order for a specific store";
+
+    const CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE = "create time is greater than delivery time";
 }

@@ -30,7 +30,7 @@ class OrderGetForAdminResponse
      */
     public DateTime $deliveryDate;
 
-    /**
+     /**
      * @OA\Property(type="object", property="createdAt")
      */
     public DateTime $createdAt;
@@ -76,7 +76,6 @@ class OrderGetForAdminResponse
      */
     public $storeOwnerBranchId;
 
-
     /**
      * @OA\Property(type="object", property="location")
      */
@@ -91,7 +90,6 @@ class OrderGetForAdminResponse
      * @var int|null
      */
     public $imageId;
-
 
     /**
      * @OA\Property(type="object", property="images")

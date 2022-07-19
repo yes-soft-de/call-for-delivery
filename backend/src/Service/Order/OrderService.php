@@ -107,7 +107,11 @@ class OrderService
      * @return OrderResponse|CanCreateOrderResponse
      */
     public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
-    {        
+    {      
+        if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+        }
+
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner());
      
         if($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
@@ -135,7 +139,7 @@ class OrderService
                  $this->notificationFirebaseService->notificationToCaptains($order->getId());
 
                  // scheduled notification to captain
-                 $this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
+                //  $this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
 
              }  catch (\Exception $e) {
                  error_log($e);
@@ -1078,7 +1082,7 @@ class OrderService
         }
     }
 
-    public function recyclingOrCancelOrder(RecyclingOrCancelOrderRequest $request): OrderCancelResponse|CanCreateOrderResponse|null|OrderResponse
+    public function recyclingOrCancelOrder(RecyclingOrCancelOrderRequest $request): OrderCancelResponse|CanCreateOrderResponse|null|OrderResponse|string
     {        
         $orderEntity = $this->orderManager->getOrderByOrderIdAndState($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
         if($orderEntity) {
@@ -1103,8 +1107,12 @@ class OrderService
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
              }
-     
-             $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
+           
+            if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+                return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+            }
+           
+            $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
           
              if($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
      
@@ -1219,6 +1227,10 @@ class OrderService
 
     public function orderUpdate(UpdateOrderRequest $request): string|null|OrderResponse
     {
+        if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+        }
+
         $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
         if($order) {
 
