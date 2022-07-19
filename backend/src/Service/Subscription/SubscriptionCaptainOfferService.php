@@ -76,4 +76,9 @@ class SubscriptionCaptainOfferService
             $this->notificationFirebaseService->notificationCreateCaptainOfferSubscriptionToAdmin($storeOwnerName, $captainOfferId);
         }
     }
+
+    public function deleteCaptainOffersSubscriptionsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->subscriptionCaptainOfferManager->deleteCaptainOffersSubscriptionsByStoreOwnerId($storeOwnerId);
+    }
 }

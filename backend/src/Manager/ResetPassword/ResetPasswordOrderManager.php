@@ -84,4 +84,18 @@ class ResetPasswordOrderManager
 
         return $code;
     }
+
+    public function deleteAllResetPasswordOrdersByUserId(int $userId): array
+    {
+        $resetPasswordOrders = $this->resetPasswordOrderEntityRepository->findBy(['user'=>$userId]);
+
+        if (! empty($resetPasswordOrders)) {
+            foreach ($resetPasswordOrders as $resetPasswordOrder) {
+                $this->entityManager->remove($resetPasswordOrder);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $resetPasswordOrders;
+    }
 }

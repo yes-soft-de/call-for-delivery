@@ -178,4 +178,9 @@ class VerificationService
 
         $this->reSendNewVerificationCode($verificationCodeResendRequest);
     }
+
+    public function deleteAllVerificationCodesByIdOfUser(int $userId): array
+    {
+        return $this->verificationManager->deleteAllVerificationCodesByIdOfUser($userId);
+    }
 }

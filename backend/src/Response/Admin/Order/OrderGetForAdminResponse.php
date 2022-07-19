@@ -76,7 +76,6 @@ class OrderGetForAdminResponse
      */
     public $storeOwnerBranchId;
 
-    
     /**
      * @OA\Property(type="object", property="location")
      */
@@ -92,12 +91,11 @@ class OrderGetForAdminResponse
      */
     public $imageId;
 
-    
     /**
      * @OA\Property(type="object", property="images")
      */
     public array|null $images;
-    
+
     /**
      * @var int
      */

@@ -148,4 +148,9 @@ class StoreOwnerBranchService
     {
         return $this->storeOwnerBranchManager->getBranchById($id);
     }
+
+    public function deleteAllStoreBranchesByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerBranchManager->deleteAllStoreBranchesByStoreOwnerId($storeOwnerId);
+    }
 }

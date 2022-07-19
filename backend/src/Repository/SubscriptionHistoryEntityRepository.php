@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionHistoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +21,21 @@ class SubscriptionHistoryEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionHistoryEntity::class);
     }
 
-    // /**
-    //  * @return SubscriptionHistoryEntity[] Returns an array of SubscriptionHistoryEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getSubscriptionsHistoryByStoreOwnerId(int $storeOwnerId): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        return $this->createQueryBuilder('subscriptionHistoryEntity')
 
-    /*
-    public function findOneBySomeField($value): ?SubscriptionHistoryEntity
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscriptionHistoryEntity.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

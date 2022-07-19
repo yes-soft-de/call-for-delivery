@@ -17,4 +17,9 @@ class StoreOwnerPaymentManager
     {
         return $this->storeOwnerPaymentEntityRepository->getStorePaymentsBySubscriptionId($subscriptionId);
     }
+
+    public function getPaymentsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerPaymentEntityRepository->getPaymentsByStoreOwnerId($storeOwnerId);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Service\Order;
 
 use App\AutoMapping;
+use App\Constant\Eraser\EraserResultConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
@@ -1292,5 +1293,16 @@ class OrderService
        }
 
        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-    }  
+    }
+
+    public function checkIfStoreHasOrdersByStoreOwnerId(int $storeOwnerId): int
+    {
+        $orders = $this->orderManager->getStoreOrdersByStoreOwnerId($storeOwnerId);
+
+        if (! empty($orders)) {
+            return EraserResultConstant::STORE_HAS_ORDERS;
+        }
+
+        return EraserResultConstant::STORE_HAS_NOT_ORDERS;
+    }
 }
