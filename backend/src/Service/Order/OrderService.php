@@ -109,7 +109,9 @@ class OrderService
     public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
     {      
         if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
-            return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+            // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+            // to the database if it is happened
+            $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
         }
 
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner());
@@ -1109,7 +1111,9 @@ class OrderService
              }
            
             if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
-                return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+                // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+                // to the database if it is happened
+                $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
             }
            
             $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
@@ -1228,7 +1232,9 @@ class OrderService
     public function orderUpdate(UpdateOrderRequest $request): string|null|OrderResponse
     {
         if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
-            return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+            // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+            // to the database if it is happened
+            $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
         }
 
         $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
