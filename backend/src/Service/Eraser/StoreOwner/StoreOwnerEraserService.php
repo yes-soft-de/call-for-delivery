@@ -3,15 +3,16 @@
 namespace App\Service\Eraser\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Constant\Eraser\EraserResultConstant;
 use App\Constant\Notification\NotificationTokenConstant;
 use App\Entity\UserEntity;
 use App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest;
 use App\Response\Eraser\DeleteStoreOwnerAccountAndProfileByAdminResponse;
-use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Order\OrderService;
+use App\Service\ResetPassword\ResetPasswordOrderService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
@@ -24,7 +25,6 @@ class StoreOwnerEraserService
 {
     private AutoMapping $autoMapping;
     private OrderService $orderService;
-    private OrderChatRoomService $orderChatRoomService;
     private UserService $userService;
     private VerificationService $verificationService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
@@ -34,15 +34,15 @@ class StoreOwnerEraserService
     private StoreSubscriptionEraserService $storeSubscriptionEraserService;
     private StoreOwnerBranchService $storeOwnerBranchService;
     private StoreOwnerProfileService $storeOwnerProfileService;
+    private ResetPasswordOrderService $resetPasswordOrderService;
 
-    public function __construct(AutoMapping $autoMapping, OrderService $orderService, OrderChatRoomService $orderChatRoomService, UserService $userService, VerificationService $verificationService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, StoreOwnerPaymentService $storeOwnerPaymentService, StoreOwnerPaymentFromCompanyService $storeOwnerPaymentFromCompanyService,
+    public function __construct(AutoMapping $autoMapping, OrderService $orderService, UserService $userService, VerificationService $verificationService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
+                                StoreOwnerPaymentService $storeOwnerPaymentService, StoreOwnerPaymentFromCompanyService $storeOwnerPaymentFromCompanyService,
                                 NotificationFirebaseService $notificationFirebaseService, StoreSubscriptionEraserService $storeSubscriptionEraserService, StoreOwnerBranchService $storeOwnerBranchService,
-                                StoreOwnerProfileService $storeOwnerProfileService)
+                                StoreOwnerProfileService $storeOwnerProfileService, ResetPasswordOrderService $resetPasswordOrderService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderService = $orderService;
-        $this->orderChatRoomService = $orderChatRoomService;
         $this->userService = $userService;
         $this->verificationService = $verificationService;
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
@@ -52,9 +52,10 @@ class StoreOwnerEraserService
         $this->storeSubscriptionEraserService = $storeSubscriptionEraserService;
         $this->storeOwnerBranchService = $storeOwnerBranchService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
+        $this->resetPasswordOrderService = $resetPasswordOrderService;
     }
 
-    public function deleteStoreOwnerAccountAndProfileByAdmin(DeleteStoreOwnerAccountAndProfileByAdminRequest $request): int|DeleteStoreOwnerAccountAndProfileByAdminResponse
+    public function deleteStoreOwnerAccountAndProfileByAdmin(DeleteStoreOwnerAccountAndProfileByAdminRequest $request): int|DeleteStoreOwnerAccountAndProfileByAdminResponse|null
     {
         // check store dues from cash orders
         $storeDuesFromCashOrders = $this->storeOwnerDuesFromCashOrdersService->getStoreOwnerDuesFromCashOrdersByStoreOwnerId($request->getStoreOwnerId());
@@ -88,7 +89,11 @@ class StoreOwnerEraserService
         $this->notificationFirebaseService->deleteTokenByUserAndAppType($request->getStoreOwnerId(), NotificationTokenConstant::APP_TYPE_STORE);
 
         // delete subscription/s
-        $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($request->getStoreOwnerId());
+        $deletingResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($request->getStoreOwnerId());
+
+        if ($deletingResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS) {
+            return EraserResultConstant::CAN_NOT_DELETE_STORE_HAS_PAYMENTS;
+        }
 
         // delete store branched
         $this->storeOwnerBranchService->deleteAllStoreBranchesByStoreOwnerId($request->getStoreOwnerId());
@@ -98,6 +103,9 @@ class StoreOwnerEraserService
 
         // delete verification code
         $this->verificationService->deleteAllVerificationCodesByIdOfUser($request->getStoreOwnerId());
+
+        // delete reset password requests
+        $this->resetPasswordOrderService->deleteAllResetPasswordOrdersByUserId($request->getStoreOwnerId());
 
         // delete user record
         $userResult = $this->userService->deleteUserById($request->getStoreOwnerId());

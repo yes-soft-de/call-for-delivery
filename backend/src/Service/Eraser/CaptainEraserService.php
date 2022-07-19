@@ -20,6 +20,7 @@ use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Image\ImageService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Order\OrderService;
+use App\Service\ResetPassword\ResetPasswordOrderService;
 use App\Service\User\UserService;
 use App\Service\Verification\VerificationService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -40,11 +41,13 @@ class CaptainEraserService
     private CaptainService $captainService;
     private UserService $userService;
     private VerificationService $verificationService;
+    private ResetPasswordOrderService $resetPasswordOrderService;
 
     public function __construct(AutoMapping $autoMapping, ParameterBagInterface $param, OrderService $orderService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
                                 CaptainFinancialDuesService $captainFinancialDuesService, CaptainPaymentService $captainPaymentService, CaptainPaymentToCompanyService $captainPaymentToCompanyService,
                                 CaptainFinancialSystemDetailService $captainFinancialSystemDetailService, ImageService $imageService, NotificationFirebaseService $notificationFirebaseService,
-                                OrderChatRoomService $orderChatRoomService, CaptainService $captainService, UserService $userService, VerificationService $verificationService)
+                                OrderChatRoomService $orderChatRoomService, CaptainService $captainService, UserService $userService, VerificationService $verificationService,
+                                ResetPasswordOrderService $resetPasswordOrderService)
     {
         $this->autoMapping = $autoMapping;
         $this->param = $param;
@@ -60,6 +63,7 @@ class CaptainEraserService
         $this->captainService = $captainService;
         $this->userService = $userService;
         $this->verificationService = $verificationService;
+        $this->resetPasswordOrderService = $resetPasswordOrderService;
     }
 
     public function deleteCaptainAccountAndProfileBySuperAdmin(DeleteCaptainAccountAndProfileBySuperAdminRequest $request): string|DeleteCaptainAccountAndProfileBySuperAdminResponse
@@ -123,6 +127,9 @@ class CaptainEraserService
         // delete related verification records
         $this->verificationService->deleteAllVerificationCodesByIdOfUser($request->getId());
 
+        // delete reset password requests
+        $this->resetPasswordOrderService->deleteAllResetPasswordOrdersByUserId($request->getId());
+
         // finally, delete captain user record
         $userResult = $this->userService->deleteUserById($request->getId());
 
@@ -184,6 +191,9 @@ class CaptainEraserService
 
         // delete related verification records
         $this->verificationService->deleteAllVerificationCodesByIdOfUser($request->getCaptainId());
+
+        // delete reset password requests
+        $this->resetPasswordOrderService->deleteAllResetPasswordOrdersByUserId($request->getCaptainId());
 
         // finally, delete captain user record
         $userResult = $this->userService->deleteUserById($request->getCaptainId());

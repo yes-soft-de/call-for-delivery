@@ -129,4 +129,9 @@ class ResetPasswordOrderService
 
         return $response;
     }
+
+    public function deleteAllResetPasswordOrdersByUserId(int $userId): array
+    {
+        return $this->resetPasswordOrderManager->deleteAllResetPasswordOrdersByUserId($userId);
+    }
 }
