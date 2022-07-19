@@ -2,8 +2,8 @@
 
 namespace App\Response\Admin\Order;
 
-use DateTime;
 use OpenApi\Annotations as OA;
+use DateTime;
 
 class OrderGetForAdminResponse
 {
@@ -26,19 +26,19 @@ class OrderGetForAdminResponse
     public $note;
 
     /**
-     * @var DateTime|null
+     * @OA\Property(type="object", property="deliveryDate")
      */
-    public $deliveryDate;
+    public DateTime $deliveryDate;
 
     /**
-     * @var DateTime|null
+     * @OA\Property(type="object", property="createdAt")
      */
-    public $createdAt;
+    public DateTime $createdAt;
 
     /**
-     * @var DateTime|null
+     * @OA\Property(type="object", property="updatedAt")
      */
-    public $updatedAt;
+    public DateTime|null $updatedAt;
 
     /**
      * @var float|null
@@ -52,9 +52,9 @@ class OrderGetForAdminResponse
 
     /**
      * @OA\Property(type="array", property="destination",
-     *     @OA\Items(type="object"), nullable=true)
+     *     @OA\Items(type="object"))
      */
-    public $destination;
+    public array|null $destination;
 
     /**
      * @var string|null
@@ -76,11 +76,11 @@ class OrderGetForAdminResponse
      */
     public $storeOwnerBranchId;
 
+
     /**
-     * @OA\Property(type="array", property="location",
-     *     @OA\Items(type="object"), nullable=true)
+     * @OA\Property(type="object", property="location")
      */
-    public $location;
+    public array|null $location;
 
     /**
      * @var string|null
@@ -92,12 +92,12 @@ class OrderGetForAdminResponse
      */
     public $imageId;
 
+
     /**
-     * @OA\Property(type="array", property="images",
-     *     @OA\Items(type="object"), nullable=true)
+     * @OA\Property(type="object", property="images")
      */
-    public $images;
-    
+    public array|null $images;
+
     /**
      * @var int
      */
