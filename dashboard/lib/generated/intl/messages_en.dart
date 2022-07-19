@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
             "Here we are showing your balance status"),
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
+        "DeletingYourAccountHint": MessageLookupByLibrary.simpleMessage(
+            "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time"),
         "FinanceRequest":
             MessageLookupByLibrary.simpleMessage("Finance request"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
@@ -43,6 +45,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account balance"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account Created"),
+        "accountDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Account deleted successfully"),
+        "accountHasOrdersRecord":
+            MessageLookupByLibrary.simpleMessage("Account has order records"),
+        "accountHasPaymentsRecord":
+            MessageLookupByLibrary.simpleMessage("Account has payments record"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
@@ -82,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this captain finance plan"),
+        "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this order ? "),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
@@ -317,6 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
+        "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
@@ -329,6 +340,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(

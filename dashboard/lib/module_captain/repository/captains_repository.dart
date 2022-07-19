@@ -122,6 +122,15 @@ class CaptainsRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> deleteCaptain(String id) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(Urls.DELETE_CAPTAIN,
+        payLoad: {'captainId': '$id'},
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<CaptainNeedSupportResponse?> getCaptainSupport() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CHAT_ROOMS_CAPTAINS,

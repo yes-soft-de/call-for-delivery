@@ -63,4 +63,6 @@ class CaptainsManager {
   Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
           int captainID) =>
       _repository.getCaptainFinancialDues(captainID);
+  Future<ActionResponse?> deleteCaptain(String captainID) =>
+      _repository.deleteCaptain(captainID);
 }

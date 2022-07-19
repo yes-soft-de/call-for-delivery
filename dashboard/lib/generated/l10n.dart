@@ -7159,6 +7159,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Account deleted successfully`
+  String get accountDeletedSuccessfully {
+    return Intl.message(
+      'Account deleted successfully',
+      name: 'accountDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Danger Zone`
+  String get dangerZone {
+    return Intl.message(
+      'Danger Zone',
+      name: 'dangerZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting your account , you won't be able to login with this credential any more`
+  String get areSureAboutDeletingYourAccount {
+    return Intl.message(
+      'Are you sure about deleting your account , you won\'t be able to login with this credential any more',
+      name: 'areSureAboutDeletingYourAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time`
+  String get DeletingYourAccountHint {
+    return Intl.message(
+      'This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time',
+      name: 'DeletingYourAccountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has order records`
+  String get accountHasOrdersRecord {
+    return Intl.message(
+      'Account has order records',
+      name: 'accountHasOrdersRecord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has payments record`
+  String get accountHasPaymentsRecord {
+    return Intl.message(
+      'Account has payments record',
+      name: 'accountHasPaymentsRecord',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

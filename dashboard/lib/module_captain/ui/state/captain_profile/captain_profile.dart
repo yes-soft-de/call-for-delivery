@@ -3,6 +3,7 @@ import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -262,6 +263,78 @@ class CaptainProfileLoadedState extends States {
                       ImageTile(
                           title: S.current.driverLicence,
                           image: model?.drivingLicence ?? ''),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text(
+                          S.current.dangerZone,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: Text(
+                          S.current.DeletingYourAccountHint,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25))),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return CustomAlertDialog(
+                                        oneAction: false,
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          screenState.stateManager
+                                              .deleteCaptainProfile(
+                                                  screenState,
+                                                  model?.captainId.toString() ??
+                                                      '-1');
+                                        },
+                                        content: S.current
+                                            .areSureAboutDeletingYourAccount);
+                                  });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                S.current.deleteAccount,
+                                style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

@@ -60,6 +60,8 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     widget._stateManager.updateCaptainProfile(this, request);
   }
 
+  CaptainProfileStateManager get stateManager => widget._stateManager;
+
   void refresh() {
     if (mounted) {
       setState(() {});

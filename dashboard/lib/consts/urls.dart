@@ -109,6 +109,8 @@ class Urls {
       BASE_API_STORE + '/storeowner/storeownerprofilebyidforadmin/';
   static const ACTIVATE_STORE =
       BASE_API_STORE + '/storeowner/storeownerprofilestatusbyadmin';
+  static const DELETE_STORE =
+      BASE_API_STORE + '/storeowner/deletestoreownerprofilebyadmin';
   static const UPDATE_STORE_INFO =
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
@@ -177,6 +179,8 @@ class Urls {
   static const ASSIGN_ORDER_TO_CAPTAIN =
       BASE_API_ORDER + '/assignordertocaptain';
   static const UPDATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofile';
+  static const DELETE_CAPTAIN =
+      BASE_API_CAPTAIN + '/deletecaptainprofilebyadmin';
   /*------------------------STORE PAYMENTS------------------------*/
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';

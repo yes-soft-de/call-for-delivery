@@ -109,6 +109,19 @@ class CaptainsService {
     return DataModel.empty();
   }
 
+  Future<DataModel> deleteCaptain(String captainId) async {
+    ActionResponse? actionResponse = await _manager.deleteCaptain(captainId);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> assignOrderToCaptain(
       AssignOrderToCaptainRequest request) async {
     ActionResponse? actionResponse =

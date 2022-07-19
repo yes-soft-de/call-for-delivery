@@ -24,6 +24,7 @@ class ProfileModel extends DataModel {
   String? createDate;
   OrderCountsSystemDetails? captainFinance;
   bool? verificationStatus;
+  late int captainId;
   ProfileModel(
       {required this.id,
       this.image,
@@ -43,7 +44,8 @@ class ProfileModel extends DataModel {
       this.salary,
       this.createDate,
       this.captainFinance,
-      this.verificationStatus});
+      this.verificationStatus,
+      required this.captainId});
 
   ProfileModel? _models;
 
@@ -71,10 +73,11 @@ class ProfileModel extends DataModel {
             '   ' +
             DateFormat.yMd()
                 .format(DateHelper.convert(data.createDate?.timestamp)),
-        verificationStatus: data.verificationStatus == 1 ? true : false);
+        verificationStatus: data.verificationStatus == 1 ? true : false,
+        captainId: data.captainID ?? -1);
   }
 
-  ProfileModel get data => _models ?? ProfileModel(id: -1);
+  ProfileModel get data => _models ?? ProfileModel(id: -1, captainId: -1);
   OrderCountsSystemDetails getOrderCounts(
       FinancialSystemCaptainDetails? finance) {
     return OrderCountsSystemDetails(

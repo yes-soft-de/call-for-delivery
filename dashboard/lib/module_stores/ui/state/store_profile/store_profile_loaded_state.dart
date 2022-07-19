@@ -9,6 +9,7 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -277,6 +278,75 @@ class StoreProfileLoadedState extends States {
                   OrdersRoutes.ORDER_CASH_STORES,
                 );
               }),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).colorScheme.error,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      S.current.dangerZone,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      S.current.DeletingYourAccountHint,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25))),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    oneAction: false,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.stateManager.deleteStore(
+                                          screenState, profile?.storeId ?? -1);
+                                    },
+                                    content: S.current
+                                        .areSureAboutDeletingYourAccount);
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            S.current.deleteAccount,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.error),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     ]));

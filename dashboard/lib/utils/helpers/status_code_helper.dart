@@ -27,6 +27,14 @@ class StatusCodeHelper {
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
       case '9603':
         return S.current.yourRequestToChangeCaptainPlanFailed;
+      case '9355':
+        return S.current.accountHasPaymentsRecord;
+      case '9351':
+        return S.current.accountHasOrdersRecord;
+      case '9353':
+        return S.current.accountHasPaymentsRecord;
+      case '9354':
+        return S.current.accountHasPaymentsRecord;
       case '-1':
         return S.current.dataDecodeError;
       default:

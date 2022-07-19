@@ -61,6 +61,26 @@ class CaptainProfileStateManager {
     });
   }
 
+  void deleteCaptainProfile(
+      CaptainProfileScreenState screenState, String captainID) {
+    _stateSubject.add(LoadingState(screenState));
+    _captainsService.deleteCaptain(captainID).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error.toString())
+            .show(screenState.context);
+        getCaptainProfile(screenState, int.tryParse(captainID) ?? -1);
+      } else {
+        getCaptainProfile(screenState, int.tryParse(captainID) ?? -1);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.accountDeletedSuccessfully)
+            .show(screenState.context);
+        getIt<GlobalStateManager>().updateList();
+      }
+    });
+  }
+
   void updateCaptainProfile(
       CaptainProfileScreenState screenState, UpdateCaptainRequest request) {
     _stateSubject.add(LoadingState(screenState));

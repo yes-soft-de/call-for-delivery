@@ -19,6 +19,7 @@ class StoreProfileModel extends DataModel {
   String? employeeCount;
   String? status;
   num profitMargin = 0;
+  late int storeId;
 
   StoreProfileModel? _models;
 
@@ -35,7 +36,8 @@ class StoreProfileModel extends DataModel {
       this.city,
       this.status,
       required this.profitMargin,
-      this.imageUrl});
+      this.imageUrl,
+      required this.storeId});
 
   StoreProfileModel.withData(Data data) : super.withData() {
     _models = StoreProfileModel(
@@ -51,7 +53,8 @@ class StoreProfileModel extends DataModel {
         employeeCount: data.employeeCount,
         city: data.city,
         status: data.status,
-        profitMargin: data.profitMargin ?? 0);
+        profitMargin: data.profitMargin ?? 0,
+        storeId: int.tryParse(data.storeId.toString()) ?? -1);
   }
 
   StoreProfileModel get data {

@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا نستعرض تفاصيل الدورة المالية الخاصة بهذا المستخدم"),
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
+        "DeletingYourAccountHint": MessageLookupByLibrary.simpleMessage(
+            "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن"),
         "FinanceRequest": MessageLookupByLibrary.simpleMessage("طلب خطة عمل"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
@@ -41,6 +43,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountBalance": MessageLookupByLibrary.simpleMessage("تفاصيل الحساب"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
+        "accountDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
+        "accountHasOrdersRecord": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن حذف الحساب لوجود سجل طلبات"),
+        "accountHasPaymentsRecord": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن حذف الحساب لوجود سجل دفعات"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
@@ -82,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من عملية حذف هذه الخطة"),
+        "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
@@ -316,6 +326,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
+        "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
@@ -329,6 +340,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deadLine": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteSuccess":

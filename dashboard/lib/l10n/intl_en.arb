@@ -397,10 +397,8 @@
     "yourRequestSent": "Your Request have been sent",
     "forgotPass": "Forgot password?",
     "partners": "Our partners",
-
     "paymentsVia": "Payments via",
     "newPassword": "New password",
-
     "confirmNewPass": "Confirm new password",
     "passwordUpdatedSuccess": "Password updated successfully",
     "informSendCode": "We will send a verification code to your number",
@@ -421,7 +419,6 @@
     "taxNumber": "Tax Number",
     "captainRated": "Captain rated successfully",
     "exitWarning": "Please press again to exit",
-
     "countCompletedOrders": "Completed Orders",
     "countOngoingOrders": "Ongoing Orders",
     "countClients": "Clients Count",
@@ -429,7 +426,6 @@
     "countProducts": "Products Count",
     "countStores": "Stores Count",
     "countTodayOrder": "Today Order",
-
     "storeBalance": "Store Balance",
     "paymentsForStore": "Payments for store",
     "remainingAmountForStore": "Amount owed for store",
@@ -449,10 +445,6 @@
     "storeUpdatedSuccessfully": "Store Updated Successfully",
     "active": "This store is active",
     "city": "city",
-
-
-
-
     "emptyStaff": "Empty Stuff",
     "paymentAmount": "Payment amount",
     "areYouSureToDeleteThisPayment": "Are you sure you want to delete this payment",
@@ -467,7 +459,6 @@
     "close": "Close",
     "carCount": "Car count",
     "orderCount": "Order count",
-
     "packageName": "Package name",
     "dayCount": "The number of days of validity of the package",
     "packages": "Packages",
@@ -475,18 +466,15 @@
     "addPackageSuccessfully": "Package Added successfully",
     "updatePackageSuccessfully": "Package updated successfully",
     "chooseCategory": "Choose category",
-
     "companyProfileCreatedSuccessfully": "Company profile created successfully",
     "companyProfileUpdatedSuccessfully": "Company profile updated successfully",
     "companyInfo": "Company information",
-
     "phone2": "Phone 2",
     "fax": "Fax",
     "whatsapp": "Whatsapp",
     "kilometerLimt": "Kilometers limit",
     "kilometerLimtMax": "bonus on max limit",
     "kilometerLimtMin": "bonus on min limit",
-
     "branchManagement": "Branch management",
     "selectedBranchesMenu": "My Selected Branches",
     "selectedBranchesMenuDescribtion": "Tap the menu icon to show selected branches",
@@ -495,7 +483,6 @@
     "saveBranchAlert": "If you have any difficulties with saving branches please reach out our support team",
     "chooseBranch": "Choose Branch",
     "thereIsNoBranches": "There is no branches available",
-
     "addNote": "Add Note",
     "title": "title",
     "sendTo": "Send to",
@@ -509,7 +496,6 @@
     "addOfferSuccessfully": "offer added successfully",
     "storesActive": "Stores Active",
     "allOrdersCount": "Orders count",
-
     "inActiveCaptains": "Inactive Captains",
     "salary": "Salary",
     "captainStatus": "Account Status",
@@ -525,7 +511,6 @@
     "sOrder": "order",
     "captainUpdatedSuccessfully": "Captain updated successfully",
     "bounce": "Bounce",
-
     "firstDate": "From date",
     "endDate": "To date",
     "pending": "Pending",
@@ -535,7 +520,6 @@
     "deliverDate": "Delivery date",
     "createdDate": "Created date",
     "details": "Details",
-
     "calculating": "Calculating",
     "distance": "Distance",
     "invalidMapLink": "Invalid map link",
@@ -573,13 +557,11 @@
     "bounceMaxCountOrdersInMonth": "Bounce max count orders in month",
     "bounceMinCountOrdersInMonth": "Bounce min count orders in month",
     "captainPayments": "Captain Payments",
-
     "inActiveSupplier": "inActive Supplier",
     "suppliers": "Suppliers",
     "suppliersCategories": "Supplier Categories",
     "categoryImage": "Category image",
     "supplierUpdatedSuccessfully": "Supplier updated successfully",
-
     "countOrders": "Count orders",
     "countOrdersMaxFromNineteen": "Count orders max from nineteen",
     "financialDues": "Profit",
@@ -626,17 +608,13 @@
     "deliveryCarsCost": "Delivery Cars Cost",
     "carModel": "Car Model",
     "profit": "Profit",
-
     "price": "Price",
     "deadLine": "Dead Line",
     "offerLog": "Offer log",
-
-
     "pendingOfferMsg": "Waiting to accept your offer",
     "rejectOfferMsg": "Store reject your offer",
     "acceptOfferMsg": "Store accept your offer",
     "confirmed": "Confirmed",
-
     "open": "Open",
     "supplierOffer": "Supplier offer",
     "bidOrder": "Bid order",
@@ -717,56 +695,27 @@
     "assignCaptainHint": "Assign captain to handle this order",
     "assignCaptain": "Assign Captain",
     "assign": "Assign",
-    "now":"Now",
-    "packageOrderStatus":"Package Orders ",
-    "packageCaptainsStatus":"Package Captain",
-    "isFutureSubscriptions":"Is Future Subscriptions",
-    "yes":"Yes",
-    "no":"No",
-    "last24CountOrder":"Last 24h orders",
-    "last7WeekOrders":"Last 7 days orders",
-    "paidOrder":"Paid Order",
-    "unPaidOrder":"Unpaid Order",
+    "now": "Now",
+    "packageOrderStatus": "Package Orders ",
+    "packageCaptainsStatus": "Package Captain",
+    "isFutureSubscriptions": "Is Future Subscriptions",
+    "yes": "Yes",
+    "no": "No",
+    "last24CountOrder": "Last 24h orders",
+    "last7WeekOrders": "Last 7 days orders",
+    "paidOrder": "Paid Order",
+    "unPaidOrder": "Unpaid Order",
     "attachFile": "Attach file",
     "attachedFile": "This order has attached file",
     "unavailable": "Unavailable",
-    "accountUnVerified":"Unverified",
-    "accountVerified":"Verified",
-    "more":"More"
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "accountUnVerified": "Unverified",
+    "accountVerified": "Verified",
+    "more": "More",
+    "accountDeletedSuccessfully": "Account deleted successfully",
+    "dangerZone": "Danger Zone",
+    "areSureAboutDeletingYourAccount": "Are you sure about deleting your account , you won't be able to login with this credential any more",
+    "deleteAccount": "Delete Account",
+    "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
+    "accountHasOrdersRecord": "Account has order records",
+    "accountHasPaymentsRecord": "Account has payments record"
 }

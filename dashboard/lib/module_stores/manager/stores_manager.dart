@@ -47,4 +47,7 @@ class StoreManager {
   Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance(
           int orderID) async =>
       await _storesRepository.getSubscriptionsFinance(orderID);
+  Future<ActionResponse?> deleteStore(
+          int storeID) async =>
+      await _storesRepository.deleteStore(storeID);
 }
