@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\User\UserRoleConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
 use App\Entity\CaptainEntity;
@@ -108,6 +109,13 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
 
         $query->orderBy('userEntity.id', 'DESC');
 
+        $tempQuery = $query->getQuery()->getResult();
+
+        // here we just add "completeAccountStatus" to each user depending on its roles
+        if (! empty($tempQuery)) {
+            return $this->addCompleteAccountStatusToResult($tempQuery);
+        }
+
         return $query->getQuery()->getResult();
     }
 
@@ -184,5 +192,83 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
 
             ->getQuery()
             ->getResult();
+    }
+
+    // this function just added "completeAccountStatus" field to each user of the "result" array
+    public function addCompleteAccountStatusToResult(array $result): array
+    {
+        foreach ($result as $key => $value) {
+            if (in_array(UserRoleConstant::ROLE_CAPTAIN, $value['roles'])) {
+                $result[$key]['completeAccountStatus']  = $this->getCaptainAccountStatusByUserId($value['id']);
+
+            } elseif (in_array(UserRoleConstant::ROLE_OWNER, $value['roles'])) {
+                $result[$key]['completeAccountStatus']  = $this->getStoreAccountStatusByUserId($value['id']);
+
+            } elseif (in_array(UserRoleConstant::ROLE_SUPPLIER, $value['roles'])) {
+                $result[$key]['completeAccountStatus']  = $this->getSupplierAccountStatusByUserId($value['id']);
+            }
+        }
+
+        return $result;
+    }
+
+    public function getCaptainAccountStatusByUserId(int $userId): string
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->select('captainEntity.completeAccountStatus')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.captainId = userEntity.id'
+            )
+
+            ->andWhere('userEntity.id = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getStoreAccountStatusByUserId(int $userId): string
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->select('storeOwnerProfileEntity.completeAccountStatus')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.storeOwnerId = userEntity.id'
+            )
+
+            ->andWhere('userEntity.id = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getSupplierAccountStatusByUserId(int $userId): string
+    {
+        return $this->createQueryBuilder('userEntity')
+
+            ->select('supplierProfileEntity.completeAccountStatus')
+
+            ->leftJoin(
+                SupplierProfileEntity::class,
+                'supplierProfileEntity',
+                Join::WITH,
+                'supplierProfileEntity.user = userEntity.id'
+            )
+
+            ->andWhere('userEntity.id = :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
