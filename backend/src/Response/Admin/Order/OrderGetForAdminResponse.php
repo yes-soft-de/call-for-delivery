@@ -78,7 +78,7 @@ class OrderGetForAdminResponse
 
     
     /**
-     * @OA\Property(type="object", property="updatedAt")
+     * @OA\Property(type="object", property="location")
      */
     public array|null $location;
 
@@ -94,7 +94,7 @@ class OrderGetForAdminResponse
 
     
     /**
-     * @OA\Property(type="object", property="updatedAt")
+     * @OA\Property(type="object", property="images")
      */
     public array|null $images;
     
