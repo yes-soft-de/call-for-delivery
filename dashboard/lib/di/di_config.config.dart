@@ -651,7 +651,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i159.CaptainFinanceByCountOrderScreen>(),
       get<_i160.CaptainFinanceByHoursScreen>(),
       get<_i161.CaptainFinanceByOrderScreen>(),
-      get<_i140.PaymentsToCaptainScreen>()));
+      get<_i140.PaymentsToCaptainScreen>(),
+      get<_i143.StoreBalanceScreen>()));
   gh.factory<_i180.StoreInfoScreen>(
       () => _i180.StoreInfoScreen(get<_i145.StoreProfileStateManager>()));
   gh.factory<_i181.StoreSubscriptionsFinanceScreen>(() =>

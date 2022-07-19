@@ -44,7 +44,7 @@ class PaymentsRepository {
 
   Future<StorePaymentsResponse?> getStorePayments(int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_STORE_PAYMENTS + '/$id',
+    dynamic response = await _apiClient.get(Urls.GET_FROM_STORE_PAYMENTS + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StorePaymentsResponse.fromJson(response);
@@ -62,7 +62,7 @@ class PaymentsRepository {
   Future<ActionResponse?> deleteFromStorePayments(String id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.delete(
-        Urls.CREATE_STORE_PAYMENTS + '/$id',
+        Urls.CREATE_STORE_FROM_PAYMENTS + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

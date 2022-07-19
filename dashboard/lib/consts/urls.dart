@@ -180,9 +180,15 @@ class Urls {
   /*------------------------STORE PAYMENTS------------------------*/
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
+  static const CREATE_STORE_FROM_PAYMENTS = BASE_API +
+      '/v1/admin/storeownerpaymentfromcompany' +
+      '/storeownerpaymentfromcompany';
   static const CREATE_STORE_PAYMENTS_TO_STORE =
       BASE_API_STORE_PAYMENTS_TO_STORE + '/storeownerpaymentfromcompany';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
+  static const GET_FROM_STORE_PAYMENTS = BASE_API +
+      '/v1/admin/storeownerpaymentfromcompany' +
+      '/storepaymentsfromcompany';
   static const GET_STORE_SUBSCRIPTIONS_FINANCE =
       BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
 

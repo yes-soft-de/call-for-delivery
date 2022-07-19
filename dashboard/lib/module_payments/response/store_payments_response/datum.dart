@@ -19,9 +19,9 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
         amount: json['amount'] as num?,
-        date: json['date'] == null
+        date: json['createdAt'] == null
             ? null
-            : Date.fromJson(json['date'] as Map<String, dynamic>),
+            : Date.fromJson(json['createdAt'] as Map<String, dynamic>),
         storeId: json['storeId'] as String?,
         storeOwnerName: json['storeOwnerName'] as String?,
         note: json['note'] as String?,

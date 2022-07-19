@@ -82,23 +82,25 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // captain name
         Visibility(
-            replacement: OrderButton(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        ArgumentHiveHelper()
-                            .setCurrentOrderID(screenState.orderId.toString());
-                        return getIt<CaptainAssignOrderScreen>();
-                      });
-                },
-                backgroundColor: Colors.orange,
-                icon: Icons.delivery_dining_rounded,
-                subtitle: S.current.assignCaptainHint,
-                title: S.current.assignCaptain),
-            visible: orderInfo.captainName != null &&
-                orderInfo.state != OrderStatusEnum.FINISHED &&
-                orderInfo.state != OrderStatusEnum.CANCELLED,
+            replacement: Visibility(
+              visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                  orderInfo.state != OrderStatusEnum.CANCELLED,
+              child: OrderButton(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          ArgumentHiveHelper().setCurrentOrderID(
+                              screenState.orderId.toString());
+                          return getIt<CaptainAssignOrderScreen>();
+                        });
+                  },
+                  backgroundColor: Colors.orange,
+                  icon: Icons.delivery_dining_rounded,
+                  subtitle: S.current.assignCaptainHint,
+                  title: S.current.assignCaptain),
+            ),
+            visible: orderInfo.captainName != null,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(

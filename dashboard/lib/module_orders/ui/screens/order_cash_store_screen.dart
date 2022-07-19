@@ -5,6 +5,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/state_manager/order_cash_store_state_manager.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -92,6 +93,12 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
         appBar: CustomC4dAppBar.appBar(context,
             title: S.current.cashOrders,
             actions: [
+              CustomC4dAppBar.actionIcon(context, onTap: () {
+                Navigator.of(context).pushNamed(
+                    PaymentsRoutes.PAYMENTS_LIST,
+                    arguments: int.tryParse(
+                        ArgumentHiveHelper().getCurrentStoreID() ?? ''));
+              }, icon: Icons.payments),
               CustomC4dAppBar.actionIcon(
                 context,
                 onTap: () {

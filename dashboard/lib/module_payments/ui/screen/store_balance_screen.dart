@@ -59,7 +59,7 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
     }
     return Scaffold(
       appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).storePayments),
+          CustomC4dAppBar.appBar(context, title: S.of(context).paymentFromStore),
       body: currentState.getUI(context),
     );
   }

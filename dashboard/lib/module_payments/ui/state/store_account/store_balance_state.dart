@@ -44,78 +44,79 @@ class StoreBalanceLoadedState extends States {
       child: CustomListView.custom(
         padding: EdgeInsets.only(left: 16, right: 16),
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, bottom: 8, right: 12, top: 16.0),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                S.current.paymentAmount,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          CustomFormField(
-            controller: _amount,
-            hintText: S.current.paymentAmount,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, bottom: 8, right: 12, top: 16.0),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                S.current.note,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          CustomFormField(
-            controller: _note,
-            hintText: S.current.note,
-            last: true,
-            keyAction: TextInputAction.done,
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                screenState.pay(CreateStorePaymentsRequest(
-                    storeId: screenState.storeID,
-                    note: _note.text,
-                    amount: num.parse(_amount.text.trim())));
-              },
-              style: ElevatedButton.styleFrom(
-                onSurface: Theme.of(context).primaryColor,
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    S.current.pay,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(right: 32.0, left: 32),
-            child: Divider(
-              thickness: 2.5,
-              color: Theme.of(context).backgroundColor,
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //       left: 12.0, bottom: 8, right: 12, top: 16.0),
+          //   child: Align(
+          //     alignment: AlignmentDirectional.centerStart,
+          //     child: Text(
+          //       S.current.paymentAmount,
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //       textAlign: TextAlign.start,
+          //     ),
+          //   ),
+          // ),
+          // CustomFormField(
+          //   controller: _amount,
+          //   hintText: S.current.paymentAmount,
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //       left: 12.0, bottom: 8, right: 12, top: 16.0),
+          //   child: Align(
+          //     alignment: AlignmentDirectional.centerStart,
+          //     child: Text(
+          //       S.current.note,
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //       textAlign: TextAlign.start,
+          //     ),
+          //   ),
+          // ),
+          // CustomFormField(
+          //   controller: _note,
+          //   hintText: S.current.note,
+          //   last: true,
+          //   keyAction: TextInputAction.done,
+          // ),
+          // SizedBox(
+          //   height: 16,
+          // ),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       screenState.pay(CreateStorePaymentsRequest(
+          //           storeId: screenState.storeID,
+          //           note: _note.text,
+          //           amount: num.parse(_amount.text.trim())));
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       onSurface: Theme.of(context).primaryColor,
+          //       elevation: 2,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(25),
+          //       ),
+          //     ),
+          //     child: Center(
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(10.0),
+          //         child: Text(
+          //           S.current.pay,
+          //           style: TextStyle(
+          //             color: Colors.white,
+          //           ),
+          //         ),
+          //       ),
+          //     )),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 32.0, left: 32),
+          //   child: Divider(
+          //     thickness: 2.5,
+          //     color: Theme.of(context).backgroundColor,
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 16,
+          // ),
+          
           getCaptainPaymentFrom(),
           SizedBox(
             height: 16,
@@ -127,19 +128,6 @@ class StoreBalanceLoadedState extends States {
 
   Widget getCaptainPaymentFrom() {
     List<Widget> widgets = [];
-    widgets.add(
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            S.current.payments,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
     model?.paymentsToStore.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8),
@@ -172,7 +160,7 @@ class StoreBalanceLoadedState extends States {
             title: Text(S.current.paymentAmount),
             subtitle: Text(element.amount.toString()),
             trailing: SizedBox(
-              width: 125,
+              width: 130,
               child: Row(
                 children: [
                   Text(
