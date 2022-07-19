@@ -116,8 +116,17 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9151 or 9204"),
-     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9151"),
+     *                          @OA\Property(type="string", property="msg", description="error store inactive Error.")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9222"),
+     *                          @OA\Property(type="string", property="msg", description="create date is greater than delivery date")
+     *                   ),
+     * 
+     *              }
      *        )
      *     )
      *
@@ -150,6 +159,11 @@ class OrderController extends BaseController
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
+        
+        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+      
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+        }  
         
         return $this->response($result, self::CREATE);
     }

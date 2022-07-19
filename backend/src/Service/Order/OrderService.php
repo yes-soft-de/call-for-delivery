@@ -106,7 +106,11 @@ class OrderService
      * @return OrderResponse|CanCreateOrderResponse
      */
     public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string 
-    {        
+    {      
+        if(new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            return OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE;
+        }
+
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner());
      
         if($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
