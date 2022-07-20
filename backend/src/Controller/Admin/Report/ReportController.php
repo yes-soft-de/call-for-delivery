@@ -87,7 +87,19 @@ class ReportController extends BaseController
      *                  @OA\Property(type="object", property="orders",
      *                      @OA\Property(type="object", property="counts",
      *                          @OA\Property(type="integer", property="allOrders"),
-     *                          @OA\Property(type="object", property="delivered"),
+     *                          @OA\Property(type="object", property="delivered",
+     *                              @OA\Property(type="object", property="lastSevenDays",
+     *                                  @OA\Property(type="array", property="daily",
+     *                                      @OA\Items(
+     *                                          @OA\Property(type="string", property="date"),
+     *                                          @OA\Property(type="integer", property="count")
+     *                                      )
+     *                                  ),
+     *                                  @OA\Property(type="integer", property="sum"),
+     *                                  @OA\Property(type="integer", property="minDeliveredCountPerDay"),
+     *                                  @OA\Property(type="integer", property="maxDeliveredCountPerDay")
+     *                              ),
+     *                          ),
      *                          @OA\Property(type="integer", property="pending"),
      *                          @OA\Property(type="integer", property="onGoing")
      *                      )
