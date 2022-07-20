@@ -6,6 +6,7 @@ class OrdersRoutes {
   static const OWNER_TIME_LINE_SCREEN = '/owner_time_line_screen';
   static const PENDING_ORDERS_SCREEN = '/pending-orders';
   static const UPDATE_ORDERS_SCREEN = '/update-order';
+  static const CAPTAIN_ORDERS_SCREEN = '/captain-orders';
 
   // ORDER CASH
   static const ORDER_CASH_CAPTAINS = '/order_cash_captains';

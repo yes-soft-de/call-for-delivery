@@ -104,50 +104,49 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-      image: element?.image?.image,
-      canRemove: false,
-      isCaptainArrived: element?.isCaptainArrived,
-      branchPhone: element?.branchPhone,
-      branchName: element?.branchName ?? S.current.unknown,
-      createdDate: create,
-      customerName: element?.recipientName ?? S.current.unknown,
-      customerPhone: element?.recipientPhone ?? '',
-      deliveryDateString: delivery,
-      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-      destinationCoordinate:
-          element?.destination?.lat != null && element?.destination?.lon != null
-              ? LatLng(element?.destination?.lat?.toDouble() ?? 0,
-                  element?.destination?.lon?.toDouble() ?? 0)
-              : null,
-      destinationLink: element?.destination?.link,
-      note: element?.note ?? '',
-      orderCost: element?.orderCost ?? 0,
-      payment: element?.payment ?? 'cash',
-      roomID: element?.roomId,
-      state: StatusHelper.getStatusEnum(element?.state),
-      id: element?.id ?? -1,
-      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-      distance: null,
-      attention: element?.attention,
-      captainOrderCost: element?.captainOrderCost,
-      orderLogs: _getOrderLogs(element?.orderLogs),
-      kilometer: element?.kilometer,
-      paidToProvider: element?.paidToProvider,
-      branchId: element?.storeOwnerBranchId,
-      imagePath: element?.image?.imageUrl,
-      orderIsMain: element?.orderIsMain ?? false,
-      captainName: element?.captainName,
-      storeName: element?.storeName ?? S.current.unknown,
-      storeID: element?.storeId ?? -1,
-      noteCaptainOrderCost: element?.noteCaptainOrderCost,
-      pdf: element?.pdf != null
-          ? PdfModel(
-              pdfOnServerPath: element?.pdf?.fileUrl,
-              pdfPreview: element?.pdf?.file,
-              pdfBaseUrl: element?.pdf?.baseUrl)
-          : null,
-      captain: element?.captain 
-    );
+        image: element?.image?.image,
+        canRemove: false,
+        isCaptainArrived: element?.isCaptainArrived,
+        branchPhone: element?.branchPhone,
+        branchName: element?.branchName ?? S.current.unknown,
+        createdDate: create,
+        customerName: element?.recipientName ?? S.current.unknown,
+        customerPhone: element?.recipientPhone ?? '',
+        deliveryDateString: delivery,
+        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+        destinationCoordinate: element?.destination?.lat != null &&
+                element?.destination?.lon != null
+            ? LatLng(element?.destination?.lat?.toDouble() ?? 0,
+                element?.destination?.lon?.toDouble() ?? 0)
+            : null,
+        destinationLink: element?.destination?.link,
+        note: element?.note ?? '',
+        orderCost: element?.orderCost ?? 0,
+        payment: element?.payment ?? 'cash',
+        roomID: element?.roomId,
+        state: StatusHelper.getStatusEnum(element?.state),
+        id: element?.id ?? -1,
+        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+        distance: null,
+        attention: element?.attention,
+        captainOrderCost: element?.captainOrderCost,
+        orderLogs: _getOrderLogs(element?.orderLogs),
+        kilometer: element?.kilometer,
+        paidToProvider: element?.paidToProvider,
+        branchId: element?.storeOwnerBranchId,
+        imagePath: element?.image?.imageUrl,
+        orderIsMain: element?.orderIsMain ?? false,
+        captainName: element?.captainName,
+        storeName: element?.storeName ?? S.current.unknown,
+        storeID: element?.storeId ?? -1,
+        noteCaptainOrderCost: element?.noteCaptainOrderCost,
+        pdf: element?.pdf != null
+            ? PdfModel(
+                pdfOnServerPath: element?.pdf?.fileUrl,
+                pdfPreview: element?.pdf?.file,
+                pdfBaseUrl: element?.pdf?.baseUrl)
+            : null,
+        captain: element?.captain);
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);
   }

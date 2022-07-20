@@ -44,7 +44,8 @@ class PaymentsRepository {
 
   Future<StorePaymentsResponse?> getStorePayments(int id) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_FROM_STORE_PAYMENTS + '/$id',
+    dynamic response = await _apiClient.get(
+        Urls.GET_FROM_STORE_PAYMENTS + '/$id',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return StorePaymentsResponse.fromJson(response);

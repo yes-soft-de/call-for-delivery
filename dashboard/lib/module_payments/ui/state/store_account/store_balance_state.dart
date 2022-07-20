@@ -116,7 +116,7 @@ class StoreBalanceLoadedState extends States {
           // SizedBox(
           //   height: 16,
           // ),
-          
+
           getCaptainPaymentFrom(),
           SizedBox(
             height: 16,

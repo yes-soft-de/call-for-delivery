@@ -20,6 +20,7 @@ import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/global/screen_type.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
 class CaptainProfileLoadedState extends States {
@@ -237,6 +238,22 @@ class CaptainProfileLoadedState extends States {
                               color: Colors.white,
                             ),
                             iconData: Icons.money),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ArgumentHiveHelper().setCurrentCaptainID(
+                              screenState.captainId.toString());
+                          Navigator.of(context)
+                              .pushNamed(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
+                        },
+                        child: CustomListTile(
+                            title: S.of(context).orderLog,
+                            subTitle: '',
+                            leading: Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                            ),
+                            iconData: FontAwesomeIcons.boxes),
                       ),
                     ],
                   ),

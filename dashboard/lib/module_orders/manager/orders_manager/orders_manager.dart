@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
+import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
@@ -27,6 +28,8 @@ class OrdersManager {
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
+  Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(FilterOrderRequest request) =>
+      _repository.getCaptainOrdersFilter(request);
   Future<OrdersCashFinancesForStoreResponse?> getOrderCashFinancesForStore(
           StoreCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForStore(request);

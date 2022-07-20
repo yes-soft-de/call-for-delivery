@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/ui/screens/order_cash_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_cash_store_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,8 +18,15 @@ class OrdersModule extends YesModule {
   final OrderPendingScreen pendingScreen;
   final UpdateOrderScreen updateOrderScreen;
   final NewOrderScreen newOrderScreen;
-  OrdersModule(this._logsScreen, this._cashCaptain, this._cashStore,
-      this.updateOrderScreen, this.pendingScreen, this.newOrderScreen) {
+  final OrderCaptainLogsScreen orderCaptainLogsScreen;
+  OrdersModule(
+      this._logsScreen,
+      this._cashCaptain,
+      this._cashStore,
+      this.updateOrderScreen,
+      this.pendingScreen,
+      this.newOrderScreen,
+      this.orderCaptainLogsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -30,6 +38,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => pendingScreen,
       OrdersRoutes.UPDATE_ORDERS_SCREEN: (context) => updateOrderScreen,
       OrdersRoutes.NEW_ORDER_SCREEN: (context) => newOrderScreen,
+      OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => orderCaptainLogsScreen,
     };
   }
 }

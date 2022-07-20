@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
@@ -43,6 +44,18 @@ class OrderRepository {
     );
     if (response == null) return null;
     return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_CAPTAIN_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrderCaptainLogsResponse.fromJson(response);
   }
 
   Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(

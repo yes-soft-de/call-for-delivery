@@ -17,7 +17,6 @@ class PdfModel {
           await getIt<ImageUploadService>().uploadPdf(pdfFilePath);
       return;
     } else {
-      
       return;
     }
   }

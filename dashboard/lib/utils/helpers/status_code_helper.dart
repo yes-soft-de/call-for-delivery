@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/logger/logger.dart';
 
 class StatusCodeHelper {
   static String getStatusCodeMessages(var statusCode) {
@@ -38,7 +39,8 @@ class StatusCodeHelper {
       case '-1':
         return S.current.dataDecodeError;
       default:
-        return S.current.errorHappened;
+        Logger().error('$statusCode', 'UnKnown Error', StackTrace.empty);
+        return S.current.errorHappened + ' ' + statusCode;
     }
   }
 }

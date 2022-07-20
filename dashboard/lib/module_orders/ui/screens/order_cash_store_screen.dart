@@ -94,8 +94,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
             title: S.current.cashOrders,
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
-                Navigator.of(context).pushNamed(
-                    PaymentsRoutes.PAYMENTS_LIST,
+                Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_LIST,
                     arguments: int.tryParse(
                         ArgumentHiveHelper().getCurrentStoreID() ?? ''));
               }, icon: Icons.payments),

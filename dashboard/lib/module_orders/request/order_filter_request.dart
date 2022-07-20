@@ -2,11 +2,15 @@ class FilterOrderRequest {
   String? state;
   String? toDate;
   String? fromDate;
-  FilterOrderRequest({this.fromDate, this.state, this.toDate});
+  String? captainID;
+  FilterOrderRequest({this.fromDate, this.state, this.toDate, this.captainID});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['state'] = this.state;
+    if (this.captainID != null) {
+      data['captainId'] = this.captainID;
+    }
     if (toDate != null) {
       data['toDate'] =
           DateTime.tryParse(this.toDate ?? '')?.toUtc().toIso8601String();

@@ -139,7 +139,7 @@ class PaymentsToCaptainLoadedState extends States {
     //     ),
     //   ),
     // );
-   
+
     balanceModel?.paymentsToCaptain.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8),

@@ -73,7 +73,7 @@ class CaptainCard extends StatelessWidget {
                       verificationStatus
                           ? S.current.accountVerified
                           : S.current.accountUnVerified,
-                      style: TextStyle(color: Colors.white,fontSize: 10),
+                      style: TextStyle(color: Colors.white, fontSize: 10),
                     ),
                   ),
                 ),
