@@ -62,6 +62,8 @@ class CaptainFinancialDuesService
             }
           
             $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('Y-m-d'), 'toDate' => $captainFinancialDues->getEndDate()->format('Y-m-d')];
+        
+            $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                //Calculation of financial dues
@@ -72,7 +74,7 @@ class CaptainFinancialDuesService
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 //Calculation of financial dues
-                $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date);
+                $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
 
                 //create or update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);

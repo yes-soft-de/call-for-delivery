@@ -63,4 +63,15 @@ class CaptainFinancialSystemDateService
 
         return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
     }
+    //Returns the number of days between two dates 
+    public function subtractTwoDates(DateTime $firstDate, DateTime $lastDate) : int
+    {
+        $countDays = 0;
+
+        $difference = $firstDate->diff($lastDate);
+
+        $countDays = $difference?->d; 
+
+        return $countDays;
+    }
 }
