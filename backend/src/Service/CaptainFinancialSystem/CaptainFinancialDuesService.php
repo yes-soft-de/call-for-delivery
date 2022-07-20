@@ -93,7 +93,8 @@ class CaptainFinancialDuesService
 
     public function createCaptainFinancialDues(int $captainId, int $status): CaptainFinancialDuesEntity
     {
-        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        // $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        $date = $this->captainFinancialSystemDateService->getStartAndEndDateOfFinancialCycle();
 
         $request = new CreateCaptainFinancialDuesRequest();
 
@@ -166,7 +167,7 @@ class CaptainFinancialDuesService
     public function updateCaptainFinancialSystemDetail(int $userId)      
     {     
        $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
- 
+
        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);
 
        if($captainFinancialDues) {

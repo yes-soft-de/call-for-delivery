@@ -106,7 +106,7 @@ class AdminCaptainFinancialSystemDetailService
     
     public function getSumPayments($captainId, $fromDate, $toDate): float 
     {
-        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        // $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
      
         //Sum Captain's Payments
         $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);
