@@ -67,6 +67,10 @@ class SupplierProfileEntity
     #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: OrderLogEntity::class)]
     private $orderLogEntities;
 
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -340,6 +344,18 @@ class SupplierProfileEntity
                 $orderLogEntity->setSupplierProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

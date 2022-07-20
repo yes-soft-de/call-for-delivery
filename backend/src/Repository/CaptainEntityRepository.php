@@ -218,4 +218,30 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainName', 'captainEntity.createdAt')
+            ->addSelect('imageEntity.imagePath as images')
+
+            ->andWhere('captainEntity.status = :activeStatus')
+            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('captainEntity.id', 'DESC')
+            ->setMaxResults(3)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

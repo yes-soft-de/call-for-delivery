@@ -271,9 +271,18 @@ class CaptainManager
         $profile['stcPay'] = $items[0]['stcPay'];
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
-        $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];
-        $profile['userId'] = $items[0]['userId'];
-        $profile['verificationStatus'] = $items[0]['verificationStatus'];
+
+        if (array_key_exists("completeAccountStatus", $items[0])) {
+            $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];
+        }
+
+        if (array_key_exists("userId", $items[0])) {
+            $profile['userId'] = $items[0]['userId'];
+        }
+
+        if (array_key_exists("verificationStatus", $items[0])) {
+            $profile['verificationStatus'] = $items[0]['verificationStatus'];
+        }
                
         foreach ($items as $captainProfile) {
 
@@ -400,5 +409,10 @@ class CaptainManager
         }
 
         return $request;
+    }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->captainEntityRepository->getLastThreeActiveCaptainsProfilesForAdmin();
     }
 }
