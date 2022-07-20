@@ -179,4 +179,9 @@ class OrderCreateRequest
     {
         return $this->deliveryDate;
     }
+
+    public function setDeliveryDate($deliveryDate): void
+    {
+        $this->deliveryDate = $deliveryDate;
+    }
 }
