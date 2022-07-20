@@ -233,4 +233,17 @@ class AdminCaptainService
     {
         return $this->captainEraserService->deleteCaptainAccountAndProfileByAdmin($request);
     }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        $captainsProfiles = $this->adminCaptainManager->getLastThreeActiveCaptainsProfilesForAdmin();
+
+        if (! empty($captainsProfiles)) {
+            foreach ($captainsProfiles as $key => $value) {
+                $captainsProfiles[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            }
+        }
+
+        return $captainsProfiles;
+    }
 }

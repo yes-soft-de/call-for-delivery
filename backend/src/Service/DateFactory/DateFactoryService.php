@@ -54,4 +54,17 @@ class DateFactoryService
 
         return date_modify($deliveryDateTime, '30 minutes ago');
     }
+
+    public function getLastSevenDaysDatesAsArray(): array
+    {
+        return [
+            (new DateTime('now'))->format('Y-m-d'),
+            (new DateTime('-1 day'))->format('Y-m-d'),
+            (new DateTime('-2 day'))->format('Y-m-d'),
+            (new DateTime('-3 day'))->format('Y-m-d'),
+            (new DateTime('-4 day'))->format('Y-m-d'),
+            (new DateTime('-5 day'))->format('Y-m-d'),
+            (new DateTime('-6 day'))->format('Y-m-d')
+        ];
+    }
 }

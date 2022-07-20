@@ -173,4 +173,19 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getLastThreeActiveStoreOwnersProfilesForAdmin(): array
+    {
+        return $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('storeOwnerProfileEntity.id', 'storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.images', 'storeOwnerProfileEntity.createdAt')
+
+            ->andWhere('storeOwnerProfileEntity.status = :activeStatus')
+            ->setParameter('activeStatus', StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS)
+
+            ->orderBy('storeOwnerProfileEntity.id', 'DESC')
+            ->setMaxResults(3)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

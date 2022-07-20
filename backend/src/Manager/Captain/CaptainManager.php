@@ -401,4 +401,9 @@ class CaptainManager
 
         return $request;
     }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->captainEntityRepository->getLastThreeActiveCaptainsProfilesForAdmin();
+    }
 }
