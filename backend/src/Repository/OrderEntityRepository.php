@@ -1627,9 +1627,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
            ->orderBy('orderEntity.id', 'DESC');
 
-       if ($request->getCaptainProfileId()) {
+       if ($request->getCaptainId()) {
            $query->andWhere('orderEntity.captainId = :captainId');
-           $query->setParameter('captainId', $request->getCaptainProfileId());
+           $query->setParameter('captainId', $request->getCaptainId());
        }
 
        $query->andWhere('orderEntity.state = :state');

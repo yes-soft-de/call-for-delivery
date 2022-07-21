@@ -17,7 +17,7 @@ class OrderCaptainFilterByAdminRequest
     /**
      * @var int
      */
-    private $captainProfileId;
+    private $captainId;
 
     /**
      * @return string|null
@@ -40,8 +40,8 @@ class OrderCaptainFilterByAdminRequest
      *
      * @return  int|null
      */ 
-    public function getCaptainProfileId()
+    public function getCaptainId()
     {
-        return $this->captainProfileId;
+        return $this->captainId;
     }
 }
