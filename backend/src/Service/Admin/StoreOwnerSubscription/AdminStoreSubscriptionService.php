@@ -9,28 +9,48 @@ use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\Subscription\SubscriptionService;
+use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
+use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\SubscriptionResponse;
+use App\Response\Subscription\SubscriptionErrorResponse;
+use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
+use App\Response\Subscription\SubscriptionExtendResponse;
+use App\Constant\Subscription\SubscriptionConstant;
 
 class AdminStoreSubscriptionService
 {
     private AutoMapping $autoMapping;
     private AdminStoreSubscriptionManager $adminStoreSubscriptionManager;
     private AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService;
+    private SubscriptionService $subscriptionService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService, SubscriptionService $subscriptionService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
         $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
-    
+        $this->subscriptionService = $subscriptionService;
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
     {
        $response = [];
+       //check Subscription
+       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
 
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
        foreach ($subscriptions as $subscription) {
+      
+            $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
+            
+            if($subscription['subscriptionDetailsId']) {
+                
+                $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT_BOOLEAN;
+                $subscription['subscriptionRemainingCars'] = $subscription['remainingCars'];
+                $subscription['subscriptionRemainingOrders'] = $subscription['remainingOrders'];
+            }
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
@@ -83,6 +103,21 @@ class AdminStoreSubscriptionService
         }
 
         return $futureSubscriptionsResult;
+    }
+
+    public function createSubscription(AdminCreateStoreSubscriptionRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+      $request = new SubscriptionCreateRequest(); 
+      $request->setPackage($requestByAdmin->getPackageId());
+      $request->setNote($requestByAdmin->getNote());
+
+      return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
+    }
+
+    public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    {
+
+      return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 
     }
 }
  

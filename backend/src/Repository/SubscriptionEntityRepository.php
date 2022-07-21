@@ -190,12 +190,14 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost', 'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired as packageExpired', 'packageEntity.note as packageNote')
+            ->addSelect('subscriptionDetailsEntity.remainingOrders','subscriptionDetailsEntity.remainingCars','subscriptionDetailsEntity.id as subscriptionDetailsId')
+         
             ->andWhere('subscription.storeOwner = :storeId')
-
             ->setParameter('storeId', $storeId)
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
             ->getQuery()
 
@@ -247,7 +249,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price')
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscriptionCaptainOfferEntity.carCount', 'subscriptionCaptainOfferEntity.expired', 'subscriptionCaptainOfferEntity.status')
            
             ->andWhere('subscription.id = :subscriptionId')
             ->setParameter('subscriptionId', $subscriptionId)

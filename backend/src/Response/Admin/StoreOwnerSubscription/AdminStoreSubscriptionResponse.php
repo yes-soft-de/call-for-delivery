@@ -43,7 +43,31 @@ class AdminStoreSubscriptionResponse
 
     /**
      * @OA\Property(type="array", property="captainOffers",
-     *     @OA\Items(type="object"))
+     *     @OA\Items(type="object",
+     *          @OA\Property(type="integer", property="id"),  
+     *          @OA\Property(type="object", property="startDate"),  
+     *          @OA\Property(type="number", property="price"),  
+     *          @OA\Property(type="integer", property="carCount"),  
+     *          @OA\Property(type="integer", property="expired"),  
+     *          @OA\Property(type="string", property="status"),  
+     *      )
+     *   )
      */
     public $captainOffers;
+
+    public int $packageCarCount;
+
+    public int $packageOrderCount;
+
+    public int $packageExpired;
+
+    public string|null $packageNote;
+
+    public bool $isFuture;
+
+    public int $subscriptionRemainingOrders;
+
+    public int $subscriptionRemainingCars;
+
+    public bool $isCurrent;
 }
