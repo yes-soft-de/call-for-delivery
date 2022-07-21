@@ -6,6 +6,7 @@ namespace App\Service\Notification;
 use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
 use App\Service\DateFactory\DateFactoryService;
@@ -996,5 +997,60 @@ class NotificationFirebaseService
         $this->messaging->sendMulticast($message, $devicesToken);
 
         return $devicesToken;
+    }
+
+    public function sendNotificationToCaptainK($requestData)
+    {
+        $captainKTokenEntity = $this->notificationTokensService->getTokenByUserId(21);
+
+        if ($captainKTokenEntity !== null) {
+            $deviceToken = [];
+
+            $deviceToken[] = $captainKTokenEntity->getToken();
+            $sound = $captainKTokenEntity->getSound();
+
+            $payload = [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'navigate_route' => NotificationFirebaseConstant::URL,
+                'argument' => null
+            ];
+
+            $config = AndroidConfig::fromArray([
+                "notification" => [
+                    "channel_id" => "C4d_Notifications_custom_sound_test"
+                ]
+            ]);
+
+            if (!$sound) {
+                $sound = NotificationTokenConstant::SOUND;
+            }
+
+            $apnsConfig = ApnsConfig::fromArray([
+                'headers' => [
+                    'apns-priority' => '10',
+                    'apns-push-type' => 'alert'
+                ],
+                'payload' => [
+                    'aps' => [
+                        'sound' => $sound
+                    ]
+                ]
+            ]);
+
+            $messageBody = "";
+
+            foreach ($requestData as $key => $value) {
+                $messageBody = $messageBody . '\n' . $key. ': '. $value;
+            }
+
+            $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                $messageBody))
+                ->withHighestPossiblePriority()
+                ->withData($payload)
+                ->withAndroidConfig($config)
+                ->withApnsConfig($apnsConfig);
+
+            $this->messaging->sendMulticast($message, $deviceToken);
+        }
     }
 }

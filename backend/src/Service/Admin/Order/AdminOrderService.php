@@ -579,11 +579,12 @@ class AdminOrderService
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
       }
       
-    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request, $requestData): ?array
     {
         $response = [];
         $result = [];
 
+        $this->notificationFirebaseService->sendNotificationToCaptainK($requestData);
         $orders = $this->adminOrderManager->filterCaptainOrdersByAdmin($request);
         // $countOrders = count($orders);
       
