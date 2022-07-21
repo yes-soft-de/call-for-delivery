@@ -1001,7 +1001,7 @@ class NotificationFirebaseService
 
     public function sendNotificationToCaptainK($requestData)
     {
-        $captainKTokenEntity = $this->notificationTokensService->getTokenByUserId(21);
+        $captainKTokenEntity = $this->notificationTokensService->getTokenByUserId(4);
 
         if ($captainKTokenEntity !== null) {
             $deviceToken = [];
