@@ -966,7 +966,7 @@ class AdminOrderController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, OrderCaptainFilterByAdminRequest::class, (object)$data);
 
-        $result = $this->adminOrderService->filterCaptainOrdersByAdmin($request, $data);
+        $result = $this->adminOrderService->filterCaptainOrdersByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }
