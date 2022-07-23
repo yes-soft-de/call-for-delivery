@@ -244,4 +244,30 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    // get captain specific info for order by id response for admin
+    public function getCaptainForAdmin(int $captainProfileId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+                'captainEntity.status')
+            ->addSelect('imageEntity.imagePath as images')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -144,4 +144,18 @@ class CaptainService
     {
         return $this->captainManager->getCaptainProfileByUserId($userId);
     }
+
+    // get captain specific info for order by id response for admin
+    public function getCaptainInfoForAdmin(int $captainProfileId): ?array
+    {
+        $captainResult = $this->captainManager->getCaptainForAdmin($captainProfileId);
+
+        if (! empty($captainResult)) {
+            $captainResult['images'] = $this->uploadFileHelperService->getImageParams($captainResult['images']);
+
+            $captainResult['averageRating'] = $this->ratingService->getAverageRating($captainResult['captainId']);
+        }
+
+        return $captainResult;
+    }
 }

@@ -116,7 +116,7 @@ class AdminOrderService
         return $response;
     }
 
-    public function getSpecificOrderByIdForAdmin(int $id)
+    public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);
 
@@ -133,7 +133,7 @@ class AdminOrderService
             $order['captain'] = null;
 
             if($order['captainUserId']) {
-                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+                $order['captain'] = $this->captainService->getCaptainInfoForAdmin($order['captainUserId']);
             }
         }
 
