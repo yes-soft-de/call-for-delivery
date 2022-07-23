@@ -100,4 +100,9 @@ class OrderGetForAdminResponse
      * @var int
      */
     public $countOrders;
+
+    /**
+     * @var float|null
+     */
+    public $captainOrderCost;
 }

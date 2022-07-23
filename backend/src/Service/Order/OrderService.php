@@ -987,6 +987,12 @@ class OrderService
 
         $request->setPrimaryOrder($primaryOrder);
 
+        if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+            // to the database if it is happened
+            $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+        }
+
         $order = $this->orderManager->createSubOrder($request);
         if($order) {
            

@@ -15,9 +15,20 @@ class OrderCaptainFilterByAdminRequest
     private $toDate;
 
     /**
+     * refers to the id of the captain profile
      * @var int
      */
     private $captainId;
+
+    /**
+     * @var string|null
+     */
+    private $payment;
+
+    /**
+     * @var string|null
+     */
+    private $state;
 
     /**
      * @return string|null
@@ -40,8 +51,18 @@ class OrderCaptainFilterByAdminRequest
      *
      * @return  int|null
      */ 
-    public function getCaptainId()
+    public function getCaptainId(): ?int
     {
         return $this->captainId;
+    }
+
+    public function getPayment(): ?string
+    {
+        return $this->payment;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
     }
 }
