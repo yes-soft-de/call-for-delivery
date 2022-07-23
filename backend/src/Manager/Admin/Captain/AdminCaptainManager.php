@@ -50,4 +50,9 @@ class AdminCaptainManager
     {
         return $this->captainManager->getCaptainProfileById($captainId);
     }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->captainManager->getLastThreeActiveCaptainsProfilesForAdmin();
+    }
 }

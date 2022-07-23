@@ -55,4 +55,9 @@ class StoreOwnerDuesFromCashOrdersService
 
         return $this->storeOwnerDuesFromCashOrdersManager->updateStoreOwnerDuesFromCashOrders($storeOwnerDuesFromCashOrdersEntity); 
     }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByStoreOwnerId($storeOwnerId);
+    }
 }

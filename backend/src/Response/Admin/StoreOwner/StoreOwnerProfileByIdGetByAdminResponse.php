@@ -103,4 +103,10 @@ class StoreOwnerProfileByIdGetByAdminResponse
      * @var float|null
      */
     public $profitMargin;
+
+    public string $userId;
+
+    public int $verificationStatus;
+
+    public string $completeAccountStatus;
 }

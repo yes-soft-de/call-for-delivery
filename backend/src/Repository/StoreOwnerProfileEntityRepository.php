@@ -87,7 +87,15 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('storeOwnerProfile')
             ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
              'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
-             'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images');
+             'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images')
+            ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = storeOwnerProfile.storeOwnerId'
+            );
 
         if($storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS || $storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
             $query->andWhere('storeOwnerProfile.status = :storeOwnerProfileStatus');
@@ -105,8 +113,16 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('storeOwnerProfile')
             ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
                 'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
-                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images', 'storeOwnerProfile.profitMargin')
+                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images', 'storeOwnerProfile.profitMargin', 'storeOwnerProfile.completeAccountStatus')
             ->addSelect('chatRoomEntity.roomId')
+            ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = storeOwnerProfile.storeOwnerId'
+            )
            
             ->leftJoin(ChatRoomEntity::class, 'chatRoomEntity', Join::WITH, 'chatRoomEntity.userId = storeOwnerProfile.storeOwnerId')
             
@@ -156,5 +172,20 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getLastThreeActiveStoreOwnersProfilesForAdmin(): array
+    {
+        return $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('storeOwnerProfileEntity.id', 'storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.images', 'storeOwnerProfileEntity.createdAt')
+
+            ->andWhere('storeOwnerProfileEntity.status = :activeStatus')
+            ->setParameter('activeStatus', StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS)
+
+            ->orderBy('storeOwnerProfileEntity.id', 'DESC')
+            ->setMaxResults(3)
+
+            ->getQuery()
+            ->getResult();
     }
 }

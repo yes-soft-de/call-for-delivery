@@ -171,4 +171,17 @@ class OrderCreateRequest
 
         return $this;
     }
+
+    /**
+     * Get the value of deliveryDate
+     */ 
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate($deliveryDate): void
+    {
+        $this->deliveryDate = $deliveryDate;
+    }
 }

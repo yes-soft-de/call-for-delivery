@@ -6,6 +6,7 @@ namespace App\Service\Notification;
 use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
 use App\Service\DateFactory\DateFactoryService;
@@ -841,59 +842,61 @@ class NotificationFirebaseService
          return $state;
      }
 
-    public function scheduledNotificationToCaptains(int $orderId, ?DateTimeInterface $deliveryDateTimeInterface)
+    public function scheduledNotificationToCaptains(int $orderId, DateTimeInterface $deliveryDateTimeInterface)
     {
         $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
 
         if (! empty($getTokens)) {
-            $date = $this->dateFactoryService->getDateTimeMinusThirteenMinutesByDateTimeInterface($deliveryDateTimeInterface);
+            $sendDateTime = $this->dateFactoryService->getSendNotificationDateTimeDependingOnDeliveredDateTime($deliveryDateTimeInterface);
 
-            $payload = [
-                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'navigate_route' => NotificationFirebaseConstant::URL,
-                'argument' => $orderId,
-                "isScheduled" => "true",
-                "scheduledTime" => $date->format('Y-m-d H:i:s')
-            ];
+            if ($sendDateTime !== false) {
+                $payload = [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'navigate_route' => NotificationFirebaseConstant::URL,
+                    'argument' => $orderId,
+                    "isScheduled" => "true",
+                    "scheduledTime" => $sendDateTime->format('Y-m-d H:i:s')
+                ];
 
-            $config = AndroidConfig::fromArray([
-                "notification" => [
-                    "channel_id" => "C4d_Notifications_custom_sound_test"
-                ]
-            ]);
+                $config = AndroidConfig::fromArray([
+                    "notification" => [
+                        "channel_id" => "C4d_Notifications_custom_sound_test"
+                    ]
+                ]);
 
-            foreach ($getTokens as $token) {
-                if ($token['token'] !== null) {
-                    $deviceToken = [];
+                foreach ($getTokens as $token) {
+                    if ($token['token'] !== null) {
+                        $deviceToken = [];
 
-                    $deviceToken[] = $token['token'];
+                        $deviceToken[] = $token['token'];
 
-                    $sound = $token['sound'];
+                        $sound = $token['sound'];
 
-                    if (! $sound) {
-                        $sound = NotificationTokenConstant::SOUND;
-                    }
+                        if (!$sound) {
+                            $sound = NotificationTokenConstant::SOUND;
+                        }
 
-                    $apnsConfig = ApnsConfig::fromArray([
-                        'headers' => [
-                            'apns-priority' => '10',
-                            'apns-push-type' => 'alert'
-                        ],
-                        'payload' => [
-                            'aps' => [
-                                'sound' => $sound
+                        $apnsConfig = ApnsConfig::fromArray([
+                            'headers' => [
+                                'apns-priority' => '10',
+                                'apns-push-type' => 'alert'
+                            ],
+                            'payload' => [
+                                'aps' => [
+                                    'sound' => $sound
+                                ]
                             ]
-                        ]
-                    ]);
+                        ]);
 
-                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
-                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-                        ->withHighestPossiblePriority()
-                        ->withData($payload)
-                        ->withAndroidConfig($config)
-                        ->withApnsConfig($apnsConfig);
+                        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                            NotificationFirebaseConstant::SCHEDULED_NOTIFICATION . NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                            ->withHighestPossiblePriority()
+                            ->withData($payload)
+                            ->withAndroidConfig($config)
+                            ->withApnsConfig($apnsConfig);
 
-                    $this->messaging->sendMulticast($message, $deviceToken);
+                        $this->messaging->sendMulticast($message, $deviceToken);
+                    }
                 }
             }
         }

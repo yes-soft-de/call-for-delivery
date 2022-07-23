@@ -48,10 +48,23 @@ class DateFactoryService
 //        ];
 //    }
 
-    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
+    public function getSendNotificationDateTimeDependingOnDeliveredDateTime(DateTimeInterface $deliveryDateTimeInterface): DateTime|bool
     {
-        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+        $deliveryDateTime = DateTime::createFromInterface($deliveryDateTimeInterface);
 
-        return date_modify($dateTime, '-30 minutes');
+        return date_modify($deliveryDateTime, '30 minutes ago');
+    }
+
+    public function getLastSevenDaysDatesAsArray(): array
+    {
+        return [
+            (new DateTime('now'))->format('Y-m-d'),
+            (new DateTime('-1 day'))->format('Y-m-d'),
+            (new DateTime('-2 day'))->format('Y-m-d'),
+            (new DateTime('-3 day'))->format('Y-m-d'),
+            (new DateTime('-4 day'))->format('Y-m-d'),
+            (new DateTime('-5 day'))->format('Y-m-d'),
+            (new DateTime('-6 day'))->format('Y-m-d')
+        ];
     }
 }

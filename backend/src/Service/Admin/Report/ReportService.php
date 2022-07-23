@@ -9,6 +9,8 @@ use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
+use App\Service\DateFactory\DateFactoryService;
+use DateTime;
 
 class ReportService
 {
@@ -16,15 +18,16 @@ class ReportService
     private AdminStoreOwnerService $adminStoreOwnerService;
     private AdminOrderService $adminOrderService;
     private AdminCaptainService $adminCaptainService;
-    //private DateFactoryService $dateFactoryService;
+    private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService,
+                                DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
         $this->adminOrderService = $adminOrderService;
         $this->adminCaptainService = $adminCaptainService;
-        //$this->dateFactoryService = $dateFactoryService;
+        $this->dateFactoryService = $dateFactoryService;
     }
 
     public function getStatisticsForAdmin(): StatisticsForAdminGetResponse
@@ -48,5 +51,45 @@ class ReportService
         $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'), new \DateTime('now'),);
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
+    }
+
+    public function getDashboardStatisticsForAdmin(): array
+    {
+        $response = [];
+
+        // 1. orders statistics
+        $response["data"]["orders"]["count"]["allOrders"] = $this->adminOrderService->getAllOrdersCountForAdmin();
+
+        // order statistics in the last seven days
+        $lastSevenDaysDates = $this->dateFactoryService->getLastSevenDaysDatesAsArray();
+
+        if (! empty($lastSevenDaysDates)) {
+            foreach ($lastSevenDaysDates as $key => $value) {
+                $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["date"] = $value;
+                $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["count"] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new DateTime($value),
+                    (new DateTime($value))->setTime(23, 59, 59));
+            }
+        }
+
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"]);
+
+        $countValues = array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count");
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["minDeliveredCountPerDay"] = min($countValues);
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["maxDeliveredCountPerDay"] = max($countValues);
+
+        $response["data"]["orders"]["count"]["pending"] = $this->adminOrderService->getPendingOrdersCountForAdmin();
+        $response["data"]["orders"]["count"]["onGoing"] = $this->adminOrderService->getCountOrderOngoingForAdmin();
+
+        // 2. stores statistics
+        $response["data"]["stores"]["count"]["active"] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS);
+        $response["data"]["stores"]["count"]["inactive"] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS);
+        $response["data"]["stores"]["count"]["lastThreeActive"] = $this->adminStoreOwnerService->getLastThreeActiveStoreOwnersProfilesForAdmin();
+
+        // 3. captains statistics
+        $response["data"]["captains"]["count"]["active"] = $this->adminCaptainService->getCaptainsCountByStatusForAdmin(CaptainConstant::CAPTAIN_ACTIVE);;
+        $response["data"]["captains"]["count"]["inactive"] = $this->adminCaptainService->getCaptainsCountByStatusForAdmin(CaptainConstant::CAPTAIN_INACTIVE);;
+        $response["data"]["captains"]["count"]["lastThreeActive"] = $this->adminCaptainService->getLastThreeActiveCaptainsProfilesForAdmin();
+
+        return $response;
     }
 }

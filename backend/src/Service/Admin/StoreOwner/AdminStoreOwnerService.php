@@ -93,4 +93,17 @@ class AdminStoreOwnerService
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
     }
+
+    public function getLastThreeActiveStoreOwnersProfilesForAdmin(): array
+    {
+        $storesProfiles = $this->adminStoreOwnerManager->getLastThreeActiveStoreOwnersProfilesForAdmin();
+
+        if (! empty($storesProfiles)) {
+            foreach ($storesProfiles as $key => $value) {
+                $storesProfiles[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            }
+        }
+
+        return $storesProfiles;
+    }
 }

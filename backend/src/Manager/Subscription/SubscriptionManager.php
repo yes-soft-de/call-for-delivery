@@ -324,4 +324,22 @@ class SubscriptionManager
        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
     }
 
+    public function getAllSubscriptionsEntitiesByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
+    }
+
+    public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
+    {
+        $subscriptions = $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
+
+        if (! empty($subscriptions)) {
+            foreach ($subscriptions as $subscription) {
+                $this->entityManager->remove($subscription);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $subscriptions;
+    }
 }

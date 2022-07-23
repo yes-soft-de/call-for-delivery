@@ -174,4 +174,9 @@ class StoreOwnerProfileService
     {
         return $this->storeOwnerProfileManager->getStoreOwnerProfileEntityByIdForAdmin($id);
     }
+
+    public function deleteStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->deleteStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
 }

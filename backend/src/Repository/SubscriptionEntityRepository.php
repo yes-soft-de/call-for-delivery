@@ -268,4 +268,21 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getResult();
     }
+
+    public function getAllSubscriptionsEntitiesByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscription.storeOwner')
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

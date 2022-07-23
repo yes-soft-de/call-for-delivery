@@ -116,8 +116,17 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9151 or 9204"),
-     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9151"),
+     *                          @OA\Property(type="string", property="msg", description="error store inactive Error.")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9204"),
+     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                   ),
+     * 
+     *              }
      *        )
      *     )
      *
@@ -150,6 +159,10 @@ class OrderController extends BaseController
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
+        
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
         
         return $this->response($result, self::CREATE);
     }
@@ -1586,6 +1599,10 @@ class OrderController extends BaseController
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
 
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
+
         return $this->response($result, self::UPDATE);
     }
 
@@ -1793,17 +1810,7 @@ class OrderController extends BaseController
      *      )
      *   )
      * )
-   
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9216 or 9217"),
-     *          @OA\Property(type="string", property="msg", description="errorMsg"),
-     *      )
-     * ) 
+     * 
      * @Security(name="Bearer") 
      */
     public function orderUpdateByStoreOwner(Request $request): JsonResponse
@@ -1822,6 +1829,10 @@ class OrderController extends BaseController
 
         $result = $this->orderService->orderUpdate($request);
 
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
+        
         // if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
         //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
         // }

@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
@@ -147,5 +148,21 @@ class SubscriptionDetailsManager
         $this->entityManager->flush();
  
         return $subscriptionDetailsEntity;
+    }
+
+    public function deleteSubscriptionDetailsByStoreOwnerId(int $storeOwnerId): array
+    {
+        $subscriptionDetailsResults = $this->subscribeDetailsRepository->getSubscriptionDetailsByStoreOwnerId($storeOwnerId);
+
+        if (! empty($subscriptionDetailsResults)) {
+            foreach ($subscriptionDetailsResults as $result) {
+                $result->setLastSubscription(null);
+                $result->setStoreOwner(new StoreOwnerProfileEntity());
+                $this->entityManager->remove($result);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $subscriptionDetailsResults;
     }
 }

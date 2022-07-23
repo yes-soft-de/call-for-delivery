@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\Subscription\SubscriptionConstant;
 
@@ -36,5 +38,23 @@ class SubscriptionDetailsEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getSubscriptionDetailsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('subscriptionDetailsEntity')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscriptionDetailsEntity.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
     }
 }

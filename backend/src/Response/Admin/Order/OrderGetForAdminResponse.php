@@ -2,6 +2,9 @@
 
 namespace App\Response\Admin\Order;
 
+use OpenApi\Annotations as OA;
+use DateTime;
+
 class OrderGetForAdminResponse
 {
     public int $id;
@@ -23,19 +26,19 @@ class OrderGetForAdminResponse
     public $note;
 
     /**
-     * @var array|null
+     * @OA\Property(type="object", property="deliveryDate")
      */
-    public $deliveryDate;
+    public DateTime $deliveryDate;
+
+     /**
+     * @OA\Property(type="object", property="createdAt")
+     */
+    public DateTime $createdAt;
 
     /**
-     * @var array|null
+     * @OA\Property(type="object", property="updatedAt")
      */
-    public $createdAt;
-
-    /**
-     * @var array|null
-     */
-    public $updatedAt;
+    public DateTime|null $updatedAt;
 
     /**
      * @var float|null
@@ -48,9 +51,10 @@ class OrderGetForAdminResponse
     public $storeOrderDetailsId;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="destination",
+     *     @OA\Items(type="object"))
      */
-    public $destination;
+    public array|null $destination;
 
     /**
      * @var string|null
@@ -73,9 +77,9 @@ class OrderGetForAdminResponse
     public $storeOwnerBranchId;
 
     /**
-     * @var array|null
+     * @OA\Property(type="object", property="location")
      */
-    public $location;
+    public array|null $location;
 
     /**
      * @var string|null
@@ -88,7 +92,12 @@ class OrderGetForAdminResponse
     public $imageId;
 
     /**
-     * @var array|null
+     * @OA\Property(type="object", property="images")
      */
-    public $images;
+    public array|null $images;
+
+    /**
+     * @var int
+     */
+    public $countOrders;
 }

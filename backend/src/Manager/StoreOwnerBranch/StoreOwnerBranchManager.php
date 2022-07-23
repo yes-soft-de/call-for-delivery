@@ -172,4 +172,18 @@ class StoreOwnerBranchManager
     {
         return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($request);
     }
+
+    public function deleteAllStoreBranchesByStoreOwnerId(int $storeOwnerId): array
+    {
+        $branches = $this->storeOwnerBranchEntityRepository->getAllStoreBranchesByStoreOwnerId($storeOwnerId);
+
+        if (! empty($branches)) {
+            foreach ($branches as $branch) {
+                $this->entityManager->remove($branch);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $branches;
+    }
 }

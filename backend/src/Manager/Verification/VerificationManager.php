@@ -89,4 +89,18 @@ class VerificationManager
 
         return $verificationCode;
     }
+
+    public function deleteAllVerificationCodesByIdOfUser(string $userId): array
+    {
+        $verificationCodesResults = $this->verificationEntityRepository->getVerificationCodeByIdOfUser($userId);
+
+        if (! empty($verificationCodesResults)) {
+            foreach ($verificationCodesResults as $verificationCodeResult) {
+                $this->entityManager->remove($verificationCodeResult);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $verificationCodesResults;
+    }
 }

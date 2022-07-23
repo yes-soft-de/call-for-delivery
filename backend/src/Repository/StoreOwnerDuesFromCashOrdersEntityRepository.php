@@ -100,4 +100,22 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->getQuery()
             ->getResult();
     }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

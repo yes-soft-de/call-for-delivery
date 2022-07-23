@@ -17,4 +17,14 @@ final class EraserResultConstant
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS = "canNotDeleteUseWhoHasPayments";
 
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY = "canNotDeleteUseWhoHasPaymentsToCompany";
+
+    const CAN_NOT_DELETE_STORE_HAS_DUES_FROM_CASH_ORDERS = 0;
+
+    const CAN_NOT_DELETE_STORE_HAS_PAYMENTS = 1;
+
+    const CAN_NOT_DELETE_STORE_HAS_PAYMENTS_FROM_COMPANY = 2;
+
+    const STORE_HAS_NOT_ORDERS = 3;
+
+    const STORE_HAS_ORDERS = 4;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Entity\SubscriptionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -35,5 +36,30 @@ class SubscriptionCaptainOfferEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getCaptainOffersSubscriptionsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('subscriptionCaptainOfferEntity')
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscriptionEntity.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
     }
 }

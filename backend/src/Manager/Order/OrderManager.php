@@ -623,5 +623,10 @@ class OrderManager
         $captainId = $this->captainManager->getCaptainProfileByUserId($captainId);
 
         return $this->orderRepository->checkWhetherCaptainReceivedOrderForSpecificStore($captainId->getId(), $storeId);
-    }    
+    }
+
+    public function getStoreOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->orderRepository->getStoreOrdersByStoreOwnerId($storeOwnerId);
+    }
 }
