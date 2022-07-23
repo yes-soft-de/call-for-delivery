@@ -5,6 +5,7 @@ class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
+  static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
   static const String VERSION_ADMIN = '/v1/admin';
   static const String BASE_API_STORE = DOMAIN + VERSION + '/admin';
   static const String BASE_API_CATEGORY =

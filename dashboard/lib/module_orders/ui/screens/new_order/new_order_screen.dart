@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -62,8 +63,10 @@ class NewOrderScreenState extends State<NewOrderScreen>
       if (event) {
         ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
         String data = clip?.text.toString() ?? '';
-        if (data.length > 9 && data[0] == '0') {
-          await Clipboard.setData(ClipboardData(text: data.substring(1)));
+        if (data.length > 9 && PhoneNumberDetection.isMobileNumberValid(data)) {
+          var result = PhoneNumberDetection.getPhoneNumber(data);
+          await Clipboard.setData(ClipboardData(text: result));
+          phoneNumberController.text = result;
           if (mounted) {
             setState(() {});
           }
@@ -85,7 +88,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
-    toController.addListener(() {
+     toController.addListener(() {
       if (toController.text.isNotEmpty && toController.text != '') {
         var data = toController.text.trim();
         var link = Uri.tryParse(data);
@@ -95,9 +98,16 @@ class NewOrderScreenState extends State<NewOrderScreen>
             double.parse(link.queryParameters['q']!.split(',')[1]),
           );
           setState(() {});
+        } else {
+          customerLocation = null;
+          setState(() {});
         }
+      } else {
+        customerLocation = null;
+        setState(() {});
       }
     });
+
   }
 
   @override
