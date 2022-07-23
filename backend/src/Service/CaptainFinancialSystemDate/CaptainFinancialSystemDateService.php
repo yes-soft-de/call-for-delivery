@@ -67,8 +67,9 @@ class CaptainFinancialSystemDateService
     public function subtractTwoDates(DateTime $firstDate, DateTime $lastDate) : int
     {
         $countDays = 0;
-
-        $difference = $firstDate->diff($lastDate);
+        //When the start date is (for example, the beginning of the 21st day of the month) and the end date (the end of the 22nd day), the countDays is 1 and this is an error
+        //We add 1 second to calculate the second day and return the countDays is 2
+        $difference = $firstDate->diff($lastDate->modify('+1 second'));
 
         $countDays = $difference?->d; 
 

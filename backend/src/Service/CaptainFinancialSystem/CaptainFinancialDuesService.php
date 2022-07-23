@@ -61,7 +61,7 @@ class CaptainFinancialDuesService
                 $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
             }
           
-            $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('Y-m-d'), 'toDate' => $captainFinancialDues->getEndDate()->format('Y-m-d')];
+            $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
         
             $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
 
@@ -173,7 +173,7 @@ class CaptainFinancialDuesService
        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);
 
        if($captainFinancialDues) {
-            if($captainFinancialDues['endDate'] < new datetime('now')) {
+            if(new datetime($captainFinancialDues['endDate']->format('y-m-d 23:59:59')) < new datetime('now')) {
                $this->captainFinancialDuesManager->updateCaptainFinancialDuesStateToInactive($captainFinancialDues['id']);
               
             //    return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);

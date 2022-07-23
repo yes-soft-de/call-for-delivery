@@ -7,7 +7,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemTwoBalanceDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
-use DateTime;
+
 class CaptainFinancialSystemTwoBalanceDetailService
 {
     private CaptainFinancialSystemTwoBalanceDetailManager $captainFinancialSystemTwoBalanceDetailManager;
@@ -23,6 +23,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
      {
         //get Count Orders On Specific Date
         $countOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
+        
         //get Orders Details On Specific Date
         $detailsOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
@@ -50,8 +51,8 @@ class CaptainFinancialSystemTwoBalanceDetailService
         $item['amountForStore'] = 0;
       
         $checkTarget = $this->checkTarget($financialSystemDetail['countOrdersInMonth'], $countWorkdays, $countOrders);
-      
-        if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS) {
+
+        if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_INT) {
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
@@ -70,30 +71,29 @@ class CaptainFinancialSystemTwoBalanceDetailService
             $total = $item['financialDues'] - $sumPayments;
         }
 
-        if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE) {
+        if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT) {
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
 
             $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
-
-            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'];
+            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'] / 30;
 
             $item['bounce'] = $item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'];   
-           
+
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;   
             // if count workdays equal 30 days,The captain gets the salary and the monthly compensation 
             if($countWorkdays === 30) {
                 $item['financialDues'] = $item['salary'] + $item['monthCompensation'] + $item['bounce']; 
             }
             else {
-                $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'];  
+                $item['financialDues'] = ($countOrders - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'];  
             }
 
             $total = $item['financialDues'] - $sumPayments;
         }
 
-        if($checkTarget === CaptainFinancialSystem::TARGET_FAILED) {
+        if($checkTarget === CaptainFinancialSystem::TARGET_FAILED_INT) {
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
@@ -129,9 +129,9 @@ class CaptainFinancialSystemTwoBalanceDetailService
     {
        //get Count Orders On Specific Date
        $countOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date ['fromDate'], $date['toDate']);
+      
        //get Orders Details On Specific Date
        $detailsOrders = $this->captainFinancialSystemTwoBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
-
        return $this->getFinancialDues($countOrders['countOrder'], $financialSystemDetail, $date, $detailsOrders, $countWorkdays);             
    }
 
@@ -146,7 +146,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
 
        $checkTarget = $this->checkTarget($financialSystemDetail['countOrdersInMonth'], $countWorkdays, $countOrders);
 
-       if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS) {
+       if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_INT) {
            $item['salary'] = $financialSystemDetail['salary'];
            // if count workdays equal 30 days,The captain gets the salary and the monthly compensation 
            if($countWorkdays === 30) {
@@ -157,12 +157,12 @@ class CaptainFinancialSystemTwoBalanceDetailService
             }
         }
        
-       if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE) {
+       if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT) {
             $item['salary'] = $financialSystemDetail['salary'];
             
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
 
-            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'];
+            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'] / 30;
 
             $item['bounce'] = $item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'];   
         
@@ -172,11 +172,11 @@ class CaptainFinancialSystemTwoBalanceDetailService
                  $item['financialDues'] = $item['salary'] + $item['monthCompensation'] + $item['bounce']; 
             }
             else {
-                $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'];  
+                $item['financialDues'] = ($countOrders - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'];  
             }
         }
 
-       if($checkTarget === CaptainFinancialSystem::TARGET_FAILED) {
+       if($checkTarget === CaptainFinancialSystem::TARGET_FAILED_INT) {
            $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY;          
        }
       
@@ -191,20 +191,20 @@ class CaptainFinancialSystemTwoBalanceDetailService
    }
 
    //Did the captain achieve the target?
-   public function checkTarget(int $countOrdersInMonth, int $countWorkdays, int $countOrdersCompleted): string
+   public function checkTarget(int $countOrdersInMonth, int $countWorkdays, int $countOrdersCompleted): int
     {
         $requiredDailyCountOrders = $countOrdersInMonth / 30;
-    
+
         if ($countOrdersCompleted / $countWorkdays === $requiredDailyCountOrders) {
-            return  CaptainFinancialSystem::TARGET_SUCCESS;
+            return  CaptainFinancialSystem::TARGET_SUCCESS_INT;
         }
 
         if ($countOrdersCompleted / $countWorkdays > $requiredDailyCountOrders) {
-            return  CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;
+            return  CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT;
         }
 
         if ($countOrdersCompleted / $countWorkdays < $requiredDailyCountOrders) {
-            return  CaptainFinancialSystem::TARGET_FAILED;
+            return  CaptainFinancialSystem::TARGET_FAILED_INT;
         }
    }
 }
