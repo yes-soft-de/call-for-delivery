@@ -340,6 +340,9 @@ class AdminOrderController extends BaseController
      *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
      *                  )
      *              ),
+     *              @OA\Property(type="integer", property="pendingOrdersCount"),
+     *              @OA\Property(type="integer", property="hiddenOrdersCount"),
+     *              @OA\Property(type="integer", property="notDeliveredOrdersCount"),
      *              @OA\Property(type="integer", property="totalOrderCount")
      *           )
      *        )
