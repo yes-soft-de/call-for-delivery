@@ -7229,6 +7229,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Total cash orders`
+  String get totalCashOrder {
+    return Intl.message(
+      'Total cash orders',
+      name: 'totalCashOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

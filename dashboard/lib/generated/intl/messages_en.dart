@@ -1008,6 +1008,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
+        "totalCashOrder":
+            MessageLookupByLibrary.simpleMessage("Total cash orders"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("Unpaid Order"),
         "unaccept": MessageLookupByLibrary.simpleMessage(

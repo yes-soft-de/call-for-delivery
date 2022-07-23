@@ -1004,6 +1004,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
+        "totalCashOrder":
+            MessageLookupByLibrary.simpleMessage("إجمالي الطلبات الكاش"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("طلبات غير مدفوعة"),
         "unaccept": MessageLookupByLibrary.simpleMessage(

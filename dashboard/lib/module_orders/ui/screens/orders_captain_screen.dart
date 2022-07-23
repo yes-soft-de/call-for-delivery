@@ -68,9 +68,11 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
+    ordersFilter.payment = payment;
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  String? payment;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -238,9 +240,17 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
               selectedContent: Theme.of(context).textTheme.button!.color!,
               unselectedContent: Theme.of(context).textTheme.headline6!.color!,
             ),
-            SizedBox(
-              height: 16,
-            ),
+            CheckboxListTile(
+                title: Text(S.current.cashOrders),
+                value: payment == 'cash',
+                onChanged: (v) {
+                  if (v == true) {
+                    payment = 'cash';
+                  } else {
+                    payment = null;
+                  }
+                  setState(() {});
+                }),
             Expanded(child: currentState.getUI(context))
           ],
         ),

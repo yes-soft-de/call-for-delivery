@@ -3,6 +3,7 @@ class FilterOrderRequest {
   String? toDate;
   String? fromDate;
   String? captainID;
+  String? payment;
   FilterOrderRequest({this.fromDate, this.state, this.toDate, this.captainID});
 
   Map<String, dynamic> toJson() {
@@ -19,7 +20,9 @@ class FilterOrderRequest {
       data['fromDate'] =
           DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
     }
-
+    if (payment != null) {
+      data['payment'] = this.payment;
+    }
     return data;
   }
 }

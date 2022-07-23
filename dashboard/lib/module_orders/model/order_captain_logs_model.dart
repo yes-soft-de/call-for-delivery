@@ -10,7 +10,11 @@ import 'package:intl/intl.dart';
 class OrderCaptainLogsModel extends DataModel {
   late List<OrderModel> orders;
   late int countOrders;
-  OrderCaptainLogsModel({required this.countOrders, required this.orders});
+  late num? cashOrder;
+  OrderCaptainLogsModel(
+      {required this.countOrders,
+      required this.orders,
+      required this.cashOrder});
   OrderCaptainLogsModel? _orders;
   OrderCaptainLogsModel.withData(OrderCaptainLogsResponse response) {
     var data = response.data;
@@ -41,8 +45,10 @@ class OrderCaptainLogsModel extends DataModel {
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName));
     });
-    _orders = OrderCaptainLogsModel(orders: orders, countOrders: count_Order);
+    _orders = OrderCaptainLogsModel(
+        orders: orders, countOrders: count_Order, cashOrder: data?.cashOrder);
   }
   OrderCaptainLogsModel get data =>
-      _orders ?? OrderCaptainLogsModel(countOrders: 0, orders: []);
+      _orders ??
+      OrderCaptainLogsModel(countOrders: 0, orders: [], cashOrder: null);
 }
