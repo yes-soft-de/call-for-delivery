@@ -940,7 +940,9 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
-     *          @OA\Property(type="integer", property="captainId")
+     *          @OA\Property(type="integer", property="captainId", description="the id of captain profile"),
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="payment")
      *      )
      * )
      *
@@ -950,9 +952,13 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *                  ref=@Model(type="App\Response\Admin\Order\OrderGetForAdminResponse")
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="number", property="totalCashOrdersCost"),
+     *              @OA\Property(type="number", property="countOrders"),
+     *              @OA\Property(type="array", property="orders",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\Order\OrderGetForAdminResponse")
+     *                  )
      *              )
      *      )
      *      )

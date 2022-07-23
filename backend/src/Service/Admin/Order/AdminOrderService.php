@@ -579,15 +579,20 @@ class AdminOrderService
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
       }
       
-    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
     {
         $response = [];
         $result = [];
+        // holds the sum of captainOrderCost of returned cash orders
+        $response['totalCashOrdersCost'] = 0;
 
         $orders = $this->adminOrderManager->filterCaptainOrdersByAdmin($request);
         // $countOrders = count($orders);
       
         foreach ($orders as $order) {
+            // note: when an order is not a cash one, then captainOrderCost = 0
+            $response['totalCashOrdersCost'] = $response['totalCashOrdersCost'] + $order['captainOrderCost'];
+
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
 
             $result[] = $this->autoMapping->map("array", OrderGetForAdminResponse::class, $order);
