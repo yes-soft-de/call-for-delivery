@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/response/captain_account_balance_response/final_financial_account.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/financial_account_detail.dart';
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
 
 class Data {
   num? countOrders;
@@ -20,6 +21,7 @@ class Data {
   FinalFinancialAccount? finalFinancialAccount;
   num? amountForStore;
   num? countOrdersInMonth;
+  List<DatumOrder>? orders;
   Data(
       {this.countOrders,
       this.countOrdersMaxFromNineteen,
@@ -38,9 +40,13 @@ class Data {
       this.finalFinancialAccount,
       this.financialAccountDetails,
       this.amountForStore,
-      this.countOrdersInMonth});
+      this.countOrdersInMonth,
+      this.orders});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
+        orders: (json['orders'] as List<dynamic>?)
+            ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
+            .toList(),
         countOrders: json['countOrders'] as num?,
         amountForStore: json['amountForStore'] as num?,
         countOrdersMaxFromNineteen: json['countOrdersMaxFromNineteen'] as num?,

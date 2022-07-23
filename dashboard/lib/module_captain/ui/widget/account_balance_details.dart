@@ -273,4 +273,5 @@ class AccountBalanceDetailsCard extends StatelessWidget {
     });
     return widgets;
   }
+
 }

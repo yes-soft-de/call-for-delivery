@@ -2,6 +2,8 @@ import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,6 @@ class CaptainProfileLoadedState extends States {
   }
   @override
   Widget getUI(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
     if (error != null) {
       return ErrorStateWidget(
         onRefresh: () {
@@ -254,6 +255,22 @@ class CaptainProfileLoadedState extends States {
                               color: Colors.white,
                             ),
                             iconData: FontAwesomeIcons.boxes),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                              arguments: ChatArgument(
+                                  roomID: model?.roomId ?? '',
+                                  userType: model?.captainId.toString()));
+                        },
+                        child: CustomListTile(
+                            title: S.of(context).chatRoom,
+                            subTitle: '',
+                            leading: Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                            ),
+                            iconData: Icons.chat),
                       ),
                     ],
                   ),

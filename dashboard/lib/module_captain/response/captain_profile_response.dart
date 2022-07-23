@@ -42,7 +42,7 @@ class Data {
   String? status;
   String? rating;
   dynamic? bounce;
-  dynamic? roomID;
+  String? roomID;
   ImageUrl? image;
   String? phone;
   bool? isOnline;

@@ -1,5 +1,4 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_orders/response/orders_response/datum.dart';
@@ -27,7 +26,7 @@ class CaptainAccountBalanceModel extends DataModel {
   late String? dateFinancialCycleEnds;
   List<OrderCountsSystemDetails>? orderCountsDetails;
   late num? ordersInMonth;
-
+  late List<OrderModel> orders;
   CaptainAccountBalanceModel(
       {required this.advancePayment,
       required this.compensationForEveryOrder,
@@ -45,7 +44,8 @@ class CaptainAccountBalanceModel extends DataModel {
       required this.monthTargetSuccess,
       this.orderCountsDetails,
       required this.amountForStore,
-      required this.ordersInMonth});
+      required this.ordersInMonth,
+      required this.orders});
   late CaptainAccountBalanceModel _data;
   CaptainAccountBalanceModel.withData(CaptainAccountBalanceResponse response) {
     var element = response.data;
@@ -83,7 +83,8 @@ class CaptainAccountBalanceModel extends DataModel {
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
           amountForStore: element?.amountForStore ?? 0,
-          ordersInMonth: element?.countOrdersInMonth);
+          ordersInMonth: element?.countOrdersInMonth,
+          orders: _getOrders(element?.orders ?? []));
     } else {
       _data = CaptainAccountBalanceModel(
           advancePayment: element?.advancePayment,
@@ -101,7 +102,8 @@ class CaptainAccountBalanceModel extends DataModel {
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
           amountForStore: element?.amountForStore ?? 0,
-          ordersInMonth: element?.countOrdersInMonth ?? 0);
+          ordersInMonth: element?.countOrdersInMonth ?? 0,
+          orders: _getOrders(element?.orders ?? []));
     }
   }
   CaptainAccountBalanceModel get data => _data;
