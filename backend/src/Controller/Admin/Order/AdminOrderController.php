@@ -147,32 +147,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="objecy", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="payment"),
-     *              @OA\Property(type="number", property="orderCost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="object", property="deliveryDate"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="object", property="updatedAt"),
-     *              @OA\Property(type="integer", property="kilometer"),
-     *              @OA\Property(type="string", property="state"),
-     *              @OA\Property(type="integer", property="orderType"),
-     *              @OA\Property(type="integer", property="storeOrderDetailsId"),
-     *              @OA\Property(type="object", property="destination"),
-     *              @OA\Property(type="string", property="recipientName"),
-     *              @OA\Property(type="string", property="recipientPhone"),
-     *              @OA\Property(type="string", property="detail"),
-     *              @OA\Property(type="integer", property="storeOwnerBranchId"),
-     *              @OA\Property(type="string", property="branchName"),
-     *              @OA\Property(type="object", property="location"),
-     *              @OA\Property(type="object", property="orderImage",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="integer", property="captainUserId"),
-     *              @OA\Property(type="string", property="captainName"),
-     *              @OA\Property(type="string", property="phone")
+     *              ref=@Model(type="App\Response\Admin\Order\OrderByIdGetForAdminResponse")
      *          )
      *      )
      * )
@@ -365,6 +340,9 @@ class AdminOrderController extends BaseController
      *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
      *                  )
      *              ),
+     *              @OA\Property(type="integer", property="pendingOrdersCount"),
+     *              @OA\Property(type="integer", property="hiddenOrdersCount"),
+     *              @OA\Property(type="integer", property="notDeliveredOrdersCount"),
      *              @OA\Property(type="integer", property="totalOrderCount")
      *           )
      *        )

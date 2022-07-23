@@ -415,4 +415,10 @@ class CaptainManager
     {
         return $this->captainEntityRepository->getLastThreeActiveCaptainsProfilesForAdmin();
     }
+
+    // get captain specific info for order by id response for admin
+    public function getCaptainForAdmin(int $captainProfileId): ?array
+    {
+        return $this->captainEntityRepository->getCaptainForAdmin($captainProfileId);
+    }
 }
