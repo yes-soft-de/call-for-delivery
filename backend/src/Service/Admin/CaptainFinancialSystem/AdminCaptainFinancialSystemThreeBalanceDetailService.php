@@ -102,6 +102,9 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
             }
         }
         
+        $finalFinancialAccount['dateFinancialCycleStarts'] = $date['fromDate'];
+        $finalFinancialAccount['dateFinancialCycleEnds'] = $date['toDate'];
+       
         return $finalFinancialAccount;
     }
 }

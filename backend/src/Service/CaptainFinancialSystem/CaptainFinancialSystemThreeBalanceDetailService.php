@@ -94,7 +94,10 @@ class CaptainFinancialSystemThreeBalanceDetailService
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }
         }
- 
+       
+        $finalFinancialAccount['dateFinancialCycleStarts'] = $date['fromDate'];
+        $finalFinancialAccount['dateFinancialCycleEnds'] = $date['toDate'];
+
         return $finalFinancialAccount;
     }
 
