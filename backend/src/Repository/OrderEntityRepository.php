@@ -1656,6 +1656,13 @@ class OrderEntityRepository extends ServiceEntityRepository
 
            $query->andWhere('orderEntity.deliveryDate <= :toDate');
            $query->setParameter('toDate', new DateTime($request->getToDate()));
+
+       } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+           $query->andWhere('orderEntity.deliveryDate >= :fromDate');
+           $query->setParameter('fromDate', (new DateTime('now'))->setTime(00, 00, 00));
+
+           $query->andWhere('orderEntity.deliveryDate <= :toDate');
+           $query->setParameter('toDate', (new DateTime('now'))->setTime(23, 59, 59));
        }
 
        if ($request->getPayment() === PaymentConstant::CASH_PAYMENT_METHOD_CONST || $request->getPayment() === PaymentConstant::CARD_PAYMENT_METHOD_CONST) {
