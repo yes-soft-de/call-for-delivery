@@ -221,4 +221,14 @@ class SubOrderCreateRequest
 
         return $this;
     }
+
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate($deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+    }
 }
