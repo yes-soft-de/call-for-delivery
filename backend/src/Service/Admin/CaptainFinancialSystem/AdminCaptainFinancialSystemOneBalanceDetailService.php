@@ -19,7 +19,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $this->adminCaptainFinancialSystemOneBalanceDetailManager = $adminCaptainFinancialSystemOneBalanceDetailManager;
     }
 
-    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
+    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date, int $countWorkdays): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     {
         $countOrdersMaxFromNineteen = 0;
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
@@ -41,10 +41,8 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
            }
         }
 
-        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrder'] + $countOrdersMaxFromNineteen) * 
-        
-        $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
-    
+        $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $countOrders['countOrder'], $countOrdersMaxFromNineteen, $financialSystemDetail['compensationForEveryOrder'], $financialSystemDetail['salary']);
+     
         $financialSystemDetail['sumPayments'] = $sumPayments;
              
         $financialSystemDetail['countOrders'] = $countOrders['countOrder'];
@@ -66,5 +64,17 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $financialSystemDetail['amountForStore'] = $amountForStore;
 
         return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
+    }
+     //If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary
+    public function financialDuesCalculator(int $countWorkdays, int $countOrdersCompleted, int $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary)
+    {
+        //The number of actual working days is 25, if the captain works 25 days or more, he will receive the full monthly salary
+        if($countWorkdays >= 25){
+             
+           return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary;
+        }
+ 
+        $dailySalary = $salary / 30;
+        return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary;
     }
 }

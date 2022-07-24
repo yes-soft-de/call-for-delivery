@@ -19,7 +19,7 @@ class CaptainFinancialSystemOneBalanceDetailService
         $this->captainFinancialSystemOneBalanceDetailManager = $captainFinancialSystemOneBalanceDetailManager;
     }
 
-    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
+    public function getBalanceDetailWithSystemOne(array $financialSystemDetail, int $captainId, float $sumPayments, array $date, int $countWorkdays): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     {
         $countOrdersMaxFromNineteen = 0;
         //get Count Orders
@@ -40,9 +40,9 @@ class CaptainFinancialSystemOneBalanceDetailService
             $amountForStore += $detailOrder['captainOrderCost'];
            }
         }
-
-        $financialSystemDetail['financialDues'] = ( ($countOrders['countOrder'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder'] ) + $financialSystemDetail['salary'];
-    
+ 
+        $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $countOrders['countOrder'], $countOrdersMaxFromNineteen, $financialSystemDetail['compensationForEveryOrder'], $financialSystemDetail['salary']);
+     
         $financialSystemDetail['sumPayments'] = $sumPayments;
              
         $financialSystemDetail['countOrders'] = $countOrders['countOrder'];
@@ -64,7 +64,7 @@ class CaptainFinancialSystemOneBalanceDetailService
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
     }
 
-    public function getFinancialDuesWithSystemOne(array $financialSystemDetail, int $captainId, array $date): array
+    public function getFinancialDuesWithSystemOne(array $financialSystemDetail, int $captainId, array $date, int $countWorkdays): array
     {
         $countOrdersMaxFromNineteen = 0;
         //get Count Orders
@@ -86,10 +86,21 @@ class CaptainFinancialSystemOneBalanceDetailService
            }
         }
 
-        $financialSystemDetail['financialDues'] = (($countOrders['countOrder'] + $countOrdersMaxFromNineteen) * $financialSystemDetail['compensationForEveryOrder']) + $financialSystemDetail['salary'];
-        
+        $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $countOrders['countOrder'], $countOrdersMaxFromNineteen, $financialSystemDetail['compensationForEveryOrder'], $financialSystemDetail['salary']);
+     
         $financialSystemDetail['amountForStore'] = $amountForStore;
 
         return $financialSystemDetail;
+    }
+    //If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary
+    public function financialDuesCalculator(int $countWorkdays, int $countOrdersCompleted, int $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary)
+    {
+         if($countWorkdays >= 25){
+             
+            return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary;
+         }
+
+         $dailySalary = $salary / 30;
+         return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary;
     }
 }
