@@ -146,6 +146,16 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                                 title: Text(S.current.profile),
                                                 content: Column(
                                                   children: [
+                                                    ClipOval(
+                                                      child: CustomNetworkImage(
+                                                          height: 100,
+                                                          width: 100,
+                                                          imageSource: orderInfo
+                                                                  .captain
+                                                                  ?.images
+                                                                  ?.image ??
+                                                              ''),
+                                                    ),
                                                     Text(
                                                         orderInfo.captainName ??
                                                             S.current.unknown),

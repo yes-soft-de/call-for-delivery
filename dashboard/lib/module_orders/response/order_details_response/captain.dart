@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/response/order_details_response/images.dart';
+
 class Captain {
   int? id;
   int? captainId;
@@ -14,6 +16,7 @@ class Captain {
   String? stcPay;
   String? status;
   num? rating;
+  Images? images;
   Captain(
       {this.id,
       this.captainId,
@@ -29,7 +32,8 @@ class Captain {
       this.bankAccountNumber,
       this.stcPay,
       this.status,
-      this.rating});
+      this.rating,
+      this.images});
 
   factory Captain.fromJson(Map<String, dynamic> json) => Captain(
         id: json['id'] as int?,
@@ -47,6 +51,9 @@ class Captain {
         stcPay: json['stcPay'] as String?,
         status: json['status'] as String?,
         rating: json['averageRating'] as num?,
+        images: json['images'] == null
+            ? null
+            : Images.fromJson(json['images'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
