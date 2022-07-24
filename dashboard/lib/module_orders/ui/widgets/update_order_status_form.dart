@@ -61,7 +61,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                 Column(
                   children: [
                     ListTile(
-                      title: LabelText(S.of(context).branch),
+                      title: LabelText(S.of(context).status),
                       subtitle: Container(
                         width: double.maxFinite,
                         decoration: BoxDecoration(

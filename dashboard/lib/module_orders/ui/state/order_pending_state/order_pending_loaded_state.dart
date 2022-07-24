@@ -31,6 +31,11 @@ class OrderPendingLoadedState extends States {
 
   List<List<OrderModel>> ordersIndex = [];
   List<Widget> getOrders() {
+    List<int> countsOrder = [
+      orders.pendingOrdersCount,
+      orders.hiddenOrdersCount,
+      orders.notDeliveredOrdersCount
+    ];
     var context = screenState.context;
     List<Widget> widgets = [];
     widgets.add(Padding(
@@ -47,13 +52,19 @@ class OrderPendingLoadedState extends States {
               Padding(
                 padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
                 child: Text(
-                  S.current.countOrders,
+                  S.current.countOrders +
+                      ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
+                      (screenState.currentIndex == 0
+                          ? S.current.pending
+                          : screenState.currentIndex == 1
+                              ? S.current.hidden
+                              : S.current.notAccepted),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               Center(
                   child: Text(
-                orders.totalOrderCount.toString(),
+                countsOrder[screenState.currentIndex].toString(),
                 style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).disabledColor,

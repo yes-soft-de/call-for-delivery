@@ -223,6 +223,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
         "chooseLocation": MessageLookupByLibrary.simpleMessage("اختر موقع"),
+        "choosePaymentMethod":
+            MessageLookupByLibrary.simpleMessage("اختر طريقة الدفع"),
         "choosePlan":
             MessageLookupByLibrary.simpleMessage("اختر الخطة المناسبة لك"),
         "chooseReceiptPoint":
@@ -417,6 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("الفاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "filter": MessageLookupByLibrary.simpleMessage("فلتر"),
         "financeByHours":
             MessageLookupByLibrary.simpleMessage("باقة حسب الساعات"),
         "financeByOrders":

@@ -3,12 +3,15 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart';
 import 'package:c4d/module_captain/ui/widget/account_balance_details.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -140,35 +143,6 @@ class AccountBalanceStateLoaded extends States {
             stringValue: balance?.countOrders?.toString()),
         CustomTile(FontAwesomeIcons.boxes, S.current.countOrdersCompleted, null,
             stringValue: balance?.countOrders?.toString()),
-        Visibility(
-            visible: balance?.orders.isNotEmpty == true,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: Text(S.current.orders),
-                        content: Column(
-                          children: getOrders(context, balance?.orders ?? []),
-                        ),
-                        scrollable: true,
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(S.current.close))
-                        ],
-                      );
-                    });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(S.current.orders),
-              ),
-            )),
         CustomTile(
             FontAwesomeIcons.road, S.current.countOrdersMaxFromNineteen, null,
             stringValue: balance?.countOrdersMaxFromNineteen?.toString()),
@@ -191,6 +165,40 @@ class AccountBalanceStateLoaded extends States {
             stringValue: balance?.monthTargetSuccess),
         CustomTile(Icons.checklist_rounded, S.current.countOrdersCompleted,
             balance?.countOrdersCompleted),
+        Visibility(
+            visible: balance?.orders.isNotEmpty == true,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return Scaffold(
+                        appBar: CustomC4dAppBar.appBar(context,
+                            title: S.current.order),
+                        body: Column(
+                          children: [
+                            Expanded(
+                              child: ListView(
+                                children:
+                                    getOrders(context, balance?.orders ?? []),
+                              ),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.close))
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(S.current.orders),
+              ),
+            )),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
             balance?.amountForStore ?? 0),
         // CustomTile(
@@ -208,74 +216,23 @@ class AccountBalanceStateLoaded extends States {
     );
   }
 
-  List<Widget> getOrders(context, orders) {
+  List<Widget> getOrders(context, List<OrderModel> orders) {
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(
         InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
-                arguments: element.id);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: Row(
-              children: [
-                // order number
-                Column(
-                  children: [
-                    Text(
-                      S.current.orderNumber,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      element.id.toString(),
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-                // store name
-                VerticalDivider(
-                  thickness: 2.5,
-                  color: Theme.of(context).disabledColor,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      S.current.storeName,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      (element.storeName ?? S.current.unknown) +
-                          '(${element.branchName})',
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-                VerticalDivider(
-                  thickness: 2.5,
-                  color: Theme.of(context).disabledColor,
-                ),
-                // delivery date
-                Column(
-                  children: [
-                    Text(
-                      S.current.deliverDate,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      element.deliveryDate,
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+            onTap: () {
+              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost,
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+            )),
       );
     });
     return widgets;

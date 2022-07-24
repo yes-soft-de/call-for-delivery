@@ -718,5 +718,7 @@
     "DeletingYourAccountHint": "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time",
     "accountHasOrdersRecord": "Account has order records",
     "accountHasPaymentsRecord": "Account has payments record",
-    "totalCashOrder": "Total cash orders"
+    "totalCashOrder": "Total cash orders",
+    "filter": "Filter",
+    "choosePaymentMethod": "Choose payment method"
 }

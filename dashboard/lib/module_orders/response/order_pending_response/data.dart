@@ -5,15 +5,24 @@ class Data {
   List<DatumOrder>? hiddenOrders;
   List<DatumOrder>? notDeliveredOrders;
   num? totalOrderCount;
+  num? notDeliveredOrdersCount;
+  num? hiddenOrdersCount;
+  num? pendingOrdersCount;
 
   Data(
       {this.pendingOrders,
       this.hiddenOrders,
       this.notDeliveredOrders,
-      this.totalOrderCount});
+      this.totalOrderCount,
+      this.hiddenOrdersCount,
+      this.notDeliveredOrdersCount,
+      this.pendingOrdersCount});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalOrderCount: json['totalOrderCount'] as num?,
+        pendingOrdersCount: json['pendingOrdersCount'] as num?,
+        hiddenOrdersCount: json['hiddenOrdersCount'] as num?,
+        notDeliveredOrdersCount: json['notDeliveredOrdersCount'] as num?,
         pendingOrders: (json['pendingOrders'] as List<dynamic>?)
             ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
             .toList(),

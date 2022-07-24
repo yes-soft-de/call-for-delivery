@@ -717,5 +717,7 @@
     "DeletingYourAccountHint": "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن",
     "accountHasOrdersRecord": "لا يمكن حذف الحساب لوجود سجل طلبات",
     "accountHasPaymentsRecord": "لا يمكن حذف الحساب لوجود سجل دفعات",
-    "totalCashOrder":"إجمالي الطلبات الكاش"
+    "totalCashOrder":"إجمالي الطلبات الكاش",
+    "filter":"فلتر",
+    "choosePaymentMethod":"اختر طريقة الدفع"
 }

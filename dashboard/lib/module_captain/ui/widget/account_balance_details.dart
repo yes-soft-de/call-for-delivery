@@ -1,10 +1,12 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 import '../../../module_orders/model/order/order_model.dart';
+import '../../../module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 
 class AccountBalanceDetailsCard extends StatelessWidget {
   final String categoryName;
@@ -206,72 +208,20 @@ class AccountBalanceDetailsCard extends StatelessWidget {
     orders.forEach((element) {
       widgets.add(
         InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
-                arguments: element.id);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: Row(
-              children: [
-                // order number
-                Column(
-                  children: [
-                    Text(
-                      S.current.orderNumber,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      element.id.toString(),
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-                // store name
-                VerticalDivider(
-                  thickness: 2.5,
-                  color: Theme.of(context).disabledColor,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      S.current.storeName,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      (element.storeName ?? S.current.unknown) +
-                          '(${element.branchName})',
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-                VerticalDivider(
-                  thickness: 2.5,
-                  color: Theme.of(context).disabledColor,
-                ),
-                // delivery date
-                Column(
-                  children: [
-                    Text(
-                      S.current.deliverDate,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Text(
-                      element.deliveryDate,
-                      style: TextStyle(color: Theme.of(context).disabledColor),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+            onTap: () {
+              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost,
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+            )),
       );
     });
     return widgets;
   }
-
 }

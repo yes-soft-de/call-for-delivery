@@ -12,11 +12,17 @@ class PendingOrder extends DataModel {
   List<OrderModel> pendingOrders = [];
   List<OrderModel> notDeliveredOrders = [];
   late int totalOrderCount;
+  late int pendingOrdersCount;
+  late int hiddenOrdersCount;
+  late int notDeliveredOrdersCount;
   PendingOrder(
       {required this.hiddenOrders,
       required this.notDeliveredOrders,
       required this.pendingOrders,
-      required this.totalOrderCount});
+      required this.totalOrderCount,
+      required this.pendingOrdersCount,
+      required this.hiddenOrdersCount,
+      required this.notDeliveredOrdersCount});
   late PendingOrder _data;
   PendingOrder.withData(OrderPendingResponse response) {
     var element = response.data;
@@ -24,7 +30,10 @@ class PendingOrder extends DataModel {
         hiddenOrders: _getOrders(element?.hiddenOrders ?? []),
         notDeliveredOrders: _getOrders(element?.notDeliveredOrders ?? []),
         pendingOrders: _getOrders(element?.pendingOrders ?? []),
-        totalOrderCount: element?.totalOrderCount?.toInt() ?? 0);
+        totalOrderCount: element?.totalOrderCount?.toInt() ?? 0,
+        hiddenOrdersCount: element?.hiddenOrdersCount?.toInt() ?? 0,
+        notDeliveredOrdersCount: element?.notDeliveredOrdersCount?.toInt() ?? 0,
+        pendingOrdersCount: element?.pendingOrdersCount?.toInt() ?? 0);
   }
   List<OrderModel> _getOrders(List<DatumOrder> orders) {
     List<OrderModel> ordersModels = [];

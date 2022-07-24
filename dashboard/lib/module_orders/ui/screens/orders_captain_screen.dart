@@ -6,9 +6,11 @@ import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/order_captain_logs_state_manager.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
+import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -87,6 +89,61 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
             title: S.current.orderLog,
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      String? paymentType = payment;
+                      return StatefulBuilder(builder: (_, refresh) {
+                        return AlertDialog(
+                          title: Text(S.current.filter),
+                          content: Column(
+                            children: [
+                              ListTile(
+                                title: LabelText(S.of(context).paymentMethod),
+                                subtitle: Container(
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16.0, right: 16),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                          value: paymentType,
+                                          items: getPaymentsMethod(),
+                                          hint: Text(S.current.paymentMethod),
+                                          onChanged: (String? value) {
+                                            paymentType = value;
+                                            refresh(() {});
+                                            setState(() {});
+                                          }),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          scrollable: true,
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.cancel)),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  payment = paymentType;
+                                  getOrders();
+                                },
+                                child: Text(S.current.confirm)),
+                          ],
+                        );
+                      });
+                    });
+              }, icon: FontAwesomeIcons.filter),
+              CustomC4dAppBar.actionIcon(context, onTap: () {
                 ordersFilter.fromDate =
                     DateTime(today.year, today.month, today.day, 0)
                         .toIso8601String();
@@ -94,7 +151,7 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
                 currentIndex = 0;
                 ordersFilter.state = 'ongoing';
                 getOrders();
-              }, icon: Icons.restart_alt_rounded)
+              }, icon: Icons.restart_alt_rounded),
             ]),
         body: Column(
           children: [
@@ -240,21 +297,42 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
               selectedContent: Theme.of(context).textTheme.button!.color!,
               unselectedContent: Theme.of(context).textTheme.headline6!.color!,
             ),
-            CheckboxListTile(
-                title: Text(S.current.cashOrders),
-                value: payment == 'cash',
-                onChanged: (v) {
-                  if (v == true) {
-                    payment = 'cash';
-                  } else {
-                    payment = null;
-                  }
-                  setState(() {});
-                }),
+            Visibility(
+                visible: payment != null,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(children: [
+                    FilterChip(
+                      showCheckmark: true,
+                      checkmarkColor: Colors.white,
+                      label: Text(
+                        payment ?? '',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      selected: true,
+                      labelStyle: TextStyle(color: Colors.white),
+                      selectedColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      onSelected: (bool value) {},
+                    )
+                  ]),
+                )),
             Expanded(child: currentState.getUI(context))
           ],
         ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> getPaymentsMethod() {
+    var payment = [S.current.all, S.current.card, S.current.cash];
+    List<DropdownMenuItem<String>> menu = [];
+    payment.forEach((element) {
+      menu.add(DropdownMenuItem(
+        child: Text(element),
+        value: element,
+      ));
+    });
+    return menu;
   }
 }

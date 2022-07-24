@@ -1,3 +1,5 @@
+import 'package:c4d/generated/l10n.dart';
+
 class FilterOrderRequest {
   String? state;
   String? toDate;
@@ -21,7 +23,9 @@ class FilterOrderRequest {
           DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
     }
     if (payment != null) {
-      data['payment'] = this.payment;
+      data['payment'] = this.payment == S.current.card
+          ? 'card'
+          : (this.payment == S.current.cash ? 'cash' : 'all');
     }
     return data;
   }

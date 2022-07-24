@@ -225,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose Destination Location"),
         "chooseLocation":
             MessageLookupByLibrary.simpleMessage("choose location"),
+        "choosePaymentMethod":
+            MessageLookupByLibrary.simpleMessage("Choose payment method"),
         "choosePlan":
             MessageLookupByLibrary.simpleMessage("Please choose your plan"),
         "chooseReceiptPoint":
@@ -420,6 +422,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "financeByHours":
             MessageLookupByLibrary.simpleMessage("Finance by hours"),
         "financeByOrders":
