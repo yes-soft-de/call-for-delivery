@@ -71,10 +71,10 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         //The number of actual working days is 25, if the captain works 25 days or more, he will receive the full monthly salary
         if($countWorkdays >= 25){
              
-           return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary;
+           return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary, 2);
         }
  
         $dailySalary = $salary / 30;
-        return (($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary;
+        return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary, 2);
     }
 }
