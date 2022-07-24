@@ -98,6 +98,11 @@ class AdminCaptainFinancialSystemDetailService
     public function updateStatusCaptainFinancialSystemDetail(AdminCaptainFinancialSystemDetailUpdateRequest $request): ?AdminCaptainFinancialSystemDetailUpdateResponse
     {
         $result = $this->adminCaptainFinancialSystemDetailManager->updateStatusCaptainFinancialSystemDetail($request);
+      
+        if($result) {
+            // Calculation of financial dues on the new system 
+            $this->captainFinancialDuesService->captainFinancialDues($result->getCaptain()->getCaptainId());
+        }
 
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);
     }

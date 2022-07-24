@@ -46,7 +46,7 @@ class CaptainFinancialDuesService
         $this->captainPaymentService = $captainPaymentService;
         $this->captainFinancialSystemDetailServiceTwo = $captainFinancialSystemDetailServiceTwo;
     }
-
+    // create or update (captainFinancialDues)
     public function captainFinancialDues(int $userId)
     {
         //get Captain Financial System Detail current
@@ -76,7 +76,7 @@ class CaptainFinancialDuesService
                 //Calculation of financial dues
                 $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
 
-                //create or update captain financial dues
+                //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
 
@@ -85,7 +85,7 @@ class CaptainFinancialDuesService
                 $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
                        
                 $financialDues = $this->captainFinancialSystemThreeBalanceDetailService->getFinancialDuesWithSystemThree($choseFinancialSystemDetails, $financialSystemDetail['captainId'], $date);
-               //create or update captain financial dues
+               //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
         }
@@ -123,7 +123,7 @@ class CaptainFinancialDuesService
         $response = [];
 
         $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserId($userId);
-
+        
         foreach ($captainFinancialDues as $captainFinancialDue) {
             
             $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 2);
