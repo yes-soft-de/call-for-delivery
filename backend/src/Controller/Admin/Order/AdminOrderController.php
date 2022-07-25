@@ -353,7 +353,7 @@ class AdminOrderController extends BaseController
      */
     public function getPendingOrdersForAdmin(): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin();
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId());
         
         return $this->response($response, self::FETCH);
     }
@@ -409,7 +409,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->rePendingAcceptedOrderByAdmin($request);
+        $result = $this->adminOrderService->rePendingAcceptedOrderByAdmin($request, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_ACCEPTED_BY_CAPTAIN) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
@@ -453,7 +453,7 @@ class AdminOrderController extends BaseController
      */
     public function updateOrderToHidden(int $id): JsonResponse
     {
-        $result = $this->adminOrderService->updateOrderToHidden($id);
+        $result = $this->adminOrderService->updateOrderToHidden($id, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::NOTFOUND);
@@ -534,7 +534,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->orderUpdateByAdmin($request);
+        $result = $this->adminOrderService->orderUpdateByAdmin($request, $this->getUserId());
 
         // if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
         //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
@@ -640,7 +640,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->createOrderByAdmin($request);
+        $result = $this->adminOrderService->createOrderByAdmin($request, $this->getUserId());
 
         if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
@@ -723,7 +723,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
          }
 
-        $response = $this->adminOrderService->assignOrderToCaptain($request);
+        $response = $this->adminOrderService->assignOrderToCaptain($request, $this->getUserId());
 
         if($response === OrderStateConstant::ORDER_STATE_PENDING_INT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
@@ -800,7 +800,7 @@ class AdminOrderController extends BaseController
      */
     public function orderCancelByAdmin(int $id): JsonResponse
     {
-        $response = $this->adminOrderService->orderCancelByAdmin($id);
+        $response = $this->adminOrderService->orderCancelByAdmin($id, $this->getUserId());
 
         if ($response === OrderResultConstant::ORDER_TYPE_BID) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
@@ -888,7 +888,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->updateOrderStateByAdmin($request);
+        $result = $this->adminOrderService->updateOrderStateByAdmin($request, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
