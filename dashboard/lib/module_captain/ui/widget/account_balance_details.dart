@@ -219,6 +219,7 @@ class AccountBalanceDetailsCard extends StatelessWidget {
               orderCost: element.orderCost,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              orderIsMain: element.orderIsMain ?? false,
             )),
       );
     });

@@ -43,7 +43,8 @@ class OrderCaptainLogsModel extends DataModel {
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
-          storeName: element.storeOwnerName));
+          storeName: element.storeOwnerName,
+          orderIsMain: element.orderIsMain));
     });
     _orders = OrderCaptainLogsModel(
         orders: orders, countOrders: count_Order, cashOrder: data?.cashOrder);

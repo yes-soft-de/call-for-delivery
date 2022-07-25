@@ -110,6 +110,7 @@ class OrderCaptainLogsLoadedState extends States {
               deliveryDate: element.deliveryDate,
               orderCost: element.orderCost,
               note: element.note,
+              orderIsMain: false,
             ),
           ),
         ),

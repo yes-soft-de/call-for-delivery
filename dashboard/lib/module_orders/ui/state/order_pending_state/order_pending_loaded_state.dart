@@ -121,6 +121,7 @@ class OrderPendingLoadedState extends States {
               deliveryDate: element.deliveryDate,
               orderCost: element.orderCost,
               note: element.note,
+              orderIsMain: element.orderIsMain ?? false,
             ),
           ),
         ),

@@ -15,6 +15,7 @@ class OrderModel extends DataModel {
   late String createdDate;
   late String branchName;
   late String? storeName;
+  late bool? orderIsMain;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -23,7 +24,8 @@ class OrderModel extends DataModel {
       required this.deliveryDate,
       required this.createdDate,
       required this.id,
-      required this.storeName});
+      required this.storeName,
+      required this.orderIsMain});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -50,7 +52,8 @@ class OrderModel extends DataModel {
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
-          storeName: element.storeOwnerName));
+          storeName: element.storeOwnerName,
+          orderIsMain: element.orderIsMain));
     });
   }
   List<OrderModel> get data => _orders;

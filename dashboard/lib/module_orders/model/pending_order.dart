@@ -60,7 +60,8 @@ class PendingOrder extends DataModel {
           deliveryDate: delivery,
           createdDate: create,
           id: element.id ?? -1,
-          storeName: element.storeOwnerName ?? S.current.unknown));
+          storeName: element.storeOwnerName ?? S.current.unknown,
+          orderIsMain: element.orderIsMain));
     });
 
     return ordersModels;
