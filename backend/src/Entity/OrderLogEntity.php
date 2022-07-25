@@ -54,6 +54,15 @@ class OrderLogEntity
     #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class, inversedBy: 'orderLogEntities')]
     private $supplierProfile;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isHide;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $orderIsMain;
+
+    #[ORM\ManyToOne(targetEntity: OrderEntity::class)]
+    private $primaryOrder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -199,6 +208,42 @@ class OrderLogEntity
     public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): self
     {
         $this->supplierProfile = $supplierProfile;
+
+        return $this;
+    }
+
+    public function getIsHide(): ?int
+    {
+        return $this->isHide;
+    }
+
+    public function setIsHide(?int $isHide): self
+    {
+        $this->isHide = $isHide;
+
+        return $this;
+    }
+
+    public function getOrderIsMain(): ?bool
+    {
+        return $this->orderIsMain;
+    }
+
+    public function setOrderIsMain(?bool $orderIsMain): self
+    {
+        $this->orderIsMain = $orderIsMain;
+
+        return $this;
+    }
+
+    public function getPrimaryOrder(): ?OrderEntity
+    {
+        return $this->primaryOrder;
+    }
+
+    public function setPrimaryOrder(?OrderEntity $primaryOrder): self
+    {
+        $this->primaryOrder = $primaryOrder;
 
         return $this;
     }
