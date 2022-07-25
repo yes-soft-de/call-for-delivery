@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
@@ -1599,10 +1600,10 @@ class OrderEntityRepository extends ServiceEntityRepository
            ->getResult();
    }
    
-   public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+   public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
    {
        $query = $this->createQueryBuilder('orderEntity')
-           ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+           ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.captainOrderCost',
                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
@@ -1632,8 +1633,14 @@ class OrderEntityRepository extends ServiceEntityRepository
            $query->setParameter('captainId', $request->getCaptainId());
        }
 
-       $query->andWhere('orderEntity.state = :state');
-       $query->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED);
+       if ($request->getState() !== null && $request->getState() !== "" && $request->getState() !== OrderStateConstant::ORDER_STATE_ONGOING) {
+           $query->andWhere('orderEntity.state = :state');
+           $query->setParameter('state', $request->getState());
+
+       } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+           $query->andWhere('orderEntity.state IN (:statesArray)');
+           $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+       }
 
        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
            $query->andWhere('orderEntity.deliveryDate >= :deliveryDate');
@@ -1649,6 +1656,18 @@ class OrderEntityRepository extends ServiceEntityRepository
 
            $query->andWhere('orderEntity.deliveryDate <= :toDate');
            $query->setParameter('toDate', new DateTime($request->getToDate()));
+
+       } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+           $query->andWhere('orderEntity.deliveryDate >= :fromDate');
+           $query->setParameter('fromDate', (new DateTime('now'))->setTime(00, 00, 00));
+
+           $query->andWhere('orderEntity.deliveryDate <= :toDate');
+           $query->setParameter('toDate', (new DateTime('now'))->setTime(23, 59, 59));
+       }
+
+       if ($request->getPayment() === PaymentConstant::CASH_PAYMENT_METHOD_CONST || $request->getPayment() === PaymentConstant::CARD_PAYMENT_METHOD_CONST) {
+           $query->andWhere('orderEntity.payment = :paymentMethod');
+           $query->setParameter('paymentMethod', $request->getPayment());
        }
 
        return $query->getQuery()->getResult();

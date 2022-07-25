@@ -90,4 +90,14 @@ class OrderCreateByAdminRequest
     {
         return $this->images;
     }
+
+    public function getDeliveryDate(): ?string
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate(?string $deliveryDate): void
+    {
+        $this->deliveryDate = $deliveryDate;
+    }
 }

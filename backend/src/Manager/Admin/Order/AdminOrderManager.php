@@ -235,7 +235,7 @@ class AdminOrderManager
         return $orderEntity;
     }
 
-    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
     {
         return $this->orderEntityRepository->filterCaptainOrdersByAdmin($request);
     }

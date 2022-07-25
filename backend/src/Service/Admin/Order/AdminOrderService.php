@@ -116,7 +116,7 @@ class AdminOrderService
         return $response;
     }
 
-    public function getSpecificOrderByIdForAdmin(int $id)
+    public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);
 
@@ -133,7 +133,7 @@ class AdminOrderService
             $order['captain'] = null;
 
             if($order['captainUserId']) {
-                $order['captain'] = $this->captainService->getCaptain($order['captainUserId']);
+                $order['captain'] = $this->captainService->getCaptainInfoForAdmin($order['captainUserId']);
             }
         }
 
@@ -245,7 +245,11 @@ class AdminOrderService
         $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin());
         $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin());
 
-        $response['totalOrderCount'] = count($response['pendingOrders']) + count($response['hiddenOrders']) + count($response['notDeliveredOrders']);
+        $response['pendingOrdersCount'] = count($response['pendingOrders']);
+        $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
+        $response['notDeliveredOrdersCount'] = count($response['notDeliveredOrders']);
+
+        $response['totalOrderCount'] = $response['pendingOrdersCount'] + $response['hiddenOrdersCount'] + $response['notDeliveredOrdersCount'];
 
         return $response;
     }
@@ -373,6 +377,12 @@ class AdminOrderService
             //       }
             // }
 
+            if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+                // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+                // to the database if it is happened
+                $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+            }
+
             $order = $this->adminOrderManager->orderUpdateByAdmin($request);
 
             if ($order) {
@@ -413,6 +423,12 @@ class AdminOrderService
         }
 
         $request->setBranch($branch);
+
+        if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+            // to the database if it is happened
+            $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+        }
 
         $order = $this->adminOrderManager->createOrderByAdmin($request);
 
@@ -579,15 +595,20 @@ class AdminOrderService
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
       }
       
-    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): ?array
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
     {
         $response = [];
         $result = [];
+        // holds the sum of captainOrderCost of returned cash orders
+        $response['totalCashOrdersCost'] = 0;
 
         $orders = $this->adminOrderManager->filterCaptainOrdersByAdmin($request);
         // $countOrders = count($orders);
       
         foreach ($orders as $order) {
+            // note: when an order is not a cash one, then captainOrderCost = 0
+            $response['totalCashOrdersCost'] = $response['totalCashOrdersCost'] + $order['captainOrderCost'];
+
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
 
             $result[] = $this->autoMapping->map("array", OrderGetForAdminResponse::class, $order);
