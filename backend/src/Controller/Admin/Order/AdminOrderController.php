@@ -353,7 +353,7 @@ class AdminOrderController extends BaseController
      */
     public function getPendingOrdersForAdmin(): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin();
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId());
         
         return $this->response($response, self::FETCH);
     }

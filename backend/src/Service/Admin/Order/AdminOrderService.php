@@ -7,6 +7,7 @@ use App\Constant\Notification\NotificationConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -234,12 +235,12 @@ class AdminOrderService
         }
     }
         
-    public function getPendingOrdersForAdmin(): array
+    public function getPendingOrdersForAdmin(int $userId): array
     {
         $response = [];
 
-        $this->orderService->showSubOrderIfCarIsAvailable();
-        $this->orderService->hideOrderExceededDeliveryTimeByHour();
+        $this->orderService->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
+        $this->orderService->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
 
         $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin());
         $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin());

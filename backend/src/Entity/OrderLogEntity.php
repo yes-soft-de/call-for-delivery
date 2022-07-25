@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderLogEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderLogEntityRepository::class)]
 class OrderLogEntity
@@ -26,6 +27,7 @@ class OrderLogEntity
     #[ORM\Column(type: 'string', length: 100)]
     private $state;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
@@ -35,7 +37,7 @@ class OrderLogEntity
     #[ORM\Column(type: 'integer')]
     private $createdByUserType;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $isCaptainArrivedConfirmation;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'orderLogEntities')]
