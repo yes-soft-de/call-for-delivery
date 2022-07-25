@@ -28,8 +28,6 @@ final class OrderStateConstant
 
     const ORDER_STATE_ONGOING_FILTER_ARRAY = ["ongoing", "on way to pick order", "in store", "picked"];
 
-    const ORDER_STATE_CANCEL_INT = 0;
-
     const ORDER_STATE_PENDING_INT = 1;
 
     const ORDER_STATE_ARRAY_INT = [
@@ -38,16 +36,7 @@ final class OrderStateConstant
         self::ORDER_STATE_IN_STORE => 3,
         self::ORDER_STATE_PICKED => 4,
         self::ORDER_STATE_ONGOING => 5,
-        self::ORDER_STATE_DELIVERED => 6
+        self::ORDER_STATE_DELIVERED => 6,
+        self::ORDER_STATE_CANCEL => 7
     ];
-
-    const ORDER_STATE_ON_WAY_INT = 2;
-
-    const ORDER_STATE_IN_STORE_INT= 3;
-
-    const ORDER_STATE_PICKED_INT = 4;
-
-    const ORDER_STATE_ONGOING_INT = 5;
-
-    const ORDER_STATE_DELIVERED_INT = 6;
 }

@@ -555,7 +555,7 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->initializeCreateOrderLogRequest($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_STATUS_BY_CAPTAIN_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, null, null);
 
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
@@ -718,6 +718,10 @@ class OrderService
             if($order) {
            
                 $this->orderTimeLineService->createOrderLogsRequest($order);
+
+                // save log of the action on order
+                $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
@@ -1031,6 +1035,10 @@ class OrderService
           
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
+            // save log of the action on order
+            $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
+
             try{
                 // create firebase notification to store
                   $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
@@ -1058,6 +1066,10 @@ class OrderService
         }
 
         $order = $this->orderManager->updateIsHideByOrderId($orderId, $isHide);
+
+        // save log of the action on order
+        $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, null, null);
       
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER_BY_CAPTAIN, $order->getId());
@@ -1131,6 +1143,10 @@ class OrderService
                 if($order) {
                     $this->orderTimeLineService->createOrderLogsRequest($order);
 
+                    // save log of the action on order
+                    $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
+
                     //create local notification to store
                     $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
     
@@ -1163,7 +1179,11 @@ class OrderService
              if($order) {
                 
                  $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
-      
+
+                 // save log of the action on order
+                 $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                     OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, null, null);
+
                  $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
      
                  //create firebase notification to store
@@ -1203,6 +1223,10 @@ class OrderService
         if($order === OrderResultConstant::ORDER_CAPTAIN_RECEIVED) {
             return $order;
         }
+
+        // save log of the action on order
+        $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
         
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
@@ -1318,6 +1342,10 @@ class OrderService
        if($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
+
+        // save log of the action on order
+        $this->orderLogService->initializeCreateOrderLogRequest($orderEntity, $orderEntity->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, null, null);
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }  
