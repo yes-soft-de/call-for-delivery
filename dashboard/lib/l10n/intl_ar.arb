@@ -719,5 +719,6 @@
     "accountHasPaymentsRecord": "لا يمكن حذف الحساب لوجود سجل دفعات",
     "totalCashOrder":"إجمالي الطلبات الكاش",
     "filter":"فلتر",
-    "choosePaymentMethod":"اختر طريقة الدفع"
+    "choosePaymentMethod":"اختر طريقة الدفع",
+    "groupOrder":"طلب مجمع"
 }

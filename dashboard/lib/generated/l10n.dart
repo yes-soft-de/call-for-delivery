@@ -7259,6 +7259,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Group order`
+  String get groupOrder {
+    return Intl.message(
+      'Group order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

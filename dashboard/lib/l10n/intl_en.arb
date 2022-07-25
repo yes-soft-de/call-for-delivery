@@ -720,5 +720,6 @@
     "accountHasPaymentsRecord": "Account has payments record",
     "totalCashOrder": "Total cash orders",
     "filter": "Filter",
-    "choosePaymentMethod": "Choose payment method"
+    "choosePaymentMethod": "Choose payment method",
+    "groupOrder": "Group order"
 }
