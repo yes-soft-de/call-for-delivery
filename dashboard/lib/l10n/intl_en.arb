@@ -721,5 +721,7 @@
     "totalCashOrder": "Total cash orders",
     "filter": "Filter",
     "choosePaymentMethod": "Choose payment method",
-    "groupOrder": "Group order"
+    "groupOrder": "Group order",
+    "accountManaging":"Account Managing",
+    "accountInfo":"Account Info"
 }

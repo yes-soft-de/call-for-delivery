@@ -746,6 +746,7 @@ class NewOrderStateBranchesLoaded extends States {
           storeId: screenState.storeID,
           fromBranch: screenState.branch,
           distance: distance,
+          orderIsMain: orderIsMain,
           pdf: pdfModel?.getPdfRequest(),
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
@@ -770,6 +771,7 @@ class NewOrderStateBranchesLoaded extends States {
     screenState.addNewOrder(CreateOrderRequest(
         storeId: screenState.storeID,
         fromBranch: screenState.branch,
+        orderIsMain: orderIsMain,
         distance: distance,
         pdf: pdfModel?.getPdfRequest(),
         recipientName: screenState.receiptNameController.text.trim(),

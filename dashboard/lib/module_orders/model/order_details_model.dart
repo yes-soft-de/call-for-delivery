@@ -48,7 +48,7 @@ class OrderDetailsModel extends DataModel {
   String? noteCaptainOrderCost;
   PdfModel? pdf;
   Captain? captain;
-
+  String? storeBranchToClientDistance;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -83,7 +83,8 @@ class OrderDetailsModel extends DataModel {
       required this.storeID,
       required this.noteCaptainOrderCost,
       required this.pdf,
-      required this.captain});
+      required this.captain,
+      required this.storeBranchToClientDistance});
 
   late OrderDetailsModel _orders;
 
@@ -146,7 +147,8 @@ class OrderDetailsModel extends DataModel {
                 pdfPreview: element?.pdf?.file,
                 pdfBaseUrl: element?.pdf?.baseUrl)
             : null,
-        captain: element?.captain);
+        captain: element?.captain,
+        storeBranchToClientDistance: element?.storeBranchToClientDistance);
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);
   }

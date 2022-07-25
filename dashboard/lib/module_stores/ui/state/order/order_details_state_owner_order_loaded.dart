@@ -450,8 +450,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
                       subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
+                          ? Text(S.current.distance +
+                              ' ${orderInfo.storeBranchToClientDistance} ' +
+                              S.current.km)
                           : Text(S.current.distance + ' ' + S.current.unknown),
                       trailing: Icon(Icons.arrow_forward),
                     ),

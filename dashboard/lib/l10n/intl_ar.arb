@@ -596,7 +596,7 @@
     "currentFinancialDuesCycle": "الدورة الحالية",
     "financialDuesDetails": "تفاصيل الدورة المالية",
     "financeStoreStatus": "حالة مستحقات المتاجر",
-    "accountBalance": "تفاصيل الحساب",
+    "accountBalance": "الحساب المالي",
     "currentFinancialCycleHint": "في هذه النافذة نستعرض التفاصيل المالية للدورة",
     "paymentToCaptain": "دفعة للكابتن",
     "makePayment": "تسجيل دفعة",
@@ -720,5 +720,7 @@
     "totalCashOrder":"إجمالي الطلبات الكاش",
     "filter":"فلتر",
     "choosePaymentMethod":"اختر طريقة الدفع",
-    "groupOrder":"طلب مجمع"
+    "groupOrder":"طلب مجمع",
+    "accountManaging":"إدارة الحساب",
+    "accountInfo":"بيانات الحساب"
 }

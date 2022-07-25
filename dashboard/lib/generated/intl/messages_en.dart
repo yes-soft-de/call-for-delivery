@@ -51,6 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account has order records"),
         "accountHasPaymentsRecord":
             MessageLookupByLibrary.simpleMessage("Account has payments record"),
+        "accountInfo": MessageLookupByLibrary.simpleMessage("Account Info"),
+        "accountManaging":
+            MessageLookupByLibrary.simpleMessage("Account Managing"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),

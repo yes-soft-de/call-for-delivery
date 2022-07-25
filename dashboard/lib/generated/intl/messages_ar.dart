@@ -40,7 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("الحساب"),
         "accountAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تسجيل هذا الحساب لوجوده مسبقا"),
-        "accountBalance": MessageLookupByLibrary.simpleMessage("تفاصيل الحساب"),
+        "accountBalance": MessageLookupByLibrary.simpleMessage("الحساب المالي"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("تم ارسال الطلب"),
         "accountDeletedSuccessfully":
@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن حذف الحساب لوجود سجل طلبات"),
         "accountHasPaymentsRecord": MessageLookupByLibrary.simpleMessage(
             "لا يمكن حذف الحساب لوجود سجل دفعات"),
+        "accountInfo": MessageLookupByLibrary.simpleMessage("بيانات الحساب"),
+        "accountManaging": MessageLookupByLibrary.simpleMessage("إدارة الحساب"),
         "accountNotExist":
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),

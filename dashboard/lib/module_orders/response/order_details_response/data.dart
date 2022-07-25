@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/responses/file_pdf_response.dart';
 
 import 'created_at.dart';
@@ -42,7 +43,7 @@ class Data {
   String? noteCaptainOrderCost;
   FilePdfResponse? pdf;
   Captain? captain;
-
+  String? storeBranchToClientDistance;
   Data(
       {this.id,
       this.state,
@@ -77,7 +78,8 @@ class Data {
       this.storeId,
       this.noteCaptainOrderCost,
       this.pdf,
-      this.captain});
+      this.captain,
+      this.storeBranchToClientDistance});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       branchId: json['branchId'],
@@ -128,6 +130,9 @@ class Data {
       attention: json['attention'] as String?,
       captainOrderCost: json['captainOrderCost'] as num?,
       storeName: json['storeOwnerName'] as String?,
+      storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
+          ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
+          : null,
       orderLogs: OrderLogsResponse.fromJson(json));
 
   Map<String, dynamic> toJson() => {

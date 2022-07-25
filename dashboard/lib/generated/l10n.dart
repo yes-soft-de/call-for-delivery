@@ -7269,6 +7269,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Account Managing`
+  String get accountManaging {
+    return Intl.message(
+      'Account Managing',
+      name: 'accountManaging',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Info`
+  String get accountInfo {
+    return Intl.message(
+      'Account Info',
+      name: 'accountInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
