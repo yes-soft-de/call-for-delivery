@@ -51,6 +51,21 @@ class OrderLogCreateRequest
      */
     private $supplierProfile;
 
+    /**
+     * @var int|null
+     */
+    private $isHide;
+
+    /**
+     * @var bool|null
+     */
+    private $orderIsMain;
+
+    /**
+     * @var OrderEntity|null
+     */
+    private $primaryOrder;
+
     public function getOrderId(): int|OrderEntity
     {
         return $this->orderId;
@@ -61,19 +76,9 @@ class OrderLogCreateRequest
         $this->orderId = $orderId;
     }
 
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
     public function setType(int $type): void
     {
         $this->type = $type;
-    }
-
-    public function getAction(): int
-    {
-        return $this->action;
     }
 
     public function setAction(int $action): void
@@ -81,19 +86,9 @@ class OrderLogCreateRequest
         $this->action = $action;
     }
 
-    public function getState(): int
-    {
-        return $this->state;
-    }
-
     public function setState(int $state): void
     {
         $this->state = $state;
-    }
-
-    public function getCreatedBy(): int
-    {
-        return $this->createdBy;
     }
 
     public function setCreatedBy(int $createdBy): void
@@ -111,19 +106,9 @@ class OrderLogCreateRequest
         $this->createdByUserType = $createdByUserType;
     }
 
-    public function getIsCaptainArrivedConfirmation(): ?bool
-    {
-        return $this->isCaptainArrivedConfirmation;
-    }
-
     public function setIsCaptainArrivedConfirmation(?bool $isCaptainArrivedConfirmation): void
     {
         $this->isCaptainArrivedConfirmation = $isCaptainArrivedConfirmation;
-    }
-
-    public function getStoreOwnerBranch(): StoreOwnerBranchEntity|int|null
-    {
-        return $this->storeOwnerBranch;
     }
 
     public function setStoreOwnerBranch(StoreOwnerBranchEntity|int|null $storeOwnerBranch): void
@@ -131,19 +116,9 @@ class OrderLogCreateRequest
         $this->storeOwnerBranch = $storeOwnerBranch;
     }
 
-    public function getStoreOwnerProfile(): int|StoreOwnerProfileEntity
-    {
-        return $this->storeOwnerProfile;
-    }
-
     public function setStoreOwnerProfile(int|StoreOwnerProfileEntity $storeOwnerProfile): void
     {
         $this->storeOwnerProfile = $storeOwnerProfile;
-    }
-
-    public function getCaptainProfile(): CaptainEntity|int|null
-    {
-        return $this->captainProfile;
     }
 
     public function setCaptainProfile(CaptainEntity|int|null $captainProfile): void
@@ -151,13 +126,23 @@ class OrderLogCreateRequest
         $this->captainProfile = $captainProfile;
     }
 
-    public function getSupplierProfile(): SupplierProfileEntity|int|null
-    {
-        return $this->supplierProfile;
-    }
-
     public function setSupplierProfile(SupplierProfileEntity|int|null $supplierProfile): void
     {
         $this->supplierProfile = $supplierProfile;
+    }
+
+    public function setIsHide(?int $isHide): void
+    {
+        $this->isHide = $isHide;
+    }
+
+    public function setOrderIsMain(?bool $orderIsMain): void
+    {
+        $this->orderIsMain = $orderIsMain;
+    }
+
+    public function setPrimaryOrder(OrderEntity|null $primaryOrder): void
+    {
+        $this->primaryOrder = $primaryOrder;
     }
 }

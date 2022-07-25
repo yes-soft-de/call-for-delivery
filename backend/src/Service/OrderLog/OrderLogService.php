@@ -40,13 +40,18 @@ class OrderLogService
 
         if ($storeOwnerBranch === null) {
             $orderLogCreateRequest->setStoreOwnerBranch($this->storeOrderDetailsService->getStoreBranchByOrderId($orderEntity->getId()));
+
+        } else {
+            $orderLogCreateRequest->setStoreOwnerBranch($storeOwnerBranch);
         }
 
-        //$orderLogCreateRequest->setStoreOwnerBranch($storeOwnerBranch);
         $orderLogCreateRequest->setStoreOwnerProfile($orderEntity->getStoreOwner());
         $orderLogCreateRequest->setCaptainProfile($orderEntity->getCaptainId());
         $orderLogCreateRequest->setIsCaptainArrivedConfirmation($orderEntity->getIsCaptainArrived());
         $orderLogCreateRequest->setSupplierProfile($supplierProfile);
+        $orderLogCreateRequest->setIsHide($orderEntity->getIsHide());
+        $orderLogCreateRequest->setOrderIsMain($orderEntity->getOrderIsMain());
+        $orderLogCreateRequest->setPrimaryOrder($orderEntity->getPrimaryOrder());
 
         $this->createNewOrderLog($orderLogCreateRequest);
     }
