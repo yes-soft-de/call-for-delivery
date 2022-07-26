@@ -300,8 +300,8 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     lastSeenIndex = widget._chatHiveHelper.getChatIndex(chatRoomId, username);
     bool newMessages =
         lastSeenIndex != null ? (lastSeenIndex! < chatList.length) : false;
-
     chatList.forEach((element) {
+      print(element.msg);
       newMessagesList.add(AutoScrollTag(
         controller: chatScrollController,
         key: ValueKey(element.sentDate),

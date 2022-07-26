@@ -88,7 +88,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
-     toController.addListener(() {
+    toController.addListener(() {
       if (toController.text.isNotEmpty && toController.text != '') {
         var data = toController.text.trim();
         var link = Uri.tryParse(data);
@@ -107,7 +107,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
-
   }
 
   @override

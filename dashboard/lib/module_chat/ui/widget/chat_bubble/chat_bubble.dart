@@ -1,7 +1,11 @@
+import 'package:c4d/consts/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatBubbleWidget extends StatefulWidget {
   final bool? showImage;
@@ -54,7 +58,7 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                         ? m.TextDirection.rtl
                         : m.TextDirection.ltr,
                     children: [
-                      widget.message.contains('http')
+                      widget.message.contains(Urls.IMAGES_ROOT)
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: CustomNetworkImage(
@@ -69,8 +73,15 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                 width: 240,
                               ),
                             )
-                          : Text(
-                              '${widget.message}',
+                          : SelectableLinkify(
+                              onOpen: (link) async {
+                                if (await canLaunch(link.url)) {
+                                  await launch(link.url);
+                                } else {
+                                  Fluttertoast.showToast(msg: 'Invalid link');
+                                }
+                              },
+                              text: '${widget.message}',
                               textAlign: reg.hasMatch(widget.message)
                                   ? TextAlign.right
                                   : TextAlign.left,

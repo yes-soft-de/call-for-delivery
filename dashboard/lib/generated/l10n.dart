@@ -7289,6 +7289,216 @@ class S {
       args: [],
     );
   }
+
+  /// `Remaining Orders`
+  String get packageOrderRemainingOrders {
+    return Intl.message(
+      'Remaining Orders',
+      name: 'packageOrderRemainingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Orders`
+  String get packageOrderCount {
+    return Intl.message(
+      'Package Orders',
+      name: 'packageOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package captains count`
+  String get packageCaptainsCount {
+    return Intl.message(
+      'Package captains count',
+      name: 'packageCaptainsCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining Captains`
+  String get packageRemainingCaptains {
+    return Intl.message(
+      'Remaining Captains',
+      name: 'packageRemainingCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown action`
+  String get unknownAction {
+    return Intl.message(
+      'Unknown action',
+      name: 'unknownAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated order state`
+  String get UpdatedOrderState {
+    return Intl.message(
+      'Updated order state',
+      name: 'UpdatedOrderState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Canceled`
+  String get orderedCanceled {
+    return Intl.message(
+      'Order Canceled',
+      name: 'orderedCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order assigned to captain`
+  String get assignedOrderToCaptain {
+    return Intl.message(
+      'Order assigned to captain',
+      name: 'assignedOrderToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created new order`
+  String get createdNewOrder {
+    return Intl.message(
+      'Created new order',
+      name: 'createdNewOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlinked order from group order`
+  String get unlinkedSubOrderFromGroupedOrder {
+    return Intl.message(
+      'Unlinked order from group order',
+      name: 'unlinkedSubOrderFromGroupedOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated order`
+  String get updatedOrder {
+    return Intl.message(
+      'Updated order',
+      name: 'updatedOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hided to edit by admin`
+  String get orderHidedToEditByAdmin {
+    return Intl.message(
+      'Order hided to edit by admin',
+      name: 'orderHidedToEditByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Un assign order`
+  String get unAssignOrder {
+    return Intl.message(
+      'Un assign order',
+      name: 'unAssignOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hided to be edit`
+  String get orderHidedToEditByStore {
+    return Intl.message(
+      'Order hided to be edit',
+      name: 'orderHidedToEditByStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlinked suborder`
+  String get unlinkedSubOrder {
+    return Intl.message(
+      'Unlinked suborder',
+      name: 'unlinkedSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New suborder created`
+  String get newSubOrderCreated {
+    return Intl.message(
+      'New suborder created',
+      name: 'newSubOrderCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order unhidden due captains available`
+  String get orderUnHidedDuCaptainAvailable {
+    return Intl.message(
+      'order unhidden due captains available',
+      name: 'orderUnHidedDuCaptainAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hidden due time has expired`
+  String get orderHidedDuTimeExpired {
+    return Intl.message(
+      'Order hidden due time has expired',
+      name: 'orderHidedDuTimeExpired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order recycled`
+  String get orderRecycled {
+    return Intl.message(
+      'Order recycled',
+      name: 'orderRecycled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order canceled`
+  String get canceledOrder {
+    return Intl.message(
+      'Order canceled',
+      name: 'canceledOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain finished filling information`
+  String get captainFinishedFillingOrderInformation {
+    return Intl.message(
+      'Captain finished filling information',
+      name: 'captainFinishedFillingOrderInformation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

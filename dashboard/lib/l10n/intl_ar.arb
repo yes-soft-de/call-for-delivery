@@ -722,5 +722,27 @@
     "choosePaymentMethod":"اختر طريقة الدفع",
     "groupOrder":"طلب مجمع",
     "accountManaging":"إدارة الحساب",
-    "accountInfo":"بيانات الحساب"
+    "accountInfo":"بيانات الحساب",
+    "packageOrderRemainingOrders":"الطلبات المتبقية من الباقة",
+    "packageOrderCount":"طلبات الباقة",
+    "packageCaptainsCount":"كباتن الباقة",
+    "packageRemainingCaptains":"الكباتن المتبقيين",
+    "unknownAction":"حدث غير معروف",
+    "UpdatedOrderState":"تم تعديل حالة الطلب",
+    "orderedCanceled":"تم إلغاء الطلب",
+    "assignedOrderToCaptain":"تم إسناد الطلب لكابتن",
+    "createdNewOrder":"تم إنشاء طلب جديد",
+    "unlinkedSubOrderFromGroupedOrder":"فك ارتباط طلب فرع بطلب مجمع",
+    "updatedOrder":"تم تحديث طلب",
+    "orderHidedToEditByAdmin":"تم إخفاء طلب لتعديله",
+    "unAssignOrder":"إلغاء اسناد طلب ",
+    "orderHidedToEditByStore":"",
+    "unlinkedSubOrder":"تم إخفاء طلب لتعديله",
+    "newSubOrderCreated":"طلب فرعي جديد",
+    "orderUnHidedDuCaptainAvailable":"إظهار طلب عند متجر لتوفر كابتن",
+    "orderHidedDuTimeExpired":"تم إخفاء طلب بعد انتهاء مدة صلاحيته",
+    "orderRecycled":"تم إعادة نشر طلب ",
+    "canceledOrder":"تم إلغاء طلب",
+    "captainFinishedFillingOrderInformation":"الكابتن أنهى إدخال بيانات طلب"
+    
 }

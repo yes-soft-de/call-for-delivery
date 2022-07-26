@@ -361,15 +361,21 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         ),
         // here is the details
         RowBubble(
-            firstBubble: verticalBubble(title: S.current.packageOrderStatus),
-            secondBubble: verticalBubble(
-                title: model.remainingOrders.toString() +
-                    '/${model.packageOrderCount}')),
+            firstBubble: verticalBubble(title: S.current.packageOrderCount),
+            secondBubble: verticalBubble(title: '${model.packageOrderCount}')),
         RowBubble(
-            firstBubble: verticalBubble(title: S.current.packageCaptainsStatus),
-            secondBubble: verticalBubble(
-                title: model.remainingCars.toString() +
-                    '/${model.packageCarCount}')),
+            firstBubble:
+                verticalBubble(title: S.current.packageOrderRemainingOrders),
+            secondBubble:
+                verticalBubble(title: model.remainingOrders.toString())),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.packageCaptainsCount),
+            secondBubble: verticalBubble(title: '${model.packageCarCount}')),
+        RowBubble(
+            firstBubble:
+                verticalBubble(title: S.current.packageRemainingCaptains),
+            secondBubble:
+                verticalBubble(title: model.remainingCars.toString())),
         //
         Divider(
           thickness: 2.5,

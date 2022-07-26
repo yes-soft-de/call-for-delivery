@@ -28,7 +28,8 @@ class OrdersManager {
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
-  Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(FilterOrderRequest request) =>
+  Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(
+          FilterOrderRequest request) =>
       _repository.getCaptainOrdersFilter(request);
   Future<OrdersCashFinancesForStoreResponse?> getOrderCashFinancesForStore(
           StoreCashFinanceRequest request) =>
