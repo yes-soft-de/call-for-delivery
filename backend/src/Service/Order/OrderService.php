@@ -32,7 +32,7 @@ use App\Response\Order\OrderUpdateByCaptainResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
-use App\Service\OrderLog\OrderLogService;
+use App\Service\OrderLog\OrderLogToMySqlService;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Captain\CaptainService;
@@ -84,12 +84,12 @@ class OrderService
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private BidOrderFinancialService $bidOrderFinancialService;
-    private OrderLogService $orderLogService;
+    private OrderLogToMySqlService $orderLogToMySqlService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
                                 CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService,
                                 CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
-                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService)
+                                BidOrderFinancialService $bidOrderFinancialService, OrderLogToMySqlService $orderLogToMySqlService)
     {
        $this->autoMapping = $autoMapping;
        $this->orderManager = $orderManager;
@@ -104,7 +104,7 @@ class OrderService
        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
        $this->bidOrderFinancialService = $bidOrderFinancialService;
-       $this->orderLogService = $orderLogService;
+       $this->orderLogToMySqlService = $orderLogToMySqlService;
     }
 
     /**
@@ -136,7 +136,7 @@ class OrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, null, null);
             //create firebase notification to store
              try{
@@ -554,7 +554,7 @@ class OrderService
             }
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, null, null);
 
             //create Notification Local for store
@@ -652,7 +652,7 @@ class OrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, null, null);
 
             // send firebase notification to admin if isCaptainArrived = false
@@ -720,7 +720,7 @@ class OrderService
                 $this->orderTimeLineService->createOrderLogsRequest($order);
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                 //create local notification to store
@@ -969,7 +969,7 @@ class OrderService
                     }
 
                     // save log of the action on order
-                    $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, $userType,
+                    $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, $userType,
                         OrderLogActionTypeConstant::HIDE_ORDER_EXCEEDED_DELIVERY_TIME_ACTION_CONST, null, null);
 
                     //create firebase notification to store
@@ -990,7 +990,7 @@ class OrderService
         $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
 
         // save log of the action on order
-        $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
         
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
@@ -1036,7 +1036,7 @@ class OrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
 
             try{
@@ -1068,7 +1068,7 @@ class OrderService
         $order = $this->orderManager->updateIsHideByOrderId($orderId, $isHide);
 
         // save log of the action on order
-        $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, null, null);
       
         //notification to store
@@ -1116,7 +1116,7 @@ class OrderService
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, $userType, OrderLogActionTypeConstant::SHOW_SUB_ORDER_IF_CAR_AVAILABLE_ACTION_CONST,
+                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, $userType, OrderLogActionTypeConstant::SHOW_SUB_ORDER_IF_CAR_AVAILABLE_ACTION_CONST,
                     null, null);
 
                 //notification to store
@@ -1144,7 +1144,7 @@ class OrderService
                     $this->orderTimeLineService->createOrderLogsRequest($order);
 
                     // save log of the action on order
-                    $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                    $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                         OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                     //create local notification to store
@@ -1181,7 +1181,7 @@ class OrderService
                  $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
 
                  // save log of the action on order
-                 $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                 $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                      OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                  $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
@@ -1225,7 +1225,7 @@ class OrderService
         }
 
         // save log of the action on order
-        $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
         
         //notification to store
@@ -1319,7 +1319,7 @@ class OrderService
             if ($order) {
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::UPDATE_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                 if ($order->getCaptainId()) {
@@ -1344,7 +1344,7 @@ class OrderService
         }
 
         // save log of the action on order
-        $this->orderLogService->initializeCreateOrderLogRequest($orderEntity, $orderEntity->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderEntity, $orderEntity->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
             OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, null, null);
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
