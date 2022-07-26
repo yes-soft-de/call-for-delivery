@@ -123,4 +123,10 @@ class OrderByIdGetForAdminResponse
     public array|null $filePdf;
 
     public float|null $storeBranchToClientDistance;
+
+    /**
+     * @OA\Property(type="array", property="subOrders",
+     *     @OA\Items(type="object"))
+     */
+    public $subOrders;
 }

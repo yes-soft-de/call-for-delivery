@@ -142,6 +142,8 @@ class AdminOrderService
             if($order['captainUserId']) {
                 $order['captain'] = $this->captainService->getCaptainInfoForAdmin($order['captainUserId']);
             }
+
+            $order['subOrders'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);

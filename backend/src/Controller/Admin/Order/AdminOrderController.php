@@ -492,6 +492,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="boolean", property="orderIsMain")
      *      )
      * )
      * 
