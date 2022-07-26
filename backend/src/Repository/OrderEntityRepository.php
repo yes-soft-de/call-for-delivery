@@ -1672,4 +1672,42 @@ class OrderEntityRepository extends ServiceEntityRepository
 
        return $query->getQuery()->getResult();
    }
+
+    public function getSubOrdersByPrimaryOrderIdForAdmin(int $primaryOrderId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.orderCost',
+                'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->andWhere('orderEntity.primaryOrder = :primaryOrderId')
+            ->setParameter('primaryOrderId', $primaryOrderId)
+
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
