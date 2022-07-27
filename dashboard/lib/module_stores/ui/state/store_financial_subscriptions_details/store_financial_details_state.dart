@@ -427,11 +427,18 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 style: TextStyle(color: Colors.white),
               )),
         ),
+
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
             secondBubble: verticalBubble(
                 title:
                     model.total.sumPayments.toString() + ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.requiredToPay),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.requiredToPay)
+                        .toString() +
+                    ' ${S.current.sar}')),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Divider(
@@ -445,7 +452,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           constraints: BoxConstraints(minWidth: 125, maxWidth: 150),
           child: verticalBubble(
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
-              title: S.current.total,
+              title: S.current.leftToPay,
               background: model.total.advancePayment == false
                   ? Colors.green
                   : Colors.red),

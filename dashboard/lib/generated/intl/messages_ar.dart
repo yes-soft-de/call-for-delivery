@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هنا نستعرض تفاصيل الدورة المالية الخاصة بهذا المستخدم"),
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "DeletingYourAccountHint": MessageLookupByLibrary.simpleMessage(
-            "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن"),
+            "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بيانات هذا الحساب مع عدم الإمكانية لاستردادها في الوقت الراهن"),
         "FinanceRequest": MessageLookupByLibrary.simpleMessage("طلب خطة عمل"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
@@ -548,6 +548,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastWeek": MessageLookupByLibrary.simpleMessage("الأسبوع الماضي"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
+        "leftToPay": MessageLookupByLibrary.simpleMessage("المتبقي للدفع"),
         "loading": MessageLookupByLibrary.simpleMessage("جار التحميل"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("(التسليم) موقع الزبون"),
@@ -876,6 +877,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
+        "requiredToPay": MessageLookupByLibrary.simpleMessage("المطلوب للدفع"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),

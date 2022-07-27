@@ -714,7 +714,7 @@
     "dangerZone": "منطقة خطرة",
     "areSureAboutDeletingYourAccount": "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن",
     "deleteAccount": "حذف الحساب",
-    "DeletingYourAccountHint": "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بياناتك مع عدم الإمكانية لاستردادها في الوقت الراهن",
+    "DeletingYourAccountHint": "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بيانات هذا الحساب مع عدم الإمكانية لاستردادها في الوقت الراهن",
     "accountHasOrdersRecord": "لا يمكن حذف الحساب لوجود سجل طلبات",
     "accountHasPaymentsRecord": "لا يمكن حذف الحساب لوجود سجل دفعات",
     "totalCashOrder":"إجمالي الطلبات الكاش",
@@ -744,6 +744,8 @@
     "orderRecycled":"تم إعادة نشر طلب ",
     "canceledOrder":"تم إلغاء طلب",
     "captainFinishedFillingOrderInformation":"الكابتن أنهى إدخال بيانات طلب",
-    "totalOrdersCount":"إجمالي عدد الطلبات"
+    "totalOrdersCount":"إجمالي عدد الطلبات",
+    "requiredToPay":"المطلوب للدفع",
+    "leftToPay":"المتبقي للدفع"
     
 }

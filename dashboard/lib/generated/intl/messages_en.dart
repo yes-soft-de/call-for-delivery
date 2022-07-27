@@ -554,6 +554,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastWeek": MessageLookupByLibrary.simpleMessage("Last week"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
+        "leftToPay": MessageLookupByLibrary.simpleMessage("Left to pay"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
@@ -882,6 +883,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reportSent": MessageLookupByLibrary.simpleMessage("Report sent"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
+        "requiredToPay":
+            MessageLookupByLibrary.simpleMessage("Required to pay"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),

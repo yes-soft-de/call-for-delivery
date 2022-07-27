@@ -22,51 +22,53 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late int remainingCars;
   late int remainingOrders;
   late bool isFuture;
-
   List<StoreSubscriptionsFinanceModel> _data = [];
-  StoreSubscriptionsFinanceModel(
-      {required this.id,
-      required this.status,
-      required this.packageName,
-      required this.flag,
-      required this.note,
-      required this.startDate,
-      required this.endDate,
-      required this.paymentsFromStore,
-      required this.total,
-      required this.captainsOffer,
-      required this.packageCarCount,
-      required this.packageOrderCount,
-      required this.remainingCars,
-      required this.remainingOrders,
-      required this.isFuture});
+  StoreSubscriptionsFinanceModel({
+    required this.id,
+    required this.status,
+    required this.packageName,
+    required this.flag,
+    required this.note,
+    required this.startDate,
+    required this.endDate,
+    required this.paymentsFromStore,
+    required this.total,
+    required this.captainsOffer,
+    required this.packageCarCount,
+    required this.packageOrderCount,
+    required this.remainingCars,
+    required this.remainingOrders,
+    required this.isFuture,
+  });
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var datum = response.data;
     datum?.forEach((element) {
       _data.add(StoreSubscriptionsFinanceModel(
-          endDate: DateFormat.yMd()
-              .format(DateHelper.convert(element.endDate?.timestamp)),
-          id: element.id ?? -1,
-          paymentsFromStore: getPayments(element.paymentsFromStore ?? []),
-          startDate: DateFormat.yMd()
-              .format(DateHelper.convert(element.startDate?.timestamp)),
-          status: element.status ?? '',
-          total: Total(
-              advancePayment: element.total?.advancePayment,
-              packageCost: element.total?.packageCost ?? 0,
-              sumPayments: element.total?.sumPayments ?? 0,
-              total: element.total?.total ?? 0,
-              captainOffer: element.total?.captainOfferPrice ?? 0),
-          flag: element.flag,
-          note: element.note,
-          packageName: element.packageName ?? S.current.unknown,
-          captainsOffer: _getCaptainsOffer(element.captainOffers ?? []),
-          packageCarCount: element.packageCarCount?.toInt() ?? 0,
-          packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
-          remainingCars: element.remainingCars?.toInt() ?? 0,
-          remainingOrders: element.remainingOrders?.toInt() ?? 0,
-          isFuture: element.isFuture ?? false));
+        endDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.endDate?.timestamp)),
+        id: element.id ?? -1,
+        paymentsFromStore: getPayments(element.paymentsFromStore ?? []),
+        startDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.startDate?.timestamp)),
+        status: element.status ?? '',
+        total: Total(
+            advancePayment: element.total?.advancePayment,
+            packageCost: element.total?.packageCost ?? 0,
+            sumPayments: element.total?.sumPayments ?? 0,
+            total: element.total?.total ?? 0,
+            captainOffer: element.total?.captainOfferPrice ?? 0,
+            requiredToPay: element.total?.requiredToPay ?? 0),
+        flag: element.flag,
+        note: element.note,
+        packageName: element.packageName ?? S.current.unknown,
+        captainsOffer: _getCaptainsOffer(element.captainOffers ?? []),
+        packageCarCount: element.packageCarCount?.toInt() ?? 0,
+        packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
+        remainingCars: element.remainingCars?.toInt() ?? 0,
+        remainingOrders: element.remainingOrders?.toInt() ?? 0,
+        isFuture: element.isFuture ?? false,
+      ));
     });
   }
   List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {
@@ -111,10 +113,12 @@ class Total {
   num sumPayments;
   num total;
   num captainOffer;
+  num requiredToPay;
   Total(
       {required this.advancePayment,
       required this.packageCost,
       required this.sumPayments,
       required this.total,
-      required this.captainOffer});
+      required this.captainOffer,
+      required this.requiredToPay});
 }

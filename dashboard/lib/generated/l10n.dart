@@ -7509,6 +7509,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Required to pay`
+  String get requiredToPay {
+    return Intl.message(
+      'Required to pay',
+      name: 'requiredToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Left to pay`
+  String get leftToPay {
+    return Intl.message(
+      'Left to pay',
+      name: 'leftToPay',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

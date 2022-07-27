@@ -745,6 +745,7 @@
     "orderRecycled": "Order recycled",
     "canceledOrder": "Order canceled",
     "captainFinishedFillingOrderInformation": "Captain finished filling information",
-    "totalOrdersCount":"Total orders count"
-
+    "totalOrdersCount": "Total orders count",
+    "requiredToPay": "Required to pay",
+    "leftToPay": "Left to pay"
 }
