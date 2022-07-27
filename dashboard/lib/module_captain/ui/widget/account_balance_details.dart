@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -116,7 +117,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                         S.current.contOrderCompleted,
                         FixedNumber.getFixedNumber(contOrderCompleted) +
                             ' ${S.current.sOrder}',
-                        toOrder: true),
+                        toOrder: true,
+                        context: context),
                     horizontalsTile(
                         S.current.countOfOrdersLeft,
                         FixedNumber.getFixedNumber(countOfOrdersLeft) +
@@ -163,19 +165,23 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                       showDialog(
                           context: context!,
                           builder: (_) {
-                            return AlertDialog(
-                              title: Text(S.current.orders),
-                              content: Column(
-                                children: getOrders(context),
+                            return Scaffold(
+                              appBar: CustomC4dAppBar.appBar(context,
+                                  title: S.current.order),
+                              body: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView(
+                                      children: getOrders(context),
+                                    ),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(S.current.close))
+                                ],
                               ),
-                              scrollable: true,
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(S.current.close))
-                              ],
                             );
                           });
                     }
@@ -207,20 +213,23 @@ class AccountBalanceDetailsCard extends StatelessWidget {
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(
-        InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
-            },
-            child: OwnerOrderCard(
-              createdDate: element.createdDate,
-              deliveryDate: element.deliveryDate,
-              note: element.note,
-              orderCost: element.orderCost,
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              orderIsMain: element.orderIsMain ?? false,
-            )),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              },
+              child: OwnerOrderCard(
+                createdDate: element.createdDate,
+                deliveryDate: element.deliveryDate,
+                note: element.note,
+                orderCost: element.orderCost,
+                orderNumber: element.id.toString(),
+                orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+                orderIsMain: element.orderIsMain ?? false,
+              )),
+        ),
       );
     });
     return widgets;
