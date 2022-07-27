@@ -13,6 +13,7 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use stdClass;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use App\Service\CaptainFinancialSystem\CaptainStopFinancialSystemAndFinancialCycleService;
 
 /**
  * Captain Financial Dues.
@@ -21,11 +22,13 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 class CaptainFinancialDuesController extends BaseController
 {
     private CaptainFinancialDuesService $captainFinancialDuesService;
+    private CaptainStopFinancialSystemAndFinancialCycleService $captainStopFinancialSystemAndFinancialCycleService;
 
-    public function __construct(SerializerInterface $serializer, CaptainFinancialDuesService $captainFinancialDuesService)
+    public function __construct(SerializerInterface $serializer, CaptainFinancialDuesService $captainFinancialDuesService, CaptainStopFinancialSystemAndFinancialCycleService $captainStopFinancialSystemAndFinancialCycleService)
     {
         parent::__construct($serializer);
         $this->captainFinancialDuesService = $captainFinancialDuesService;
+        $this->captainStopFinancialSystemAndFinancialCycleService = $captainStopFinancialSystemAndFinancialCycleService;
     }
 
     /**
@@ -63,5 +66,41 @@ class CaptainFinancialDuesController extends BaseController
         $result = $this->captainFinancialDuesService->getCaptainFinancialDues($this->getUserId());
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * captain: stop financial system and financial cycle
+     * @Route("stopfinancialcycle", name="stopFinancialSystemAndFinancialCycle", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Financial Dues")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns id",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="integer", property="id"),
+     *      )
+     *   )
+     * )
+     *  
+     * @Security(name="Bearer")
+     */
+    public function stopFinancialSystemAndFinancialCycle(): JsonResponse
+    {
+        $result = $this->captainStopFinancialSystemAndFinancialCycleService->stopFinancialSystemAndFinancialCycle($this->getUserId());
+
+        return $this->response($result, self::UPDATE);
     }
 }

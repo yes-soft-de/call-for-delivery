@@ -18,6 +18,7 @@ use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordi
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 use  App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest;
+use DateTime;
 
 class AdminCaptainFinancialSystemDetailService
 {
@@ -55,9 +56,11 @@ class AdminCaptainFinancialSystemDetailService
             $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues
             ($captainId);
             if($captainFinancialDues ) {
-                $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d'), "toDate" => $captainFinancialDues['endDate']->format('Y-m-d')];
+                $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'), "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
         
                 $sumPayments = $this->getSumPayments($captainId, $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
+
+                $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
             }
 
             else {
@@ -69,23 +72,18 @@ class AdminCaptainFinancialSystemDetailService
             }
             
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-                // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
-               
-                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $captainId, $sumPayments, $date);
+             
+                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
             }
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                $choseFinancialSystemDetails = $this->adminCaptainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
               
-            //    $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
-              
                return $this->adminCaptainFinancialSystemThreeBalanceDetailService->getBalanceDetailWithSystemThree($choseFinancialSystemDetails, $captainId, $sumPayments, $date);
             } 
             
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-                // $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemTwo();
-        
-                return $this->adminCaptainFinancialSystemTwoBalanceDetailService->adminGetBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments, $date);
+                return $this->adminCaptainFinancialSystemTwoBalanceDetailService->adminGetBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
             }
         }
 
@@ -100,13 +98,18 @@ class AdminCaptainFinancialSystemDetailService
     public function updateStatusCaptainFinancialSystemDetail(AdminCaptainFinancialSystemDetailUpdateRequest $request): ?AdminCaptainFinancialSystemDetailUpdateResponse
     {
         $result = $this->adminCaptainFinancialSystemDetailManager->updateStatusCaptainFinancialSystemDetail($request);
+      
+        if($result) {
+            // Calculation of financial dues on the new system 
+            $this->captainFinancialDuesService->captainFinancialDues($result->getCaptain()->getCaptainId());
+        }
 
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);
     }
     
     public function getSumPayments($captainId, $fromDate, $toDate): float 
     {
-        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        // $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
      
         //Sum Captain's Payments
         $sumPayments = $this->captainPaymentService->getSumPaymentsToCaptainByCaptainIdAndDate($fromDate, $toDate, $captainId);

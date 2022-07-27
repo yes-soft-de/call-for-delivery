@@ -14,6 +14,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\CaptainFinancialDuesEntity;
 /**
  * @method CaptainEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -99,6 +100,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.completeAccountStatus')
             ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+            ->addSelect('captainFinancialDuesEntity.captainStoppedFinancialCycle')
 
             ->leftJoin(
                 UserEntity::class,
@@ -111,6 +113,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
             $query->andWhere('captainEntity.status = :captainProfileStatus');
             $query->setParameter('captainProfileStatus', $captainProfileStatus);
         }
+
+        $query->leftJoin(CaptainFinancialDuesEntity::class, 'captainFinancialDuesEntity', Join::WITH, 'captainFinancialDuesEntity.captain = captainEntity.id');
 
         $query->orderBy('captainEntity.id', 'DESC');
 

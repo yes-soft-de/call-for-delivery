@@ -52,4 +52,10 @@ final class CaptainFinancialSystem
     const FINANCIAL_SYSTEM_INACTIVE = "financial inactive";
 
     const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = "not update because financial System is active";
+
+    const TARGET_SUCCESS_INT = 1;
+
+    const TARGET_SUCCESS_AND_INCREASE_INT = 2;
+  
+    const TARGET_FAILED_INT = 3;
 }

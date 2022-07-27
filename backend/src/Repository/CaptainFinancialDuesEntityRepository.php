@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\CaptainPaymentEntity;
 use DateTime;
-
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 /**
  * @method CaptainFinancialDuesEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainFinancialDuesEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -73,7 +73,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore')
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore', 'captainFinancialDuesEntity.captainStoppedFinancialCycle')
             ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
             
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
@@ -108,7 +108,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.captainStoppedFinancialCycle')
             
             ->andWhere('captainFinancialDuesEntity.captain = :captainId')
 
@@ -163,5 +163,26 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function getLatestCaptainFinancialDuesByUserId(int $userId): CaptainFinancialDuesEntity
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+
+            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
+            ->setParameter('userId', $userId)
+
+            // ->andWhere('captainFinancialDuesEntity.state = :state')
+            // ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
+            
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+
+            ->setMaxResults(1)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
     }
 }
