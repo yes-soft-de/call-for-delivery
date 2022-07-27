@@ -51,7 +51,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
 
         $financialSystemDetail['countOrdersMaxFromNineteen'] = $countOrdersMaxFromNineteen;
 
-        $total = $sumPayments - $financialSystemDetail['financialDues'];
+        $total = $sumPayments - round($financialSystemDetail['financialDues'], 2);
        
         $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
         
@@ -59,10 +59,14 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
             $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
 
-        $financialSystemDetail['total'] = abs($total);
+        $financialSystemDetail['total'] = abs(round($total, 2));
         
         $financialSystemDetail['amountForStore'] = $amountForStore;
+    
+        $financialSystemDetail['dateFinancialCycleStarts'] = $date['fromDate'];
 
+        $financialSystemDetail['dateFinancialCycleEnds'] = $date['toDate'];
+    
         return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
     }
      //If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary

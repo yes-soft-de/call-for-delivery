@@ -79,15 +79,15 @@ class CaptainFinancialSystemTwoBalanceDetailService
             $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
             $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'] / 30;
 
-            $item['bounce'] = $item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'];   
+            $item['bounce'] = round($item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 2);   
 
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;   
             // if count workdays equal 30 days,The captain gets the salary and the monthly compensation 
             if($countWorkdays === 30) {
-                $item['financialDues'] = $item['salary'] + $item['monthCompensation'] + $item['bounce']; 
+                $item['financialDues'] = round($item['salary'] + $item['monthCompensation'] + $item['bounce'], 2); 
             }
             else {
-                $item['financialDues'] = ($countOrders - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'];  
+                $item['financialDues'] = round(($countOrders - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 2);  
             }
 
             $total = $item['financialDues'] - $sumPayments;
@@ -104,7 +104,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
 
             $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
           
-            $total = $item['financialDues'] - $sumPayments;
+            $total = round($item['financialDues'] - $sumPayments, 2);
         }
 
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;

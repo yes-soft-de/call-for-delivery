@@ -61,6 +61,10 @@ class CaptainFinancialSystemOneBalanceDetailService
 
         $financialSystemDetail['amountForStore'] = $amountForStore;
 
+        $financialSystemDetail['dateFinancialCycleStarts'] = $date['fromDate'];
+
+        $financialSystemDetail['dateFinancialCycleEnds'] = $date['toDate'];
+
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
     }
 
