@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderLogEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: OrderLogEntityRepository::class)]
 class OrderLogEntity
@@ -26,6 +27,7 @@ class OrderLogEntity
     #[ORM\Column(type: 'string', length: 100)]
     private $state;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
@@ -35,7 +37,7 @@ class OrderLogEntity
     #[ORM\Column(type: 'integer')]
     private $createdByUserType;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $isCaptainArrivedConfirmation;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerBranchEntity::class, inversedBy: 'orderLogEntities')]
@@ -51,6 +53,15 @@ class OrderLogEntity
 
     #[ORM\ManyToOne(targetEntity: SupplierProfileEntity::class, inversedBy: 'orderLogEntities')]
     private $supplierProfile;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isHide;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $orderIsMain;
+
+    #[ORM\ManyToOne(targetEntity: OrderEntity::class)]
+    private $primaryOrder;
 
     public function getId(): ?int
     {
@@ -197,6 +208,42 @@ class OrderLogEntity
     public function setSupplierProfile(?SupplierProfileEntity $supplierProfile): self
     {
         $this->supplierProfile = $supplierProfile;
+
+        return $this;
+    }
+
+    public function getIsHide(): ?int
+    {
+        return $this->isHide;
+    }
+
+    public function setIsHide(?int $isHide): self
+    {
+        $this->isHide = $isHide;
+
+        return $this;
+    }
+
+    public function getOrderIsMain(): ?bool
+    {
+        return $this->orderIsMain;
+    }
+
+    public function setOrderIsMain(?bool $orderIsMain): self
+    {
+        $this->orderIsMain = $orderIsMain;
+
+        return $this;
+    }
+
+    public function getPrimaryOrder(): ?OrderEntity
+    {
+        return $this->primaryOrder;
+    }
+
+    public function setPrimaryOrder(?OrderEntity $primaryOrder): self
+    {
+        $this->primaryOrder = $primaryOrder;
 
         return $this;
     }

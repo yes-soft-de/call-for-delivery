@@ -31,6 +31,11 @@ class UpdateOrderByAdminRequest
     private string|null $filePdf;
 
     private float|null $storeBranchToClientDistance;
+
+    /**
+     * @var bool|null
+     */
+    private $orderIsMain;
     
     /**
      * Get the value of id

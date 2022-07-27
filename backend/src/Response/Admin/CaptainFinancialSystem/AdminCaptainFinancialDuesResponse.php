@@ -36,4 +36,6 @@ class AdminCaptainFinancialDuesResponse
      *     @OA\Items(type="object"))
      */
     public array $total;
+
+    public bool|null $captainStoppedFinancialCycle;
 }

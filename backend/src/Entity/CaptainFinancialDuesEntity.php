@@ -42,6 +42,9 @@ class CaptainFinancialDuesEntity
     #[ORM\Column(type: 'integer')]
     private $state;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $captainStoppedFinancialCycle;
+
     public function __construct()
     {
         $this->captainPaymentEntities = new ArrayCollection();
@@ -174,6 +177,18 @@ class CaptainFinancialDuesEntity
     public function setState(int $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getCaptainStoppedFinancialCycle(): ?bool
+    {
+        return $this->captainStoppedFinancialCycle;
+    }
+
+    public function setCaptainStoppedFinancialCycle(?bool $captainStoppedFinancialCycle): self
+    {
+        $this->captainStoppedFinancialCycle = $captainStoppedFinancialCycle;
 
         return $this;
     }

@@ -46,7 +46,7 @@ class CaptainFinancialDuesService
         $this->captainPaymentService = $captainPaymentService;
         $this->captainFinancialSystemDetailServiceTwo = $captainFinancialSystemDetailServiceTwo;
     }
-
+    // create or update (captainFinancialDues)
     public function captainFinancialDues(int $userId)
     {
         //get Captain Financial System Detail current
@@ -61,20 +61,22 @@ class CaptainFinancialDuesService
                 $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
             }
           
-            $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('Y-m-d'), 'toDate' => $captainFinancialDues->getEndDate()->format('Y-m-d')];
+            $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
+        
+            $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                //Calculation of financial dues
-                $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date);
+                $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
                //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 //Calculation of financial dues
-                $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date);
+                $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
 
-                //create or update captain financial dues
+                //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
 
@@ -83,7 +85,7 @@ class CaptainFinancialDuesService
                 $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
                        
                 $financialDues = $this->captainFinancialSystemThreeBalanceDetailService->getFinancialDuesWithSystemThree($choseFinancialSystemDetails, $financialSystemDetail['captainId'], $date);
-               //create or update captain financial dues
+               //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
         }
@@ -93,7 +95,7 @@ class CaptainFinancialDuesService
 
     public function createCaptainFinancialDues(int $captainId, int $status): CaptainFinancialDuesEntity
     {
-        $date = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+        $date = $this->captainFinancialSystemDateService->getStartAndEndDateOfFinancialCycle();
 
         $request = new CreateCaptainFinancialDuesRequest();
 
@@ -121,9 +123,10 @@ class CaptainFinancialDuesService
         $response = [];
 
         $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserId($userId);
-
+        
         foreach ($captainFinancialDues as $captainFinancialDue) {
-
+            
+            $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 2);
             $captainFinancialDue['paymentsFromCompany'] = $this->captainPaymentService->getPaymentsByCaptainFinancialDues($captainFinancialDue['id']);
           
             $captainFinancialDue['total'] = $this->getCaptainFinancialTotal($captainFinancialDue['id']);
@@ -150,9 +153,9 @@ class CaptainFinancialDuesService
             $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
        
-        $captainFinancialDues['sumCaptainFinancialDues'] =  $sumCaptainFinancialDues['sumCaptainFinancialDues'];
+        $captainFinancialDues['sumCaptainFinancialDues'] =  round($sumCaptainFinancialDues['sumCaptainFinancialDues'], 2);
         $captainFinancialDues['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPaymentsToCaptain'];
-        $captainFinancialDues['total'] = abs($total);
+        $captainFinancialDues['total'] = abs(round($total,2));
 
         return $captainFinancialDues;
     }
@@ -166,11 +169,11 @@ class CaptainFinancialDuesService
     public function updateCaptainFinancialSystemDetail(int $userId)      
     {     
        $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
- 
+
        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);
 
        if($captainFinancialDues) {
-            if($captainFinancialDues['endDate'] < new datetime('now')) {
+            if(new datetime($captainFinancialDues['endDate']->format('y-m-d 23:59:59')) < new datetime('now')) {
                $this->captainFinancialDuesManager->updateCaptainFinancialDuesStateToInactive($captainFinancialDues['id']);
               
             //    return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);

@@ -107,4 +107,6 @@ class CaptainProfileGetForAdminResponse
     public int $verificationStatus;
 
     public string $completeAccountStatus;
+    
+    public bool|null $captainStoppedFinancialCycle;
 }

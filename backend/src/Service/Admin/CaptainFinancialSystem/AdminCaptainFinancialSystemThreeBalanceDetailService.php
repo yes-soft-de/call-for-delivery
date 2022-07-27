@@ -84,7 +84,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
          
         $finalFinancialAccount['sumPayments'] = $sumPayments;
        
-        $total = $sumPayments - $finalFinancialAccount['financialDues'];
+        $total = round($sumPayments - $finalFinancialAccount['financialDues'], 2);
        
         $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
@@ -102,6 +102,9 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
             }
         }
         
+        $finalFinancialAccount['dateFinancialCycleStarts'] = $date['fromDate'];
+        $finalFinancialAccount['dateFinancialCycleEnds'] = $date['toDate'];
+       
         return $finalFinancialAccount;
     }
 }

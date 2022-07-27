@@ -29,4 +29,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float|null $amountForStore;
 
     public array $orders;
+
+    public string|null $dateFinancialCycleStarts;
 }
