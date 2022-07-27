@@ -27,4 +27,6 @@ final class EraserResultConstant
     const STORE_HAS_NOT_ORDERS = 3;
 
     const STORE_HAS_ORDERS = 4;
+
+    const CAPTAIN_ACCOUNT_AND_PROFILE_CAN_BE_DELETED = 5;
 }
