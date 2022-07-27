@@ -113,4 +113,10 @@ final class NotificationFirebaseConstant
     const STORE_DENIED_CAPTAIN_ARRIVAL = 'تم نفي وصول الكابتن للمتجر من أجل الطلب رقم ';
 
     const SCHEDULED_NOTIFICATION = 'إشعار مجدول - ';
+  
+    const THE_CAPTAIN = 'الكابتن';
+
+    const CAPTAIN_STOPE_FINANCIAL_CYCLE = 'أوقف دورته المالية';
+
+    const URL_CAPTAIN_DETAILS = '/captain_details';
 }
