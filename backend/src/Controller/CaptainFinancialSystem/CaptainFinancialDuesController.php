@@ -72,7 +72,6 @@ class CaptainFinancialDuesController extends BaseController
      * captain: stop financial system and financial cycle
      * @Route("stopfinancialcycle", name="stopFinancialSystemAndFinancialCycle", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Financial Dues")
