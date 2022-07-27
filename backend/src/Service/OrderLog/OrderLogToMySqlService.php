@@ -4,13 +4,14 @@ namespace App\Service\OrderLog;
 
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderEntity;
+use App\Entity\OrderLogEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\SupplierProfileEntity;
 use App\Manager\OrderLog\OrderLogManager;
 use App\Request\OrderLog\OrderLogCreateRequest;
 use App\Service\Order\StoreOrderDetailsService;
 
-class OrderLogService
+class OrderLogToMySqlService
 {
     private OrderLogManager $orderLogManager;
     private StoreOrderDetailsService $storeOrderDetailsService;
@@ -21,7 +22,7 @@ class OrderLogService
         $this->storeOrderDetailsService = $storeOrderDetailsService;
     }
 
-    public function createNewOrderLog(OrderLogCreateRequest $request)
+    public function createNewOrderLog(OrderLogCreateRequest $request): OrderLogEntity
     {
         return $this->orderLogManager->createNewOrderLog($request);
     }
