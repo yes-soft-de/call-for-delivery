@@ -743,6 +743,7 @@
     "orderHidedDuTimeExpired":"تم إخفاء طلب بعد انتهاء مدة صلاحيته",
     "orderRecycled":"تم إعادة نشر طلب ",
     "canceledOrder":"تم إلغاء طلب",
-    "captainFinishedFillingOrderInformation":"الكابتن أنهى إدخال بيانات طلب"
+    "captainFinishedFillingOrderInformation":"الكابتن أنهى إدخال بيانات طلب",
+    "totalOrdersCount":"إجمالي عدد الطلبات"
     
 }

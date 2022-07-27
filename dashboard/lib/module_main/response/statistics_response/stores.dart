@@ -6,12 +6,12 @@ class Stores {
   Stores({this.countStores});
 
   factory Stores.fromJson(Map<String, dynamic> json) => Stores(
-        countStores: json['countStores'] == null
+        countStores: json['count'] == null
             ? null
-            : CountStores.fromJson(json['countStores'] as Map<String, dynamic>),
+            : CountStores.fromJson(json['count'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
-        'countStores': countStores?.toJson(),
+        'count': countStores?.toJson(),
       };
 }

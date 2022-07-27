@@ -1043,6 +1043,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalCashOrder":
             MessageLookupByLibrary.simpleMessage("إجمالي الطلبات الكاش"),
+        "totalOrdersCount":
+            MessageLookupByLibrary.simpleMessage("إجمالي عدد الطلبات"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("إلغاء اسناد طلب "),

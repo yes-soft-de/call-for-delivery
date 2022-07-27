@@ -744,5 +744,7 @@
     "orderHidedDuTimeExpired": "Order hidden due time has expired",
     "orderRecycled": "Order recycled",
     "canceledOrder": "Order canceled",
-    "captainFinishedFillingOrderInformation": "Captain finished filling information"
+    "captainFinishedFillingOrderInformation": "Captain finished filling information",
+    "totalOrdersCount":"Total orders count"
+
 }

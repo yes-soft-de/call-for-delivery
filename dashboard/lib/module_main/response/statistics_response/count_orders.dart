@@ -1,14 +1,14 @@
 import 'delivered.dart';
 
-class CountOrder {
+class CountOrders {
   int? allOrders;
   Delivered? delivered;
   int? pending;
   int? onGoing;
 
-  CountOrder({this.allOrders, this.delivered, this.pending, this.onGoing});
+  CountOrders({this.allOrders, this.delivered, this.pending, this.onGoing});
 
-  factory CountOrder.fromJson(Map<String, dynamic> json) => CountOrder(
+  factory CountOrders.fromJson(Map<String, dynamic> json) => CountOrders(
         allOrders: json['allOrders'] as int?,
         delivered: json['delivered'] == null
             ? null

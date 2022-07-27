@@ -91,7 +91,7 @@ class Urls {
 
   /*--------home-------------------*/
   static const GET_REPORT = BASE_API_REPORT_ADMIN + '/getstatistics';
-
+  static const GET_STATISTICS = BASE_API_REPORT_ADMIN + '/fetchdashstatistics';
   /*--------Notification-------------------*/
   static const NEEDFORSUPPORT_ANYNAMOUS = BASE_API + '/anonymouschat';
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';

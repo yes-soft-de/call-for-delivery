@@ -1,17 +1,29 @@
-import 'data.dart';
+import 'captains.dart';
+import 'orders.dart';
+import 'stores.dart';
 
 class Data {
-  Data? data;
+  Orders? orders;
+  Stores? stores;
+  Captains? captains;
 
-  Data({this.data});
+  Data({this.orders, this.stores, this.captains});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        data: json['data'] == null
+        orders: json['orders'] == null
             ? null
-            : Data.fromJson(json['data'] as Map<String, dynamic>),
+            : Orders.fromJson(json['orders'] as Map<String, dynamic>),
+        stores: json['stores'] == null
+            ? null
+            : Stores.fromJson(json['stores'] as Map<String, dynamic>),
+        captains: json['captains'] == null
+            ? null
+            : Captains.fromJson(json['captains'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
-        'data': data?.toJson(),
+        'orders': orders?.toJson(),
+        'stores': stores?.toJson(),
+        'captains': captains?.toJson(),
       };
 }

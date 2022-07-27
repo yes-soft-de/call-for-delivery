@@ -1,25 +1,25 @@
-import 'data.dart';
+import 'dataum.dart';
 
 class StatisticsResponse {
   String? statusCode;
   String? msg;
-  Data? data;
+  Dataum? dataum;
 
-  StatisticsResponse({this.statusCode, this.msg, this.data});
+  StatisticsResponse({this.statusCode, this.msg, this.dataum});
 
   factory StatisticsResponse.fromJson(Map<String, dynamic> json) {
     return StatisticsResponse(
       statusCode: json['status_code'] as String?,
       msg: json['msg'] as String?,
-      data: json['Data'] == null
+      dataum: json['Data'] == null
           ? null
-          : Data.fromJson(json['Data'] as Map<String, dynamic>),
+          : Dataum.fromJson(json['Data'] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'status_code': statusCode,
         'msg': msg,
-        'Data': data?.toJson(),
+        'Dataum': dataum?.toJson(),
       };
 }

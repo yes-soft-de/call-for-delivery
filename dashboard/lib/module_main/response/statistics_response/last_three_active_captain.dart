@@ -1,16 +1,21 @@
 import 'created_at.dart';
 import 'images.dart';
 
-class LastThreeActive {
+class LastThreeActiveCaptain {
   int? id;
   String? captainName;
   CreatedAt? createdAt;
   Images? images;
 
-  LastThreeActive({this.id, this.captainName, this.createdAt, this.images});
+  LastThreeActiveCaptain({
+    this.id,
+    this.captainName,
+    this.createdAt,
+    this.images,
+  });
 
-  factory LastThreeActive.fromJson(Map<String, dynamic> json) {
-    return LastThreeActive(
+  factory LastThreeActiveCaptain.fromJson(Map<String, dynamic> json) {
+    return LastThreeActiveCaptain(
       id: json['id'] as int?,
       captainName: json['captainName'] as String?,
       createdAt: json['createdAt'] == null

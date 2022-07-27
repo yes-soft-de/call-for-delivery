@@ -1,17 +1,17 @@
-import 'count_order.dart';
+import 'count_orders.dart';
 
 class Orders {
-  CountOrder? countOrder;
+  CountOrders? countOrders;
 
-  Orders({this.countOrder});
+  Orders({this.countOrders});
 
   factory Orders.fromJson(Map<String, dynamic> json) => Orders(
-        countOrder: json['countOrder'] == null
+        countOrders: json['count'] == null
             ? null
-            : CountOrder.fromJson(json['countOrder'] as Map<String, dynamic>),
+            : CountOrders.fromJson(json['count'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
-        'countOrder': countOrder?.toJson(),
+        'count': countOrders?.toJson(),
       };
 }

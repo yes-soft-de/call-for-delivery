@@ -7499,6 +7499,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Total orders count`
+  String get totalOrdersCount {
+    return Intl.message(
+      'Total orders count',
+      name: 'totalOrdersCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
