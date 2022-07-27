@@ -608,6 +608,8 @@ class SubscriptionService
 
         $item['packageCost'] = $packageCost;
       
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
+      
         $total = $item['sumPayments'] - ($packageCost + $sumCaptainOfferPrices);
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;

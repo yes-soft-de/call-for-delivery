@@ -61,6 +61,8 @@ class AdminStoreSubscriptionService
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
       
         $total = ($packageCost + $sumCaptainOfferPrices) - $item['sumPayments'];
+     
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
