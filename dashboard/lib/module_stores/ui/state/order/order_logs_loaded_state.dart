@@ -1,10 +1,13 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_logs_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/owner_order_card.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +21,16 @@ class OrderLogsLoadedState extends States {
     return CustomListView.custom(children: getOrders());
   }
 
+  num maxKilo = -1;
+  TextEditingController controller = TextEditingController();
   List<Widget> getOrders() {
     var context = screenState.context;
     List<Widget> widgets = [];
-    orders.forEach((element) {
+    for (var element in orders) {
+      if (maxKilo > element.kilometer &&
+          element.state == OrderStatusEnum.FINISHED) {
+        continue;
+      }
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -34,6 +43,11 @@ class OrderLogsLoadedState extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
+              kilometer: element.kilometer > 0
+                  ? FixedNumber.getFixedNumber(element.kilometer) +
+                      ' ' +
+                      S.current.km
+                  : null,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
@@ -45,7 +59,29 @@ class OrderLogsLoadedState extends States {
           ),
         ),
       ));
-    });
+    }
+    if (screenState.currentIndex == 2) {
+      widgets.insert(
+          0,
+          CustomFormField(
+            numbers: true,
+            hintText: S.current.countKilometersTo,
+            controller: controller,
+            onChanged: () {
+              maxKilo = num.tryParse(controller.text) ?? -1;
+              screenState.refresh();
+            },
+          ));
+      widgets.insert(
+          1,
+          Center(
+              child: Text(
+            (widgets.length - 1).toString() + ' ' + S.current.sOrder,
+            style: TextStyle(
+              fontSize: 17,
+            ),
+          )));
+    }
     widgets.add(SizedBox(
       height: 75,
     ));
