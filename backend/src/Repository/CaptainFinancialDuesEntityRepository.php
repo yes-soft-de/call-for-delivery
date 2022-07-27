@@ -73,7 +73,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore')
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore', 'captainFinancialDuesEntity.captainStoppedFinancialCycle')
             ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
             
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
@@ -108,7 +108,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
+            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.captainStoppedFinancialCycle')
             
             ->andWhere('captainFinancialDuesEntity.captain = :captainId')
 

@@ -69,6 +69,10 @@ final class NotificationConstant
     const SUPPLIER = "supplier";
 
     const APP_TYPE_SUPPLIER = "suppliers";
+
+    const TITLE_OK = "موافقة";
+    
+    const PLEASE_RECEIVE_DUES = 'لو سمحت بناء على طلبك تفضل باستلام مستحقاتك بتاريخ ';
     
     //sub order    
     const RECYCLING_ORDER_TITLE = "تدوير الطلب";

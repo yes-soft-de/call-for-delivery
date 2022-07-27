@@ -119,4 +119,6 @@ final class NotificationFirebaseConstant
     const CAPTAIN_STOPE_FINANCIAL_CYCLE = 'أوقف دورته المالية';
 
     const URL_CAPTAIN_DETAILS = '/captain_details';
+
+    const PLEASE_RECEIVE_DUES = 'لو سمحت بناء على طلبك تفضل باستلام مستحقاتك بتاريخ ';
 }
