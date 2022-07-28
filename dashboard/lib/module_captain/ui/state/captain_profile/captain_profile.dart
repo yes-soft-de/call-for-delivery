@@ -56,165 +56,177 @@ class CaptainProfileLoadedState extends States {
             screenState.getCaptain();
           });
     }
-    return StackedForm(
-        visible: screenState.currentIndex == 0,
-        child: FixedContainer(
-            child: Column(
-          children: [
-            FilterBar(
-              cursorRadius: BorderRadius.circular(25),
-              animationDuration: Duration(milliseconds: 350),
-              backgroundColor: Theme.of(context).backgroundColor,
-              currentIndex: screenState.currentIndex,
-              borderRadius: BorderRadius.circular(25),
-              floating: true,
-              height: 40,
-              cursorColor: Theme.of(context).colorScheme.primary,
-              items: [
-                FilterItem(
-                  label: S.current.accountInfo,
-                ),
-                FilterItem(label: S.current.accountManaging),
-              ],
-              onItemSelected: (index) {
-                screenState.currentIndex = index;
-                screenState.refresh();
-              },
-              selectedContent: Theme.of(context).textTheme.button!.color!,
-              unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+    return FixedContainer(
+        child: Column(
+      children: [
+        FilterBar(
+          cursorRadius: BorderRadius.circular(25),
+          animationDuration: Duration(milliseconds: 350),
+          backgroundColor: Theme.of(context).backgroundColor,
+          currentIndex: screenState.currentIndex,
+          borderRadius: BorderRadius.circular(25),
+          floating: true,
+          height: 40,
+          cursorColor: Theme.of(context).colorScheme.primary,
+          items: [
+            FilterItem(
+              label: S.current.accountInfo,
             ),
-            SizedBox(
-              height: 8,
-            ),
-            Expanded(
-              child: CustomListView.custom(
-                children: [
-                  // image profile
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: SizedBox(
-                        height: 175,
-                        child: CustomNetworkImage(
-                          imageSource: model?.image ?? '',
-                          width: double.maxFinite,
-                          height: double.maxFinite,
-                        ),
-                      ),
+            FilterItem(label: S.current.accountManaging),
+          ],
+          onItemSelected: (index) {
+            screenState.currentIndex = index;
+            screenState.refresh();
+          },
+          selectedContent: Theme.of(context).textTheme.button!.color!,
+          unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Expanded(
+          child: CustomListView.custom(
+            children: [
+              // image profile
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: SizedBox(
+                    height: 175,
+                    child: CustomNetworkImage(
+                      imageSource: model?.image ?? '',
+                      width: double.maxFinite,
+                      height: double.maxFinite,
                     ),
                   ),
-                  Visibility(
-                    replacement: getManageUI(context),
-                    visible: screenState.currentIndex == 0,
-                    child: Column(
-                      children: [
-                        // info
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Theme.of(context).colorScheme.primary),
-                            child: Column(
-                              children: [
-                                CustomListTile(
-                                    title: S.of(context).name,
-                                    subTitle: model?.name,
-                                    iconData: Icons.person_rounded),
-                                CustomListTile(
-                                    title: S.of(context).age,
-                                    subTitle: model?.age?.toString(),
-                                    iconData: Icons.calendar_today_rounded),
-                                CustomListTile(
-                                  title: S.of(context).phoneNumber,
-                                  subTitle: model?.phone,
-                                  iconData: Icons.phone,
-                                  leading: Padding(
+                ),
+              ),
+              Visibility(
+                replacement: getManageUI(context),
+                visible: screenState.currentIndex == 0,
+                child: Column(
+                  children: [
+                    // info
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).colorScheme.primary),
+                        child: Column(
+                          children: [
+                            CustomListTile(
+                                title: S.of(context).name,
+                                subTitle: model?.name,
+                                iconData: Icons.person_rounded),
+                            CustomListTile(
+                                title: S.of(context).age,
+                                subTitle: model?.age?.toString(),
+                                iconData: Icons.calendar_today_rounded),
+                            CustomListTile(
+                              title: S.of(context).phoneNumber,
+                              subTitle: model?.phone,
+                              iconData: Icons.phone,
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: model?.verificationStatus == true
+                                        ? Colors.green
+                                        : Colors.orange,
+                                  ),
+                                  child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(25),
-                                        color: model?.verificationStatus == true
-                                            ? Colors.green
-                                            : Colors.orange,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          model?.verificationStatus == true
-                                              ? S.current.accountVerified
-                                              : S.current.accountUnVerified,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
+                                    child: Text(
+                                      model?.verificationStatus == true
+                                          ? S.current.accountVerified
+                                          : S.current.accountUnVerified,
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
-                                CustomListTile(
-                                    title: S.of(context).car,
-                                    subTitle: model?.car,
-                                    iconData: Icons.local_taxi_rounded),
-                              ],
+                              ),
                             ),
-                          ),
+                            CustomListTile(
+                                title: S.of(context).car,
+                                subTitle: model?.car,
+                                iconData: Icons.local_taxi_rounded),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Theme.of(context).colorScheme.primary),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    ImageTile(
-                                        title: S.current.identity,
-                                        image: model?.identity ?? ''),
-                                    Spacer(),
-                                    ImageTile(
-                                        title: S.current.mechanichLicence,
-                                        image: model?.mechanicLicense ?? ''),
-                                  ],
-                                ),
-                                ImageTile(
-                                    title: S.current.driverLicence,
-                                    image: model?.drivingLicence ?? ''),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 75,
-                        )
-                      ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        )),
-        label: S.current.update,
-        onTap: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return Scaffold(
-                  appBar:
-                      CustomC4dAppBar.appBar(context, title: S.current.update),
-                  body: UpdateCaptainProfile(
-                    request: model,
-                    updateProfile: (request) {
-                      Navigator.of(context).pop();
-                      screenState.updateCaptainProfile(request);
-                    },
-                  ),
-                );
-              });
-        });
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).colorScheme.primary),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                ImageTile(
+                                    title: S.current.identity,
+                                    image: model?.identity ?? ''),
+                                Spacer(),
+                                ImageTile(
+                                    title: S.current.mechanichLicence,
+                                    image: model?.mechanicLicense ?? ''),
+                              ],
+                            ),
+                            ImageTile(
+                                title: S.current.driverLicence,
+                                image: model?.drivingLicence ?? ''),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return Scaffold(
+                                    appBar: CustomC4dAppBar.appBar(context,
+                                        title: S.current.update),
+                                    body: UpdateCaptainProfile(
+                                      request: model,
+                                      updateProfile: (request) {
+                                        Navigator.of(context).pop();
+                                        screenState.updateCaptainProfile(request);
+                                      },
+                                    ),
+                                  );
+                                });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              S.current.updatePersonalInformation,
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 
   String getCaptainType(int? captainFinancialSystemType) {
