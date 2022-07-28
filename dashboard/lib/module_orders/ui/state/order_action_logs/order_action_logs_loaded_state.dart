@@ -4,7 +4,6 @@ import 'package:c4d/module_orders/model/order/order_action_logs_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_actions_log_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/action_widget.dart';
-import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +67,7 @@ class OrderActionLogsLoadedState extends States {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               width: 2.5,
-              height: 75,
+              height: 40,
               color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
             ),
           ),
