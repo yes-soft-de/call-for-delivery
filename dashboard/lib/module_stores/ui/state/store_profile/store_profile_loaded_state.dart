@@ -230,20 +230,20 @@ class StoreProfileLoadedState extends States {
                     });
               }),
           cardTap(
-              image: ImageAsset.BID_ORDER,
-              title: S.of(context).bidOrder,
-              onTapCard: () {
-                Navigator.pushNamed(
-                    screenState.context, BidOrderRoutes.BID_ORDER,
-                    arguments: profile?.id);
-              }),
-          cardTap(
               image: ImageAsset.ORDERS,
               title: S.of(context).storeOrders,
               onTapCard: () {
                 Navigator.pushNamed(
                     screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
                     arguments: profile?.id);
+              }),
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).financeSubscriptions,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    arguments: profile?.id ?? -1);
               }),
           cardTap(
               image: ImageAsset.BRANCH,
@@ -262,14 +262,6 @@ class StoreProfileLoadedState extends States {
           //     }),
           cardTap(
               image: ImageAsset.PAYMENT,
-              title: S.of(context).financeSubscriptions,
-              onTapCard: () {
-                Navigator.of(context).pushNamed(
-                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
-                    arguments: profile?.id ?? -1);
-              }),
-          cardTap(
-              image: ImageAsset.PAYMENT,
               title: S.of(context).cashOrders,
               onTapCard: () {
                 ArgumentHiveHelper()
@@ -278,6 +270,18 @@ class StoreProfileLoadedState extends States {
                   OrdersRoutes.ORDER_CASH_STORES,
                 );
               }),
+          // Visibility(
+          //   visible: false,
+          //   child: cardTap(
+          //       image: ImageAsset.BID_ORDER,
+          //       title: S.of(context).bidOrder,
+          //       onTapCard: () {
+          //         Navigator.pushNamed(
+          //             screenState.context, BidOrderRoutes.BID_ORDER,
+          //             arguments: profile?.id);
+          //       }),
+          // ),
+
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
