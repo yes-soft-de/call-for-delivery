@@ -41,7 +41,7 @@ class ActionOrderCard extends StatelessWidget {
                 verticalTile(context,
                     title: S.current.action, subtitle: action),
                 verticalTile(context,
-                    title: S.current.createDate, subtitle: createdDate),
+                    title: S.of(context).actionDate, subtitle: createdDate),
               ],
             ),
             // divider
