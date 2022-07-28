@@ -82,7 +82,9 @@ class CaptainAccountBalanceModel extends DataModel {
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
-          amountForStore: element?.amountForStore ?? 0,
+          amountForStore: element?.amountForStore ??
+              element?.finalFinancialAccount?.amountForStore ??
+              0,
           ordersInMonth: element?.countOrdersInMonth,
           orders: _getOrders(element?.orders ?? []));
     } else {
@@ -101,7 +103,9 @@ class CaptainAccountBalanceModel extends DataModel {
           dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
           monthCompensation: element?.monthCompensation,
           monthTargetSuccess: element?.monthTargetSuccess,
-          amountForStore: element?.amountForStore ?? 0,
+          amountForStore: element?.amountForStore ??
+              element?.finalFinancialAccount?.amountForStore ??
+              0,
           ordersInMonth: element?.countOrdersInMonth ?? 0,
           orders: _getOrders(element?.orders ?? []));
     }
