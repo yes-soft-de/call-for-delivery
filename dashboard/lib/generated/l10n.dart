@@ -7579,6 +7579,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Action date`
+  String get actionDate {
+    return Intl.message(
+      'Action date',
+      name: 'actionDate',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

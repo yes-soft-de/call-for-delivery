@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
         "action": MessageLookupByLibrary.simpleMessage("الإجراء"),
         "actionBy": MessageLookupByLibrary.simpleMessage("الإجراء من قبل"),
+        "actionDate": MessageLookupByLibrary.simpleMessage("تاريخ الإجراء"),
         "actionLogHistoryHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب "),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),

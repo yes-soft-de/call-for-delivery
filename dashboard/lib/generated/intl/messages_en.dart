@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
         "action": MessageLookupByLibrary.simpleMessage("Action"),
         "actionBy": MessageLookupByLibrary.simpleMessage("Action By"),
+        "actionDate": MessageLookupByLibrary.simpleMessage("Action date"),
         "actionLogHistoryHint": MessageLookupByLibrary.simpleMessage(
             "In this window we will view action logs history in this order"),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
