@@ -20,8 +20,12 @@ class AdminSubscriptionDetailsManager
     public function deleteSubscriptionDetailsBySubscriptionId(int $subscriptionId): ?SubscriptionDetailsEntity
     {
         $subscriptionDetailsEntity = $this->subscriptionDetailsEntityRepository->findOneBy(['lastSubscription' => $subscriptionId]);
+       
 
         if ($subscriptionDetailsEntity) {
+            $subscriptionDetailsEntity->setLastSubscription(null);
+            $subscriptionDetailsEntity->setStoreOwner(null);
+            
             $this->entityManager->remove($subscriptionDetailsEntity);
             $this->entityManager->flush();
         }

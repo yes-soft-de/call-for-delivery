@@ -74,15 +74,14 @@ class AdminStoreSubscriptionManager
         $subscriptionEntity = $this->subscribeRepository->find($id);
 
         if ($subscriptionEntity) {
-            
-                // Delete history
-                $this->adminSubscriptionHistoryManager->deleteSubscriptionHistoryBySubscriptionId($id);
                 //Delete subscription details
                 $this->adminSubscriptionDetailsManager->deleteSubscriptionDetailsBySubscriptionId($id);
-                // now we delete the subscription entity itself
-                // $this->entityManager->remove($subscriptionEntity);
+                //Delete history
+                $this->adminSubscriptionHistoryManager->deleteSubscriptionHistoryBySubscriptionId($id);
+                // //Delete the subscription entity
+                $this->entityManager->remove($subscriptionEntity);
 
-                // $this->entityManager->flush();
+                $this->entityManager->flush();
         }
 
         return $subscriptionEntity;

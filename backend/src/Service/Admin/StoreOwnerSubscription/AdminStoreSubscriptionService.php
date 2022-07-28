@@ -19,6 +19,7 @@ use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -122,18 +123,21 @@ class AdminStoreSubscriptionService
       return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 
     }
     
-    public function deleteSubscriptionByAdmin(AdminDeleteSubscriptionRequest $request): StoreFutureSubscriptionGetForAdminResponse|null|int
+    public function deleteSubscriptionByAdmin(AdminDeleteSubscriptionRequest $request): AdminDeleteSubscriptionResponse |null|int
     {
         //delete subscription with payments
         if($request->getDeletePayment() === PaymentConstant::DELETE_SUBSCRIPTION_WITH_PAYMENT) {
-            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
-          
+           
             $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
             foreach($payments as $payment){
                 $this->adminStoreOwnerPaymentService->deleteStoreOwnerPayment($payment->id);
             }
 
-            return $this->autoMapping->map(SubscriptionEntity::class, StoreFutureSubscriptionGetForAdminResponse::class, $subscription); 
+            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
+          
+            
+
+            return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription); 
         }
 
         // get payments with subscription id
@@ -146,7 +150,7 @@ class AdminStoreSubscriptionService
         if(! $payments) {
             $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
           
-            return $this->autoMapping->map(SubscriptionEntity::class, StoreFutureSubscriptionGetForAdminResponse::class, $subscription); 
+            return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription); 
         }
     }
 }
