@@ -654,6 +654,13 @@ App\Request\Admin\Order\OrderStateUpdateByAdminRequest:
         state:
             - NotBlank: ~
 
+App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        deletePayment:
+            - NotBlank: ~
+            
 App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest:
     properties:
         storeProfileId:
