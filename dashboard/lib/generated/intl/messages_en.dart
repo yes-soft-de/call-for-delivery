@@ -890,6 +890,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("Renew Subscription"),
         "reportSent": MessageLookupByLibrary.simpleMessage("Report sent"),
+        "reports": MessageLookupByLibrary.simpleMessage("Reports"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
         "requiredToPay":

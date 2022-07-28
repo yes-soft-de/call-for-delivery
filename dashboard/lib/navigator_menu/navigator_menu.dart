@@ -63,9 +63,51 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   : BorderRadius.horizontal(right: Radius.circular(12))),
           child: CustomListView.custom(children: [
             drawerHeader,
-
             customListTile(getIt<MainModule>().homeScreen, S.current.home,
                 FontAwesomeIcons.home),
+            // order
+            customExpansionTile(
+                title: S.current.orders,
+                icon: FontAwesomeIcons.boxes,
+                children: [
+                  customListTile(
+                      getIt<StoresModule>().captainNotArrivedScreen,
+                      S.current.captainNotArrived,
+                      Icons.storefront_rounded,
+                      true),
+                  customListTile(getIt<OrdersModule>().pendingScreen,
+                      S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
+                  customListTile(getIt<OrdersModule>().newOrderScreen,
+                      S.current.newOrder, Icons.add_rounded, true)
+                ],
+                page: widget.currentPage),
+            // report
+            customExpansionTile(
+                title: S.current.reports,
+                icon: Icons.report,
+                children: [
+                  customListTile(
+                      getIt<StoresModule>().captainNotArrivedScreen,
+                      S.current.captainNotArrived,
+                      Icons.storefront_rounded,
+                      true),
+                ],
+                page: widget.currentPage),
+
+            // captain
+            customExpansionTile(
+                title: S.current.captains,
+                icon: FontAwesomeIcons.car,
+                children: [
+                  customListTile(getIt<CaptainsModule>().captainsScreen,
+                      S.current.captains, FontAwesomeIcons.solidListAlt, true),
+                  customListTile(
+                      getIt<CaptainsModule>().inActiveCaptains,
+                      S.current.inActiveCaptains,
+                      FontAwesomeIcons.solidAddressCard,
+                      true),
+                ],
+                page: widget.currentPage),
             // Store
             customExpansionTile(
                 title: S.current.stores,
@@ -80,6 +122,25 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
+            // support
+            customExpansionTile(
+                title: S.current.directSupport,
+                icon: FontAwesomeIcons.headphonesAlt,
+                children: [
+                  customListTile(getIt<StoresModule>().supportScreen,
+                      S.current.stores, Icons.storefront_rounded, true),
+                  customListTile(getIt<CaptainsModule>().supportScreen,
+                      S.current.captains, FontAwesomeIcons.car, true),
+                  Visibility(
+                    visible: false,
+                    child: customListTile(getIt<SupplierModule>().supportScreen,
+                        S.current.suppliers, FontAwesomeIcons.car, true),
+                  ),
+                ],
+                page: widget.currentPage),
+            // notice
+            customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
+                FontAwesomeIcons.stickyNote),
             // packages
             customExpansionTile(
                 title: S.current.packages,
@@ -104,20 +165,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                 ],
                 page: widget.currentPage),
-            // captain
-            customExpansionTile(
-                title: S.current.captains,
-                icon: FontAwesomeIcons.car,
-                children: [
-                  customListTile(getIt<CaptainsModule>().captainsScreen,
-                      S.current.captains, FontAwesomeIcons.solidListAlt, true),
-                  customListTile(
-                      getIt<CaptainsModule>().inActiveCaptains,
-                      S.current.inActiveCaptains,
-                      FontAwesomeIcons.solidAddressCard,
-                      true),
-                ],
-                page: widget.currentPage),
             // captain finance
             customExpansionTile(
                 title: S.current.captainFinance,
@@ -134,63 +181,43 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
-            customExpansionTile(
-                title: S.current.suppliers,
-                icon: Icons.backpack_outlined,
-                children: [
-                  customListTile(
-                      getIt<SupplierCategoriesModule>().categoriesScreen,
-                      S.current.suppliersCategories,
-                      Icons.category,
-                      true),
-                  customListTile(
-                      getIt<SupplierModule>().inActiveSupplierScreen,
-                      S.current.inActiveSupplier,
-                      FontAwesomeIcons.square,
-                      true),
-                  customListTile(
-                      getIt<SupplierModule>().suppliersScreen,
-                      S.current.suppliers,
-                      FontAwesomeIcons.wolfPackBattalion,
-                      true),
-//                  customListTile(
-//                      getIt<CaptainsModule>().captainOffersScreen,
-//                      S.current.captainsOffer,
-//                      FontAwesomeIcons.solidListAlt,
-//                      true),
-                ],
-                page: widget.currentPage),
-            customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
-                FontAwesomeIcons.stickyNote),
-            customExpansionTile(
-                title: S.current.orders,
-                icon: FontAwesomeIcons.boxes,
-                children: [
-                  customListTile(
-                      getIt<StoresModule>().captainNotArrivedScreen,
-                      S.current.captainNotArrived,
-                      Icons.storefront_rounded,
-                      true),
-                  customListTile(getIt<OrdersModule>().pendingScreen,
-                      S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
-                  customListTile(getIt<OrdersModule>().newOrderScreen,
-                      S.current.newOrder, Icons.add_rounded, true)
-                ],
-                page: widget.currentPage),
-            customListTile(getIt<CarsModule>().carsScreen,
-                S.current.deliveryCars, FontAwesomeIcons.car),
-            customExpansionTile(
-                title: S.current.directSupport,
-                icon: FontAwesomeIcons.headphonesAlt,
-                children: [
-                  customListTile(getIt<StoresModule>().supportScreen,
-                      S.current.stores, Icons.storefront_rounded, true),
-                  customListTile(getIt<CaptainsModule>().supportScreen,
-                      S.current.captains, FontAwesomeIcons.car, true),
-                  customListTile(getIt<SupplierModule>().supportScreen,
-                      S.current.suppliers, FontAwesomeIcons.car, true),
-                ],
-                page: widget.currentPage),
+            // supplier
+            Visibility(
+              visible: false,
+              child: customExpansionTile(
+                  title: S.current.suppliers,
+                  icon: Icons.backpack_outlined,
+                  children: [
+                    customListTile(
+                        getIt<SupplierCategoriesModule>().categoriesScreen,
+                        S.current.suppliersCategories,
+                        Icons.category,
+                        true),
+                    customListTile(
+                        getIt<SupplierModule>().inActiveSupplierScreen,
+                        S.current.inActiveSupplier,
+                        FontAwesomeIcons.square,
+                        true),
+                    customListTile(
+                        getIt<SupplierModule>().suppliersScreen,
+                        S.current.suppliers,
+                        FontAwesomeIcons.wolfPackBattalion,
+                        true),
+                    //                  customListTile(
+                    //                      getIt<CaptainsModule>().captainOffersScreen,
+                    //                      S.current.captainsOffer,
+                    //                      FontAwesomeIcons.solidListAlt,
+                    //                      true),
+                  ],
+                  page: widget.currentPage),
+            ),
+            // cars
+            Visibility(
+              visible: false,
+              child: customListTile(getIt<CarsModule>().carsScreen,
+                  S.current.deliveryCars, FontAwesomeIcons.car),
+            ),
+            // company
             customExpansionTile(
                 title: S.current.companyInfo,
                 icon: FontAwesomeIcons.solidCopyright,
@@ -204,7 +231,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.contactInfo, Icons.info, true),
                 ],
                 page: widget.currentPage),
-
+            // setting
             customListTile(getIt<SettingsModule>().settingsScreen,
                 S.current.settings, FontAwesomeIcons.cog),
           ])),

@@ -752,5 +752,6 @@
     "currentOrderStatus": "حالة الطلب",
     "orderLogHistory": "سجل الطلب",
     "actionLogHistoryHint":"في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب ",
-    "actionDate":"تاريخ الإجراء"
+    "actionDate":"تاريخ الإجراء",
+    "reports":"تقارير"
 }

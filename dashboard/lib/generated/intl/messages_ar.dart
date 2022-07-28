@@ -883,6 +883,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewSubscription":
             MessageLookupByLibrary.simpleMessage("تجديد الاشتراك"),
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
+        "reports": MessageLookupByLibrary.simpleMessage("تقارير"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
         "requiredToPay": MessageLookupByLibrary.simpleMessage("المطلوب للدفع"),

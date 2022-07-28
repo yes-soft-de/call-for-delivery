@@ -753,5 +753,6 @@
     "currentOrderStatus": "Order status",
     "orderLogHistory": "Order action logs",
     "actionLogHistoryHint": "In this window we will view action logs history in this order",
-    "actionDate": "Action date"
+    "actionDate": "Action date",
+    "reports": "Reports"
 }
