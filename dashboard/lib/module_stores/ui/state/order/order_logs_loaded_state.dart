@@ -27,7 +27,7 @@ class OrderLogsLoadedState extends States {
     var context = screenState.context;
     List<Widget> widgets = [];
     for (var element in orders) {
-      if (maxKilo > element.kilometer &&
+      if (maxKilo >= element.kilometer &&
           element.state == OrderStatusEnum.FINISHED) {
         continue;
       }
