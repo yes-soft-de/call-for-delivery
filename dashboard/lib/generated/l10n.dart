@@ -7529,6 +7529,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Action`
+  String get action {
+    return Intl.message(
+      'Action',
+      name: 'action',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action By`
+  String get actionBy {
+    return Intl.message(
+      'Action By',
+      name: 'actionBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order status`
+  String get currentOrderStatus {
+    return Intl.message(
+      'Order status',
+      name: 'currentOrderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order action logs`
+  String get orderLogHistory {
+    return Intl.message(
+      'Order action logs',
+      name: 'orderLogHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In this window we will view action logs history in this order`
+  String get actionLogHistoryHint {
+    return Intl.message(
+      'In this window we will view action logs history in this order',
+      name: 'actionLogHistoryHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

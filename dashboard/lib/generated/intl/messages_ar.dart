@@ -59,6 +59,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountUnVerified": MessageLookupByLibrary.simpleMessage("غير مؤكد"),
         "accountVerified": MessageLookupByLibrary.simpleMessage("مؤكد"),
         "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
+        "action": MessageLookupByLibrary.simpleMessage("الإجراء"),
+        "actionBy": MessageLookupByLibrary.simpleMessage("الإجراء من قبل"),
+        "actionLogHistoryHint": MessageLookupByLibrary.simpleMessage(
+            "في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب "),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
@@ -337,6 +341,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "في هذه النافذة نستعرض التفاصيل المالية للدورة"),
         "currentFinancialDuesCycle":
             MessageLookupByLibrary.simpleMessage("الدورة الحالية"),
+        "currentOrderStatus":
+            MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
@@ -672,6 +678,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
+        "orderLogHistory": MessageLookupByLibrary.simpleMessage("سجل الطلب"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),

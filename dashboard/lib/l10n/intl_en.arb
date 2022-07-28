@@ -747,5 +747,11 @@
     "captainFinishedFillingOrderInformation": "Captain finished filling information",
     "totalOrdersCount": "Total orders count",
     "requiredToPay": "Required to pay",
-    "leftToPay": "Left to pay"
+    "leftToPay": "Left to pay",
+    "action": "Action",
+    "actionBy": "Action By",
+    "currentOrderStatus": "Order status",
+    "orderLogHistory": "Order action logs",
+    "actionLogHistoryHint":"In this window we will view action logs history in this order"
+
 }

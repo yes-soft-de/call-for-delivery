@@ -10,11 +10,10 @@ class CountCaptains {
   factory CountCaptains.fromJson(Map<String, dynamic> json) => CountCaptains(
         active: json['active'] as int?,
         inactive: json['inactive'] as int?,
-        lastThreeActiveCaptains:
-            (json['lastThreeActive'] as List<dynamic>?)
-                ?.map((e) =>
-                    LastThreeActiveCaptain.fromJson(e as Map<String, dynamic>))
-                .toList(),
+        lastThreeActiveCaptains: (json['lastThreeActive'] as List<dynamic>?)
+            ?.map((e) =>
+                LastThreeActiveCaptain.fromJson(e as Map<String, dynamic>))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {

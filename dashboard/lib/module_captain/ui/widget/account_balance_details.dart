@@ -217,7 +217,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
                     arguments: element.id);
               },
               child: OwnerOrderCard(

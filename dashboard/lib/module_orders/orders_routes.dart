@@ -7,6 +7,7 @@ class OrdersRoutes {
   static const PENDING_ORDERS_SCREEN = '/pending-orders';
   static const UPDATE_ORDERS_SCREEN = '/update-order';
   static const CAPTAIN_ORDERS_SCREEN = '/captain-orders';
+  static const ORDERS_ACTIONS_LOGS_SCREEN = '/order_actions_logs_screen';
 
   // ORDER CASH
   static const ORDER_CASH_CAPTAINS = '/order_cash_captains';

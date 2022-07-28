@@ -8,8 +8,7 @@ class Captains {
   factory Captains.fromJson(Map<String, dynamic> json) => Captains(
         countCaptains: json['count'] == null
             ? null
-            : CountCaptains.fromJson(
-                json['count'] as Map<String, dynamic>),
+            : CountCaptains.fromJson(json['count'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {

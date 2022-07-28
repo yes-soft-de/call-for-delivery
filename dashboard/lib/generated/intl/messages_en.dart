@@ -62,6 +62,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountUnVerified": MessageLookupByLibrary.simpleMessage("Unverified"),
         "accountVerified": MessageLookupByLibrary.simpleMessage("Verified"),
         "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
+        "action": MessageLookupByLibrary.simpleMessage("Action"),
+        "actionBy": MessageLookupByLibrary.simpleMessage("Action By"),
+        "actionLogHistoryHint": MessageLookupByLibrary.simpleMessage(
+            "In this window we will view action logs history in this order"),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
@@ -339,6 +343,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "In these windows we are showing you current financial details for cycle date"),
         "currentFinancialDuesCycle":
             MessageLookupByLibrary.simpleMessage("Current cycle"),
+        "currentOrderStatus":
+            MessageLookupByLibrary.simpleMessage("Order status"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
@@ -677,6 +683,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
+        "orderLogHistory":
+            MessageLookupByLibrary.simpleMessage("Order action logs"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),

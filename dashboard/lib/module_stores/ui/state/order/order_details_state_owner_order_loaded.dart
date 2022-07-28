@@ -8,6 +8,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
@@ -241,6 +242,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
+            onLongPress: () {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
+                  arguments: orderInfo.id);
+            },
             onTap: () {
               Navigator.of(screenState.context).pushNamed(
                   StoresRoutes.ORDER_TIMELINE_SCREEN,
@@ -282,6 +288,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   style: TextStyle(fontWeight: FontWeight.w600)),
             ),
           ),
+        ),
+        // order log
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: OrderButton(
+              backgroundColor: Colors.grey[800]!,
+              icon: Icons.history,
+              subtitle: null,
+              onTap: () {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
+                    arguments: orderInfo.id);
+              },
+              title: S.current.orderLogHistory),
         ),
         // chat
         Visibility(
