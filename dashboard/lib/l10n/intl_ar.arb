@@ -751,7 +751,7 @@
     "actionBy": "الإجراء من قبل",
     "currentOrderStatus": "حالة الطلب",
     "orderLogHistory": "سجل الطلب",
-    "actionLogHistoryHint":"في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب ",
+    "actionLogHistoryHint":"الإجرائيات التي طرأت على الطلب ",
     "actionDate":"تاريخ الإجراء",
     "reports":"تقارير",
     "updatePersonalInformation":"تعديل البيانات الشخصية"

@@ -63,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "actionBy": MessageLookupByLibrary.simpleMessage("الإجراء من قبل"),
         "actionDate": MessageLookupByLibrary.simpleMessage("تاريخ الإجراء"),
         "actionLogHistoryHint": MessageLookupByLibrary.simpleMessage(
-            "في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب "),
+            "الإجرائيات التي طرأت على الطلب "),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
