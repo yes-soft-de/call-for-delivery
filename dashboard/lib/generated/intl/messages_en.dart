@@ -1106,6 +1106,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Package updated successfully"),
         "updatePaymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment updated successfully"),
+        "updatePersonalInformation":
+            MessageLookupByLibrary.simpleMessage("Update profile"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "updatedBy": MessageLookupByLibrary.simpleMessage("Updated by"),

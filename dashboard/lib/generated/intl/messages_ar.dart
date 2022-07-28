@@ -1097,6 +1097,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل الباقة بنجاح"),
         "updatePaymentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الدفعة بنجاح"),
+        "updatePersonalInformation":
+            MessageLookupByLibrary.simpleMessage("تعديل البيانات الشخصية"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),

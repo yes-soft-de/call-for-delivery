@@ -753,5 +753,6 @@
     "orderLogHistory": "سجل الطلب",
     "actionLogHistoryHint":"في هذه النافذة نستعرض جميع الإجرائيات التي طرأت على الطلب ",
     "actionDate":"تاريخ الإجراء",
-    "reports":"تقارير"
+    "reports":"تقارير",
+    "updatePersonalInformation":"تعديل البيانات الشخصية"
 }
