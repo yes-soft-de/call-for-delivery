@@ -41,23 +41,12 @@ class OrderActionLogsLoadedState extends States {
     orders.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
-            },
-            child: ActionOrderCard(
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              createdDate: element.createdAt,
-              action: element.action,
-              background: StatusHelper.getOrderStatusColor(element.state),
-              createdBy: element.createdBy,
-            ),
-          ),
+        child: ActionOrderCard(
+          orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+          createdDate: element.createdAt,
+          action: element.action,
+          background: StatusHelper.getOrderStatusColor(element.state),
+          createdBy: element.createdBy,
         ),
       ));
       widgets.add(Container(
