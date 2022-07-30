@@ -17,6 +17,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Entity\CaptainOfferEntity;
+use App\Constant\Order\OrderIsMainConstant;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -124,11 +125,13 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
              //Orders made within the current subscription date only
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
+            ->andWhere('orderEntity.orderIsMain = :main')
 
             ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+            ->setParameter('main', OrderIsMainConstant::ORDER_MAIN)
         
             ->getQuery()
 
