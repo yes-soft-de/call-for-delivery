@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
+use App\Entity\ImageEntity;
 use App\Entity\AdminProfileEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderEntity;
@@ -64,6 +66,7 @@ class OrderLogEntityRepository extends ServiceEntityRepository
 //            ->addSelect('storeOwnerBranchEntity as branch')
             ->addSelect('storeOwnerBranchEntity.id as storeOwnerBranchId', 'storeOwnerBranchEntity.name as storeOwnerBranchName')
             ->addSelect('captainEntity.id as captainProfileId', 'captainEntity.captainName')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
             ->addSelect('orderEntity.id as primaryOrderId')
 
             ->leftJoin(
@@ -86,6 +89,15 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'captainEntity.id = orderLogEntity.captainProfile'
             )
+            
+            ->leftJoin(
+                ImageEntity::class, 
+                'imageEntity', 
+                Join::WITH, 
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+            )
+            
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
 
             ->leftJoin(
                 OrderEntity::class,
@@ -97,7 +109,7 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             ->andWhere('orderLogEntity.orderId = :orderId')
             ->setParameter('orderId', $orderId)
 
-            ->orderBy('orderLogEntity.id', 'DESC');
+            ->orderBy('orderLogEntity.createdAt', 'DESC');
 
         $tempResult = $query->getQuery()->getResult();
 

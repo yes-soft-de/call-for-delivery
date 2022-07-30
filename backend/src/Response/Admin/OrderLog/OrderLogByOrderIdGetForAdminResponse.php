@@ -2,6 +2,7 @@
 
 namespace App\Response\Admin\OrderLog;
 
+use OpenApi\Annotations as OA;
 
 class OrderLogByOrderIdGetForAdminResponse
 {
@@ -55,4 +56,12 @@ class OrderLogByOrderIdGetForAdminResponse
      * @var int|null
      */
     public $primaryOrderId;
+
+    /**
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"))
+     */
+    public $images;
+
+    public string $userJobDescription;
 }
