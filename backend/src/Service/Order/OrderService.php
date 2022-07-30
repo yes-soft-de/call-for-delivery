@@ -516,7 +516,7 @@ class OrderService
                 }
                 // end check
 
-                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN) {
+                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getOrderIsMain() !== OrderIsHideConstant::ORDER_HIDE) {
                     // Following if block will be executed only when the order is of type 1 and of type show,
                     // otherwise, we will move to update statement directly
                     $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
