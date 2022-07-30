@@ -76,7 +76,12 @@ class OrderActionLogsScreenState extends State<OrderActionLogsScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderLogHistory + ' #$orderId', actions: []),
+            title: S.current.orderLogHistory + ' #$orderId',
+            actions: [
+              CustomC4dAppBar.actionIcon(context, onTap: () {
+                widget._stateManager.getActions(this, orderId);
+              }, icon: Icons.refresh),
+            ]),
         body: currentState.getUI(context),
       ),
     );
