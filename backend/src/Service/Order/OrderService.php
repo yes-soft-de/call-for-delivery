@@ -516,13 +516,15 @@ class OrderService
                 }
                 // end check
 
-                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL && $orderEntity->getOrderIsMain() !== OrderIsHideConstant::ORDER_HIDE) {
-                    // Following if block will be executed only when the order is of type 1 and of type show,
+                if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                    // Following if block will be executed only when the order is not sub-order,
                     // otherwise, we will move to update statement directly
-                    $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
+                    if( $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN || $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER) {
+                        $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
-                    if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
-                        return $canAcceptOrder;
+                        if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
+                            return $canAcceptOrder;
+                        }
                     }
                 }
             }

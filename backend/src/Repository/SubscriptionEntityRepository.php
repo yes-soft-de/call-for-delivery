@@ -18,6 +18,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Entity\CaptainOfferEntity;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Constant\Order\OrderIsMainConstant;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -126,13 +127,15 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
             //not sub-order
-            ->andWhere('orderEntity.isHide != :isHide')
+            // ->andWhere('orderEntity.isHide != :isHide')
+            ->andWhere('orderEntity.orderIsMain = :mainTrue or orderEntity.orderIsMain = :mainFalse')
 
             ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
-            ->setParameter('isHide', OrderIsHideConstant::ORDER_HIDE)
+            ->setParameter('mainTrue', OrderIsMainConstant::ORDER_MAIN)
+            ->setParameter('mainFalse', OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER)
         
             ->getQuery()
 
