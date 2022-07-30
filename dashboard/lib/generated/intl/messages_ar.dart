@@ -607,7 +607,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "newSubOrderCreated":
-            MessageLookupByLibrary.simpleMessage("طلب فرعي جديد"),
+            MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي جديد"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
@@ -669,7 +669,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إخفاء طلب بعد انتهاء مدة صلاحيته"),
         "orderHidedToEditByAdmin":
             MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
-        "orderHidedToEditByStore": MessageLookupByLibrary.simpleMessage(""),
+        "orderHidedToEditByStore":
+            MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
@@ -1069,9 +1070,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
         "unlinkedSubOrder":
-            MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
+            MessageLookupByLibrary.simpleMessage("فك ارتباط وليس اخفاء"),
         "unlinkedSubOrderFromGroupedOrder":
-            MessageLookupByLibrary.simpleMessage("فك ارتباط طلب فرع بطلب مجمع"),
+            MessageLookupByLibrary.simpleMessage(
+                "فك ارتباط طلب فرعي بطلب مجمع"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -1104,7 +1106,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "updatedBy":
             MessageLookupByLibrary.simpleMessage("تم تعديل الحالة من قبل"),
-        "updatedOrder": MessageLookupByLibrary.simpleMessage("تم تحديث طلب"),
+        "updatedOrder":
+            MessageLookupByLibrary.simpleMessage("تم تحديث معلومات طلب"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
         "uploadImageIfyouHave":
