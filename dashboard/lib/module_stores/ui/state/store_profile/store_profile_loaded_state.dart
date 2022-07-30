@@ -203,33 +203,6 @@ class StoreProfileLoadedState extends States {
         direction: Axis.horizontal,
         children: [
           cardTap(
-              image: ImageAsset.EDIT_PROFILE,
-              title: S.of(context).editProfile,
-              onTapCard: () {
-                showDialog(
-                    barrierDismissible: false,
-                    context: screenState.context,
-                    builder: (context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: Scaffold(
-                          appBar: CustomC4dAppBar.appBar(context,
-                              title: S.current.updateStore),
-                          backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          body: UpdateStoreWidget(
-                            storesModel: profile,
-                            updateStore: (request, haveImage) {
-                              Navigator.of(context).pop();
-                              screenState.updateStore(request, haveImage);
-                            },
-                          ),
-                        ),
-                      );
-                    });
-              }),
-          cardTap(
               image: ImageAsset.ORDERS,
               title: S.of(context).storeOrders,
               onTapCard: () {
@@ -281,7 +254,33 @@ class StoreProfileLoadedState extends States {
           //             arguments: profile?.id);
           //       }),
           // ),
-
+          cardTap(
+              image: ImageAsset.EDIT_PROFILE,
+              title: S.of(context).editProfile,
+              onTapCard: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: screenState.context,
+                    builder: (context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: Scaffold(
+                          appBar: CustomC4dAppBar.appBar(context,
+                              title: S.current.updateStore),
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          body: UpdateStoreWidget(
+                            storesModel: profile,
+                            updateStore: (request, haveImage) {
+                              Navigator.of(context).pop();
+                              screenState.updateStore(request, haveImage);
+                            },
+                          ),
+                        ),
+                      );
+                    });
+              }),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
@@ -364,29 +363,33 @@ class StoreProfileLoadedState extends States {
       onTap: onTapCard,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Card(
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  image,
-                  height: 100,
-                  width: 130,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+        child: SizedBox(
+          width: 175,
+          child: Card(
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    image,
+                    height: 100,
+                    width: 130,
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

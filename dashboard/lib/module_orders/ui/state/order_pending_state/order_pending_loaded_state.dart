@@ -19,8 +19,8 @@ class OrderPendingLoadedState extends States {
   OrderPendingLoadedState(this.screenState, this.orders) : super(screenState) {
     ordersIndex = [
       orders.pendingOrders,
+      orders.notDeliveredOrders,
       orders.hiddenOrders,
-      orders.notDeliveredOrders
     ];
   }
 
@@ -33,8 +33,8 @@ class OrderPendingLoadedState extends States {
   List<Widget> getOrders() {
     List<int> countsOrder = [
       orders.pendingOrdersCount,
+      orders.notDeliveredOrdersCount,
       orders.hiddenOrdersCount,
-      orders.notDeliveredOrdersCount
     ];
     var context = screenState.context;
     List<Widget> widgets = [];
@@ -80,8 +80,8 @@ class OrderPendingLoadedState extends States {
           FilterItem(
             label: S.current.pending,
           ),
-          FilterItem(label: S.current.hidden),
           FilterItem(label: S.current.notAccepted),
+          FilterItem(label: S.current.hidden),
         ],
         onItemSelected: (index) {
           screenState.currentIndex = index;
