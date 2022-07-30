@@ -70,11 +70,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.orders,
                 icon: FontAwesomeIcons.boxes,
                 children: [
-                  customListTile(
-                      getIt<StoresModule>().captainNotArrivedScreen,
-                      S.current.captainNotArrived,
-                      Icons.storefront_rounded,
-                      true),
                   customListTile(getIt<OrdersModule>().pendingScreen,
                       S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
                   customListTile(getIt<OrdersModule>().newOrderScreen,
