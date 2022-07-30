@@ -204,7 +204,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('storeId', $storeId)
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
-            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
             ->getQuery()
 
@@ -290,6 +290,25 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->getQuery()
+            ->getResult();
+    }
+
+    public function getCaptainOffersBySubscriptionIdForAdmin(int $subscriptionId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscription.captainOfferFirstTime')
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+
+            ->andWhere('subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+            ->andWhere('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+           
+            ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
+
+            ->getQuery()
+
             ->getResult();
     }
 }
