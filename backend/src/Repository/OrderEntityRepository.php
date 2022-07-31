@@ -263,7 +263,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function closestOrders(int $captainId, DateTime $date): ?array
     {
         return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment', 'orderEntity.storeBranchToClientDistance',
             'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
