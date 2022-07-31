@@ -61,7 +61,7 @@ class NotificationFirebaseService
         if (! empty($getTokens)) {
 
             $payload = [
-                // 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
                 // 'navigate_route' => NotificationFirebaseConstant::URL,
                 'argument' => $orderId,
             ];
