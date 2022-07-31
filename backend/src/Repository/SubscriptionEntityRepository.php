@@ -17,6 +17,8 @@ use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Entity\CaptainOfferEntity;
+use App\Constant\Order\OrderIsHideConstant;
+use App\Constant\Order\OrderIsMainConstant;
 
 /**
  * @method SubscriptionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -124,11 +126,16 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
              //Orders made within the current subscription date only
             ->andWhere('orderEntity.createdAt >= subscription.startDate')
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
+            //not sub-order
+            // ->andWhere('orderEntity.isHide != :isHide')
+            ->andWhere('orderEntity.orderIsMain = :mainTrue or orderEntity.orderIsMain = :mainFalse')
 
             ->setParameter('id', $subscriptionId)
             ->setParameter('cancel', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
+            ->setParameter('mainTrue', OrderIsMainConstant::ORDER_MAIN)
+            ->setParameter('mainFalse', OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER)
         
             ->getQuery()
 
@@ -197,7 +204,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('storeId', $storeId)
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
-            ->innerJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
             ->getQuery()
 
@@ -283,6 +290,25 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->getQuery()
+            ->getResult();
+    }
+
+    public function getCaptainOffersBySubscriptionIdForAdmin(int $subscriptionId): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscription.captainOfferFirstTime')
+            
+            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+
+            ->andWhere('subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
+            ->andWhere('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+           
+            ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
+
+            ->getQuery()
+
             ->getResult();
     }
 }
