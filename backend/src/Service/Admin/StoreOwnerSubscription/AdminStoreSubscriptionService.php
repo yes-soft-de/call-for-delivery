@@ -10,6 +10,8 @@ use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdmin
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Subscription\SubscriptionService;
+use App\Constant\Payment\PaymentConstant;
+use App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest;
 use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionResponse;
@@ -17,6 +19,7 @@ use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -43,6 +46,13 @@ class AdminStoreSubscriptionService
 
        foreach ($subscriptions as $subscription) {
       
+            if( ! $subscription['remainingCars'] ) {
+                $subscription['remainingCars'] = 0;
+            }
+            if( ! $subscription['remainingOrders'] ) {
+                $subscription['remainingOrders'] = 0;
+            }
+
             $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
             
             if($subscription['subscriptionDetailsId']) {
@@ -54,7 +64,7 @@ class AdminStoreSubscriptionService
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
-            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
+            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionIdForAdmin($subscription['id']);
 
             $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
 
@@ -68,8 +78,16 @@ class AdminStoreSubscriptionService
     {
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
-        $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
-      
+        // $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
+            
+        $sumCaptainOfferPrices = 0;
+
+        foreach($captainOffers as $captainOffer) {
+            if($captainOffer['captainOfferFirstTime'] === true) {
+                $sumCaptainOfferPrices += $captainOffer['price'];
+            }
+        }
+        
         $item['packageCost'] = $packageCost;
 
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
@@ -118,6 +136,37 @@ class AdminStoreSubscriptionService
     {
 
       return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 
+    }
+    
+    public function deleteSubscriptionByAdmin(AdminDeleteSubscriptionRequest $request): AdminDeleteSubscriptionResponse |null|int
+    {
+        //delete subscription with payments
+        if($request->getDeletePayment() === PaymentConstant::DELETE_SUBSCRIPTION_WITH_PAYMENT) {
+           
+            $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+            foreach($payments as $payment){
+                $this->adminStoreOwnerPaymentService->deleteStoreOwnerPayment($payment->id);
+            }
+
+            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
+          
+            
+
+            return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription); 
+        }
+
+        // get payments with subscription id
+        $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+
+        if($payments) {
+            return PaymentConstant::THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION;
+        }
+        //if not found payments , delete subscription
+        if(! $payments) {
+            $subscription = $this->adminStoreSubscriptionManager->deleteSubscriptionById($request->getId());
+          
+            return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription); 
+        }
     }
 }
  
