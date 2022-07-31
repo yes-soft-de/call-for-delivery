@@ -672,3 +672,10 @@ App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest:
     properties:
         storeProfileId:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest:
+    properties:
+        storeOwner:
+            - NotBlank: ~
+        captainOffer:
+            - NotBlank: ~

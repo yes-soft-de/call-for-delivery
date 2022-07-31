@@ -31,4 +31,9 @@ class AdminSubscriptionDetailsManager
         }
         return $subscriptionDetailsEntity;
     }
+
+    public function getSubscriptionCurrentActive($storeOwner): ?array
+    {
+        return $this->subscriptionDetailsEntityRepository->getSubscriptionCurrentActive($storeOwner);
+    }
 }

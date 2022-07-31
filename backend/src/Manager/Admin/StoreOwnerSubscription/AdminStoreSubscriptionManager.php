@@ -86,4 +86,11 @@ class AdminStoreSubscriptionManager
 
         return $subscriptionEntity;
     }
+
+    public function isThereSubscription($storeOwnerProfileId): ?array
+    {
+        //$storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
+
+        return $this->adminSubscriptionDetailsManager->getSubscriptionCurrentActive($storeOwnerProfileId);
+    }
 }

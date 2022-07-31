@@ -93,4 +93,9 @@ class AdminStoreOwnerService
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
     }
+
+    public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);
+    }
 }
