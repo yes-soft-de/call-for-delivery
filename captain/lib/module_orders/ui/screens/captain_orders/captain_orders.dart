@@ -6,6 +6,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -142,6 +143,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       }
     });
     checkForUpdates(context);
+    currentPage = NotificationsPrefHelper().getHomeIndex();
+    if (NotificationsPrefHelper().getHomeIndex() == 1) {
+      NotificationsPrefHelper().setHomeIndex(1);
+    }
   }
 
   @override
