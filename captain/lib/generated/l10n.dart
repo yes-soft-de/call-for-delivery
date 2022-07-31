@@ -7249,6 +7249,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Welcome Captain !`
+  String get welcomeCaptain {
+    return Intl.message(
+      'Welcome Captain !',
+      name: 'welcomeCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here orders will be shown`
+  String get hereOrdersWillBeShown {
+    return Intl.message(
+      'Here orders will be shown',
+      name: 'hereOrdersWillBeShown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here accepted orders will be shown`
+  String get hereAcceptedOrderShown {
+    return Intl.message(
+      'Here accepted orders will be shown',
+      name: 'hereAcceptedOrderShown',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

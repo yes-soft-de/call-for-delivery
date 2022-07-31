@@ -1,6 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -58,8 +57,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         },
       );
     } else if (myOrders.isEmpty) {
-      return EmptyStateWidget(
-        empty: S.current.homeDataEmpty,
+      return MyOrdersStateWidget(
         onRefresh: () {
           screenState.getMyOrders();
         },
@@ -133,8 +131,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
       );
     }
     if (nearbyOrders.isEmpty) {
-      return EmptyStateWidget(
-        empty: S.current.homeDataEmpty,
+      return NearbyOrdersStateWidget(
         onRefresh: () {
           screenState.getMyOrders();
         },

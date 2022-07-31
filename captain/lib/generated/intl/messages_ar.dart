@@ -455,6 +455,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
+        "hereAcceptedOrderShown":
+            MessageLookupByLibrary.simpleMessage("هنا ستظهر الطلبات المستلمة"),
+        "hereOrdersWillBeShown":
+            MessageLookupByLibrary.simpleMessage("هنا ستظهر الطلبات الجديدة "),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "homeDataEmpty":
@@ -572,7 +576,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حقل الاسم فارغ"),
         "nationalAddress":
             MessageLookupByLibrary.simpleMessage("العنوان الوطني"),
-        "nearbyOrders": MessageLookupByLibrary.simpleMessage("الطلبات القريبة"),
+        "nearbyOrders": MessageLookupByLibrary.simpleMessage("الطلبات الجديدة"),
         "nearbyStore":
             MessageLookupByLibrary.simpleMessage("المتاجر القريبة إليك"),
         "netProfit": MessageLookupByLibrary.simpleMessage("الأرباح"),
@@ -1090,6 +1094,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نحتاج صورتك للتسجيل"),
         "weWillContactYouSoon": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الطلب، سنتواصل معك بأقرب وقت ممكن"),
+        "welcomeCaptain":
+            MessageLookupByLibrary.simpleMessage("أهلا بعودتك يا كابتن !"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
         "welcomeToOurApp":

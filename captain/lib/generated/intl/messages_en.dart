@@ -461,6 +461,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
+        "hereAcceptedOrderShown": MessageLookupByLibrary.simpleMessage(
+            "Here accepted orders will be shown"),
+        "hereOrdersWillBeShown":
+            MessageLookupByLibrary.simpleMessage("Here orders will be shown"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
@@ -1095,6 +1099,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "We need  your image in order to sign up"),
         "weWillContactYouSoon":
             MessageLookupByLibrary.simpleMessage("We will contact you soon"),
+        "welcomeCaptain":
+            MessageLookupByLibrary.simpleMessage("Welcome Captain !"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("Welcome to Orders Screen"),
         "welcomeToOurApp":

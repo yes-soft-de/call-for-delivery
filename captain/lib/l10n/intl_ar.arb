@@ -46,7 +46,7 @@
     "openChatRoom": "افتح غرفة المحادثة",
     "orders": "الطلبات",
     "currentOrders": "طلباتي",
-    "nearbyOrders": "الطلبات القريبة",
+    "nearbyOrders": "الطلبات الجديدة",
     "chatWithStoreOwner": "التحدث مع صاحب المحل",
     "whatsappWithStoreOwner": "صاحب المحل",
     "whatsappWithClient": "الزبون",
@@ -720,6 +720,9 @@
     "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
     "captainProfileNotCompleted": "حابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك",
     "orderCanceledYouCannotAccept": "تم إلغاء لطلب لايمكنك قبوله بعد الآن",
-    "youCannotAcceptAnotherOrderFromThisStore":"لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
-    "optional":"اختياري"
+    "youCannotAcceptAnotherOrderFromThisStore": "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
+    "optional": "اختياري",
+    "welcomeCaptain": "أهلا بعودتك يا كابتن !",
+    "hereOrdersWillBeShown": "هنا ستظهر الطلبات الجديدة ",
+    "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة"
 }

@@ -718,8 +718,10 @@
     "attachedFile": "This order has attached file",
     "captainProfileNotCompleted": "Captain profile note completed yet , so you cannot accept it now ",
     "orderCanceledYouCannotAccept": "This order cancelled , You cannot accept any more",
-    "youCannotAcceptAnotherOrderFromThisStore":"You cannot accept another order from this store , before you delivering orders belongs to this store after that try again",
-    "optional":"Optional"
-
+    "youCannotAcceptAnotherOrderFromThisStore": "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again",
+    "optional": "Optional",
+    "welcomeCaptain": "Welcome Captain !",
+    "hereOrdersWillBeShown": "Here orders will be shown",
+    "hereAcceptedOrderShown":"Here accepted orders will be shown"
 
 }
