@@ -1,3 +1,11 @@
+import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/model/geo_model.dart';
+import 'package:c4d/module_deep_links/repository/deep_link_repository.dart';
+import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
+import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
+import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as loc;
 import 'package:uni_links/uni_links.dart';
@@ -21,7 +29,7 @@ class DeepLinksService {
     );
   }
 
-   static Future<LatLng?> defaultLocation() async {
+  static Future<LatLng?> defaultLocation() async {
     try {
       bool serviceEnabled;
       LocationPermission permission;
@@ -43,8 +51,8 @@ class DeepLinksService {
       if (permission == LocationPermission.deniedForever) {
         return null;
       }
-      var myLocation =
-          await Geolocator.getCurrentPosition(timeLimit: const Duration(seconds: 10));
+      var myLocation = await Geolocator.getCurrentPosition(
+          timeLimit: const Duration(seconds: 10));
       LatLng myPos = LatLng(myLocation.latitude, myLocation.longitude);
       return myPos;
     } catch (e) {
@@ -77,5 +85,19 @@ class DeepLinksService {
     var straightDistance =
         const Distance().as(LengthUnit.Kilometer, currentLocation, headed);
     return straightDistance;
+  }
+
+  static Future<DataModel> getGeoDistance(GeoDistanceRequest request) async {
+    GeoDistanceX? response =
+        await getIt<DeepLinkRepository>().getDistance(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    GeoDistanceModel model =
+        GeoDistanceModel(distance: response.data?.distance);
+    return model;
   }
 }

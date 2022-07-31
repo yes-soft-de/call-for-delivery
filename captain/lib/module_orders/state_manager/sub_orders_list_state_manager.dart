@@ -62,7 +62,7 @@ class SubOrdersStateManager {
             orderIsMain: order.orderIsMain ?? false,
             subOrders: order.subOrders,
             isHide: -1,
-            distance: order.distance ?? '0.0',
+            distance: 0,
             location: order.branchCoordinate,
             paymentMethod: order.payment);
         List<OrderModel> orders = [];

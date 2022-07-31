@@ -183,7 +183,7 @@ class OrderDetailsModel extends DataModel {
           subOrders: [],
           state: StatusHelper.getStatusEnum(element.state),
           isHide: -1,
-          distance: S.current.destinationUnavailable,
+          distance: 0,
           location: LatLng(element.location?.latitude?.toDouble() ?? 0,
               element.location?.longitude?.toDouble() ?? 0),
           paymentMethod: element.payment ?? 'cash'));

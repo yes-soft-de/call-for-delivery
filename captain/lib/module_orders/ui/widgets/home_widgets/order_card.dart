@@ -178,7 +178,7 @@ class NearbyOrdersCard extends StatelessWidget {
   final String orderNumber;
   final String deliveryDate;
   final String orderCost;
-  final String distance;
+  final Widget distance;
   final String? note;
   final String branchName;
   final bool credit;
@@ -294,7 +294,7 @@ class NearbyOrdersCard extends StatelessWidget {
               children: [
                 verticalTile(context,
                     title: S.current.deliverDate, subtitle: deliveryDate),
-                verticalTile(context,
+                verticalTileForDistance(context,
                     title: S.current.destination, subtitle: distance),
               ],
             ),
@@ -339,6 +339,21 @@ class NearbyOrdersCard extends StatelessWidget {
                 .textTheme
                 .button
                 ?.copyWith(fontWeight: FontWeight.normal)),
+      ],
+    );
+  }
+
+  Widget verticalTileForDistance(context,
+      {required String title, required Widget subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.button?.color),
+        ),
+        distance,
       ],
     );
   }

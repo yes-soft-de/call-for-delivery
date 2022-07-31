@@ -17,7 +17,7 @@ class OrderModel extends DataModel {
   late String createdDate;
   late String branchName;
   LatLng? location;
-  late String distance;
+  late num distance;
   late String paymentMethod;
   late List<OrderModel> subOrders;
   late bool orderIsMain;
@@ -65,7 +65,7 @@ class OrderModel extends DataModel {
           location: element.location != null
               ? LatLng(element.location?.lat, element.location?.lon)
               : null,
-          distance: S.current.destinationUnavailable,
+          distance: -1,
           paymentMethod: element.payment ?? 'cash',
           isHide: element.isHide ?? -1,
           orderIsMain: element.orderIsMain ?? false,
@@ -96,7 +96,7 @@ class OrderModel extends DataModel {
           subOrders: [],
           state: StatusHelper.getStatusEnum(element.state),
           isHide: -1,
-          distance: S.current.destinationUnavailable,
+          distance: 0,
           location: LatLng(element.location?.latitude?.toDouble() ?? 0,
               element.location?.longitude?.toDouble() ?? 0),
           paymentMethod: ''));

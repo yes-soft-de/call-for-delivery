@@ -74,13 +74,7 @@ class SubOrdersListStateLoaded extends States {
                 : StatusHelper.getOrderStatusColor(element.state),
             note: element.note,
             orderCost: FixedNumber.getFixedNumber(element.orderCost),
-            destination: S.current.destinationUnavailable == element.distance
-                ? element.distance
-                : S.current.distance +
-                    ' ' +
-                    element.distance +
-                    ' ' +
-                    S.current.km,
+            destination: '',
             credit: element.paymentMethod != 'cash',
           ),
         ),

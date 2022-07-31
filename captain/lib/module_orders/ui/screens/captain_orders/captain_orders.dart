@@ -11,16 +11,20 @@ import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_navigation/menu.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:new_version/new_version.dart';
+import 'package:location/location.dart' as loc;
 
 @injectable
 class CaptainOrdersScreen extends StatefulWidget {
@@ -42,6 +46,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _companySubscription;
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
+  LatLng? currentLocation;
   Future<void> checkForUpdates(context) async {
     final newVersion = NewVersion();
     final VersionStatus? status = await newVersion.getVersionStatus();
@@ -91,6 +96,23 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
+    canRequestLocation().then((value) async {
+      if (value) {
+        Logger().info('Location enabled', '$value');
+        Geolocator.getPositionStream(
+            locationSettings: const LocationSettings(
+          distanceFilter: 25,
+        )).listen((event) {
+          currentLocation = LatLng(event.latitude, event.longitude);
+          Logger().info('Location with us ',
+              currentLocation?.toJson().toString() ?? 'null');
+          if (mounted) {
+            setState(() {});
+          }
+        });
+      }
+    });
+
     getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
@@ -206,5 +228,36 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     _profileSubscription?.cancel();
     _companySubscription?.cancel();
     widget._stateManager.newActionSubscription?.cancel();
+  }
+
+  Future<bool> canRequestLocation() async {
+    try {
+      bool serviceEnabled;
+      LocationPermission permission;
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await loc.Location().requestService();
+        if (!serviceEnabled) {
+          return false;
+        }
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return false;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
