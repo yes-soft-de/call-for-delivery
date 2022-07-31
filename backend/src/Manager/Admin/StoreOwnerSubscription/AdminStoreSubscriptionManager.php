@@ -36,9 +36,9 @@ class AdminStoreSubscriptionManager
         return $this->subscribeRepository->getCaptainOfferFirstTimeBySubscriptionId($subscriptionId);
     }
 
-    public function getCaptainOffersBySubscriptionId(int $subscriptionId): ?array
+    public function getCaptainOffersBySubscriptionIdForAdmin(int $subscriptionId): ?array
     {
-        return $this->subscribeRepository->getCaptainOffersBySubscriptionId($subscriptionId);
+        return $this->subscribeRepository->getCaptainOffersBySubscriptionIdForAdmin($subscriptionId);
     }
 
     // This functions deletes only future subscriptions of a store according to storeOwnerId

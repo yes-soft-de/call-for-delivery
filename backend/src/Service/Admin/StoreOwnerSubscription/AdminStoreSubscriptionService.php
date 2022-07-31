@@ -46,6 +46,13 @@ class AdminStoreSubscriptionService
 
        foreach ($subscriptions as $subscription) {
       
+            if( ! $subscription['remainingCars'] ) {
+                $subscription['remainingCars'] = 0;
+            }
+            if( ! $subscription['remainingOrders'] ) {
+                $subscription['remainingOrders'] = 0;
+            }
+
             $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
             
             if($subscription['subscriptionDetailsId']) {
@@ -57,7 +64,7 @@ class AdminStoreSubscriptionService
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
-            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
+            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionIdForAdmin($subscription['id']);
 
             $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
 
@@ -71,8 +78,16 @@ class AdminStoreSubscriptionService
     {
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
-        $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
-      
+        // $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
+            
+        $sumCaptainOfferPrices = 0;
+
+        foreach($captainOffers as $captainOffer) {
+            if($captainOffer['captainOfferFirstTime'] === true) {
+                $sumCaptainOfferPrices += $captainOffer['price'];
+            }
+        }
+        
         $item['packageCost'] = $packageCost;
 
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
