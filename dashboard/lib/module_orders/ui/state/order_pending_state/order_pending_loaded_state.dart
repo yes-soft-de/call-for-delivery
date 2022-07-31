@@ -50,7 +50,7 @@ class OrderPendingLoadedState extends States {
               ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
               (screenState.currentIndex == 0
                   ? S.current.pending
-                  : screenState.currentIndex == 1
+                  : screenState.currentIndex == 2
                       ? S.current.hidden
                       : S.current.notAccepted),
           style: TextStyle(fontWeight: FontWeight.bold),
