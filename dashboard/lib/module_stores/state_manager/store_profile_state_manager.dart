@@ -63,6 +63,25 @@ class StoreProfileStateManager {
     });
   }
 
+  void deleteStore(StoreInfoScreenState screenState, int storeID,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
+    _storesService.deleteStore(storeID).then((value) {
+      if (value.hasError) {
+        getStore(screenState, storeID, loading);
+        showSnackFailed(
+            screenState, value.error ?? S.current.errorHappened, loading);
+      } else {
+        getIt<GlobalStateManager>().updateList();
+        getStore(screenState, storeID, loading);
+        showSnackSuccess(
+            screenState, S.current.accountDeletedSuccessfully, loading);
+      }
+    });
+  }
+
   void showSnackSuccess(
       StoreInfoScreenState screenState, String message, bool loading) {
     if (loading) {

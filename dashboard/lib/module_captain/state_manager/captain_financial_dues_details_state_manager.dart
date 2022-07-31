@@ -67,7 +67,7 @@ class CaptainFinancialDuesDetailsStateManager {
   void deletePayment(
       CaptainFinancialDuesDetailsScreenState screenState, String id) {
     _stateSubject.add(LoadingState(screenState));
-    _paymentsService.deletePaymentToCaptain(id).then((value) {
+    _paymentsService.deletePaymentFROMCaptain(id).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())

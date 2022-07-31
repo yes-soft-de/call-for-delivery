@@ -1,3 +1,5 @@
+import 'package:c4d/module_main/model/statistics_model.dart';
+import 'package:c4d/module_main/response/statistics_response/statistics_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -23,5 +25,18 @@ class HomeService {
     }
     if (_storesResponse.data == null) return DataModel.empty();
     return ReportModel.withData(_storesResponse.data!);
+  }
+
+  Future<DataModel> getStatistics() async {
+    StatisticsResponse? _storesResponse = await _homeManager.getStatistics();
+    if (_storesResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_storesResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_storesResponse.statusCode));
+    }
+    if (_storesResponse.dataum == null) return DataModel.empty();
+    return StatisticsModel.withData(_storesResponse);
   }
 }

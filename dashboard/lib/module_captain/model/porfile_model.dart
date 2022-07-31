@@ -23,6 +23,9 @@ class ProfileModel extends DataModel {
   num? bounce;
   String? createDate;
   OrderCountsSystemDetails? captainFinance;
+  bool? verificationStatus;
+  late int captainId;
+  late String roomId;
   ProfileModel(
       {required this.id,
       this.image,
@@ -41,7 +44,10 @@ class ProfileModel extends DataModel {
       this.bounce,
       this.salary,
       this.createDate,
-      this.captainFinance});
+      this.captainFinance,
+      this.verificationStatus,
+      required this.captainId,
+      required this.roomId});
 
   ProfileModel? _models;
 
@@ -68,10 +74,14 @@ class ProfileModel extends DataModel {
                 .format(DateHelper.convert(data.createDate?.timestamp)) +
             '   ' +
             DateFormat.yMd()
-                .format(DateHelper.convert(data.createDate?.timestamp)));
+                .format(DateHelper.convert(data.createDate?.timestamp)),
+        verificationStatus: data.verificationStatus == 1 ? true : false,
+        captainId: data.captainID ?? -1,
+        roomId: data.roomID ?? '');
   }
 
-  ProfileModel get data => _models ?? ProfileModel(id: -1);
+  ProfileModel get data =>
+      _models ?? ProfileModel(id: -1, captainId: -1, roomId: '');
   OrderCountsSystemDetails getOrderCounts(
       FinancialSystemCaptainDetails? finance) {
     return OrderCountsSystemDetails(

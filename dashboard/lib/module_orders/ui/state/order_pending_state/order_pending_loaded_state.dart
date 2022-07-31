@@ -11,6 +11,7 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OrderPendingLoadedState extends States {
   OrderPendingScreenState screenState;
@@ -18,8 +19,8 @@ class OrderPendingLoadedState extends States {
   OrderPendingLoadedState(this.screenState, this.orders) : super(screenState) {
     ordersIndex = [
       orders.pendingOrders,
+      orders.notDeliveredOrders,
       orders.hiddenOrders,
-      orders.notDeliveredOrders
     ];
   }
 
@@ -30,8 +31,40 @@ class OrderPendingLoadedState extends States {
 
   List<List<OrderModel>> ordersIndex = [];
   List<Widget> getOrders() {
+    List<int> countsOrder = [
+      orders.pendingOrdersCount,
+      orders.notDeliveredOrdersCount,
+      orders.hiddenOrdersCount,
+    ];
     var context = screenState.context;
     List<Widget> widgets = [];
+    widgets.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading: Icon(
+          FontAwesomeIcons.boxes,
+          color: Theme.of(context).disabledColor,
+        ),
+        title: Text(
+          S.current.countOrders +
+              ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
+              (screenState.currentIndex == 0
+                  ? S.current.pending
+                  : screenState.currentIndex == 2
+                      ? S.current.hidden
+                      : S.current.notAccepted),
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        horizontalTitleGap: 4,
+        trailing: Text(
+          countsOrder[screenState.currentIndex].toString(),
+          style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).disabledColor,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    ));
     widgets.add(
       // filter on state
       FilterBar(
@@ -47,8 +80,8 @@ class OrderPendingLoadedState extends States {
           FilterItem(
             label: S.current.pending,
           ),
-          FilterItem(label: S.current.hidden),
           FilterItem(label: S.current.notAccepted),
+          FilterItem(label: S.current.hidden),
         ],
         onItemSelected: (index) {
           screenState.currentIndex = index;
@@ -78,6 +111,7 @@ class OrderPendingLoadedState extends States {
               deliveryDate: element.deliveryDate,
               orderCost: element.orderCost,
               note: element.note,
+              orderIsMain: element.orderIsMain ?? false,
             ),
           ),
         ),

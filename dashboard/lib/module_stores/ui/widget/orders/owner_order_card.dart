@@ -9,13 +9,15 @@ class OwnerOrderCard extends StatelessWidget {
   final String createdDate;
   final String orderCost;
   final String note;
+  final String? kilometer;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
       required this.createdDate,
       required this.deliveryDate,
       required this.orderCost,
-      required this.note});
+      required this.note,
+      this.kilometer});
 
   @override
   Widget build(BuildContext context) {
@@ -34,28 +36,49 @@ class OwnerOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            InfoButtonOrder(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text(S.current.note),
-                        content: Container(child: Text(note)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        actionsAlignment: MainAxisAlignment.center,
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(S.current.close)),
-                        ],
-                      );
-                    });
-              },
+            Row(
+              children: [
+                Visibility(
+                  visible: kilometer != null,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.green,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        kilometer.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                InfoButtonOrder(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(S.current.note),
+                            content: Container(child: Text(note)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            actionsAlignment: MainAxisAlignment.center,
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(S.current.close)),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ],
             ),
             // order number & order status
             Row(

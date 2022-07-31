@@ -21,7 +21,7 @@ class _AnimatedLiquidCircularProgressIndicatorState
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 0),
     );
 
     _animationController.addListener(() {

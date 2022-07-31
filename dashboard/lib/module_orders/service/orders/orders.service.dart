@@ -4,7 +4,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/captain_cash_orders_finance.dart';
+import 'package:c4d/module_orders/model/order/order_action_logs_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order_captain_logs_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
@@ -13,6 +15,8 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
+import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
@@ -36,6 +40,18 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return OrderModel.withData(response);
+  }
+
+  Future<DataModel> getCaptainOrdersFilter(FilterOrderRequest request) async {
+    OrderCaptainLogsResponse? response =
+        await _ordersManager.getCaptainOrdersFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderCaptainLogsModel.withData(response);
   }
 
   Future<DataModel> getOrderCashFinancesForStore(
@@ -73,6 +89,18 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return PendingOrder.withData(response);
+  }
+
+  Future<DataModel> getActionOrderLogs(int orderID) async {
+    OrderActionLogsResponse? response =
+        await _ordersManager.getActionOrderLogs(orderID);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderActionLogsModel.withData(response);
   }
 
   Future<DataModel> createOrder(CreateOrderRequest request) async {
@@ -120,6 +148,16 @@ class OrdersService {
 
   Future<DataModel> deleteOrder(int id) async {
     ActionResponse? response = await _ordersManager.deleteOrder(id);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> unAssignCaptain(int id) async {
+    ActionResponse? response = await _ordersManager.unAssignCaptain(id);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

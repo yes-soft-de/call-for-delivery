@@ -1,3 +1,4 @@
+import 'package:c4d/module_main/response/statistics_response/statistics_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
@@ -17,5 +18,13 @@ class HomeRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ReportResponse.fromJson(response);
+  }
+
+  Future<StatisticsResponse?> getStatistics() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_STATISTICS,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return StatisticsResponse.fromJson(response);
   }
 }

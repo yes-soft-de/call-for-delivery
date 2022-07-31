@@ -77,4 +77,6 @@ class PaymentsManager {
       _paymentsRepository.paymentFromCaptain(request);
   Future<ActionResponse?> deletePaymentToCaptain(String id) =>
       _paymentsRepository.deletePaymentToCaptain(id);
+  Future<ActionResponse?> deletePaymentFROMCaptain(String id) =>
+      _paymentsRepository.deletePaymentFROMCaptain(id);
 }

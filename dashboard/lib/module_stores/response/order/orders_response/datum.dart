@@ -18,24 +18,25 @@ class Datum {
   String? detail;
   int? storeOwnerBranchId;
   String? branchName;
+  num? kilometer;
 
-  Datum({
-    this.id,
-    this.state,
-    this.payment,
-    this.orderCost,
-    this.orderType,
-    this.note,
-    this.deliveryDate,
-    this.createdAt,
-    this.storeOrderDetailsId,
-    this.destination,
-    this.recipientName,
-    this.recipientPhone,
-    this.detail,
-    this.storeOwnerBranchId,
-    this.branchName,
-  });
+  Datum(
+      {this.id,
+      this.state,
+      this.payment,
+      this.orderCost,
+      this.orderType,
+      this.note,
+      this.deliveryDate,
+      this.createdAt,
+      this.storeOrderDetailsId,
+      this.destination,
+      this.recipientName,
+      this.recipientPhone,
+      this.detail,
+      this.storeOwnerBranchId,
+      this.branchName,
+      this.kilometer});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -60,6 +61,7 @@ class Datum {
         detail: json['detail'] as String?,
         storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
         branchName: json['branchName'] as String?,
+        kilometer: json['kilometer'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

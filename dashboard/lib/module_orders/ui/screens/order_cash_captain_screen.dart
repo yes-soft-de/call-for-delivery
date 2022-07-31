@@ -5,6 +5,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/state_manager/order_cash_captain_state_manager.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -179,18 +180,26 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                 });
           },
         ),
-        appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderLog,
-            actions: [
-              CustomC4dAppBar.actionIcon(context, onTap: () {
-                ordersFilter.fromDate =
-                    DateTime(today.year, today.month, today.day, 0)
-                        .toIso8601String();
-                ordersFilter.toDate = DateTime.now().toIso8601String();
-                currentIndex = 0;
-                getOrders();
-              }, icon: Icons.restart_alt_rounded)
-            ]),
+        appBar: CustomC4dAppBar.appBar(
+          context,
+          title: S.current.orderLog,
+          actions: [
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context).pushNamed(
+                  PaymentsRoutes.PAYMENTS_TO_CAPTAIN,
+                  arguments: int.tryParse(
+                      ArgumentHiveHelper().getCurrentCaptainID() ?? ''));
+            }, icon: Icons.payments),
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              ordersFilter.fromDate =
+                  DateTime(today.year, today.month, today.day, 0)
+                      .toIso8601String();
+              ordersFilter.toDate = DateTime.now().toIso8601String();
+              currentIndex = 0;
+              getOrders();
+            }, icon: Icons.restart_alt_rounded),
+          ],
+        ),
         body: Column(
           children: [
             // filter date

@@ -175,11 +175,15 @@ class ApiClient {
     String url, {
     Map<String, String>? queryParams,
     Map<String, String>? headers,
+    Map<String, dynamic>? payLoad,
   }) async {
     try {
       _logger.info(tag, 'Requesting DELETE to: ' + url);
       _logger.info(tag, 'Headers: ' + headers.toString());
       _logger.info(tag, 'Query: ' + queryParams.toString());
+      if (payLoad != null) {
+        _logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
+      }
       Dio client = Dio(BaseOptions(
         sendTimeout: 60000,
         receiveTimeout: 60000,
@@ -197,6 +201,7 @@ class ApiClient {
       //   client.options.headers['Access-Control-Allow-Origin'] = '*';
       var response = await client.delete(
         url,
+        data: payLoad != null ? json.encode(payLoad) : {},
         queryParameters: queryParams,
       );
       return _processResponse(response);

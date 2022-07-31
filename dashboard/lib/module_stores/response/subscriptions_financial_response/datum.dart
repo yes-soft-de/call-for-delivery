@@ -16,21 +16,35 @@ class Datum {
   List<PaymentsFromStore>? paymentsFromStore;
   Total? total;
   List<CaptainOffer>? captainOffers;
-
-  Datum({
-    this.id,
-    this.packageName,
-    this.startDate,
-    this.endDate,
-    this.status,
-    this.note,
-    this.flag,
-    this.paymentsFromStore,
-    this.total,
-  });
+  num? remainingOrders;
+  num? remainingCars;
+  num? packageOrderCount;
+  num? packageCarCount;
+  bool? isFuture;
+  Datum(
+      {this.id,
+      this.packageName,
+      this.startDate,
+      this.endDate,
+      this.status,
+      this.note,
+      this.flag,
+      this.paymentsFromStore,
+      this.total,
+      this.captainOffers,
+      this.packageCarCount,
+      this.packageOrderCount,
+      this.remainingCars,
+      this.remainingOrders,
+      this.isFuture});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
+        isFuture: json['isFuture'] as bool?,
+        remainingOrders: json['remainingOrders'] as num?,
+        remainingCars: json['remainingCars'] as num?,
+        packageOrderCount: json['packageOrderCount'] as num?,
+        packageCarCount: json['packageCarCount'] as num?,
         packageName: json['packageName'] as String?,
         startDate: json['startDate'] == null
             ? null
@@ -41,6 +55,9 @@ class Datum {
         status: json['status'] as String?,
         note: json['note'] as dynamic,
         flag: json['flag'] as dynamic,
+        captainOffers: (json['captainOffers'] as List<dynamic>?)
+            ?.map((e) => CaptainOffer.fromJson(e as Map<String, dynamic>))
+            .toList(),
         paymentsFromStore: (json['paymentsFromStore'] as List<dynamic>?)
             ?.map((e) => PaymentsFromStore.fromJson(e as Map<String, dynamic>))
             .toList(),

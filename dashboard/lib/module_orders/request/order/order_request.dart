@@ -13,6 +13,8 @@ class CreateOrderRequest {
   int? orderID;
   bool? orderIsMain;
   int? id;
+  String? distance;
+  String? pdf;
   CreateOrderRequest(
       {this.id,
       this.storeId,
@@ -27,7 +29,9 @@ class CreateOrderRequest {
       this.image,
       this.detail,
       this.orderID,
-      this.orderIsMain});
+      this.orderIsMain,
+      this.distance,
+      this.pdf});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -62,6 +66,13 @@ class CreateOrderRequest {
     }
     if (this.orderID != null) {
       data[''] = this.orderID;
+    }
+    if (distance != null) {
+      data['storeBranchToClientDistance'] =
+          double.tryParse(this.distance!.replaceAll(',', ''));
+    }
+    if (this.pdf != null) {
+      data['filePdf'] = this.pdf;
     }
     return data;
   }

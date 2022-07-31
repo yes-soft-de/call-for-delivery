@@ -1,7 +1,13 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+
+import '../../../module_orders/model/order/order_model.dart';
+import '../../../module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 
 class AccountBalanceDetailsCard extends StatelessWidget {
   final String categoryName;
@@ -16,6 +22,7 @@ class AccountBalanceDetailsCard extends StatelessWidget {
   final num countOfOrdersLeft;
   final String? message;
   final bool active;
+  final List<OrderModel> orders;
   const AccountBalanceDetailsCard(
       {Key? key,
       required this.categoryName,
@@ -28,7 +35,8 @@ class AccountBalanceDetailsCard extends StatelessWidget {
       required this.captainTotalCategory,
       required this.contOrderCompleted,
       required this.countOfOrdersLeft,
-      this.message})
+      this.message,
+      required this.orders})
       : super(key: key);
 
   @override
@@ -108,7 +116,9 @@ class AccountBalanceDetailsCard extends StatelessWidget {
                     horizontalsTile(
                         S.current.contOrderCompleted,
                         FixedNumber.getFixedNumber(contOrderCompleted) +
-                            ' ${S.current.sOrder}'),
+                            ' ${S.current.sOrder}',
+                        toOrder: true,
+                        context: context),
                     horizontalsTile(
                         S.current.countOfOrdersLeft,
                         FixedNumber.getFixedNumber(countOfOrdersLeft) +
@@ -141,18 +151,48 @@ class AccountBalanceDetailsCard extends StatelessWidget {
         ));
   }
 
-  Widget horizontalsTile(String title, String subtitle) {
+  Widget horizontalsTile(String title, String subtitle,
+      {bool toOrder = false, BuildContext? context}) {
     return Padding(
       padding: const EdgeInsets.all(16.0).copyWith(bottom: 8.0, top: 0),
       child: Row(
         children: [
           SizedBox(
             width: 200,
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: active ? Colors.white : null),
+            child: InkWell(
+              onTap: toOrder
+                  ? () {
+                      showDialog(
+                          context: context!,
+                          builder: (_) {
+                            return Scaffold(
+                              appBar: CustomC4dAppBar.appBar(context,
+                                  title: S.current.order),
+                              body: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView(
+                                      children: getOrders(context),
+                                    ),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(S.current.close))
+                                ],
+                              ),
+                            );
+                          });
+                    }
+                  : null,
+              child: Text(
+                title,
+                style: TextStyle(
+                    decoration: toOrder ? TextDecoration.underline : null,
+                    fontWeight: FontWeight.bold,
+                    color: active ? Colors.white : null),
+              ),
             ),
           ),
           const SizedBox(
@@ -167,5 +207,32 @@ class AccountBalanceDetailsCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> getOrders(context) {
+    List<Widget> widgets = [];
+    orders.forEach((element) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              },
+              child: OwnerOrderCard(
+                createdDate: element.createdDate,
+                deliveryDate: element.deliveryDate,
+                note: element.note,
+                orderCost: element.orderCost,
+                orderNumber: element.id.toString(),
+                orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+                orderIsMain: element.orderIsMain ?? false,
+              )),
+        ),
+      );
+    });
+    return widgets;
   }
 }

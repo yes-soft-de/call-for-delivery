@@ -66,6 +66,7 @@ class StoresLoadedState extends States {
         continue;
       }
       widgets.add(Padding(
+        key: ValueKey(element.id),
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(25),

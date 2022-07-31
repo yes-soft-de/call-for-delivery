@@ -23,12 +23,13 @@ class AccountBalanceStateManager {
     _planService.getCaptainAccountBalance(captainID).then((value) {
       if (value.hasError) {
         stateSubject.add(
-          ErrorState(screenState, onPressed: () {
+          ErrorState(screenState, hasAppbar: false, onPressed: () {
             getAccountBalance(screenState, captainID);
           }, title: S.current.myBalance, error: value.error),
         );
       } else if (value.isEmpty) {
         stateSubject.add(EmptyState(screenState,
+            hasAppbar: false,
             emptyMessage: S.current.homeDataEmpty,
             title: S.current.myBalance, onPressed: () {
           getAccountBalance(screenState, captainID);

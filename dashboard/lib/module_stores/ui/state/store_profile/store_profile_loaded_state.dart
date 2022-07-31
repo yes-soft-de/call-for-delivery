@@ -9,6 +9,7 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -202,6 +203,58 @@ class StoreProfileLoadedState extends States {
         direction: Axis.horizontal,
         children: [
           cardTap(
+              image: ImageAsset.ORDERS,
+              title: S.of(context).storeOrders,
+              onTapCard: () {
+                Navigator.pushNamed(
+                    screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
+                    arguments: profile?.id);
+              }),
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).financeSubscriptions,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    arguments: profile?.id ?? -1);
+              }),
+          cardTap(
+              image: ImageAsset.BRANCH,
+              title: S.of(context).manageBranch,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(
+                    BranchesRoutes.BRANCHES_LIST_SCREEN,
+                    arguments: profile?.id ?? -1);
+              }),
+          // cardTap(
+          //     image: ImageAsset.PAYMENT,
+          //     title: S.of(context).payments,
+          //     onTapCard: () {
+          //       Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
+          //           arguments: profile?.id ?? -1);
+          //     }),
+          cardTap(
+              image: ImageAsset.PAYMENT,
+              title: S.of(context).cashOrders,
+              onTapCard: () {
+                ArgumentHiveHelper()
+                    .setCurrentStoreID(profile?.id.toString() ?? '-1');
+                Navigator.of(context).pushNamed(
+                  OrdersRoutes.ORDER_CASH_STORES,
+                );
+              }),
+          // Visibility(
+          //   visible: false,
+          //   child: cardTap(
+          //       image: ImageAsset.BID_ORDER,
+          //       title: S.of(context).bidOrder,
+          //       onTapCard: () {
+          //         Navigator.pushNamed(
+          //             screenState.context, BidOrderRoutes.BID_ORDER,
+          //             arguments: profile?.id);
+          //       }),
+          // ),
+          cardTap(
               image: ImageAsset.EDIT_PROFILE,
               title: S.of(context).editProfile,
               onTapCard: () {
@@ -228,55 +281,75 @@ class StoreProfileLoadedState extends States {
                       );
                     });
               }),
-          cardTap(
-              image: ImageAsset.BID_ORDER,
-              title: S.of(context).bidOrder,
-              onTapCard: () {
-                Navigator.pushNamed(
-                    screenState.context, BidOrderRoutes.BID_ORDER,
-                    arguments: profile?.id);
-              }),
-          cardTap(
-              image: ImageAsset.ORDERS,
-              title: S.of(context).storeOrders,
-              onTapCard: () {
-                Navigator.pushNamed(
-                    screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
-                    arguments: profile?.id);
-              }),
-          cardTap(
-              image: ImageAsset.BRANCH,
-              title: S.of(context).manageBranch,
-              onTapCard: () {
-                Navigator.of(context).pushNamed(
-                    BranchesRoutes.BRANCHES_LIST_SCREEN,
-                    arguments: profile?.id ?? -1);
-              }),
-          // cardTap(
-          //     image: ImageAsset.PAYMENT,
-          //     title: S.of(context).payments,
-          //     onTapCard: () {
-          //       Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
-          //           arguments: profile?.id ?? -1);
-          //     }),
-          cardTap(
-              image: ImageAsset.PAYMENT,
-              title: S.of(context).financeSubscriptions,
-              onTapCard: () {
-                Navigator.of(context).pushNamed(
-                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
-                    arguments: profile?.id ?? -1);
-              }),
-          cardTap(
-              image: ImageAsset.PAYMENT,
-              title: S.of(context).cashOrders,
-              onTapCard: () {
-                ArgumentHiveHelper()
-                    .setCurrentStoreID(profile?.id.toString() ?? '-1');
-                Navigator.of(context).pushNamed(
-                  OrdersRoutes.ORDER_CASH_STORES,
-                );
-              }),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).colorScheme.error,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      S.current.dangerZone,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      S.current.DeletingYourAccountHint,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25))),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    oneAction: false,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.stateManager.deleteStore(
+                                          screenState, profile?.storeId ?? -1);
+                                    },
+                                    content: S.current
+                                        .areSureAboutDeletingYourAccount);
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            S.current.deleteAccount,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.error),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     ]));
@@ -290,29 +363,33 @@ class StoreProfileLoadedState extends States {
       onTap: onTapCard,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Card(
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  image,
-                  height: 100,
-                  width: 130,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+        child: SizedBox(
+          width: 175,
+          child: Card(
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    image,
+                    height: 100,
+                    width: 130,
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

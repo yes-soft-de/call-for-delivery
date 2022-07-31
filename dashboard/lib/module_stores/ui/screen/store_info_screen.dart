@@ -52,6 +52,7 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
     }
   }
 
+  StoreProfileStateManager get stateManager => widget.stateManager;
   void updateStore(UpdateStoreRequest request, bool haveImage) {
     widget.stateManager.updateStore(this, request, haveImage);
   }

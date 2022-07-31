@@ -1,16 +1,18 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
+import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/payment_cash_response/finished_payment.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:intl/intl.dart';
 
 class CaptainCashOrdersFinanceModel extends DataModel {
   late Total total;
   late List<Order> orders;
-  CaptainCashOrdersFinanceModel({
-    required this.total,
-    required this.orders,
-  });
+  late List<FinishedPayment> finishedPayment;
+  CaptainCashOrdersFinanceModel(
+      {required this.total,
+      required this.orders,
+      required this.finishedPayment});
   late CaptainCashOrdersFinanceModel _data;
   CaptainCashOrdersFinanceModel.withData(
       OrdersCashFinancesForCaptainResponse response) {
@@ -38,7 +40,8 @@ class CaptainCashOrdersFinanceModel extends DataModel {
           captainNote: element.captainNote,
           storeAmount: element.storeAmount ?? 0));
     });
-    _data = CaptainCashOrdersFinanceModel(total: _total, orders: _orders);
+    _data = CaptainCashOrdersFinanceModel(
+        total: _total, orders: _orders, finishedPayment: data?.payments ?? []);
   }
   CaptainCashOrdersFinanceModel get data => _data;
 }

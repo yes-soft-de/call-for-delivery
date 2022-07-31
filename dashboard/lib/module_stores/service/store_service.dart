@@ -99,6 +99,19 @@ class StoresService {
     return DataModel.empty();
   }
 
+  Future<DataModel> deleteStore(int storeID) async {
+    ActionResponse? actionResponse = await _storeManager.deleteStore(storeID);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> getStoreBalance(int id) async {
     StoreBalanceResponse? _storeResponse =
         await _storeManager.getStoreAccountBalance(id);

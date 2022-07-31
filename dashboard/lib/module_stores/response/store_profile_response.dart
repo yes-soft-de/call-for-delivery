@@ -33,6 +33,7 @@ class Data {
   String? bankName;
   String? bankAccountNumber;
   num? profitMargin;
+  String? storeId;
 
   Data(
       {this.id,
@@ -46,10 +47,12 @@ class Data {
       this.bankAccountNumber,
       this.bankName,
       this.employeeCount,
-      this.profitMargin});
+      this.profitMargin,
+      this.storeId});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
+    storeId = json['storeOwnerId'];
     storeOwnerName = json['storeOwnerName'];
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];

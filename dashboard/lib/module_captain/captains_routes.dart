@@ -8,4 +8,5 @@ class CaptainsRoutes {
   static const CAPTAIN_DUES = '/captains_dues';
   static const CAPTAIN_DUES_DETAILS = '/captains_dues_details';
   static const CAPTAIN_PLAN = '/captain_plan';
+  static const ASSIGN_TO_CAPTAIN = '/assign_to_captain';
 }

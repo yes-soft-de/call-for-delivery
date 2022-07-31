@@ -140,4 +140,21 @@ class StatusHelper {
         return 0;
     }
   }
+
+  static OrderStatusEnum getOrderStatusEnumFromIndex(num? status) {
+    if (status == 1) {
+      return OrderStatusEnum.WAITING;
+    } else if (status == 2) {
+      return OrderStatusEnum.GOT_CAPTAIN;
+    } else if (status == 3) {
+      return OrderStatusEnum.IN_STORE;
+    } else if (status == 5) {
+      return OrderStatusEnum.DELIVERING;
+    } else if (status == 6) {
+      return OrderStatusEnum.FINISHED;
+    } else if (status == 7) {
+      return OrderStatusEnum.CANCELLED;
+    }
+    return OrderStatusEnum.WAITING;
+  }
 }

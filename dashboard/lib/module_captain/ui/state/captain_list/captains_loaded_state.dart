@@ -60,6 +60,7 @@ class CaptainsLoadedState extends States {
             ? element.phoneNumber
             : element.captainName,
         image: element.image,
+        verificationStatus: element.verificationStatus,
       ));
     }
 

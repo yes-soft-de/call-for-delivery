@@ -42,7 +42,7 @@ class Data {
   String? status;
   String? rating;
   dynamic? bounce;
-  dynamic? roomID;
+  String? roomID;
   ImageUrl? image;
   String? phone;
   bool? isOnline;
@@ -54,6 +54,7 @@ class Data {
   ImageUrl? identity;
   CreateDate? createDate;
   FinancialSystemCaptainDetails? financialSystemCaptainDetails;
+  int? verificationStatus;
   Data(
       {this.id,
       this.captainID,
@@ -77,10 +78,12 @@ class Data {
       this.mechanicLicense,
       this.identity,
       this.createDate,
-      this.financialSystemCaptainDetails});
+      this.financialSystemCaptainDetails,
+      this.verificationStatus});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
+    verificationStatus = json['verificationStatus'];
     captainID = json['captainId'];
     captainName = json['captainName'];
     location =

@@ -31,18 +31,16 @@ class Data {
   int? activeCaptainsCount;
   int? inactiveCaptainsCount;
 
-
-  Data({
-    this.countOngoingOrders,
-    this.inactiveStoresCount,
-    this.activeStoresCount,
-    this.allOrdersCount,
-    this.activeCaptainsCount,
-    this.inactiveCaptainsCount,
-    this.pendingOrdersCount,
-    this.previousWeekDeliveredOrdersCount,
-    this.todayDeliveredOrdersCount
-  });
+  Data(
+      {this.countOngoingOrders,
+      this.inactiveStoresCount,
+      this.activeStoresCount,
+      this.allOrdersCount,
+      this.activeCaptainsCount,
+      this.inactiveCaptainsCount,
+      this.pendingOrdersCount,
+      this.previousWeekDeliveredOrdersCount,
+      this.todayDeliveredOrdersCount});
 
   Data.fromJson(dynamic json) {
     countOngoingOrders = json['ongoingOrdersCount'];
@@ -55,6 +53,5 @@ class Data {
     previousWeekDeliveredOrdersCount = json['previousWeekDeliveredOrdersCount'];
     todayDeliveredOrdersCount = json['todayDeliveredOrdersCount'];
     pendingOrdersCount = json['pendingOrdersCount'];
-
   }
 }
