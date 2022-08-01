@@ -182,6 +182,10 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               orderCost: element.orderCost.toStringAsFixed(1),
               orderNumber: element.id.toString(),
               branchName: element.branchName,
+              branchToDestination: element.storeBranchToClientDistance != null
+                  ? FixedNumber.getFixedNumber(
+                      element.storeBranchToClientDistance ?? 0)
+                  : null,
               distance: Visibility(
                 visible: screenState.currentLocation != null,
                 child: GeoDistanceText(
@@ -193,13 +197,14 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   },
                   destination: element.location ?? LatLng(0, 0),
                   origin: screenState.currentLocation ?? LatLng(0, 0),
-                  textStyle: Theme.of(context)
-                      .textTheme
-                      .button
-                      ?.copyWith(fontWeight: FontWeight.normal),
+                  textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
               credit: element.paymentMethod != 'cash',
+              storeName: element.storeName,
             ),
           ),
         ),

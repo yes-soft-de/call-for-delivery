@@ -100,9 +100,8 @@ class NearbyOrdersStateWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 75.0, bottom: 75),
-                  child: Lottie.network(
-                      'https://assets3.lottiefiles.com/packages/lf20_awhyxxqk.json',
-                      repeat: false),
+                  child:
+                      Lottie.asset(LottieAsset.WELCOME_CAPTAIN, repeat: false),
                 ),
                 Text(
                   S.current.hereOrdersWillBeShown,
@@ -169,9 +168,8 @@ class MyOrdersStateWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 75.0, bottom: 75),
-                  child: Lottie.network(
-                      'https://assets3.lottiefiles.com/packages/lf20_awhyxxqk.json',
-                      repeat: false),
+                  child:
+                      Lottie.asset(LottieAsset.WELCOME_CAPTAIN, repeat: false),
                 ),
                 Text(
                   S.current.hereAcceptedOrderShown,

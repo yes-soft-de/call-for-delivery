@@ -150,7 +150,7 @@ class OrderDetailsModel extends DataModel {
               pdfPreview: element?.pdf?.file,
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
-      storeBranchToClientDistance: element?.storeBranchToClientDistance ,
+      storeBranchToClientDistance: element?.storeBranchToClientDistance,
     );
     // _orders.distance = _distance(
     //     _orders,
@@ -186,7 +186,9 @@ class OrderDetailsModel extends DataModel {
           distance: 0,
           location: LatLng(element.location?.latitude?.toDouble() ?? 0,
               element.location?.longitude?.toDouble() ?? 0),
-          paymentMethod: element.payment ?? 'cash'));
+          paymentMethod: element.payment ?? 'cash',
+          storeBranchToClientDistance: element.storeBranchToClientDistance,
+          storeName: element.storeOwnerName ?? S.current.unknown));
     });
     return orders;
   }

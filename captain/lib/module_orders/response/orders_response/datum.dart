@@ -24,6 +24,8 @@ class Datum {
   int? isHide;
   bool? orderIsMain;
   List<SubOrder>? suborder;
+  num? storeBranchToClientDistance;
+  String? storeOwnerName;
   Datum(
       {this.id,
       this.state,
@@ -43,13 +45,17 @@ class Datum {
       this.location,
       this.isHide,
       this.orderIsMain,
-      this.suborder});
+      this.suborder,
+      this.storeBranchToClientDistance,
+      this.storeOwnerName});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['id'] as int?,
       state: json['state'] as String?,
+      storeOwnerName: json['storeOwnerName'] as String?,
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
+      storeBranchToClientDistance: json['storeBranchToClientDistance'] as num?,
       orderType: json['orderType'] as int?,
       note: json['note'] as String?,
       deliveryDate: json['deliveryDate'] == null

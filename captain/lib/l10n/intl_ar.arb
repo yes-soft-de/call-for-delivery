@@ -724,5 +724,8 @@
     "optional": "اختياري",
     "welcomeCaptain": "أهلا بعودتك يا كابتن !",
     "hereOrdersWillBeShown": "هنا ستظهر الطلبات الجديدة ",
-    "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة"
+    "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة",
+    "currentLocation":"موقعك الحالي",
+    "receivingLocation":"موقع الاستلام",
+    "deliveryDestination":"موقع التسليم"
 }

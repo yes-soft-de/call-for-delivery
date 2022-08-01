@@ -310,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialDuesCycle":
             MessageLookupByLibrary.simpleMessage("الدورة الحالية"),
+        "currentLocation": MessageLookupByLibrary.simpleMessage("موقعك الحالي"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "currentRating": MessageLookupByLibrary.simpleMessage("المتجر قيمك ب"),
         "customer": MessageLookupByLibrary.simpleMessage("الزبون"),
@@ -342,6 +343,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("جار توصيل الطلبية للعميل"),
+        "deliveryDestination":
+            MessageLookupByLibrary.simpleMessage("موقع التسليم"),
         "destination": MessageLookupByLibrary.simpleMessage("المسافة"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -844,6 +847,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سبب طلب الدعم"),
         "receipt": MessageLookupByLibrary.simpleMessage("المستلم"),
         "receiptPoint": MessageLookupByLibrary.simpleMessage("موقع الاستلام"),
+        "receivingLocation":
+            MessageLookupByLibrary.simpleMessage("موقع الاستلام"),
         "recipientName": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),

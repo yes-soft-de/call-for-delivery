@@ -722,6 +722,8 @@
     "optional": "Optional",
     "welcomeCaptain": "Welcome Captain !",
     "hereOrdersWillBeShown": "Here orders will be shown",
-    "hereAcceptedOrderShown":"Here accepted orders will be shown"
-
+    "hereAcceptedOrderShown": "Here accepted orders will be shown",
+    "currentLocation": "Current location",
+    "receivingLocation": "Receiving location",
+    "deliveryDestination": "Delivery location"
 }

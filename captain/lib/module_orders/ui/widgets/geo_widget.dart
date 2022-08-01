@@ -68,12 +68,10 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: loading == false,
-      replacement: Text(
-        S.current.calculating + '....',
-        style: const TextStyle(color: Colors.white),
-      ),
+      replacement: const SizedBox(
+          width: 10, height: 10, child: CircularProgressIndicator()),
       child: Text(
-        S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
+        (distance ?? '') + ' ${S.current.km}',
         style: widget.textStyle ?? const TextStyle(color: Colors.white),
       ),
     );

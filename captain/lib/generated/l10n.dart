@@ -7279,6 +7279,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Current location`
+  String get currentLocation {
+    return Intl.message(
+      'Current location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receiving location`
+  String get receivingLocation {
+    return Intl.message(
+      'Receiving location',
+      name: 'receivingLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery location`
+  String get deliveryDestination {
+    return Intl.message(
+      'Delivery location',
+      name: 'deliveryDestination',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -316,6 +316,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentFinancialDuesCycle":
             MessageLookupByLibrary.simpleMessage("Current cycle"),
+        "currentLocation":
+            MessageLookupByLibrary.simpleMessage("Current location"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "currentRating": MessageLookupByLibrary.simpleMessage(
             "Your current rating by this store is"),
@@ -348,6 +350,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("On My way to client"),
+        "deliveryDestination":
+            MessageLookupByLibrary.simpleMessage("Delivery location"),
         "destination": MessageLookupByLibrary.simpleMessage("Destination"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -853,6 +857,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "receipt": MessageLookupByLibrary.simpleMessage("Receipt"),
         "receiptPoint":
             MessageLookupByLibrary.simpleMessage("Receipt Location"),
+        "receivingLocation":
+            MessageLookupByLibrary.simpleMessage("Receiving location"),
         "recipientName": MessageLookupByLibrary.simpleMessage("Recipient Name"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),

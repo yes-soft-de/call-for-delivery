@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/home_widgets/icon_info_button.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -179,14 +180,17 @@ class NearbyOrdersCard extends StatelessWidget {
   final String deliveryDate;
   final String orderCost;
   final Widget distance;
+  final String? branchToDestination;
   final String? note;
   final String branchName;
   final bool credit;
   final bool orderIsMain;
   final String? primaryTitle;
   final Color? background;
+  final String storeName;
   const NearbyOrdersCard(
       {required this.orderNumber,
+      this.branchToDestination,
       required this.distance,
       required this.deliveryDate,
       required this.orderCost,
@@ -195,7 +199,8 @@ class NearbyOrdersCard extends StatelessWidget {
       required this.credit,
       this.orderIsMain = false,
       this.background,
-      this.primaryTitle});
+      this.primaryTitle,
+      required this.storeName});
 
   @override
   Widget build(BuildContext context) {
@@ -276,29 +281,95 @@ class NearbyOrdersCard extends StatelessWidget {
                 ),
               ],
             ),
-            // order number & order status
+            // order number & order date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
                     title: S.current.orderNumber, subtitle: orderNumber),
                 verticalTile(context,
+                    title: S.current.deliverDate, subtitle: deliveryDate),
+              ],
+            ),
+            // divider
+            divider(context),
+            // store name & branch name
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                verticalTile(context,
+                    title: S.current.storeName, subtitle: storeName),
+                verticalTile(context,
                     title: S.current.branch, subtitle: branchName),
               ],
             ),
             // divider
             divider(context),
-            // order date & create date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.deliverDate, subtitle: deliveryDate),
-                verticalTileForDistance(context,
-                    title: S.current.destination, subtitle: distance),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.carSide,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.currentLocation,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  distance,
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.box,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.receivingLocation,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    (branchToDestination ?? S.current.unknown) +
+                        ' ${S.current.km}',
+                    style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.home,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.deliveryDestination,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            // divider
             divider(context),
             // order cost
             Row(
@@ -367,6 +438,17 @@ class NearbyOrdersCard extends StatelessWidget {
       indent: 16,
       endIndent: 16,
       color: dividerColor,
+    );
+  }
+
+  Widget dotedDivider(context) {
+    Color dividerColor = Theme.of(context).disabledColor.withOpacity(0.0);
+    return DottedLine(
+      lineLength: 8,
+      dashRadius: 25,
+      dashLength: 3,
+      dashGapLength: 2,
+      dashColor: dividerColor,
     );
   }
 }
