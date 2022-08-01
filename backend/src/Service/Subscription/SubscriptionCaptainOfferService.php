@@ -62,4 +62,9 @@ class SubscriptionCaptainOfferService
         
          return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribe);
     }
+
+    public function deleteCaptainOfferSubscriptionById(int $id): ?SubscriptionCaptainOfferEntity
+    {
+        return $this->subscriptionCaptainOfferManager->deleteCaptainOfferSubscriptionById($id);
+    }
 }

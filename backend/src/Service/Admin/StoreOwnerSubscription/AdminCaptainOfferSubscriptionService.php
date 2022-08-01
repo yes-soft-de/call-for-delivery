@@ -10,23 +10,29 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminCaptainOfferSubscriptionManager;
 use App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest;
+use App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest;
 use App\Response\Admin\StoreOwnerSubscription\AdminCaptainOfferSubscriptionCreateResponse;
+use App\Response\Admin\StoreOwnerSubscription\CaptainOfferSubscriptionDeleteByAdminResponse;
 use App\Response\Admin\StoreOwnerSubscription\SubscriptionStateGetForAdminResponse;
 use App\Service\Admin\CaptainOffer\AdminCaptainOfferService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
+use App\Service\Eraser\Subscription\CaptainOfferSubscriptionEraserService;
 
 class AdminCaptainOfferSubscriptionService
 {
     private AutoMapping $autoMapping;
     private AdminStoreOwnerService $adminStoreOwnerService;
     private AdminCaptainOfferService $adminCaptainOfferService;
+    private CaptainOfferSubscriptionEraserService $captainOfferSubscriptionEraserService;
     private AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminCaptainOfferService $adminCaptainOfferService, AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager)
+    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminCaptainOfferService $adminCaptainOfferService,
+                                CaptainOfferSubscriptionEraserService $captainOfferSubscriptionEraserService, AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
         $this->adminCaptainOfferService = $adminCaptainOfferService;
+        $this->captainOfferSubscriptionEraserService = $captainOfferSubscriptionEraserService;
         $this->adminCaptainOfferSubscriptionManager = $adminCaptainOfferSubscriptionManager;
     }
 
@@ -83,5 +89,10 @@ class AdminCaptainOfferSubscriptionService
         }
 
         return $this->autoMapping->map("array", SubscriptionStateGetForAdminResponse::class, $subscription);
+    }
+
+    public function deleteCaptainOfferSubscriptionByAdmin(CaptainOfferSubscriptionDeleteByAdminRequest $request): string|int|CaptainOfferSubscriptionDeleteByAdminResponse
+    {
+        return $this->captainOfferSubscriptionEraserService->deleteCaptainOfferSubscriptionByAdmin($request);
     }
 }

@@ -8,6 +8,7 @@ use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -1211,5 +1212,11 @@ class OrderService
         }
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
-    }  
+    }
+
+    public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
+    {
+        return $this->orderManager->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
+            $specificDateTime);
+    }
 }

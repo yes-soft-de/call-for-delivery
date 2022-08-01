@@ -89,6 +89,8 @@ class BaseController extends AbstractController
     const NOT_POSSIBLE = ["This subscription was previously extended, cannot be extended again", "9305"];
     const CAN_NOT_ACCEPTED_ORDER = ["The cars remaining is finished", "9306"];
     const ERROR_THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION = ["there are payment related with subscription", "9307"];
+    const SUBSCRIPTION_NOT_FOUND = ["subscription is not exist", "9308"];
+    const OLD_STORE_SUBSCRIPTION = ["subscription is an old one", "9309"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
@@ -135,6 +137,13 @@ class BaseController extends AbstractController
     // renew database
     const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
     const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
+
+    // captain offer subscription
+    const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = ["inactive captain offer subscription", "9370"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED = ["expired captain offer subscription", "9371"];
+    const CAPTAIN_OFFER_CARS_HAVE_BEING_USED = ["captain offer subscription is being used", "9372"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST = ["captain offer subscription is not exist", "9373"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9374"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

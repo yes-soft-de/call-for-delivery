@@ -10,6 +10,7 @@ use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest;
+use App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest;
 use App\Service\Admin\StoreOwnerSubscription\AdminCaptainOfferSubscriptionService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -113,5 +114,90 @@ class AdminCaptainOfferSubscriptionController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * Admin: delete captain offer subscription by admin depending on store subscription id.
+     * @Route("deletesubscription", name="deleteCaptainOfferSubscriptionByAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription Captain Offer")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="delete captain offer subscription by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="storeSubscriptionId"),
+     *          @OA\Property(type="integer", property="deleteEvenItIsBeingUsed", description="1 refers to YES, 0 refers to NO")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns new captain offer subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminCaptainOfferSubscriptionCreateResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteCaptainOfferSubscriptionByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainOfferSubscriptionDeleteByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainOfferSubscriptionService->deleteCaptainOfferSubscriptionByAdmin($request);
+
+        if ($result === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE);
+        }
+
+        if ($result === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED);
+        }
+
+        if ($result === SubscriptionCaptainOffer::CAPTAIN_OFFER_CARS_HAVE_BEING_USED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_OFFER_CARS_HAVE_BEING_USED);
+        }
+
+        if ($result === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST);
+        }
+
+        if ($result === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_NOT_FOUND);
+        }
+
+        if ($result === SubscriptionConstant::OLD_STORE_SUBSCRIPTION) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::OLD_STORE_SUBSCRIPTION);
+        }
+
+        if ($result === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM);
+        }
+
+        return $this->response($result, self::DELETE);
     }
 }

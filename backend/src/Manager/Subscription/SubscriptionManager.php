@@ -307,4 +307,18 @@ class SubscriptionManager
     {
        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
     }
+
+    public function updateSubscriptionByRemovingCaptainOfferSubscription(int $subscriptionId): ?SubscriptionEntity
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id'=>$subscriptionId]);
+
+        if ($subscriptionEntity !== null) {
+            $subscriptionEntity->setSubscriptionCaptainOffer(null);
+            $subscriptionEntity->setCaptainOfferFirstTime(null);
+
+            $this->entityManager->flush();
+        }
+
+        return $subscriptionEntity;
+    }
 }

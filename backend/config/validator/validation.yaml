@@ -679,3 +679,10 @@ App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest:
             - NotBlank: ~
         captainOffer:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest:
+    properties:
+        storeSubscriptionId:
+            - NotBlank: ~
+        deleteEvenItIsBeingUsed:
+            - NotNull: ~

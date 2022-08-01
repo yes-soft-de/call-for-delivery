@@ -31,4 +31,14 @@ class SubscriptionDetailsService
 
         return $this->autoMapping->map(SubscriptionDetailsEntity::class, SubscriptionDetailsResponse::class, $subscriptionResult);
     }
+
+    public function getSubscriptionDetailsEntityByLastSubscriptionId(int $subscriptionId): array
+    {
+        return $this->subscriptionDetailsManager->getSubscriptionDetailsEntityByLastSubscriptionId($subscriptionId);
+    }
+
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
+    }
 }
