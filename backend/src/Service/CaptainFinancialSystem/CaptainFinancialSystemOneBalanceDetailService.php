@@ -32,7 +32,7 @@ class CaptainFinancialSystemOneBalanceDetailService
         $detailsOrders = $this->captainFinancialSystemOneBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
-           if($detailOrder['kilometer'] > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+           if($detailOrder['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $countOrdersMaxFromNineteen = $countOrdersMaxFromNineteen + 1;
            }
 
@@ -81,7 +81,7 @@ class CaptainFinancialSystemOneBalanceDetailService
         $detailsOrders = $this->captainFinancialSystemOneBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
-           if($detailOrder['kilometer'] > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+           if($detailOrder['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $countOrdersMaxFromNineteen = $countOrdersMaxFromNineteen + 1;
            }
 
