@@ -7309,6 +7309,36 @@ class S {
       args: [],
     );
   }
+
+  /// `There is far away orders , if you want to view them press the button at the bottom`
+  String get thereIsFarawayOrder {
+    return Intl.message(
+      'There is far away orders , if you want to view them press the button at the bottom',
+      name: 'thereIsFarawayOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show`
+  String get show {
+    return Intl.message(
+      'Show',
+      name: 'show',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Un Show`
+  String get unShow {
+    return Intl.message(
+      'Un Show',
+      name: 'unShow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

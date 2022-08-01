@@ -69,7 +69,7 @@ class OrderModel extends DataModel {
           location: element.location != null
               ? LatLng(element.location?.lat, element.location?.lon)
               : null,
-          distance: -1,
+          distance: 0,
           paymentMethod: element.payment ?? 'cash',
           isHide: element.isHide ?? -1,
           orderIsMain: element.orderIsMain ?? false,

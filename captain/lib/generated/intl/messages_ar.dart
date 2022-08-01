@@ -932,6 +932,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "سيتم إرسال التقرير بعد 15 ثانية الرجاء الانتظار أو التراجع عن خيارك"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
+        "show": MessageLookupByLibrary.simpleMessage("إظهار"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "showingCart": MessageLookupByLibrary.simpleMessage("مشاهدة السلة"),
         "signOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -1012,6 +1013,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "thereIsFarawayOrder": MessageLookupByLibrary.simpleMessage(
+            "هناك طلبات بعيدة متوفرة في حال رغبتك في إظهارها اضغط على زر إظهار"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
@@ -1038,6 +1041,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBonus": MessageLookupByLibrary.simpleMessage("الراتب"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+        "unShow": MessageLookupByLibrary.simpleMessage("عدم إظهار"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),

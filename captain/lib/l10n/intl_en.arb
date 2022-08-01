@@ -725,5 +725,8 @@
     "hereAcceptedOrderShown": "Here accepted orders will be shown",
     "currentLocation": "Current location",
     "receivingLocation": "Receiving location",
-    "deliveryDestination": "Delivery location"
+    "deliveryDestination": "Delivery location",
+    "thereIsFarawayOrder": "There is far away orders , if you want to view them press the button at the bottom",
+    "show": "Show",
+    "unShow":"Un Show"
 }

@@ -6,6 +6,7 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -153,12 +154,73 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     var data = screenState.currentLocation != null
         ? _sortOrder(ordersData.data)
         : ordersData.data;
+    List<Widget> farOrders = [];
     for (var element in data) {
       if (searchNearby.text != '' &&
           element.id.toString().contains(searchNearby.text) == false) {
         continue;
       }
+      if (element.distance.toDouble() > 9.9) {
+        farOrders.add(Padding(
+          key: ValueKey(element.id),
+          padding: const EdgeInsets.all(8.0),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(25),
+              onTap: () {
+                if (element.orderIsMain && element.subOrders.isNotEmpty) {
+                  Navigator.of(context).pushNamed(
+                      OrdersRoutes.SUB_ORDERS_SCREEN,
+                      arguments: element.id);
+                } else {
+                  Navigator.of(context).pushNamed(
+                      OrdersRoutes.ORDER_STATUS_SCREEN,
+                      arguments: element.id.toString());
+                }
+              },
+              child: NearbyOrdersCard(
+                background: element.orderIsMain
+                    ? Colors.red[700]
+                    : Theme.of(context).colorScheme.secondary,
+                orderIsMain: element.orderIsMain,
+                deliveryDate: element.deliveryDate,
+                note: element.note,
+                orderCost: element.orderCost.toStringAsFixed(1),
+                orderNumber: element.id.toString(),
+                branchName: element.branchName,
+                branchToDestination: element.storeBranchToClientDistance != null
+                    ? FixedNumber.getFixedNumber(
+                        element.storeBranchToClientDistance ?? 0)
+                    : null,
+                distance: Visibility(
+                  visible: screenState.currentLocation != null,
+                  child: GeoDistanceText(
+                    destance: (s) {
+                      s?.replaceAll(',', '');
+                      if (num.tryParse(s ?? '') != null) {
+                        element.distance = num.tryParse(s ?? '') ?? 0;
+                        screenState.refresh();
+                      }
+                    },
+                    destination: element.location ?? LatLng(0, 0),
+                    origin: screenState.currentLocation ?? LatLng(0, 0),
+                    textStyle: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+                credit: element.paymentMethod != 'cash',
+                storeName: element.storeName,
+              ),
+            ),
+          ),
+        ));
+        continue;
+      }
       uiList.add(Padding(
+        key: ValueKey(element.id),
         padding: const EdgeInsets.all(8.0),
         child: Material(
           color: Colors.transparent,
@@ -190,7 +252,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 visible: screenState.currentLocation != null,
                 child: GeoDistanceText(
                   destance: (s) {
+                    s = s?.replaceAll(',', '');
                     if (num.tryParse(s ?? '') != null) {
+                      print(s);
                       element.distance = num.tryParse(s ?? '') ?? 0;
                       screenState.refresh();
                     }
@@ -209,6 +273,87 @@ class CaptainOrdersListStateOrdersLoaded extends States {
           ),
         ),
       ));
+    }
+    if (farOrders.isNotEmpty) {
+      uiList.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(
+                  FontAwesomeIcons.info,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                ),
+                title: Text(
+                  S.current.thereIsFarawayOrder,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: const StadiumBorder(),
+                              primary: screenState.farOrders == true
+                                  ? Colors.green.shade300
+                                  : Theme.of(context).colorScheme.secondaryContainer,
+                            ),
+                            onPressed: () {
+                              screenState.farOrders = true;
+                              screenState.refresh();
+                            },
+                            child: Text(
+                              S.current.show,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            )),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: const StadiumBorder(),
+                              primary: screenState.farOrders == false
+                                  ? Colors.red.shade300
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
+                            ),
+                            onPressed: () {
+                              screenState.farOrders = false;
+                              screenState.refresh();
+                            },
+                            child: Text(
+                              S.current.unShow,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            )),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+        ),
+      ));
+      if (screenState.farOrders) {
+        uiList.addAll(farOrders);
+      }
     }
     uiList.add(Container(
       height: 75,
@@ -229,7 +374,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         try {
           var pos1 = a.distance;
           var pos2 = b.distance;
-          return pos1.compareTo(pos2);
+          return pos2.compareTo(pos1);
         } catch (e) {
           return 1;
         }

@@ -94,6 +94,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     widget._stateManager.updateProfileStatus(this, isOnline);
   }
 
+  bool farOrders = false;
   @override
   void initState() {
     super.initState();

@@ -942,6 +942,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sending report within 15 seconds"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "show": MessageLookupByLibrary.simpleMessage("Show"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
         "showingCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "signOut": MessageLookupByLibrary.simpleMessage("Sign out"),
@@ -1019,6 +1020,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "thereIsFarawayOrder": MessageLookupByLibrary.simpleMessage(
+            "There is far away orders , if you want to view them press the button at the bottom"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(
@@ -1045,6 +1048,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
+        "unShow": MessageLookupByLibrary.simpleMessage("Un Show"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),

@@ -727,5 +727,8 @@
     "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة",
     "currentLocation":"موقعك الحالي",
     "receivingLocation":"موقع الاستلام",
-    "deliveryDestination":"موقع التسليم"
+    "deliveryDestination":"موقع التسليم",
+    "thereIsFarawayOrder":"هناك طلبات بعيدة متوفرة في حال رغبتك في إظهارها اضغط على زر إظهار",
+    "show":"إظهار",
+    "unShow":"عدم إظهار"
 }
