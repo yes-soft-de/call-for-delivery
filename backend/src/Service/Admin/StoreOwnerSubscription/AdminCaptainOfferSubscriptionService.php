@@ -7,6 +7,7 @@ use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminCaptainOfferSubscriptionManager;
 use App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest;
@@ -71,7 +72,7 @@ class AdminCaptainOfferSubscriptionService
         return $this->autoMapping->map(SubscriptionCaptainOfferEntity::class, AdminCaptainOfferSubscriptionCreateResponse::class, $captainOffer);
     }
 
-    public function isThereSubscription($storeOwnerProfileId): SubscriptionStateGetForAdminResponse
+    public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerProfileId): SubscriptionStateGetForAdminResponse
     {
         $subscription = $this->adminCaptainOfferSubscriptionManager->isThereSubscription($storeOwnerProfileId);
 

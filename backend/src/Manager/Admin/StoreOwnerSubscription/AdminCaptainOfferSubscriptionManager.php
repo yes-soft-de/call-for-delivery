@@ -4,6 +4,7 @@ namespace App\Manager\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Repository\SubscriptionCaptainOfferEntityRepository;
@@ -45,7 +46,7 @@ class AdminCaptainOfferSubscriptionManager
         return $subscriptionCaptainOfferEntity;
     }
 
-    public function isThereSubscription($storeOwnerId): ?array
+    public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerId): ?array
     {
         return $this->adminStoreSubscriptionManager->isThereSubscription($storeOwnerId);
     }
