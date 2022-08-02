@@ -64,7 +64,7 @@ class CaptainEraserService
         }
 
         // password is correct, check if there are cash orders payments for the captain
-        $canDeleteCaptainResult = $this->canDeleteCaptainAccountAndProfileByAdminService->checkIfCaptainAccountAndProfileCanBeDeletedByCaptainId($request->getCaptainId());
+        $canDeleteCaptainResult = $this->canDeleteCaptainAccountAndProfileByAdminService->checkIfCaptainAccountAndProfileCanBeDeletedByCaptainId($request->getId());
 
         if ($canDeleteCaptainResult !== EraserResultConstant::CAPTAIN_ACCOUNT_AND_PROFILE_CAN_BE_DELETED) {
             return $canDeleteCaptainResult;
