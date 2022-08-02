@@ -35,7 +35,7 @@ class CaptainOfferSubscriptionEraserService
     {
         try {
             // first check if can delete captain offer subscription
-            $grantResult = $this->captainOfferSubscriptionGrantService->canDeleteCaptainOfferSubscription($request);
+            $grantResult = $this->captainOfferSubscriptionGrantService->canDeleteCaptainOfferSubscription($request);//dd($grantResult);
 
             if ($grantResult[0] !== SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_CAN_BE_DELETED) {
                 return $grantResult[1];
@@ -54,7 +54,7 @@ class CaptainOfferSubscriptionEraserService
 
                 $subscriptionDetailsUpdateResult = $this->subscriptionDetailsService->updateRemainingCars($grantResult[2]->getLastSubscription()->getId(), $remainingCars);
 
-                if ($subscriptionDetailsUpdateResult !== null) {
+                if ($subscriptionDetailsUpdateResult) {
                     $subscriptionCaptainOfferResult = $this->deleteCaptainOfferSubscription($grantResult[2]->getLastSubscription());
                 }
 
@@ -62,7 +62,7 @@ class CaptainOfferSubscriptionEraserService
                 $subscriptionCaptainOfferResult = $this->deleteCaptainOfferSubscription($grantResult[2]->getLastSubscription());
             }
 
-            if ($subscriptionCaptainOfferResult === null) {
+            if (! $subscriptionCaptainOfferResult) {
                 return SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM;
             }
 
@@ -84,10 +84,10 @@ class CaptainOfferSubscriptionEraserService
         $subscriptionUpdateResult = $this->subscriptionService->updateSubscriptionByRemovingCaptainOfferSubscription($subscriptionEntity->getId());
 
         // B - Delete captain offer subscription record
-        if ($subscriptionUpdateResult !== null) {
-            return $this->subscriptionCaptainOfferService->deleteCaptainOfferSubscriptionById($subscriptionCaptainOfferId);
+        if (! $subscriptionUpdateResult) {
+            return $subscriptionUpdateResult;
         }
 
-        return $subscriptionUpdateResult;
+        return $this->subscriptionCaptainOfferService->deleteCaptainOfferSubscriptionById($subscriptionCaptainOfferId);
     }
 }

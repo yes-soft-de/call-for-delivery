@@ -42,7 +42,7 @@ class AdminCaptainOfferSubscriptionService
         // get store owner profile entity
         $storeOwnerProfileEntity = $this->adminStoreOwnerService->getStoreOwnerProfileEntityByStoreOwnerId($request->getStoreOwner());
 
-        if ($storeOwnerProfileEntity === null) {
+        if (! $storeOwnerProfileEntity) {
             return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
         }
 
@@ -51,7 +51,7 @@ class AdminCaptainOfferSubscriptionService
         // get captain offer entity
         $captainOfferEntity = $this->adminCaptainOfferService->getCaptainOfferEntityByIdForAdmin($request->getCaptainOffer());
 
-        if ($captainOfferEntity === null) {
+        if (! $captainOfferEntity) {
             return CaptainOfferConstant::CAPTAIN_OFFER_NOT_EXIST;
         }
 

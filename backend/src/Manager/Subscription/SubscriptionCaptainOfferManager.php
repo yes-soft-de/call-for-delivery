@@ -78,10 +78,7 @@ class SubscriptionCaptainOfferManager
     {
         $captainOfferSubscriptionEntity = $this->subscriptionCaptainOfferEntityRepository->findOneBy(['id'=>$id]);
 
-        if ($captainOfferSubscriptionEntity !== null) {
-            $captainOfferSubscriptionEntity->setStoreOwner(null);
-            $captainOfferSubscriptionEntity->setCaptainOffer(null);
-
+        if ($captainOfferSubscriptionEntity) {
             $subscriptionsArray = $captainOfferSubscriptionEntity->getSubscriptionEntitie()->toArray();
 
             if (count($subscriptionsArray)) {

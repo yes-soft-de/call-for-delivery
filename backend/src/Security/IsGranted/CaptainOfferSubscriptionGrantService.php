@@ -36,7 +36,7 @@ class CaptainOfferSubscriptionGrantService
         if (count($subscriptionDetailsArrayResult) > 0) {
             // The store subscription is a current one
             // A - Check if captain offer subscription is exist
-            if ($subscriptionDetailsArrayResult[0]->getLastSubscription()->getSubscriptionCaptainOffer() !== null) {
+            if ($subscriptionDetailsArrayResult[0]->getLastSubscription()->getSubscriptionCaptainOffer()) {
                 // B - Check if captain offer subscription status is Active
                 if ($subscriptionDetailsArrayResult[0]->getLastSubscription()->getSubscriptionCaptainOffer()->getStatus() === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_INACTIVE) {
                     // captain offer subscription status is not Active, we can not delete captain offer
@@ -74,7 +74,7 @@ class CaptainOfferSubscriptionGrantService
         $subscriptionEntity = $this->subscriptionService->getSubscriptionEntityById($request->getStoreSubscriptionId());
 
         // A - Check if there is a subscription
-        if ($subscriptionEntity === null) {
+        if (! $subscriptionEntity) {
             return [SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_CAN_NOT_BE_DELETED,
                 SubscriptionConstant::SUBSCRIPTION_NOT_FOUND];
 
