@@ -69,6 +69,7 @@ use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class OrderService
 {
@@ -988,9 +989,17 @@ class OrderService
         }  
     }
     
-    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): ?OrderUpdatePaidToProviderResponse
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): OrderUpdatePaidToProviderResponse|null|string
     {
+        //Is the captain allowed to edit?
+        $captainAllowedEdit = $this->captainAmountFromOrderCashService->getEditingByCaptain($orderId);
+       
+        if($captainAllowedEdit === false) {
+            return OrderAmountCashConstant::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING;
+        }
+
         $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
+       
         if($order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH) {
             //if captain paid to provider
             if($order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {

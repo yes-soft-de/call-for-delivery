@@ -141,6 +141,9 @@ class BaseController extends AbstractController
     // geo distance
     const ERROR_BAD_REQUEST = ["bad request", "9370"];
     const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
+
+    //
+    const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

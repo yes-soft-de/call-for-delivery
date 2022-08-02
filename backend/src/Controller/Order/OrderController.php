@@ -36,7 +36,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
-
+use App\Constant\Order\OrderAmountCashConstant;
 
 /**
  * Create and fetch order.
@@ -1364,12 +1364,28 @@ class OrderController extends BaseController
      *       )
      * )
      * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9380"),
+     *          @OA\Property(type="string", property="msg", description="You can not edit, because you paid the admin Error."),
+     *      )
+     * )
+     *
+     *  
      * @Security(name="Bearer")
      */
     public function orderUpdatePaidToProvider(int $orderId,int $paidToProvider): JsonResponse
     {
         $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
-      
+       
+        if($response === OrderAmountCashConstant::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG);
+        }
+
         return $this->response($response, self::UPDATE);
     }
 

@@ -67,4 +67,16 @@ class CaptainAmountFromOrderCashService
     {
         return $this->captainAmountFromOrderCashManager->getCashOrdersPaymentsByCaptainId($captainId);
     }
+
+    // Is the captain allowed to edit?
+    public function getEditingByCaptain(int $orderId): ?bool
+    {
+        $captainAmountFromOrderCash = $this->captainAmountFromOrderCashManager->getCaptainAmountFromOrderCashByOrderId($orderId);
+     
+        if($captainAmountFromOrderCash === null) {
+            return true;
+        }
+
+        return $captainAmountFromOrderCash->getEditingByCaptain();
+    }
 }
