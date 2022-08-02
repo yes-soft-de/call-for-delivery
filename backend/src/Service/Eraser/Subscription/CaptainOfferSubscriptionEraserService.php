@@ -35,7 +35,7 @@ class CaptainOfferSubscriptionEraserService
     {
         try {
             // first check if can delete captain offer subscription
-            $grantResult = $this->captainOfferSubscriptionGrantService->canDeleteCaptainOfferSubscription($request);//dd($grantResult);
+            $grantResult = $this->captainOfferSubscriptionGrantService->canDeleteCaptainOfferSubscription($request);
 
             if ($grantResult[0] !== SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_CAN_BE_DELETED) {
                 return $grantResult[1];
