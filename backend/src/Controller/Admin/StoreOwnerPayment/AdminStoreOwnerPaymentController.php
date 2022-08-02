@@ -237,7 +237,7 @@ class AdminStoreOwnerPaymentController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *           @OA\Items(
-     *             ref=@Model(type="App\Response\Admin\AdminStorePaymentsBySubscriptionIdResponse"),
+     *             ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStorePaymentsBySubscriptionIdResponse"),
      *          )
      *       )
      *    )

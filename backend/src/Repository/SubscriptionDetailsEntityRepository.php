@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Constant\Subscription\SubscriptionConstant;
 
@@ -36,5 +38,23 @@ class SubscriptionDetailsEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getSubscriptionDetailsEntityByLastSubscriptionId(int $subscriptionId): array
+    {
+        return $this->createQueryBuilder('subscriptionDetailsEntity')
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.id = subscriptionDetailsEntity.lastSubscription'
+            )
+
+            ->andWhere('subscriptionEntity.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->getQuery()
+            ->getResult();
     }
 }

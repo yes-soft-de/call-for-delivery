@@ -649,5 +649,15 @@ class SubscriptionService
        
         return $this->subscriptionForOneDay($store->getStoreOwnerId());
     }
+
+    public function getSubscriptionEntityById(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->getSubscriptionById($subscriptionId);
+    }
+
+    public function updateSubscriptionByRemovingCaptainOfferSubscription(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->updateSubscriptionByRemovingCaptainOfferSubscription($subscriptionId);
+    }
 }
  

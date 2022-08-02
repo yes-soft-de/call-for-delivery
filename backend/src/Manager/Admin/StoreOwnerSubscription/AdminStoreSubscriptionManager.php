@@ -2,6 +2,7 @@
 
 namespace App\Manager\Admin\StoreOwnerSubscription;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Repository\SubscriptionHistoryEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -85,5 +86,10 @@ class AdminStoreSubscriptionManager
         }
 
         return $subscriptionEntity;
+    }
+
+    public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerProfileId): ?array
+    {
+        return $this->adminSubscriptionDetailsManager->getSubscriptionCurrentActive($storeOwnerProfileId);
     }
 }

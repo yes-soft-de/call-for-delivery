@@ -1491,4 +1491,35 @@ class OrderEntityRepository extends ServiceEntityRepository
            ->getQuery()
            ->getSingleScalarResult();
    }
+
+   public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
+   {
+       return $this->createQueryBuilder('orderEntity')
+           ->select('COUNT(orderEntity.id)')
+
+           ->andWhere('orderEntity.storeOwner = :storeOwnerProfile')
+           ->setParameter('storeOwnerProfile', $storeOwnerProfileEntity)
+
+           ->andWhere('orderEntity.orderType = :normalOrderType')
+           ->setParameter('normalOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
+
+           ->leftJoin(
+               OrderTimeLineEntity::class,
+               'orderTimeLineEntity',
+               Join::WITH,
+               'orderTimeLineEntity.orderId = orderEntity.id'
+           )
+
+           ->andWhere('orderTimeLineEntity.orderState = :onWayToPickOrderState')
+           ->setParameter('onWayToPickOrderState', OrderStateConstant::ORDER_STATE_ON_WAY)
+
+           ->andWhere('orderTimeLineEntity.createdAt > :specificDateTime')
+           ->setParameter('specificDateTime', $specificDateTime)
+
+           ->andWhere('orderEntity.captainId IS NOT NULL')
+           ->groupBy('orderEntity.captainId')
+
+           ->getQuery()
+           ->getSingleColumnResult();
+   }
 }

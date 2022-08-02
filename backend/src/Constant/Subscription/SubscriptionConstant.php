@@ -89,4 +89,6 @@ final class SubscriptionConstant
     const SUBSCRIBE_CURRENT_BOOLEAN = 1;
 
     const SUBSCRIBE_NOT_CURRENT_BOOLEAN = 0;
+
+    const OLD_STORE_SUBSCRIPTION = 30;
 }

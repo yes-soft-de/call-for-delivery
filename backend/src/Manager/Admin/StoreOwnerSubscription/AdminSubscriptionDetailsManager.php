@@ -2,6 +2,7 @@
 
 namespace App\Manager\Admin\StoreOwnerSubscription;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,5 +31,10 @@ class AdminSubscriptionDetailsManager
             $this->entityManager->flush();
         }
         return $subscriptionDetailsEntity;
+    }
+
+    public function getSubscriptionCurrentActive(StoreOwnerProfileEntity $storeOwner): ?array
+    {
+        return $this->subscriptionDetailsEntityRepository->getSubscriptionCurrentActive($storeOwner);
     }
 }

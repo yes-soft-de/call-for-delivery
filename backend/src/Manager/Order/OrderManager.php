@@ -8,6 +8,7 @@ use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderTimeLineEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\BidDetails\BidDetailsManager;
 use App\Manager\OrderTimeLine\OrderTimeLineManager;
 use App\Repository\OrderEntityRepository;
@@ -606,5 +607,11 @@ class OrderManager
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+
+    public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
+    {
+        return $this->orderRepository->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
+            $specificDateTime);
     }
 }

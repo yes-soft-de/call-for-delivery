@@ -148,4 +148,9 @@ class SubscriptionDetailsManager
  
         return $subscriptionDetailsEntity;
     }
+
+    public function getSubscriptionDetailsEntityByLastSubscriptionId(int $subscriptionId): array
+    {
+        return $this->subscribeDetailsRepository->getSubscriptionDetailsEntityByLastSubscriptionId($subscriptionId);
+    }
 }

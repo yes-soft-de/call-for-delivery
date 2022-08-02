@@ -71,4 +71,9 @@ class AdminCaptainOfferService
         
         return $this->autoMapping->map(CaptainOfferEntity::class, CaptainOfferCreateResponse::class, $captainOffer);
     }
+
+    public function getCaptainOfferEntityByIdForAdmin(int $id): ?CaptainOfferEntity
+    {
+        return $this->adminCaptainOfferManager->getCaptainOfferByAdmin($id);
+    }
 }
