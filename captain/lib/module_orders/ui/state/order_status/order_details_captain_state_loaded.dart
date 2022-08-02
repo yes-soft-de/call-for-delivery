@@ -737,6 +737,21 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   icon: Icons.location_on_rounded,
                   subtitle: S.current.storeLocation,
                   title: S.current.location,
+                  onLongTap: () {
+                    String url = '';
+                    if (orderInfo.branchCoordinate != null) {
+                      url = LauncherLinkHelper.getMapsLink(
+                          orderInfo.branchCoordinate?.latitude ?? 0,
+                          orderInfo.branchCoordinate?.longitude ?? 0);
+                    } else if (orderInfo.destinationLink != null) {
+                      url = orderInfo.destinationLink ?? '';
+                    }
+                    try {
+                      launch(url);
+                    } catch (e) {
+                      Fluttertoast.showToast(msg: url);
+                    }
+                  },
                   onTap: () {
                     String url = '';
                     if (orderInfo.branchCoordinate != null) {
@@ -750,7 +765,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       if (value) {
                         launch(url);
                       } else {
-                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        Fluttertoast.showToast(
+                            msg: S.current.invalidMapLink + url);
                       }
                     });
                   },
@@ -764,6 +780,21 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   subtitle: S.current.destinationPoint,
                   title: S.current.location,
                   short: true,
+                  onLongTap: () {
+                    String url = '';
+                    if (orderInfo.destinationCoordinate != null) {
+                      url = LauncherLinkHelper.getMapsLink(
+                          orderInfo.destinationCoordinate?.latitude ?? 0,
+                          orderInfo.destinationCoordinate?.longitude ?? 0);
+                    } else if (orderInfo.destinationLink != null) {
+                      url = orderInfo.destinationLink ?? '';
+                    }
+                    try {
+                      launch(url);
+                    } catch (e) {
+                      Fluttertoast.showToast(msg: url);
+                    }
+                  },
                   onTap: () {
                     String url = '';
                     if (orderInfo.destinationCoordinate != null) {
