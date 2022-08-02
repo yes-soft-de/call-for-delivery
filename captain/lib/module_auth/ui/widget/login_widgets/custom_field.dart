@@ -2,6 +2,7 @@ import 'package:c4d/utils/components/op_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/effect/hidder.dart';
+import 'package:flutter/services.dart';
 
 class CustomLoginFormField extends StatefulWidget {
   final double? height;
@@ -162,6 +163,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       maxLength: widget.phone | widget.numbers
                           ? (widget.maxLength ?? 9)
                           : null,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
+                      ],
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: '',
