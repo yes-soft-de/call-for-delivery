@@ -151,6 +151,8 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                     $orderLogs[$key]['createdBy'] = $createdByName[0];
                 }
 
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
+
             } elseif ($value['createdByUserType'] === OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST) {
                 $createdByName = $this->createQueryBuilder('orderLogEntity')
                     ->select('storeOwnerProfileEntity.storeOwnerName')
@@ -178,6 +180,8 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                 if (count($createdByName) !== 0) {
                     $orderLogs[$key]['createdBy'] = $createdByName[0];
                 }
+
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
 
             } elseif ($value['createdByUserType'] === OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST) {
                 $createdByName = $this->createQueryBuilder('orderLogEntity')
@@ -207,6 +211,8 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                     $orderLogs[$key]['createdBy'] = $createdByName[0];
                 }
 
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
+
             } elseif ($value['createdByUserType'] === OrderLogCreatedByUserTypeConstant::SUPPLIER_USER_TYPE_CONST) {
                 $createdByName = $this->createQueryBuilder('orderLogEntity')
                     ->select('supplierProfileEntity.supplierName')
@@ -235,6 +241,7 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                     $orderLogs[$key]['createdBy'] = $createdByName[0];
                 }
 
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
             }
         }
 
