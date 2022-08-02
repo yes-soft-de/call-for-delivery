@@ -32,16 +32,13 @@ class AdminStoreOwnerController extends BaseController
     private AutoMapping $autoMapping;
     private ValidatorInterface $validator;
     private AdminStoreOwnerService $adminStoreOwnerService;
-    private StoreOwnerEraserService $storeOwnerEraserService;
 
-    public function __construct(AutoMapping $autoMapping, ValidatorInterface $validator, SerializerInterface $serializer, AdminStoreOwnerService $adminStoreOwnerService,
-                                StoreOwnerEraserService $storeOwnerEraserService)
+    public function __construct(AutoMapping $autoMapping, ValidatorInterface $validator, SerializerInterface $serializer, AdminStoreOwnerService $adminStoreOwnerService)
     {
         parent::__construct($serializer);
         $this->autoMapping = $autoMapping;
         $this->validator = $validator;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
-        $this->storeOwnerEraserService = $storeOwnerEraserService;
     }
 
     /**
@@ -360,7 +357,7 @@ class AdminStoreOwnerController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->storeOwnerEraserService->deleteStoreOwnerAccountAndProfileByAdmin($request);
+        $response = $this->adminStoreOwnerService->deleteStoreOwnerAccountAndProfileByAdmin($request);
 
         if ($response === EraserResultConstant::CAN_NOT_DELETE_STORE_HAS_DUES_FROM_CASH_ORDERS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS);
