@@ -68,6 +68,7 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 
 class OrderService
 {
@@ -550,8 +551,8 @@ class OrderService
               
                 //Save the price of the order in cash in case the captain does not pay the store
                 if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                    $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
-                    $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
+                    $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+                    $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                 }
             }
 
@@ -990,10 +991,23 @@ class OrderService
     public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): ?OrderUpdatePaidToProviderResponse
     {
         $order = $this->orderManager->orderUpdatePaidToProvider($orderId, $paidToProvider);
-
-        // save log of the action on order
-        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
+        if($order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH) {
+            //if captain paid to provider
+            if($order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {
+                $orderCost = 0; 
+                $flag = OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES;
+            }  
+            //if captain not paid provider
+            if($order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                $orderCost = $order->getOrderCost();
+                $flag = OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO;
+            }  
+            
+            $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order,  $flag, $orderCost);
+            $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, $flag, $orderCost);
+            
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
+        }
         
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
