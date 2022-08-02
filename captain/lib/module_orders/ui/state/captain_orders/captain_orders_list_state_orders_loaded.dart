@@ -282,72 +282,17 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(18),
           ),
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  FontAwesomeIcons.info,
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                ),
-                title: Text(
-                  S.current.thereIsFarawayOrder,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+          child: ListTile(
+            leading: Icon(
+              FontAwesomeIcons.info,
+              color: Theme.of(context).colorScheme.secondaryContainer,
+            ),
+            title: Text(
+              S.current.thereIsFarawayOrder,
+              style: const TextStyle(
+                color: Colors.white,
               ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              shape: const StadiumBorder(),
-                              primary: screenState.farOrders == true
-                                  ? Colors.green.shade300
-                                  : Theme.of(context).colorScheme.secondaryContainer,
-                            ),
-                            onPressed: () {
-                              screenState.farOrders = true;
-                              screenState.refresh();
-                            },
-                            child: Text(
-                              S.current.show,
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              shape: const StadiumBorder(),
-                              primary: screenState.farOrders == false
-                                  ? Colors.red.shade300
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                            ),
-                            onPressed: () {
-                              screenState.farOrders = false;
-                              screenState.refresh();
-                            },
-                            child: Text(
-                              S.current.unShow,
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                            )),
-                      ),
-                    ],
-                  )),
-            ],
+            ),
           ),
         ),
       ));

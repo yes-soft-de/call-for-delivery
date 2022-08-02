@@ -406,6 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
+        "farOrders": MessageLookupByLibrary.simpleMessage("البعيدة"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
@@ -1013,8 +1014,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
-        "thereIsFarawayOrder": MessageLookupByLibrary.simpleMessage(
-            "هناك طلبات بعيدة متوفرة في حال رغبتك في إظهارها اضغط على زر إظهار"),
+        "thereIsFarawayOrder":
+            MessageLookupByLibrary.simpleMessage("هناك طلبات بعيدة متوفرة"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(

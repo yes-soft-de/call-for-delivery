@@ -415,6 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
+        "farOrders": MessageLookupByLibrary.simpleMessage("Far orders"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("Favorite Categories"),
         "favoriteStores":
@@ -1020,8 +1021,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
-        "thereIsFarawayOrder": MessageLookupByLibrary.simpleMessage(
-            "There is far away orders , if you want to view them press the button at the bottom"),
+        "thereIsFarawayOrder":
+            MessageLookupByLibrary.simpleMessage("There is far away orders "),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoPermission": MessageLookupByLibrary.simpleMessage(

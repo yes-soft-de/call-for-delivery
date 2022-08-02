@@ -16,6 +16,7 @@ import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -168,6 +169,23 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                       : StatusHelper.getOrderStatusColor(
                           OrderStatusEnum.GOT_CAPTAIN)),
               actions: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 8),
+                  child: FlutterSwitch(
+                    onToggle: (bool value) {
+                      farOrders = value;
+                      refresh();
+                    },
+                    showOnOff: true,
+                    valueFontSize: 12,
+                    width: 90,
+                    activeColor: Colors.green,
+                    inactiveColor: Colors.red,
+                    activeText: S.current.farOrders,
+                    inactiveText: S.current.farOrders,
+                    value: farOrders,
+                  ),
+                ),
                 CustomC4dAppBar.actionIcon(context, onTap: () {
                   Navigator.of(context)
                       .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
@@ -176,7 +194,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                     colorIcon: currentPage == 1
                         ? null
                         : StatusHelper.getOrderStatusColor(
-                            OrderStatusEnum.GOT_CAPTAIN))
+                            OrderStatusEnum.GOT_CAPTAIN)),
               ],
               title: S.of(context).home,
               icon: Icons.sort_rounded, onTap: () {

@@ -728,7 +728,8 @@
     "currentLocation":"موقعك الحالي",
     "receivingLocation":"موقع الاستلام",
     "deliveryDestination":"موقع التسليم",
-    "thereIsFarawayOrder":"هناك طلبات بعيدة متوفرة في حال رغبتك في إظهارها اضغط على زر إظهار",
+    "thereIsFarawayOrder":"هناك طلبات بعيدة متوفرة",
     "show":"إظهار",
-    "unShow":"عدم إظهار"
+    "unShow":"عدم إظهار",
+    "farOrders":"البعيدة"
 }

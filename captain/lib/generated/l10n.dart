@@ -7310,10 +7310,10 @@ class S {
     );
   }
 
-  /// `There is far away orders , if you want to view them press the button at the bottom`
+  /// `There is far away orders `
   String get thereIsFarawayOrder {
     return Intl.message(
-      'There is far away orders , if you want to view them press the button at the bottom',
+      'There is far away orders ',
       name: 'thereIsFarawayOrder',
       desc: '',
       args: [],
@@ -7335,6 +7335,16 @@ class S {
     return Intl.message(
       'Un Show',
       name: 'unShow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Far orders`
+  String get farOrders {
+    return Intl.message(
+      'Far orders',
+      name: 'farOrders',
       desc: '',
       args: [],
     );
