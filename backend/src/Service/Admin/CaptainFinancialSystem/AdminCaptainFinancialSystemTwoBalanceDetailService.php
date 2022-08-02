@@ -54,8 +54,20 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         $item['sumPayments'] = $sumPayments;
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $item['amountForStore'] = 0;
+        $item['countOrdersMaxFromNineteen'] = 0;
      
-        $checkTarget = $this->checkTarget($financialSystemDetail['countOrdersInMonth'], $countWorkdays, $countOrders);
+        foreach($detailsOrders as $orderDetail) {
+            if($orderDetail['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+                $item['countOrdersMaxFromNineteen'] = $item['countOrdersMaxFromNineteen'] + 1;
+            }
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+                $item['amountForStore'] += $orderDetail['captainOrderCost'];
+            }
+        }
+
+        $item['countOrdersCompleted'] +=  $item['countOrdersMaxFromNineteen'];
+
+        $checkTarget = $this->checkTarget($financialSystemDetail['countOrdersInMonth'], $countWorkdays, $item['countOrdersCompleted']);
 
         if($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_INT) {
             $item['salary'] = $financialSystemDetail['salary'];
@@ -68,7 +80,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
                 $item['financialDues'] = $item['salary'] + $item['monthCompensation']; 
             }
             else {
-                $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY;  
+                $item['financialDues'] = $item['countOrdersCompleted'] * CaptainFinancialSystem::TARGET_FAILED_SALARY;  
             }
 
             $total = $sumPayments - $item['financialDues'];
@@ -79,7 +91,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
 
-            $item['countOverOrdersThanRequired'] = $countOrders - $financialSystemDetail['countOrdersInMonth'] / 30;
+            $item['countOverOrdersThanRequired'] = $item['countOrdersCompleted'] - $financialSystemDetail['countOrdersInMonth'] / 30;
 
             $item['bounce'] = round($item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 2);   
            
@@ -89,7 +101,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
                 $item['financialDues'] = round($item['salary'] + $item['monthCompensation'] + $item['bounce'], 2); 
             }
             else {
-                $item['financialDues'] = round(($countOrders - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 2);  
+                $item['financialDues'] = round(($item['countOrdersCompleted'] - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 2);  
             }
 
             $total = $sumPayments - round($item['financialDues'], 2);
@@ -100,7 +112,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
            
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_FAILED;
              
-            $item['financialDues'] = $countOrders * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
+            $item['financialDues'] = $item['countOrdersCompleted'] * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
           
             $total = round($sumPayments - $item['financialDues'], 2);
         }
@@ -112,12 +124,6 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         }
 
         $item['total'] = abs($total);
-
-        foreach($detailsOrders as $orderDetail) {
-            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
-                $item['amountForStore'] += $orderDetail['captainOrderCost'];
-            }
-        }
 
         return $item;
     }

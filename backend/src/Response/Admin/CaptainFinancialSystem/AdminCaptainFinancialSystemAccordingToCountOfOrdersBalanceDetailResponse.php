@@ -31,4 +31,6 @@ class AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public array $orders;
 
     public string|null $dateFinancialCycleStarts;
+  
+    public int $countOrdersMaxFromNineteen;
 }
