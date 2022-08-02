@@ -789,10 +789,14 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     } else if (orderInfo.destinationLink != null) {
                       url = orderInfo.destinationLink ?? '';
                     }
+                    if (url == '') {
+                      return;
+                    }
                     try {
                       launch(url);
                     } catch (e) {
-                      Fluttertoast.showToast(msg: url);
+                      Fluttertoast.showToast(
+                          msg: S.current.destinationUnavailable + url);
                     }
                   },
                   onTap: () {
