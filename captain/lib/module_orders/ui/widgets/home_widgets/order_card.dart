@@ -372,22 +372,25 @@ class NearbyOrdersCard extends StatelessWidget {
             ),
             divider(context),
             // order cost
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Visibility(
-                  visible: credit,
-                  child: verticalTile(context,
-                      title: S.current.cost, subtitle: S.current.paid),
-                  replacement: verticalTile(context,
-                      title: S.current.cost,
-                      subtitle: orderCost + ' ' + S.current.sar),
-                ),
-                Icon(
-                  Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).textTheme.button?.color,
-                )
-              ],
+            Visibility(
+              visible: orderCost != '0' && credit == false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Visibility(
+                    visible: credit,
+                    child: verticalTile(context,
+                        title: S.current.cost, subtitle: S.current.paid),
+                    replacement: verticalTile(context,
+                        title: S.current.cost,
+                        subtitle: orderCost + ' ' + S.current.sar),
+                  ),
+                  Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: Theme.of(context).textTheme.button?.color,
+                  )
+                ],
+              ),
             ),
           ],
         ),

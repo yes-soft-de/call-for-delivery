@@ -186,7 +186,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 orderIsMain: element.orderIsMain,
                 deliveryDate: element.deliveryDate,
                 note: element.note,
-                orderCost: element.orderCost.toStringAsFixed(1),
+                orderCost: FixedNumber.getFixedNumber(element.orderCost),
                 orderNumber: element.id.toString(),
                 branchName: element.branchName,
                 branchToDestination: element.storeBranchToClientDistance != null
@@ -241,7 +241,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               orderIsMain: element.orderIsMain,
               deliveryDate: element.deliveryDate,
               note: element.note,
-              orderCost: element.orderCost.toStringAsFixed(1),
+              orderCost: FixedNumber.getFixedNumber(element.orderCost),
               orderNumber: element.id.toString(),
               branchName: element.branchName,
               branchToDestination: element.storeBranchToClientDistance != null
