@@ -117,6 +117,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
         $query->leftJoin(CaptainFinancialDuesEntity::class, 'captainFinancialDuesEntity', Join::WITH, 'captainFinancialDuesEntity.captain = captainEntity.id');
 
         $query->orderBy('captainEntity.id', 'DESC');
+        $query->groupBy('captainEntity.id');
 
         return $query->getQuery()->getResult();
     }
