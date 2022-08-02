@@ -14,8 +14,19 @@ class AccountBalanceStateLoaded extends States {
   CaptainAccountBalanceModel? balance;
   final AccountBalanceScreenState screenState;
   AccountBalanceStateLoaded(this.screenState, this.balance)
-      : super(screenState);
+      : super(screenState) {
+    try {
+      _scrollController.addListener(() {
+        first = false;
+        screenState.refresh();
+      });
+    } catch (e) {
+      //
+    }
+  }
   int currentIndex = 0;
+  ScrollController _scrollController = ScrollController();
+  bool first = true;
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(
@@ -114,12 +125,67 @@ class AccountBalanceStateLoaded extends States {
     });
     return Visibility(
       visible: balance?.orderCountsDetails != null,
-      child: SizedBox(
-        height: 408,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: data,
-        ),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 407,
+            width: double.maxFinite,
+            child: Scrollbar(
+              radius: const Radius.circular(25),
+              isAlwaysShown: true,
+              child: ListView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                scrollDirection: Axis.horizontal,
+                children: data,
+              ),
+            ),
+          ),
+          Visibility(
+            visible:
+                maxOffset() && (balance?.orderCountsDetails?.length ?? -1) > 1,
+            child: Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: SizedBox(
+                height: 407 - 8,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Opacity(
+                    opacity: 0.4,
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: maxOffset()
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).disabledColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible:
+                minOffset() && (balance?.orderCountsDetails?.length ?? -1) > 1,
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Container(
+                  height: 407 - 8,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Opacity(
+                      opacity: 0.4,
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: minOffset()
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).disabledColor,
+                      ),
+                    ),
+                  )),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -191,5 +257,26 @@ class AccountBalanceStateLoaded extends States {
             advancedValue: balance?.advancePayment),
       ],
     );
+  }
+
+  bool maxOffset() {
+    if (first && (balance?.orderCountsDetails?.length ?? -1) > 1) {
+      return true;
+    }
+    if (_scrollController.hasClients) {
+      return _scrollController.position.maxScrollExtent >
+          _scrollController.offset;
+    } else {
+      return false;
+    }
+  }
+
+  bool minOffset() {
+    if (_scrollController.hasClients) {
+      return _scrollController.position.minScrollExtent <
+          _scrollController.offset;
+    } else {
+      return false;
+    }
   }
 }
