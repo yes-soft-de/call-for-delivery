@@ -70,26 +70,31 @@ class AdminStoreSubscriptionManager
         return $futureSubscriptionsEntities;
     }
 
-    public function deleteSubscriptionById(int $id): ?SubscriptionEntity
-    {
-        $subscriptionEntity = $this->subscribeRepository->find($id);
-
-        if ($subscriptionEntity) {
-                //Delete subscription details
-                $this->adminSubscriptionDetailsManager->deleteSubscriptionDetailsBySubscriptionId($id);
-                //Delete history
-                $this->adminSubscriptionHistoryManager->deleteSubscriptionHistoryBySubscriptionId($id);
-                // //Delete the subscription entity
-                $this->entityManager->remove($subscriptionEntity);
-
-                $this->entityManager->flush();
-        }
-
-        return $subscriptionEntity;
-    }
+//    public function deleteSubscriptionById(int $id): ?SubscriptionEntity
+//    {
+//        $subscriptionEntity = $this->subscribeRepository->find($id);
+//
+//        if ($subscriptionEntity) {
+//                //Delete subscription details
+//                $this->adminSubscriptionDetailsManager->deleteSubscriptionDetailsBySubscriptionId($id);
+//                //Delete history
+//                $this->adminSubscriptionHistoryManager->deleteSubscriptionHistoryBySubscriptionId($id);
+//                // //Delete the subscription entity
+//                $this->entityManager->remove($subscriptionEntity);
+//
+//                $this->entityManager->flush();
+//        }
+//
+//        return $subscriptionEntity;
+//    }
 
     public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerProfileId): ?array
     {
         return $this->adminSubscriptionDetailsManager->getSubscriptionCurrentActive($storeOwnerProfileId);
+    }
+
+    public function getSubscriptionEntityByIdForAdmin(int $id): ?SubscriptionEntity
+    {
+        return $this->subscribeRepository->findOneBy(['id'=>$id]);
     }
 }
