@@ -582,10 +582,12 @@ class OrderService
                   error_log($e);
               }
             // create firebase notification to captain
-             try{
-                $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
-              }
-             catch (\Exception $e){
+             try {
+                 if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                     $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+                 }
+
+             } catch (\Exception $e){
                   error_log($e);
               }
         }
