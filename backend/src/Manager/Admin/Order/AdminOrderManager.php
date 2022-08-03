@@ -20,7 +20,7 @@ use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
-
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 class AdminOrderManager
 {

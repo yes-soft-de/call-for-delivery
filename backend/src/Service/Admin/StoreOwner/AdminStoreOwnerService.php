@@ -94,6 +94,24 @@ class AdminStoreOwnerService
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
     }
 
+    public function getLastThreeActiveStoreOwnersProfilesForAdmin(): array
+    {
+        $storesProfiles = $this->adminStoreOwnerManager->getLastThreeActiveStoreOwnersProfilesForAdmin();
+
+        if (! empty($storesProfiles)) {
+            foreach ($storesProfiles as $key => $value) {
+                $storesProfiles[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            }
+        }
+
+        return $storesProfiles;
+    }
+
+    public function deleteStoreOwnerAccountAndProfileByAdmin(DeleteStoreOwnerAccountAndProfileByAdminRequest $request): int|DeleteStoreOwnerAccountAndProfileByAdminResponse|null
+    {
+        return $this->storeOwnerEraserService->deleteStoreOwnerAccountAndProfileByAdmin($request);
+    }
+
     public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);

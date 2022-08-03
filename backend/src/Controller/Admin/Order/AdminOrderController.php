@@ -30,6 +30,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")

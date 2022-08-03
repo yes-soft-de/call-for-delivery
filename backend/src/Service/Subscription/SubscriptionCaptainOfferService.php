@@ -10,16 +10,19 @@ use App\Manager\Subscription\SubscriptionCaptainOfferManager;
 use App\Request\Subscription\SubscriptionCaptainOfferCreateRequest;
 use App\Response\Subscription\SubscriptionCaptainOfferCreateResponse;
 use App\Response\Subscription\SubscriptionIsReadyResponse;
+use App\Service\Notification\NotificationFirebaseService;
 
 class SubscriptionCaptainOfferService
 {
     private AutoMapping $autoMapping;
     private SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager;
+    private NotificationFirebaseService $notificationFirebaseService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager)
+    public function __construct(AutoMapping $autoMapping, SubscriptionCaptainOfferManager $subscriptionCaptainOfferManager, NotificationFirebaseService $notificationFirebaseService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionCaptainOfferManager = $subscriptionCaptainOfferManager;
+        $this->notificationFirebaseService = $notificationFirebaseService;
     }
 
     public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): SubscriptionCaptainOfferCreateResponse|SubscriptionIsReadyResponse 
@@ -61,6 +64,19 @@ class SubscriptionCaptainOfferService
         }
         
          return $this->autoMapping->map("array", SubscriptionIsReadyResponse::class, $subscribe);
+    }
+
+    public function sendDoubledFirebaseNotificationToAdmin(string $storeOwnerName, int $captainOfferId)
+    {
+        for ($i = 0; $i < 2; $i++)
+        {
+            $this->notificationFirebaseService->notificationCreateCaptainOfferSubscriptionToAdmin($storeOwnerName, $captainOfferId);
+        }
+    }
+
+    public function deleteCaptainOffersSubscriptionsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->subscriptionCaptainOfferManager->deleteCaptainOffersSubscriptionsByStoreOwnerId($storeOwnerId);
     }
 
     public function deleteCaptainOfferSubscriptionById(int $id): ?SubscriptionCaptainOfferEntity

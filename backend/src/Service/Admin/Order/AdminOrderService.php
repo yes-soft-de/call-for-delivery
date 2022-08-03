@@ -48,6 +48,7 @@ use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 use App\Service\Captain\CaptainService;
 use App\Constant\Captain\CaptainConstant;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 
 class AdminOrderService
 {

@@ -34,6 +34,7 @@ class AdminStoreSubscriptionService
         $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
         $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
         $this->subscriptionService = $subscriptionService;
+
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
@@ -79,7 +80,6 @@ class AdminStoreSubscriptionService
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
         // $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
-            
         $sumCaptainOfferPrices = 0;
 
         foreach($captainOffers as $captainOffer) {

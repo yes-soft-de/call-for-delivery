@@ -3,6 +3,7 @@
 namespace App\Service\Subscription;
 
 use App\AutoMapping;
+use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
@@ -626,6 +627,27 @@ class SubscriptionService
         }
 
         return $balance;
+    }
+
+    public function checkIfStoreSubscriptionsHavePayments(int $storeOwnerId): int
+    {
+        $storeSubscriptions = $this->subscriptionManager->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
+
+        if (! empty($storeSubscriptions)) {
+            foreach ($storeSubscriptions as $storeSubscription) {
+                if (! empty($storeSubscription->getStoreOwnerPaymentEntities()->toArray())) {
+                    // return can not delete subscriptions because payments related to it are exists
+                    return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS;
+                }
+            }
+        }
+
+        return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_NOT_ANY_PAYMENTS;
+    }
+
+    public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->subscriptionManager->deleteStoreSubscriptionByStoreOwnerId($storeOwnerId);
     }
 
     public function createSubscriptionByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int

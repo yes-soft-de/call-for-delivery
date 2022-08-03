@@ -65,6 +65,10 @@ class AdminStoreSubscriptionResponse
 
     public bool $isFuture;
 
+    public int $remainingCars;
+
+    public int $remainingOrders;
+
     public int $subscriptionRemainingOrders;
 
     public int $subscriptionRemainingCars;

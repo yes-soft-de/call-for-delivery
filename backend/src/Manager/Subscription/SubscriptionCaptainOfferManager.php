@@ -74,6 +74,27 @@ class SubscriptionCaptainOfferManager
        return  $this->subscriptionCaptainOfferEntityRepository->subscriptionCaptainOfferBySubscribeId($subscribeId);
     }
 
+    public function deleteCaptainOffersSubscriptionsByStoreOwnerId(int $storeOwnerId): array
+    {
+        $captainOffersSubscriptions = $this->subscriptionCaptainOfferEntityRepository->getCaptainOffersSubscriptionsByStoreOwnerId($storeOwnerId);
+
+        if (! empty($captainOffersSubscriptions)) {
+            foreach ($captainOffersSubscriptions as $captainOfferSubscription) {
+
+                if (! empty($captainOfferSubscription->getSubscriptionEntitie()->toArray())) {
+                    foreach ($captainOfferSubscription->getSubscriptionEntitie()->toArray() as $item) {
+                        $captainOfferSubscription->removeSubscriptionEntitie($item);
+                    }
+                }
+
+                $this->entityManager->remove($captainOfferSubscription);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $captainOffersSubscriptions;
+    }
+
     public function deleteCaptainOfferSubscriptionById(int $id): ?SubscriptionCaptainOfferEntity
     {
         $captainOfferSubscriptionEntity = $this->subscriptionCaptainOfferEntityRepository->findOneBy(['id'=>$id]);

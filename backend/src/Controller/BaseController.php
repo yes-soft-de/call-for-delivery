@@ -138,12 +138,19 @@ class BaseController extends AbstractController
     const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
     const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
 
+    // geo distance
+    const ERROR_BAD_REQUEST = ["bad request", "9370"];
+    const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
+
+    //
+    const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
+
     // captain offer subscription
-    const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = ["inactive captain offer subscription", "9370"];
-    const CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED = ["expired captain offer subscription", "9371"];
-    const CAPTAIN_OFFER_CARS_HAVE_BEING_USED = ["captain offer subscription is being used", "9372"];
-    const CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST = ["captain offer subscription is not exist", "9373"];
-    const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9374"];
+    const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = ["inactive captain offer subscription", "9376"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED = ["expired captain offer subscription", "9377"];
+    const CAPTAIN_OFFER_CARS_HAVE_BEING_USED = ["captain offer subscription is being used", "9378"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST = ["captain offer subscription is not exist", "9379"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9385"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

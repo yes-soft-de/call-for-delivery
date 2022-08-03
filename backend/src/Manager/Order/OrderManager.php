@@ -609,6 +609,23 @@ class OrderManager
         return $orderEntity;
     }
 
+    public function getOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderRepository->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): ?OrderEntity
+    {
+        $captainId = $this->captainManager->getCaptainProfileByUserId($captainId);
+
+        return $this->orderRepository->checkWhetherCaptainReceivedOrderForSpecificStore($captainId->getId(), $storeId);
+    }
+
+    public function getStoreOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->orderRepository->getStoreOrdersByStoreOwnerId($storeOwnerId);
+    }
+
     public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
     {
         return $this->orderRepository->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,

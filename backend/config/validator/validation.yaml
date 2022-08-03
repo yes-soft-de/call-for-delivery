@@ -654,6 +654,25 @@ App\Request\Admin\Order\OrderStateUpdateByAdminRequest:
         state:
             - NotBlank: ~
 
+App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest:
+    properties:
+        captainId:
+            - NotBlank: ~
+
+App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest:
+    properties:
+        storeOwnerId:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\ApprovalOrRefusalFinancialSystemAndFinancialCycleByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        state:
+            - NotBlank: ~
+        date:
+            - NotBlank: ~
+
 App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
     properties:
         id:

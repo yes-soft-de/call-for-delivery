@@ -3,6 +3,7 @@
 namespace App\Service\Order;
 
 use App\AutoMapping;
+use App\Constant\Eraser\EraserResultConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
@@ -1212,6 +1213,37 @@ class OrderService
         }
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
+    }
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId, int|null $primaryOrderId): int
+    {
+        $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
+        if(! empty($orderEntity)) {
+            //if the order not main
+            if ($orderEntity->getOrderIsMain() !== true) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) related
+            if($primaryOrderId === $orderEntity->getId()) {
+
+                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) not related
+            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+        }
+
+        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+    }
+
+    public function checkIfStoreHasOrdersByStoreOwnerId(int $storeOwnerId): int
+    {
+        $orders = $this->orderManager->getStoreOrdersByStoreOwnerId($storeOwnerId);
+
+        if (! empty($orders)) {
+            return EraserResultConstant::STORE_HAS_ORDERS;
+        }
+
+        return EraserResultConstant::STORE_HAS_NOT_ORDERS;
     }
 
     public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
