@@ -7,6 +7,7 @@ use App\Constant\Package\PackageCategoryConstant;
 use App\Entity\PackageCategoryEntity;
 use App\Repository\PackageCategoryEntityRepository;
 use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
+use App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest;
 use App\Request\Admin\Package\PackageCategoryUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -52,5 +53,33 @@ class AdminPackageCategoryManager
     public function getAllPackagesCategories(): ?array
     {
         return $this->packageCategoryEntityRepository->getAllPackagesCategories();
+    }
+
+    public function updateAllPackagesCategoriesStatus(int $status): array
+    {
+        $packagesCategoriesEntities = $this->packageCategoryEntityRepository->findAll();
+
+        if (count($packagesCategoriesEntities) > 0) {
+            foreach ($packagesCategoriesEntities as $packageCategoryEntity) {
+                $packageCategoryEntity->setStatus($status);
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $packagesCategoriesEntities;
+    }
+
+    public function updatePackageCategoryStatusById(PackageCategoryStatusUpdateByAdminRequest $request): ?PackageCategoryEntity
+    {
+        $packageCategoryEntity = $this->packageCategoryEntityRepository->findOneBy(['id'=>$request->getId()]);
+
+        if ($packageCategoryEntity) {
+            $packageCategoryEntity->setStatus($request->getStatus());
+
+            $this->entityManager->flush();
+        }
+
+        return $packageCategoryEntity;
     }
 }

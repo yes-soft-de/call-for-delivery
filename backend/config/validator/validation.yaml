@@ -672,3 +672,10 @@ App\Request\Admin\CaptainFinancialSystem\ApprovalOrRefusalFinancialSystemAndFina
             - NotBlank: ~
         date:
             - NotBlank: ~
+
+App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~

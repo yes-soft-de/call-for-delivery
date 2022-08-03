@@ -23,4 +23,9 @@ class PackageAndCategoryForAdminGetResponse
      * @var array|null
      */
     public $packages;
+
+    /**
+     * @var int|null
+     */
+    public $status;
 }
