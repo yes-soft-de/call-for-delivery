@@ -50,7 +50,7 @@ class AdminCaptainPaymentToCompanyManager
             $this->entityManager->persist($captainPaymentToCompanyEntity);
             $this->entityManager->flush();
     
-            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $captainPaymentToCompanyEntity);
+            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $captainPaymentToCompanyEntity, false);
          
             return $captainPaymentToCompanyEntity;
         }

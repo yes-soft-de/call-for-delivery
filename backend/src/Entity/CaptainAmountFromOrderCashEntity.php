@@ -45,6 +45,10 @@ class CaptainAmountFromOrderCashEntity
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $captainNote;
+    //When paying (storeAmount) from captain to the company, the captain is prevented from modifying the field (flag)
+    //false means unmodifiable
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $editingByCaptain;
 
     public function getId(): ?int
     {
@@ -155,6 +159,18 @@ class CaptainAmountFromOrderCashEntity
     public function setCaptainNote(?string $captainNote): self
     {
         $this->captainNote = $captainNote;
+
+        return $this;
+    }
+
+    public function getEditingByCaptain(): ?bool
+    {
+        return $this->editingByCaptain;
+    }
+
+    public function setEditingByCaptain(?bool $editingByCaptain): self
+    {
+        $this->editingByCaptain = $editingByCaptain;
 
         return $this;
     }
