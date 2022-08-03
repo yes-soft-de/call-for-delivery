@@ -989,7 +989,7 @@ class OrderService
         }  
     }
     
-    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): OrderUpdatePaidToProviderResponse|null|string
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): OrderUpdatePaidToProviderResponse|null|int
     {
         //Is the captain allowed to edit?
         $captainAllowedEdit = $this->captainAmountFromOrderCashService->getEditingByCaptain($orderId);

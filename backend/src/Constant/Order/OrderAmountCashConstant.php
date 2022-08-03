@@ -12,5 +12,5 @@ final class OrderAmountCashConstant
     
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = false;
 
-    const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING = "not allowed update";
+    const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING = 1;
 }

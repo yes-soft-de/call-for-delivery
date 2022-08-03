@@ -73,8 +73,8 @@ class CaptainAmountFromOrderCashService
     {
         $captainAmountFromOrderCash = $this->captainAmountFromOrderCashManager->getCaptainAmountFromOrderCashByOrderId($orderId);
      
-        if($captainAmountFromOrderCash === null) {
-            return true;
+        if(! $captainAmountFromOrderCash) {
+            return $captainAmountFromOrderCash;
         }
 
         return $captainAmountFromOrderCash->getEditingByCaptain();
