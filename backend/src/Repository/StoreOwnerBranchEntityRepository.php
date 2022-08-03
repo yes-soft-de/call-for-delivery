@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,6 +34,24 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
             ->setParameter('active', StoreOwnerBranch::BRANCH_IS_ACTIVE)
 
             ->orderBy('storeOwnerBranch.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllStoreBranchesByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('storeOwnerBranch')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerBranch.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->getQuery()
             ->getResult();

@@ -36,7 +36,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
-
+use App\Constant\Order\OrderAmountCashConstant;
 
 /**
  * Create and fetch order.
@@ -87,6 +87,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="boolean", property="orderIsMain"),
+     *          @OA\Property(type="string", property="filePdf"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
      *      )
      * )
      *
@@ -114,8 +116,17 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9151 or 9204"),
-     *          @OA\Property(type="string", property="msg", description="error store inactive Error."),
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9151"),
+     *                          @OA\Property(type="string", property="msg", description="error store inactive Error.")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9204"),
+     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                   ),
+     * 
+     *              }
      *        )
      *     )
      *
@@ -148,6 +159,10 @@ class OrderController extends BaseController
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
+        
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
         
         return $this->response($result, self::CREATE);
     }
@@ -717,7 +732,7 @@ class OrderController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9306"),
+     *          @OA\Property(type="string", property="status_code", description="9306 OR 9100 OR 9107 OR 9105 OR 9207 OR 9215 OR 9218 OR 9220"),
      *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error."),
      *      )
      * )
@@ -742,6 +757,26 @@ class OrderController extends BaseController
 
         $response = $this->orderService->orderUpdateStateByCaptain($request);
 
+        if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_COMPLETED) {
+
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PROFILE_NOT_COMPLETED);
+        }
+
+        if ($response === CaptainConstant::CAPTAIN_INACTIVE) {
+           
+           return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
+        }
+ 
+        if ($response === CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE) {
+             
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_ONLINE_FALSE);
+        }
+ 
+        if ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
+             
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SYSTEM_FINANCIAL_INACTIVE);
+        }
+
         if($response === SubscriptionConstant::CARS_FINISHED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
         }
@@ -756,6 +791,10 @@ class OrderController extends BaseController
 
         if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
+        }
+
+        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
         }
       
         return $this->response($response, self::UPDATE);
@@ -1325,12 +1364,28 @@ class OrderController extends BaseController
      *       )
      * )
      * 
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Return erorr.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9380"),
+     *          @OA\Property(type="string", property="msg", description="You can not edit, because you paid the admin Error."),
+     *      )
+     * )
+     *
+     *  
      * @Security(name="Bearer")
      */
     public function orderUpdatePaidToProvider(int $orderId,int $paidToProvider): JsonResponse
     {
         $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
-      
+       
+        if($response === OrderAmountCashConstant::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG);
+        }
+
         return $this->response($response, self::UPDATE);
     }
 
@@ -1364,6 +1419,8 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="integer", property="primaryOrder"),
+      *         @OA\Property(type="string", property="filePdf"),
+      *         @OA\Property(type="number", property="storeBranchToClientDistance"),
      *      )
      * )
      *
@@ -1557,6 +1614,10 @@ class OrderController extends BaseController
       
             return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
         }
+
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
 
         return $this->response($result, self::UPDATE);
     }
@@ -1765,17 +1826,7 @@ class OrderController extends BaseController
      *      )
      *   )
      * )
-   
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9216 or 9217"),
-     *          @OA\Property(type="string", property="msg", description="errorMsg"),
-     *      )
-     * ) 
+     * 
      * @Security(name="Bearer") 
      */
     public function orderUpdateByStoreOwner(Request $request): JsonResponse
@@ -1794,6 +1845,10 @@ class OrderController extends BaseController
 
         $result = $this->orderService->orderUpdate($request);
 
+//        if ($result === OrderResultConstant::CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE);
+//        }
+        
         // if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
         //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
         // }

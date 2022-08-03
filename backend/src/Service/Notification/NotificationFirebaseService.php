@@ -6,6 +6,7 @@ namespace App\Service\Notification;
 use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
+use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
 use App\Service\DateFactory\DateFactoryService;
@@ -53,7 +54,7 @@ class NotificationFirebaseService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->dateFactoryService = $dateFactoryService;
     }
-
+    // send notifications to captains when create order
     public function notificationToCaptains(int $orderId)
     {
         $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
@@ -61,7 +62,7 @@ class NotificationFirebaseService
 
             $payload = [
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'navigate_route' => NotificationFirebaseConstant::URL,
+                // 'navigate_route' => NotificationFirebaseConstant::URL,
                 'argument' => $orderId,
             ];
 
@@ -841,19 +842,82 @@ class NotificationFirebaseService
          return $state;
      }
 
-    public function scheduledNotificationToCaptains(int $orderId, ?DateTimeInterface $deliveryDateTimeInterface)
+    public function scheduledNotificationToCaptains(int $orderId, DateTimeInterface $deliveryDateTimeInterface)
     {
         $getTokens = $this->notificationTokensService->getCaptainsOnlineTokens();
 
         if (! empty($getTokens)) {
-            $date = $this->dateFactoryService->getDateTimeMinusThirteenMinutesByDateTimeInterface($deliveryDateTimeInterface);
+            $sendDateTime = $this->dateFactoryService->getSendNotificationDateTimeDependingOnDeliveredDateTime($deliveryDateTimeInterface);
+
+            if ($sendDateTime !== false) {
+                $payload = [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'navigate_route' => NotificationFirebaseConstant::URL,
+                    'argument' => $orderId,
+                    "isScheduled" => "true",
+                    "scheduledTime" => $sendDateTime->format('Y-m-d H:i:s')
+                ];
+
+                $config = AndroidConfig::fromArray([
+                    "notification" => [
+                        "channel_id" => "C4d_Notifications_custom_sound_test"
+                    ]
+                ]);
+
+                foreach ($getTokens as $token) {
+                    if ($token['token'] !== null) {
+                        $deviceToken = [];
+
+                        $deviceToken[] = $token['token'];
+
+                        $sound = $token['sound'];
+
+                        if (!$sound) {
+                            $sound = NotificationTokenConstant::SOUND;
+                        }
+
+                        $apnsConfig = ApnsConfig::fromArray([
+                            'headers' => [
+                                'apns-priority' => '10',
+                                'apns-push-type' => 'alert'
+                            ],
+                            'payload' => [
+                                'aps' => [
+                                    'sound' => $sound
+                                ]
+                            ]
+                        ]);
+
+                        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
+                            NotificationFirebaseConstant::SCHEDULED_NOTIFICATION . NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
+                            ->withHighestPossiblePriority()
+                            ->withData($payload)
+                            ->withAndroidConfig($config)
+                            ->withApnsConfig($apnsConfig);
+
+                        $this->messaging->sendMulticast($message, $deviceToken);
+                    }
+                }
+            }
+        }
+    }
+
+    public function notificationCreateCaptainOfferSubscriptionToAdmin(string $storeOwnerName, int $captainOfferId): array
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        if (! empty($adminsTokens)) {
+            foreach ($adminsTokens as $token) {
+                $devicesToken[] = $token['token'];
+            }
 
             $payload = [
                 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'navigate_route' => NotificationFirebaseConstant::URL,
-                'argument' => $orderId,
-                "isScheduled" => "true",
-                "scheduledTime" => $date->format('Y-m-d H:i:s')
+                'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+                'argument' => null,
             ];
 
             $config = AndroidConfig::fromArray([
@@ -862,40 +926,168 @@ class NotificationFirebaseService
                 ]
             ]);
 
-            foreach ($getTokens as $token) {
-                if ($token['token'] !== null) {
-                    $deviceToken = [];
+            $apnsConfig = ApnsConfig::fromArray([
+                'headers' => [
+                    'apns-priority' => '10',
+                    'apns-push-type' => 'alert',
+                ],
+                'payload' => [
+                    'aps' => [
+                        'sound' => $sound
+                    ]
+                ]
+            ]);
 
-                    $deviceToken[] = $token['token'];
+            $msgContent = NotificationFirebaseConstant::STORE_HAS_DONE.$storeOwnerName.NotificationFirebaseConstant::SUBSCRIBED_WITH_CAPTAIN_OFFER.$captainOfferId;
 
-                    $sound = $token['sound'];
+            $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+                ->withHighestPossiblePriority();
 
-                    if (! $sound) {
-                        $sound = NotificationTokenConstant::SOUND;
-                    }
+            $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
 
-                    $apnsConfig = ApnsConfig::fromArray([
-                        'headers' => [
-                            'apns-priority' => '10',
-                            'apns-push-type' => 'alert'
-                        ],
-                        'payload' => [
-                            'aps' => [
-                                'sound' => $sound
-                            ]
-                        ]
-                    ]);
-
-                    $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME,
-                        NotificationFirebaseConstant::MESSAGE_CAPTAIN_NEW_ORDER))
-                        ->withHighestPossiblePriority()
-                        ->withData($payload)
-                        ->withAndroidConfig($config)
-                        ->withApnsConfig($apnsConfig);
-
-                    $this->messaging->sendMulticast($message, $deviceToken);
-                }
-            }
+            $this->messaging->sendMulticast($message, $devicesToken);
         }
+
+        return $devicesToken;
+    }
+
+    // notification to admin when store owner confirm that captain did not arrive to store
+    public function notificationCaptainNotArrivedStoreToAdmin(int $orderId)
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        foreach ($adminsTokens as $token) {
+            $devicesToken[] = $token['token'];
+        }
+
+        $payload = [
+//            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+//            'navigate_route' => NotificationFirebaseConstant::URL_CHAT,
+            'argument' => $orderId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msgContent = NotificationFirebaseConstant::STORE_DENIED_CAPTAIN_ARRIVAL.$orderId;
+
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+            ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
+
+    // notification to admin When the captain stops his financial cycle
+    public function notificationWhenCaptainStopFinancialCycle(int $captainId, string $captainName, int $captainFinancialDuesId)
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        foreach ($adminsTokens as $token) {
+            $devicesToken[] = $token['token'];
+        }
+
+        $payload = [
+           'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+           'navigate_route' => NotificationFirebaseConstant::URL_CAPTAIN_DETAILS,
+            'argument' => $captainId,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+        
+        $msgContent = NotificationFirebaseConstant::THE_CAPTAIN.' '.$captainName.' '.NotificationFirebaseConstant::CAPTAIN_STOPE_FINANCIAL_CYCLE;
+
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+            ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
+    //notification To User by user id
+    public function notificationToUserWithoutOrderByUserId(int $userId, string $text)
+    {
+        $token = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $deviceToken = $this->notificationTokensService->getTokenByUserId($userId);
+        if(! $deviceToken) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        $token[] = $deviceToken->getToken();
+
+        $payload = [
+            'argument' => '',
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msg = $text;
+
+        $message = CloudMessage::new()
+            ->withNotification(
+                Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msg))
+            ->withHighestPossiblePriority()->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $token);
     }
 }

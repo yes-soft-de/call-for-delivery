@@ -3,11 +3,15 @@
 namespace App\Controller\Admin\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\Eraser\EraserResultConstant;
+use App\Constant\Main\MainErrorConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Controller\BaseController;
+use App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
+use App\Service\Eraser\StoreOwner\StoreOwnerEraserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
@@ -97,26 +101,7 @@ class AdminStoreOwnerController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="storeOwnerId"),
-     *              @OA\Property(type="string", property="storeOwnerName"),
-     *              @OA\Property(type="object", property="images",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="roomID"),
-     *              @OA\Property(type="string", property="city"),
-     *              @OA\Property(type="integer", property="storeCategoryId"),
-     *              @OA\Property(type="string", property="employeeCount"),
-     *              @OA\Property(type="object", property="openingTime"),
-     *              @OA\Property(type="object", property="closingTime"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="string", property="commission"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
+     *              ref=@Model(type="App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse")
      *      )
      *   )
      * )
@@ -321,5 +306,75 @@ class AdminStoreOwnerController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Admin: delete store owner account and profile by admin
+     * @Route("deletestoreownerprofilebyadmin", name="deleteStoreOwnerAccountAndProfileByAdmin", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @OA\Tag(name="Eraser")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Delete store owner account by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="storeOwnerId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted user info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Eraser\DeleteStoreOwnerAccountAndProfileByAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteStoreOwnerAccountAndProfileByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, DeleteStoreOwnerAccountAndProfileByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminStoreOwnerService->deleteStoreOwnerAccountAndProfileByAdmin($request);
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_STORE_HAS_DUES_FROM_CASH_ORDERS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS);
+        }
+
+        if ($response === EraserResultConstant::STORE_HAS_ORDERS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_ORDERS);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_STORE_HAS_PAYMENTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS);
+        }
+
+        if ($response === EraserResultConstant::CAN_NOT_DELETE_STORE_HAS_PAYMENTS_FROM_COMPANY) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY);
+        }
+
+        return $this->response($response, self::DELETE);
     }
 }

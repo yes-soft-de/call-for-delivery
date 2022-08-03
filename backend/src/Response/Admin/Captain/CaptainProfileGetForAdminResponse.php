@@ -2,6 +2,8 @@
 
 namespace App\Response\Admin\Captain;
 
+use OpenApi\Annotations as OA;
+
 class CaptainProfileGetForAdminResponse
 {
     public int $id;
@@ -14,12 +16,14 @@ class CaptainProfileGetForAdminResponse
     public $captainName;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="string"))
      */
     public $images;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="location",
+     *     @OA\Items(type="object"))
      */
     public $location;
 
@@ -71,17 +75,20 @@ class CaptainProfileGetForAdminResponse
     public $stcPay;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="mechanicLicense",
+     *     @OA\Items(type="object"))
      */
     public $mechanicLicense;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="drivingLicence",
+     *     @OA\Items(type="object"))
      */
     public $drivingLicence;
 
     /**
-     * @var array|null
+     * @OA\Property(type="array", property="identity",
+     *     @OA\Items(type="object"))
      */
     public $identity;
 
@@ -91,7 +98,15 @@ class CaptainProfileGetForAdminResponse
     public $roomId;
 
     /**
-     * @var object|null
+     * @OA\Property(type="object", nullable=true)
      */
     public $financialCaptainSystemDetails;
+
+    public string $userId;
+
+    public int $verificationStatus;
+
+    public string $completeAccountStatus;
+    
+    public bool|null $captainStoppedFinancialCycle;
 }

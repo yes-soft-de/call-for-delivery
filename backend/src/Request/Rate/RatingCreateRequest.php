@@ -6,7 +6,7 @@ class RatingCreateRequest
 {
     private string $comment;
     
-    private int $rating;
+    private float $rating;
 
     private $rater;
     

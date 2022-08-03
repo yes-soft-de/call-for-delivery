@@ -34,7 +34,6 @@ class AdminStoreSubscriptionService
         $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
         $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
         $this->subscriptionService = $subscriptionService;
-
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
@@ -43,10 +42,13 @@ class AdminStoreSubscriptionService
        //check Subscription
        $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
 
+       //check Subscription
+       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
+       
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
        foreach ($subscriptions as $subscription) {
-      
+
             if( ! $subscription['remainingCars'] ) {
                 $subscription['remainingCars'] = 0;
             }
@@ -87,12 +89,14 @@ class AdminStoreSubscriptionService
                 $sumCaptainOfferPrices += $captainOffer['price'];
             }
         }
-        
+
         $item['packageCost'] = $packageCost;
 
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
       
         $total = ($packageCost + $sumCaptainOfferPrices) - $item['sumPayments'];
+     
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     

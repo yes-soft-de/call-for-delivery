@@ -29,4 +29,8 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float|null $amountForStore;
 
     public int|null $countOrdersInMonth;
+  
+    public string|null $dateFinancialCycleStarts;
+
+    public int $countOrdersMaxFromNineteen;
 }

@@ -234,4 +234,14 @@ class AdminOrderManager
         
         return $orderEntity;
     }
+
+    public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
+    {
+        return $this->orderEntityRepository->filterCaptainOrdersByAdmin($request);
+    }
+
+    public function getSubOrdersByPrimaryOrderIdForAdmin(int $primaryOrderId): array
+    {
+        return $this->orderEntityRepository->getSubOrdersByPrimaryOrderIdForAdmin($primaryOrderId);
+    }
 }

@@ -40,4 +40,9 @@ class OrderClosestResponse
      * @var object|null
      */
     public $sourceDestination;
+
+    /**
+     * @var float|null
+     */
+    public $storeBranchToClientDistance;
 }

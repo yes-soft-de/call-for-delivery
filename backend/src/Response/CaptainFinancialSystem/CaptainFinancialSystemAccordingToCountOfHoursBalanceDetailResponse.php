@@ -21,4 +21,8 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public bool $advancePayment;
     
     public float $amountForStore;
+
+    public string|null $dateFinancialCycleStarts;
+
+    public string|null $dateFinancialCycleEnds;
 }

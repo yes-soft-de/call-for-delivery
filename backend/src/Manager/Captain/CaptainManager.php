@@ -109,7 +109,7 @@ class CaptainManager
 
             } else {
                 // its allowed to update the captain name and profile image  while its first update
-                if ($request->getCaptainName() === null) {
+                if ($request->getCaptainName() === null || $request->getCaptainName() === "") {
                     $request->setCaptainName($item->getCaptainName());
                 }
 
@@ -117,6 +117,8 @@ class CaptainManager
                     $this->imageManager->createImageOrUpdate($request->getImage(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
                 }
             }
+
+            $request = $this->handleEmptyStringInCaptainProfileUpdateRequest($request);
 
             $item = $this->autoMapping->mapToObject(CaptainProfileUpdateRequest::class, CaptainEntity::class, $request, $item);
 
@@ -127,15 +129,15 @@ class CaptainManager
             $this->entityManager->flush();
 
             //save images
-            if ($request->getDrivingLicence()) {
+            if ($request->getDrivingLicence() !== null) {
                 $this->imageManager->createImageOrUpdate($request->getDrivingLicence(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_DRIVE_LICENSE_IMAGE);
             }
 
-            if ($request->getMechanicLicense()) {
+            if ($request->getMechanicLicense() !== null) {
                 $this->imageManager->createImageOrUpdate($request->getMechanicLicense(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_MECHANIC_LICENSE_IMAGE);
             }
             
-            if ($request->getIdentity()) {
+            if ($request->getIdentity() !== null) {
                 $this->imageManager->createImageOrUpdate($request->getIdentity(), $item->getId(), ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE, ImageUseAsConstant::IMAGE_USE_AS_IDENTITY_IMAGE);
             }
            
@@ -269,6 +271,18 @@ class CaptainManager
         $profile['stcPay'] = $items[0]['stcPay'];
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
+
+        if (array_key_exists("completeAccountStatus", $items[0])) {
+            $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];
+        }
+
+        if (array_key_exists("userId", $items[0])) {
+            $profile['userId'] = $items[0]['userId'];
+        }
+
+        if (array_key_exists("verificationStatus", $items[0])) {
+            $profile['verificationStatus'] = $items[0]['verificationStatus'];
+        }
                
         foreach ($items as $captainProfile) {
 
@@ -369,5 +383,42 @@ class CaptainManager
     public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
     {
         return $this->captainEntityRepository->getReadyCaptainsAndCountOfTheirCurrentOrders();
+    }
+
+    // this function just replace empty strings with null
+    public function handleEmptyStringInCaptainProfileUpdateRequest(CaptainProfileUpdateRequest $request): CaptainProfileUpdateRequest
+    {
+        if ($request->getCar() === "")
+        {
+            $request->setCar(null);
+        }
+
+        if ($request->getBankAccountNumber() === "")
+        {
+            $request->setBankAccountNumber(null);
+        }
+
+        if ($request->getBankName() === "")
+        {
+            $request->setBankName(null);
+        }
+
+        if ($request->getStcPay() === "")
+        {
+            $request->setStcPay(null);
+        }
+
+        return $request;
+    }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->captainEntityRepository->getLastThreeActiveCaptainsProfilesForAdmin();
+    }
+
+    // get captain specific info for order by id response for admin
+    public function getCaptainForAdmin(int $captainProfileId): ?array
+    {
+        return $this->captainEntityRepository->getCaptainForAdmin($captainProfileId);
     }
 }

@@ -102,4 +102,23 @@ final class NotificationFirebaseConstant
     const STATE_ONGOING_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن في طريقه إلى تسليم الطلب";
  
     const STATE_DELIVERED_BY_ADMIN = "بواسطة الإدارة, تم تغيير حالة الطلب إلى الكابتن سلم الطلب";
+
+    const CANCEL_ASSIGN_BY_ADMIN = "تم إلغاء إسناد الطلب من قبل الإدارة ,الطلب رقم ";
+
+    // when a store subscribe with a captain offer
+    const STORE_HAS_DONE = 'قام المتجر ';
+
+    const SUBSCRIBED_WITH_CAPTAIN_OFFER = ' بالاشتراك بعرض الكابتن ';
+
+    const STORE_DENIED_CAPTAIN_ARRIVAL = 'تم نفي وصول الكابتن للمتجر من أجل الطلب رقم ';
+
+    const SCHEDULED_NOTIFICATION = 'إشعار مجدول - ';
+  
+    const THE_CAPTAIN = 'الكابتن';
+
+    const CAPTAIN_STOPE_FINANCIAL_CYCLE = 'أوقف دورته المالية';
+
+    const URL_CAPTAIN_DETAILS = '/captain_details';
+
+    const PLEASE_RECEIVE_DUES = 'لو سمحت بناء على طلبك تفضل باستلام مستحقاتك بتاريخ ';
 }

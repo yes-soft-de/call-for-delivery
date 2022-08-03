@@ -77,6 +77,11 @@ class AdminCaptainAmountFromOrderCashController extends BaseController
      *                @OA\Items(
      *                 ref=@Model(type="App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse")
      *              ),
+     *          ),
+     *              @OA\Property(type="array", property="finishedPayments",
+     *                @OA\Items(
+     *                 ref=@Model(type="App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse")
+     *              ),
      *          )
      *      )
      *    )

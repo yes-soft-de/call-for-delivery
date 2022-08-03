@@ -5,6 +5,7 @@ App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity:
     monthCompensation: 2
     bounceMaxCountOrdersInMonth: 10
     bounceMinCountOrdersInMonth: 5
+    status: true
 
   accordingOnCountOfOrdersFinancialSystemTwo:
     countOrdersInMonth: 2
@@ -12,6 +13,7 @@ App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity:
     monthCompensation: 3
     bounceMaxCountOrdersInMonth: 15
     bounceMinCountOrdersInMonth: 10
+    status: true
 
   accordingOnCountOfOrdersFinancialSystemThree:
     countOrdersInMonth: 3
@@ -19,3 +21,4 @@ App\Entity\CaptainFinancialSystemAccordingToCountOfOrdersEntity:
     monthCompensation: 4
     bounceMaxCountOrdersInMonth: 25
     bounceMinCountOrdersInMonth: 15
+    status: true

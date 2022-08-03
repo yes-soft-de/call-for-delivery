@@ -61,6 +61,10 @@ class OrderCreateByAdminRequest
      * @var bool|null
      */
     private $orderIsMain;
+     
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
 
     public function getStoreOwner(): int|StoreOwnerProfileEntity
     {
@@ -85,5 +89,15 @@ class OrderCreateByAdminRequest
     public function getImages(): ?string
     {
         return $this->images;
+    }
+
+    public function getDeliveryDate(): ?string
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate(?string $deliveryDate): void
+    {
+        $this->deliveryDate = $deliveryDate;
     }
 }

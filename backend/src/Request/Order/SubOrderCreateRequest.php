@@ -33,6 +33,16 @@ class SubOrderCreateRequest
     private null|CaptainEntity $captainId;
 
     /**
+     * @var string|null
+     */
+    private $filePdf;
+
+    /**
+     * @var float|null
+     */
+    private $storeBranchToClientDistance;
+
+    /**
      * Get the value of storeOwner
      */ 
     public function getStoreOwner()
@@ -210,5 +220,15 @@ class SubOrderCreateRequest
         $this->captainId = $captainId;
 
         return $this;
+    }
+
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate($deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
     }
 }

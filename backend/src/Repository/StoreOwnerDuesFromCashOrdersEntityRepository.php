@@ -68,8 +68,8 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
 
-            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
-            ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            // ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
+            // ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
             
             ->getQuery()
             ->getResult();
@@ -96,6 +96,24 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             
             ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
 
             ->getQuery()
             ->getResult();

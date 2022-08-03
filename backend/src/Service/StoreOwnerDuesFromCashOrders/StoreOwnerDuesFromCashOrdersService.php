@@ -20,39 +20,48 @@ class StoreOwnerDuesFromCashOrdersService
         $this->storeOwnerDuesFromCashOrdersManager = $storeOwnerDuesFromCashOrdersManager;
     }
 
-    public function createStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity): ?StoreOwnerDuesFromCashOrdersEntity
+    public function createStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity, int $flag, float $orderCost): ?StoreOwnerDuesFromCashOrdersEntity
     {
         $storeOwnerDuesFromCashOrders = $this->storeOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByOrderId($orderEntity->getId());
         if( ! $storeOwnerDuesFromCashOrders) {
-            return $this->create($orderEntity);
+            return $this->create($orderEntity, $orderCost, $flag);
         }
 
-        return $this->updateStoreOwnerDuesFromCashOrders($orderEntity, $storeOwnerDuesFromCashOrders);
+        return $this->updateStoreOwnerDuesFromCashOrders($orderEntity, $storeOwnerDuesFromCashOrders, $orderCost, $flag);
     }
 
-    public function create(OrderEntity $orderEntity): ?StoreOwnerDuesFromCashOrdersEntity
+    public function create(OrderEntity $orderEntity, float $orderCost, int $flag): ?StoreOwnerDuesFromCashOrdersEntity
     {
         $request = new StoreOwnerDuesFromCashOrdersRequest();
 
         $request->setStore($orderEntity->getStoreOwner());
         $request->setOrderId($orderEntity);
         $request->setAmount($orderEntity->getCaptainOrderCost());
-        $request->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
-        $request->setStoreAmount($orderEntity->getOrderCost());
+        // $request->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $request->setFlag($flag);
+        // $request->setStoreAmount($orderEntity->getOrderCost());
+        $request->setStoreAmount($orderCost);
         $request->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->storeOwnerDuesFromCashOrdersManager->createStoreOwnerDuesFromCashOrders($request); 
     }
 
-    public function updateStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity, StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrdersEntity): ?StoreOwnerDuesFromCashOrdersEntity
+    public function updateStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity, StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrdersEntity, float $orderCost, int $flag): ?StoreOwnerDuesFromCashOrdersEntity
     {
         $storeOwnerDuesFromCashOrdersEntity->setStore($orderEntity->getStoreOwner());
         $storeOwnerDuesFromCashOrdersEntity->setOrderId($orderEntity);
         $storeOwnerDuesFromCashOrdersEntity->setAmount($orderEntity->getCaptainOrderCost());
-        $storeOwnerDuesFromCashOrdersEntity->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
-        $storeOwnerDuesFromCashOrdersEntity->setStoreAmount($orderEntity->getOrderCost());
+        // $storeOwnerDuesFromCashOrdersEntity->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
+        $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
+        // $storeOwnerDuesFromCashOrdersEntity->setStoreAmount($orderEntity->getOrderCost());
+        $storeOwnerDuesFromCashOrdersEntity->setStoreAmount($orderCost);
         $storeOwnerDuesFromCashOrdersEntity->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
 
         return $this->storeOwnerDuesFromCashOrdersManager->updateStoreOwnerDuesFromCashOrders($storeOwnerDuesFromCashOrdersEntity); 
+    }
+
+    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByStoreOwnerId($storeOwnerId);
     }
 }

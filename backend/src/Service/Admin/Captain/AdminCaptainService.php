@@ -11,9 +11,12 @@ use App\Entity\ImageEntity;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
+use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
 use App\Request\Image\ImageCreateRequest;
 use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
+use App\Response\Admin\Captain\DeleteCaptainAccountAndProfileByAdminResponse;
+use App\Service\Eraser\CaptainEraserService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailService;
@@ -28,8 +31,10 @@ class AdminCaptainService
     private ImageService $imageService;
     private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
     private AdminOrderService $adminOrderService;
+    private CaptainEraserService $captainEraserService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService, AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService, AdminOrderService $adminOrderService)
+    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService,
+                                AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService, AdminOrderService $adminOrderService, CaptainEraserService $captainEraserService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainManager = $adminCaptainManager;
@@ -37,6 +42,7 @@ class AdminCaptainService
         $this->imageService = $imageService;
         $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
         $this->adminOrderService = $adminOrderService;
+        $this->captainEraserService = $captainEraserService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -221,5 +227,23 @@ class AdminCaptainService
         }
 
         return $response;
+    }
+
+    public function deleteCaptainAccountAndProfileByAdmin(DeleteCaptainAccountAndProfileByAdminRequest $request): string|DeleteCaptainAccountAndProfileByAdminResponse
+    {
+        return $this->captainEraserService->deleteCaptainAccountAndProfileByAdmin($request);
+    }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        $captainsProfiles = $this->adminCaptainManager->getLastThreeActiveCaptainsProfilesForAdmin();
+
+        if (! empty($captainsProfiles)) {
+            foreach ($captainsProfiles as $key => $value) {
+                $captainsProfiles[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            }
+        }
+
+        return $captainsProfiles;
     }
 }

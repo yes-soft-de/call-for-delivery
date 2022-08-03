@@ -28,6 +28,10 @@ class OrderCreateRequest
 
     private bool|null $orderIsMain;
 
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
+
     /**
      * Get the value of storeOwner
      */ 
@@ -166,5 +170,18 @@ class OrderCreateRequest
         $this->destination = $destination;
 
         return $this;
+    }
+
+    /**
+     * Get the value of deliveryDate
+     */ 
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate($deliveryDate): void
+    {
+        $this->deliveryDate = $deliveryDate;
     }
 }

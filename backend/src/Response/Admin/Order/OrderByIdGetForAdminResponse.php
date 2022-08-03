@@ -115,4 +115,18 @@ class OrderByIdGetForAdminResponse
      *     @OA\Items(type="object"))
      */
     public $captain;
+
+    /**
+     * @OA\Property(type="array", property="filePdf",
+     *     @OA\Items(type="string"))
+     */
+    public array|null $filePdf;
+
+    public float|null $storeBranchToClientDistance;
+
+    /**
+     * @OA\Property(type="array", property="subOrders",
+     *     @OA\Items(type="object"))
+     */
+    public $subOrders;
 }

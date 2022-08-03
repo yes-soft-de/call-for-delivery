@@ -55,5 +55,5 @@ class AdminCaptainFinancialDuesManager
        }
        
         return "ok";
-    } 
+    }  
 }

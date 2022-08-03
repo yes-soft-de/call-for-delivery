@@ -40,4 +40,20 @@ class UploadFileHelperService
 //        }
         return $imageURL;
     }
+
+    public function getFileParams(string|null $imageURL): ?array
+    {
+        if ($imageURL !== null) {
+            //return null;
+            $item = [];
+            $item['fileURL'] = $imageURL;
+            $item['file'] = $this->params . $imageURL;
+            $item['baseURL'] = $this->params;
+
+            return $item;
+
+        }
+        
+        return $imageURL;
+    }
 }

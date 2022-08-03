@@ -6,5 +6,5 @@ class RatingResponse
 {
     public int $id;
     public string $comment;
-    public int $rating;  
+    public float $rating;  
 }

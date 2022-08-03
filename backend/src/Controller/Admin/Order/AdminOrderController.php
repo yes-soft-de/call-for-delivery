@@ -147,32 +147,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="objecy", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="payment"),
-     *              @OA\Property(type="number", property="orderCost"),
-     *              @OA\Property(type="string", property="note"),
-     *              @OA\Property(type="object", property="deliveryDate"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="object", property="updatedAt"),
-     *              @OA\Property(type="integer", property="kilometer"),
-     *              @OA\Property(type="string", property="state"),
-     *              @OA\Property(type="integer", property="orderType"),
-     *              @OA\Property(type="integer", property="storeOrderDetailsId"),
-     *              @OA\Property(type="object", property="destination"),
-     *              @OA\Property(type="string", property="recipientName"),
-     *              @OA\Property(type="string", property="recipientPhone"),
-     *              @OA\Property(type="string", property="detail"),
-     *              @OA\Property(type="integer", property="storeOwnerBranchId"),
-     *              @OA\Property(type="string", property="branchName"),
-     *              @OA\Property(type="object", property="location"),
-     *              @OA\Property(type="object", property="orderImage",
-     *                  @OA\Property(type="string", property="imageURL"),
-     *                  @OA\Property(type="string", property="image"),
-     *                  @OA\Property(type="string", property="baseURL")
-     *              ),
-     *              @OA\Property(type="integer", property="captainUserId"),
-     *              @OA\Property(type="string", property="captainName"),
-     *              @OA\Property(type="string", property="phone")
+     *              ref=@Model(type="App\Response\Admin\Order\OrderByIdGetForAdminResponse")
      *          )
      *      )
      * )
@@ -364,7 +339,11 @@ class AdminOrderController extends BaseController
      *                  @OA\Items(
      *                      ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
      *                  )
-     *              )
+     *              ),
+     *              @OA\Property(type="integer", property="pendingOrdersCount"),
+     *              @OA\Property(type="integer", property="hiddenOrdersCount"),
+     *              @OA\Property(type="integer", property="notDeliveredOrdersCount"),
+     *              @OA\Property(type="integer", property="totalOrderCount")
      *           )
      *        )
      *    )
@@ -374,7 +353,7 @@ class AdminOrderController extends BaseController
      */
     public function getPendingOrdersForAdmin(): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin();
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId());
         
         return $this->response($response, self::FETCH);
     }
@@ -430,7 +409,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->rePendingAcceptedOrderByAdmin($request);
+        $result = $this->adminOrderService->rePendingAcceptedOrderByAdmin($request, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_ACCEPTED_BY_CAPTAIN) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
@@ -474,7 +453,7 @@ class AdminOrderController extends BaseController
      */
     public function updateOrderToHidden(int $id): JsonResponse
     {
-        $result = $this->adminOrderService->updateOrderToHidden($id);
+        $result = $this->adminOrderService->updateOrderToHidden($id, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::NOTFOUND);
@@ -513,6 +492,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="boolean", property="orderIsMain")
      *      )
      * )
      * 
@@ -555,7 +535,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->orderUpdateByAdmin($request);
+        $result = $this->adminOrderService->orderUpdateByAdmin($request, $this->getUserId());
 
         // if ($result === OrderResultConstant::ERROR_UPDATE_BRANCH) {
         //     return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_UPDATE_BRANCH);
@@ -661,7 +641,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->createOrderByAdmin($request);
+        $result = $this->adminOrderService->createOrderByAdmin($request, $this->getUserId());
 
         if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
@@ -744,7 +724,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
          }
 
-        $response = $this->adminOrderService->assignOrderToCaptain($request);
+        $response = $this->adminOrderService->assignOrderToCaptain($request, $this->getUserId());
 
         if($response === OrderStateConstant::ORDER_STATE_PENDING_INT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
@@ -821,7 +801,7 @@ class AdminOrderController extends BaseController
      */
     public function orderCancelByAdmin(int $id): JsonResponse
     {
-        $response = $this->adminOrderService->orderCancelByAdmin($id);
+        $response = $this->adminOrderService->orderCancelByAdmin($id, $this->getUserId());
 
         if ($response === OrderResultConstant::ORDER_TYPE_BID) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
@@ -909,12 +889,70 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->updateOrderStateByAdmin($request);
+        $result = $this->adminOrderService->updateOrderStateByAdmin($request, $this->getUserId());
 
         if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: filter captain orders by admin
+     * @Route("filtercaptainordersbyadmin", name="filterCaptainOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="captainId", description="the id of captain profile"),
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="payment")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accommodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="number", property="totalCashOrdersCost"),
+     *              @OA\Property(type="number", property="countOrders"),
+     *              @OA\Property(type="array", property="orders",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\Order\OrderGetForAdminResponse")
+     *                  )
+     *              )
+     *      )
+     *      )
+     *   )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderCaptainFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterCaptainOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
     }
 }

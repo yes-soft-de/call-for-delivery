@@ -14,6 +14,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\CaptainFinancialDuesEntity;
 /**
  * @method CaptainEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -97,14 +98,26 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
-                'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay');
+                'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.completeAccountStatus')
+            ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+            ->addSelect('captainFinancialDuesEntity.captainStoppedFinancialCycle')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = captainEntity.captainId'
+            );
 
         if ($captainProfileStatus === CaptainConstant::CAPTAIN_ACTIVE || $captainProfileStatus === CaptainConstant::CAPTAIN_INACTIVE) {
             $query->andWhere('captainEntity.status = :captainProfileStatus');
             $query->setParameter('captainProfileStatus', $captainProfileStatus);
         }
 
+        $query->leftJoin(CaptainFinancialDuesEntity::class, 'captainFinancialDuesEntity', Join::WITH, 'captainFinancialDuesEntity.captain = captainEntity.id');
+
         $query->orderBy('captainEntity.id', 'DESC');
+        $query->groupBy('captainEntity.id');
 
         return $query->getQuery()->getResult();
     }
@@ -114,8 +127,16 @@ class CaptainEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
-                'captainEntity.status', 'chatRoomEntity.roomId')
-           ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+                'captainEntity.completeAccountStatus', 'captainEntity.status', 'chatRoomEntity.roomId')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+            ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+
+            ->leftJoin(
+                UserEntity::class,
+                'userEntity',
+                Join::WITH,
+                'userEntity.id = captainEntity.captainId'
+            )
 
             ->leftJoin(
                 ChatRoomEntity::class,
@@ -201,5 +222,57 @@ class CaptainEntityRepository extends ServiceEntityRepository
             
             ->getQuery()
             ->getResult();
+    }
+
+    public function getLastThreeActiveCaptainsProfilesForAdmin(): array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainName', 'captainEntity.createdAt')
+            ->addSelect('imageEntity.imagePath as images')
+
+            ->andWhere('captainEntity.status = :activeStatus')
+            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('captainEntity.id', 'DESC')
+            ->setMaxResults(3)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    // get captain specific info for order by id response for admin
+    public function getCaptainForAdmin(int $captainProfileId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+                'captainEntity.status')
+            ->addSelect('imageEntity.imagePath as images')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

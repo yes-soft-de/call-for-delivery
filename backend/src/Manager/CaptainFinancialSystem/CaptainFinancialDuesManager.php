@@ -98,4 +98,9 @@ class CaptainFinancialDuesManager
   
         return $this->getCaptainFinancialDues($captain->getId(), $state);
     } 
+    
+    public function getLatestCaptainFinancialDuesByUserId(int $userId): ?CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDuesByUserId($userId);
+    } 
 }

@@ -64,11 +64,19 @@ class SupplierProfileEntity
     #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: BidDetailsEntity::class)]
     private $bidDetailsEntities;
 
+    #[ORM\OneToMany(mappedBy: 'supplierProfile', targetEntity: OrderLogEntity::class)]
+    private $orderLogEntities;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->announcementEntities = new ArrayCollection();
         $this->bidDetailsEntities = new ArrayCollection();
+        $this->orderLogEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,6 +314,48 @@ class SupplierProfileEntity
                 $bidDetailsEntity->setSupplierProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderLogEntity>
+     */
+    public function getOrderLogEntities(): Collection
+    {
+        return $this->orderLogEntities;
+    }
+
+    public function addOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if (!$this->orderLogEntities->contains($orderLogEntity)) {
+            $this->orderLogEntities[] = $orderLogEntity;
+            $orderLogEntity->setSupplierProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLogEntity(OrderLogEntity $orderLogEntity): self
+    {
+        if ($this->orderLogEntities->removeElement($orderLogEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLogEntity->getSupplierProfile() === $this) {
+                $orderLogEntity->setSupplierProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

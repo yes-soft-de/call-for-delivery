@@ -8,6 +8,7 @@ use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilte
 use App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentToCompanyService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminCaptainAmountFromOrderCashService
 {
@@ -25,20 +26,26 @@ class AdminCaptainAmountFromOrderCashService
     public function filterCaptainAmountFromOrderCash(CaptainAmountFromOrderCashFilterGetRequest $request): array
     {
         $detail = [];
-        $sumAmountWithCaptain = 0 ;
+        $sumAmountWithCaptain = 0;
+        $finishedPayments = [];
 
         $items = $this->adminCaptainAmountFromOrderCashManager->filterCaptainAmountFromOrderCash($request);
         
         foreach ($items as $captainAmountFromOrderCash) {
-          
-            $sumAmountWithCaptain = $sumAmountWithCaptain + $captainAmountFromOrderCash['amount'];
-          
-            $detail[] = $this->autoMapping->map("array", CaptainAmountFromOrderCashResponse::class, $captainAmountFromOrderCash);
+           //Unfinished Payments
+            if($captainAmountFromOrderCash['flag'] ===  OrderAmountCashConstant::ORDER_PAID_FLAG_NO) {
+                $sumAmountWithCaptain = $sumAmountWithCaptain + $captainAmountFromOrderCash['amount'];
+                $detail[] = $this->autoMapping->map("array", CaptainAmountFromOrderCashResponse::class, $captainAmountFromOrderCash);
+            }
+            //Finished Payments
+            else {
+                $finishedPayments[] = $this->autoMapping->map("array", CaptainAmountFromOrderCashResponse::class, $captainAmountFromOrderCash);
+            }
         }
 
         $total = $this->getTotal($sumAmountWithCaptain, $request->getCaptainId(), $request->getFromDate(), $request->getToDate());
 
-        return ['detail' => $detail, 'total' => $total];
+        return ['detail' => $detail, 'finishedPayments' => $finishedPayments, 'total' => $total];
     }
 
     public function getTotal(float $sumAmountWithCaptain, int $captainId, string $fromDate, string $toDate): array

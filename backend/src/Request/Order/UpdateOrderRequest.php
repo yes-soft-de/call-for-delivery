@@ -26,6 +26,10 @@ class UpdateOrderRequest
     private string|null $detail;
    
     private StoreOwnerBranchEntity|int $branch;
+    
+    private string|null $filePdf;
+
+    private float|null $storeBranchToClientDistance;
 
     /**
      * Get the value of id

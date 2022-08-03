@@ -30,5 +30,13 @@ final class OrderStateConstant
 
     const ORDER_STATE_PENDING_INT = 1;
 
-    const ORDER_STATE_CANCEL_INT = 0;
+    const ORDER_STATE_ARRAY_INT = [
+        self::ORDER_STATE_PENDING => 1,
+        self::ORDER_STATE_ON_WAY => 2,
+        self::ORDER_STATE_IN_STORE => 3,
+        self::ORDER_STATE_PICKED => 4,
+        self::ORDER_STATE_ONGOING => 5,
+        self::ORDER_STATE_DELIVERED => 6,
+        self::ORDER_STATE_CANCEL => 7
+    ];
 }

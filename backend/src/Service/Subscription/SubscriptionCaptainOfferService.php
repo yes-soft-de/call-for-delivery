@@ -27,14 +27,17 @@ class SubscriptionCaptainOfferService
 
     public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): SubscriptionCaptainOfferCreateResponse|SubscriptionIsReadyResponse 
     {
-        $canCreateSubscriptionCaptainOffer = $this->isThereSubscription($request->getStoreOwner()); 
-     
+        $canCreateSubscriptionCaptainOffer = $this->isThereSubscription($request->getStoreOwner());
+
         if($canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND || $canCreateSubscriptionCaptainOffer->subscriptionState === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_CAN_NOT_SUBSCRIPTION) {
-      
+
             return  $canCreateSubscriptionCaptainOffer;
         }
 
         $captainOffer = $this->subscriptionCaptainOfferManager->createSubscriptionCaptainOffer($request);
+
+        // send two firebase notifications to admin
+        $this->sendDoubledFirebaseNotificationToAdmin($request->getStoreOwner()->getStoreOwnerName(), $request->getCaptainOffer()->getId());
 
         return $this->autoMapping->map(SubscriptionCaptainOfferEntity::class, SubscriptionCaptainOfferCreateResponse::class, $captainOffer);
     }

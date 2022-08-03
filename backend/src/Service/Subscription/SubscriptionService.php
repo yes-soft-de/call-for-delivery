@@ -592,6 +592,8 @@ class SubscriptionService
 
         $item['packageCost'] = $packageCost;
       
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
+      
         $total = $item['sumPayments'] - ($packageCost + $sumCaptainOfferPrices);
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
@@ -615,13 +617,12 @@ class SubscriptionService
         $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
 
         $packageBalance = $this->packageBalance($store->getStoreOwnerId());
-       
+
         $balance = [];
         $balance['remainingOrders'] = 0;
         $balance['remainingCars'] = 0;
         
         if($packageBalance->status !== SubscriptionConstant::UNSUBSCRIBED) {
-           
             $balance['remainingOrders'] = $packageBalance->remainingOrders;
             $balance['remainingCars'] = $packageBalance->remainingCars;
         }

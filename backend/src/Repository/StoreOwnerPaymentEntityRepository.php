@@ -80,4 +80,22 @@ class StoreOwnerPaymentEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getPaymentsByStoreOwnerId(int $storeOwnerId): array
+    {
+        return $this->createQueryBuilder('storeOwnerPaymentEntity')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerPaymentEntity.store'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
