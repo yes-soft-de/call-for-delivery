@@ -1,5 +1,6 @@
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
@@ -27,8 +28,10 @@ class LoginStateManager {
         case AuthStatus.CODE_SENT:
           _screenState.verifyFirst(getIt<AuthPrefsHelper>().getUsername(),
               getIt<AuthPrefsHelper>().getPassword());
+          saveCredential(_screenState);
           break;
         case AuthStatus.AUTHORIZED:
+          saveCredential(_screenState);
           _screenState.moveToNext();
           break;
         case AuthStatus.NOT_LOGGED_IN:
@@ -80,5 +83,14 @@ class LoginStateManager {
     _screenState = _loginScreenState;
     _authService.verifyCodeApi(request).whenComplete(
         () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
+  }
+
+  void saveCredential(LoginScreenState _screenState) {
+    if (_screenState.rememberMe) {
+      Logger().info('Saving Credential',
+          'Remember me with value ${_screenState.rememberMe}');
+      AuthPrefsHelper().saveLoginCredential();
+    }
+    return;
   }
 }

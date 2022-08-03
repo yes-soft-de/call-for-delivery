@@ -32,6 +32,7 @@ class LoginScreenState extends State<LoginScreen> {
   late AsyncSnapshot loadingSnapshot;
   late StreamSubscription _stateSubscription;
   bool deepLinkChecked = false;
+  bool rememberMe = false;
   void refresh() {
     if (mounted) setState(() {});
   }

@@ -790,13 +790,14 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       url = orderInfo.destinationLink ?? '';
                     }
                     if (url == '') {
+                      Fluttertoast.showToast(msg: S.current.invalidMapLink);
                       return;
                     }
                     try {
                       launch(url);
                     } catch (e) {
                       Fluttertoast.showToast(
-                          msg: S.current.destinationUnavailable + url);
+                          msg: S.current.invalidMapLink + url);
                     }
                   },
                   onTap: () {

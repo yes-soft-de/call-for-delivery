@@ -1,3 +1,4 @@
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/utils/components/op_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -25,6 +26,7 @@ class CustomLoginFormField extends StatefulWidget {
   final bool numbers;
   final bool halfField;
   final int? maxLength;
+  final Iterable<String>? allowSuggestions;
   @override
   _CustomLoginFormFieldState createState() => _CustomLoginFormFieldState();
 
@@ -48,7 +50,8 @@ class CustomLoginFormField extends StatefulWidget {
       this.style,
       this.numbers = false,
       this.halfField = false,
-      this.maxLength});
+      this.maxLength,
+      this.allowSuggestions});
 }
 
 class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
@@ -80,7 +83,9 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                   child: SizedBox(
                     height: widget.height,
                     child: TextFormField(
+                      autofillHints: widget.allowSuggestions,
                       style: widget.style,
+                      enableSuggestions: true,
                       autovalidateMode: mode,
                       onChanged: (s) {
                         if (widget.onChanged != null) {

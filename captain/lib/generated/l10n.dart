@@ -7340,11 +7340,21 @@ class S {
     );
   }
 
-  /// `Far orders`
+  /// `Far`
   String get farOrders {
     return Intl.message(
-      'Far orders',
+      'Far',
       name: 'farOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remember me`
+  String get rememberMe {
+    return Intl.message(
+      'Remember me',
+      name: 'rememberMe',
       desc: '',
       args: [],
     );

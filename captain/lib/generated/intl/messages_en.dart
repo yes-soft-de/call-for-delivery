@@ -415,7 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
-        "farOrders": MessageLookupByLibrary.simpleMessage("Far orders"),
+        "farOrders": MessageLookupByLibrary.simpleMessage("Far"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("Favorite Categories"),
         "favoriteStores":
@@ -876,6 +876,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reject": MessageLookupByLibrary.simpleMessage("Reject"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
+        "rememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
         "renewOldPlan":
