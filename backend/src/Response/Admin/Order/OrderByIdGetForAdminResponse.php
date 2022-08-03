@@ -129,4 +129,8 @@ class OrderByIdGetForAdminResponse
      *     @OA\Items(type="object"))
      */
     public $subOrders;
+
+    public int|null $isCaptainPaidToProvider;
+
+    public object|null $dateCaptainPaidToProvider;
 }

@@ -52,6 +52,8 @@ use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService
 use App\Service\Captain\CaptainService;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
+use App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse;
 
 class AdminOrderService
 {
@@ -656,6 +658,20 @@ class AdminOrderService
         $response['orders'] = $result;
         $response['countOrders'] = count($orders);
 
+        return $response;
+    }
+
+    // filter orders in which the store's answer differs from that of the captain (paid or not paid)
+    public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): array
+    {
+        $response = [];
+  
+        $orders = $this->adminOrderManager->filterOrdersPaidOrNotPaidByAdmin($request);
+  
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterOrdersPaidOrNotPaidByAdminResponse::class, $order);
+        }
+  
         return $response;
     }
 }

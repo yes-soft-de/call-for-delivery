@@ -29,6 +29,7 @@ use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Request\Order\UpdateOrderRequest;
+use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 
 class OrderManager
 {
@@ -628,5 +629,22 @@ class OrderManager
     public function getStoreOrdersByStoreOwnerId(int $storeOwnerId): array
     {
         return $this->orderRepository->getStoreOrdersByStoreOwnerId($storeOwnerId);
+    }
+
+    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+               
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCaptainPaidToProviderRequest::class, OrderEntity::class, $request, $orderEntity);
+        
+        $orderEntity->setDateCaptainPaidToProvider(new DateTime());
+        
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }
