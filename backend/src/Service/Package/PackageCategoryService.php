@@ -19,11 +19,11 @@ class PackageCategoryService
         $this->packageService = $packageService;
     }
 
-    public function getAllPackagesCategoriesAndPackagesForStore(): ?array
+    public function getAllActivePackagesCategoriesAndPackagesForStore(): ?array
     {
         $response = [];
 
-        $packageCategories = $this->packageCategoryManager->getAllPackagesCategories();
+        $packageCategories = $this->packageCategoryManager->getAllActivePackagesCategories();
 
         foreach ($packageCategories as $packageCategory) {
 
