@@ -22,6 +22,8 @@ use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Response\Subscription\SubscriptionExtendResponse;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -188,6 +190,11 @@ class AdminStoreSubscriptionService
         }
 
         return PaymentConstant::THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION;
+    }
+
+    public function calculateCostDeliveryOrderForAdmin(AdminCalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
+    {
+        return $this->subscriptionService->calculateCostDeliveryOrderForAdmin($request);
     }
 }
  

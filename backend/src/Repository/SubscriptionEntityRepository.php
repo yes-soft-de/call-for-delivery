@@ -62,7 +62,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
             ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
-             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired, packageEntity.type, packageEntity.geographicalRange, packageEntity.extraCost as packageExtraCost, packageEntity.cost as packageCost')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
              'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')

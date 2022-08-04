@@ -705,3 +705,15 @@ App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest:
             - NotBlank: ~
         deleteEvenItIsBeingUsed:
             - NotNull: ~
+            
+App\Request\Subscription\CalculateCostDeliveryOrderRequest:
+    properties:
+        storeBranchToClientDistance:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest:
+    properties:
+        storeBranchToClientDistance:
+            - NotBlank: ~
+        storeOwnerProfileId:
+            - NotBlank: ~
