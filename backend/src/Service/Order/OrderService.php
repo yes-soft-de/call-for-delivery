@@ -71,6 +71,8 @@ use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 
 class OrderService
 {
@@ -1404,5 +1406,10 @@ class OrderService
     {
         return $this->orderManager->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
             $specificDateTime);
+    }
+
+    public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
+    {
+        return $this->subscriptionService->calculateCostDeliveryOrder($request);
     }
 }

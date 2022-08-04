@@ -26,6 +26,9 @@ use App\Response\Subscription\StoreSubscriptionResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
+use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 
 class SubscriptionService
 {
@@ -682,5 +685,57 @@ class SubscriptionService
     {
         return $this->subscriptionManager->updateSubscriptionByRemovingCaptainOfferSubscription($subscriptionId);
     }
+
+    //Calculate Cost Delivery Order
+    public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request):CalculateCostDeliveryOrderResponse
+    {
+        $item = [];
+        $item['extraDistance'] = 0;
+        $item['orderDeliveryCost'] = 0;
+        $item['extraOrderDeliveryCost'] = 0;
+
+        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($request->getStoreOwner());
+        if($subscription) {
+           
+            $item['extraDistance'] = $this->getExtraDistance($subscription['geographicalRange'], $request->getStoreBranchToClientDistance());
+
+            $item['orderDeliveryCost'] = $subscription['packageCost'];
+            
+            $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
+            
+            $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
+        }
+     
+        return $this->autoMapping->map("array", CalculateCostDeliveryOrderResponse::class, $item);
+    }
+
+    //Get Extra Distance
+    public function getExtraDistance(float|null $geographicalRange, float $storeBranchToClientDistance)
+    {
+        $extraDistance = 0;
+
+        if(!$geographicalRange) {
+            return $extraDistance;
+        }
+
+        if( $storeBranchToClientDistance > $geographicalRange) {
+            $extraDistance = $storeBranchToClientDistance - $geographicalRange;
+        }
+
+        return $extraDistance;
+    }
+
+     //Calculate Cost Delivery Order for admin
+     public function calculateCostDeliveryOrderForAdmin(AdminCalculateCostDeliveryOrderRequest $adminRequest):CalculateCostDeliveryOrderResponse
+     {
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($adminRequest->getStoreOwnerProfileId());
+      
+        $request = new CalculateCostDeliveryOrderRequest();
+        
+        $request->setStoreOwner($store->getStoreOwnerId());
+        $request->setStoreBranchToClientDistance($adminRequest->getStoreBranchToClientDistance());
+       
+        return $this->calculateCostDeliveryOrder($request);
+     }
 }
  

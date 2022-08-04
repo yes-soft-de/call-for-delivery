@@ -52,6 +52,9 @@ use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService
 use App\Service\Captain\CaptainService;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 
 class AdminOrderService
 {
@@ -72,12 +75,13 @@ class AdminOrderService
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private CaptainService $captainService;
     private OrderLogToMySqlService $orderLogToMySqlService;
+    private AdminStoreSubscriptionService $adminStoreSubscriptionService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
                                 NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService,
                                 StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogToMySqlService $orderLogToMySqlService)
+                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogToMySqlService $orderLogToMySqlService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -96,6 +100,7 @@ class AdminOrderService
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
         $this->captainService = $captainService;
         $this->orderLogToMySqlService = $orderLogToMySqlService;
+        $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -657,5 +662,10 @@ class AdminOrderService
         $response['countOrders'] = count($orders);
 
         return $response;
+    }
+    
+    public function calculateCostDeliveryOrder(AdminCalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
+    {
+        return $this->adminStoreSubscriptionService->calculateCostDeliveryOrderForAdmin($request);
     }
 }

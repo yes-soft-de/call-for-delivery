@@ -31,6 +31,8 @@ use App\Constant\Order\OrderStateConstant;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+;
 
 /**
  * @Route("v1/admin/order/")
@@ -953,6 +955,66 @@ class AdminOrderController extends BaseController
 
         $result = $this->adminOrderService->filterCaptainOrdersByAdmin($request);
 
+        return $this->response($result, self::FETCH);
+    }
+    
+    /**
+     * admin: Calculate the cost delivery the order for admin.
+     * @Route("calculatecostdeliveryorderforadmin", name="calculateCostDeliveryOrderForAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="storeOwnerProfileId"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="number", property="orderDeliveryCost"),
+     *            @OA\Property(type="number", property="extraDistance"),
+     *            @OA\Property(type="number", property="extraOrderDeliveryCost"),
+     *            @OA\Property(type="number", property="total"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function calculateCostDeliveryOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AdminCalculateCostDeliveryOrderRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->calculateCostDeliveryOrder($request);
+    
         return $this->response($result, self::FETCH);
     }
 }
