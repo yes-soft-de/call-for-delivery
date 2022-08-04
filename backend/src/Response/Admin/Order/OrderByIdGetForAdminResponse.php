@@ -130,7 +130,13 @@ class OrderByIdGetForAdminResponse
      */
     public $subOrders;
 
-    public int|null $isCaptainPaidToProvider;
+    /**
+     * @var int|null
+     */
+    public $isCaptainPaidToProvider;
 
-    public object|null $dateCaptainPaidToProvider;
+    /**
+     * @var DateTime|null
+     */
+    public $dateCaptainPaidToProvider;
 }
