@@ -140,17 +140,18 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     }
     var ordersData = nearbyOrders as OrderModel;
     var uiList = <Widget>[];
-    uiList.add(Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CustomFormField(
-          onChanged: (s) {
-            screenState.refresh();
-          },
-          numbers: true,
-          hintText: S.current.searchForOrder,
-          preIcon: const Icon(Icons.search_rounded),
-          controller: searchNearby),
-    ));
+    // uiList.add(Padding(
+    //   padding: const EdgeInsets.all(8.0),
+    //   child: CustomFormField(
+    //       onChanged: (s) {
+    //         screenState.refresh();
+    //       },
+    //       numbers: true,
+    //       hintText: S.current.searchForOrder,
+    //       preIcon: const Icon(Icons.search_rounded),
+    //       controller: searchNearby),
+    // ));
+
     var data = screenState.currentLocation != null
         ? _sortOrder(ordersData.data)
         : ordersData.data;
@@ -184,7 +185,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     ? Colors.red[700]
                     : Theme.of(context).colorScheme.secondary,
                 orderIsMain: element.orderIsMain,
-                deliveryDate: element.deliveryDate,
                 note: element.note,
                 orderCost: FixedNumber.getFixedNumber(element.orderCost),
                 orderNumber: element.id.toString(),
@@ -239,7 +239,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             child: NearbyOrdersCard(
               background: element.orderIsMain ? Colors.red[700] : null,
               orderIsMain: element.orderIsMain,
-              deliveryDate: element.deliveryDate,
               note: element.note,
               orderCost: FixedNumber.getFixedNumber(element.orderCost),
               orderNumber: element.id.toString(),
@@ -254,7 +253,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   destance: (s) {
                     s = s?.replaceAll(',', '');
                     if (num.tryParse(s ?? '') != null) {
-                      print(s);
                       element.distance = num.tryParse(s ?? '') ?? 0;
                       screenState.refresh();
                     }

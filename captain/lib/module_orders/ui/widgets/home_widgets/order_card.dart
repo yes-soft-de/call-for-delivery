@@ -177,7 +177,6 @@ class OrderCard extends StatelessWidget {
 
 class NearbyOrdersCard extends StatelessWidget {
   final String orderNumber;
-  final String deliveryDate;
   final String orderCost;
   final Widget distance;
   final String? branchToDestination;
@@ -192,7 +191,6 @@ class NearbyOrdersCard extends StatelessWidget {
       {required this.orderNumber,
       this.branchToDestination,
       required this.distance,
-      required this.deliveryDate,
       required this.orderCost,
       required this.note,
       required this.branchName,
@@ -217,7 +215,7 @@ class NearbyOrdersCard extends StatelessWidget {
             color,
           ])),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
             Row(
@@ -288,19 +286,8 @@ class NearbyOrdersCard extends StatelessWidget {
                 verticalTile(context,
                     title: S.current.orderNumber, subtitle: orderNumber),
                 verticalTile(context,
-                    title: S.current.deliverDate, subtitle: deliveryDate),
-              ],
-            ),
-            // divider
-            divider(context),
-            // store name & branch name
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.storeName, subtitle: storeName),
-                verticalTile(context,
-                    title: S.current.branch, subtitle: branchName),
+                    title: S.current.store,
+                    subtitle: storeName + ' | ' + branchName),
               ],
             ),
             // divider
@@ -326,7 +313,9 @@ class NearbyOrdersCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                  dotedDivider(context),
                   distance,
+                  dotedDivider(context),
                   Column(
                     children: [
                       Icon(
@@ -343,6 +332,7 @@ class NearbyOrdersCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                  dotedDivider(context),
                   Text(
                     (branchToDestination ?? S.current.unknown) +
                         ' ${S.current.km}',
@@ -351,6 +341,7 @@ class NearbyOrdersCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
+                  dotedDivider(context),
                   Column(
                     children: [
                       Icon(
@@ -380,10 +371,15 @@ class NearbyOrdersCard extends StatelessWidget {
                   Visibility(
                     visible: credit,
                     child: verticalTile(context,
-                        title: S.current.cost, subtitle: S.current.paid),
+                        title: S.current.paymentMethod,
+                        subtitle: S.current.paid),
                     replacement: verticalTile(context,
-                        title: S.current.cost,
-                        subtitle: orderCost + ' ' + S.current.sar),
+                        title: S.current.paymentMethod,
+                        subtitle: orderCost +
+                            ' ' +
+                            S.current.sar +
+                            ' | ' +
+                            S.current.cash),
                   ),
                   Icon(
                     Icons.arrow_circle_left_outlined,
@@ -445,13 +441,16 @@ class NearbyOrdersCard extends StatelessWidget {
   }
 
   Widget dotedDivider(context) {
-    Color dividerColor = Theme.of(context).disabledColor.withOpacity(0.0);
-    return DottedLine(
-      lineLength: 8,
-      dashRadius: 25,
-      dashLength: 3,
-      dashGapLength: 2,
-      dashColor: dividerColor,
+    Color dividerColor = Theme.of(context).disabledColor.withOpacity(0.9);
+    return Row(
+      children: [
+        Container(
+          width: 5,
+          height: 5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25), color: dividerColor),
+        ),
+      ],
     );
   }
 }
