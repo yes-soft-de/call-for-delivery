@@ -24,7 +24,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, 
-            package.status, package.city, package.expired')
+            package.status, package.city, package.expired, package.type, package.geographicalRange, package.extraCost')
 
             ->andWhere("package.status = :status")
             
@@ -38,7 +38,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
-                      package.status, package.city, package.expired')
+                      package.status, package.city, package.expired, package.type, package.geographicalRange, package.extraCost')
             ->getQuery()
             ->getResult();
     }
@@ -47,7 +47,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount,
-                      package.status, package.city, package.expired')
+                      package.status, package.city, package.expired, package.type, package.geographicalRange, package.extraCost')
 
             ->andWhere("package.id = :id")
             
@@ -61,7 +61,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('IDENTITY(package.packageCategory)')
-            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
+            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired, package.type, package.geographicalRange, package.extraCost')
 
             ->andWhere("package.packageCategory = :packageCategory")
             ->setParameter('packageCategory',$packageCategory)
@@ -74,7 +74,7 @@ class PackageEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('package')
             ->select('IDENTITY(package.packageCategory) as packageCategoryId')
-            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired')
+            ->addSelect('package.id, package.name, package.cost, package.note, package.carCount, package.orderCount, package.status, package.city, package.expired, package.type, package.geographicalRange, package.extraCost')
 
             ->andWhere("package.packageCategory = :packageCategory")
             ->andWhere("package.status = :status")
