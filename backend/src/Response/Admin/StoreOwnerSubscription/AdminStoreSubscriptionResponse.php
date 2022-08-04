@@ -16,41 +16,40 @@ class AdminStoreSubscriptionResponse
 
     public DateTime $endDate;
 
-    public string|null $status;
+    /**
+     * @var string|null
+     */
+    public $status;
 
-    public string|null $note;
+    /**
+     * @var string|null
+     */
+    public $note;
 
     public int|null $flag;
     
     /**
      * @OA\Property(type="array", property="paymentsFromStore",
-     *     @OA\Items(type="object",
-     *              ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse"),
+     *     @OA\Items(
+     *              ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse")
      * ))
      */
-    public array $paymentsFromStore;
+    public $paymentsFromStore;
 
     /**
      * @OA\Property(type="object", property="total",
      *              @OA\Property(type="number", property="total"),
      *              @OA\Property(type="number", property="packageCost"),
      *              @OA\Property(type="number", property="sumPayments"),
-     *              @OA\Property(type="boolean", property="advancePayment"),
+     *              @OA\Property(type="boolean", property="advancePayment")
      * 
      * )
      */
-    public array $total;
+    public $total;
 
     /**
      * @OA\Property(type="array", property="captainOffers",
-     *     @OA\Items(type="object",
-     *          @OA\Property(type="integer", property="id"),  
-     *          @OA\Property(type="object", property="startDate"),  
-     *          @OA\Property(type="number", property="price"),  
-     *          @OA\Property(type="integer", property="carCount"),  
-     *          @OA\Property(type="integer", property="expired"),  
-     *          @OA\Property(type="string", property="status"),  
-     *      )
+     *     @OA\Items(type="object")
      *   )
      */
     public $captainOffers;
@@ -61,7 +60,10 @@ class AdminStoreSubscriptionResponse
 
     public int $packageExpired;
 
-    public string|null $packageNote;
+    /**
+     * @var string|null
+     */
+    public $packageNote;
 
     public bool $isFuture;
 

@@ -97,6 +97,12 @@ class OrderEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $storeBranchToClientDistance;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isCaptainPaidToProvider;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $dateCaptainPaidToProvider;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -512,6 +518,30 @@ class OrderEntity
     public function setStoreBranchToClientDistance(?float $storeBranchToClientDistance): self
     {
         $this->storeBranchToClientDistance = $storeBranchToClientDistance;
+
+        return $this;
+    }
+
+    public function getIsCaptainPaidToProvider(): ?int
+    {
+        return $this->isCaptainPaidToProvider;
+    }
+
+    public function setIsCaptainPaidToProvider(?int $isCaptainPaidToProvider): self
+    {
+        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
+
+        return $this;
+    }
+
+    public function getDateCaptainPaidToProvider(): ?\DateTimeInterface
+    {
+        return $this->dateCaptainPaidToProvider;
+    }
+
+    public function setDateCaptainPaidToProvider(?\DateTimeInterface $dateCaptainPaidToProvider): self
+    {
+        $this->dateCaptainPaidToProvider = $dateCaptainPaidToProvider;
 
         return $this;
     }

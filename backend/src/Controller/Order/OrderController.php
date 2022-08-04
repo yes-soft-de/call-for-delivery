@@ -36,6 +36,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 use App\Constant\Order\OrderAmountCashConstant;
 
 /**
@@ -262,6 +263,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="boolean", property="orderIsMain"),
+     *                  @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *                  @OA\Property(type="object", property="dateCaptainPaidToProvider"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -1898,5 +1901,63 @@ class OrderController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+    
+    /**
+     * store: Store confirmation whether payment has been made by the captain or not.
+     * @Route("orderupdateiscaptainpaidtoprovider", name="updateIsCaptainPaidToProvider", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Order Update Captain isCaptainPaidToProvider",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return isCaptainPaidToProvider.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              )
+     *       )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function updateIsCaptainPaidToProvider(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
+            
+        $violations = $this->validator->validate($request);
+       
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+         }
+
+        $response = $this->orderService->updateIsCaptainPaidToProvider($request);
+      
+        return $this->response($response, self::UPDATE);
     }
 }

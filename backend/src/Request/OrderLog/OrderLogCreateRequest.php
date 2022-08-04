@@ -66,6 +66,11 @@ class OrderLogCreateRequest
      */
     private $primaryOrder;
 
+    
+    private null|int $paidToProvider;
+   
+    private null|int $isCaptainPaidToProvider;
+
     public function getOrderId(): int|OrderEntity
     {
         return $this->orderId;
@@ -144,5 +149,45 @@ class OrderLogCreateRequest
     public function setPrimaryOrder(OrderEntity|null $primaryOrder): void
     {
         $this->primaryOrder = $primaryOrder;
+    }
+
+    /**
+     * Get the value of paidToProvider
+     */ 
+    public function getPaidToProvider()
+    {
+        return $this->paidToProvider;
+    }
+
+    /**
+     * Set the value of paidToProvider
+     *
+     * @return  self
+     */ 
+    public function setPaidToProvider($paidToProvider)
+    {
+        $this->paidToProvider = $paidToProvider;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isCaptainPaidToProvider
+     */ 
+    public function getIsCaptainPaidToProvider()
+    {
+        return $this->isCaptainPaidToProvider;
+    }
+
+    /**
+     * Set the value of isCaptainPaidToProvider
+     *
+     * @return  self
+     */ 
+    public function setIsCaptainPaidToProvider($isCaptainPaidToProvider)
+    {
+        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
+
+        return $this;
     }
 }

@@ -69,4 +69,8 @@ class OrdersResponse
     public array|null $filePdf;
 
     public float|null $storeBranchToClientDistance;
+
+    public int|null $isCaptainPaidToProvider;
+
+    public object|null $dateCaptainPaidToProvider;
 }

@@ -32,6 +32,7 @@ use App\Entity\SupplierProfileEntity;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Constant\Order\OrderIsMainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -82,7 +83,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('IDENTITY (orderEntity.captainId) as captainUserId')
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
-             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance')
+             'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCaptainPaidToProvider', 'orderEntity.dateCaptainPaidToProvider')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.filePdf')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
@@ -504,7 +505,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('IDENTITY (orderEntity.captainId) as captainUserId', 'orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note',
                 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost', 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance')
+                'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost', 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCaptainPaidToProvider', 'orderEntity.dateCaptainPaidToProvider')
 
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
@@ -1210,7 +1211,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
+            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.isCaptainPaidToProvider', 'orderEntity.dateCaptainPaidToProvider')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
@@ -1560,9 +1561,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.createdAt <= :toDate')
             ->setParameter('toDate', $toDate)
 
-            ->getQuery()
-            ->getResult();
-    }
+           ->getQuery()
+           ->getResult();
+   }
 
     public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): ?OrderEntity
     {
@@ -1606,7 +1607,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.captainOrderCost',
                 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'orderEntity.isCaptainPaidToProvider', 'orderEntity.dateCaptainPaidToProvider')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -1887,6 +1888,65 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    // filter orders in which the store's answer differs from that of the captain (paid or not paid)
+    public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): ?array
+     {
+         $query = $this->createQueryBuilder('orderEntity')
+             ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.isCaptainPaidToProvider', 'orderEntity.dateCaptainPaidToProvider', 'orderEntity.paidToProvider', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName', 'storeOwnerProfileEntity.storeOwnerName')
+ 
+             ->leftJoin(
+                 StoreOrderDetailsEntity::class,
+                 'storeOrderDetails',
+                 Join::WITH,
+                 'orderEntity.id = storeOrderDetails.orderId')
+ 
+             ->leftJoin(
+                 StoreOwnerBranchEntity::class,
+                 'storeOwnerBranch',
+                 Join::WITH,
+                 'storeOrderDetails.branch = storeOwnerBranch.id')
+ 
+             ->leftJoin(
+                 CaptainEntity::class,
+                 'captainEntity',
+                 Join::WITH,
+                 'captainEntity.id = orderEntity.captainId'
+             )
+ 
+             ->leftJoin(
+                 StoreOwnerProfileEntity::class,
+                 'storeOwnerProfileEntity',
+                 Join::WITH,
+                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+             )
+            
+             ->andWhere('orderEntity.isCaptainPaidToProvider != orderEntity.paidToProvider')
+             ->andWhere('orderEntity.state = :state')
+             ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+ 
+             ->orderBy('orderEntity.id', 'DESC');
+ 
+         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+             $query->andWhere('orderEntity.createdAt >= :createdAt');
+             $query->setParameter('createdAt', $request->getFromDate());
+ 
+         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt <= :createdAt');
+             $query->setParameter('createdAt', ($request->getToDate()));
+ 
+         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt >= :fromDate');
+             $query->setParameter('fromDate', $request->getFromDate());
+ 
+             $query->andWhere('orderEntity.createdAt <= :toDate');
+             $query->setParameter('toDate', ($request->getToDate()));
+         }
+ 
+         $query->groupBy('orderEntity.id');
+ 
+         return $query->getQuery()->getResult();
+     }
 
    public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
    {
