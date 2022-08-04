@@ -31,6 +31,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 ;
 
@@ -957,7 +958,58 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
+    /**
+     * admin: filter orders in which the store's answer differs from that of the captain (paid or not paid)
+     * @Route("filterorders", name="filterOrdersPaidOrNotPaidByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterOrdersPaidOrNotPaidByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, FilterOrdersPaidOrNotPaidByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterOrdersPaidOrNotPaidByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
     /**
      * admin: Calculate the cost delivery the order for admin.
      * @Route("calculatecostdeliveryorderforadmin", name="calculateCostDeliveryOrderForAdmin", methods={"POST"})

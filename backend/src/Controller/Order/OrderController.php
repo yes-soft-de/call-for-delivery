@@ -36,6 +36,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 
@@ -1900,7 +1901,65 @@ class OrderController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
-    
+
+    /**
+     * store: Store confirmation whether payment has been made by the captain or not.
+     * @Route("orderupdateiscaptainpaidtoprovider", name="updateIsCaptainPaidToProvider", methods={"PUT"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Order Update Captain isCaptainPaidToProvider",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *         ),
+     *      ),
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return isCaptainPaidToProvider.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              )
+     *       )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateIsCaptainPaidToProvider(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->orderService->updateIsCaptainPaidToProvider($request);
+
+        return $this->response($response, self::UPDATE);
+    }
+
     /**
      * store: Calculate the cost delivery the order.
      * @Route("calculatecostdeliveryorder", name="calculateCostDeliveryOrder", methods={"POST"})

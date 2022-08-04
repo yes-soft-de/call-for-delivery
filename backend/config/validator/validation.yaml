@@ -705,6 +705,13 @@ App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest:
             - NotBlank: ~
         deleteEvenItIsBeingUsed:
             - NotNull: ~
+
+App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
             
 App\Request\Subscription\CalculateCostDeliveryOrderRequest:
     properties:
