@@ -673,6 +673,39 @@ App\Request\Admin\CaptainFinancialSystem\ApprovalOrRefusalFinancialSystemAndFina
         date:
             - NotBlank: ~
 
+App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        deletePayment:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~
+        packageId:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminCaptainOfferSubscriptionCreateRequest:
+    properties:
+        storeOwner:
+            - NotBlank: ~
+        captainOffer:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\CaptainOfferSubscriptionDeleteByAdminRequest:
+    properties:
+        storeSubscriptionId:
+            - NotBlank: ~
+        deleteEvenItIsBeingUsed:
+            - NotNull: ~
+
 App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest:
     properties:
         id:
