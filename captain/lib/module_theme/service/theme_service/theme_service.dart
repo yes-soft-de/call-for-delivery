@@ -24,11 +24,15 @@ class AppThemeDataService {
     var dark = _preferencesHelper.isDarkMode();
     final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: PrimaryColor,
-        brightness: Brightness.dark,
-        error: Colors.red[900],
-        errorContainer: Colors.red[100],
-        primary: Colors.grey[900]);
+      seedColor: PrimaryColor,
+      brightness: Brightness.dark,
+      error: Colors.red[900],
+      errorContainer: Colors.red[100],
+      primaryContainer: Colors.grey[500],
+      primary: Colors.grey[900],
+      secondary: Colors.grey.shade600,
+      secondaryContainer: Colors.grey.shade900,
+    );
     if (dark == true) {
       mapStyle(dark);
       return ThemeData(
@@ -73,7 +77,7 @@ class AppThemeDataService {
               borderRadius: BorderRadius.circular(25),
             ),
           )),
-          textTheme: TextTheme(
+          textTheme: const TextTheme(
             button: TextStyle(
               color: Colors.white,
             ),
