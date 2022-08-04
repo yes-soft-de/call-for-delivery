@@ -2,6 +2,7 @@
 
 namespace App\Service\Subscription;
 
+use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Subscription\SubscriptionDetailsManager;
 //use App\Response\Subscription\SubscriptionDetailsResponse;
 
