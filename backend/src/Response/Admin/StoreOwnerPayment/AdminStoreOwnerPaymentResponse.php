@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Response\Admin\StoreOwnerPayment;
+use DateTime;
 use OpenApi\Annotations as OA;
 
 class AdminStoreOwnerPaymentResponse
@@ -16,11 +17,7 @@ class AdminStoreOwnerPaymentResponse
     public $amount;
 
     /**
-     *
-     * @OA\Property(type="array", property="date",
-     *     @OA\Items(type="object"))
-     *
-     * @var array
+     * @var DateTime
      */
     public $date;
 

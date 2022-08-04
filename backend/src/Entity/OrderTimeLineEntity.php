@@ -45,6 +45,12 @@ class OrderTimeLineEntity
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isVisible;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $paidToProvider;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isCaptainPaidToProvider;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +159,30 @@ class OrderTimeLineEntity
     public function setIsVisible(bool $isVisible): self
     {
         $this->isVisible = $isVisible;
+
+        return $this;
+    }
+
+    public function getPaidToProvider(): ?int
+    {
+        return $this->paidToProvider;
+    }
+
+    public function setPaidToProvider(?int $paidToProvider): self
+    {
+        $this->paidToProvider = $paidToProvider;
+
+        return $this;
+    }
+
+    public function getIsCaptainPaidToProvider(): ?int
+    {
+        return $this->isCaptainPaidToProvider;
+    }
+
+    public function setIsCaptainPaidToProvider(?int $isCaptainPaidToProvider): self
+    {
+        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
 
         return $this;
     }

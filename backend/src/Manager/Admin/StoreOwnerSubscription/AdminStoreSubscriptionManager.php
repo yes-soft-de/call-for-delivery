@@ -2,21 +2,29 @@
 
 namespace App\Manager\Admin\StoreOwnerSubscription;
 
+use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Repository\SubscriptionHistoryEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionDetailsManager;
+use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionHistoryManager;
+use App\Entity\SubscriptionEntity;
 
 class AdminStoreSubscriptionManager
 {
     private EntityManagerInterface $entityManager;
     private SubscriptionEntityRepository $subscribeRepository;
     private SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository;
+    private AdminSubscriptionDetailsManager $adminSubscriptionDetailsManager;
+    private AdminSubscriptionHistoryManager $adminSubscriptionHistoryManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository)
+    public function __construct(EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository, AdminSubscriptionDetailsManager $adminSubscriptionDetailsManager, AdminSubscriptionHistoryManager $adminSubscriptionHistoryManager)
     {
         $this->entityManager = $entityManager;
         $this->subscribeRepository = $subscribeRepository;
         $this->subscriptionHistoryEntityRepository = $subscriptionHistoryEntityRepository;
+        $this->adminSubscriptionDetailsManager = $adminSubscriptionDetailsManager;
+        $this->adminSubscriptionHistoryManager = $adminSubscriptionHistoryManager;
     }
 
     public function getSubscriptionsSpecificStoreForAdmin(int $storeId): ?array
@@ -60,5 +68,33 @@ class AdminStoreSubscriptionManager
         }
 
         return $futureSubscriptionsEntities;
+    }
+
+//    public function deleteSubscriptionById(int $id): ?SubscriptionEntity
+//    {
+//        $subscriptionEntity = $this->subscribeRepository->find($id);
+//
+//        if ($subscriptionEntity) {
+//                //Delete subscription details
+//                $this->adminSubscriptionDetailsManager->deleteSubscriptionDetailsBySubscriptionId($id);
+//                //Delete history
+//                $this->adminSubscriptionHistoryManager->deleteSubscriptionHistoryBySubscriptionId($id);
+//                // //Delete the subscription entity
+//                $this->entityManager->remove($subscriptionEntity);
+//
+//                $this->entityManager->flush();
+//        }
+//
+//        return $subscriptionEntity;
+//    }
+
+    public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerProfileId): ?array
+    {
+        return $this->adminSubscriptionDetailsManager->getSubscriptionCurrentActive($storeOwnerProfileId);
+    }
+
+    public function getSubscriptionEntityByIdForAdmin(int $id): ?SubscriptionEntity
+    {
+        return $this->subscribeRepository->findOneBy(['id'=>$id]);
     }
 }

@@ -81,4 +81,9 @@ class SubscriptionCaptainOfferService
     {
         return $this->subscriptionCaptainOfferManager->deleteCaptainOffersSubscriptionsByStoreOwnerId($storeOwnerId);
     }
+
+    public function deleteCaptainOfferSubscriptionById(int $id): ?SubscriptionCaptainOfferEntity
+    {
+        return $this->subscriptionCaptainOfferManager->deleteCaptainOfferSubscriptionById($id);
+    }
 }

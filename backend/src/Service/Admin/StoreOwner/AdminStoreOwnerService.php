@@ -117,4 +117,9 @@ class AdminStoreOwnerService
     {
         return $this->storeOwnerEraserService->deleteStoreOwnerAccountAndProfileByAdmin($request);
     }
+
+    public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);
+    }
 }

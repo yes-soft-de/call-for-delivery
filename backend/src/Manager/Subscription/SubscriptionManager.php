@@ -185,26 +185,6 @@ class SubscriptionManager
        return $this->subscribeRepository->countOrders($subscriptionId);
     }
 
-    public function updateHasExtraAndType(int $subscriptionExtraId, bool $hasExtra, bool $type): ?string
-    {
-        $subscribeEntity = $this->subscribeRepository->find($subscriptionExtraId);
-
-        if (!$subscribeEntity) {
-
-            return $subscribeEntity;
-        }
-      
-        $subscriptionHistory = $this->subscriptionHistoryManager->updateType($subscribeEntity, $type);
-        if($subscriptionHistory === "this subscription not extra") {
-
-            return "this subscription not extra";
-        }
-
-        $this->subscriptionDetailsManager->updateHasExtra($subscribeEntity, $hasExtra);
-
-        return SubscriptionConstant::UPDATE_STATE;
-    }
-
     public function isPackageReadyForSubscription($packageId): ?array {
        
         return $this->packageManager->getPackageActiveById($packageId);
@@ -272,7 +252,11 @@ class SubscriptionManager
     {        
         $subscriptionEntity->setFlag($flag);
 
-        $this->entityManager->flush();   
+        $this->entityManager->flush();
+      //To be used with the extended subscription, to become a normal subscription.
+        $this->subscriptionHistoryManager->updateType($subscriptionEntity, SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE);
+      //To be used with the extended subscription, to become a normal subscription.
+        $this->subscriptionDetailsManager->updateHasExtra($subscriptionEntity, SubscriptionConstant::IS_HAS_EXTRA_FALSE);  
        
         return $subscriptionEntity;
     }
@@ -341,5 +325,19 @@ class SubscriptionManager
         }
 
         return $subscriptions;
+    }
+
+    public function updateSubscriptionByRemovingCaptainOfferSubscription(int $subscriptionId): ?SubscriptionEntity
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id'=>$subscriptionId]);
+
+        if ($subscriptionEntity !== null) {
+            $subscriptionEntity->setSubscriptionCaptainOffer(null);
+            $subscriptionEntity->setCaptainOfferFirstTime(null);
+
+            $this->entityManager->flush();
+        }
+
+        return $subscriptionEntity;
     }
 }

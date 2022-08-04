@@ -91,6 +91,9 @@ class BaseController extends AbstractController
     const SUBSCRIBE_THEN_NEXT = ["Please subscribe first, then create a subscription for later", "9304"];
     const NOT_POSSIBLE = ["This subscription was previously extended, cannot be extended again", "9305"];
     const CAN_NOT_ACCEPTED_ORDER = ["The cars remaining is finished", "9306"];
+    const ERROR_THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION = ["there are payment related with subscription", "9307"];
+    const SUBSCRIPTION_NOT_FOUND = ["subscription is not exist", "9308"];
+    const OLD_STORE_SUBSCRIPTION = ["subscription is an old one", "9309"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
@@ -144,6 +147,13 @@ class BaseController extends AbstractController
 
     //
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
+
+    // captain offer subscription
+    const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = ["inactive captain offer subscription", "9376"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED = ["expired captain offer subscription", "9377"];
+    const CAPTAIN_OFFER_CARS_HAVE_BEING_USED = ["captain offer subscription is being used", "9378"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST = ["captain offer subscription is not exist", "9379"];
+    const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9385"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
