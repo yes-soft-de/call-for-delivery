@@ -354,20 +354,6 @@ class SubscriptionController extends BaseController
         
         return $this->response($result, self::CREATE);
     }
-
-    /**
-     * Delete these lines when completing the payment entity
-     * This router is used to modify some fields assuming that the payment process was completed successfully
-     * @Route("paymentsuccess/{subscriptionExtraId}", name="paymentSuccess", methods={"PUT"})
-     * @IsGranted("ROLE_OWNER")
-     * @return JsonResponse
-     */
-    public function paymentSuccess($subscriptionExtraId): JsonResponse
-    {
-        $result = $this->subscriptionService->updateHasExtraAndType($subscriptionExtraId);
-        
-        return $this->response($result, self::UPDATE);
-    }
     
     /**
      * store:get subscriptions with payments.

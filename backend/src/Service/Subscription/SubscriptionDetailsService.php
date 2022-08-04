@@ -2,6 +2,7 @@
 
 namespace App\Service\Subscription;
 
+use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Subscription\SubscriptionDetailsManager;
 //use App\Response\Subscription\SubscriptionDetailsResponse;
 
@@ -33,5 +34,15 @@ class SubscriptionDetailsService
     public function deleteSubscriptionDetailsByStoreOwnerId(int $storeOwnerId): array
     {
         return $this->subscriptionDetailsManager->deleteSubscriptionDetailsByStoreOwnerId($storeOwnerId);
+    }
+
+    public function getSubscriptionDetailsEntityByLastSubscriptionId(int $subscriptionId): array
+    {
+        return $this->subscriptionDetailsManager->getSubscriptionDetailsEntityByLastSubscriptionId($subscriptionId);
+    }
+
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
 }

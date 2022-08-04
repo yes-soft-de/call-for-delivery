@@ -8,6 +8,7 @@ use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderTimeLineEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\BidDetails\BidDetailsManager;
 use App\Manager\OrderTimeLine\OrderTimeLineManager;
 use App\Repository\OrderEntityRepository;
@@ -617,7 +618,7 @@ class OrderManager
     public function getOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderRepository->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
-    }    
+    }
 
     public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId): ?OrderEntity
     {
@@ -635,16 +636,22 @@ class OrderManager
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
-        if(! $orderEntity) {
+        if (!$orderEntity) {
             return $orderEntity;
         }
-               
+
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCaptainPaidToProviderRequest::class, OrderEntity::class, $request, $orderEntity);
-        
+
         $orderEntity->setDateCaptainPaidToProvider(new DateTime());
-        
+
         $this->entityManager->flush();
 
         return $orderEntity;
+    }
+
+    public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
+    {
+        return $this->orderRepository->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
+            $specificDateTime);
     }
 }

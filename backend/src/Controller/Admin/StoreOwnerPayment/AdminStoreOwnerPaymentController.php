@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Payment\PaymentConstant;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
  * Create and fetch Payments from store.
@@ -209,6 +210,44 @@ class AdminStoreOwnerPaymentController extends BaseController
     public function getAllStorePayments(int $storeId): JsonResponse
     {
         $result = $this->adminStoreOwnerPaymentService->getAllStorePayments($storeId);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin:Get payments for specific subscription .
+     * @Route("storepaymentsbysubscriptionid/{subscriptionId}", name="getStorePaymentsBySubscriptionId", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Store Owner Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns payments",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *           @OA\Items(
+     *             ref=@Model(type="App\Response\Admin\StoreOwnerPayment\AdminStorePaymentsBySubscriptionIdResponse"),
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getStorePaymentsBySubscriptionId(int $subscriptionId): JsonResponse
+    {
+        $result = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscriptionId);
 
         return $this->response($result, self::FETCH);
     }

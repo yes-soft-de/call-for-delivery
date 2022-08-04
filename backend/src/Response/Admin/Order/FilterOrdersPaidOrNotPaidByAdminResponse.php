@@ -22,9 +22,18 @@ class FilterOrdersPaidOrNotPaidByAdminResponse
      */
     public $captainName;
 
-    public null|int $paidToProvider;
-   
-    public null|int $isCaptainPaidToProvider;
-   
-    public object|int $dateCaptainPaidToProvider;
+    /**
+     * @var int|null
+     */
+    public $paidToProvider;
+
+    /**
+     * @var int|null
+     */
+    public $isCaptainPaidToProvider;
+
+    /**
+     * @var DateTime|null
+     */
+    public $dateCaptainPaidToProvider;
 }

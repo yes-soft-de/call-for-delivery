@@ -85,4 +85,10 @@ final class SubscriptionConstant
     const CAN_NOT_CREATE_SUB_ORDER = "canNotCreateSubOrder";
 
     const CARS_FINISHED_INT = 0;
+
+    const SUBSCRIBE_CURRENT_BOOLEAN = 1;
+
+    const SUBSCRIBE_NOT_CURRENT_BOOLEAN = 0;
+
+    const OLD_STORE_SUBSCRIPTION = 30;
 }
