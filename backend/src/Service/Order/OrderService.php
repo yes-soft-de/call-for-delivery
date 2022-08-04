@@ -69,6 +69,8 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
+use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
+use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
@@ -578,11 +580,14 @@ class OrderService
                 error_log($e);
             }
             // create firebase notification to captain
-            try {
-                $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
-            } catch (\Exception $e) {
-                error_log($e);
-            }
+             try {
+                 if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                     $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+                 }
+
+             } catch (\Exception $e){
+                  error_log($e);
+              }
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
@@ -1400,6 +1405,28 @@ class OrderService
         }
 
         return EraserResultConstant::STORE_HAS_NOT_ORDERS;
+    }
+
+    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderUpdateIsCaptainPaidToProviderResponse
+    {
+        $order = $this->orderManager->updateIsCaptainPaidToProvider($request);
+
+        if ($order) {
+            // create order log in order time line
+            $this->orderTimeLineService->createOrderLogsRequest($order);
+
+            // save log of the action on order
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, null, null);
+
+            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCaptainPaidToProvider) 
+            if ($order->getIsCaptainPaidToProvider() !== $order->getPaidToProvider()) {
+
+                $this->notificationFirebaseService->notificationToAdmin($order->getId(), NotificationFirebaseConstant::CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE);
+            }
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCaptainPaidToProviderResponse::class, $order);
     }
 
     public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array

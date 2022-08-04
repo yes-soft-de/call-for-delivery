@@ -48,9 +48,6 @@ class AdminStoreSubscriptionService
        $response = [];
        //check Subscription
        $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
-
-       //check Subscription
-       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
        
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 

@@ -53,6 +53,8 @@ class OrderLogToMySqlService
         $orderLogCreateRequest->setIsHide($orderEntity->getIsHide());
         $orderLogCreateRequest->setOrderIsMain($orderEntity->getOrderIsMain());
         $orderLogCreateRequest->setPrimaryOrder($orderEntity->getPrimaryOrder());
+        $orderLogCreateRequest->setPaidToProvider($orderEntity->getPaidToProvider());
+        $orderLogCreateRequest->setIsCaptainPaidToProvider($orderEntity->getIsCaptainPaidToProvider());
 
         $this->createNewOrderLog($orderLogCreateRequest);
     }

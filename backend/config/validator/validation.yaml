@@ -673,13 +673,20 @@ App\Request\Admin\CaptainFinancialSystem\ApprovalOrRefusalFinancialSystemAndFina
         date:
             - NotBlank: ~
 
+App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        isCaptainPaidToProvider:
+            - NotBlank: ~
+
 App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
     properties:
         id:
             - NotBlank: ~
         deletePayment:
             - NotBlank: ~
-            
+
 App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest:
     properties:
         storeProfileId:

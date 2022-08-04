@@ -264,6 +264,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="boolean", property="orderIsMain"),
+     *                  @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *                  @OA\Property(type="object", property="dateCaptainPaidToProvider"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -1946,7 +1948,7 @@ class OrderController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
-
+            
         $violations = $this->validator->validate($request);
 
         if (\count($violations) > 0) {

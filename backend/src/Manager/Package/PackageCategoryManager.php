@@ -25,8 +25,8 @@ class PackageCategoryManager
         return $this->packageCategoryRepository->find($id);
     }
 
-    public function getAllPackagesCategories(): ?array
+    public function getAllActivePackagesCategories(): ?array
     {
-         return $this->packageCategoryRepository->getAllPackagesCategories();
+         return $this->packageCategoryRepository->getAllActivePackagesCategories();
     }
 }

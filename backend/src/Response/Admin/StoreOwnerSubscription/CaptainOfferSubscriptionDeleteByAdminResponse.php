@@ -2,6 +2,8 @@
 
 namespace App\Response\Admin\StoreOwnerSubscription;
 
+use DateTime;
+
 class CaptainOfferSubscriptionDeleteByAdminResponse
 {
     public int $carCount;
@@ -10,7 +12,7 @@ class CaptainOfferSubscriptionDeleteByAdminResponse
 
     public int $expired;
 
-    public \DateTime $startDate;
+    public DateTime $startDate;
 
-    public \DateTime $updatedAt;
+    public DateTime $updatedAt;
 }

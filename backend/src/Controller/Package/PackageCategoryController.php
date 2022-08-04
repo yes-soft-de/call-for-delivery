@@ -26,7 +26,7 @@ class PackageCategoryController extends BaseController
     }
 
     /**
-     * store: Get all packages categories and related packages.
+     * store: Get all active packages categories and related packages.
      * @Route("packagescategoriesforstore", name="getAllPackagesCategoriesAndPackagesForStore", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
      * @return JsonResponse
@@ -64,9 +64,9 @@ class PackageCategoryController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllPackagesCategoriesAndPackagesForStore(): JsonResponse
+    public function getAllActivePackagesCategoriesAndPackagesForStore(): JsonResponse
     {
-        $result = $this->packageCategoryService->getAllPackagesCategoriesAndPackagesForStore();
+        $result = $this->packageCategoryService->getAllActivePackagesCategoriesAndPackagesForStore();
 
         return $this->response($result, self::FETCH);
     }

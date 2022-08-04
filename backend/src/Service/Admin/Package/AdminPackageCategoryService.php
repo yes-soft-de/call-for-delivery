@@ -7,6 +7,7 @@ use App\Constant\Package\PackageCategoryConstant;
 use App\Entity\PackageCategoryEntity;
 use App\Manager\Admin\Package\AdminPackageCategoryManager;
 use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
+use App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest;
 use App\Response\Admin\Package\PackageAndCategoryForAdminGetResponse;
 use App\Response\Admin\Package\PackageCategoryCreateByAdminResponse;
 use App\Response\Admin\Package\PackageCategoryGetResponse;
@@ -57,5 +58,31 @@ class AdminPackageCategoryService
         }
 
         return $response;
+    }
+
+    public function updateAllPackagesCategoriesStatus(int $status): array
+    {
+        $response = [];
+
+        $packagesCategoriesEntities = $this->adminPackageCategoryManager->updateAllPackagesCategoriesStatus($status);
+
+        if (count($packagesCategoriesEntities) > 0) {
+            foreach ($packagesCategoriesEntities as $packageCategoryEntity) {
+                $response[] = $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryGetResponse::class, $packageCategoryEntity);
+            }
+        }
+
+        return $response;
+    }
+
+    public function updatePackageCategoryStatusById(PackageCategoryStatusUpdateByAdminRequest $request): ?PackageCategoryGetResponse
+    {
+        $packageCategoryEntity = $this->adminPackageCategoryManager->updatePackageCategoryStatusById($request);
+
+        if (! $packageCategoryEntity) {
+            return $packageCategoryEntity;
+        }
+
+        return $this->autoMapping->map(PackageCategoryEntity::class, PackageCategoryGetResponse::class, $packageCategoryEntity);
     }
 }

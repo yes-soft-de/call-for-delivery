@@ -21,6 +21,10 @@ class OrderLogsCreateRequest
 
    private null|bool $isCaptainArrived;
 
+   private null|int $paidToProvider;
+   
+   private null|int $isCaptainPaidToProvider;
+
    /**
     * Get the value of orderId
     */ 
@@ -136,6 +140,46 @@ class OrderLogsCreateRequest
    public function setIsCaptainArrived(null|bool $isCaptainArrived)
    {
       $this->isCaptainArrived = $isCaptainArrived;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of paidToProvider
+    */ 
+   public function getPaidToProvider()
+   {
+      return $this->paidToProvider;
+   }
+
+   /**
+    * Set the value of paidToProvider
+    *
+    * @return  self
+    */ 
+   public function setPaidToProvider($paidToProvider)
+   {
+      $this->paidToProvider = $paidToProvider;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of isCaptainPaidToProvider
+    */ 
+   public function getIsCaptainPaidToProvider()
+   {
+      return $this->isCaptainPaidToProvider;
+   }
+
+   /**
+    * Set the value of isCaptainPaidToProvider
+    *
+    * @return  self
+    */ 
+   public function setIsCaptainPaidToProvider($isCaptainPaidToProvider)
+   {
+      $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
 
       return $this;
    }

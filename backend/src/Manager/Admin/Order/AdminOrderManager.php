@@ -21,6 +21,7 @@ use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 
 class AdminOrderManager
 {
@@ -243,5 +244,11 @@ class AdminOrderManager
     public function getSubOrdersByPrimaryOrderIdForAdmin(int $primaryOrderId): array
     {
         return $this->orderEntityRepository->getSubOrdersByPrimaryOrderIdForAdmin($primaryOrderId);
+    }
+
+    // filter orders in which the store's answer differs from that of the captain (paid or not paid)
+    public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrdersPaidOrNotPaidByAdmin($request);
     }
 }

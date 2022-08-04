@@ -617,8 +617,8 @@ class AdminOrderService
                   
                     //save the price of the order in cash in case the captain does not pay the store
                     if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
-                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
+                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                     }
                 }
 

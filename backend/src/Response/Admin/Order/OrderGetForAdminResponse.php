@@ -105,4 +105,14 @@ class OrderGetForAdminResponse
      * @var float|null
      */
     public $captainOrderCost;
+
+    /**
+     * @var int|null
+     */
+    public $isCaptainPaidToProvider;
+
+    /**
+     * @var DateTime|null
+     */
+    public $dateCaptainPaidToProvider;
 }
