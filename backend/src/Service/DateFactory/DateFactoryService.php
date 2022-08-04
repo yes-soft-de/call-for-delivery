@@ -67,4 +67,18 @@ class DateFactoryService
             (new DateTime('-6 day'))->format('Y-m-d')
         ];
     }
+
+    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
+    {
+        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+
+        return date_modify($dateTime, '-30 minutes');
+    }
+
+    public function sumDaysWithDateTimeInterface(DateTimeInterface $dateTimeInterface, int $days): DateTime|bool
+    {
+        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+
+        return date_modify($dateTime, '+'.$days. 'days');
+    }
 }

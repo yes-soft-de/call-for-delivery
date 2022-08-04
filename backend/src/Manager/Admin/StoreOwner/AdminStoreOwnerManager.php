@@ -82,4 +82,9 @@ class AdminStoreOwnerManager
     {
         return $this->storeOwnerProfileEntityRepository->getLastThreeActiveStoreOwnersProfilesForAdmin();
     }
+
+    public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->findOneBy(['storeOwnerId'=>$storeOwnerId]);
+    }
 }

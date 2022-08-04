@@ -3,13 +3,25 @@
 namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
+use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
 use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
 use App\Service\Subscription\SubscriptionService;
+use App\Constant\Payment\PaymentConstant;
+use App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest;
+use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
+use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\SubscriptionResponse;
+use App\Response\Subscription\SubscriptionErrorResponse;
+use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
+use App\Response\Subscription\SubscriptionExtendResponse;
+use App\Constant\Subscription\SubscriptionConstant;
+use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
 
 class AdminStoreSubscriptionService
 {
@@ -17,19 +29,23 @@ class AdminStoreSubscriptionService
     private AdminStoreSubscriptionManager $adminStoreSubscriptionManager;
     private AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService;
     private SubscriptionService $subscriptionService;
+    private StoreSubscriptionEraserService $storeSubscriptionEraserService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService, SubscriptionService $subscriptionService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService,
+                                SubscriptionService $subscriptionService, StoreSubscriptionEraserService $storeSubscriptionEraserService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
         $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
         $this->subscriptionService = $subscriptionService;
-    
+        $this->storeSubscriptionEraserService = $storeSubscriptionEraserService;
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
     {
        $response = [];
+       //check Subscription
+       $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
 
        //check Subscription
        $this->subscriptionService->packageBalanceForAdminByStoreOwnerProfileId($storeId);
@@ -37,12 +53,21 @@ class AdminStoreSubscriptionService
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
        foreach ($subscriptions as $subscription) {
-         
+
             if( ! $subscription['remainingCars'] ) {
                 $subscription['remainingCars'] = 0;
             }
             if( ! $subscription['remainingOrders'] ) {
                 $subscription['remainingOrders'] = 0;
+            }
+
+            $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
+            
+            if($subscription['subscriptionDetailsId']) {
+                
+                $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT_BOOLEAN;
+                $subscription['subscriptionRemainingCars'] = $subscription['remainingCars'];
+                $subscription['subscriptionRemainingOrders'] = $subscription['remainingOrders'];
             }
 
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
@@ -105,6 +130,64 @@ class AdminStoreSubscriptionService
         }
 
         return $futureSubscriptionsResult;
+    }
+
+    public function createSubscription(AdminCreateStoreSubscriptionRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+      $request = new SubscriptionCreateRequest(); 
+      $request->setPackage($requestByAdmin->getPackageId());
+      $request->setNote($requestByAdmin->getNote());
+
+      return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
+    }
+
+    public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    {
+
+      return $this->subscriptionService->extraSubscriptionForDayByAdmin($request->getStoreProfileId()); 
+    }
+    
+    public function deleteSubscriptionByAdmin(AdminDeleteSubscriptionRequest $request): AdminDeleteSubscriptionResponse |null|int
+    {
+        //delete subscription with payments
+        if ($request->getDeletePayment() === PaymentConstant::DELETE_SUBSCRIPTION_WITH_PAYMENT) {
+           
+            $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+
+            if (count($payments) > 0) {
+                foreach ($payments as $payment) {
+                    $this->adminStoreOwnerPaymentService->deleteStoreOwnerPayment($payment->id);
+                }
+            }
+
+            $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
+
+            if ($subscription) {
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+
+                if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
+                    return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);
+                }
+            }
+        }
+
+        // get payments with subscription id
+        $payments = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($request->getId());
+
+        //if not found payments , delete subscription
+        if(count($payments) === 0) {
+            $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
+
+            if ($subscription) {
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+
+                if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
+                    return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);
+                }
+            }
+        }
+
+        return PaymentConstant::THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION;
     }
 }
  

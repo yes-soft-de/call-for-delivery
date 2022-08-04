@@ -34,4 +34,14 @@ class SubscriptionDetailsService
     {
         return $this->subscriptionDetailsManager->deleteSubscriptionDetailsByStoreOwnerId($storeOwnerId);
     }
+
+    public function getSubscriptionDetailsEntityByLastSubscriptionId(int $subscriptionId): array
+    {
+        return $this->subscriptionDetailsManager->getSubscriptionDetailsEntityByLastSubscriptionId($subscriptionId);
+    }
+
+    public function updateRemainingCars(int $id, int $remainingCars): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
+    }
 }

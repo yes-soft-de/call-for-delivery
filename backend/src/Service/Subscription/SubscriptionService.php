@@ -408,22 +408,6 @@ class SubscriptionService
                 
         return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
     }
-    
-    //To be used with the extended subscription, to become a normal subscription.
-    //When the payment is successful, call this function to update the extra subscription to the normal subscription
-    public function updateHasExtraAndType(int $subscriptionExtraId): ?string
-    {
-        $hasExtra = SubscriptionConstant::IS_HAS_EXTRA_FALSE;
-        $type = SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE;
-
-        $result = $this->subscriptionManager->updateHasExtraAndType($subscriptionExtraId, $hasExtra, $type);
-        if($result === SubscriptionConstant::SUBSCRIPTION_NOT_EXTRA) {
-        
-            return SubscriptionConstant::SUBSCRIPTION_NOT_EXTRA;
-        }
-       
-        return  $result;
-    }
 
     /**
      * @param string $status
@@ -627,19 +611,18 @@ class SubscriptionService
     {
         return $this->subscriptionManager->updateSubscription($request);
     }
-        
+
     public function packageBalanceForAdminByStoreOwnerProfileId(int $storeOwnerProfileId): array
     {
         $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
 
         $packageBalance = $this->packageBalance($store->getStoreOwnerId());
-        
+
         $balance = [];
         $balance['remainingOrders'] = 0;
         $balance['remainingCars'] = 0;
         
         if($packageBalance->status !== SubscriptionConstant::UNSUBSCRIBED) {
-            
             $balance['remainingOrders'] = $packageBalance->remainingOrders;
             $balance['remainingCars'] = $packageBalance->remainingCars;
         }
@@ -666,6 +649,38 @@ class SubscriptionService
     public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
     {
         return $this->subscriptionManager->deleteStoreSubscriptionByStoreOwnerId($storeOwnerId);
+    }
+
+    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {  
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
+        if (! $store) {
+            return StoreProfileConstant::STORE_NOT_FOUND;
+        }
+       
+        $request->setStoreOwner($store->getStoreOwnerId());
+
+        return $this->createSubscription($request);
+    }
+
+    public function extraSubscriptionForDayByAdmin(int $storeOwnerProfileId): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
+    {  
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
+        if (! $store) {
+            return StoreProfileConstant::STORE_NOT_FOUND;
+        }
+       
+        return $this->subscriptionForOneDay($store->getStoreOwnerId());
+    }
+
+    public function getSubscriptionEntityById(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->getSubscriptionById($subscriptionId);
+    }
+
+    public function updateSubscriptionByRemovingCaptainOfferSubscription(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->updateSubscriptionByRemovingCaptainOfferSubscription($subscriptionId);
     }
 }
  

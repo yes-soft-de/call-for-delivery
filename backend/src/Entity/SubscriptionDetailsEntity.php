@@ -93,7 +93,7 @@ class SubscriptionDetailsEntity
         return $this->storeOwner;
     }
 
-    public function setStoreOwner(StoreOwnerProfileEntity $storeOwner): self
+    public function setStoreOwner(?StoreOwnerProfileEntity $storeOwner): self
     {
         $this->storeOwner = $storeOwner;
 
