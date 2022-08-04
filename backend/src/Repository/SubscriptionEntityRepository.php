@@ -298,7 +298,8 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscription.captainOfferFirstTime')
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscription.captainOfferFirstTime',
+                'subscriptionCaptainOfferEntity.carCount', 'subscriptionCaptainOfferEntity.expired', 'subscriptionCaptainOfferEntity.status')
             
             ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
 
@@ -312,25 +313,4 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getResult();
     }
-
-    // duplicated after pull from dev-backend to epic-4
-//    public function getCaptainOffersBySubscriptionIdForAdmin(int $subscriptionId): ?array
-//    {
-//        return $this->createQueryBuilder('subscription')
-//
-//            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscription.captainOfferFirstTime')
-//
-//            ->leftJoin(SubscriptionCaptainOfferEntity::class, 'subscriptionCaptainOfferEntity', Join::WITH, 'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
-//
-//            ->andWhere('subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id')
-//            ->andWhere('subscription.id = :subscriptionId')
-//            ->setParameter('subscriptionId', $subscriptionId)
-//
-//            ->leftJoin(CaptainOfferEntity::class, 'captainOfferEntity', Join::WITH, 'captainOfferEntity.id = subscriptionCaptainOfferEntity.captainOffer')
-//
-//            ->getQuery()
-//
-//            ->getResult();
-//    }
-
 }
