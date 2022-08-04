@@ -29,13 +29,14 @@ class AdminCaptainAmountFromOrderCashManager
         return $this->captainAmountFromOrderCashEntityRepository->filterCaptainAmountFromOrderCash($request->getCaptainId(), $request->getFromDate(), $request->getToDate());
     }
 
-    public function updateFlagBySpecificDate(array $ids, $flag, CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity)
+    public function updateFlagBySpecificDate(array $ids, $flag, CaptainPaymentToCompanyEntity $captainPaymentToCompanyEntity, bool $editingByCaptain)
     {           
       foreach($ids as $item) {
         $captainAmountFromOrderCashEntity = $this->captainAmountFromOrderCashEntityRepository->find($item['id']);
        
         $captainAmountFromOrderCashEntity->setFlag($flag);
         $captainAmountFromOrderCashEntity->setCaptainPaymentToCompany($captainPaymentToCompanyEntity);
+        $captainAmountFromOrderCashEntity->setEditingByCaptain($editingByCaptain);
        
         $this->entityManager->flush();
       }
