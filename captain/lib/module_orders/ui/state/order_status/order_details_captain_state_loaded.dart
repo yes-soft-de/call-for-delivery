@@ -731,6 +731,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           // location
           Row(
             children: [
+              // store location
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.red[900]!,
@@ -773,50 +774,54 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   short: true,
                 ),
               ),
-              Expanded(
-                child: OrderButton(
-                  backgroundColor: Colors.red[900]!,
-                  icon: Icons.location_history_rounded,
-                  subtitle: S.current.destinationPoint,
-                  title: S.current.location,
-                  short: true,
-                  onLongTap: () {
-                    String url = '';
-                    if (orderInfo.destinationCoordinate != null) {
-                      url = LauncherLinkHelper.getMapsLink(
-                          orderInfo.destinationCoordinate?.latitude ?? 0,
-                          orderInfo.destinationCoordinate?.longitude ?? 0);
-                    } else if (orderInfo.destinationLink != null) {
-                      url = orderInfo.destinationLink ?? '';
-                    }
-                    if (url == '') {
-                      Fluttertoast.showToast(msg: S.current.invalidMapLink);
-                      return;
-                    }
-                    try {
-                      launch(url);
-                    } catch (e) {
-                      Fluttertoast.showToast(
-                          msg: S.current.invalidMapLink + url);
-                    }
-                  },
-                  onTap: () {
-                    String url = '';
-                    if (orderInfo.destinationCoordinate != null) {
-                      url = LauncherLinkHelper.getMapsLink(
-                          orderInfo.destinationCoordinate?.latitude ?? 0,
-                          orderInfo.destinationCoordinate?.longitude ?? 0);
-                    } else if (orderInfo.destinationLink != null) {
-                      url = orderInfo.destinationLink ?? '';
-                    }
-                    canLaunch(url).then((value) {
-                      if (value) {
-                        launch(url);
-                      } else {
-                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+              // client location
+              Visibility(
+                visible: orderInfo.state == OrderStatusEnum.DELIVERING,
+                child: Expanded(
+                  child: OrderButton(
+                    backgroundColor: Colors.red[900]!,
+                    icon: Icons.location_history_rounded,
+                    subtitle: S.current.destinationPoint,
+                    title: S.current.location,
+                    short: true,
+                    onLongTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
                       }
-                    });
-                  },
+                      if (url == '') {
+                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        return;
+                      }
+                      try {
+                        launch(url);
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: S.current.invalidMapLink + url);
+                      }
+                    },
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
@@ -824,6 +829,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           // whatsapp
           Row(
             children: [
+              // store owner
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,
@@ -841,6 +847,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   short: true,
                 ),
               ),
+              // client
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,
