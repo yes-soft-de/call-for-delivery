@@ -124,6 +124,7 @@ class OrderStatusStateManager {
       }
     });
   }
+
   void updateCashStatus(
       UpdateOrderRequest request, OrderStatusScreenState screenState) {
     _ordersService.updateCashStatus(request).then((value) {

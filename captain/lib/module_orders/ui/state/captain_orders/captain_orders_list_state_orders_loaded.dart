@@ -176,10 +176,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   Navigator.of(context).pushNamed(
                       OrdersRoutes.SUB_ORDERS_SCREEN,
                       arguments: element.id);
-                } else {
-                  Navigator.of(context).pushNamed(
-                      OrdersRoutes.ORDER_STATUS_SCREEN,
-                      arguments: element.id.toString());
                 }
               },
               child: NearbyOrdersCard(
@@ -242,10 +238,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               if (element.orderIsMain && element.subOrders.isNotEmpty) {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);
-              } else {
-                Navigator.of(context).pushNamed(
-                    OrdersRoutes.ORDER_STATUS_SCREEN,
-                    arguments: element.id.toString());
               }
             },
             child: NearbyOrdersCard(

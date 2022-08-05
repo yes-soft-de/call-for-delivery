@@ -133,18 +133,22 @@ class CaptainOrdersListStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
-        CustomFlushBarHelper.warningDialog(
-            title: S.current.warnning,
-            message: value.error,
-            context: screenState.context);
         screenState.getMyOrders();
+        showDialog(
+            context: screenState.context,
+            builder: (ctx) {
+              return CustomFlushBarHelper.warningDialog(
+                  title: S.current.warnning,
+                  message: value.error,
+                  context: screenState.context);
+            });
       } else {
+        screenState.getMyOrders('Trigger');
+        screenState.moveTo(OrdersRoutes.ORDER_STATUS_SCREEN, request.id);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderSuccess)
             .show(screenState.context);
-        screenState.getMyOrders('Trigger');
-        screenState.moveTo(OrdersRoutes.ORDER_STATUS_SCREEN, request.id);
       }
     });
   }

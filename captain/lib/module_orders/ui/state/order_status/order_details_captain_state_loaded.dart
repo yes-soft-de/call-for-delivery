@@ -776,7 +776,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
               // client location
               Visibility(
-                visible: orderInfo.state == OrderStatusEnum.DELIVERING,
+                visible: orderInfo.state == OrderStatusEnum.DELIVERING &&
+                    orderInfo.state == OrderStatusEnum.FINISHED,
                 child: Expanded(
                   child: OrderButton(
                     backgroundColor: Colors.red[900]!,
