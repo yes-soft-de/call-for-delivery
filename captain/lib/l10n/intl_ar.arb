@@ -718,7 +718,7 @@
     "later": "لاحقا",
     "attachFile": "إرفاق ملف",
     "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
-    "captainProfileNotCompleted": "حابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك",
+    "captainProfileNotCompleted": "حسابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك",
     "orderCanceledYouCannotAccept": "تم إلغاء لطلب لايمكنك قبوله بعد الآن",
     "youCannotAcceptAnotherOrderFromThisStore": "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
     "optional": "اختياري",
@@ -734,5 +734,7 @@
     "farOrders": "الطلبات البعيدة",
     "rememberMe": "تذكرني",
     "pleaseCorrectProvidedDistance": "من فضلك قم بتصحيح المسافة المدخلة",
-    "orderNotifications":"التنبيهات"
+    "orderNotifications": "التنبيهات",
+    "activateOrderNotification": "فعل التنبهات وابدأ باستقبال الطلبات",
+    "activeOrderNotification":"فعل التنبيهات"
 }

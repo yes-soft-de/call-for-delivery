@@ -732,5 +732,7 @@
     "farOrders": "Far",
     "rememberMe": "Remember me",
     "pleaseCorrectProvidedDistance": "Please correct provided distance",
-    "orderNotifications": "Status"
+    "orderNotifications": "Status",
+    "activateOrderNotification": "Activate notifications and start delivering order",
+    "activeOrderNotification": "Activate notification"
 }

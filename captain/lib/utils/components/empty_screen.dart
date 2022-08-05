@@ -74,10 +74,10 @@ class EmptyStateWidget extends StatelessWidget {
   }
 }
 
-class NearbyOrdersStateWidget extends StatelessWidget {
+class NearbyOrdersEmptyStateWidget extends StatelessWidget {
   final VoidCallback? onRefresh;
   final double? height;
-  const NearbyOrdersStateWidget({required this.onRefresh, this.height});
+  const NearbyOrdersEmptyStateWidget({required this.onRefresh, this.height});
 
   @override
   Widget build(BuildContext context) {

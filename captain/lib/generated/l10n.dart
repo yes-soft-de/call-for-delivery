@@ -7379,6 +7379,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Activate notifications and start delivering order`
+  String get activateOrderNotification {
+    return Intl.message(
+      'Activate notifications and start delivering order',
+      name: 'activateOrderNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate notification`
+  String get activeOrderNotification {
+    return Intl.message(
+      'Activate notification',
+      name: 'activeOrderNotification',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

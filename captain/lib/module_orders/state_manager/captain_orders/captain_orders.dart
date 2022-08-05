@@ -69,17 +69,22 @@ class CaptainOrdersListStateManager {
     }
     _ordersService.getNearbyOrders().then((DataModel value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState,
-            onPressed: () {
-              getNearbyOrders(screenState);
-            },
-            title: '',
-            error: value.error,
-            hasAppbar: false,
-            tapApp: () {
-              screenState.advancedController.showDrawer();
-            },
-            icon: Icons.sort_rounded));
+        if (value.error == S.current.youAreOffline) {
+          _stateSubject.add(CaptainOrdersListStateOrdersLoaded(screenState,
+              DataModel.empty(), DataModel.withError(value.error)));
+        } else {
+          _stateSubject.add(ErrorState(screenState,
+              onPressed: () {
+                getNearbyOrders(screenState);
+              },
+              title: '',
+              error: value.error,
+              hasAppbar: false,
+              tapApp: () {
+                screenState.advancedController.showDrawer();
+              },
+              icon: Icons.sort_rounded));
+        }
       } else {
         _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
             screenState, DataModel.empty(), value));

@@ -52,8 +52,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
         "achieved": MessageLookupByLibrary.simpleMessage("Achieved"),
+        "activateOrderNotification": MessageLookupByLibrary.simpleMessage(
+            "Activate notifications and start delivering order"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
+        "activeOrderNotification":
+            MessageLookupByLibrary.simpleMessage("Activate notification"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
         "actual": MessageLookupByLibrary.simpleMessage("Actual"),

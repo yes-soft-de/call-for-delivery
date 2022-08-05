@@ -51,8 +51,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
         "achieved": MessageLookupByLibrary.simpleMessage("الهدف محقق"),
+        "activateOrderNotification": MessageLookupByLibrary.simpleMessage(
+            "فعل التنبهات وابدأ باستقبال الطلبات"),
         "active": MessageLookupByLibrary.simpleMessage("مفعل"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
+        "activeOrderNotification":
+            MessageLookupByLibrary.simpleMessage("فعل التنبيهات"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "actual": MessageLookupByLibrary.simpleMessage("الحالي"),
@@ -166,7 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainPlanNotAcceptedFromAdminYet": MessageLookupByLibrary.simpleMessage(
             "خطة العمل المختارة من الكابتن لم يتم اعتمادها من قبل الإدارة بعد  يرجى الانتظار"),
         "captainProfileNotCompleted": MessageLookupByLibrary.simpleMessage(
-            "حابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك"),
+            "حسابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":

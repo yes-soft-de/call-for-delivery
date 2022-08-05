@@ -126,15 +126,16 @@ class CaptainOrdersListStateOrdersLoaded extends States {
 
   Widget getNearbyOrdersList(BuildContext context) {
     if (nearbyOrders.hasError) {
-      return ErrorStateWidget(
+      return ErrorOrderNotificationStateWidget(
         error: nearbyOrders.error,
         onRefresh: () {
+          screenState.changeStatus(true);
           screenState.getMyOrders();
         },
       );
     }
     if (nearbyOrders.isEmpty) {
-      return NearbyOrdersStateWidget(
+      return NearbyOrdersEmptyStateWidget(
         onRefresh: () {
           screenState.getMyOrders();
         },
