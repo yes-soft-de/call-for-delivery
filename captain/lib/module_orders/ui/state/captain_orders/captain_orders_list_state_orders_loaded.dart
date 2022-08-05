@@ -1,6 +1,8 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
@@ -182,7 +184,14 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               },
               child: NearbyOrdersCard(
                 acceptOrder: () {
-                  
+                  var index = StatusHelper.getOrderStatusIndex(element.state);
+                  screenState.stateManager.updateOrder(
+                      UpdateOrderRequest(
+                        id: element.id,
+                        state: StatusHelper.getStatusString(
+                            OrderStatusEnum.values[index + 1]),
+                      ),
+                      screenState);
                 },
                 background: element.orderIsMain
                     ? Colors.red[700]

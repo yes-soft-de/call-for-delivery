@@ -49,6 +49,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
+  CaptainOrdersListStateManager get stateManager => widget._stateManager;
   Future<void> checkForUpdates(context) async {
     final newVersion = NewVersion();
     final VersionStatus? status = await newVersion.getVersionStatus();
@@ -103,6 +104,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       Navigator.of(context).pushNamed(route, arguments: argument);
     });
   }
+
   bool farOrders = false;
   @override
   void initState() {
