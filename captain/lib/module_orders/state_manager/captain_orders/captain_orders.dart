@@ -4,6 +4,8 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -122,6 +124,27 @@ class CaptainOrdersListStateManager {
       } else {
         Fluttertoast.showToast(msg: S.current.profileStatusUpdatedSuccessfully);
         getIt<GlobalStateManager>().update();
+      }
+    });
+  }
+
+  void updateOrder(
+      UpdateOrderRequest request, CaptainOrdersScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.updateOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.warningDialog(
+            title: S.current.warnning,
+            message: value.error,
+            context: screenState.context);
+        screenState.getMyOrders();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
+        screenState.getMyOrders('Trigger');
+        screenState.moveTo(OrdersRoutes.ORDER_STATUS_SCREEN, request.id);
       }
     });
   }

@@ -1,6 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/home_widgets/icon_info_button.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -187,6 +186,7 @@ class NearbyOrdersCard extends StatelessWidget {
   final String? primaryTitle;
   final Color? background;
   final String storeName;
+  final Function()? acceptOrder;
   const NearbyOrdersCard(
       {required this.orderNumber,
       this.branchToDestination,
@@ -198,7 +198,8 @@ class NearbyOrdersCard extends StatelessWidget {
       this.orderIsMain = false,
       this.background,
       this.primaryTitle,
-      required this.storeName});
+      required this.storeName,
+      this.acceptOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -381,10 +382,19 @@ class NearbyOrdersCard extends StatelessWidget {
                             ' | ' +
                             S.current.cash),
                   ),
-                  Icon(
-                    Icons.arrow_circle_left_outlined,
-                    color: Theme.of(context).textTheme.button?.color,
-                  )
+                  Visibility(
+                    replacement: ElevatedButton.icon(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(),
+                      label: Text(S.current.accept),
+                      icon: const Icon(Icons.thumb_up_alt_rounded),
+                    ),
+                    visible: acceptOrder != null ? false : true,
+                    child: Icon(
+                      Icons.arrow_circle_left_outlined,
+                      color: Theme.of(context).textTheme.button?.color,
+                    ),
+                  ),
                 ],
               ),
             ),

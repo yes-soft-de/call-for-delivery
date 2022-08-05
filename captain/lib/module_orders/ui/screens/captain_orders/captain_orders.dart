@@ -66,9 +66,12 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     }
   }
 
-  void getMyOrders() {
+  void getMyOrders([String? trigger]) {
     widget._stateManager.getProfile(this);
     widget._stateManager.getMyOrders(this);
+    if (trigger != null) {
+      FireStoreHelper().backgroundThread(trigger);
+    }
   }
 
   Future<void> refreshOrders() async {
@@ -95,6 +98,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     widget._stateManager.updateProfileStatus(this, isOnline);
   }
 
+  void moveTo(String route, dynamic argument) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Navigator.of(context).pushNamed(route, arguments: argument);
+    });
+  }
   bool farOrders = false;
   @override
   void initState() {

@@ -181,6 +181,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 }
               },
               child: NearbyOrdersCard(
+                acceptOrder: () {
+                  
+                },
                 background: element.orderIsMain
                     ? Colors.red[700]
                     : Theme.of(context).colorScheme.secondary,
