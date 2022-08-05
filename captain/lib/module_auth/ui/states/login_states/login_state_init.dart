@@ -159,16 +159,19 @@ class LoginStateInit extends LoginState {
                     )
                   ],
                 ),
-                Container(
-                  height: 16,
+                // Container(
+                //   height: 16,
+                // ),
+                Visibility(
+                  visible: false,
+                  child: CheckboxListTile(
+                      title: Text(S.current.rememberMe),
+                      value: screen.rememberMe,
+                      onChanged: (check) {
+                        screen.rememberMe = check ?? false;
+                        screen.refresh();
+                      }),
                 ),
-                CheckboxListTile(
-                    title: Text(S.current.rememberMe),
-                    value: screen.rememberMe,
-                    onChanged: (check) {
-                      screen.rememberMe = check ?? false;
-                      screen.refresh();
-                    }),
                 const SizedBox(
                   height: 16,
                 ),

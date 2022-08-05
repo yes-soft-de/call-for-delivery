@@ -406,7 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
-        "farOrders": MessageLookupByLibrary.simpleMessage("البعيدة"),
+        "farOrders": MessageLookupByLibrary.simpleMessage("الطلبات البعيدة"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":

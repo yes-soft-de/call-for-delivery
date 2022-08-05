@@ -179,22 +179,27 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                       : StatusHelper.getOrderStatusColor(
                           OrderStatusEnum.GOT_CAPTAIN)),
               actions: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 8),
-                  child: FlutterSwitch(
-                    onToggle: (bool value) {
-                      farOrders = value;
-                      refresh();
-                    },
-                    showOnOff: true,
-                    valueFontSize: 12,
-                    width: 90,
-                    activeColor: Colors.green,
-                    inactiveColor: Colors.red,
-                    activeText: S.current.farOrders,
-                    inactiveText: S.current.farOrders,
-                    value: farOrders,
-                  ),
+                Row(
+                  children: [
+                    Switch(
+                        value: farOrders,
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        onChanged: (bool value) {
+                          farOrders = value;
+                          refresh();
+                        }),
+                    SizedBox(
+                      width: 35,
+                      child: Text(
+                        S.current.farOrders,
+                        style: TextStyle(
+                            fontSize: 10,
+                            height: 1,
+                            fontWeight: FontWeight.bold,
+                            color: farOrders ? Colors.green : Colors.red),
+                      ),
+                    ),
+                  ],
                 ),
                 CustomC4dAppBar.actionIcon(context, onTap: () {
                   Navigator.of(context)
