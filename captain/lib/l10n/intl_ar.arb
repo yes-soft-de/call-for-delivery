@@ -725,12 +725,14 @@
     "welcomeCaptain": "أهلا بعودتك يا كابتن !",
     "hereOrdersWillBeShown": "هنا ستظهر الطلبات الجديدة ",
     "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة",
-    "currentLocation":"موقعك الحالي",
-    "receivingLocation":"موقع الاستلام",
-    "deliveryDestination":"موقع التسليم",
-    "thereIsFarawayOrder":"هناك طلبات بعيدة متوفرة",
-    "show":"إظهار",
-    "unShow":"عدم إظهار",
-    "farOrders":"البعيدة",
-    "rememberMe":"تذكرني"
+    "currentLocation": "موقعك الحالي",
+    "receivingLocation": "موقع الاستلام",
+    "deliveryDestination": "موقع التسليم",
+    "thereIsFarawayOrder": "هناك طلبات بعيدة متوفرة",
+    "show": "إظهار",
+    "unShow": "عدم إظهار",
+    "farOrders": "البعيدة",
+    "rememberMe": "تذكرني",
+    "pleaseCorrectProvidedDistance": "من فضلك قم بتصحيح المسافة المدخلة",
+    "orderNotifications":"التنبيهات"
 }

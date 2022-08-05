@@ -186,7 +186,7 @@ class NearbyOrdersCard extends StatelessWidget {
   final String? primaryTitle;
   final Color? background;
   final String storeName;
-  final Function()? acceptOrder;
+  final Function() acceptOrder;
   const NearbyOrdersCard(
       {required this.orderNumber,
       this.branchToDestination,
@@ -199,7 +199,7 @@ class NearbyOrdersCard extends StatelessWidget {
       this.background,
       this.primaryTitle,
       required this.storeName,
-      this.acceptOrder});
+      required this.acceptOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -384,12 +384,21 @@ class NearbyOrdersCard extends StatelessWidget {
                   ),
                   Visibility(
                     replacement: ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(),
-                      label: Text(S.current.accept),
-                      icon: const Icon(Icons.thumb_up_alt_rounded),
+                      onPressed: () {
+                        acceptOrder();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.green, shape: StadiumBorder()),
+                      label: Text(
+                        S.current.accept,
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                      icon: const Icon(
+                        Icons.thumb_up_alt_rounded,
+                        color: Colors.white,
+                      ),
                     ),
-                    visible: acceptOrder != null ? false : true,
+                    visible: false,
                     child: Icon(
                       Icons.arrow_circle_left_outlined,
                       color: Theme.of(context).textTheme.button?.color,
@@ -451,7 +460,8 @@ class NearbyOrdersCard extends StatelessWidget {
   }
 
   Widget dotedDivider(context) {
-    Color dividerColor = Theme.of(context).disabledColor.withOpacity(0.9);
+    Color dividerColor =
+        Theme.of(context).textTheme.button?.color ?? Colors.white;
     return Row(
       children: [
         Container(

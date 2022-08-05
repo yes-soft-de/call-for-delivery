@@ -680,6 +680,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
+        "orderNotifications": MessageLookupByLibrary.simpleMessage("Status"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
@@ -772,6 +773,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("Please Complete the Form"),
+        "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
+            "Please correct provided distance"),
         "pleaseDownloadmandob_moshtarayat_captain":
             MessageLookupByLibrary.simpleMessage("Please Download c4d"),
         "pleaseEnterValidCountryCode":

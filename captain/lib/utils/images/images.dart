@@ -33,6 +33,7 @@ class SvgAsset {
   static const SEARCHING_SVG = ROOT + 'searching.svg';
   static const RATE_SVG = ROOT + 'rating.svg';
   static const WAITING_SVG = ROOT + 'waiting.svg';
+  static const WAITING_PARKS_SVG = ROOT + 'waiting_parks.svg';
   static const DELIVER_TO_CLIENT = ROOT + 'to_client.svg';
 }
 

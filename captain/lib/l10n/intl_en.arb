@@ -730,5 +730,7 @@
     "show": "Show",
     "unShow": "Un Show",
     "farOrders": "Far",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "pleaseCorrectProvidedDistance": "Please correct provided distance",
+    "orderNotifications": "Status"
 }

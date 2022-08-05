@@ -279,6 +279,16 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               ),
               credit: element.paymentMethod != 'cash',
               storeName: element.storeName,
+              acceptOrder: () {
+                var index = StatusHelper.getOrderStatusIndex(element.state);
+                screenState.stateManager.updateOrder(
+                    UpdateOrderRequest(
+                      id: element.id,
+                      state: StatusHelper.getStatusString(
+                          OrderStatusEnum.values[index + 1]),
+                    ),
+                    screenState);
+              },
             ),
           ),
         ),

@@ -671,6 +671,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
+        "orderNotifications": MessageLookupByLibrary.simpleMessage("التنبيهات"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
@@ -765,6 +766,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("الرجاء أكمال الفورم"),
+        "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
+            "من فضلك قم بتصحيح المسافة المدخلة"),
         "pleaseDownloadmandob_moshtarayat_captain":
             MessageLookupByLibrary.simpleMessage("الرجاء تحميل c4d"),
         "pleaseEnterValidCountryCode":

@@ -7359,6 +7359,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Please correct provided distance`
+  String get pleaseCorrectProvidedDistance {
+    return Intl.message(
+      'Please correct provided distance',
+      name: 'pleaseCorrectProvidedDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get orderNotifications {
+    return Intl.message(
+      'Status',
+      name: 'orderNotifications',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
