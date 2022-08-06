@@ -5,8 +5,9 @@ class Urls {
   static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
+  static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
   static const String VERSION_ADMIN = '/v1/admin';
-  static const String BASE_API_STORE = DOMAIN + VERSION + '/store';
+  static const String BASE_API_STORE = DOMAIN + VERSION + '/admin';
   static const String BASE_API_CATEGORY =
       DOMAIN + VERSION_ADMIN + '/packagecategory';
   static const String BASE_API_PACKAGE_ADMIN =
@@ -73,7 +74,9 @@ class Urls {
   /*--------Auth-------------------*/
   static const String IMAGES_ROOT =
       'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
+
   static const UPLOAD_API = BASE_API + '/uploadfile';
+  static const UPLOAD_PDF_API = BASE_API + '/uploadpdffile';
   static const SIGN_UP_API = BASE_API + '/createAdmin';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
@@ -88,7 +91,7 @@ class Urls {
 
   /*--------home-------------------*/
   static const GET_REPORT = BASE_API_REPORT_ADMIN + '/getstatistics';
-
+  static const GET_STATISTICS = BASE_API_REPORT_ADMIN + '/fetchdashstatistics';
   /*--------Notification-------------------*/
   static const NEEDFORSUPPORT_ANYNAMOUS = BASE_API + '/anonymouschat';
   static const NOTIFICATIONTOADMIN_API = BASE_API + '/notificationtoadmin';
@@ -102,17 +105,26 @@ class Urls {
 
   /*--------Store-------------------*/
   static const GET_STORES =
-      BASE_API_STORE + '/storeownersprofilesbystatusforadmin/';
+      BASE_API_STORE + '/storeowner/storeownerprofilesbystatusforadmin/';
   static const GET_STORE_PROFILE =
-      BASE_API_STORE + '/storeownersprofilesbyidforadmin/';
-  static const ACTIVATE_STORE = BASE_API_STORE + '/storeownerprofilestatus';
-  static const UPDATE_STORE_INFO = BASE_API_STORE + '/storeownerprofilebyadmin';
+      BASE_API_STORE + '/storeowner/storeownerprofilebyidforadmin/';
+  static const ACTIVATE_STORE =
+      BASE_API_STORE + '/storeowner/storeownerprofilestatusbyadmin';
+  static const DELETE_STORE =
+      BASE_API_STORE + '/storeowner/deletestoreownerprofilebyadmin';
+  static const UPDATE_STORE_INFO =
+      BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
-  static const UPDATE_ORDER_STATUS_API = BASE_API_ORDER + '/orderstateupdatebyadmin';
+  static const UPDATE_ORDER_STATUS_API =
+      BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
+  static const FILTER_CAPTAIN_ORDERS_API =
+      BASE_API_ORDER + '/filtercaptainordersbyadmin';
+  static const GET_ORDER_LOGS_API =
+      DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
   static const FILTER_CASH_ORDERS_FINANCES_API =
       BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
@@ -165,15 +177,27 @@ class Urls {
 
   /*------------------------CAPTAINS------------------------*/
   static const GET_CAPTAINS = BASE_API_CAPTAIN + '/captainsprofilesbystatus/';
+  static const GET_CAPTAINS_ORDERS =
+      BASE_API_CAPTAIN + '/getreadycaptainsandcountoftheircurrentorders';
   static const GET_CAPTAIN_PROFILE = BASE_API_CAPTAIN + '/captainprofilebyid/';
   static const ACTIVATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofilestatus';
+  static const ASSIGN_ORDER_TO_CAPTAIN =
+      BASE_API_ORDER + '/assignordertocaptain';
   static const UPDATE_CAPTAIN = BASE_API_CAPTAIN + '/captainprofile';
+  static const DELETE_CAPTAIN =
+      BASE_API_CAPTAIN + '/deletecaptainprofilebyadmin';
   /*------------------------STORE PAYMENTS------------------------*/
   static const CREATE_STORE_PAYMENTS =
       BASE_API_STORE_PAYMENTS + '/storeownerpayment';
+  static const CREATE_STORE_FROM_PAYMENTS = BASE_API +
+      '/v1/admin/storeownerpaymentfromcompany' +
+      '/storeownerpaymentfromcompany';
   static const CREATE_STORE_PAYMENTS_TO_STORE =
       BASE_API_STORE_PAYMENTS_TO_STORE + '/storeownerpaymentfromcompany';
   static const GET_STORE_PAYMENTS = BASE_API_STORE_PAYMENTS + '/storepayments';
+  static const GET_FROM_STORE_PAYMENTS = BASE_API +
+      '/v1/admin/storeownerpaymentfromcompany' +
+      '/storepaymentsfromcompany';
   static const GET_STORE_SUBSCRIPTIONS_FINANCE =
       BASE_STORE_SUBSCRIPTIONS_FINANCE + '/subscriptionswithpayment';
 
@@ -182,7 +206,11 @@ class Urls {
       BASE_CAPTAIN_PAYMENT + '/captainpayment';
   static const CREATE_CAPTAIN_PAYMENTS_TO_COMPANY =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompany';
+  static const DELETE_CAPTAIN_PAYMENTS_TO_COMPANY =
+      BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymenttocompnay';
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
+  static const GET_CAPTAIN_PAYMENTS_FROM_CASH =
+      BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymentstocompany';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 
@@ -235,4 +263,6 @@ class Urls {
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
+  static const UNASSIGNED_ORDER_FROM_CAPTAIN =
+      BASE_API_ORDER + '/rependingacceptedorder';
 }

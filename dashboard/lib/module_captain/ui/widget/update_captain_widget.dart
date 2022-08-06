@@ -206,16 +206,16 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
                   });
                 },
                 child: Checked(
-                    checked: imagePath != null,
+                    checked: imagePathDriving != null,
                     checkedWidget: ClipRRect(
                         borderRadius: BorderRadius.circular(25),
-                        child: imageBytes != null
+                        child: imageBytesDriving != null
                             ? Image.memory(
-                                imageBytes ?? Uint8List(0),
+                                imageBytesDriving ?? Uint8List(0),
                                 fit: BoxFit.cover,
                               )
                             : Image.network(
-                                networkImage ?? '',
+                                networkImageDriving ?? '',
                                 fit: BoxFit.cover,
                               )),
                     child: Center(

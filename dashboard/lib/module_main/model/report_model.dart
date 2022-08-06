@@ -33,9 +33,9 @@ class ReportModel extends DataModel {
 
     inactiveCaptainsCount = data.inactiveCaptainsCount ?? 0;
     activeCaptainsCount = data.activeCaptainsCount ?? 0;
-    previousWeekDeliveredOrdersCount = data.previousWeekDeliveredOrdersCount ?? 0;
+    previousWeekDeliveredOrdersCount =
+        data.previousWeekDeliveredOrdersCount ?? 0;
     todayDeliveredOrdersCount = data.todayDeliveredOrdersCount ?? 0;
     pendingOrdersCount = data.pendingOrdersCount ?? 0;
-
   }
 }

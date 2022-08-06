@@ -10,10 +10,11 @@ class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static final PublishSubject<String> _onNotificationReceived =
+  final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
       PublishSubject();
 
-  Stream get onLocalNotificationStream => _onNotificationReceived.stream;
+  Stream<Map<String, dynamic>> get onLocalNotificationStream =>
+      _onNotificationReceived.stream;
 
   Future<void> init() async {
     AndroidInitializationSettings initializationSettingsAndroid =

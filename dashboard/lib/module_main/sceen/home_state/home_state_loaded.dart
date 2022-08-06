@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_main/model/report_model.dart';
+import 'package:c4d/module_main/model/statistics_model.dart';
 import 'package:c4d/module_main/sceen/home_screen.dart';
 import 'package:c4d/module_main/widget/animation.dart';
+import 'package:c4d/module_main/widget/order_statistic_ui.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,9 @@ class HomeLoadedState extends States {
   final String? error;
   final bool empty;
   final ReportModel? model;
+  final StatisticsModel? statistics;
 
-  HomeLoadedState(this.screenState, this.model,
+  HomeLoadedState(this.screenState, this.model, this.statistics,
       {this.empty = false, this.error})
       : super(screenState);
 
@@ -64,9 +67,10 @@ class HomeLoadedState extends States {
                 ),
               ),
               widgetTile(model?.todayDeliveredOrdersCount.toString() ?? '',
-                  S.current.countTodayOrder),
-              widgetTile(model?.previousWeekDeliveredOrdersCount.toString() ?? '',
-                  S.current.lastWeek),
+                  S.current.last24CountOrder),
+              widgetTile(
+                  model?.previousWeekDeliveredOrdersCount.toString() ?? '',
+                  S.current.last7WeekOrders),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
                 child: Divider(

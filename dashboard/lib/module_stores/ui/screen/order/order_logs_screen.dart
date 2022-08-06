@@ -171,7 +171,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              ordersFilter.toDate = value.toIso8601String();
+                              var currentTime = TimeOfDay.now();
+                              ordersFilter.toDate = DateTime(
+                                      value.year,
+                                      value.month,
+                                      value.day,
+                                      currentTime.hour,
+                                      currentTime.minute)
+                                  .toIso8601String();
                               setState(() {});
                               getOrders();
                             }

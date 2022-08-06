@@ -110,6 +110,25 @@ class OrderStatusStateManager {
                 message: S.current.updateOrderStatusSuccessfully)
             .show(screenState.context);
         getOrder(screenState, request.id ?? -1);
+        FireStoreHelper().backgroundThread('Trigger').ignore();
+      }
+    });
+  }
+
+  void unAssignedOrder(int orderId, OrderDetailsScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().unAssignCaptain(orderId).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        getOrder(screenState, orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.orderUpdatedSuccessfully)
+            .show(screenState.context);
+        getOrder(screenState, orderId);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

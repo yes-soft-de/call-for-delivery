@@ -347,6 +347,43 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 background:
                     SubscriptionsStatusHelper.getStatusColor(model.status))),
         RowBubble(
+            firstBubble: verticalBubble(title: S.current.isFutureSubscriptions),
+            secondBubble: verticalBubble(
+                title: model.isFuture ? S.current.yes : S.current.no,
+                background: model.isFuture ? Colors.green : Colors.grey)),
+
+        // subscription details
+        Divider(
+          thickness: 2.5,
+          color: Theme.of(context).backgroundColor,
+          indent: 32,
+          endIndent: 32,
+        ),
+        // here is the details
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.packageOrderCount),
+            secondBubble: verticalBubble(title: '${model.packageOrderCount}')),
+        RowBubble(
+            firstBubble:
+                verticalBubble(title: S.current.packageOrderRemainingOrders),
+            secondBubble:
+                verticalBubble(title: model.remainingOrders.toString())),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.packageCaptainsCount),
+            secondBubble: verticalBubble(title: '${model.packageCarCount}')),
+        RowBubble(
+            firstBubble:
+                verticalBubble(title: S.current.packageRemainingCaptains),
+            secondBubble:
+                verticalBubble(title: model.remainingCars.toString())),
+        //
+        Divider(
+          thickness: 2.5,
+          color: Theme.of(context).backgroundColor,
+          indent: 32,
+          endIndent: 32,
+        ),
+        RowBubble(
             firstBubble: verticalBubble(title: S.current.packageCost),
             secondBubble: verticalBubble(
                 title: FixedNumber.getFixedNumber(model.total.packageCost)
@@ -358,40 +395,50 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 title: FixedNumber.getFixedNumber(model.total.captainOffer)
                         .toString() +
                     ' ${S.current.sar}')),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(), primary: Colors.amber),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return AlertDialog(
-                      title: Text(S.current.captainOffers),
-                      scrollable: true,
-                      content: Container(
-                        child: Column(
-                          children: getCaptainOffers(model),
+        Visibility(
+          visible: model.captainsOffer.isNotEmpty,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: StadiumBorder(), primary: Colors.amber),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: Text(S.current.captainOffers),
+                        scrollable: true,
+                        content: Container(
+                          child: Column(
+                            children: getCaptainOffers(model),
+                          ),
                         ),
-                      ),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(S.current.cancel))
-                      ],
-                    );
-                  });
-            },
-            child: Text(
-              S.current.captainOffers,
-              style: TextStyle(color: Colors.white),
-            )),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(S.current.cancel))
+                        ],
+                      );
+                    });
+              },
+              child: Text(
+                S.current.captainOffers,
+                style: TextStyle(color: Colors.white),
+              )),
+        ),
+
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
             secondBubble: verticalBubble(
                 title:
                     model.total.sumPayments.toString() + ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.requiredToPay),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.requiredToPay)
+                        .toString() +
+                    ' ${S.current.sar}')),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Divider(
@@ -405,7 +452,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           constraints: BoxConstraints(minWidth: 125, maxWidth: 150),
           child: verticalBubble(
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
-              title: S.current.total,
+              title: S.current.leftToPay,
               background: model.total.advancePayment == false
                   ? Colors.green
                   : Colors.red),

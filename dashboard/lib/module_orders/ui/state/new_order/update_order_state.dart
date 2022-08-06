@@ -11,15 +11,18 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +31,7 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class UpdateOrderLoaded extends States {
   List<BranchesModel> branches;
@@ -63,21 +67,30 @@ class UpdateOrderLoaded extends States {
     orderIsMain = orderInfo.orderIsMain;
     imagePath = orderInfo.imagePath;
     image = orderInfo.image;
+    pdfModel = PdfModel(
+        pdfBaseUrl: orderInfo.pdf?.pdfBaseUrl,
+        pdfPreview: orderInfo.pdf?.pdfPreview,
+        pdfOnServerPath: orderInfo.pdf?.pdfOnServerPath);
+    activeBranch =
+        branches.firstWhere((element) => element.id == screenState.branch);
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
-  DateTime orderDate = DateTime.now();
+  DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Branches? activeBranch;
+  BranchesModel? activeBranch;
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
   String? image;
+  String? distance;
+  PdfModel? pdfModel;
+
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -107,16 +120,49 @@ class UpdateOrderLoaded extends States {
                             color: Theme.of(context).backgroundColor),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                value: screenState.branch,
-                                items: _getBranches(),
-                                hint: Text(S.current.chooseBranch),
-                                onChanged: (int? value) {
-                                  screenState.branch = value;
-                                  screenState.refresh();
-                                }),
-                          ),
+                          child: DropdownSearch<BranchesModel>(
+                              showSearchBox: true,
+                              enabled: branches.isNotEmpty,
+                              dropdownBuilder: (context, model) {
+                                return Text(
+                                  model?.branchName ?? S.current.chooseBranch,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                );
+                              },
+                              dropdownSearchDecoration: InputDecoration(
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
+                              searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                      hintText: S.current.chooseBranch,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25)))),
+                              popupShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              mode: Mode.MENU,
+                              items: branches,
+                              filterFn: (model, filter) {
+                                return model!.branchName.contains(filter ?? '');
+                              },
+                              itemAsString: (model) =>
+                                  model?.branchName ?? S.current.unknown,
+                              onChanged: (v) {
+                                v as BranchesModel;
+                                screenState.branch = v.id;
+                                activeBranch = branches.firstWhere((element) =>
+                                    element.id == screenState.branch);
+                                screenState.refresh();
+                              },
+                              selectedItem: screenState.branch != null
+                                  ? branches.firstWhere((element) =>
+                                      element.id == screenState.branch)
+                                  : null), // stores
                         ),
                       ),
                     ),
@@ -202,6 +248,28 @@ class UpdateOrderLoaded extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.customerLocation != null &&
+                        activeBranch != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              destance: (d) {
+                                distance = d;
+                              },
+                            )),
+                      ),
+                    )),
                 // order details
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
@@ -379,6 +447,100 @@ class UpdateOrderLoaded extends States {
                     ), // send
                   ],
                 ),
+                // upload pdf
+                Visibility(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0, left: 24),
+                        child: Text(
+                          S.current.attachFile,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 16),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            var isDark =
+                                getIt<ThemePreferencesHelper>().isDarkMode();
+                            FilePicker.platform.pickFiles(
+                                allowedExtensions: ['pdf'],
+                                type: FileType.custom).then((result) async {
+                              if (result != null) {
+                                XFile file = XFile(result.files.single.path!);
+                                pdfModel = PdfModel(pdfFilePath: file.path);
+                                screenState.refresh();
+                              } else {
+                                // User canceled the picker
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Checked(
+                                checked: pdfModel?.pdfFilePath != null ||
+                                    pdfModel?.pdfOnServerPath != null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.attach_file_rounded,
+                                        color: Theme.of(context).disabledColor,
+                                      ),
+                                      Text(
+                                        S.current.pressHere,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .disabledColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                checkedWidget: Visibility(
+                                  visible: pdfModel?.pdfFilePath != null ||
+                                      pdfModel?.pdfOnServerPath != null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.filePdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ), // send
+                    ],
+                  ),
+                ),
                 // delivery date
                 Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
@@ -419,7 +581,9 @@ class UpdateOrderLoaded extends States {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              time.format(context).toString(),
+                              orderDate == null
+                                  ? S.current.now
+                                  : time.format(context).toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -659,6 +823,7 @@ class UpdateOrderLoaded extends States {
           id: orderInfo.id,
           orderIsMain: orderIsMain,
           fromBranch: screenState.branch,
+          pdf: pdfModel?.getPdfRequest(),
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
@@ -670,7 +835,9 @@ class UpdateOrderLoaded extends States {
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.parse(screenState.priceController.text.trim()),
           image: value,
-          date: orderDate.toUtc().toIso8601String(),
+          date: orderDate == null
+              ? DateTime.now().toUtc().toIso8601String()
+              : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments));
     });
   }
@@ -680,6 +847,7 @@ class UpdateOrderLoaded extends States {
     screenState.addNewOrder(CreateOrderRequest(
         id: orderInfo.id,
         orderIsMain: orderIsMain,
+        pdf: pdfModel?.getPdfRequest(),
         fromBranch: screenState.branch,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
@@ -692,17 +860,43 @@ class UpdateOrderLoaded extends States {
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: imagePath ?? null,
-        date: orderDate.toUtc().toIso8601String(),
+        date: orderDate == null
+            ? DateTime.now().toUtc().toIso8601String()
+            : orderDate?.toUtc().toIso8601String(),
         payment: screenState.payments));
   }
 
   void createOrder() {
     if (imagePath == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else if (image != null && imagePath != null && memoryBytes == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else {
-      createOrderWithImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithImage();
+        });
+      } else {
+        createOrderWithImage();
+      }
     }
   }
 

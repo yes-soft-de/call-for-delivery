@@ -14,15 +14,19 @@ class OrderModel extends DataModel {
   late String deliveryDate;
   late String createdDate;
   late String branchName;
-  OrderModel({
-    required this.branchName,
-    required this.state,
-    required this.orderCost,
-    required this.note,
-    required this.deliveryDate,
-    required this.createdDate,
-    required this.id,
-  });
+  String? storeName;
+  late num kilometer;
+
+  OrderModel(
+      {required this.branchName,
+      required this.state,
+      required this.orderCost,
+      required this.note,
+      required this.deliveryDate,
+      required this.createdDate,
+      required this.id,
+      required this.storeName,
+      required this.kilometer});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -48,7 +52,9 @@ class OrderModel extends DataModel {
           id: element.id ?? -1,
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,
-          state: StatusHelper.getStatusEnum(element.state)));
+          state: StatusHelper.getStatusEnum(element.state),
+          storeName: '',
+          kilometer: element.kilometer ?? 0));
     });
   }
   List<OrderModel> get data => _orders;

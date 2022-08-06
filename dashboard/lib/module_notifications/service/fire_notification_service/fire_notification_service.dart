@@ -26,7 +26,8 @@ class FireNotificationService {
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
       PublishSubject();
 
-  Stream get onNotificationStream => _onNotificationReceived.stream;
+  Stream<RemoteMessage> get onNotificationStream =>
+      _onNotificationReceived.stream;
 
   static StreamSubscription? iosSubscription;
 

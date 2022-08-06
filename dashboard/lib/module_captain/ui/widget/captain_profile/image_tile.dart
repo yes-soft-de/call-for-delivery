@@ -15,7 +15,7 @@ class ImageTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 16.0, left: 8, right: 8),
           child: Container(
-              width: 150,
+              width: 140,
               decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(25),
@@ -26,7 +26,9 @@ class ImageTile extends StatelessWidget {
                     child: Text(
                   title,
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 )),
               )),
         ),

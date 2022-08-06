@@ -1,16 +1,26 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/hive/util/argument_hive_helper.dart';
+import 'package:c4d/module_captain/captains_routes.dart';
+import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/phone_number_formtter.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +30,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../module_orders/model/order_details_model.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
@@ -74,21 +83,39 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         ),
         // captain name
         Visibility(
+            replacement: Visibility(
+              visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                  orderInfo.state != OrderStatusEnum.CANCELLED,
+              child: OrderButton(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          ArgumentHiveHelper().setCurrentOrderID(
+                              screenState.orderId.toString());
+                          return getIt<CaptainAssignOrderScreen>();
+                        });
+                  },
+                  backgroundColor: Colors.orange,
+                  icon: Icons.delivery_dining_rounded,
+                  subtitle: S.current.assignCaptainHint,
+                  title: S.current.assignCaptain),
+            ),
             visible: orderInfo.captainName != null,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: 75,
+                constraints: BoxConstraints(minHeight: 75),
                 decoration: BoxDecoration(
                     color: StatusHelper.getOrderStatusColor(orderInfo.state),
                     borderRadius: BorderRadius.circular(25)),
                 child: Row(
                   children: [
-                    SizedBox(
-                      width: 16,
-                    ),
                     Row(
                       children: [
+                        SizedBox(
+                          width: 8,
+                        ),
                         Icon(
                           Icons.delivery_dining_rounded,
                           color: Colors.white,
@@ -97,7 +124,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                           width: 8,
                         ),
                         Container(
-                          constraints: BoxConstraints(maxWidth: 240),
+                          width: 200,
                           child: Text.rich(
                             TextSpan(
                               children: [
@@ -110,43 +137,102 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                     style: TextStyle(color: Colors.white)),
                                 TextSpan(
                                     text: orderInfo.captainName,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (ctx) {
+                                              return AlertDialog(
+                                                scrollable: true,
+                                                title: Text(S.current.profile),
+                                                content: Column(
+                                                  children: [
+                                                    ClipOval(
+                                                      child: CustomNetworkImage(
+                                                          height: 100,
+                                                          width: 100,
+                                                          imageSource: orderInfo
+                                                                  .captain
+                                                                  ?.images
+                                                                  ?.image ??
+                                                              ''),
+                                                    ),
+                                                    Text(
+                                                        orderInfo.captainName ??
+                                                            S.current.unknown),
+                                                    SelectableText(
+                                                      PhoneNumberFormatter
+                                                              .format(orderInfo
+                                                                  .captain
+                                                                  ?.phone) ??
+                                                          '',
+                                                      textDirection:
+                                                          TextDirection.ltr,
+                                                      style: TextStyle(
+                                                        locale:
+                                                            Locale.fromSubtags(
+                                                                languageCode:
+                                                                    'en'),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                actionsAlignment:
+                                                    MainAxisAlignment.center,
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                CaptainsRoutes
+                                                                    .CAPTAIN_PROFILE,
+                                                                arguments:
+                                                                    orderInfo
+                                                                        .captain
+                                                                        ?.id);
+                                                      },
+                                                      child:
+                                                          Text(S.current.more))
+                                                ],
+                                              );
+                                            });
+                                      },
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),
                               ],
                             ),
+                            overflow: TextOverflow.clip,
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
                         ),
                       ],
                     ),
-                    // Expanded(
-                    //   child: Container(
-                    //     height: 75,
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.yellow,
-                    //         borderRadius: BorderRadiusDirectional.only(
-                    //             topEnd: Radius.circular(25),
-                    //             bottomEnd: Radius.circular(25))),
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Row(
-                    //         children: [
-                    //           Text(
-                    //             orderInfo.captainRating,
-                    //             style: TextStyle(color: Colors.white),
-                    //           ),
-                    //           Icon(
-                    //             Icons.star_rounded,
-                    //             color: Colors.white,
-                    //           )
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Visibility(
+                      visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                          orderInfo.state != OrderStatusEnum.CANCELLED,
+                      child: IconButton(
+                        icon: Icon(Icons.remove_circle),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager.unAssignedOrder(
+                                          screenState.orderId, screenState);
+                                    },
+                                    content:
+                                        S.current.areYouSureAboutRependingOrder,
+                                    oneAction: false);
+                              });
+                        },
+                        color: Colors.white,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -156,6 +242,16 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           padding:
               const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
           child: ListTile(
+            onLongPress: () {
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
+                  arguments: orderInfo.id);
+            },
+            onTap: () {
+              Navigator.of(screenState.context).pushNamed(
+                  StoresRoutes.ORDER_TIMELINE_SCREEN,
+                  arguments: orderInfo.id);
+            },
             leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
@@ -192,6 +288,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   style: TextStyle(fontWeight: FontWeight.w600)),
             ),
           ),
+        ),
+        // order log
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: OrderButton(
+              backgroundColor: Colors.grey[800]!,
+              icon: Icons.history,
+              subtitle: null,
+              onTap: () {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
+                    arguments: orderInfo.id);
+              },
+              title: S.current.orderLogHistory),
         ),
         // chat
         Visibility(
@@ -360,8 +470,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       leading: Icon(Icons.location_pin),
                       title: Text(S.current.locationOfCustomer),
                       subtitle: distance != null
-                          ? Text(
-                              S.current.distance + ' $distance ' + S.current.km)
+                          ? Text(S.current.distance +
+                              ' ${orderInfo.storeBranchToClientDistance} ' +
+                              S.current.km)
                           : Text(S.current.distance + ' ' + S.current.unknown),
                       trailing: Icon(Icons.arrow_forward),
                     ),
@@ -428,6 +539,56 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                 height: 100,
                                 imageSource: orderInfo.image ?? '',
                                 width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: orderInfo.pdf != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.attach_file_rounded,
+                        ),
+                        title: Text(S.current.attachedFile),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          var url = orderInfo.pdf?.pdfPreview;
+                          canLaunch(url ?? '').then((value) {
+                            if (value) {
+                              launch(url ?? '');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.unavailable);
+                            }
+                          });
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: Icon(
+                                  FontAwesomeIcons.filePdf,
+                                  color: Colors.red,
+                                  size: 100,
+                                ),
                               ),
                             ),
                           ),
@@ -563,7 +724,6 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             ),
           ),
         ),
-
         // payments
         Padding(
           padding: const EdgeInsets.all(16.0),

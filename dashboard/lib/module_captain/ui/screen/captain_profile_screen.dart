@@ -60,6 +60,8 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     widget._stateManager.updateCaptainProfile(this, request);
   }
 
+  CaptainProfileStateManager get stateManager => widget._stateManager;
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -67,7 +69,7 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
   }
 
   int captainId = -1;
-
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     if (captainId == -1) {
@@ -78,13 +80,10 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       }
     }
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.current.profile, actions: [
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context)
-              .pushNamed(CaptainsRoutes.CAPTAIN_BALANCE, arguments: captainId);
-        }, icon: Icons.account_balance_rounded),
-      ]),
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: S.current.profile,
+      ),
       body: currentState.getUI(context),
     );
   }

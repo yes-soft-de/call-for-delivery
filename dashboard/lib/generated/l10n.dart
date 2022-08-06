@@ -6949,6 +6949,666 @@ class S {
       args: [],
     );
   }
+
+  /// `Order Assigned Successfully`
+  String get orderAssignedSuccessfully {
+    return Intl.message(
+      'Order Assigned Successfully',
+      name: 'orderAssignedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about reset this order and remove it form captain`
+  String get areYouSureAboutRependingOrder {
+    return Intl.message(
+      'Are you sure about reset this order and remove it form captain',
+      name: 'areYouSureAboutRependingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign captain to handle this order`
+  String get assignCaptainHint {
+    return Intl.message(
+      'Assign captain to handle this order',
+      name: 'assignCaptainHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign Captain`
+  String get assignCaptain {
+    return Intl.message(
+      'Assign Captain',
+      name: 'assignCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assign`
+  String get assign {
+    return Intl.message(
+      'Assign',
+      name: 'assign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Now`
+  String get now {
+    return Intl.message(
+      'Now',
+      name: 'now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Orders `
+  String get packageOrderStatus {
+    return Intl.message(
+      'Package Orders ',
+      name: 'packageOrderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Captain`
+  String get packageCaptainsStatus {
+    return Intl.message(
+      'Package Captain',
+      name: 'packageCaptainsStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Future Subscriptions`
+  String get isFutureSubscriptions {
+    return Intl.message(
+      'Is Future Subscriptions',
+      name: 'isFutureSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 24h orders`
+  String get last24CountOrder {
+    return Intl.message(
+      'Last 24h orders',
+      name: 'last24CountOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 7 days orders`
+  String get last7WeekOrders {
+    return Intl.message(
+      'Last 7 days orders',
+      name: 'last7WeekOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid Order`
+  String get paidOrder {
+    return Intl.message(
+      'Paid Order',
+      name: 'paidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid Order`
+  String get unPaidOrder {
+    return Intl.message(
+      'Unpaid Order',
+      name: 'unPaidOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unavailable`
+  String get unavailable {
+    return Intl.message(
+      'Unavailable',
+      name: 'unavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unverified`
+  String get accountUnVerified {
+    return Intl.message(
+      'Unverified',
+      name: 'accountUnVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verified`
+  String get accountVerified {
+    return Intl.message(
+      'Verified',
+      name: 'accountVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More`
+  String get more {
+    return Intl.message(
+      'More',
+      name: 'more',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account deleted successfully`
+  String get accountDeletedSuccessfully {
+    return Intl.message(
+      'Account deleted successfully',
+      name: 'accountDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Danger Zone`
+  String get dangerZone {
+    return Intl.message(
+      'Danger Zone',
+      name: 'dangerZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting your account , you won't be able to login with this credential any more`
+  String get areSureAboutDeletingYourAccount {
+    return Intl.message(
+      'Are you sure about deleting your account , you won\'t be able to login with this credential any more',
+      name: 'areSureAboutDeletingYourAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time`
+  String get DeletingYourAccountHint {
+    return Intl.message(
+      'This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time',
+      name: 'DeletingYourAccountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has order records`
+  String get accountHasOrdersRecord {
+    return Intl.message(
+      'Account has order records',
+      name: 'accountHasOrdersRecord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has payments record`
+  String get accountHasPaymentsRecord {
+    return Intl.message(
+      'Account has payments record',
+      name: 'accountHasPaymentsRecord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total cash orders`
+  String get totalCashOrder {
+    return Intl.message(
+      'Total cash orders',
+      name: 'totalCashOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose payment method`
+  String get choosePaymentMethod {
+    return Intl.message(
+      'Choose payment method',
+      name: 'choosePaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group order`
+  String get groupOrder {
+    return Intl.message(
+      'Group order',
+      name: 'groupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Managing`
+  String get accountManaging {
+    return Intl.message(
+      'Account Managing',
+      name: 'accountManaging',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Info`
+  String get accountInfo {
+    return Intl.message(
+      'Account Info',
+      name: 'accountInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining Orders`
+  String get packageOrderRemainingOrders {
+    return Intl.message(
+      'Remaining Orders',
+      name: 'packageOrderRemainingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Orders`
+  String get packageOrderCount {
+    return Intl.message(
+      'Package Orders',
+      name: 'packageOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package captains count`
+  String get packageCaptainsCount {
+    return Intl.message(
+      'Package captains count',
+      name: 'packageCaptainsCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining Captains`
+  String get packageRemainingCaptains {
+    return Intl.message(
+      'Remaining Captains',
+      name: 'packageRemainingCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown action`
+  String get unknownAction {
+    return Intl.message(
+      'Unknown action',
+      name: 'unknownAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated order state`
+  String get UpdatedOrderState {
+    return Intl.message(
+      'Updated order state',
+      name: 'UpdatedOrderState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Canceled`
+  String get orderedCanceled {
+    return Intl.message(
+      'Order Canceled',
+      name: 'orderedCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order assigned to captain`
+  String get assignedOrderToCaptain {
+    return Intl.message(
+      'Order assigned to captain',
+      name: 'assignedOrderToCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created new order`
+  String get createdNewOrder {
+    return Intl.message(
+      'Created new order',
+      name: 'createdNewOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlinked order from group order`
+  String get unlinkedSubOrderFromGroupedOrder {
+    return Intl.message(
+      'Unlinked order from group order',
+      name: 'unlinkedSubOrderFromGroupedOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated order`
+  String get updatedOrder {
+    return Intl.message(
+      'Updated order',
+      name: 'updatedOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hided to edit by admin`
+  String get orderHidedToEditByAdmin {
+    return Intl.message(
+      'Order hided to edit by admin',
+      name: 'orderHidedToEditByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Un assign order`
+  String get unAssignOrder {
+    return Intl.message(
+      'Un assign order',
+      name: 'unAssignOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hided to be edit`
+  String get orderHidedToEditByStore {
+    return Intl.message(
+      'Order hided to be edit',
+      name: 'orderHidedToEditByStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlinked suborder`
+  String get unlinkedSubOrder {
+    return Intl.message(
+      'Unlinked suborder',
+      name: 'unlinkedSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New suborder created`
+  String get newSubOrderCreated {
+    return Intl.message(
+      'New suborder created',
+      name: 'newSubOrderCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order unhidden due captains available`
+  String get orderUnHidedDuCaptainAvailable {
+    return Intl.message(
+      'order unhidden due captains available',
+      name: 'orderUnHidedDuCaptainAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order hidden due time has expired`
+  String get orderHidedDuTimeExpired {
+    return Intl.message(
+      'Order hidden due time has expired',
+      name: 'orderHidedDuTimeExpired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order recycled`
+  String get orderRecycled {
+    return Intl.message(
+      'Order recycled',
+      name: 'orderRecycled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order canceled`
+  String get canceledOrder {
+    return Intl.message(
+      'Order canceled',
+      name: 'canceledOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain finished filling information`
+  String get captainFinishedFillingOrderInformation {
+    return Intl.message(
+      'Captain finished filling information',
+      name: 'captainFinishedFillingOrderInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total orders count`
+  String get totalOrdersCount {
+    return Intl.message(
+      'Total orders count',
+      name: 'totalOrdersCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Required to pay`
+  String get requiredToPay {
+    return Intl.message(
+      'Required to pay',
+      name: 'requiredToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Left to pay`
+  String get leftToPay {
+    return Intl.message(
+      'Left to pay',
+      name: 'leftToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action`
+  String get action {
+    return Intl.message(
+      'Action',
+      name: 'action',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action By`
+  String get actionBy {
+    return Intl.message(
+      'Action By',
+      name: 'actionBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order status`
+  String get currentOrderStatus {
+    return Intl.message(
+      'Order status',
+      name: 'currentOrderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order action logs`
+  String get orderLogHistory {
+    return Intl.message(
+      'Order action logs',
+      name: 'orderLogHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In this window we will view action logs history in this order`
+  String get actionLogHistoryHint {
+    return Intl.message(
+      'In this window we will view action logs history in this order',
+      name: 'actionLogHistoryHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action date`
+  String get actionDate {
+    return Intl.message(
+      'Action date',
+      name: 'actionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reports`
+  String get reports {
+    return Intl.message(
+      'Reports',
+      name: 'reports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update profile`
+  String get updatePersonalInformation {
+    return Intl.message(
+      'Update profile',
+      name: 'updatePersonalInformation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

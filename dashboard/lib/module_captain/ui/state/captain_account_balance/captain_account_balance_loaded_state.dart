@@ -3,11 +3,15 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart';
 import 'package:c4d/module_captain/ui/widget/account_balance_details.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -115,6 +119,7 @@ class AccountBalanceStateLoaded extends States {
         countKilometersTo: e.countKilometersTo,
         countOfOrdersLeft: e.countOfOrdersLeft,
         message: e.message,
+        orders: e.orders,
       ));
     });
     return Visibility(
@@ -160,6 +165,40 @@ class AccountBalanceStateLoaded extends States {
             stringValue: balance?.monthTargetSuccess),
         CustomTile(Icons.checklist_rounded, S.current.countOrdersCompleted,
             balance?.countOrdersCompleted),
+        Visibility(
+            visible: balance?.orders.isNotEmpty == true,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return Scaffold(
+                        appBar: CustomC4dAppBar.appBar(context,
+                            title: S.current.order),
+                        body: Column(
+                          children: [
+                            Expanded(
+                              child: ListView(
+                                children:
+                                    getOrders(context, balance?.orders ?? []),
+                              ),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.close))
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(S.current.orders),
+              ),
+            )),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
             balance?.amountForStore ?? 0),
         // CustomTile(
@@ -175,5 +214,28 @@ class AccountBalanceStateLoaded extends States {
             advancedValue: balance?.advancePayment),
       ],
     );
+  }
+
+  List<Widget> getOrders(context, List<OrderModel> orders) {
+    List<Widget> widgets = [];
+    orders.forEach((element) {
+      widgets.add(
+        InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost,
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              orderIsMain: element.orderIsMain ?? false,
+            )),
+      );
+    });
+    return widgets;
   }
 }

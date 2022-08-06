@@ -1,3 +1,5 @@
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
+
 class FinancialAccountDetail {
   String? categoryName;
   num? countKilometersFrom;
@@ -9,19 +11,20 @@ class FinancialAccountDetail {
   num? contOrderCompleted;
   num? countOfOrdersLeft;
   String? message;
+  List<DatumOrder>? orders;
 
-  FinancialAccountDetail({
-    this.categoryName,
-    this.countKilometersFrom,
-    this.countKilometersTo,
-    this.amount,
-    this.bounce,
-    this.bounceCountOrdersInMonth,
-    this.captainTotalCategory,
-    this.contOrderCompleted,
-    this.countOfOrdersLeft,
-    this.message,
-  });
+  FinancialAccountDetail(
+      {this.categoryName,
+      this.countKilometersFrom,
+      this.countKilometersTo,
+      this.amount,
+      this.bounce,
+      this.bounceCountOrdersInMonth,
+      this.captainTotalCategory,
+      this.contOrderCompleted,
+      this.countOfOrdersLeft,
+      this.message,
+      this.orders});
 
   factory FinancialAccountDetail.fromJson(Map<String, dynamic> json) {
     return FinancialAccountDetail(
@@ -30,6 +33,9 @@ class FinancialAccountDetail {
       countKilometersTo: json['countKilometersTo'] as num?,
       amount: json['amount'] as num?,
       bounce: json['bounce'] as num?,
+      orders: (json['orders'] as List<dynamic>?)
+          ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
+          .toList(),
       bounceCountOrdersInMonth: json['bounceCountOrdersInMonth'] as num?,
       captainTotalCategory: json['captainTotalCategory'] as num?,
       contOrderCompleted: json['contOrderCompleted'] as num?,

@@ -57,6 +57,15 @@ class StoresRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> deleteStore(int storeId) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(Urls.DELETE_STORE,
+        payLoad: {'storeOwnerId': storeId},
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> updateStore(UpdateStoreRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(

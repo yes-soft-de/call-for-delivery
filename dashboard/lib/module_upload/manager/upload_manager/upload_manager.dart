@@ -10,4 +10,8 @@ class UploadManager {
   Future<ImgBBResponse?> upload(String filePath) {
     return _repository.upload(filePath);
   }
+
+  Future<ImgBBResponse?> uploadPDF(String filePath) {
+    return _repository.uploadPDF(filePath);
+  }
 }
