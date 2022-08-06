@@ -2,9 +2,14 @@
 
 namespace App\Response\GeoDistance;
 
+use OpenApi\Annotations as OA;
+
 class GeoDistanceInfoGetResponse
 {
     public string $distance;
 
-    public object $costDeliveryOrder;
+    /**
+     * @OA\Property(type="object", property="costDeliveryOrder", nullable=true)
+     */
+    public $costDeliveryOrder;
 }

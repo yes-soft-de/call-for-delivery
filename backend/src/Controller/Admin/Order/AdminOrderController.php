@@ -1101,9 +1101,12 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
-     *                  ref=@Model(type="App\Response\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedResponse")
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="array", property="orderWithOutDistance",
+     *                  @OA\Items()
+     *              ),
+     *              @OA\Property(type="array", property="orders",
+     *                  @OA\Items()
      *              )
      *      )
      *   )

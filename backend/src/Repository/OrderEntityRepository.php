@@ -2073,6 +2073,9 @@ class OrderEntityRepository extends ServiceEntityRepository
                  'storeOwnerProfileEntity.id = orderEntity.storeOwner'
              )
             
+             ->andWhere('orderEntity.storeBranchToClientDistance is NOT NULL or orderEntity.storeBranchToClientDistance != :zero')
+             ->setParameter('zero', GeoDistanceResultConstant::ZERO_DISTANCE_CONST)
+            
              ->orderBy('orderEntity.id', 'DESC');
  
          if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {

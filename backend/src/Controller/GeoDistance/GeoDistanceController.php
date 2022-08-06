@@ -152,7 +152,7 @@ class GeoDistanceController extends BaseController
      * @param float $originLng
      * @param float $destinationLat
      * @param float $destinationLng
-     * @param float $storeOwnerProfileId
+     * @param int $storeOwnerProfileId
      * @return JsonResponse
      *
      * @OA\Tag(name="Geo Distance")
