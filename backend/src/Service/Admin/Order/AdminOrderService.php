@@ -58,8 +58,8 @@ use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
-use App\Response\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedResponse;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class AdminOrderService
 {
@@ -691,16 +691,24 @@ class AdminOrderService
     // filter orders whose has not distance  has calculated 
     public function filterOrdersWhoseHasNotDistanceHasCalculated(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
     {
-        $response = [];
+        $items = [];
  
-        $orders = $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+        $items['orderWithOutDistance'] = $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+        $items['orders'] = $this->adminOrderManager->filterOrders($request);
  
-        foreach ($orders as $order) {
-            $response[] = $this->autoMapping->map("array", FilterOrdersWhoseHasNotDistanceHasCalculatedResponse::class, $order);
-        }
- 
-        return $response;
+        return $items;
      }
+   
+    // filter orders whose has not distance  has calculated 
+    public function filterOrdersWithOutDistance(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
+    }
+   
+    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        return $this->adminOrderManager->filterOrders($request);  
+    }
      
     public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): OrderByIdGetForAdminResponse
     {

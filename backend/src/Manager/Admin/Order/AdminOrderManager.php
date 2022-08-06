@@ -274,4 +274,9 @@ class AdminOrderManager
         
         return $orderEntity;
     }
+
+    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrders($request);
+    }
 }
