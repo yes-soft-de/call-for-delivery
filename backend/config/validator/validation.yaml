@@ -731,3 +731,10 @@ App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest:
             - NotBlank: ~
         storeOwnerProfileId:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        storeBranchToClientDistance:
+            - NotBlank: ~

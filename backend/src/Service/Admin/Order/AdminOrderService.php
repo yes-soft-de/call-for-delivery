@@ -57,6 +57,9 @@ use App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
+use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
+use App\Response\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedResponse;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 
 class AdminOrderService
 {
@@ -683,5 +686,26 @@ class AdminOrderService
     public function calculateCostDeliveryOrder(AdminCalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
     {
         return $this->adminStoreSubscriptionService->calculateCostDeliveryOrderForAdmin($request);
+    }
+
+    // filter orders whose has not distance  has calculated 
+    public function filterOrdersWhoseHasNotDistanceHasCalculated(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        $response = [];
+ 
+        $orders = $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+ 
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterOrdersWhoseHasNotDistanceHasCalculatedResponse::class, $order);
+        }
+ 
+        return $response;
+     }
+     
+    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }
 }
