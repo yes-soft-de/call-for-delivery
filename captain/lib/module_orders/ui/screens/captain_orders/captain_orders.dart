@@ -197,6 +197,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                             height: 1,
                             fontWeight: FontWeight.bold,
                             color: farOrders ? Colors.green : Colors.red),
+                        textScaleFactor: 1,
                       ),
                     ),
                   ],

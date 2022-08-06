@@ -311,6 +311,7 @@ class NearbyOrdersCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
                       ),
                     ],
                   ),
@@ -330,6 +331,7 @@ class NearbyOrdersCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
                       ),
                     ],
                   ),
@@ -341,6 +343,7 @@ class NearbyOrdersCard extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
+                    textScaleFactor: 1,
                   ),
                   dotedDivider(context),
                   Column(
@@ -356,6 +359,7 @@ class NearbyOrdersCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
                       ),
                     ],
                   ),
@@ -363,13 +367,13 @@ class NearbyOrdersCard extends StatelessWidget {
               ),
             ),
             divider(context),
-            // order cost
-            Visibility(
-              visible: orderCost != '0' && credit == false,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Visibility(
+            // order cost & accept order
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Visibility(
+                  visible: orderCost != '0' || credit,
+                  child: Visibility(
                     visible: credit,
                     child: verticalTile(context,
                         title: S.current.paymentMethod,
@@ -382,30 +386,30 @@ class NearbyOrdersCard extends StatelessWidget {
                             ' | ' +
                             S.current.cash),
                   ),
-                  Visibility(
-                    replacement: ElevatedButton.icon(
-                      onPressed: () {
-                        acceptOrder();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.green, shape: StadiumBorder()),
-                      label: Text(
-                        S.current.accept,
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      icon: const Icon(
-                        Icons.thumb_up_alt_rounded,
-                        color: Colors.white,
-                      ),
+                ),
+                Visibility(
+                  replacement: ElevatedButton.icon(
+                    onPressed: () {
+                      acceptOrder();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green, shape: StadiumBorder()),
+                    label: Text(
+                      S.current.accept,
+                      style: Theme.of(context).textTheme.button,
                     ),
-                    visible: false,
-                    child: Icon(
-                      Icons.arrow_circle_left_outlined,
-                      color: Theme.of(context).textTheme.button?.color,
+                    icon: const Icon(
+                      Icons.thumb_up_alt_rounded,
+                      color: Colors.white,
                     ),
                   ),
-                ],
-              ),
+                  visible: false,
+                  child: Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
