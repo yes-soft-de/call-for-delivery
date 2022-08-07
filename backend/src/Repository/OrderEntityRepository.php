@@ -700,7 +700,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
 
-        ->select('orderEntity.id, orderEntity.kilometer', 'orderEntity.payment', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider')
+        ->select('orderEntity.id, orderEntity.kilometer', 'orderEntity.payment', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider, orderEntity.storeBranchToClientDistance')
 
         ->where('orderEntity.state = :state')
         ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
@@ -758,11 +758,14 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->andWhere('orderEntity.createdAt <= :toDate')
         ->setParameter('toDate', $toDate)
 
-        ->andWhere('orderEntity.kilometer >= :countKilometersFrom')
+        ->andWhere('orderEntity.storeBranchToClientDistance >= :countKilometersFrom')
         ->setParameter('countKilometersFrom', $countKilometersFrom)
 
-        ->andWhere('orderEntity.kilometer <= :countKilometersTo')
+        ->andWhere('orderEntity.storeBranchToClientDistance <= :countKilometersTo')
         ->setParameter('countKilometersTo', $countKilometersTo)
+
+        ->andWhere('orderEntity.storeBranchToClientDistance != :zero')
+        ->setParameter('zero', 0)
 
         ->getQuery()
         ->getOneOrNullResult();
