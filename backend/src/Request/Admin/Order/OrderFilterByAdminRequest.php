@@ -30,6 +30,16 @@ class OrderFilterByAdminRequest
     private $openToPriceOffer;
 
     /**
+     * @var float|null|string
+     */
+    private $kilometer;
+
+    /**
+     * @var float|null|string
+     */
+    private $storeBranchToClientDistance;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -67,5 +77,15 @@ class OrderFilterByAdminRequest
     public function getOpenToPriceOffer(): ?bool
     {
         return $this->openToPriceOffer;
+    }
+
+    public function getKilometer(): float|null|string
+    {
+        return $this->kilometer;
+    }
+
+    public function getStoreBranchToClientDistance(): float|null|string
+    {
+        return $this->storeBranchToClientDistance;
     }
 }

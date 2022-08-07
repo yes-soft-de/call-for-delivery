@@ -441,9 +441,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
-                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'storeOrderDetails.id as storeOrderDetailsId',
+                'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId',
+                'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'imageEntity.id as imageId', 'imageEntity.imagePath as images')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -494,6 +494,16 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
             $query->setParameter('toDate', new DateTime($request->getToDate()));
+        }
+
+        if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
+            $query->andWhere('orderEntity.kilometer = :kilometerValue');
+            $query->setParameter('kilometerValue', $request->getKilometer());
+        }
+
+        if (($request->getStoreBranchToClientDistance()) && ($request->getStoreBranchToClientDistance() !== "")) {
+            $query->andWhere('orderEntity.storeBranchToClientDistance = :storeBranchToClientDistanceValue');
+            $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
         }
 
         return $query->getQuery()->getResult();
