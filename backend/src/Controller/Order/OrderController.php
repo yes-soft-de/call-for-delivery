@@ -1343,7 +1343,8 @@ class OrderController extends BaseController
      * captain: Order Update Paid To Provider.
      * @Route("orderupdatepaidtoprovider/{orderId}/{paidToProvider}", name="orderUpdatePaidToProvider", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
+     * @param int $orderId
+     * @param int $paidToProvider
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -1366,7 +1367,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * or
      *
      * @OA\Response(
@@ -1378,12 +1379,12 @@ class OrderController extends BaseController
      *      )
      * )
      *
-     *  
+     *
      * @Security(name="Bearer")
      */
     public function orderUpdatePaidToProvider(int $orderId,int $paidToProvider): JsonResponse
     {
-        $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
+        $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider, $this->getUserId());
        
         if($response === OrderAmountCashConstant::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG);

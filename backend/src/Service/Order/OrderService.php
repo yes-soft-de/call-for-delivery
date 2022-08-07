@@ -982,7 +982,7 @@ class OrderService
         }
     }
 
-    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): OrderUpdatePaidToProviderResponse|null|int
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider, int $userId): OrderUpdatePaidToProviderResponse|null|int
     {
         //Is the captain allowed to edit?
         $captainAllowedEdit = $this->captainAmountFromOrderCashService->getEditingByCaptain($orderId);
@@ -1010,6 +1010,10 @@ class OrderService
 
             $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
         }
+
+        // save log of the action on order
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
