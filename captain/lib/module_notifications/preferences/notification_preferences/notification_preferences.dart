@@ -19,4 +19,12 @@ class NotificationsPrefHelper {
   int getHomeIndex() {
     return box.get('homeIndex') ?? 0;
   }
+
+  void setFarOrders(bool show) {
+    box.put('far_orders', show);
+  }
+
+  bool getFarOrder() {
+    return box.get('far_orders') ?? false;
+  }
 }

@@ -109,6 +109,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   @override
   void initState() {
     super.initState();
+    farOrders = NotificationsPrefHelper().getFarOrder();
     canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
@@ -186,6 +187,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                         activeColor: Theme.of(context).colorScheme.secondary,
                         onChanged: (bool value) {
                           farOrders = value;
+                          NotificationsPrefHelper().setFarOrders(value);
                           refresh();
                         }),
                     SizedBox(
