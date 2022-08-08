@@ -76,4 +76,12 @@ class AdminStoreSubscriptionResponse
     public int $subscriptionRemainingCars;
 
     public bool $isCurrent;
+
+    public float $countOfConsumedOrders;
+    
+    /**
+     * @OA\Property(type="array", property="ordersExceedGeographicalRange",
+     *     @OA\Items(type="object"))
+     */
+    public $ordersExceedGeographicalRange;
 }

@@ -11,4 +11,6 @@ final class PackageConstant
     const PACKAGE_NOT_EXIST = "packageNotExist";
     
     const PACKAGE_EXIST = "packageExist";
+
+    const PACKAGE_TYPE_ON_ORDER = 1;
 }
