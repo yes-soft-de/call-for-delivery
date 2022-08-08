@@ -1151,6 +1151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")
       };
 }

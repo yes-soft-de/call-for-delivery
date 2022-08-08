@@ -736,5 +736,6 @@
     "pleaseCorrectProvidedDistance": "من فضلك قم بتصحيح المسافة المدخلة",
     "orderNotifications": "التنبيهات",
     "activateOrderNotification": "فعل التنبهات وابدأ باستقبال الطلبات",
-    "activeOrderNotification":"فعل التنبيهات"
+    "activeOrderNotification": "فعل التنبيهات",
+    "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"
 }

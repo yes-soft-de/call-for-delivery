@@ -1155,6 +1155,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "Your number start with zero please remove it and try again"),
         "yourRequestSent":
             MessageLookupByLibrary.simpleMessage("Your Request have been sent")
       };

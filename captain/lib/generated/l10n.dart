@@ -7399,6 +7399,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Your number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Your number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

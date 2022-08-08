@@ -734,5 +734,6 @@
     "pleaseCorrectProvidedDistance": "Please correct provided distance",
     "orderNotifications": "Status",
     "activateOrderNotification": "Activate notifications and start delivering order",
-    "activeOrderNotification": "Activate notification"
+    "activeOrderNotification": "Activate notification",
+    "yourNumberStartWithZero": "Your number start with zero please remove it and try again"
 }
