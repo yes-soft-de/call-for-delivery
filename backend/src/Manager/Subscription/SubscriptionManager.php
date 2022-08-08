@@ -345,4 +345,9 @@ class SubscriptionManager
     {
        return $this->subscribeRepository->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
     }
+
+    public function getCountOfConsumedOrders(int $subscriptionId): ?int
+    {
+       return $this->subscribeRepository->getCountOfConsumedOrders($subscriptionId);
+    }
 }

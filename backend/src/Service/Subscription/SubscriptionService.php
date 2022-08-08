@@ -582,7 +582,7 @@ class SubscriptionService
            
             //if package is on order
             if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
-                $subscription['total'] = $this->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['remainingOrders'], $subscription['orderCount']);
+                $subscription['total'] = $this->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['id']);
             }
             else {
                
@@ -759,12 +759,13 @@ class SubscriptionService
         return $this->calculateCostDeliveryOrder($request);
      }
     //Get the cost of subscriptions on order
-    public function getTotalWithPackageOnOrder(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, float $totalExtraDistance, int $remainingOrders, int $orderCount)
+    public function getTotalWithPackageOnOrder(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, float $totalExtraDistance, int $subscriptionId)
     {
         $item['totalDistanceExtra'] = $totalExtraDistance;
         $item['packageCost'] = $packageCost;
         //consumed orders from the package
-        $item['countOfConsumedOrders'] = $orderCount - $remainingOrders;
+        $item['countOfConsumedOrders'] = $this->subscriptionManager->getCountOfConsumedOrders($subscriptionId);
+
         $sumCaptainOfferPrices = 0;
         
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));

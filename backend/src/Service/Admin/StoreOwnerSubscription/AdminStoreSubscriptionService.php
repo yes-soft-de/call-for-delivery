@@ -79,7 +79,7 @@ class AdminStoreSubscriptionService
             $totalExtraDistance = $this->subscriptionService->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'], (float)$subscription['packageGeographicalRange']);
             //if package is on order
             if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
-                $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['remainingOrders'], $subscription['orderCount']);
+                $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['id']);
             }
             else {
                 $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);

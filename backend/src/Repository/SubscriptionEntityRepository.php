@@ -341,4 +341,27 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getResult();
     }
+
+    public function getCountOfConsumedOrders(int $subscriptionId): ?int
+    {
+        return $this->createQueryBuilder('subscription')
+         
+            ->select('count (orderEntity.id) as countOrders')
+    
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.storeOwner = subscription.storeOwner')
+        
+            ->where('subscription.id = :id')
+            ->setParameter('id', $subscriptionId)
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+             //Orders made within the current subscription date only
+            ->andWhere('orderEntity.createdAt >= subscription.startDate')
+            ->andWhere('orderEntity.createdAt <= subscription.endDate')
+
+            ->getQuery()
+            ->getSingleScalarResult();
+            // ->getOneOrNullResult();
+    }
 }
