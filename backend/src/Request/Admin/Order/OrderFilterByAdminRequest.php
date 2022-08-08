@@ -30,6 +30,12 @@ class OrderFilterByAdminRequest
     private $openToPriceOffer;
 
     /**
+     * 1 refers to use Kilometer, 2 refers to use storeBranchToClientDistance
+     * @var int|null|string
+     */
+    private $chosenDistanceIndicator;
+
+    /**
      * @var float|null|string
      */
     private $kilometer;
@@ -77,6 +83,11 @@ class OrderFilterByAdminRequest
     public function getOpenToPriceOffer(): ?bool
     {
         return $this->openToPriceOffer;
+    }
+
+    public function getChosenDistanceIndicator(): string|null|int
+    {
+        return $this->chosenDistanceIndicator;
     }
 
     public function getKilometer(): float|null|string

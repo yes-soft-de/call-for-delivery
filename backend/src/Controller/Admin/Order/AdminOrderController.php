@@ -73,6 +73,8 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
      *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="integer", property="chosenDistanceIndicator", description="1 refers to use Kilometer,
+     *              2 refers to use storeBranchToClientDistance"),
      *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
      *          @OA\Property(type="number", property="storeBranchToClientDistance")
      *      )

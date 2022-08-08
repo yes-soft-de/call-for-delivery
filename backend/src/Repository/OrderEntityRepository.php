@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Order\OrderDistanceConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\Payment\PaymentConstant;
@@ -496,14 +497,17 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', new DateTime($request->getToDate()));
         }
 
-        if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
-            $query->andWhere('orderEntity.kilometer = :kilometerValue');
-            $query->setParameter('kilometerValue', $request->getKilometer());
-        }
+        if ($request->getChosenDistanceIndicator() === OrderDistanceConstant::KILOMETER_DISTANCE_CONST) {
+            if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
+                $query->andWhere('orderEntity.kilometer = :kilometerValue');
+                $query->setParameter('kilometerValue', $request->getKilometer());
+            }
 
-        if (($request->getStoreBranchToClientDistance()) && ($request->getStoreBranchToClientDistance() !== "")) {
-            $query->andWhere('orderEntity.storeBranchToClientDistance = :storeBranchToClientDistanceValue');
-            $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
+        } elseif ($request->getChosenDistanceIndicator() === OrderDistanceConstant::STORE_BRANCH_TO_CLIENT_DISTANCE_CONST) {
+            if (($request->getStoreBranchToClientDistance()) && ($request->getStoreBranchToClientDistance() !== "")) {
+                $query->andWhere('orderEntity.storeBranchToClientDistance = :storeBranchToClientDistanceValue');
+                $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
+            }
         }
 
         return $query->getQuery()->getResult();
