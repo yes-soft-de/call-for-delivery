@@ -49,7 +49,9 @@ class OrderTimeLineService
        if($branch) {
          $request->setStoreOwnerBranch($branch);
        }
-       
+       $request->setPaidToProvider($order->getPaidToProvider());
+       $request->setIsCaptainPaidToProvider($order->getIsCaptainPaidToProvider());
+
        return $this->createOrderLogs($request);
     }
 

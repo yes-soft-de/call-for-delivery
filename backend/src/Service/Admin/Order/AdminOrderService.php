@@ -52,6 +52,8 @@ use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService
 use App\Service\Captain\CaptainService;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
+use App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse;
 
 class AdminOrderService
 {
@@ -610,8 +612,8 @@ class AdminOrderService
                   
                     //save the price of the order in cash in case the captain does not pay the store
                     if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order);
-                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order);
+                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                     }
                 }
 
@@ -656,6 +658,20 @@ class AdminOrderService
         $response['orders'] = $result;
         $response['countOrders'] = count($orders);
 
+        return $response;
+    }
+
+    // filter orders in which the store's answer differs from that of the captain (paid or not paid)
+    public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): array
+    {
+        $response = [];
+  
+        $orders = $this->adminOrderManager->filterOrdersPaidOrNotPaidByAdmin($request);
+  
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterOrdersPaidOrNotPaidByAdminResponse::class, $order);
+        }
+  
         return $response;
     }
 }

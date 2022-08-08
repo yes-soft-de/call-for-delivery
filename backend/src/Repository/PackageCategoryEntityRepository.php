@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\Package\PackageCategoryConstant;
 use App\Entity\PackageCategoryEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,10 +23,22 @@ class PackageCategoryEntityRepository extends ServiceEntityRepository
     public function getAllPackagesCategories(): ?array
     {
         return $this->createQueryBuilder('PackageCategory')
-            ->addSelect('PackageCategory.id, PackageCategory.name, PackageCategory.description')
+            ->addSelect('PackageCategory.id, PackageCategory.name, PackageCategory.description', 'PackageCategory.status')
          
             ->getQuery()
 
+            ->getResult();
+    }
+
+    public function getAllActivePackagesCategories(): array
+    {
+        return $this->createQueryBuilder('packageCategory')
+            ->addSelect('packageCategory.id, packageCategory.name, packageCategory.description')
+
+            ->andWhere('packageCategory.status = :activeStatus')
+            ->setParameter('activeStatus', PackageCategoryConstant::PACKAGE_CATEGORY_ACTIVE_STATUS_CONST)
+
+            ->getQuery()
             ->getResult();
     }
 }

@@ -63,6 +63,12 @@ class OrderLogEntity
     #[ORM\ManyToOne(targetEntity: OrderEntity::class)]
     private $primaryOrder;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $paidToProvider;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $isCaptainPaidToProvider;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -244,6 +250,30 @@ class OrderLogEntity
     public function setPrimaryOrder(?OrderEntity $primaryOrder): self
     {
         $this->primaryOrder = $primaryOrder;
+
+        return $this;
+    }
+
+    public function getPaidToProvider(): ?int
+    {
+        return $this->paidToProvider;
+    }
+
+    public function setPaidToProvider(?int $paidToProvider): self
+    {
+        $this->paidToProvider = $paidToProvider;
+
+        return $this;
+    }
+
+    public function getIsCaptainPaidToProvider(): ?int
+    {
+        return $this->isCaptainPaidToProvider;
+    }
+
+    public function setIsCaptainPaidToProvider(?int $isCaptainPaidToProvider): self
+    {
+        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
 
         return $this;
     }

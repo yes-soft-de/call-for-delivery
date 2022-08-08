@@ -6,11 +6,14 @@ use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Admin\StoreOwner\AdminStoreOwnerManager;
+use App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse;
+use App\Response\Eraser\DeleteStoreOwnerAccountAndProfileByAdminResponse;
 use App\Service\CompanyInfo\CompanyInfoService;
+use App\Service\Eraser\StoreOwner\StoreOwnerEraserService;
 use App\Service\FileUpload\UploadFileHelperService;
 
 class AdminStoreOwnerService
@@ -19,13 +22,16 @@ class AdminStoreOwnerService
     private AdminStoreOwnerManager $adminStoreOwnerManager;
     private UploadFileHelperService $uploadFileHelperService;
     private CompanyInfoService $companyInfoService;
+    private StoreOwnerEraserService $storeOwnerEraserService;
 
-    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, CompanyInfoService $companyInfoService)
+    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService,
+                                CompanyInfoService $companyInfoService, StoreOwnerEraserService $storeOwnerEraserService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->companyInfoService = $companyInfoService;
+        $this->storeOwnerEraserService = $storeOwnerEraserService;
     }
 
     public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?StoreOwnerProfileByIdGetByAdminResponse
@@ -105,5 +111,15 @@ class AdminStoreOwnerService
         }
 
         return $storesProfiles;
+    }
+
+    public function deleteStoreOwnerAccountAndProfileByAdmin(DeleteStoreOwnerAccountAndProfileByAdminRequest $request): int|DeleteStoreOwnerAccountAndProfileByAdminResponse|null
+    {
+        return $this->storeOwnerEraserService->deleteStoreOwnerAccountAndProfileByAdmin($request);
+    }
+
+    public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);
     }
 }

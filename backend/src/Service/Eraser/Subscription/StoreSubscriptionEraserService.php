@@ -30,12 +30,12 @@ class StoreSubscriptionEraserService
      */
     public function deleteStoreOwnerSubscription(int $storeOwnerId): int
     {
-        // first, check if there are any payments related to any one of store subscriptions
-        $paymentsExistsResult = $this->subscriptionService->checkIfStoreSubscriptionsHavePayments($storeOwnerId);
-
-        if ($paymentsExistsResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS) {
-            return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS;
-        }
+//        // first, check if there are any payments related to any one of store subscriptions
+//        $paymentsExistsResult = $this->subscriptionService->checkIfStoreSubscriptionsHavePayments($storeOwnerId);
+//
+//        if ($paymentsExistsResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS) {
+//            return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS;
+//        }
 
         // No payments are exists, we can continue in deleting store subscription process >>>
         // second, delete subscription/s history

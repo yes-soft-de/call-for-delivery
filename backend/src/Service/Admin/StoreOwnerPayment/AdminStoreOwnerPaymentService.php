@@ -11,6 +11,7 @@ use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentResponse;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentDeleteResponse;
+use App\Response\Admin\StoreOwnerPayment\AdminStorePaymentsBySubscriptionIdResponse;
 
 class AdminStoreOwnerPaymentService
 {
@@ -67,7 +68,7 @@ class AdminStoreOwnerPaymentService
 
         foreach ($payments as $payment) {
            
-            $response[] = $this->autoMapping->map('array', AdminStoreOwnerPaymentResponse::class, $payment);
+            $response[] = $this->autoMapping->map('array', AdminStorePaymentsBySubscriptionIdResponse::class, $payment);
         }
 
         return $response;

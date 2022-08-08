@@ -7,10 +7,12 @@ use App\Constant\Package\PackageCategoryConstant;
 use App\Controller\BaseController;
 use App\Entity\PackageCategoryEntity;
 use App\Request\Admin\Package\PackageCategoryCreateByAdminRequest;
+use App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest;
 use App\Request\Admin\Package\PackageCategoryUpdateRequest;
 use App\Response\Admin\Package\PackageCategoryCreateByAdminResponse;
 use App\Service\Admin\Package\AdminPackageCategoryService;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
@@ -330,5 +332,101 @@ class AdminPackageCategoryController extends BaseController
         $result = $this->adminPackageCategoryService->getAllPackagesCategories();
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: update all packages categories status.
+     * @Route("packagescategoriesstatus/{status}", name="updateAllPackagesCategoriesStatusByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $status
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Package Category")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns all categories info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *           @OA\Items(
+     *              ref=@Model(type="App\Response\Admin\Package\PackageCategoryGetResponse")
+     *          )
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateAllPackagesCategoriesStatus(int $status): JsonResponse
+    {
+        $result = $this->adminPackageCategoryService->updateAllPackagesCategoriesStatus($status);
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: Update package category status by admin
+     * @Route("packagecategorystatus", name="updatePackageCategoryStatusByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Package Category")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="package",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="integer", property="status")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated package category info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Package\PackageCategoryGetResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updatePackageCategoryStatusById(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, PackageCategoryStatusUpdateByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminPackageCategoryService->updatePackageCategoryStatusById($request);
+
+        return $this->response($result, self::UPDATE);
     }
 }

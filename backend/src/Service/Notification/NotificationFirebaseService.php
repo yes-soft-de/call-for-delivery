@@ -61,7 +61,7 @@ class NotificationFirebaseService
         if (! empty($getTokens)) {
 
             $payload = [
-                // 'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
                 // 'navigate_route' => NotificationFirebaseConstant::URL,
                 'argument' => $orderId,
             ];
@@ -1090,4 +1090,52 @@ class NotificationFirebaseService
 
         $this->messaging->sendMulticast($message, $token);
     }
+
+     // notification to admin 
+     public function notificationToAdmin(int $orderId, string $text)
+     {
+         $devicesToken = [];
+         $sound = NotificationTokenConstant::SOUND;
+ 
+         $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+ 
+         foreach ($adminsTokens as $token) {
+             $devicesToken[] = $token['token'];
+         }
+ 
+         $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => $orderId,
+         ];
+ 
+         $config = AndroidConfig::fromArray([
+             "notification" => [
+                 "channel_id" => "C4d_Notifications_custom_sound_test"
+             ]
+         ]);
+ 
+         $apnsConfig = ApnsConfig::fromArray([
+             'headers' => [
+                 'apns-priority' => '10',
+                 'apns-push-type' => 'alert',
+             ],
+             'payload' => [
+                 'aps' =>[
+                     'sound' => $sound
+                 ]
+             ]
+         ]);
+ 
+         $msgContent = $text.$orderId;
+ 
+         $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+             ->withHighestPossiblePriority();
+ 
+         $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+         $this->messaging->sendMulticast($message, $devicesToken);
+ 
+         return $devicesToken;
+     } 
 }

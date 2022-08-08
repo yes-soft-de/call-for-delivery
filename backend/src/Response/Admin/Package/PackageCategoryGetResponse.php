@@ -18,4 +18,9 @@ class PackageCategoryGetResponse
      * @var string|null
      */
     public $description;
+
+    /**
+     * @var int|null
+     */
+    public $status;
 }

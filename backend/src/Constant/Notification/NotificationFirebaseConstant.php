@@ -121,4 +121,6 @@ final class NotificationFirebaseConstant
     const URL_CAPTAIN_DETAILS = '/captain_details';
 
     const PLEASE_RECEIVE_DUES = 'لو سمحت بناء على طلبك تفضل باستلام مستحقاتك بتاريخ ';
+    
+    const CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE = 'يوجد اختلاف بتأكيد المتجر بالنسبة لتسديد مبلغ الطلب رقم';
 }
