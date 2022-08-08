@@ -340,4 +340,9 @@ class SubscriptionManager
 
         return $subscriptionEntity;
     }
+
+    public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
+    {
+       return $this->subscribeRepository->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
+    }
 }
