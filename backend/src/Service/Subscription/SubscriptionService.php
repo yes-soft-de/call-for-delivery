@@ -798,7 +798,7 @@ class SubscriptionService
     }
 
     //get total extra distance for subscription
-    public function getTotalExtraDistance(array $orders, float $packageGeographicalRange):int
+    public function getTotalExtraDistance(array $orders, float $packageGeographicalRange): float
     {
         $totalDistanceExtra = 0;
 
