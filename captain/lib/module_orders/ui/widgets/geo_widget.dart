@@ -10,12 +10,14 @@ class GeoDistanceText extends StatefulWidget {
   LatLng destination;
   Function(String?) destance;
   TextStyle? textStyle;
+  String? leading;
   GeoDistanceText(
       {Key? key,
       required this.destination,
       required this.origin,
       required this.destance,
-      this.textStyle})
+      this.textStyle,
+      this.leading})
       : super(key: key);
 
   @override
@@ -66,12 +68,13 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
 
   @override
   Widget build(BuildContext context) {
+    String space = widget.leading != null ? ' ' : '';
     return Visibility(
       visible: loading == false,
       replacement: const SizedBox(
           width: 10, height: 10, child: CircularProgressIndicator()),
       child: Text(
-        (distance ?? '') + ' ${S.current.km}',
+        (widget.leading ?? '') + space + (distance ?? '') + ' ${S.current.km}',
         style: widget.textStyle ?? const TextStyle(color: Colors.white),
       ),
     );

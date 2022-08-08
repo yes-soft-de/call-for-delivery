@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
@@ -26,6 +27,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -363,19 +365,12 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     title: Text(S.current.branchLocation),
                     subtitle: orderInfo.branchCoordinate != null &&
                             screenState.myLocation != null
-                        ? Text(S.current.distance +
-                            ' ' +
-                            (Geolocator.distanceBetween(
-                                        screenState.myLocation?.latitude ?? 0,
-                                        screenState.myLocation?.longitude ?? 0,
-                                        orderInfo.branchCoordinate?.latitude ??
-                                            0,
-                                        orderInfo.branchCoordinate?.longitude ??
-                                            0) /
-                                    1000)
-                                .toStringAsFixed(2)
-                                .toString() +
-                            ' ${S.current.km}')
+                        ? GeoDistanceText(
+                            destance: (d) {},
+                            destination: screenState.myLocation ?? LatLng(0, 0),
+                            origin: orderInfo.branchCoordinate ?? LatLng(0, 0),
+                            leading: S.current.distance,
+                          )
                         : Text(S.current.destination +
                             ' ' +
                             S.current.destinationUnavailable),
