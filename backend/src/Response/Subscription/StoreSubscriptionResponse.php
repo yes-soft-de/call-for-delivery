@@ -46,4 +46,18 @@ class StoreSubscriptionResponse
      *     @OA\Items(type="object"))
      */
     public $captainOffers;
+
+    public float $totalDistanceExtra;
+    
+    public float $extraCost;
+
+    public float $packageCost;
+
+    public int $countOfConsumedOrders;
+   
+    /**
+     * @OA\Property(type="array", property="ordersExceedGeographicalRange",
+     *     @OA\Items(type="object"))
+     */
+    public $ordersExceedGeographicalRange;
 }

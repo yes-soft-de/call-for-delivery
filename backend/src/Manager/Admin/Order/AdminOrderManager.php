@@ -22,6 +22,8 @@ use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 
 class AdminOrderManager
 {
@@ -250,5 +252,31 @@ class AdminOrderManager
     public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): ?array
     {
         return $this->orderEntityRepository->filterOrdersPaidOrNotPaidByAdmin($request);
+    }
+   
+    // filter orders whose has not distance  has calculated
+    public function filterOrdersWhoseHasNotDistanceHasCalculated(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+    }
+   
+    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+        
+        $this->entityManager->flush();
+        
+        return $orderEntity;
+    }
+
+    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrders($request);
     }
 }

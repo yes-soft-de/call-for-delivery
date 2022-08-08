@@ -48,6 +48,9 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="orderCount"),
      *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="integer", property="type"),
+     *              @OA\Property(type="number", property="geographicalRange"),
+     *              @OA\Property(type="number", property="extraCost"),
      *          )
      *       )
      *    )
@@ -84,6 +87,9 @@ class PackageController extends BaseController
      *              @OA\Property(type="integer", property="orderCount"),
      *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="integer", property="type"),
+     *              @OA\Property(type="number", property="geographicalRange"),
+     *              @OA\Property(type="number", property="extraCost"),
      *       )
      *    )
      * )
@@ -126,6 +132,9 @@ class PackageController extends BaseController
      *              @OA\Property(type="string", property="city"),
      *              @OA\Property(type="integer", property="orderCount"),
      *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="integer", property="type"),
+     *              @OA\Property(type="number", property="geographicalRange"),
+     *              @OA\Property(type="number", property="extraCost"),
      *          )
      *       )
      *    )

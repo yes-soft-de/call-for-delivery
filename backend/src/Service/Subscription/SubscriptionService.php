@@ -26,6 +26,9 @@ use App\Response\Subscription\StoreSubscriptionResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
 use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
+use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 
 class SubscriptionService
 {
@@ -574,27 +577,48 @@ class SubscriptionService
             $subscription['paymentsFromStore'] = $this->storeOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
             $subscription['captainOffers'] = $this->subscriptionManager->getCaptainOffersBySubscriptionId($subscription['id']);
+            $subscription['ordersExceedGeographicalRange'] = $this->getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange($subscription['id'], (float)$subscription['packageGeographicalRange']);
+            $totalExtraDistance = $this->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'], (float)$subscription['packageGeographicalRange']);
+           
+            //if package is on order
+            if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+                $subscription['total'] = $this->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['id']);
+            }
+            else {
+               
+                $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);
+            }
 
-            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
-         
             $response[] = $this->autoMapping->map("array", StoreSubscriptionResponse::class, $subscription);
         }
 
         return $response;
     }
-    
-    public function getTotal(array $payments, float $packageCost, array $captainOffers): array
+    //Get the cost of regular subscriptions 
+    public function getTotal(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, int $totalDistanceExtra): array
     {
+        $item['totalDistanceExtra'] = $totalDistanceExtra;
+        $item['packageCost'] = $packageCost;
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
-        $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
-      
+        $sumCaptainOfferPrices = 0;
+
+        // $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
+       
+        foreach($captainOffers as $captainOffer) {
+            if($captainOffer['captainOfferFirstTime'] === true) {
+                $sumCaptainOfferPrices += $captainOffer['price'];
+            }
+        }
+
+        $item['extraCost'] = $packageExtraCost * $item['totalDistanceExtra'];
+       
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
 
         $item['packageCost'] = $packageCost;
       
-        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices + $item['extraCost'];
       
-        $total = $item['sumPayments'] - ($packageCost + $sumCaptainOfferPrices);
+        $total = $item['sumPayments'] - $item['requiredToPay'];
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
@@ -681,6 +705,116 @@ class SubscriptionService
     public function updateSubscriptionByRemovingCaptainOfferSubscription(int $subscriptionId): ?SubscriptionEntity
     {
         return $this->subscriptionManager->updateSubscriptionByRemovingCaptainOfferSubscription($subscriptionId);
+    }
+
+    //Calculate Cost Delivery Order
+    public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request):CalculateCostDeliveryOrderResponse
+    {
+        $item = [];
+        $item['extraDistance'] = 0;
+        $item['orderDeliveryCost'] = 0;
+        $item['extraOrderDeliveryCost'] = 0;
+
+        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($request->getStoreOwner());
+        if($subscription) {
+           
+            $item['extraDistance'] = $this->getExtraDistance($subscription['geographicalRange'], $request->getStoreBranchToClientDistance());
+
+            $item['orderDeliveryCost'] = $subscription['packageCost'];
+            
+            $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
+            
+            $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
+        }
+     
+        return $this->autoMapping->map("array", CalculateCostDeliveryOrderResponse::class, $item);
+    }
+
+    //Get Extra Distance
+    public function getExtraDistance(float|null $geographicalRange, float $storeBranchToClientDistance)
+    {
+        $extraDistance = 0;
+
+        if(!$geographicalRange) {
+            return $extraDistance;
+        }
+
+        if( $storeBranchToClientDistance > $geographicalRange) {
+            $extraDistance = $storeBranchToClientDistance - $geographicalRange;
+        }
+
+        return $extraDistance;
+    }
+
+     //Calculate Cost Delivery Order for admin
+     public function calculateCostDeliveryOrderForAdmin(AdminCalculateCostDeliveryOrderRequest $adminRequest):CalculateCostDeliveryOrderResponse
+     {
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($adminRequest->getStoreOwnerProfileId());
+      
+        $request = new CalculateCostDeliveryOrderRequest();
+        
+        $request->setStoreOwner($store->getStoreOwnerId());
+        $request->setStoreBranchToClientDistance($adminRequest->getStoreBranchToClientDistance());
+       
+        return $this->calculateCostDeliveryOrder($request);
+     }
+    //Get the cost of subscriptions on order
+    public function getTotalWithPackageOnOrder(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, float $totalExtraDistance, int $subscriptionId)
+    {
+        $item['totalDistanceExtra'] = $totalExtraDistance;
+        $item['packageCost'] = $packageCost;
+        //consumed orders from the package
+        $item['countOfConsumedOrders'] = $this->subscriptionManager->getCountOfConsumedOrders($subscriptionId);
+
+        $sumCaptainOfferPrices = 0;
+        
+        $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
+      
+        foreach($captainOffers as $captainOffer) {
+            if($captainOffer['captainOfferFirstTime'] === true) {
+                $sumCaptainOfferPrices += $captainOffer['price'];
+            }
+        }
+
+        $item['extraCost'] = $packageExtraCost * $item['totalDistanceExtra'];
+       
+        $item['captainOfferPrice'] = $sumCaptainOfferPrices;
+
+        $item['packageCost'] = $packageCost;
+      
+        $item['requiredToPay'] = ($packageCost * $item['countOfConsumedOrders']) + $sumCaptainOfferPrices + $item['extraCost'];
+      
+        $total = $item['sumPayments'] - $item['requiredToPay'];
+       
+        $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+    
+        if($total <= 0 ) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+        }
+
+        $item['total'] = abs($total);
+        
+        return  $item;
+    }
+
+    //get total extra distance for subscription
+    public function getTotalExtraDistance(array $orders, float $packageGeographicalRange): float
+    {
+        $totalDistanceExtra = 0;
+
+        foreach($orders as $order) {
+            $distance = $this->getExtraDistance($packageGeographicalRange, $order['storeBranchToClientDistance']);
+
+            $totalDistanceExtra += $distance;
+        }
+
+        return  $totalDistanceExtra;    
+    }
+
+    //get Orders Exceed Geographical Range
+    public function getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange(int $subscriptionId, float $packageGeographicalRange):array
+    {
+        return $this->subscriptionManager->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
     }
 }
  

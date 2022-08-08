@@ -28,6 +28,12 @@ class PackageUpdateRequest
     private int $orderCount;
     
     private int $expired;
+   
+    private int $type;
+
+    private float $geographicalRange;
+
+    private float $extraCost;
 
     public function getId(): int
     {

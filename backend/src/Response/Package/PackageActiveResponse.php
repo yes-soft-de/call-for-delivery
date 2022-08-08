@@ -21,4 +21,10 @@ class PackageActiveResponse
     public $expired;
 
     public $status;
+ 
+    public int|null $type;
+   
+    public float|null $geographicalRange;
+
+    public  float|null $extraCost;
 }

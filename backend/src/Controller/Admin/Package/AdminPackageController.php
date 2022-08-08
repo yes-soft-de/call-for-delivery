@@ -66,6 +66,9 @@ class AdminPackageController extends BaseController
      *          @OA\Property(type="integer", property="expired"),
      *          @OA\Property(type="string", property="status"),
      *          @OA\Property(type="integer", property="packageCategory"),
+     *          @OA\Property(type="integer", property="type"),
+     *          @OA\Property(type="number", property="geographicalRange"),
+     *          @OA\Property(type="number", property="extraCost"),
      *      )
      * )
      *
@@ -111,7 +114,7 @@ class AdminPackageController extends BaseController
     }
 
     /**
-     * admin: Update new package by admin
+     * admin: Update package by admin
      * @Route("package", name="updatePackage", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -138,12 +141,15 @@ class AdminPackageController extends BaseController
      *          @OA\Property(type="integer", property="orderCount"),
      *          @OA\Property(type="integer", property="expired"),
      *          @OA\Property(type="string", property="status"),
+     *          @OA\Property(type="integer", property="type"),
+     *          @OA\Property(type="number", property="geographicalRange"),
+     *          @OA\Property(type="number", property="extraCost"),
      *      )
      * )
      *
      * @OA\Response(
-     *      response=201,
-     *      description="Returns new package",
+     *      response=204,
+     *      description="Returns package",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -165,7 +171,7 @@ class AdminPackageController extends BaseController
      *
      * @OA\Response(
      *      response="default",
-     *      description="Returns new package",
+     *      description="Returns error",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", example="9351"),
      *          @OA\Property(type="string", property="msg"),
@@ -199,7 +205,7 @@ class AdminPackageController extends BaseController
     }
 
     /**
-     * admin:Update new package by admin
+     * admin:Update package  status by admin
      * @Route("packagestatus", name="updatePackageStatus", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -224,7 +230,7 @@ class AdminPackageController extends BaseController
      *
      * @OA\Response(
      *      response=201,
-     *      description="Returns new package",
+     *      description="Returns package",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
@@ -311,6 +317,9 @@ class AdminPackageController extends BaseController
      *              @OA\Property(type="integer", property="orderCount"),
      *              @OA\Property(type="integer", property="expired"),
      *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="integer", property="type"),
+     *              @OA\Property(type="number", property="geographicalRange"),
+     *              @OA\Property(type="number", property="extraCost"),
      *          )
      *       )
      *    )
@@ -361,6 +370,9 @@ class AdminPackageController extends BaseController
      *                      @OA\Property(type="string", property="city"),
      *                      @OA\Property(type="integer", property="orderCount"),
      *                      @OA\Property(type="string", property="status"),
+     *                      @OA\Property(type="integer", property="type"),
+     *                      @OA\Property(type="number", property="geographicalRange"),
+     *                      @OA\Property(type="number", property="extraCost"),
      *                  )
      *              )
      *          )

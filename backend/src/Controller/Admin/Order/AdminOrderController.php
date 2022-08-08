@@ -32,6 +32,9 @@ use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
 use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")
@@ -376,7 +379,7 @@ class AdminOrderController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="new package category create by admin request",
+     *      description="accepted order to pending status by admin request",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="orderId")
      *      )
@@ -480,7 +483,7 @@ class AdminOrderController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="new package category create by admin request",
+     *      description="order update request",
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
      *          @OA\Property(type="integer", property="branch"),
@@ -840,7 +843,7 @@ class AdminOrderController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="new package category create by admin request",
+     *      description="update order state",
      *      @OA\JsonContent(
      *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state", description="on way to pick order or in store or ongoing or delivered"),
@@ -957,7 +960,6 @@ class AdminOrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    
     /**
      * admin: filter orders in which the store's answer differs from that of the captain (paid or not paid)
      * @Route("filterorders", name="filterOrdersPaidOrNotPaidByAdmin", methods={"POST"})
@@ -1007,5 +1009,176 @@ class AdminOrderController extends BaseController
         $result = $this->adminOrderService->filterOrdersPaidOrNotPaidByAdmin($request);
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: Calculate the cost delivery the order for admin.
+     * @Route("calculatecostdeliveryorderforadmin", name="calculateCostDeliveryOrderForAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="storeOwnerProfileId"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="number", property="orderDeliveryCost"),
+     *            @OA\Property(type="number", property="extraDistance"),
+     *            @OA\Property(type="number", property="extraOrderDeliveryCost"),
+     *            @OA\Property(type="number", property="total"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function calculateCostDeliveryOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, AdminCalculateCostDeliveryOrderRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->calculateCostDeliveryOrder($request);
+    
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter orders whose has not distance  has calculated 
+     * @Route("filterorderswhosehasnotdistancehascalculated", name="filterOrdersWhoseHasNotDistanceHasCalculated ", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="array", property="orderWithOutDistance",
+     *                  @OA\Items()
+     *              ),
+     *              @OA\Property(type="array", property="orders",
+     *                  @OA\Items()
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterOrdersWhoseHasNotDistanceHasCalculated(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, FilterOrdersWhoseHasNotDistanceHasCalculatedRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+
+        return $this->response($result, self::FETCH);
+    }
+    
+    /**
+     * Admin: update storeBranchToClientDistance by admin. 
+     * @Route("updatestorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update storeBranchToClientDistance by admin",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="string", property="storeBranchToClientDistance"),
+     *      )
+     * )
+     * 
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               @OA\Property(type="integer", property="id"),
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer") 
+     */
+    public function updateStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->updateStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::UPDATE);
     }
 }

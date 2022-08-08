@@ -45,6 +45,15 @@ class PackageEntity
     #[ORM\ManyToOne(targetEntity: PackageCategoryEntity::class, inversedBy: 'packageEntities')]
     #[ORM\JoinColumn(nullable: false)]
     private $packageCategory;
+    //type = 1 means package on order 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $type;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $geographicalRange;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $extraCost;
 
     public function __construct()
     {
@@ -190,6 +199,42 @@ class PackageEntity
     public function setPackageCategory(?PackageCategoryEntity $packageCategory): self
     {
         $this->packageCategory = $packageCategory;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getGeographicalRange(): ?float
+    {
+        return $this->geographicalRange;
+    }
+
+    public function setGeographicalRange(?float $geographicalRange): self
+    {
+        $this->geographicalRange = $geographicalRange;
+
+        return $this;
+    }
+
+    public function getExtraCost(): ?float
+    {
+        return $this->extraCost;
+    }
+
+    public function setExtraCost(?float $extraCost): self
+    {
+        $this->extraCost = $extraCost;
 
         return $this;
     }

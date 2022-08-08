@@ -62,7 +62,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
             ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
-             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired')
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired, packageEntity.type, packageEntity.geographicalRange, packageEntity.extraCost as packageExtraCost, packageEntity.cost as packageCost')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
              'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
@@ -197,7 +197,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost', 'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired as packageExpired', 'packageEntity.note as packageNote')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost', 'packageEntity.carCount as packageCarCount', 'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired as packageExpired', 'packageEntity.note as packageNote', 'packageEntity.geographicalRange as packageGeographicalRange', 'packageEntity.extraCost as packageExtraCost', 'packageEntity.type as packageType', 'packageEntity.orderCount')
 
             ->addSelect('subscriptionDetailsEntity.remainingOrders','subscriptionDetailsEntity.remainingCars','subscriptionDetailsEntity.id as subscriptionDetailsId')
          
@@ -218,10 +218,12 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->select ('IDENTITY( subscription.package)')
             ->addSelect('subscription.id', 'subscription.status', 'subscription.startDate', 'subscription.endDate', 'subscription.note', 'subscription.isFuture', 'subscription.flag')
-            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost')
+            ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.cost as packageCost', 'packageEntity.geographicalRange as packageGeographicalRange', 'packageEntity.extraCost as packageExtraCost', 'packageEntity.type as packageType', 'packageEntity.orderCount')
+            ->addSelect('subscriptionDetailsEntity.remainingOrders')
 
             ->innerJoin(PackageEntity::class, 'packageEntity', Join::WITH, 'packageEntity.id = subscription.package')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
+            ->leftJoin(SubscriptionDetailsEntity::class, 'subscriptionDetailsEntity', Join::WITH, 'subscription.id = subscriptionDetailsEntity.lastSubscription')
 
             ->andWhere('subscription.storeOwner = storeOwnerProfileEntity.id')
 
@@ -257,7 +259,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('subscription')
 
-            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscriptionCaptainOfferEntity.carCount', 'subscriptionCaptainOfferEntity.expired', 'subscriptionCaptainOfferEntity.status')
+            ->select ('subscriptionCaptainOfferEntity.id', 'subscriptionCaptainOfferEntity.startDate', 'captainOfferEntity.price', 'subscriptionCaptainOfferEntity.carCount', 'subscriptionCaptainOfferEntity.expired', 'subscriptionCaptainOfferEntity.status', 'subscription.captainOfferFirstTime')
            
 //            ->andWhere('subscription.id = :subscriptionId')
 //            ->setParameter('subscriptionId', $subscriptionId)
@@ -312,5 +314,54 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
 
             ->getResult();
+    }
+
+    public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
+    {
+        return $this->createQueryBuilder('subscription')
+         
+            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance','orderEntity.createdAt')
+    
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.storeOwner = subscription.storeOwner')
+        
+            ->where('subscription.id = :id')
+            ->setParameter('id', $subscriptionId)
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance > :packageGeographicalRange')
+            ->setParameter('packageGeographicalRange', $packageGeographicalRange)
+
+             //Orders made within the current subscription date only
+            ->andWhere('orderEntity.createdAt >= subscription.startDate')
+            ->andWhere('orderEntity.createdAt <= subscription.endDate')
+           
+            ->getQuery()
+
+            ->getResult();
+    }
+
+    public function getCountOfConsumedOrders(int $subscriptionId): ?int
+    {
+        return $this->createQueryBuilder('subscription')
+         
+            ->select('count (orderEntity.id) as countOrders')
+    
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.storeOwner = subscription.storeOwner')
+        
+            ->where('subscription.id = :id')
+            ->setParameter('id', $subscriptionId)
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+             //Orders made within the current subscription date only
+            ->andWhere('orderEntity.createdAt >= subscription.startDate')
+            ->andWhere('orderEntity.createdAt <= subscription.endDate')
+
+            ->getQuery()
+            ->getSingleScalarResult();
+            // ->getOneOrNullResult();
     }
 }

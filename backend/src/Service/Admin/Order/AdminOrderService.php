@@ -54,6 +54,12 @@ use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 use App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse;
+use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
+use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class AdminOrderService
 {
@@ -74,12 +80,13 @@ class AdminOrderService
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private CaptainService $captainService;
     private OrderLogToMySqlService $orderLogToMySqlService;
+    private AdminStoreSubscriptionService $adminStoreSubscriptionService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
                                 NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService,
                                 StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogToMySqlService $orderLogToMySqlService)
+                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogToMySqlService $orderLogToMySqlService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -98,6 +105,7 @@ class AdminOrderService
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
         $this->captainService = $captainService;
         $this->orderLogToMySqlService = $orderLogToMySqlService;
+        $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -665,13 +673,47 @@ class AdminOrderService
     public function filterOrdersPaidOrNotPaidByAdmin(FilterOrdersPaidOrNotPaidByAdminRequest $request): array
     {
         $response = [];
-  
+
         $orders = $this->adminOrderManager->filterOrdersPaidOrNotPaidByAdmin($request);
-  
+
         foreach ($orders as $order) {
             $response[] = $this->autoMapping->map("array", FilterOrdersPaidOrNotPaidByAdminResponse::class, $order);
         }
-  
+
         return $response;
+    }
+    
+    public function calculateCostDeliveryOrder(AdminCalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
+    {
+        return $this->adminStoreSubscriptionService->calculateCostDeliveryOrderForAdmin($request);
+    }
+
+    // filter orders whose has not distance  has calculated 
+    public function filterOrdersWhoseHasNotDistanceHasCalculated(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        $items = [];
+ 
+        $items['orderWithOutDistance'] = $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);
+        $items['orders'] = $this->adminOrderManager->filterOrders($request);
+ 
+        return $items;
+     }
+   
+    // filter orders whose has not distance  has calculated 
+    public function filterOrdersWithOutDistance(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
+    }
+   
+    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+    {
+        return $this->adminOrderManager->filterOrders($request);  
+    }
+     
+    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }
 }
