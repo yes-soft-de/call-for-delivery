@@ -572,82 +572,6 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      String url = '';
-                      if (orderInfo.destinationCoordinate != null) {
-                        url = LauncherLinkHelper.getMapsLink(
-                            orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.longitude ?? 0);
-                      } else if (orderInfo.destinationLink != null) {
-                        url = orderInfo.destinationLink ?? '';
-                      }
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.location_pin),
-                      title: Text(S.current.locationOfCustomer),
-                      subtitle: Visibility(
-                        visible:
-                            StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                                StatusHelper.getOrderStatusIndex(
-                                    OrderStatusEnum.IN_STORE),
-                        replacement: Visibility(
-                          visible: orderInfo.branchCoordinate != null &&
-                              orderInfo.destinationCoordinate != null,
-                          replacement: Text(S.current.distance +
-                              ' ' +
-                              S.current.destinationUnavailable),
-                          child: Text(S.current.distance +
-                              ' ' +
-                              (orderInfo.storeBranchToClientDistance ??
-                                  S.current.unknown) +
-                              ' ${S.current.km}'),
-                        ),
-                        child: Visibility(
-                            visible: screenState.myLocation != null &&
-                                orderInfo.destinationCoordinate != null,
-                            child: Text(S.current.distance +
-                                ' ' +
-                                (Geolocator.distanceBetween(
-                                            screenState.myLocation?.latitude ??
-                                                0,
-                                            screenState.myLocation?.longitude ??
-                                                0,
-                                            orderInfo.destinationCoordinate
-                                                    ?.latitude ??
-                                                0,
-                                            orderInfo.destinationCoordinate
-                                                    ?.longitude ??
-                                                0) /
-                                        1000)
-                                    .toStringAsFixed(2)
-                                    .toString() +
-                                ' ${S.current.km}'),
-                            replacement: Text(S.current.distance +
-                                ' ' +
-                                S.current.destinationUnavailable)),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -776,8 +700,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
               // client location
               Visibility(
-                visible: orderInfo.state == OrderStatusEnum.DELIVERING &&
-                    orderInfo.state == OrderStatusEnum.FINISHED,
+                visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                    StatusHelper.getOrderStatusIndex(
+                        OrderStatusEnum.DELIVERING),
                 child: Expanded(
                   child: OrderButton(
                     backgroundColor: Colors.red[900]!,
