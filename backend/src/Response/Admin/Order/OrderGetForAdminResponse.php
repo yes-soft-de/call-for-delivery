@@ -115,4 +115,9 @@ class OrderGetForAdminResponse
      * @var DateTime|null
      */
     public $dateCaptainPaidToProvider;
+
+    /**
+     * @var float|null
+     */
+    public $storeBranchToClientDistance;
 }

@@ -75,7 +75,11 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="state"),
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
-     *          @OA\Property(type="integer", property="storeOwnerProfileId")
+     *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="integer", property="chosenDistanceIndicator", description="1 refers to use Kilometer,
+     *              2 refers to use storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance")
      *      )
      * )
      *
@@ -87,29 +91,7 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *              @OA\Items(
-     *                  @OA\Property(type="integer", property="id"),
-     *                  @OA\Property(type="string", property="payment"),
-     *                  @OA\Property(type="number", property="orderCost"),
-     *                  @OA\Property(type="string", property="note"),
-     *                  @OA\Property(type="object", property="deliveryDate"),
-     *                  @OA\Property(type="object", property="createdAt"),
-     *                  @OA\Property(type="object", property="updatedAt"),
-     *                  @OA\Property(type="integer", property="kilometer"),
-     *                  @OA\Property(type="string", property="state"),
-     *                  @OA\Property(type="integer", property="orderType"),
-     *                  @OA\Property(type="integer", property="storeOrderDetailsId"),
-     *                  @OA\Property(type="object", property="destination"),
-     *                  @OA\Property(type="string", property="recipientName"),
-     *                  @OA\Property(type="string", property="recipientPhone"),
-     *                  @OA\Property(type="string", property="detail"),
-     *                  @OA\Property(type="integer", property="storeOwnerBranchId"),
-     *                  @OA\Property(type="string", property="branchName"),
-     *                  @OA\Property(type="object", property="location"),
-     *                  @OA\Property(type="object", property="images",
-     *                      @OA\Property(type="string", property="imageURL"),
-     *                      @OA\Property(type="string", property="image"),
-     *                      @OA\Property(type="string", property="baseURL")
-     *                  ),
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderGetForAdminResponse")
      *              )
      *      )
      *   )
