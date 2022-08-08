@@ -72,7 +72,9 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
     return Visibility(
       visible: loading == false,
       replacement: const SizedBox(
-          width: 10, height: 10, child: CircularProgressIndicator()),
+          width: 10,
+          height: 10,
+          child: Center(child: CircularProgressIndicator())),
       child: Text(
         (widget.leading ?? '') + space + (distance ?? '') + ' ${S.current.km}',
         style: widget.textStyle ?? const TextStyle(color: Colors.white),

@@ -611,43 +611,34 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                           title: Text(S.current.locationOfCustomer),
                           subtitle: Visibility(
                             visible: StatusHelper.getOrderStatusIndex(
-                                    orderInfo.state) >=
+                                    orderInfo.state) >
                                 StatusHelper.getOrderStatusIndex(
                                     OrderStatusEnum.IN_STORE),
                             replacement: Visibility(
-                              visible: orderInfo.branchCoordinate != null &&
-                                  orderInfo.destinationCoordinate != null,
+                              visible:
+                                  orderInfo.storeBranchToClientDistance != null,
                               replacement: Text(S.current.distance +
                                   ' ' +
                                   S.current.destinationUnavailable),
-                              child: GeoDistanceText(
-                                destance: (dist) {},
-                                destination: orderInfo.destinationCoordinate ??
-                                    LatLng(0, 0),
-                                origin: screenState.myLocation ?? LatLng(0, 0),
-                              ),
+                              child: Text(S.current.distance +
+                                  ' ' +
+                                  orderInfo.storeBranchToClientDistance
+                                      .toString() +
+                                  ' ' +
+                                  S.current.km),
                             ),
                             child: Visibility(
                                 visible: screenState.myLocation != null &&
                                     orderInfo.destinationCoordinate != null,
-                                child: Text(S.current.distance +
-                                    ' ' +
-                                    (Geolocator.distanceBetween(
-                                                screenState.myLocation?.latitude ??
-                                                    0,
-                                                screenState.myLocation
-                                                        ?.longitude ??
-                                                    0,
-                                                orderInfo.destinationCoordinate
-                                                        ?.latitude ??
-                                                    0,
-                                                orderInfo.destinationCoordinate
-                                                        ?.longitude ??
-                                                    0) /
-                                            1000)
-                                        .toStringAsFixed(2)
-                                        .toString() +
-                                    ' ${S.current.km}'),
+                                child: GeoDistanceText(
+                                  leading: S.current.distance,
+                                  destance: (dist) {},
+                                  destination:
+                                      orderInfo.destinationCoordinate ??
+                                          LatLng(0, 0),
+                                  origin:
+                                      screenState.myLocation ?? LatLng(0, 0),
+                                ),
                                 replacement: Text(S.current.distance +
                                     ' ' +
                                     S.current.destinationUnavailable)),
