@@ -25,4 +25,6 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public string|null $dateFinancialCycleStarts;
 
     public string|null $dateFinancialCycleEnds;
+
+    public int $countOrdersWithoutDistance;
 }

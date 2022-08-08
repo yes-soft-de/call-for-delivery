@@ -7,6 +7,7 @@ use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordi
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemOneBalanceDetailManager;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class AdminCaptainFinancialSystemOneBalanceDetailService
 {
@@ -24,6 +25,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $countOrdersMaxFromNineteen = 0;
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $amountForStore = 0;
+        $countOrdersWithoutDistance = 0;
         //get Count Orders On Specific Date
         $countOrders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         //get Orders Details On Specific Date
@@ -32,10 +34,15 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $orders = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
 
         foreach($detailsOrders as $detailOrder) {
-           if($detailOrder['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+           if($detailOrder['storeBranchToClientDistance'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $countOrdersMaxFromNineteen = $countOrdersMaxFromNineteen + 1;
            }
           
+           if($detailOrder['storeBranchToClientDistance'] === null || $detailOrder['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
+             
+            $countOrdersWithoutDistance += 1;
+            }
+
            if($detailOrder['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
                 $amountForStore += $detailOrder['captainOrderCost'];
            }
@@ -50,6 +57,8 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         $financialSystemDetail['orders'] = $orders;
 
         $financialSystemDetail['countOrdersMaxFromNineteen'] = $countOrdersMaxFromNineteen;
+
+        $financialSystemDetail['countOrdersWithoutDistance'] = $countOrdersWithoutDistance;
 
         $total = $sumPayments - round($financialSystemDetail['financialDues'], 2);
        

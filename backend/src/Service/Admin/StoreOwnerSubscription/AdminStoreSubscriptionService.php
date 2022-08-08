@@ -24,6 +24,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Constant\Package\PackageConstant;
 
 class AdminStoreSubscriptionService
 {
@@ -72,35 +73,47 @@ class AdminStoreSubscriptionService
             $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
           
             $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionIdForAdmin($subscription['id']);
-
-            $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers']);
+            
+            $subscription['ordersExceedGeographicalRange'] = $this->subscriptionService->getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange($subscription['id'], (float)$subscription['packageGeographicalRange']);
+          
+            $totalExtraDistance = $this->subscriptionService->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'], (float)$subscription['packageGeographicalRange']);
+            //if package is on order
+            if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+                $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['id']);
+            }
+            else {
+                $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);
+            }
 
             $response[] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
         }
 
         return $response;
     }
-
-    public function getTotal(array $payments, float $packageCost, array $captainOffers): array
+    //Get the cost of regular subscriptions 
+    public function getTotal(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, int $totalDistanceExtra): array
     {
+        $item['totalDistanceExtra'] = $totalDistanceExtra;
+
         $item['sumPayments'] = array_sum(array_map(fn ($payment) => $payment->amount, $payments));
       
-        // $sumCaptainOfferPrices = array_sum(array_map(fn ($captainOffer) => $captainOffer['price'], $captainOffers));
         $sumCaptainOfferPrices = 0;
-
+       
         foreach($captainOffers as $captainOffer) {
             if($captainOffer['captainOfferFirstTime'] === true) {
                 $sumCaptainOfferPrices += $captainOffer['price'];
             }
         }
+      
+        $item['extraCost'] = $packageExtraCost * $item['totalDistanceExtra'];
 
         $item['packageCost'] = $packageCost;
 
         $item['captainOfferPrice'] = $sumCaptainOfferPrices;
-      
-        $total = ($packageCost + $sumCaptainOfferPrices) - $item['sumPayments'];
-     
-        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices;
+           
+        $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices + $item['extraCost'];
+        
+        $total =  $item['requiredToPay'] - $item['sumPayments'];
        
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
     
