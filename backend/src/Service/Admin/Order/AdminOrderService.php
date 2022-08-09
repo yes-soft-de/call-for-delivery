@@ -722,7 +722,7 @@ class AdminOrderService
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }
 
-    public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId)
+    public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
     {
         $storeOwnerProfile = $this->storeOwnerProfileService->getStoreOwnerProfileEntityByIdForAdmin($request->getStoreOwner());
 
