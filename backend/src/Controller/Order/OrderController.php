@@ -38,6 +38,7 @@ use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 
 /**
  * Create and fetch order.
@@ -1343,7 +1344,8 @@ class OrderController extends BaseController
      * captain: Order Update Paid To Provider.
      * @Route("orderupdatepaidtoprovider/{orderId}/{paidToProvider}", name="orderUpdatePaidToProvider", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
+     * @param int $orderId
+     * @param int $paidToProvider
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -1366,7 +1368,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * or
      *
      * @OA\Response(
@@ -1378,12 +1380,12 @@ class OrderController extends BaseController
      *      )
      * )
      *
-     *  
+     *
      * @Security(name="Bearer")
      */
     public function orderUpdatePaidToProvider(int $orderId,int $paidToProvider): JsonResponse
     {
-        $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider);
+        $response = $this->orderService->orderUpdatePaidToProvider($orderId, $paidToProvider, $this->getUserId());
        
         if($response === OrderAmountCashConstant::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG_STRING) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG);
@@ -1902,7 +1904,7 @@ class OrderController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
-    
+
     /**
      * store: Store confirmation whether payment has been made by the captain or not.
      * @Route("orderupdateiscaptainpaidtoprovider", name="updateIsCaptainPaidToProvider", methods={"PUT"})
@@ -1939,7 +1941,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function updateIsCaptainPaidToProvider(Request $request): JsonResponse
@@ -1949,15 +1951,76 @@ class OrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
             
         $violations = $this->validator->validate($request);
-       
+
         if (\count($violations) > 0) {
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
-         }
+        }
 
         $response = $this->orderService->updateIsCaptainPaidToProvider($request);
-      
+
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * store: Calculate the cost delivery the order.
+     * @Route("calculatecostdeliveryorder", name="calculateCostDeliveryOrder", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Store Branch To Client Distance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="number", property="orderDeliveryCost"),
+     *            @OA\Property(type="number", property="extraDistance"),
+     *            @OA\Property(type="number", property="extraOrderDeliveryCost"),
+     *            @OA\Property(type="number", property="total"),
+     *      )
+     *   )
+     * )
+     * 
+     * @Security(name="Bearer")
+     */
+    public function calculateCostDeliveryOrder(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CalculateCostDeliveryOrderRequest::class, (object)$data);
+
+        $request->setStoreOwner($this->getUserId());
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->calculateCostDeliveryOrder($request);
+    
+        return $this->response($result, self::FETCH);
     }
 }

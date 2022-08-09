@@ -7,6 +7,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemTwoBalanceDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class CaptainFinancialSystemTwoBalanceDetailService
 {
@@ -50,11 +51,18 @@ class CaptainFinancialSystemTwoBalanceDetailService
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $item['amountForStore'] = 0;
         $item['countOrdersMaxFromNineteen'] = 0;
+        $item['countOrdersWithoutDistance'] = 0;
         
         foreach($detailsOrders as $orderDetail) {
-            if($orderDetail['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+            if($orderDetail['storeBranchToClientDistance'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $item['countOrdersMaxFromNineteen'] = $item['countOrdersMaxFromNineteen'] + 1;
             }
+            
+            if($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
+             
+                $item['countOrdersWithoutDistance'] += 1;
+            }
+
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $item['amountForStore'] += $orderDetail['captainOrderCost'];
             }
@@ -87,7 +95,6 @@ class CaptainFinancialSystemTwoBalanceDetailService
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
-
             $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
             $item['countOverOrdersThanRequired'] = $item['countOrdersCompleted'] - $financialSystemDetail['countOrdersInMonth'] / 30;
 
@@ -152,7 +159,7 @@ class CaptainFinancialSystemTwoBalanceDetailService
        $item['countOrdersCompleted'] = $countOrders;
 
        foreach($detailsOrders as $orderDetail) {
-            if($orderDetail['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+            if($orderDetail['storeBranchToClientDistance'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $item['countOrdersMaxFromNineteen'] = $item['countOrdersMaxFromNineteen'] + 1;
             }
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {

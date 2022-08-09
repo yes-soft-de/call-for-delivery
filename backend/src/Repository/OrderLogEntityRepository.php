@@ -109,6 +109,8 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             ->andWhere('orderLogEntity.orderId = :orderId')
             ->setParameter('orderId', $orderId)
 
+            ->groupBy('orderLogEntity.id')
+
             ->orderBy('orderLogEntity.createdAt', 'DESC');
 
         $tempResult = $query->getQuery()->getResult();

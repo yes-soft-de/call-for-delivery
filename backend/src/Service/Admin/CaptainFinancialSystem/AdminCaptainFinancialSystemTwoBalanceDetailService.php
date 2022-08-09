@@ -7,6 +7,7 @@ use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordi
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemTwoBalanceDetailManager;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class AdminCaptainFinancialSystemTwoBalanceDetailService
 {
@@ -55,11 +56,18 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $item['amountForStore'] = 0;
         $item['countOrdersMaxFromNineteen'] = 0;
+        $item['countOrdersWithoutDistance'] = 0;
      
         foreach($detailsOrders as $orderDetail) {
-            if($orderDetail['kilometer'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
+            if($orderDetail['storeBranchToClientDistance'] >= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER ) {
                 $item['countOrdersMaxFromNineteen'] = $item['countOrdersMaxFromNineteen'] + 1;
             }
+            
+            if($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
+             
+                $item['countOrdersWithoutDistance'] += 1;
+            }
+
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
                 $item['amountForStore'] += $orderDetail['captainOrderCost'];
             }

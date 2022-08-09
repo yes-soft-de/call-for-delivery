@@ -7,6 +7,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingOnOrderBa
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemThreeBalanceDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class CaptainFinancialSystemThreeBalanceDetailService
 {
@@ -71,6 +72,7 @@ class CaptainFinancialSystemThreeBalanceDetailService
     {
         $finalFinancialAccount = [];
         $finalFinancialAccount['amountForStore'] = 0;
+        $finalFinancialAccount['countOrdersWithoutDistance'] = 0;
         
         $finalFinancialAccount['financialDues'] = array_sum(array_map(fn ($financialAccountDetail) => $financialAccountDetail->captainTotalCategory, $financialAccountDetails));
          
@@ -89,7 +91,11 @@ class CaptainFinancialSystemThreeBalanceDetailService
         //get Orders Details On Specific Date
         $detailsOrders = $this->captainFinancialSystemThreeBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         foreach($detailsOrders as $orderDetail) {
-            
+            if($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
+             
+                $finalFinancialAccount['countOrdersWithoutDistance'] += 1;
+            }
+
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }
@@ -109,6 +115,7 @@ class CaptainFinancialSystemThreeBalanceDetailService
              
                 //get the number of orders arranged according to the categories of the financial system
                 $countOrders = $this->captainFinancialSystemThreeBalanceDetailManager->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'], $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+              
                 //Amount payable to the captain in the absence of a bounce
                 $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
                //cont Order Completed

@@ -73,6 +73,8 @@ use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
+use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 
 class OrderService
 {
@@ -982,7 +984,7 @@ class OrderService
         }
     }
 
-    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider): OrderUpdatePaidToProviderResponse|null|int
+    public function orderUpdatePaidToProvider(int $orderId, int $paidToProvider, int $userId): OrderUpdatePaidToProviderResponse|null|int
     {
         //Is the captain allowed to edit?
         $captainAllowedEdit = $this->captainAmountFromOrderCashService->getEditingByCaptain($orderId);
@@ -1010,6 +1012,10 @@ class OrderService
 
             $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
         }
+
+        // save log of the action on order
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
@@ -1431,5 +1437,10 @@ class OrderService
     {
         return $this->orderManager->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
             $specificDateTime);
+    }
+
+    public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
+    {
+        return $this->subscriptionService->calculateCostDeliveryOrder($request);
     }
 }

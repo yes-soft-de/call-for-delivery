@@ -719,3 +719,22 @@ App\Request\Admin\Package\PackageCategoryStatusUpdateByAdminRequest:
             - NotBlank: ~
         status:
             - NotBlank: ~
+            
+App\Request\Subscription\CalculateCostDeliveryOrderRequest:
+    properties:
+        storeBranchToClientDistance:
+            - NotBlank: ~
+
+App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest:
+    properties:
+        storeBranchToClientDistance:
+            - NotBlank: ~
+        storeOwnerProfileId:
+            - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        storeBranchToClientDistance:
+            - NotBlank: ~

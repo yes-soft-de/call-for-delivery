@@ -7,6 +7,7 @@ use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordi
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemThreeBalanceDetailManager;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 class AdminCaptainFinancialSystemThreeBalanceDetailService
 {
@@ -79,6 +80,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
     {
         $finalFinancialAccount = [];
         $finalFinancialAccount['amountForStore'] = 0;
+        $finalFinancialAccount['countOrdersWithoutDistance'] = 0;
       
         $finalFinancialAccount['financialDues'] = array_sum(array_map(fn ($financialAccountDetail) => $financialAccountDetail->captainTotalCategory, $financialAccountDetails));
          
@@ -96,7 +98,12 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
         //get Orders Details On Specific Date
         $detailsOrders = $this->adminCaptainFinancialSystemThreeBalanceDetailManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $date['fromDate'], $date['toDate']);
         foreach($detailsOrders as $orderDetail) {
-            
+          
+            if($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
+             
+                $finalFinancialAccount['countOrdersWithoutDistance'] += 1;
+            }
+
             if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }

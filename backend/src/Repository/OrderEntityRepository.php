@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Order\OrderDistanceConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\Payment\PaymentConstant;
@@ -33,6 +34,8 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Constant\Order\OrderIsMainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
+use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
 /**
  * @method OrderEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -441,9 +444,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
-                'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'storeOrderDetails.id as storeOrderDetailsId',
+                'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId',
+                'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'imageEntity.id as imageId', 'imageEntity.imagePath as images')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -494,6 +497,19 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             $query->andWhere('orderEntity.createdAt <= :toDate');
             $query->setParameter('toDate', new DateTime($request->getToDate()));
+        }
+
+        if ($request->getChosenDistanceIndicator() === OrderDistanceConstant::KILOMETER_DISTANCE_CONST) {
+            if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
+                $query->andWhere('orderEntity.kilometer = :kilometerValue');
+                $query->setParameter('kilometerValue', $request->getKilometer());
+            }
+
+        } elseif ($request->getChosenDistanceIndicator() === OrderDistanceConstant::STORE_BRANCH_TO_CLIENT_DISTANCE_CONST) {
+            if (($request->getStoreBranchToClientDistance()) && ($request->getStoreBranchToClientDistance() !== "")) {
+                $query->andWhere('orderEntity.storeBranchToClientDistance = :storeBranchToClientDistanceValue');
+                $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
+            }
         }
 
         return $query->getQuery()->getResult();
@@ -698,7 +714,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
 
-        ->select('orderEntity.id, orderEntity.kilometer', 'orderEntity.payment', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider')
+        ->select('orderEntity.id, orderEntity.kilometer', 'orderEntity.payment', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider, orderEntity.storeBranchToClientDistance')
 
         ->where('orderEntity.state = :state')
         ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
@@ -756,11 +772,14 @@ class OrderEntityRepository extends ServiceEntityRepository
         ->andWhere('orderEntity.createdAt <= :toDate')
         ->setParameter('toDate', $toDate)
 
-        ->andWhere('orderEntity.kilometer >= :countKilometersFrom')
+        ->andWhere('orderEntity.storeBranchToClientDistance >= :countKilometersFrom')
         ->setParameter('countKilometersFrom', $countKilometersFrom)
 
-        ->andWhere('orderEntity.kilometer <= :countKilometersTo')
+        ->andWhere('orderEntity.storeBranchToClientDistance <= :countKilometersTo')
         ->setParameter('countKilometersTo', $countKilometersTo)
+
+        ->andWhere('orderEntity.storeBranchToClientDistance != :zero')
+        ->setParameter('zero', 0)
 
         ->getQuery()
         ->getOneOrNullResult();
@@ -1978,4 +1997,122 @@ class OrderEntityRepository extends ServiceEntityRepository
            ->getQuery()
            ->getSingleColumnResult();
    }
+
+    // filter orders whose has not distance  has calculated
+    public function filterOrdersWhoseHasNotDistanceHasCalculated(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest  $request): ?array
+     {
+         $query = $this->createQueryBuilder('orderEntity')
+             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.captainOrderCost',
+             'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'orderEntity.storeBranchToClientDistance')
+             ->leftJoin(
+                 StoreOrderDetailsEntity::class,
+                 'storeOrderDetails',
+                 Join::WITH,
+                 'orderEntity.id = storeOrderDetails.orderId')
+ 
+             ->leftJoin(
+                 StoreOwnerBranchEntity::class,
+                 'storeOwnerBranch',
+                 Join::WITH,
+                 'storeOrderDetails.branch = storeOwnerBranch.id')
+ 
+             ->leftJoin(
+                 CaptainEntity::class,
+                 'captainEntity',
+                 Join::WITH,
+                 'captainEntity.id = orderEntity.captainId'
+             )
+ 
+             ->leftJoin(
+                 StoreOwnerProfileEntity::class,
+                 'storeOwnerProfileEntity',
+                 Join::WITH,
+                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+             )
+            
+             ->andWhere('orderEntity.storeBranchToClientDistance is NULL or orderEntity.storeBranchToClientDistance = :zero')
+             ->setParameter('zero', GeoDistanceResultConstant::ZERO_DISTANCE_CONST)
+ 
+             ->orderBy('orderEntity.id', 'DESC');
+ 
+         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+             $query->andWhere('orderEntity.createdAt >= :createdAt');
+             $query->setParameter('createdAt', $request->getFromDate());
+ 
+         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt <= :createdAt');
+             $query->setParameter('createdAt', ($request->getToDate()));
+ 
+         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt >= :fromDate');
+             $query->setParameter('fromDate', $request->getFromDate());
+ 
+             $query->andWhere('orderEntity.createdAt <= :toDate');
+             $query->setParameter('toDate', ($request->getToDate()));
+         }
+ 
+         $query->groupBy('orderEntity.id');
+ 
+         return $query->getQuery()->getResult();
+     }
+   
+    // filter orders
+    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest  $request): ?array
+     {
+         $query = $this->createQueryBuilder('orderEntity')
+             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.captainOrderCost',
+             'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'orderEntity.storeBranchToClientDistance')
+             ->leftJoin(
+                 StoreOrderDetailsEntity::class,
+                 'storeOrderDetails',
+                 Join::WITH,
+                 'orderEntity.id = storeOrderDetails.orderId')
+ 
+             ->leftJoin(
+                 StoreOwnerBranchEntity::class,
+                 'storeOwnerBranch',
+                 Join::WITH,
+                 'storeOrderDetails.branch = storeOwnerBranch.id')
+ 
+             ->leftJoin(
+                 CaptainEntity::class,
+                 'captainEntity',
+                 Join::WITH,
+                 'captainEntity.id = orderEntity.captainId'
+             )
+ 
+             ->leftJoin(
+                 StoreOwnerProfileEntity::class,
+                 'storeOwnerProfileEntity',
+                 Join::WITH,
+                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+             )
+            
+             ->andWhere('orderEntity.storeBranchToClientDistance is NOT NULL or orderEntity.storeBranchToClientDistance != :zero')
+             ->setParameter('zero', GeoDistanceResultConstant::ZERO_DISTANCE_CONST)
+            
+             ->orderBy('orderEntity.id', 'DESC');
+ 
+         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+             $query->andWhere('orderEntity.createdAt >= :createdAt');
+             $query->setParameter('createdAt', $request->getFromDate());
+ 
+         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt <= :createdAt');
+             $query->setParameter('createdAt', ($request->getToDate()));
+ 
+         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $query->andWhere('orderEntity.createdAt >= :fromDate');
+             $query->setParameter('fromDate', $request->getFromDate());
+ 
+             $query->andWhere('orderEntity.createdAt <= :toDate');
+             $query->setParameter('toDate', ($request->getToDate()));
+         }
+ 
+         $query->groupBy('orderEntity.id');
+ 
+         return $query->getQuery()->getResult();
+     }
 }

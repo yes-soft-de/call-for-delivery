@@ -31,6 +31,12 @@ class PackageCreateRequest
 
     private $packageCategory;
 
+    private int $type;
+
+    private float $geographicalRange;
+
+    private float $extraCost;
+
     /**
      * Get the value of packageCategory
      */ 

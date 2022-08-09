@@ -48,4 +48,19 @@ class PackageGetResponse
      * @var int|null
      */
     public $expired;
+   
+    /**
+     * @var int|null
+     */
+    public $type;
+   
+    /**
+     * @var float|null
+     */
+    public $geographicalRange;
+
+    /**
+     * @var float|null
+     */
+    public $extraCost;
 }
