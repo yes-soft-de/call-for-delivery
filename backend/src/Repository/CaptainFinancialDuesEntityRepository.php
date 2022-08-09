@@ -12,6 +12,8 @@ use Doctrine\ORM\Query\Expr\Join;
 use App\Entity\CaptainPaymentEntity;
 use DateTime;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Entity\OrderEntity;
+
 /**
  * @method CaptainFinancialDuesEntity|null find($id, $lockMode = null, $lockVersion = null)
  * @method CaptainFinancialDuesEntity|null findOneBy(array $criteria, array $orderBy = null)
@@ -180,6 +182,26 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->orderBy('captainFinancialDuesEntity.id', 'DESC')
 
             ->setMaxResults(1)
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+    //get the financial cycle to which the order belongs
+    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): CaptainFinancialDuesEntity
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+            ->setParameter('userId', $userId)
+           
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
+
+            ->andWhere('captainFinancialDuesEntity.startDate <= orderEntity.createdAt')
+            ->andWhere('captainFinancialDuesEntity.endDate >= orderEntity.createdAt')            
 
             ->getQuery()
 

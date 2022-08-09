@@ -95,7 +95,6 @@ class CaptainFinancialSystemTwoBalanceDetailService
             $item['salary'] = $financialSystemDetail['salary'];
            
             $item['monthCompensation'] = $financialSystemDetail['monthCompensation'];
-
             $item['countOrdersInMonth'] = $financialSystemDetail['countOrdersInMonth'];
             $item['countOverOrdersThanRequired'] = $item['countOrdersCompleted'] - $financialSystemDetail['countOrdersInMonth'] / 30;
 

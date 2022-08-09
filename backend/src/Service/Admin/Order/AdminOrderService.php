@@ -713,6 +713,10 @@ class AdminOrderService
     public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
+      
+        if($order?->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+        }
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }
