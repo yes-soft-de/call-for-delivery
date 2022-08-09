@@ -72,7 +72,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                               kIsWeb
                           ? 16
                           : null,
-                  keyboardType: widget.numbers ? TextInputType.phone : null,
+                  keyboardType: widget.numbers ? const TextInputType.numberWithOptions(decimal: true) : null,
                   onEditingComplete:
                       widget.maxLines != null ? null : () => node.nextFocus(),
                   onFieldSubmitted: widget.maxLines == null && widget.last

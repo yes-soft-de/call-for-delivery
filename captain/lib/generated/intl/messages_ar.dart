@@ -202,7 +202,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chatWithClient":
             MessageLookupByLibrary.simpleMessage("محادثة مع العميل"),
         "chatWithStoreOwner":
-            MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المحل"),
+            MessageLookupByLibrary.simpleMessage("التحدث مع صاحب المتجر"),
         "checkOrders": MessageLookupByLibrary.simpleMessage("تاكد من الطلبات"),
         "checkOrdersDescribtion": MessageLookupByLibrary.simpleMessage(
             "يمكنك تفقد الطرود القريبة منك لتوصيلها"),
@@ -456,7 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "getDirection":
-            MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
+            MessageLookupByLibrary.simpleMessage("موقع المتجر (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "goingBackToHome":
             MessageLookupByLibrary.simpleMessage("الرجوع للقائمة الرئيسية"),
@@ -980,7 +980,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "اسم المتجر يجب ألا يقل عن ثلاث حروف"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
-        "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
+        "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المتجر"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
         "storeRated":
@@ -1124,7 +1124,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "whatsappWithCaptain": MessageLookupByLibrary.simpleMessage("الكابتن"),
         "whatsappWithClient": MessageLookupByLibrary.simpleMessage("الزبون"),
         "whatsappWithStoreOwner":
-            MessageLookupByLibrary.simpleMessage("صاحب المحل"),
+            MessageLookupByLibrary.simpleMessage("صاحب المتجر"),
         "withTaxes":
             MessageLookupByLibrary.simpleMessage("شامل القيمة المضافة"),
         "withoutTax": MessageLookupByLibrary.simpleMessage(
