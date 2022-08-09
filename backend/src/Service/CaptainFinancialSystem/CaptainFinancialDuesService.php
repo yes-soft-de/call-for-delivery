@@ -47,20 +47,28 @@ class CaptainFinancialDuesService
         $this->captainFinancialSystemDetailServiceTwo = $captainFinancialSystemDetailServiceTwo;
     }
     // create or update (captainFinancialDues)
-    public function captainFinancialDues(int $userId)
+    public function captainFinancialDues(int $userId, $orderId = null)
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
         
         if($financialSystemDetail) {
-            //Get Captain's Active Financial Dues 
-            $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
-          
-            if(! $captainFinancialDues) {
-                // Create Captain Financial Dues
-                $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+            //if not send order id get captain's active financial cycle 
+            if(! $orderId) {
+                //Get Captain's Active Financial Dues 
+                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+                        
+                if(! $captainFinancialDues) {
+                    // Create Captain Financial Dues
+                    $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+                }
             }
-          
+            //if send order id get the financial cycle to which the order belongs
+            else {
+                //Get financial dues by orderId and userId
+                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);               
+            }
+
             $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
         
             $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
