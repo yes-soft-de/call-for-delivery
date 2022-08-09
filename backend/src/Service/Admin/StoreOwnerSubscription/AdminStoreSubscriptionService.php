@@ -8,6 +8,7 @@ use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
 use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
+use App\Response\Subscription\RemainingOrdersResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
@@ -205,6 +206,11 @@ class AdminStoreSubscriptionService
     public function calculateCostDeliveryOrderForAdmin(AdminCalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
     {
         return $this->subscriptionService->calculateCostDeliveryOrderForAdmin($request);
+    }
+
+    public function packageBalanceForAdminByStoreOwnerId(int $storeOwnerId): RemainingOrdersResponse|string
+    {
+        return $this->subscriptionService->packageBalance($storeOwnerId);
     }
 }
  
