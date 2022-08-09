@@ -54,7 +54,7 @@ class CaptainFinancialDuesService
         
         if($financialSystemDetail) {
             //if not send order id get captain's active financial cycle 
-            if($orderId === null) {
+            if(! $orderId) {
                 //Get Captain's Active Financial Dues 
                 $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
                         
