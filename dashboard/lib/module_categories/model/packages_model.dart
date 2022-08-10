@@ -12,9 +12,10 @@ class PackagesModel extends DataModel {
   num carCount = 0;
   num orderCount = 0;
   num expired = 0;
-
+  num type = 0;
+  num? geographicalRange = 0;
+  num? extraCost = 0;
   List<PackagesModel> _model = [];
-
   PackagesModel(
       {required this.id,
       required this.name,
@@ -24,7 +25,10 @@ class PackagesModel extends DataModel {
       required this.cost,
       required this.carCount,
       required this.orderCount,
-      required this.expired});
+      required this.expired,
+      required this.geographicalRange,
+      required this.type,
+      required this.extraCost});
 
   PackagesModel.withData(List<PackageData> data) : super.withData() {
     _model = [];
@@ -38,7 +42,10 @@ class PackagesModel extends DataModel {
           cost: element.cost ?? 0,
           expired: element.expired ?? 0,
           note: element.note ?? '',
-          orderCount: element.orderCount ?? 0));
+          orderCount: element.orderCount ?? 0,
+          geographicalRange: element.geographicalRange,
+          type: element.type ?? 0,
+          extraCost: element.extraCost));
     }
   }
   List<PackagesModel> get data => _model;

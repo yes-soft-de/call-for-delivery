@@ -7,7 +7,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/ui/screen/packages_screen.dart';
-import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
@@ -86,40 +85,6 @@ class PackagesLoadedState extends States {
     ));
   }
 
-//  List<Widget> getProducts() {
-//    List<Widget> widgets = [];
-//    if (productsModel == null) {
-//      return widgets;
-//    }
-//
-//    if (productsModel!.isEmpty) return widgets;
-//    for (var element in productsModel!) {
-//      if (id != null && id != element.storeProductCategoryID.toString()) {
-//        continue;
-//      }
-//      widgets.add(ProductCard(
-//        productName: element.productName,
-//        productImage: element.productImage,
-//        dialog: UpdateProductsForm(
-//          request: UpdateProductRequest(
-//              productName: element.productName,
-//              productImage: element.productImage,
-//              productPrice: element.productPrice.toDouble()),
-//          addProduct: (name, price, image) {
-//            Navigator.of(screenState.context).pop();
-//            screenState.updateProduct(UpdateProductRequest(
-//                id: element.id,
-//                productName: name,
-//                productImage: image,
-//                productPrice: double.parse(price),
-//                storeProductCategoryID: element.storeProductCategoryID,
-//                storeOwnerProfileID: element.storeOwnerProfileID));
-//          },
-//        ),
-//      ));
-//    }
-//    return widgets;
-//  }
   List<Widget> getProducts(BuildContext context) {
     List<Widget> widgets = [];
     if (packages == null) {
@@ -158,6 +123,9 @@ class PackagesLoadedState extends States {
           screenState.enablePackage(
               ActivePackageRequest(status: status, id: element.id), false);
         },
+        extraCost: element.extraCost?.toString() ?? '',
+        geographicalRange: element.geographicalRange?.toString() ?? '',
+        type: element.type.toInt(),
       ));
     }
     widgets.add(SizedBox(

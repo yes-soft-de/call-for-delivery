@@ -431,6 +431,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiredSubscriptions":
             MessageLookupByLibrary.simpleMessage("Expired Subscriptions"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
+        "extraCost": MessageLookupByLibrary.simpleMessage("Extra Cost"),
+        "extraCostHint": MessageLookupByLibrary.simpleMessage(
+            "Extra cost for every kilometer over geographical range"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
@@ -488,6 +491,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+        "geographicalRange":
+            MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group order"),
@@ -638,6 +643,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "now": MessageLookupByLibrary.simpleMessage("Now"),
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "onOrderPackage":
+            MessageLookupByLibrary.simpleMessage("On order package"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),

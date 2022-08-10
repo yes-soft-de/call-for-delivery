@@ -7609,6 +7609,46 @@ class S {
       args: [],
     );
   }
+
+  /// `On order package`
+  String get onOrderPackage {
+    return Intl.message(
+      'On order package',
+      name: 'onOrderPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Geographical range`
+  String get geographicalRange {
+    return Intl.message(
+      'Geographical range',
+      name: 'geographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Cost`
+  String get extraCost {
+    return Intl.message(
+      'Extra Cost',
+      name: 'extraCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra cost for every kilometer over geographical range`
+  String get extraCostHint {
+    return Intl.message(
+      'Extra cost for every kilometer over geographical range',
+      name: 'extraCostHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

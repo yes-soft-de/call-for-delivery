@@ -9,7 +9,9 @@ class PackageRequest {
   num? cost;
   num? carCount;
   num? orderCount;
-
+  num? extraCost;
+  num? geographicalRange;
+  num? type;
   PackageRequest(
       {this.id,
       this.packageCategoryID,
@@ -20,7 +22,10 @@ class PackageRequest {
       this.cost,
       this.expired,
       this.note,
-      this.orderCount});
+      this.orderCount,
+      this.extraCost,
+      this.geographicalRange,
+      this.type});
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -33,6 +38,9 @@ class PackageRequest {
     map['status'] = status;
     map['cost'] = cost;
     map['carCount'] = carCount;
+    map['extraCost'] = extraCost;
+    map['type'] = type;
+    map['geographicalRange'] = geographicalRange;
     map['orderCount'] = orderCount;
     return map;
   }

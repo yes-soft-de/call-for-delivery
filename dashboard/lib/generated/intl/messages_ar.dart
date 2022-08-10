@@ -429,6 +429,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiredSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراك منتهي"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
+        "extraCost": MessageLookupByLibrary.simpleMessage("التكلفة الإضافية"),
+        "extraCostHint": MessageLookupByLibrary.simpleMessage(
+            "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
@@ -484,6 +487,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+        "geographicalRange":
+            MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
@@ -634,6 +639,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
+        "onOrderPackage":
+            MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "open": MessageLookupByLibrary.simpleMessage("مفتوح"),

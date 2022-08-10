@@ -37,7 +37,9 @@ class PackageData {
   num? carCount;
   num? orderCount;
   num? expired;
-
+  num? type;
+  num? extraCost;
+  num? geographicalRange;
   PackageData(
       {this.id,
       this.name,
@@ -47,7 +49,10 @@ class PackageData {
       this.cost,
       this.carCount,
       this.status,
-      this.city});
+      this.city,
+      this.extraCost,
+      this.geographicalRange,
+      this.type});
 
   PackageData.fromJson(dynamic json) {
     id = json['id'];
@@ -59,5 +64,8 @@ class PackageData {
     carCount = json['carCount'];
     orderCount = json['orderCount'];
     expired = json['expired'];
+    geographicalRange = json['geographicalRange'];
+    extraCost = json['extraCost'];
+    type = json['type'];
   }
 }

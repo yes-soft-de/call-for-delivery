@@ -754,5 +754,9 @@
     "actionLogHistoryHint": "الإجرائيات التي طرأت على الطلب ",
     "actionDate": "تاريخ الإجراء",
     "reports": "تقارير",
-    "updatePersonalInformation": "تعديل البيانات الشخصية"
+    "updatePersonalInformation": "تعديل البيانات الشخصية",
+    "onOrderPackage":"باقة على الطلب",
+    "geographicalRange":"نطاق الباقة الجغرافي",
+    "extraCost":"التكلفة الإضافية",
+    "extraCostHint":"قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"
 }

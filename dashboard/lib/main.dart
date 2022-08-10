@@ -47,7 +47,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:lehttp_overrides/lehttp_overrides.dart';
-
 import 'module_supplier/supplier_module.dart';
 
 void main() async {

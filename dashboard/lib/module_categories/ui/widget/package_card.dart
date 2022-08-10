@@ -16,6 +16,9 @@ class SinglePackageCard extends StatelessWidget {
   final String expaired;
   final String city;
   final String status;
+  final String extraCost;
+  final int type;
+  final String geographicalRange;
   final Function enablePackage;
   final Function() edit;
 
@@ -29,7 +32,10 @@ class SinglePackageCard extends StatelessWidget {
       required this.city,
       required this.ordersCount,
       required this.cost,
-      required this.expaired});
+      required this.expaired,
+      required this.extraCost,
+      required this.type,
+      required this.geographicalRange});
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +180,35 @@ class SinglePackageCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // geographical
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Theme.of(context).backgroundColor),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FaIcon(Icons.roundabout_left_rounded,
+                                    color: Theme.of(context).disabledColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            SizedBox(
+                              width: 105,
+                              child:
+                                  Text(geographicalRange + ' ' + S.current.km),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
@@ -242,6 +277,36 @@ class SinglePackageCard extends StatelessWidget {
                             SizedBox(
                               child: Text(
                                 '${expaired} ' + S.current.day,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // extra cost
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Theme.of(context).backgroundColor),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(FontAwesomeIcons.dollarSign,
+                                    color: Theme.of(context).disabledColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            SizedBox(
+                              child: Text(
+                                '$extraCost ' + S.current.sar,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
