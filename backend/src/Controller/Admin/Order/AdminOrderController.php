@@ -12,6 +12,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
+use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -1162,5 +1163,115 @@ class AdminOrderController extends BaseController
         $result = $this->adminOrderService->updateStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * Admin: Create new sub order by admin
+     * @Route("createsuborderbyadmin", name="createSubOrderByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="new sub order create request by admin",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="primaryOrder"),
+     *          @OA\Property(type="string", property="filePdf"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns new order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               ref=@Model(type="App\Response\Admin\Order\OrderCreateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error according to situation.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9157"),
+     *                          @OA\Property(type="string", property="msg", description="store owner profile not exist!")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9162"),
+     *                          @OA\Property(type="string", property="msg", description="store branch is not exist!")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9209"),
+     *                          @OA\Property(type="string", property="msg", description="can not create sub order,the orders finished !")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9208"),
+     *                          @OA\Property(type="string", property="msg", description="can not create sub order,the primary order is delivered!")
+     *                   )
+     *              }
+     *      )
+     *
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createSubOrderByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, SubOrderCreateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->createSubOrderByAdmin($request, $this->getUserId());
+
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
+
+        if ($result === StoreOwnerBranch::BRANCH_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_BRANCH_NOT_EXIST);
+        }
+
+        if ($result === SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE_ORDER_FINISHED);
+        }
+
+        if ($result === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SUB_ORDER_CAN_NOT_CREATE);
+        }
+
+        return $this->response($result, self::CREATE);
     }
 }

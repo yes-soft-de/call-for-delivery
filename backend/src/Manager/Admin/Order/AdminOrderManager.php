@@ -9,6 +9,7 @@ use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Constant\Order\OrderIsHideConstant;
@@ -278,5 +279,24 @@ class AdminOrderManager
     public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
     {
         return $this->orderEntityRepository->filterOrders($request);
+    }
+
+    public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->autoMapping->map(SubOrderCreateByAdminRequest::class, OrderEntity::class, $request);
+
+        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+
+        $this->entityManager->persist($orderEntity);
+        $this->entityManager->flush();
+
+        $orderCreateRequest = $this->autoMapping->map(SubOrderCreateByAdminRequest::class, OrderCreateByAdminRequest::class, $request);
+
+        $this->adminStoreOrderDetailsManager->createOrderDetailsByAdmin($orderEntity, $orderCreateRequest);
+
+        return $orderEntity;
     }
 }

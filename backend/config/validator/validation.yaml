@@ -738,3 +738,12 @@ App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest:
             - NotBlank: ~
         storeBranchToClientDistance:
             - NotBlank: ~
+
+App\Request\Admin\Order\SubOrderCreateByAdminRequest:
+    properties:
+        branch:
+            - NotBlank: ~
+        storeOwner:
+            - NotBlank: ~
+        primaryOrder:
+            - NotBlank: ~
