@@ -714,9 +714,15 @@ class AdminOrderService
     public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-      
-        if($order?->getCaptainId()?->getCaptainId()) {
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+
+        if ($order) {
+            if ($order->getCaptainId()?->getCaptainId()) {
+                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+            }
+
+            // save log of the action on order
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);

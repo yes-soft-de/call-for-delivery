@@ -8,6 +8,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Entity\SupplierProfileEntity;
 use App\Entity\UserEntity;
 use App\Manager\Image\ImageManager;
@@ -59,7 +60,13 @@ class SupplierProfileManager
             }
 
         } else {
-            $this->createSupplierProfile($request, $user);
+            if (in_array(UserRoleConstant::ROLE_SUPPLIER, $user->getRoles())) {
+                $supplierProfile = $this->getSupplierProfileEntityBySupplierId($user->getId());
+
+                if (! $supplierProfile) {
+                    $this->createSupplierProfile($request, $user);
+                }
+            }
 
             return UserReturnResultConstant::USER_IS_FOUND_RESULT;
         }

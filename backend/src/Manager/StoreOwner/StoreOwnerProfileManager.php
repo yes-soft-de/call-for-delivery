@@ -5,6 +5,7 @@ namespace App\Manager\StoreOwner;
 use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
@@ -42,11 +43,21 @@ class StoreOwnerProfileManager
 
             if ($userRegister) {
                 return $this->createProfile($request, $userRegister);
+
             } else {
                 return UserReturnResultConstant::USER_IS_NOT_CREATED_RESULT;
             }
+
         } else {
-            return $this->createProfileWithUserFound($user, $request);
+            if (in_array(UserRoleConstant::ROLE_OWNER, $user['roles'])) {
+                $storeOwnerProfile = $this->getStoreOwnerProfile($user['id']);
+
+                if (! $storeOwnerProfile) {
+                    return $this->createProfileWithUserFound($user, $request);
+                }
+            }
+
+            return UserReturnResultConstant::USER_IS_FOUND_RESULT;
         }
     }
 
