@@ -46,6 +46,7 @@ class _CategoryFormState extends State<PackageForm> {
       _nameController.text = widget.request?.name ?? '';
       _noteController.text = widget.request?.note ?? '';
       _cityController.text = widget.request?.city ?? '';
+      _expirdCountController.text = widget.request?.expired.toString() ?? '';
 //
       type = widget.request?.type.toInt() ?? 0;
 
@@ -58,7 +59,7 @@ class _CategoryFormState extends State<PackageForm> {
       _carCountController.text = widget.request?.carCount.toString() ?? '0';
       _orderCountController.text = widget.request?.orderCount.toString() ?? '0';
       _geographicalRangeController.text =
-          widget.request?.expired.toString() ?? '0';
+          widget.request?.geographicalRange?.toString() ?? '';
       id = widget.request?.id ?? -1;
     }
   }
@@ -157,12 +158,16 @@ class _CategoryFormState extends State<PackageForm> {
                       numbers: true,
                     ),
                     // type
-                    CheckboxListTile(
-                        value: type == 0 ? false : true,
-                        title: Text(S.current.onOrderPackage),
-                        onChanged: (bool? v) {
-                          type = (v ?? false) ? 1 : 0;
-                        }),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0, bottom: 12),
+                      child: CheckboxListTile(
+                          value: type == 0 ? false : true,
+                          title: Text(S.current.onOrderPackage),
+                          onChanged: (bool? v) {
+                            type = (v ?? false) ? 1 : 0;
+                            setState(() {});
+                          }),
+                    ),
                     // geographicalRange
                     Padding(
                       padding: const EdgeInsets.only(

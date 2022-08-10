@@ -59,13 +59,28 @@ class SinglePackageCard extends StatelessWidget {
             children: [
               // package name
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Text(
                       packageName,
                       style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Spacer(),
+                  Visibility(
+                    visible: type == 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.green),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.current.onOrderPackage,
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                      ),
                     ),
                   ),
                   Switch(
@@ -139,7 +154,7 @@ class SinglePackageCard extends StatelessWidget {
                             SizedBox(
                               width: 105,
                               child: Text(
-                                '${ordersCount} ' + S.of(context).ordermonth,
+                                '${ordersCount} ' + S.of(context).sOrder,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

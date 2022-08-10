@@ -112,6 +112,8 @@ class PackagesLoadedState extends States {
                 return PackageForm(
                   request: element,
                   onSave: (request) {
+                    request.packageCategoryID =
+                        int.tryParse(screenState.id ?? '');
                     screenState.updatePakage(request);
                   },
                 );
