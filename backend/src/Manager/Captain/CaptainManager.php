@@ -5,6 +5,7 @@ namespace App\Manager\Captain;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\User\UserReturnResultConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Entity\CaptainEntity;
 use App\Repository\CaptainEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
@@ -52,10 +53,18 @@ class CaptainManager
             }
 
             return UserReturnResultConstant::USER_IS_NOT_CREATED_RESULT;
+
+        } else {
+            if (in_array(UserRoleConstant::ROLE_CAPTAIN, $user['roles'])) {
+                $captainProfile = $this->getCaptainProfileByUserId($user['id']);
+
+                if (! $captainProfile) {
+                    return $this->createProfileWithUserFound($user, $request);
+                }
+            }
+
+            return UserReturnResultConstant::USER_IS_FOUND_RESULT;
         }
-
-        return $this->createProfileWithUserFound($user, $request);
-
     }
 
     public function createProfile(UserRegisterRequest $request, $userRegister): mixed
