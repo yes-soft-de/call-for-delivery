@@ -73,6 +73,8 @@ final class NotificationConstant
     const TITLE_OK = "موافقة";
     
     const PLEASE_RECEIVE_DUES = 'لو سمحت بناء على طلبك تفضل باستلام مستحقاتك بتاريخ ';
+
+    const ORDER_UNASSIGNED_TO_CAPTAIN = "بناء على طلب الإدارة, تم إلغاء إسناد الطلب إليك";
     
     //sub order    
     const RECYCLING_ORDER_TITLE = "تدوير الطلب";
