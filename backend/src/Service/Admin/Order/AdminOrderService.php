@@ -305,7 +305,7 @@ class AdminOrderService
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
 
         if ($orderEntity !== null) {
-            // we need captain id for deleting related order chat room
+            // we need captain id for deleting related order chat room + create local notification for the captain
             $captainId = $orderEntity->getCaptainId()->getId();
 
             // we need also the user id of the captain in order to send a firebase notification later after updating the order
@@ -334,6 +334,9 @@ class AdminOrderService
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
                     NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
+
+                $this->notificationLocalService->createNotificationLocal($captainId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN, $orderResult->getId());
 
                 //create firebase notification to store
                 try {
@@ -606,43 +609,59 @@ class AdminOrderService
 
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderByIdGetForAdminResponse|null
     {
-        $order = $this->adminOrderManager->updateOrderStateByAdmin($request);
+        $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
-        if ($order === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
+        if (! $orderResult) {
+            return $orderResult;
+        }
+
+        if ($orderResult === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
         }
-       
-        if($order) {
-            if($order->getCaptainId()) {
 
-                if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                    //create or update captainFinancialDues
-                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
-                  
-                    //save the price of the order in cash in case the captain does not pay the store
-                    if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
-                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+        if (count($orderResult) > 0) {
+            if ($orderResult[0]) {
+                if ($orderResult[0]->getCaptainId()) {
+                    if ($orderResult[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        //create or update captainFinancialDues
+                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
+
+                        //save the price of the order in cash in case the captain does not pay the store
+                        if ($orderResult[0]->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderResult[0]->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
+                                OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
+
+                            $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($orderResult[0],
+                                OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
+                        }
+                    }
+
+                    // create firebase notification to captain
+                    try {
+                        $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($orderResult[0]->getCaptainId()->getCaptainId(),
+                            $orderResult[0]->getId(), $orderResult[0]->getState(), NotificationConstant::CAPTAIN);
+
+                    } catch (\Exception $e) {
+                        error_log($e);
+                    }
+
+                } else {
+                    if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+                        // order returned to pending status, so create a local notification for the captain
+                        $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN, $orderResult[0]->getId());
                     }
                 }
+                // insert new order log
+                $this->orderTimeLineService->createOrderLogsRequest($orderResult[0], $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult[0]->getId()));
 
-                // create firebase notification to captain
-                try{
-                    $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
-                }
-                catch (\Exception $e){
-                    error_log($e);
-                }
+                // save log of the action on order
+                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
             }
-            // insert new order log
-            $this->orderTimeLineService->createOrderLogsRequest($order, $this->storeOrderDetailsService->getStoreBranchByOrderId($order->getId()));
-
-            // save log of the action on order
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $orderResult[0]);
       }
       
     public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
