@@ -8,6 +8,8 @@ class OrdersRoutes {
   static const UPDATE_ORDERS_SCREEN = '/update-order';
   static const CAPTAIN_ORDERS_SCREEN = '/captain-orders';
   static const ORDERS_ACTIONS_LOGS_SCREEN = '/order_actions_logs_screen';
+  static const ORDERS_WITHOUT_DISTANCE_SCREEN =
+      '/orders_without_distance_screen';
 
   // ORDER CASH
   static const ORDER_CASH_CAPTAINS = '/order_cash_captains';

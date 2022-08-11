@@ -7699,6 +7699,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order without distance`
+  String get orderWithoutDistance {
+    return Intl.message(
+      'Order without distance',
+      name: 'orderWithoutDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

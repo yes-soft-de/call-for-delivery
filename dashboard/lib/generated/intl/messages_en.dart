@@ -718,6 +718,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
+        "orderWithoutDistance":
+            MessageLookupByLibrary.simpleMessage("Order without distance"),
         "orderedCanceled":
             MessageLookupByLibrary.simpleMessage("Order Canceled"),
         "orderedNotAccepted":

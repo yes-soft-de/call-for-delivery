@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/ui/screens/order_cash_store_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
+import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,6 +22,7 @@ class OrdersModule extends YesModule {
   final NewOrderScreen newOrderScreen;
   final OrderCaptainLogsScreen orderCaptainLogsScreen;
   final OrderActionLogsScreen orderActionLogsScreen;
+  final OrdersWithoutDistanceScreen ordersWithoutDistanceScreen;
   OrdersModule(
       this._logsScreen,
       this._cashCaptain,
@@ -29,7 +31,8 @@ class OrdersModule extends YesModule {
       this.pendingScreen,
       this.newOrderScreen,
       this.orderCaptainLogsScreen,
-      this.orderActionLogsScreen) {
+      this.orderActionLogsScreen,
+      this.ordersWithoutDistanceScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 

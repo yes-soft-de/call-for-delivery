@@ -764,5 +764,7 @@
     "extraDistance": "Extra Distance",
     "extraOrderDeliveryCost": "Extra order delivery cost",
     "orderDeliveryCost": "Order delivery cost",
-    "deliveryCostDetails": "Delivery cost details"
+    "deliveryCostDetails": "Delivery cost details",
+    "orderWithoutDistance":"Order without distance"
+
 }

@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/model/order/order_action_logs_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_captain_logs_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/model/order_without_distance_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
@@ -19,6 +20,7 @@ import 'package:c4d/module_orders/response/order_actionlogs_response/order_actio
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
+import 'package:c4d/module_orders/response/order_without_distance_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -164,5 +166,17 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     return DataModel.empty();
+  }
+
+  Future<DataModel> getOrdersWithoutDistance(FilterOrderRequest request) async {
+    OrdersWithoutDistanceResponse? response =
+        await _ordersManager.getOrdersWithoutDistance(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrdersWithoutDistanceModel.withData(response);
   }
 }

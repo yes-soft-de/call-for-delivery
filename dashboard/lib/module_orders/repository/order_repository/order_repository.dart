@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/response/order_actionlogs_response/order_actio
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
+import 'package:c4d/module_orders/response/order_without_distance_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -162,5 +163,17 @@ class OrderRepository {
     );
     if (response == null) return null;
     return OrderActionLogsResponse.fromJson(response);
+  }
+
+  Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.ORDERS_WITHOUT_DISTANCE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersWithoutDistanceResponse.fromJson(response);
   }
 }

@@ -6,6 +6,8 @@ class Urls {
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
+  static const GEO_DISTANCE_WITH_DELIVERY_COST =
+      DOMAIN + '/v1/geodistance/geodistanceandcostdeliveredforadmin';
   static const String VERSION_ADMIN = '/v1/admin';
   static const String BASE_API_STORE = DOMAIN + VERSION + '/admin';
   static const String BASE_API_CATEGORY =
@@ -126,6 +128,7 @@ class Urls {
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
+  static const ORDERS_WITHOUT_DISTANCE_API = BASE_API_ORDER + '/filterorderswhosehasnotdistancehascalculated';
   static const FILTER_CASH_ORDERS_FINANCES_API =
       BASE_API_ORDER_CASH_FINANCE + '/storeownerduesfromcashorders';
   static const FILTER_CASH_ORDERS_FINANCES_CAPTAIN_API =

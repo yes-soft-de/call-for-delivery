@@ -763,5 +763,6 @@
     "extraDistance": "المسافة الإضافية",
     "extraOrderDeliveryCost": "تكلفة التوصيل الإضافية",
     "orderDeliveryCost":"سعر توصيل الطلب",
-    "deliveryCostDetails":"تفاصيل سعر التوصيل"
+    "deliveryCostDetails":"تفاصيل سعر التوصيل",
+    "orderWithoutDistance":"الطلبات دون مسافات"
 }

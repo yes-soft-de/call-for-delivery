@@ -715,6 +715,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل الطلب بنجاح"),
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("طلب"),
+        "orderWithoutDistance":
+            MessageLookupByLibrary.simpleMessage("الطلبات دون مسافات"),
         "orderedCanceled":
             MessageLookupByLibrary.simpleMessage("تم إلغاء الطلب"),
         "orderedNotAccepted":
