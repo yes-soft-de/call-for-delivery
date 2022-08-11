@@ -377,6 +377,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCars": MessageLookupByLibrary.simpleMessage("Delivery cars"),
         "deliveryCarsCost":
             MessageLookupByLibrary.simpleMessage("Delivery Cars Cost"),
+        "deliveryCost": MessageLookupByLibrary.simpleMessage("Delivery cost"),
+        "deliveryCostDetails":
+            MessageLookupByLibrary.simpleMessage("Delivery cost details"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("delivery date"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
@@ -435,6 +438,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraCostHint": MessageLookupByLibrary.simpleMessage(
             "Extra cost for every kilometer over geographical range"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("Extra details"),
+        "extraDistance": MessageLookupByLibrary.simpleMessage("Extra Distance"),
+        "extraOrderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("Extra order delivery cost"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
@@ -668,6 +674,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
+        "orderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("Order delivery cost"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "Please place your order details here"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),

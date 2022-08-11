@@ -7649,6 +7649,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Delivery cost`
+  String get deliveryCost {
+    return Intl.message(
+      'Delivery cost',
+      name: 'deliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Distance`
+  String get extraDistance {
+    return Intl.message(
+      'Extra Distance',
+      name: 'extraDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra order delivery cost`
+  String get extraOrderDeliveryCost {
+    return Intl.message(
+      'Extra order delivery cost',
+      name: 'extraOrderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order delivery cost`
+  String get orderDeliveryCost {
+    return Intl.message(
+      'Order delivery cost',
+      name: 'orderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery cost details`
+  String get deliveryCostDetails {
+    return Intl.message(
+      'Delivery cost details',
+      name: 'deliveryCostDetails',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

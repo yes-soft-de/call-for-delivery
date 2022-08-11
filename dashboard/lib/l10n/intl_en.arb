@@ -759,5 +759,10 @@
     "onOrderPackage": "On order package",
     "geographicalRange": "Geographical range",
     "extraCost": "Extra Cost",
-    "extraCostHint": "Extra cost for every kilometer over geographical range"
+    "extraCostHint": "Extra cost for every kilometer over geographical range",
+    "deliveryCost": "Delivery cost",
+    "extraDistance": "Extra Distance",
+    "extraOrderDeliveryCost": "Extra order delivery cost",
+    "orderDeliveryCost": "Order delivery cost",
+    "deliveryCostDetails": "Delivery cost details"
 }

@@ -755,8 +755,13 @@
     "actionDate": "تاريخ الإجراء",
     "reports": "تقارير",
     "updatePersonalInformation": "تعديل البيانات الشخصية",
-    "onOrderPackage":"باقة على الطلب",
-    "geographicalRange":"نطاق الباقة الجغرافي",
-    "extraCost":"التكلفة الإضافية",
-    "extraCostHint":"قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"
+    "onOrderPackage": "باقة على الطلب",
+    "geographicalRange": "نطاق الباقة الجغرافي",
+    "extraCost": "التكلفة الإضافية",
+    "extraCostHint": "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي",
+    "deliveryCost": "سعر التوصيل",
+    "extraDistance": "المسافة الإضافية",
+    "extraOrderDeliveryCost": "تكلفة التوصيل الإضافية",
+    "orderDeliveryCost":"سعر توصيل الطلب",
+    "deliveryCostDetails":"تفاصيل سعر التوصيل"
 }

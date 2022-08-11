@@ -376,6 +376,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
         "deliveryCarsCost":
             MessageLookupByLibrary.simpleMessage("أجرة التوصيل"),
+        "deliveryCost": MessageLookupByLibrary.simpleMessage("سعر التوصيل"),
+        "deliveryCostDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "description": MessageLookupByLibrary.simpleMessage("وصف"),
         "destinationAddress":
@@ -433,6 +436,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraCostHint": MessageLookupByLibrary.simpleMessage(
             "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
+        "extraDistance":
+            MessageLookupByLibrary.simpleMessage("المسافة الإضافية"),
+        "extraOrderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("تكلفة التوصيل الإضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
         "favoriteCategories":
@@ -665,6 +672,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("سعر توصيل الطلب"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "اكتب تفاصيل الطلب الذي تريد إرساله"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الطلب"),
