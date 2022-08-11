@@ -19,6 +19,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
+use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
@@ -710,14 +711,102 @@ class AdminOrderService
         return $this->adminOrderManager->filterOrders($request);  
     }
      
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): OrderByIdGetForAdminResponse
+    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-      
-        if($order?->getCaptainId()?->getCaptainId()) {
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+
+        if ($order) {
+            if ($order->getCaptainId()?->getCaptainId()) {
+                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+            }
+
+            // save log of the action on order
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+    }
+
+    public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
+    {
+        $storeOwnerProfile = $this->storeOwnerProfileService->getStoreOwnerProfileEntityByIdForAdmin($request->getStoreOwner());
+
+        if (! $storeOwnerProfile) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $request->setStoreOwner($storeOwnerProfile);
+
+        $branch = $this->storeOwnerBranchService->getBranchEntityById($request->getBranch());
+
+        if (! $branch) {
+            return StoreOwnerBranch::BRANCH_NOT_FOUND;
+        }
+
+        $request->setBranch($branch);
+
+        $packageBalance = $this->adminStoreSubscriptionService->packageBalanceForAdminByStoreOwnerId($storeOwnerProfile->getStoreOwnerId());
+
+        if ($packageBalance->remainingOrders <= 0) {
+            return SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER;
+        }
+
+        $primaryOrder = $this->adminOrderManager->getOrderById($request->getPrimaryOrder());
+
+        if ($primaryOrder->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            return OrderStateConstant::ORDER_STATE_DELIVERED;
+        }
+
+        if ($primaryOrder->getCaptainId()) {
+            $request->setCaptainId($primaryOrder->getCaptainId());
+        }
+
+        $request->setPrimaryOrder($primaryOrder);
+
+        if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+            // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+            // to the database if it is happened
+            $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+        }
+
+        $order = $this->adminOrderManager->createSubOrderByAdmin($request);
+
+        if ($order) {
+            // update remaining orders
+            $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(),
+                SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+
+            // notification to store
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(),
+                NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS, $order->getId());
+
+            // notification to captain
+            if ($primaryOrder->getCaptainId()) {
+                $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(),
+                    NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());
+            }
+
+            $this->orderTimeLineService->createOrderLogsRequest($order);
+
+            // save log of the action on order
+            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, null, null);
+
+            try {
+                // create firebase notification to store
+                $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
+
+                // create firebase notification to captain
+                if ($primaryOrder->getCaptainId()) {
+                    $this->notificationFirebaseService->notificationSubOrderForUser($primaryOrder->getCaptainId()->getCaptainId(), $order->getId(), NotificationFirebaseConstant::ADD_SUB_ORDER);
+                }
+
+            } catch (\Exception $e) {
+                error_log($e);
+            }
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
     }
 }
