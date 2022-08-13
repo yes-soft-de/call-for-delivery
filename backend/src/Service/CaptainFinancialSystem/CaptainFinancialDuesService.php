@@ -51,11 +51,11 @@ class CaptainFinancialDuesService
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
-        
+       
         if($financialSystemDetail) {
             //if not send order id get captain's active financial cycle 
             if(! $orderId) {
-                //Get Captain's Active Financial Dues 
+                //Get Captain's Active Finan`cial Dues 
                 $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
                         
                 if(! $captainFinancialDues) {
@@ -66,7 +66,12 @@ class CaptainFinancialDuesService
             //if send order id get the financial cycle to which the order belongs
             else {
                 //Get financial dues by orderId and userId
-                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);               
+                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);    
+              
+                if(! $captainFinancialDues) {
+                    // Create Captain Financial Dues
+                    $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+                }           
             }
 
             $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
