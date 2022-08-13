@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/response/order_without_distance_response/order
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 class OrdersWithoutDistanceModel extends DataModel {
   late List<OrderModel> orders;
@@ -39,7 +40,9 @@ class OrdersWithoutDistanceModel extends DataModel {
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+          orderIsMain: element.orderIsMain,
+          branchLocation: LatLng(element.location?.lat, element.location?.lon),
+          destinationLink: element.destination?.link));
     });
     _orders = OrdersWithoutDistanceModel(orders: orders);
   }

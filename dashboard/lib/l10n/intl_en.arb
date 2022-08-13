@@ -765,6 +765,9 @@
     "extraOrderDeliveryCost": "Extra order delivery cost",
     "orderDeliveryCost": "Order delivery cost",
     "deliveryCostDetails": "Delivery cost details",
-    "orderWithoutDistance":"Order without distance"
-
+    "orderWithoutDistance": "Order without distance",
+    "branchLocation": "Branch location",
+    "clientLocation": "Client location",
+    "distanceUpdatedSuccessfully": "Distance updated successfully",
+    "updateDistance": "Update distance"
 }

@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
@@ -61,4 +62,6 @@ class OrdersManager {
   Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
           FilterOrderRequest request) =>
       _repository.getOrdersWithoutDistance(request);
+  Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) =>
+      _repository.updateDistance(request);
 }

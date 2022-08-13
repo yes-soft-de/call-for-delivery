@@ -7709,6 +7709,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Branch location`
+  String get branchLocation {
+    return Intl.message(
+      'Branch location',
+      name: 'branchLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client location`
+  String get clientLocation {
+    return Intl.message(
+      'Client location',
+      name: 'clientLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance updated successfully`
+  String get distanceUpdatedSuccessfully {
+    return Intl.message(
+      'Distance updated successfully',
+      name: 'distanceUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update distance`
+  String get updateDistance {
+    return Intl.message(
+      'Update distance',
+      name: 'updateDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

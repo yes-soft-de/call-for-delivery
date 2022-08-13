@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bounce min count orders in month"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
+        "branchLocation":
+            MessageLookupByLibrary.simpleMessage("Branch location"),
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
@@ -253,6 +255,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("city"),
+        "clientLocation":
+            MessageLookupByLibrary.simpleMessage("Client location"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
@@ -390,6 +394,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),
+        "distanceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Distance updated successfully"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
@@ -1106,6 +1112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
         "updateDate": MessageLookupByLibrary.simpleMessage("Update date"),
+        "updateDistance":
+            MessageLookupByLibrary.simpleMessage("Update distance"),
         "updateOfferSuccessfully":
             MessageLookupByLibrary.simpleMessage("offer updated successfully"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(

@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
@@ -175,5 +176,16 @@ class OrderRepository {
     );
     if (response == null) return null;
     return OrdersWithoutDistanceResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_DISTANCE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }

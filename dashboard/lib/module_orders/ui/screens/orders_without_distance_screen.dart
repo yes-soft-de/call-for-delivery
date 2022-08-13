@@ -28,7 +28,7 @@ class OrdersWithoutDistanceScreenState
   late States currentState;
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
-
+  OrderWithoutDistanceStateManager get manager => widget._stateManager;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -88,8 +88,6 @@ class OrdersWithoutDistanceScreenState
                     DateTime(today.year, today.month, today.day, 0)
                         .toIso8601String();
                 ordersFilter.toDate = DateTime.now().toIso8601String();
-                currentIndex = 0;
-                ordersFilter.state = 'pending';
                 getOrders();
               }, icon: Icons.restart_alt_rounded)
             ]),

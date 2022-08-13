@@ -764,5 +764,9 @@
     "extraOrderDeliveryCost": "تكلفة التوصيل الإضافية",
     "orderDeliveryCost":"سعر توصيل الطلب",
     "deliveryCostDetails":"تفاصيل سعر التوصيل",
-    "orderWithoutDistance":"الطلبات دون مسافات"
+    "orderWithoutDistance":"الطلبات دون مسافات",
+    "branchLocation":"موقع الفرع",
+    "clientLocation":"موقع العميل",
+    "distanceUpdatedSuccessfully":"تم تحديث المسافة بنجاح",
+    "updateDistance":"تحديث المسافة"
 }
