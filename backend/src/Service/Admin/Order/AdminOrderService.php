@@ -335,8 +335,8 @@ class AdminOrderService
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
                     NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
 
-                $this->notificationLocalService->createNotificationLocal($captainId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN, $orderResult->getId());
+                $this->notificationLocalService->createNotificationLocal($captainUserId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), $orderResult->getId());
 
                 //create firebase notification to store
                 try {
@@ -649,7 +649,7 @@ class AdminOrderService
                     if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
                         // order returned to pending status, so create a local notification for the captain
                         $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN, $orderResult[0]->getId());
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(), $orderResult[0]->getId());
                     }
                 }
                 // insert new order log
