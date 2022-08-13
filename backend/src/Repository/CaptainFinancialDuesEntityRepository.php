@@ -188,7 +188,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     //get the financial cycle to which the order belongs
-    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): CaptainFinancialDuesEntity
+    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): ?CaptainFinancialDuesEntity
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
