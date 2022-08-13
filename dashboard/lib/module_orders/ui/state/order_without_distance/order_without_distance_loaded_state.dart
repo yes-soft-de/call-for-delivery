@@ -5,10 +5,8 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/orders_without_distance/order_without_distance_card.dart';
-import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -51,6 +49,7 @@ class OrderWithoutDistanceLoadedState extends States {
                     context: context,
                     builder: (ctx) {
                       return StatefulBuilder(builder: (context, setState) {
+                        print(screenState.manager);
                         return AlertDialog(
                           scrollable: true,
                           shape: RoundedRectangleBorder(
@@ -80,16 +79,15 @@ class OrderWithoutDistanceLoadedState extends States {
                                         num.tryParse(_kilometer.text) == null
                                     ? null
                                     : () {
-                                        Navigator.of(context).pop();
-                                        screenState.manager.updateDistance(
-                                            screenState,
+                                        Navigator.of(ctx).pop();
+                                        screenState.updateDistance(
                                             UpdateDistanceRequest(
-                                              id: element.id,
-                                              storeBranchToClientDistance:
-                                                  num.tryParse(_kilometer.text
-                                                          .trim()) ??
-                                                      0,
-                                            ));
+                                          id: element.id,
+                                          storeBranchToClientDistance:
+                                              num.tryParse(
+                                                      _kilometer.text.trim()) ??
+                                                  0,
+                                        ));
                                         _kilometer.clear();
                                       },
                                 child: Text(
@@ -98,7 +96,7 @@ class OrderWithoutDistanceLoadedState extends States {
                                 )),
                             ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(ctx).pop();
                                   _kilometer.clear();
                                 },
                                 child: Text(
