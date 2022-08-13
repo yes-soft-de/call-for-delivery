@@ -37,12 +37,13 @@ class CaptainAmountFromOrderCashService
         $request->setCaptain($orderEntity->getCaptainId());
         $request->setOrderId($orderEntity);
         $request->setAmount($orderEntity->getCaptainOrderCost());
-        // $request->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
         $request->setFlag($flag);
-        // $request->setStoreAmount($orderEntity->getOrderCost());
         $request->setStoreAmount($orderCost);
-
         $request->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
+      
+        if($flag === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {
+            $request->setAmount(0);
+        }
 
         return $this->captainAmountFromOrderCashManager->createCaptainAmountFromOrderCash($request); 
     }
@@ -52,12 +53,14 @@ class CaptainAmountFromOrderCashService
         $captainAmountFromOrderCashEntity->setCaptain($orderEntity->getCaptainId());
         $captainAmountFromOrderCashEntity->setOrderId($orderEntity);
         $captainAmountFromOrderCashEntity->setAmount($orderEntity->getCaptainOrderCost());
-        // $captainAmountFromOrderCashEntity->setFlag(OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO);
         $captainAmountFromOrderCashEntity->setFlag($flag);
-        // $captainAmountFromOrderCashEntity->setStoreAmount($orderEntity->getOrderCost());
         $captainAmountFromOrderCashEntity->setStoreAmount($orderCost);
 
         $captainAmountFromOrderCashEntity->setCaptainNote($orderEntity->getNoteCaptainOrderCost());
+      
+        if($flag === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {
+            $captainAmountFromOrderCashEntity->setAmount(0);
+        }
 
         return $this->captainAmountFromOrderCashManager->updateCaptainAmountFromOrderCash($captainAmountFromOrderCashEntity); 
     }

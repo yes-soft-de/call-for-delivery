@@ -137,6 +137,10 @@ class AdminOrderService
     public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);
+       
+        if($order['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {
+            $order['captainOrderCost'] = 0;
+        }
 
         if ($order) {
             $order['orderImage'] = $this->uploadFileHelperService->getImageParams($order['orderImage']);
