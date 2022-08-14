@@ -182,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNotArrivedToStore": MessageLookupByLibrary.simpleMessage(
             "Captain not arrived to store"),
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
+        "captainOffer": MessageLookupByLibrary.simpleMessage("Captain offer"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
         "captainPaidToProvider":
             MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
@@ -654,6 +655,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
+        "offerStatus": MessageLookupByLibrary.simpleMessage("Offer status"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("On order package"),

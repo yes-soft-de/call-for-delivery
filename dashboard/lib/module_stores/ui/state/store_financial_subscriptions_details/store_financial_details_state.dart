@@ -583,14 +583,31 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           ' ' +
           DateFormat.jm()
               .format(DateHelper.convert(element.startDate?.timestamp));
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListTile(
-          tileColor: Theme.of(context).backgroundColor,
-          title: Text(FixedNumber.getFixedNumber(element.price ?? 0) +
-              ' ${S.current.sar}'),
-          subtitle: Text(date),
-        ),
+      var endDate = DateFormat.yMEd().format(
+              DateHelper.convert(element.startDate?.timestamp)
+                  .add(Duration(days: element.expired?.toInt() ?? 0))) +
+          ' ' +
+          DateFormat.jm().format(
+              DateHelper.convert(element.startDate?.timestamp)
+                  .add(Duration(days: element.expired?.toInt() ?? 0)));
+      widgets.add(Column(
+        children: [
+          verticalBubble(
+              title: S.current.captainOffer,
+              subtitle: element.carCount.toString() + ' ' + S.current.captain),
+          verticalBubble(title: S.current.createDate, subtitle: date),
+          verticalBubble(title: S.current.expirationData, subtitle: endDate),
+          verticalBubble(
+              title: S.current.offerStatus,
+              subtitle: element.status == 'active'
+                  ? S.current.active
+                  : S.current.expiredSubscriptions),
+          verticalBubble(
+              title: S.current.price,
+              subtitle: FixedNumber.getFixedNumber(element.price ?? 0) +
+                  ' ' +
+                  S.current.sar),
+        ],
       ));
     });
     return widgets;

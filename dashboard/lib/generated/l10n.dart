@@ -7769,6 +7769,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain offer`
+  String get captainOffer {
+    return Intl.message(
+      'Captain offer',
+      name: 'captainOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer status`
+  String get offerStatus {
+    return Intl.message(
+      'Offer status',
+      name: 'offerStatus',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

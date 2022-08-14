@@ -771,5 +771,7 @@
     "distanceUpdatedSuccessfully": "Distance updated successfully",
     "updateDistance": "Update distance",
     "ordersExceedGeographicalRange": "Orders exceed geographical range",
-    "totalExtraDistance": "Total extra distance"
+    "totalExtraDistance": "Total extra distance",
+    "captainOffer": "Captain offer",
+    "offerStatus":"Offer status"
 }

@@ -180,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNotArrivedToStore":
             MessageLookupByLibrary.simpleMessage("الكابتن لم يصل إلى المتجر"),
         "captainNote": MessageLookupByLibrary.simpleMessage("ملاحظات الكابتن"),
+        "captainOffer": MessageLookupByLibrary.simpleMessage("عرض الكابتن"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainPaidToProvider": MessageLookupByLibrary.simpleMessage(
             "هل تم دفع تكلفة الطلب للمتجر"),
@@ -649,6 +650,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
+        "offerStatus": MessageLookupByLibrary.simpleMessage("حالة العرض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),

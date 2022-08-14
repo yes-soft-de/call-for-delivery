@@ -770,5 +770,8 @@
     "distanceUpdatedSuccessfully": "تم تحديث المسافة بنجاح",
     "updateDistance": "تحديث المسافة",
     "ordersExceedGeographicalRange": "الطلبات التي تجاوزت النطاق الجغرافي للباقة",
-    "totalExtraDistance":"إجمالي المسافات التي تجاوزت النطاق"
+    "totalExtraDistance":"إجمالي المسافات التي تجاوزت النطاق",
+    "captainOffer":"عرض الكابتن",
+    "offerStatus":"حالة العرض"
+
 }
