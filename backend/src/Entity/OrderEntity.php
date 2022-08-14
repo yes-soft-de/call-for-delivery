@@ -98,10 +98,10 @@ class OrderEntity
     private $storeBranchToClientDistance;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private $isCaptainPaidToProvider;
+    private $isCashPaymentConfirmedByStore;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $dateCaptainPaidToProvider;
+    private $isCashPaymentConfirmedByStoreUpdateDate;
 
     public function __construct()
     {
@@ -522,26 +522,26 @@ class OrderEntity
         return $this;
     }
 
-    public function getIsCaptainPaidToProvider(): ?int
+    public function getIsCashPaymentConfirmedByStore(): ?int
     {
-        return $this->isCaptainPaidToProvider;
+        return $this->isCashPaymentConfirmedByStore;
     }
 
-    public function setIsCaptainPaidToProvider(?int $isCaptainPaidToProvider): self
+    public function setIsCashPaymentConfirmedByStore(?int $isCashPaymentConfirmedByStore): self
     {
-        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
+        $this->isCashPaymentConfirmedByStore = $isCashPaymentConfirmedByStore;
 
         return $this;
     }
 
-    public function getDateCaptainPaidToProvider(): ?\DateTimeInterface
+    public function getIsCashPaymentConfirmedByStoreUpdateDate(): ?\DateTimeInterface
     {
-        return $this->dateCaptainPaidToProvider;
+        return $this->isCashPaymentConfirmedByStoreUpdateDate;
     }
 
-    public function setDateCaptainPaidToProvider(?\DateTimeInterface $dateCaptainPaidToProvider): self
+    public function setIsCashPaymentConfirmedByStoreUpdateDate(?\DateTimeInterface $isCashPaymentConfirmedByStoreUpdateDate): self
     {
-        $this->dateCaptainPaidToProvider = $dateCaptainPaidToProvider;
+        $this->isCashPaymentConfirmedByStoreUpdateDate = $isCashPaymentConfirmedByStoreUpdateDate;
 
         return $this;
     }

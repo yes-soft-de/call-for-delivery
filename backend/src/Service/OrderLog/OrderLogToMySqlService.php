@@ -54,7 +54,7 @@ class OrderLogToMySqlService
         $orderLogCreateRequest->setOrderIsMain($orderEntity->getOrderIsMain());
         $orderLogCreateRequest->setPrimaryOrder($orderEntity->getPrimaryOrder());
         $orderLogCreateRequest->setPaidToProvider($orderEntity->getPaidToProvider());
-        $orderLogCreateRequest->setIsCaptainPaidToProvider($orderEntity->getIsCaptainPaidToProvider());
+        $orderLogCreateRequest->setIsCashPaymentConfirmedByStore($orderEntity->getIsCashPaymentConfirmedByStore());
 
         $this->createNewOrderLog($orderLogCreateRequest);
     }

@@ -30,10 +30,10 @@ class FilterOrdersPaidOrNotPaidByAdminResponse
     /**
      * @var int|null
      */
-    public $isCaptainPaidToProvider;
+    public $isCashPaymentConfirmedByStore;
 
     /**
      * @var DateTime|null
      */
-    public $dateCaptainPaidToProvider;
+    public $isCashPaymentConfirmedByStoreUpdateDate;
 }

@@ -50,7 +50,7 @@ class OrderTimeLineService
          $request->setStoreOwnerBranch($branch);
        }
        $request->setPaidToProvider($order->getPaidToProvider());
-       $request->setIsCaptainPaidToProvider($order->getIsCaptainPaidToProvider());
+       $request->setIsCashPaymentConfirmedByStore($order->getIsCashPaymentConfirmedByStore());
 
        return $this->createOrderLogs($request);
     }

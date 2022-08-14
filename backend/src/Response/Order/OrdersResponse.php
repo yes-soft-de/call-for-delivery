@@ -70,7 +70,7 @@ class OrdersResponse
 
     public float|null $storeBranchToClientDistance;
 
-    public int|null $isCaptainPaidToProvider;
+    public int|null $isCashPaymentConfirmedByStore;
 
-    public object|null $dateCaptainPaidToProvider;
+    public object|null $isCashPaymentConfirmedByStoreUpdateDate;
 }

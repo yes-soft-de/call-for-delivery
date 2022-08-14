@@ -673,11 +673,11 @@ App\Request\Admin\CaptainFinancialSystem\ApprovalOrRefusalFinancialSystemAndFina
         date:
             - NotBlank: ~
 
-App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest:
+App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest:
     properties:
         id:
             - NotBlank: ~
-        isCaptainPaidToProvider:
+        isCashPaymentConfirmedByStore:
             - NotBlank: ~
 
 App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest:
