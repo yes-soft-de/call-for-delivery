@@ -1,16 +1,21 @@
 import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -351,7 +356,10 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             secondBubble: verticalBubble(
                 title: model.isFuture ? S.current.yes : S.current.no,
                 background: model.isFuture ? Colors.green : Colors.grey)),
-
+        Text(
+          model.packageNote,
+          style: TextStyle(color: Colors.white),
+        ),
         // subscription details
         Divider(
           thickness: 2.5,
@@ -376,6 +384,52 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 verticalBubble(title: S.current.packageRemainingCaptains),
             secondBubble:
                 verticalBubble(title: model.remainingCars.toString())),
+        Visibility(
+          visible: model.ordersExceedGeographicalRange.isNotEmpty,
+          child: Column(
+            children: [
+              RowBubble(
+                  firstBubble: verticalBubble(
+                      title: S.current.ordersExceedGeographicalRange),
+                  secondBubble: verticalBubble(
+                      title: model.ordersExceedGeographicalRange.length
+                              .toString() +
+                          ' ' +
+                          S.current.sOrder)),
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return Scaffold(
+                            appBar: CustomC4dAppBar.appBar(context,
+                                title: S.current.order),
+                            body: Column(
+                              children: [
+                                Expanded(
+                                  child: ListView(
+                                    children: getOrders(context,
+                                        model.ordersExceedGeographicalRange),
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(S.current.close))
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                  child: Text(
+                    S.current.showAll,
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ],
+          ),
+        ),
         //
         Divider(
           thickness: 2.5,
@@ -383,6 +437,19 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           indent: 32,
           endIndent: 32,
         ),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.totalExtraDistance),
+            secondBubble: verticalBubble(
+                title:
+                    FixedNumber.getFixedNumber(model.total.totalDistanceExtra)
+                            .toString() +
+                        ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.extraCost),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.extraCost)
+                        .toString() +
+                    ' ${S.current.sar}')),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.packageCost),
             secondBubble: verticalBubble(
@@ -482,6 +549,29 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         ],
       ),
     );
+  }
+
+  List<Widget> getOrders(context, List<OrderModel> orders) {
+    List<Widget> widgets = [];
+    orders.forEach((element) {
+      widgets.add(
+        InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost,
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              orderIsMain: element.orderIsMain ?? false,
+            )),
+      );
+    });
+    return widgets;
   }
 
   List<Widget> getCaptainOffers(StoreSubscriptionsFinanceModel model) {

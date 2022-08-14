@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
 import 'package:c4d/module_stores/response/subscriptions_financial_response/captain_offer.dart';
 import 'package:c4d/module_stores/response/subscriptions_financial_response/payments_from_company.dart';
 
@@ -16,6 +17,8 @@ class Datum {
   List<PaymentsFromStore>? paymentsFromStore;
   Total? total;
   List<CaptainOffer>? captainOffers;
+  String? packageNote;
+  List<DatumOrder>? ordersExceedGeographicalRange;
   num? remainingOrders;
   num? remainingCars;
   num? packageOrderCount;
@@ -36,7 +39,9 @@ class Datum {
       this.packageOrderCount,
       this.remainingCars,
       this.remainingOrders,
-      this.isFuture});
+      this.isFuture,
+      this.ordersExceedGeographicalRange,
+      this.packageNote});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -46,6 +51,7 @@ class Datum {
         packageOrderCount: json['packageOrderCount'] as num?,
         packageCarCount: json['packageCarCount'] as num?,
         packageName: json['packageName'] as String?,
+        packageNote: json['packageNote'] as String?,
         startDate: json['startDate'] == null
             ? null
             : StartDate.fromJson(json['startDate'] as Map<String, dynamic>),
@@ -58,6 +64,10 @@ class Datum {
         captainOffers: (json['captainOffers'] as List<dynamic>?)
             ?.map((e) => CaptainOffer.fromJson(e as Map<String, dynamic>))
             .toList(),
+        ordersExceedGeographicalRange:
+            (json['ordersExceedGeographicalRange'] as List<dynamic>?)
+                ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
+                .toList(),
         paymentsFromStore: (json['paymentsFromStore'] as List<dynamic>?)
             ?.map((e) => PaymentsFromStore.fromJson(e as Map<String, dynamic>))
             .toList(),

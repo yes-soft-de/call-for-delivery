@@ -12,11 +12,13 @@ class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
   Function(String?) destance;
+  int storeID;
   GeoDistanceText(
       {Key? key,
       required this.destination,
       required this.origin,
-      required this.destance})
+      required this.destance,
+      required this.storeID})
       : super(key: key);
 
   @override
@@ -45,7 +47,9 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
     destination = widget.destination;
     var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
         GeoDistanceRequest(
-            origin: widget.origin, distance: widget.destination));
+            origin: widget.origin,
+            distance: widget.destination,
+            id: widget.storeID));
     if (snap.hasError || snap.isEmpty) {
       loading = false;
       distance = S.current.unknown;

@@ -267,6 +267,7 @@ class UpdateOrderLoaded extends States {
                               destance: (d) {
                                 distance = d;
                               },
+                              storeID: orderInfo.storeID,
                             )),
                       ),
                     )),
