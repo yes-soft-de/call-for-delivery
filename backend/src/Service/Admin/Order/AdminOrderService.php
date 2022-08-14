@@ -34,7 +34,7 @@ use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Order\StoreOrderDetailsService;
-use App\Service\OrderLog\OrderLogToMySqlService;
+use App\Service\OrderLog\OrderLogService;
 use App\Service\OrderTimeLine\OrderTimeLineService;
 use App\Response\Admin\Order\OrderPendingResponse;
 use App\Service\Order\OrderService;
@@ -80,14 +80,14 @@ class AdminOrderService
     private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private CaptainService $captainService;
-    private OrderLogToMySqlService $orderLogToMySqlService;
+    private OrderLogService $orderLogService;
     private AdminStoreSubscriptionService $adminStoreSubscriptionService;
 
     public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
                                 NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService,
                                 StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogToMySqlService $orderLogToMySqlService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
+                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogService $orderLogService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminOrderManager = $adminStoreOwnerManager;
@@ -105,7 +105,7 @@ class AdminOrderService
         $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
         $this->captainService = $captainService;
-        $this->orderLogToMySqlService = $orderLogToMySqlService;
+        $this->orderLogService = $orderLogService;
         $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
     }
 
@@ -328,7 +328,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($orderResult, $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult->getId()));
 
                 // save log of the action on order
-                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderResult, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->createOrderLogMessage($orderResult, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::UN_ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, null, null);
 
                 // *** send notifications (local and firebase) *** //
@@ -383,7 +383,7 @@ class AdminOrderService
         }
 
         // save log of the action on order
-        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+        $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_ADMIN_ACTION_CONST, null, null);
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
@@ -418,7 +418,7 @@ class AdminOrderService
 
             if ($order) {
                 // save log of the action on order
-                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::UPDATE_ORDER_BY_ADMIN_ACTION_CONST, null, null);
 
                 if ($order->getCaptainId()) {
@@ -476,7 +476,7 @@ class AdminOrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, $branch, null);
 
             //create firebase notification to store
@@ -535,7 +535,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($order);
 
                 // save log of the action on order
-                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, null, null);
 
                 //create firebase notification to store
@@ -580,7 +580,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($newUpdatedOrder);
 
                 // save log of the action on order
-                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($newUpdatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->initializeCreateOrderLogRequest($newUpdatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, null, null);
 
                 //create local notification to store
@@ -656,7 +656,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($orderResult[0], $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult[0]->getId()));
 
                 // save log of the action on order
-                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->initializeCreateOrderLogRequest($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
             }
         }
@@ -740,7 +740,7 @@ class AdminOrderService
             }
 
             // save log of the action on order
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
@@ -809,7 +809,7 @@ class AdminOrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, null, null);
 
             try {

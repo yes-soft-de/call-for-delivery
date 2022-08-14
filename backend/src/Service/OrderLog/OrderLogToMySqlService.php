@@ -67,4 +67,9 @@ class OrderLogToMySqlService
             }
         }
     }
+
+    public function createOrderLog()
+    {
+
+    }
 }
