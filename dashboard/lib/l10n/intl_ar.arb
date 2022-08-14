@@ -762,11 +762,13 @@
     "deliveryCost": "سعر التوصيل",
     "extraDistance": "المسافة الإضافية",
     "extraOrderDeliveryCost": "تكلفة التوصيل الإضافية",
-    "orderDeliveryCost":"سعر توصيل الطلب",
-    "deliveryCostDetails":"تفاصيل سعر التوصيل",
-    "orderWithoutDistance":"الطلبات دون مسافات",
-    "branchLocation":"موقع الفرع",
-    "clientLocation":"موقع العميل",
-    "distanceUpdatedSuccessfully":"تم تحديث المسافة بنجاح",
-    "updateDistance":"تحديث المسافة"
+    "orderDeliveryCost": "سعر توصيل الطلب",
+    "deliveryCostDetails": "تفاصيل سعر التوصيل",
+    "orderWithoutDistance": "الطلبات دون مسافات",
+    "branchLocation": "موقع الفرع",
+    "clientLocation": "موقع العميل",
+    "distanceUpdatedSuccessfully": "تم تحديث المسافة بنجاح",
+    "updateDistance": "تحديث المسافة",
+    "ordersExceedGeographicalRange": "الطلبات التي تجاوزت النطاق الجغرافي للباقة",
+    "totalExtraDistance":"إجمالي المسافات التي تجاوزت النطاق"
 }

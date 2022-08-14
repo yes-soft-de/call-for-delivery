@@ -727,6 +727,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلبات غير المسلمة"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
+            "الطلبات التي تجاوزت النطاق الجغرافي للباقة"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم حسابنا"),
@@ -1077,6 +1079,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalCashOrder":
             MessageLookupByLibrary.simpleMessage("إجمالي الطلبات الكاش"),
+        "totalExtraDistance": MessageLookupByLibrary.simpleMessage(
+            "إجمالي المسافات التي تجاوزت النطاق"),
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("إجمالي عدد الطلبات"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),

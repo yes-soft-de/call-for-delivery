@@ -7749,6 +7749,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Orders exceed geographical range`
+  String get ordersExceedGeographicalRange {
+    return Intl.message(
+      'Orders exceed geographical range',
+      name: 'ordersExceedGeographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total extra distance`
+  String get totalExtraDistance {
+    return Intl.message(
+      'Total extra distance',
+      name: 'totalExtraDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

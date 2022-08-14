@@ -732,6 +732,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ordered not accepted"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
+            "Orders exceed geographical range"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),
@@ -1084,6 +1086,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "The total cost without delivery cost"),
         "totalCashOrder":
             MessageLookupByLibrary.simpleMessage("Total cash orders"),
+        "totalExtraDistance":
+            MessageLookupByLibrary.simpleMessage("Total extra distance"),
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("Total orders count"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),

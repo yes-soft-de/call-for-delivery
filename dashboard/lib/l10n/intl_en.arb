@@ -769,5 +769,7 @@
     "branchLocation": "Branch location",
     "clientLocation": "Client location",
     "distanceUpdatedSuccessfully": "Distance updated successfully",
-    "updateDistance": "Update distance"
+    "updateDistance": "Update distance",
+    "ordersExceedGeographicalRange": "Orders exceed geographical range",
+    "totalExtraDistance": "Total extra distance"
 }
