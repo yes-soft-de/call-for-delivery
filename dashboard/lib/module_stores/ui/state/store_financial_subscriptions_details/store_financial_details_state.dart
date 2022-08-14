@@ -590,24 +590,39 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           DateFormat.jm().format(
               DateHelper.convert(element.startDate?.timestamp)
                   .add(Duration(days: element.expired?.toInt() ?? 0)));
-      widgets.add(Column(
-        children: [
-          verticalBubble(
+      widgets.add(Padding(
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+        child: Column(
+          children: [
+            verticalBubble(
               title: S.current.captainOffer,
-              subtitle: element.carCount.toString() + ' ' + S.current.captain),
-          verticalBubble(title: S.current.createDate, subtitle: date),
-          verticalBubble(title: S.current.expirationData, subtitle: endDate),
-          verticalBubble(
-              title: S.current.offerStatus,
-              subtitle: element.status == 'active'
-                  ? S.current.active
-                  : S.current.expiredSubscriptions),
-          verticalBubble(
-              title: S.current.price,
-              subtitle: FixedNumber.getFixedNumber(element.price ?? 0) +
-                  ' ' +
-                  S.current.sar),
-        ],
+              subtitle: element.carCount.toString() + ' ' + S.current.captain,
+              radius: 0,
+            ),
+            verticalBubble(
+              title: S.current.createDate,
+              subtitle: date,
+              radius: 0,
+            ),
+            verticalBubble(
+              title: S.current.expirationData,
+              subtitle: endDate,
+              radius: 0,
+            ),
+            verticalBubble(
+                title: S.current.offerStatus,
+                radius: 0,
+                subtitle: element.status == 'active'
+                    ? S.current.activeOffer
+                    : S.current.inactive),
+            verticalBubble(
+                title: S.current.price,
+                radius: 0,
+                subtitle: FixedNumber.getFixedNumber(element.price ?? 0) +
+                    ' ' +
+                    S.current.sar),
+          ],
+        ),
       ));
     });
     return widgets;
@@ -617,11 +632,12 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
       {required String title,
       String? subtitle,
       Color? background,
-      bool subtitleText = false}) {
+      bool subtitleText = false,
+      double radius = 25}) {
     var context = screenState.context;
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(radius),
         color: background ?? Theme.of(context).backgroundColor,
       ),
       child: Visibility(

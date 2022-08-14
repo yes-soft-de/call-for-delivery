@@ -70,7 +70,7 @@ class StoreSubscriptionsFinanceModel extends DataModel {
         flag: element.flag,
         note: element.note,
         packageName: element.packageName ?? S.current.unknown,
-        captainsOffer: _getCaptainsOffer(element.captainOffers ?? []),
+        captainsOffer: element.captainOffers ?? [],
         packageCarCount: element.packageCarCount?.toInt() ?? 0,
         packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
         remainingCars: element.remainingCars?.toInt() ?? 0,
@@ -109,15 +109,6 @@ class StoreSubscriptionsFinanceModel extends DataModel {
           orderIsMain: element.orderIsMain));
     });
     return orders;
-  }
-
-  List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {
-    List<CaptainOffer> captains = [];
-    offers.forEach((element) {
-      captains.add(CaptainOffer(
-          id: element.id, price: element.price, startDate: element.startDate));
-    });
-    return captains;
   }
 
   List<StoreSubscriptionsFinanceModel> get data => _data;

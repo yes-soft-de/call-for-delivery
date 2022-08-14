@@ -773,5 +773,7 @@
     "ordersExceedGeographicalRange": "Orders exceed geographical range",
     "totalExtraDistance": "Total extra distance",
     "captainOffer": "Captain offer",
-    "offerStatus":"Offer status"
+    "offerStatus": "Offer status",
+    "activeOffer": "Active Offer",
+    "unActiveOffer": "Inactive offer"
 }

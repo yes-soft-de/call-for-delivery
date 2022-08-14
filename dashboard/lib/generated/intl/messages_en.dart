@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
+        "activeOffer": MessageLookupByLibrary.simpleMessage("Active Offer"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
         "addBranch": MessageLookupByLibrary.simpleMessage("Add Branch"),
@@ -1093,6 +1094,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("Total orders count"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "unActiveOffer": MessageLookupByLibrary.simpleMessage("Inactive offer"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("Un assign order"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("Unpaid Order"),

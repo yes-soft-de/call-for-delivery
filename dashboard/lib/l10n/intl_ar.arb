@@ -772,6 +772,8 @@
     "ordersExceedGeographicalRange": "الطلبات التي تجاوزت النطاق الجغرافي للباقة",
     "totalExtraDistance":"إجمالي المسافات التي تجاوزت النطاق",
     "captainOffer":"عرض الكابتن",
-    "offerStatus":"حالة العرض"
+    "offerStatus":"حالة العرض",
+    "activeOffer":"عرض فعال",
+    "unActiveOffer":"عرض غير فعال"
 
 }

@@ -67,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
+        "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
@@ -1086,6 +1087,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("إجمالي عدد الطلبات"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
+        "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("إلغاء اسناد طلب "),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("طلبات غير مدفوعة"),

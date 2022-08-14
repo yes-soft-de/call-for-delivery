@@ -7789,6 +7789,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Active Offer`
+  String get activeOffer {
+    return Intl.message(
+      'Active Offer',
+      name: 'activeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive offer`
+  String get unActiveOffer {
+    return Intl.message(
+      'Inactive offer',
+      name: 'unActiveOffer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
