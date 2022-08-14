@@ -60,4 +60,6 @@ class StoreSubscriptionResponse
      *     @OA\Items(type="object"))
      */
     public $ordersExceedGeographicalRange;
+
+    public int|null $packageType;
 }
