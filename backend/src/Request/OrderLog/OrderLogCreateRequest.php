@@ -69,7 +69,7 @@ class OrderLogCreateRequest
     
     private null|int $paidToProvider;
    
-    private null|int $isCaptainPaidToProvider;
+    private null|int $isCashPaymentConfirmedByStore;
 
     public function getOrderId(): int|OrderEntity
     {
@@ -171,22 +171,14 @@ class OrderLogCreateRequest
         return $this;
     }
 
-    /**
-     * Get the value of isCaptainPaidToProvider
-     */ 
-    public function getIsCaptainPaidToProvider()
+    public function getIsCashPaymentConfirmedByStore(): ?int
     {
-        return $this->isCaptainPaidToProvider;
+        return $this->isCashPaymentConfirmedByStore;
     }
 
-    /**
-     * Set the value of isCaptainPaidToProvider
-     *
-     * @return  self
-     */ 
-    public function setIsCaptainPaidToProvider($isCaptainPaidToProvider)
+    public function setIsCashPaymentConfirmedByStore(?int $isCashPaymentConfirmedByStore)
     {
-        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
+        $this->isCashPaymentConfirmedByStore = $isCashPaymentConfirmedByStore;
 
         return $this;
     }

@@ -69,8 +69,8 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
-use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
+use App\Response\Order\OrderUpdateIsCashPaymentConfirmedByStoreResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
@@ -1411,9 +1411,9 @@ class OrderService
         return EraserResultConstant::STORE_HAS_NOT_ORDERS;
     }
 
-    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderUpdateIsCaptainPaidToProviderResponse
+    public function updateIsCashPaymentConfirmedByStore(OrderUpdateIsCashPaymentConfirmedByStoreRequest $request): ?OrderUpdateIsCashPaymentConfirmedByStoreResponse
     {
-        $order = $this->orderManager->updateIsCaptainPaidToProvider($request);
+        $order = $this->orderManager->updateIsCashPaymentConfirmedByStore($request);
 
         if ($order) {
             // create order log in order time line
@@ -1423,14 +1423,14 @@ class OrderService
             $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, null, null);
 
-            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCaptainPaidToProvider) 
-            if ($order->getIsCaptainPaidToProvider() !== $order->getPaidToProvider()) {
+            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
+            if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {
 
                 $this->notificationFirebaseService->notificationToAdmin($order->getId(), NotificationFirebaseConstant::CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE);
             }
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCaptainPaidToProviderResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCashPaymentConfirmedByStoreResponse::class, $order);
     }
 
     public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
