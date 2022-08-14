@@ -4,6 +4,7 @@ namespace App\Manager\SuperAdmin\Order;
 
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Constant\Order\OrderStateConstant;
+use App\Constant\Payment\PaymentConstant;
 use App\Repository\OrderEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -29,7 +30,7 @@ class SuperAdminOrderManager
     public function updateIsCaptainPaidToProviderForAllDeliveredOrdersBySuperAdmin(): array
     {
         $ordersEntities = $this->orderEntityRepository->findBy(['state'=>OrderStateConstant::ORDER_STATE_DELIVERED,
-            'isCaptainPaidToProvider'=>null, 'dateCaptainPaidToProvider'=>null]);
+            'isCaptainPaidToProvider'=>null, 'dateCaptainPaidToProvider'=>null, 'payment'=>PaymentConstant::CASH_PAYMENT_METHOD_CONST]);
 
         if (count($ordersEntities) > 0) {
             foreach ($ordersEntities as $orderEntity) {
