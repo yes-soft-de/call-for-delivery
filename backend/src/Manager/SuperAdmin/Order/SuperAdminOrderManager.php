@@ -24,13 +24,12 @@ class SuperAdminOrderManager
      * Update isCaptainPaidToProvider by super admin to 1 (captain paid the cash order payment to the store) for order
      * which meet following condition:
      *      state = delivered
-     *      isCaptainPaidToProvider = NULL
-     *      dateCaptainPaidToProvider = NULL
+     *      payment = cash
      */
-    public function updateIsCaptainPaidToProviderForAllDeliveredOrdersBySuperAdmin(): array
+    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): array
     {
         $ordersEntities = $this->orderEntityRepository->findBy(['state'=>OrderStateConstant::ORDER_STATE_DELIVERED,
-            'isCaptainPaidToProvider'=>null, 'dateCaptainPaidToProvider'=>null, 'payment'=>PaymentConstant::CASH_PAYMENT_METHOD_CONST]);
+            'payment'=>PaymentConstant::CASH_PAYMENT_METHOD_CONST]);
 
         if (count($ordersEntities) > 0) {
             foreach ($ordersEntities as $orderEntity) {

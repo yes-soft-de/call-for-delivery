@@ -7,7 +7,7 @@ use App\Entity\OrderEntity;
 use App\Manager\SuperAdmin\Order\SuperAdminOrderManager;
 use App\Response\SuperAdmin\Order\IsCaptainPaidToProviderUpdateBySuperAdminResponse;
 
-class SuperAdminOrderService
+class SuperAdminOrderService implements SuperAdminServiceInterface
 {
     private AutoMapping $autoMapping;
     private SuperAdminOrderManager $superAdminOrderManager;
@@ -26,9 +26,9 @@ class SuperAdminOrderService
      *      isCaptainPaidToProvider = NULL
      *      dateCaptainPaidToProvider = NULL
      */
-    public function updateIsCaptainPaidToProviderForAllDeliveredOrdersBySuperAdmin(): array
+    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): array
     {
-        $ordersArrayResult = $this->superAdminOrderManager->updateIsCaptainPaidToProviderForAllDeliveredOrdersBySuperAdmin();
+        $ordersArrayResult = $this->superAdminOrderManager->updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand();
 
         if (count($ordersArrayResult) > 0) {
             $response = [];
