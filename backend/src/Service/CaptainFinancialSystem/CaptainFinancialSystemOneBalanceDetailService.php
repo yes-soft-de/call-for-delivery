@@ -111,11 +111,11 @@ class CaptainFinancialSystemOneBalanceDetailService
     public function financialDuesCalculator(int $countWorkdays, int $countOrdersCompleted, int $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary)
     {
          if($countWorkdays >= 25){
-             
             return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary, 2);
          }
 
          $dailySalary = $salary / 30;
-         return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary, 2);
+
+         return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + ($dailySalary * $countWorkdays), 2);
     }
 }
