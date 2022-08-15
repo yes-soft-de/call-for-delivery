@@ -33,7 +33,7 @@ class OrderCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $message = "Update isCashPaymentConfirmedByStore field, please wait..";
+        $message = "Updating isCashPaymentConfirmedByStore field, please wait..";
 
         $output->writeln($message);
         $io->newLine();
@@ -44,7 +44,7 @@ class OrderCommand extends Command
 
         $io->newLine();
 
-        $message = "isCashPaymentConfirmedByStore field was being updated successfully!";
+        $message = "isCashPaymentConfirmedByStore field had been updated successfully!";
 
         $output->writeln($message);
 
