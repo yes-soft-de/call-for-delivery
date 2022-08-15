@@ -30,7 +30,7 @@ use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Request\Order\UpdateOrderRequest;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 
 class OrderManager
 {
@@ -632,7 +632,7 @@ class OrderManager
         return $this->orderRepository->getStoreOrdersByStoreOwnerId($storeOwnerId);
     }
 
-    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderEntity
+    public function updateIsCashPaymentConfirmedByStore(OrderUpdateIsCashPaymentConfirmedByStoreRequest $request): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
@@ -640,9 +640,9 @@ class OrderManager
             return $orderEntity;
         }
 
-        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCaptainPaidToProviderRequest::class, OrderEntity::class, $request, $orderEntity);
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCashPaymentConfirmedByStoreRequest::class, OrderEntity::class, $request, $orderEntity);
 
-        $orderEntity->setDateCaptainPaidToProvider(new DateTime());
+        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime());
 
         $this->entityManager->flush();
 

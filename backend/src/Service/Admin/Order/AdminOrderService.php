@@ -828,4 +828,19 @@ class AdminOrderService
 
         return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
     }
+    
+    // filter Orders not answered by the store (paid or not paid)
+    public function filterOrdersNotAnsweredByTheStore(FilterOrdersPaidOrNotPaidByAdminRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->filterOrdersNotAnsweredByTheStore($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterOrdersPaidOrNotPaidByAdminResponse::class, $order);
+        }
+
+        return $response;
+    }
+    
 }

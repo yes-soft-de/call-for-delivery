@@ -304,4 +304,9 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function filterOrdersNotAnsweredByTheStore(FilterOrdersPaidOrNotPaidByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrdersNotAnsweredByTheStore($request);
+    }
 }

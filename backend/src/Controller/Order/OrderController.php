@@ -36,7 +36,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 
@@ -264,8 +264,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="boolean", property="orderIsMain"),
-     *                  @OA\Property(type="integer", property="isCaptainPaidToProvider"),
-     *                  @OA\Property(type="object", property="dateCaptainPaidToProvider"),
+     *                  @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
+     *                  @OA\Property(type="object", property="isCashPaymentConfirmedByStoreUpdateDate"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -1907,7 +1907,7 @@ class OrderController extends BaseController
 
     /**
      * store: Store confirmation whether payment has been made by the captain or not.
-     * @Route("orderupdateiscaptainpaidtoprovider", name="updateIsCaptainPaidToProvider", methods={"PUT"})
+     * @Route("confirmcashpaymentbystore", name="updateIsCashPaymentConfirmedByStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -1922,33 +1922,33 @@ class OrderController extends BaseController
      * )
      *
      * @OA\RequestBody (
-     *        description="Order Update Captain isCaptainPaidToProvider",
+     *        description="Update isCashPaymentConfirmedByStore of an order by store owner request",
      *        @OA\JsonContent(
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
      *         ),
      *      ),
      *
      * @OA\Response(
      *      response=204,
-     *      description="Return isCaptainPaidToProvider.",
+     *      description="Return isCashPaymentConfirmedByStore new value.",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
      *              )
      *       )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function updateIsCaptainPaidToProvider(Request $request): JsonResponse
+    public function updateIsCashPaymentConfirmedByStore(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCashPaymentConfirmedByStoreRequest::class, (object) $data);
             
         $violations = $this->validator->validate($request);
 
@@ -1958,7 +1958,7 @@ class OrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->orderService->updateIsCaptainPaidToProvider($request);
+        $response = $this->orderService->updateIsCashPaymentConfirmedByStore($request);
 
         return $this->response($response, self::UPDATE);
     }

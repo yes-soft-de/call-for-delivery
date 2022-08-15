@@ -49,7 +49,7 @@ class OrderTimeLineEntity
     private $paidToProvider;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private $isCaptainPaidToProvider;
+    private $isCashPaymentConfirmedByStore;
 
     public function getId(): ?int
     {
@@ -175,14 +175,14 @@ class OrderTimeLineEntity
         return $this;
     }
 
-    public function getIsCaptainPaidToProvider(): ?int
+    public function getIsCashPaymentConfirmedByStore(): ?int
     {
-        return $this->isCaptainPaidToProvider;
+        return $this->isCashPaymentConfirmedByStore;
     }
 
-    public function setIsCaptainPaidToProvider(?int $isCaptainPaidToProvider): self
+    public function setIsCashPaymentConfirmedByStore(?int $isCashPaymentConfirmedByStore): self
     {
-        $this->isCaptainPaidToProvider = $isCaptainPaidToProvider;
+        $this->isCashPaymentConfirmedByStore = $isCashPaymentConfirmedByStore;
 
         return $this;
     }

@@ -2,11 +2,11 @@
 
 namespace App\Request\Order;
 
-class OrderUpdateIsCaptainPaidToProviderRequest
+class OrderUpdateIsCashPaymentConfirmedByStoreRequest
 {   
     private int $id;
 
-    private int $isCaptainPaidToProvider;
+    private int $isCashPaymentConfirmedByStore;
 
     /**
      * Get the value of id
