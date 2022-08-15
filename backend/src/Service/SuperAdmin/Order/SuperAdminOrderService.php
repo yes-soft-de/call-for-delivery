@@ -2,19 +2,14 @@
 
 namespace App\Service\SuperAdmin\Order;
 
-use App\AutoMapping;
-use App\Entity\OrderEntity;
 use App\Manager\SuperAdmin\Order\SuperAdminOrderManager;
-use App\Response\SuperAdmin\Order\IsCaptainPaidToProviderUpdateBySuperAdminResponse;
 
 class SuperAdminOrderService implements SuperAdminServiceInterface
 {
-    private AutoMapping $autoMapping;
     private SuperAdminOrderManager $superAdminOrderManager;
 
-    public function __construct(AutoMapping $autoMapping, SuperAdminOrderManager $superAdminOrderManager)
+    public function __construct(SuperAdminOrderManager $superAdminOrderManager)
     {
-        $this->autoMapping = $autoMapping;
         $this->superAdminOrderManager = $superAdminOrderManager;
     }
 
@@ -26,20 +21,8 @@ class SuperAdminOrderService implements SuperAdminServiceInterface
      *      isCaptainPaidToProvider = NULL
      *      dateCaptainPaidToProvider = NULL
      */
-    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): array
+    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): void
     {
-        $ordersArrayResult = $this->superAdminOrderManager->updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand();
-
-        if (count($ordersArrayResult) > 0) {
-            $response = [];
-
-            foreach ($ordersArrayResult as $orderEntity) {
-                $response[] = $this->autoMapping->map(OrderEntity::class, IsCaptainPaidToProviderUpdateBySuperAdminResponse::class, $orderEntity);
-            }
-
-            return $response;
-        }
-
-        return $ordersArrayResult;
+        $this->superAdminOrderManager->updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand();
     }
 }
