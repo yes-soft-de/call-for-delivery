@@ -2188,7 +2188,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
     
-    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId, int|null $orderId): ?OrderEntity
+    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
     {
         return $this->createQueryBuilder('orderEntity')
             ->andWhere('orderEntity.state IN (:statesArray)')
@@ -2199,9 +2199,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->andWhere('orderEntity.storeOwner = :storeId')
             ->setParameter('storeId', $storeId)
-
-            ->andWhere('orderEntity.id != :id')
-            ->setParameter('id', $orderId)
 
             ->setMaxResults(1)
             ->getQuery()

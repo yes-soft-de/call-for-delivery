@@ -513,7 +513,7 @@ class AdminOrderService
             }
 
             // Check whether the captain has received an order for a specific store
-            $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getId(), $orderEntity->getPrimaryOrder()?->getId());
+            $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
             if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
                 return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN;
             }
@@ -851,9 +851,10 @@ class AdminOrderService
         return $response;
     }
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int $orderId, int|null $primaryOrderId): int
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int|null $primaryOrderId): int
     {
-        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId, $orderId);
+        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
+       
         if (!empty($orderEntity)) {
             //if the order not main
             if ($orderEntity->getOrderIsMain() !== true) {
