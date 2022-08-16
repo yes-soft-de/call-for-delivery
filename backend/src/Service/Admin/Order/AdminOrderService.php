@@ -535,7 +535,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($order);
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, null, null);
 
                 //create firebase notification to store
@@ -580,7 +580,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($newUpdatedOrder);
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($newUpdatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->createOrderLogMessage($newUpdatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, null, null);
 
                 //create local notification to store
@@ -656,7 +656,7 @@ class AdminOrderService
                 $this->orderTimeLineService->createOrderLogsRequest($orderResult[0], $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult[0]->getId()));
 
                 // save log of the action on order
-                $this->orderLogService->initializeCreateOrderLogRequest($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                $this->orderLogService->createOrderLogMessage($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
             }
         }
@@ -740,7 +740,7 @@ class AdminOrderService
             }
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
@@ -809,7 +809,7 @@ class AdminOrderService
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
             // save log of the action on order
-            $this->orderLogService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, null, null);
 
             try {
