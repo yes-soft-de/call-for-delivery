@@ -611,6 +611,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order without distance"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "ordersCash": MessageLookupByLibrary.simpleMessage("Orders cash"),
+        "ordersCashHint": MessageLookupByLibrary.simpleMessage(
+            "Here you need to confirm if you received order cost from captain or not"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "Orders exceed geographical range"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),

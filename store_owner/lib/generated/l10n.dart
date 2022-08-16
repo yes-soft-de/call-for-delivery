@@ -6689,6 +6689,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Here you need to confirm if you received order cost from captain or not`
+  String get ordersCashHint {
+    return Intl.message(
+      'Here you need to confirm if you received order cost from captain or not',
+      name: 'ordersCashHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders cash`
+  String get ordersCash {
+    return Intl.message(
+      'Orders cash',
+      name: 'ordersCash',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -601,6 +601,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلبات دون مسافات"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "ordersCash": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
+        "ordersCashHint": MessageLookupByLibrary.simpleMessage(
+            "هنا يتوجب عليك تأكيد تسديد سعر الطلبية من الكابتن ام لا"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "الطلبات التي تجاوزت النطاق الجغرافي للباقة"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
