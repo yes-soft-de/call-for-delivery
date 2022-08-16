@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -83,5 +84,56 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getOnGoingOrdersChatRoomsForStore(int $userId): array
+    {
+        return $this->createQueryBuilder('orderChatRoomEntity')
+            ->select('identity(orderChatRoomEntity.orderId) as orderId')
+            ->addSelect('orderChatRoomEntity.id', 'orderChatRoomEntity.usedAs', 'orderChatRoomEntity.createdAt', 'orderChatRoomEntity.roomId')
+            ->addSelect('captainEntity.id as captainId', 'captainEntity.captainName')
+            ->addSelect('imageEntity.imagePath')
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.id = orderChatRoomEntity.orderId'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.storeOwnerId = :userId'
+            )
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderChatRoomEntity.captain'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType')
+
+            ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id')
+
+            ->andWhere('orderChatRoomEntity.usedAs = :orderChatRoomUsedAs')
+            ->setParameter('orderChatRoomUsedAs', ChatRoomConstant::CAPTAIN_STORE)
+
+            ->andWhere('orderEntity.state IN (:ongoingState)')
+            ->setParameter('ongoingState', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+
+            ->setParameter('userId', $userId)
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->getQuery()
+            ->getResult();
     }
 }

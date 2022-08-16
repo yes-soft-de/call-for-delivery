@@ -147,4 +147,9 @@ class OrderChatRoomManager
 
         return $orderChatRoomEntity;
     }
+
+    public function getOnGoingOrdersChatRoomsForStore(int $userId): array
+    {
+        return $this->orderChatRoomRepository->getOnGoingOrdersChatRoomsForStore($userId);
+    }
 }
