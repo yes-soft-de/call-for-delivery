@@ -661,5 +661,7 @@
     "totalExtraDistance": "إجمالي المسافات التي تجاوزت النطاق",
     "captainOffer": "عرض الكابتن",
     "activeOffer": "عرض فعال",
-    "unActiveOffer": "عرض غير فعال"
+    "unActiveOffer": "عرض غير فعال",
+    "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
+    "remove":"إزالة"
 }

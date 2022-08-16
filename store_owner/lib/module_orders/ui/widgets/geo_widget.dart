@@ -146,12 +146,24 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
                       );
                     });
               },
-              child: Text(
-                S.current.deliveryCost +
-                    ' ' +
-                    (deliveryCost ?? '') +
-                    ' ${S.current.sar}',
-                style: TextStyle(color: Colors.white),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  Text(
+                    S.current.deliveryCost +
+                        ' ' +
+                        (deliveryCost ?? '') +
+                        ' ${S.current.sar}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  )
+                ],
               ),
             ),
           ],

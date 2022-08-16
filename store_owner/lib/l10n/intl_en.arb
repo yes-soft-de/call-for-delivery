@@ -661,5 +661,7 @@
     "totalExtraDistance": "Total extra distance",
     "captainOffer": "Captain offer",
     "activeOffer": "Active Offer",
-    "unActiveOffer": "Inactive offer"
+    "unActiveOffer": "Inactive offer",
+    "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
+    "remove": "Remove"
 }

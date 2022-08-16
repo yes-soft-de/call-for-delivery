@@ -631,6 +631,28 @@ class UpdateOrderLoaded extends States {
                   ),
                 ),
                 // payment method
+                Visibility(
+                    visible: screenState.payments == 'card' &&
+                        screenState.priceController.text.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Flushbar(
+                        title: S.current.warnning,
+                        message: S.current.orderPriceOnCreditWarning,
+                        titleColor: Colors.white,
+                        messageColor: Colors.white,
+                        backgroundColor: Colors.amber,
+                        borderRadius: BorderRadius.circular(25),
+                        mainButton: TextButton(
+                          onPressed: () {
+                            screenState.priceController.clear();
+                            screenState.refresh();
+                          },
+                          child: Text(S.current.remove,
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                    )),
                 ListTile(
                   title: Padding(
                     padding: const EdgeInsets.all(8.0),

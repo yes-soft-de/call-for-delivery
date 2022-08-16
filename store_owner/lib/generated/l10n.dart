@@ -6669,6 +6669,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Please remove order price after setting payment method to credit`
+  String get orderPriceOnCreditWarning {
+    return Intl.message(
+      'Please remove order price after setting payment method to credit',
+      name: 'orderPriceOnCreditWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message(
+      'Remove',
+      name: 'remove',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

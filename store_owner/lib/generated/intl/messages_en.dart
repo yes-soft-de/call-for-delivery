@@ -596,6 +596,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderOffers": MessageLookupByLibrary.simpleMessage("Order Offers"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "Please remove order price after setting payment method to credit"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order Removed Successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
@@ -764,6 +766,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Register Success, Setup my profile"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
+        "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
         "renewOldPlan":

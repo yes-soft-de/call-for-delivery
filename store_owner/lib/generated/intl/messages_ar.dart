@@ -586,6 +586,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderOffers": MessageLookupByLibrary.simpleMessage("عروض الأسعار"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
@@ -754,6 +756,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم تأكيد الحساب، اتجه للاشتراك"),
         "remainingAmountForCompany":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
+        "remove": MessageLookupByLibrary.simpleMessage("إزالة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
         "renewOldPlan":

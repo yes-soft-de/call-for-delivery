@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -195,7 +196,6 @@ class OrderRecyclingLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
-                    validator: false,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
@@ -582,6 +582,29 @@ class OrderRecyclingLoaded extends States {
                   ),
                 ),
                 // payment method
+                Visibility(
+                    visible: screenState.payments == 'card' &&
+                        screenState.priceController.text.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Flushbar(
+                        title: S.current.warnning,
+                        message: S.current.orderPriceOnCreditWarning,
+                        titleColor: Colors.white,
+                        messageColor: Colors.white,
+                        backgroundColor: Colors.amber,
+                        borderRadius: BorderRadius.circular(25),
+                        mainButton: TextButton(
+                          onPressed: () {
+                            screenState.priceController.clear();
+                            screenState.refresh();
+                          },
+                          child: Text(S.current.remove,
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                    )),
+
                 ListTile(
                   title: Padding(
                     padding: const EdgeInsets.all(8.0),
