@@ -2187,4 +2187,21 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+    
+    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->andWhere('orderEntity.state IN (:statesArray)')
+            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.storeOwner = :storeId')
+            ->setParameter('storeId', $storeId)
+
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

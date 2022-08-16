@@ -725,6 +725,10 @@ class AdminOrderController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
+        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        }
+
         return $this->response($response, self::UPDATE);
     }
 

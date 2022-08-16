@@ -309,4 +309,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterOrdersNotAnsweredByTheStore($request);
     }
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
+    }
 }

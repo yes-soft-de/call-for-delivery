@@ -507,10 +507,18 @@ class AdminOrderService
     {
         $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
         if ($orderEntity) {
+            //Check the order if it is pending
             if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
                 return OrderStateConstant::ORDER_STATE_PENDING_INT;
             }
 
+            // Check whether the captain has received an order for a specific store
+            $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
+            if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN;
+            }
+
+            //Check availability of cars for the store
             $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($request->getOrderId());
 
             if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
@@ -842,5 +850,25 @@ class AdminOrderService
 
         return $response;
     }
-    
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int|null $primaryOrderId): int
+    {
+        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
+       
+        if ($orderEntity) {
+            //if the order not main
+            if ($orderEntity->getOrderIsMain() !== true) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) related
+            if ($primaryOrderId === $orderEntity->getId()) {
+
+                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) not related
+            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+        }
+
+        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+    }    
 }
