@@ -763,8 +763,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       title: Text(S.current.locationOfCustomer),
                       subtitle: Visibility(
                         replacement: Text(S.current.destinationUnavailable),
-                        visible: screenState.myLocation != null &&
-                            orderInfo.destinationCoordinate != null,
+                        visible: orderInfo.storeBranchToClientDistance != null,
                         child: Text(S.current.distance +
                             ' ' +
                             (orderInfo.storeBranchToClientDistance ??

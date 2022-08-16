@@ -249,7 +249,6 @@ class UpdateOrderLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
-                    validator: false,
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
                     controller: screenState.toController,
