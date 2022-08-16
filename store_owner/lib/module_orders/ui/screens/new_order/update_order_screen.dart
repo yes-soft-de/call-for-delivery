@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/state_manager/new_order/update_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -83,6 +84,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
       }
     });
     toController.addListener(() {
+      toController.text = Cleaner.clean(toController.text);
       if (toController.text.isNotEmpty && toController.text != '') {
         var data = toController.text.trim();
         var link = Uri.tryParse(data);

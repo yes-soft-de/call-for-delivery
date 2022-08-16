@@ -7,6 +7,7 @@ import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,6 +78,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
       }
     });
     toController.addListener(() {
+      toController.text = Cleaner.clean(toController.text);
       if (toController.text.isNotEmpty && toController.text != '') {
         var data = toController.text.trim();
         var link = Uri.tryParse(data);
