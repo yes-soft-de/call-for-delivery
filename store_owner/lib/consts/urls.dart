@@ -254,4 +254,6 @@ class Urls {
   static const UPDATE_OFFER_STATE = DOMAIN + '/v1/priceoffer/priceofferstatus';
   static const CANCEL_BID_ORDER = DOMAIN + '/v1/order/bidordercancel/';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
+  static const GEO_DISTANCE_WITH_DELIVERY_COST =
+      DOMAIN + '/v1/geodistance/geodistanceandcostdelivered';
 }

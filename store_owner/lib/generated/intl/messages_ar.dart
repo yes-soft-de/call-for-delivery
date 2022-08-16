@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
         "active": MessageLookupByLibrary.simpleMessage("مفعل"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
+        "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
@@ -107,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bounce": MessageLookupByLibrary.simpleMessage("المكافأة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
+        "branchLocation": MessageLookupByLibrary.simpleMessage("موقع الفرع"),
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
@@ -141,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
         "captainNotInStore":
             MessageLookupByLibrary.simpleMessage("الكابتن ليس في المتجر"),
+        "captainOffer": MessageLookupByLibrary.simpleMessage("عرض الكابتن"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainOrderCost":
             MessageLookupByLibrary.simpleMessage("المبلغ الذي استلمه الكابتن"),
@@ -200,6 +203,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityHint": MessageLookupByLibrary.simpleMessage("جدة"),
+        "clientLocation": MessageLookupByLibrary.simpleMessage("موقع العميل"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "closeOrder": MessageLookupByLibrary.simpleMessage("مغلق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
@@ -277,6 +281,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى الزبون"),
+        "deliveryCost": MessageLookupByLibrary.simpleMessage("سعر التوصيل"),
+        "deliveryCostDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
         "description": MessageLookupByLibrary.simpleMessage("وصف للطلب"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -288,6 +295,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
+        "distanceUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
@@ -331,7 +340,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraCaptain": MessageLookupByLibrary.simpleMessage("كابتن إضافي"),
+        "extraCost": MessageLookupByLibrary.simpleMessage("التكلفة الإضافية"),
+        "extraCostHint": MessageLookupByLibrary.simpleMessage(
+            "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"),
         "extraDetails": MessageLookupByLibrary.simpleMessage("تفاصيل إضافية"),
+        "extraDistance":
+            MessageLookupByLibrary.simpleMessage("المسافة الإضافية"),
+        "extraOrderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("تكلفة التوصيل الإضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
@@ -359,6 +375,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+        "geographicalRange":
+            MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
@@ -512,6 +530,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatusUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث عرض السعر بنجاح"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
+        "onOrderPackage":
+            MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "open": MessageLookupByLibrary.simpleMessage("مفتوح"),
@@ -543,6 +563,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDeliveryCost":
+            MessageLookupByLibrary.simpleMessage("سعر توصيل الطلب"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
             "اكتب تفاصيل الطلب الذي تريد إرساله"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الطلب"),
@@ -573,8 +595,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),
         "orderType": MessageLookupByLibrary.simpleMessage("نوع الطلب"),
+        "orderWithoutDistance":
+            MessageLookupByLibrary.simpleMessage("الطلبات دون مسافات"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
+            "الطلبات التي تجاوزت النطاق الجغرافي للباقة"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم حسابنا"),
@@ -879,9 +905,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("إجمالي الأموال"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
+        "totalExtraDistance": MessageLookupByLibrary.simpleMessage(
+            "إجمالي المسافات التي تجاوزت النطاق"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "transCount": MessageLookupByLibrary.simpleMessage("عدد النقلات"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+        "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
@@ -897,6 +926,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateDistance": MessageLookupByLibrary.simpleMessage("تحديث المسافة"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":

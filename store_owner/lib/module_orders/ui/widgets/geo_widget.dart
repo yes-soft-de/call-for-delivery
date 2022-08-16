@@ -1,7 +1,10 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/model/deep_links_model.dart';
 import 'package:c4d/module_deep_links/model/geo_model.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
+import 'package:c4d/module_deep_links/response/geo_distance_x/cost_delivery_order_response/cost_delivery_order.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -9,14 +12,12 @@ class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
   Function(String?) destance;
-  Color? color;
-  GeoDistanceText(
-      {Key? key,
-      required this.destination,
-      required this.origin,
-      required this.destance,
-      this.color})
-      : super(key: key);
+  GeoDistanceText({
+    Key? key,
+    required this.destination,
+    required this.origin,
+    required this.destance,
+  }) : super(key: key);
 
   @override
   State<GeoDistanceText> createState() => _GeoDistanceTextState();
@@ -25,6 +26,8 @@ class GeoDistanceText extends StatefulWidget {
 class _GeoDistanceTextState extends State<GeoDistanceText> {
   bool loading = true;
   String? distance = '';
+  String? deliveryCost;
+  CostDeliveryOrder? deliveryCostDetails;
   late LatLng origin;
   late LatLng destination;
   @override
@@ -40,8 +43,11 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   Future<void> _setup() async {
     origin = widget.origin;
     destination = widget.destination;
-    var snap = await DeepLinksService.getGeoDistance(GeoDistanceRequest(
-        origin: widget.origin, distance: widget.destination));
+    var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
+        GeoDistanceRequest(
+      origin: widget.origin,
+      distance: widget.destination,
+    ));
     if (snap.hasError || snap.isEmpty) {
       loading = false;
       distance = S.current.unknown;
@@ -49,6 +55,9 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
     } else {
       loading = false;
       distance = (snap as GeoDistanceModel).distance;
+      deliveryCost = FixedNumber.getFixedNumber(
+          (snap as GeoDistanceModel).costDeliveryOrder?.total ?? 0);
+      deliveryCostDetails = (snap as GeoDistanceModel).costDeliveryOrder;
       widget.destance(distance);
       setState(() {});
     }
@@ -72,10 +81,98 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
         S.current.calculating + '....',
         style: TextStyle(color: Colors.white),
       ),
-      child: Text(
-        S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
-        style: TextStyle(color: widget.color ?? Colors.white),
+      child: Visibility(
+        visible: deliveryCost != null,
+        replacement: Text(
+          S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
+          style: TextStyle(color: Colors.white),
+        ),
+        child: Column(
+          children: [
+            Text(
+              S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
+              style: TextStyle(color: Colors.white),
+            ),
+            Divider(
+              indent: 16,
+              endIndent: 16,
+              color: Theme.of(context).backgroundColor,
+              thickness: 2.5,
+            ),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: Text(S.current.deliveryCostDetails),
+                        scrollable: true,
+                        content: Column(
+                          children: [
+                            getRow(
+                                S.current.extraDistance,
+                                (deliveryCostDetails?.extraDistance
+                                            ?.toString() ??
+                                        '') +
+                                    ' ' +
+                                    S.current.km),
+                            getRow(
+                                S.current.extraOrderDeliveryCost,
+                                (deliveryCostDetails?.extraOrderDeliveryCost
+                                            ?.toString() ??
+                                        '') +
+                                    ' ' +
+                                    S.current.sar),
+                            getRow(
+                                S.current.orderDeliveryCost,
+                                (deliveryCostDetails?.orderDeliveryCost
+                                            ?.toString() ??
+                                        '') +
+                                    ' ' +
+                                    S.current.sar),
+                            getRow(
+                                S.current.total,
+                                (deliveryCostDetails?.total?.toString() ?? '') +
+                                    ' ' +
+                                    S.current.sar),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: Text(
+                S.current.deliveryCost +
+                    ' ' +
+                    (deliveryCost ?? '') +
+                    ' ${S.current.sar}',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget getRow(String title, String subtitle) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width * 0.5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).backgroundColor),
+          child: Text(title),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).backgroundColor),
+          child: Text(subtitle),
+        ),
+      ],
     );
   }
 }
