@@ -104,7 +104,7 @@ class AdminCaptainFinancialSystemThreeBalanceDetailService
                 $finalFinancialAccount['countOrdersWithoutDistance'] += 1;
             }
 
-            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+            if($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
                 $finalFinancialAccount['amountForStore'] += $orderDetail['captainOrderCost'];
             }
         }
