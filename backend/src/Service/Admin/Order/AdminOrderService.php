@@ -855,7 +855,7 @@ class AdminOrderService
     {
         $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
        
-        if (!empty($orderEntity)) {
+        if ($orderEntity) {
             //if the order not main
             if ($orderEntity->getOrderIsMain() !== true) {
                 return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
