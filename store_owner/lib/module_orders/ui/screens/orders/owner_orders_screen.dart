@@ -31,6 +31,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:feature_discovery/feature_discovery.dart';
+import 'package:new_version/new_version.dart';
 
 @injectable
 class OwnerOrdersScreen extends StatefulWidget {
@@ -76,13 +77,29 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   }
 
   bool featureFlag = true;
+  Future<void> checkForUpdates(context) async {
+    final newVersion = NewVersion();
+    final VersionStatus? status = await newVersion.getVersionStatus();
+  if (status?.canUpdate == true) {
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status!,
+        dialogTitle: S.current.newVersion,
+        dialogText: S.current.newVersionHint
+            .replaceAll('^', status.localVersion)
+            .replaceAll('&', status.storeVersion),
+        updateButtonText: S.current.update,
+        dismissButtonText: S.current.later,
+      );
+    }
+  }
   @override
   void initState() {
     super.initState();
     getIt<FireNotificationService>().refreshToken();
     _currentState = LoadingState(this);
     getInitData();
-     widget._stateManager.watcher(this, true);
+    widget._stateManager.watcher(this, true);
     WidgetsBinding.instance?.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
@@ -131,6 +148,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             arguments: value);
       }
     });
+    checkForUpdates(context);
   }
 
   String? orderFilter;

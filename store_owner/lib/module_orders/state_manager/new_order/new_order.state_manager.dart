@@ -51,14 +51,14 @@ class NewOrderStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.addNewOrder(request).then((value) {
       if (value.hasError) {
-        getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-      } else {
         getIt<GlobalStateManager>().update();
+      } else {
         Navigator.pop(screenState.context);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)

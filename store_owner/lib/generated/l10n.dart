@@ -6449,6 +6449,36 @@ class S {
       args: [],
     );
   }
+
+  /// `New version`
+  String get newVersion {
+    return Intl.message(
+      'New version',
+      name: 'newVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future`
+  String get newVersionHint {
+    return Intl.message(
+      'There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future',
+      name: 'newVersionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get later {
+    return Intl.message(
+      'Later',
+      name: 'later',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

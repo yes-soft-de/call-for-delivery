@@ -1,5 +1,4 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/model/deep_links_model.dart';
 import 'package:c4d/module_deep_links/model/geo_model.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
@@ -10,11 +9,13 @@ class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
   Function(String?) destance;
+  Color? color;
   GeoDistanceText(
       {Key? key,
       required this.destination,
       required this.origin,
-      required this.destance})
+      required this.destance,
+      this.color})
       : super(key: key);
 
   @override
@@ -73,7 +74,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       ),
       child: Text(
         S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: widget.color ?? Colors.white),
       ),
     );
   }

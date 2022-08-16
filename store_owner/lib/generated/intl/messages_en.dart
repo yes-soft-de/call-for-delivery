@@ -428,6 +428,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
+        "later": MessageLookupByLibrary.simpleMessage("Later"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
@@ -481,6 +482,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "This button let you to make a new order"),
         "newOrderLink": MessageLookupByLibrary.simpleMessage("New sub order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
+        "newVersion": MessageLookupByLibrary.simpleMessage("New version"),
+        "newVersionHint": MessageLookupByLibrary.simpleMessage(
+            "There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),

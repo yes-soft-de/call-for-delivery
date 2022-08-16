@@ -417,6 +417,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
+        "later": MessageLookupByLibrary.simpleMessage("لاحقا"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "launch": MessageLookupByLibrary.simpleMessage("شغل تطبيقنا"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
@@ -472,6 +473,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrderLink": MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
+        "newVersion": MessageLookupByLibrary.simpleMessage("نسخة جديدة"),
+        "newVersionHint": MessageLookupByLibrary.simpleMessage(
+            "تتوفر نسخة جديدة من تطبيقنا الرجاء التحديث من النسخة ^ إلى النسخة & لضمان جودة الخدمة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
