@@ -49,18 +49,22 @@ class OrdersCashLoadedState extends States {
               deliveryDate: element.deliveryDate,
               orderCost: element.orderCost,
               answer: (paid) {
-                CustomAlertDialog(
-                  content: S.current.confirmOrderCashAnswer,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    screenState.manager.confirmOrderCashFinance(
-                        screenState,
-                        OrderCashRequest(
-                          orderID: element.id,
-                          paid: paid,
-                        ));
-                  },
-                );
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return CustomAlertDialog(
+                        content: S.current.confirmOrderCashAnswer,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          screenState.manager.confirmOrderCashFinance(
+                              screenState,
+                              OrderCashRequest(
+                                orderID: element.id,
+                                paid: paid,
+                              ));
+                        },
+                      );
+                    });
               },
             ),
           ),
