@@ -666,5 +666,11 @@
     "remove": "إزالة",
     "ordersCashHint": "هنا يتوجب عليك تأكيد تسديد سعر الطلبية من الكابتن ام لا",
     "ordersCash": "الطلبات الكاش",
-    "confirmOrderCashAnswer": "هل أنت متأكد من خيارك ، لايمكنك تغيير جوابك لاحقا"
+    "confirmOrderCashAnswer": "هل أنت متأكد من خيارك ، لايمكنك تغيير جوابك لاحقا",
+    "captainsOffer": "عروض الكباتن",
+    "requiredToPay": "المطلوب للدفع",
+    "leftToPay": "المتبقي للدفع",
+    "packageType":"نوع الباقة",
+    "packageTypeOnOrder":"باقة على الطلب",
+    "packageTypeRegular":"باقة عادية"
 }

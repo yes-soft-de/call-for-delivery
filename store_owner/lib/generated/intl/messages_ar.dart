@@ -155,6 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
+        "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
@@ -441,6 +442,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "launch": MessageLookupByLibrary.simpleMessage("شغل تطبيقنا"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
+        "leftToPay": MessageLookupByLibrary.simpleMessage("المتبقي للدفع"),
         "loading": MessageLookupByLibrary.simpleMessage("جار التحميل"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("موقع الزبون"),
@@ -629,6 +631,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "هذه الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
+        "packageType": MessageLookupByLibrary.simpleMessage("نوع الباقة"),
+        "packageTypeOnOrder":
+            MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "packageTypeRegular":
+            MessageLookupByLibrary.simpleMessage("باقة عادية"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -778,6 +785,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "republish": MessageLookupByLibrary.simpleMessage("إعادة نشر"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
+        "requiredToPay": MessageLookupByLibrary.simpleMessage("المطلوب للدفع"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),

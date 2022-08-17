@@ -160,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
+        "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carModel": MessageLookupByLibrary.simpleMessage("Car model"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
@@ -453,6 +454,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "launch": MessageLookupByLibrary.simpleMessage("Launch our app"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
+        "leftToPay": MessageLookupByLibrary.simpleMessage("Left to pay"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading"),
         "locationOfCustomer":
             MessageLookupByLibrary.simpleMessage("Location of customer"),
@@ -639,6 +641,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Package not available to renew any more"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
+        "packageType": MessageLookupByLibrary.simpleMessage("Package type"),
+        "packageTypeOnOrder": MessageLookupByLibrary.simpleMessage("On order"),
+        "packageTypeRegular": MessageLookupByLibrary.simpleMessage("Regular"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -788,6 +793,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "republish": MessageLookupByLibrary.simpleMessage("Republish"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
+        "requiredToPay":
+            MessageLookupByLibrary.simpleMessage("Required to pay"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
