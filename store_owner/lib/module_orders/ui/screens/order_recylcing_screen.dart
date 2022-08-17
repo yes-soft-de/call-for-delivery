@@ -77,22 +77,37 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
         widget._stateManager.getOrder(this, orderId, false);
       }
     });
+    var old = toController.text;
     toController.addListener(() {
-      toController.text = Cleaner.clean(toController.text);
-      if (toController.text.isNotEmpty && toController.text != '') {
-        var data = toController.text.trim();
-        var link = Uri.tryParse(data);
-        if (link != null && link.queryParameters['q'] != null) {
-          customerLocation = LatLng(
-            double.parse(link.queryParameters['q']!.split(',')[0]),
-            double.parse(link.queryParameters['q']!.split(',')[1]),
-          );
-          setState(() {});
-        }
+      if (old != toController.text) {
+        old = toController.text;
+        locationParsing();
       }
     });
-
     super.initState();
+  }
+
+  void locationParsing() {
+    if (toController.text.isNotEmpty && toController.text != '') {
+      if (toController.text.contains(' ') || toController.text.contains('\n')) {
+        toController.text = Cleaner.clean(toController.text);
+      }
+      var data = toController.text.trim();
+      var link = Uri.tryParse(data);
+      if (link != null && link.queryParameters['q'] != null) {
+        customerLocation = LatLng(
+          double.parse(link.queryParameters['q']!.split(',')[0]),
+          double.parse(link.queryParameters['q']!.split(',')[1]),
+        );
+        setState(() {});
+      } else {
+        customerLocation = null;
+        setState(() {});
+      }
+    } else {
+      customerLocation = null;
+      setState(() {});
+    }
   }
 
   void refresh() {
