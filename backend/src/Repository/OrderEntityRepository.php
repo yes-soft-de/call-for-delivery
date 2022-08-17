@@ -2166,6 +2166,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('payment', OrderTypeConstant::ORDER_PAYMENT_CASH)
 
             ->orderBy('orderEntity.id', 'DESC');
+        if ($request->getStoreId() != null || $request->getStoreId() != "") {
+            $query->andWhere('orderEntity.storeOwner = :storeOwner');
+            $query->setParameter('storeOwner', $request->getStoreId());
+        }
 
         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
             $query->andWhere('orderEntity.createdAt >= :createdAt');
