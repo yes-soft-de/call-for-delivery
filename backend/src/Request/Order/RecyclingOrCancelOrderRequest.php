@@ -34,6 +34,8 @@ class RecyclingOrCancelOrderRequest
 
     private float|null $storeBranchToClientDistance;
     
+    private int $isHide;
+
     /**
      * Get the value of id
      */ 
@@ -270,6 +272,26 @@ class RecyclingOrCancelOrderRequest
     public function setCancel($cancel)
     {
         $this->cancel = $cancel;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isHide
+     */ 
+    public function getIsHide()
+    {
+        return $this->isHide;
+    }
+
+    /**
+     * Set the value of isHide
+     *
+     * @return  self
+     */ 
+    public function setIsHide($isHide)
+    {
+        $this->isHide = $isHide;
 
         return $this;
     }

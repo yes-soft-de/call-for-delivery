@@ -135,6 +135,13 @@ class OrderService
             return $canCreateOrder;
         }
 
+        $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+
+            $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+        }
+
         $order = $this->orderManager->createOrder($request);
         if ($order) {
 
@@ -1128,6 +1135,7 @@ class OrderService
     }
 
     //Show the sub-order for captains if a car is available
+    //Show Temporarily hidden orders
     //Modify the field (isHide) from (ORDER_HIDE_TEMPORARILY) to (ORDER_SHOW)
     public function showSubOrderIfCarIsAvailable(int $userId, int $userType)
     {
@@ -1137,6 +1145,9 @@ class OrderService
             $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($order->getId());
 
             if ($checkRemainingCars === SubscriptionConstant::SUBSCRIPTION_OK) {
+              
+                $order->setCreatedAt(new DateTime('now'));
+
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
 
                 // save log of the action on order
@@ -1158,6 +1169,7 @@ class OrderService
     public function recyclingOrCancelOrder(RecyclingOrCancelOrderRequest $request): OrderCancelResponse|CanCreateOrderResponse|null|OrderResponse|string
     {
         $orderEntity = $this->orderManager->getOrderByOrderIdAndState($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+       
         if ($orderEntity) {
             if ($request->getCancel() === OrderIsCancelConstant::ORDER_CANCEL) {
 
@@ -1195,6 +1207,13 @@ class OrderService
             if ($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
 
                 return $canCreateOrder;
+            }
+           
+            $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+            if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+    
+                $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
             }
 
             $order = $this->orderManager->recyclingOrder($orderEntity, $request);

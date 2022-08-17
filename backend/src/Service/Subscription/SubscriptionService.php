@@ -342,11 +342,17 @@ class SubscriptionService
         if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
 
             $item['subscriptionStatus'] = $packageBalance->status;
-
-            if($packageBalance->status ===  SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+            //if subscription active
+            if($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
             
             $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
             }
+            //if subscription cars finished
+            elseif($packageBalance->status === SubscriptionConstant::CARS_FINISHED) {
+            
+            $item['canCreateOrder'] = SubscriptionConstant::CARS_FINISHED;
+            }
+
             else{
     
             $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
@@ -354,7 +360,7 @@ class SubscriptionService
             
             $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
             $item['packageName'] = $packageBalance->packageName;
-            
+            // dd( $item['canCreateOrder']);
             return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
         }
 
