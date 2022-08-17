@@ -228,6 +228,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في إنشاء طلب جديد"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmOrderCashAnswer": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من خيارك ، لايمكنك تغيير جوابك لاحقا"),
         "confirmPasswordAgain":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "confirmRefuseOffer": MessageLookupByLibrary.simpleMessage(

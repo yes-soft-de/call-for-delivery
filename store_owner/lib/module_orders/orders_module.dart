@@ -9,6 +9,7 @@ import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_time_line_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
+import 'package:c4d/module_orders/ui/screens/orders_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -25,7 +26,7 @@ class OrdersModule extends YesModule {
   final HiddenOrdersScreen _hiddenOrdersScreen;
   final OrderRecyclingScreen _recyclingScreen;
   final UpdateOrderScreen _updateOrderScreen;
-
+  final OrdersCashScreen _ordersCashScreen;
   OrdersModule(
       this._newOrderScreen,
       this._orderStatus,
@@ -36,7 +37,8 @@ class OrdersModule extends YesModule {
       this._logsScreen,
       this._hiddenOrdersScreen,
       this._recyclingScreen,
-      this._updateOrderScreen) {
+      this._updateOrderScreen,
+      this._ordersCashScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -52,6 +54,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.OWNER_HIDDEN_ORDERS_SCREEN: (context) => _hiddenOrdersScreen,
       OrdersRoutes.ORDER_OWNER_RECYCLE: (context) => _recyclingScreen,
       OrdersRoutes.ORDER_OWNER_UPDATE: (context) => _updateOrderScreen,
+      OrdersRoutes.ORDERS_CASH_SCREEN: (context) => _ordersCashScreen,
     };
   }
 }

@@ -664,8 +664,7 @@
     "unActiveOffer": "Inactive offer",
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
-    "ordersCashHint":"Here you need to confirm if you received order cost from captain or not",
-    "ordersCash": "Orders cash"
-
-
+    "ordersCashHint": "Here you need to confirm if you received order cost from captain or not",
+    "ordersCash": "Orders cash",
+    "confirmOrderCashAnswer": "Confirm order cash answer"
 }

@@ -6709,6 +6709,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm order cash answer`
+  String get confirmOrderCashAnswer {
+    return Intl.message(
+      'Confirm order cash answer',
+      name: 'confirmOrderCashAnswer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

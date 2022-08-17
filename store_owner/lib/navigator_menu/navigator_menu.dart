@@ -139,6 +139,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               },
               title: S.current.myOrders),
           CustomNavTile(
+              icon: Icons.payments_rounded,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(OrdersRoutes.ORDERS_CASH_SCREEN);
+              },
+              title: S.current.ordersCash),
+          CustomNavTile(
               icon: Icons.hide_source_rounded,
               onTap: () {
                 Navigator.of(context)

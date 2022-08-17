@@ -225,6 +225,23 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       : S.current.captainNotInStore),
               title: S.current.captainLocation,
             )),
+        // captain finance confirmation
+        Visibility(
+            visible: false,
+            child: OrderButton(
+              backgroundColor: Colors.orange,
+              icon: Icons.question_mark_rounded,
+              onTap: () {
+                showOwnerAlertConfirm();
+              },
+              subtitle: orderInfo.isCaptainArrived == null
+                  ? (S.current.NotConfirmed)
+                  : (orderInfo.isCaptainArrived == true
+                      ? S.current.captainInStore
+                      : S.current.captainNotInStore),
+              title: S.current.captainLocation,
+            )),
+
         // rate
         Visibility(
           visible: orderInfo.roomID != null,

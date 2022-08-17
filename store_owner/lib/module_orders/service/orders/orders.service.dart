@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -40,6 +41,17 @@ class OrdersService {
 
   Future<DataModel> getMyOrdersFilter(FilterOrderRequest request) async {
     OrdersResponse? response = await _ordersManager.getMyOrdersFilter(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
+  Future<DataModel> getOrdersCash(FilterOrderRequest request) async {
+    OrdersResponse? response = await _ordersManager.getOrdersCash(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -143,6 +155,17 @@ class OrdersService {
       ConfirmCaptainLocationRequest request) async {
     ActionResponse? response =
         await _ordersManager.confirmCaptainLocation(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> confirmOrderCashFinance(OrderCashRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.confirmOrderCashFinance(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

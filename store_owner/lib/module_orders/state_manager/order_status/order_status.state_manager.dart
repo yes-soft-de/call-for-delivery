@@ -8,6 +8,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
@@ -118,6 +119,20 @@ class OrderStatusStateManager {
                 title: S.current.warnning,
                 message: S.current.orderRemovedSuccessfully)
             .show(screenState.context);
+      }
+    });
+  }
+
+  void confirmOrderCashFinance(
+      OrderDetailsScreenState screenState, OrderCashRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.confirmOrderCashFinance(request).then((value) {
+      if (value.hasError) {
+        getOrder(screenState, request.orderID ?? -1);
+        Fluttertoast.showToast(msg: value.error ?? S.current.errorHappened);
+      } else {
+        getOrder(screenState, request.orderID ?? -1);
+        Fluttertoast.showToast(msg: S.current.reportSent);
       }
     });
   }

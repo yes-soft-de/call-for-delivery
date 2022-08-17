@@ -3,6 +3,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -107,6 +108,17 @@ class OrderRepository {
     return OrdersResponse.fromJson(response);
   }
 
+  Future<OrdersResponse?> getOrdersCash(FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_OWNER_CASH_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> deleteOrder(int orderId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
@@ -166,6 +178,18 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       Urls.UPDATE_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> confirmOrderCashFinance(
+      OrderCashRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_ORDER_CASH_FINANCE,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
