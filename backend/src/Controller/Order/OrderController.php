@@ -7,6 +7,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -2021,6 +2022,59 @@ class OrderController extends BaseController
 
         $result = $this->orderService->calculateCostDeliveryOrder($request);
     
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store: filter Cash Orders not answered by the store (paid or not paid)
+     * @Route("notansweredcashordersbystore", name="filterNotAnsweredCashOrdersByStore", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\CashOrdersPaidOrNotFilterByStoreResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCashOrdersPaidOrNotByStore(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CashOrdersPaidOrNotFilterByStoreRequest::class, (object)$data);
+
+        $request->setStoreOwnerUserId($this->getUserId());
+
+        $result = $this->orderService->filterCashOrdersPaidOrNotByStore($request);
+
         return $this->response($result, self::FETCH);
     }
 }

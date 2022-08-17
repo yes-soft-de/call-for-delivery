@@ -15,6 +15,7 @@ use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -653,5 +654,11 @@ class OrderManager
     {
         return $this->orderRepository->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
             $specificDateTime);
+    }
+
+    // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
+    public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
+    {
+        return $this->orderRepository->filterCashOrdersPaidOrNotByStore($request);
     }
 }

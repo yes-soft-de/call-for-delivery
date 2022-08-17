@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Controller\ChatRoom;
+
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Service\ChatRoom\OrderChatRoomService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -129,5 +131,41 @@ class OrderChatRoomController extends BaseController
         $response = $this->orderChatRoomService->createNewOrderChatRoom($request);
 
         return $this->response($response, self::CREATE);
+    }
+
+    /**
+     * store:fetch ongoing orders chat rooms with captains
+     * @Route("ongoingorderschatroomsforstore", name="getOnGoingOrdersChatRoomsForStore", methods={"GET"})
+     * @return JsonResponse
+     * @IsGranted("ROLE_OWNER")
+     *
+     * @OA\Tag(name="Order Chat Room")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns ongoing orders chat rooms info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\ChatRoom\OrderChatRoomsStoreResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getOnGoingOrdersChatRoomsForStore(): JsonResponse
+    {
+        $result = $this->orderChatRoomService->getOnGoingOrdersChatRoomsForStore($this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }

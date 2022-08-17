@@ -15,6 +15,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -22,6 +23,7 @@ use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
+use App\Response\Order\CashOrdersPaidOrNotFilterByStoreResponse;
 use App\Response\Order\FilterBidOrderByStoreOwnerResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
@@ -1442,5 +1444,19 @@ class OrderService
     public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
     {
         return $this->subscriptionService->calculateCostDeliveryOrder($request);
+    }
+
+    // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
+    public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterCashOrdersPaidOrNotByStore($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", CashOrdersPaidOrNotFilterByStoreResponse::class, $order);
+        }
+
+        return $response;
     }
 }
