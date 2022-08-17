@@ -168,7 +168,7 @@ class AdminOrderManager
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        // $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();

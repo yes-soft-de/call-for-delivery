@@ -61,6 +61,7 @@ use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
+use App\Constant\Order\OrderIsHideConstant;
 
 class AdminOrderService
 {
@@ -447,6 +448,13 @@ class AdminOrderService
 
         if ($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
             return $canCreateOrder;
+        }
+       
+        $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+
+            $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
         }
 
         $request->setStoreOwner($storeOwnerProfile);

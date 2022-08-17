@@ -32,6 +32,8 @@ class OrderCreateRequest
 
     private float|null $storeBranchToClientDistance;
 
+    private int $isHide;
+
     /**
      * Get the value of storeOwner
      */ 
@@ -183,5 +185,25 @@ class OrderCreateRequest
     public function setDeliveryDate($deliveryDate): void
     {
         $this->deliveryDate = $deliveryDate;
+    }
+
+    /**
+     * Get the value of isHide
+     */ 
+    public function getIsHide()
+    {
+        return $this->isHide;
+    }
+
+    /**
+     * Set the value of isHide
+     *
+     * @return  self
+     */ 
+    public function setIsHide($isHide)
+    {
+        $this->isHide = $isHide;
+
+        return $this;
     }
 }
