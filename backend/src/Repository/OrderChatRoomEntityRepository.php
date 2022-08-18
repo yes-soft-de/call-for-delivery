@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
+use App\Entity\RateEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
@@ -93,6 +94,7 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
             ->addSelect('orderChatRoomEntity.id', 'orderChatRoomEntity.usedAs', 'orderChatRoomEntity.createdAt', 'orderChatRoomEntity.roomId')
             ->addSelect('captainEntity.id as captainId', 'captainEntity.captainName')
             ->addSelect('imageEntity.imagePath')
+            ->addSelect('avg(rateEntity.rating) as avgRating')
 
             ->leftJoin(
                 OrderEntity::class,
@@ -119,7 +121,15 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
                 ImageEntity::class,
                 'imageEntity',
                 Join::WITH,
-                'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType')
+                'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType'
+            )
+
+            ->leftJoin(
+                RateEntity::class,
+                'rateEntity',
+                Join::WITH,
+                'rateEntity.rated = captainEntity.captainId'
+            )
 
             ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id')
 
