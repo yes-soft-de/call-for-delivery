@@ -41,4 +41,9 @@ class OrderChatRoomsStoreResponse
      * @var int|null $captainId
      */
     public $captainId;
+
+    /**
+     * @var float|null
+     */
+    public $avgRating;
 }
