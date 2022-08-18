@@ -8,6 +8,7 @@ import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
@@ -227,19 +228,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             )),
         // captain finance confirmation
         Visibility(
-            visible: false,
+            visible: OrderStatusEnum.FINISHED == orderInfo.state,
             child: OrderButton(
               backgroundColor: Colors.orange,
               icon: Icons.question_mark_rounded,
               onTap: () {
-                showOwnerAlertConfirm();
+                showConfirmOrderCash();
               },
-              subtitle: orderInfo.isCaptainArrived == null
+              subtitle: orderInfo.isCashPaymentConfirmedByStore == null
                   ? (S.current.NotConfirmed)
-                  : (orderInfo.isCaptainArrived == true
-                      ? S.current.captainInStore
-                      : S.current.captainNotInStore),
-              title: S.current.captainLocation,
+                  : (orderInfo.isCashPaymentConfirmedByStore == 2
+                      ? S.current.financePaid
+                      : S.current.financeUnPaid),
+              title: S.current.confirmOrderCashAnswer,
             )),
 
         // rate
@@ -953,6 +954,37 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   onPressed: () {
                     Navigator.of(context).pop();
                     showFlush(context, false);
+                  },
+                  child: Text(S.of(context).no))
+            ],
+          );
+        });
+  }
+
+  void showConfirmOrderCash() {
+    var context = screenState.context;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(S.current.warnning),
+            content: Container(
+              child: Text(S.of(context).confirmingIfReceiveOrderCost),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    screenState.manager.confirmOrderCashFinance(screenState,
+                        OrderCashRequest(orderID: orderInfo.id, paid: 2));
+                  },
+                  child: Text(S.of(context).yes)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    screenState.manager.confirmOrderCashFinance(screenState,
+                        OrderCashRequest(orderID: orderInfo.id, paid: 1));
                   },
                   child: Text(S.of(context).no))
             ],

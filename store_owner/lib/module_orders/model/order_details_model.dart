@@ -51,6 +51,7 @@ class OrderDetailsModel extends DataModel {
   late List<OrderModel> subOrders;
   late String? captainName;
   late String? captainPhone;
+  int? isCashPaymentConfirmedByStore;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -86,7 +87,8 @@ class OrderDetailsModel extends DataModel {
       required this.captainPhone,
       required this.captainRating,
       this.pdf,
-      this.storeBranchToClientDistance});
+      this.storeBranchToClientDistance,
+      this.isCashPaymentConfirmedByStore});
 
   late OrderDetailsModel _orders;
 
@@ -107,6 +109,7 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
+      isCashPaymentConfirmedByStore: element?.isCashPaymentConfirmedByStore,
       image: element?.image?.image,
       canRemove: _canRemove(DateHelper.convert(element?.createdAt?.timestamp)),
       isCaptainArrived: element?.isCaptainArrived,

@@ -43,6 +43,7 @@ class Data {
   String? captainPhone;
   Captain? captainDetails;
   String? storeBranchToClientDistance;
+  int? isCashPaymentConfirmedByStore;
   Data(
       {this.id,
       this.state,
@@ -76,14 +77,16 @@ class Data {
       this.captainPhone,
       this.captainDetails,
       this.pdf,
-      this.storeBranchToClientDistance});
+      this.storeBranchToClientDistance,
+      this.isCashPaymentConfirmedByStore});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
+      isCashPaymentConfirmedByStore:
+          json['isCashPaymentConfirmedByStore'] as int?,
       state: json['state'] as String?,
       storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
-          ? FixedNumber.getFixedNumber(
-              json['storeBranchToClientDistance'])
+          ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
           : null,
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
