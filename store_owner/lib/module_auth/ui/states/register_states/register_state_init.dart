@@ -288,11 +288,18 @@ class RegisterStateInit extends RegisterState {
               firstButtonTab: agreed
                   ? () {
                       if (_registerKey.currentState!.validate()) {
-                        screen.registerClient(RegisterRequest(
-                          userID: countryController.text.trim() +
-                              usernameController.text.trim(),
-                          password: passwordController.text,
-                        ));
+                        if (usernameController.text.trim().startsWith('0')) {
+                          CustomFlushBarHelper.createError(
+                                  title: S.current.warnning,
+                                  message: S.current.yourNumberStartWithZero)
+                              .show(context);
+                        } else {
+                          screen.registerClient(RegisterRequest(
+                            userID: countryController.text.trim() +
+                                usernameController.text.trim(),
+                            password: passwordController.text,
+                          ));
+                        }
                       }
                     }
                   : null,
