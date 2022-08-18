@@ -43,7 +43,7 @@ class OrderChatRoomsStoreResponse
     public $captainId;
 
     /**
-     * @var float|null
+     * @var string|null
      */
     public $avgRating;
 }
