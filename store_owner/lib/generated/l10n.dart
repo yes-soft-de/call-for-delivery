@@ -6779,6 +6779,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Please confirm if you receive order cost from captain please answer with yes or no`
+  String get confirmingIfReceiveOrderCost {
+    return Intl.message(
+      'Please confirm if you receive order cost from captain please answer with yes or no',
+      name: 'confirmingIfReceiveOrderCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Your number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

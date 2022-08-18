@@ -672,5 +672,7 @@
     "leftToPay": "Left to pay",
     "packageType": "Package type",
     "packageTypeOnOrder": "On order",
-    "packageTypeRegular": "Regular"
+    "packageTypeRegular": "Regular",
+    "confirmingIfReceiveOrderCost": "Please confirm if you receive order cost from captain please answer with yes or no",
+    "yourNumberStartWithZero": "Your number start with zero please remove it and try again"
 }

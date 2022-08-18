@@ -248,6 +248,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmed": MessageLookupByLibrary.simpleMessage("confirmed"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "Confirm with yes and no if captain reach you"),
+        "confirmingIfReceiveOrderCost": MessageLookupByLibrary.simpleMessage(
+            "Please confirm if you receive order cost from captain please answer with yes or no"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
@@ -1032,6 +1034,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your branch missing phone number"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "Your number start with zero please remove it and try again"),
         "yourRequestSent":
             MessageLookupByLibrary.simpleMessage("Your Request have been sent")
       };

@@ -242,6 +242,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
         "confirmingCaptainLocation": MessageLookupByLibrary.simpleMessage(
             "هل وصل الكابتن للمتجر للتأكيد جاوب بنعم أو لا"),
+        "confirmingIfReceiveOrderCost": MessageLookupByLibrary.simpleMessage(
+            "يرجى التأكيد من استلام سعر الطلبية من الكابتن ، الرجاء الجواب بنعم في حالة الاستلام ولا في حالة النفي"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
@@ -552,7 +554,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAverage40": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسداد الدفعة الثانية من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 40% من رصيد الباقة وشكرا"),
         "orderAverage75": MessageLookupByLibrary.simpleMessage(
-            "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا"),
+            "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنه تم استهلاك 75% من رصيد الباقة وشكرا"),
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
         "orderCategory": MessageLookupByLibrary.simpleMessage("فئة الطلب"),
@@ -1023,6 +1025,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "فرعك ينقصه رقم الهاتف الرجاء تزويدنا به"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")
       };
 }
