@@ -87,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
+        "asrMessage": MessageLookupByLibrary.simpleMessage(
+            "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر"),
         "at": MessageLookupByLibrary.simpleMessage("في"),
         "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),
         "attachedFile": MessageLookupByLibrary.simpleMessage(
@@ -297,6 +299,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationUnavailable":
             MessageLookupByLibrary.simpleMessage("المسافة غير متوفرة"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
+        "dhahrMessage": MessageLookupByLibrary.simpleMessage(
+            "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
@@ -354,6 +358,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraOrderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("تكلفة التوصيل الإضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
+        "fajrMessage": MessageLookupByLibrary.simpleMessage(
+            "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
@@ -427,6 +433,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
+        "ishaMessage": MessageLookupByLibrary.simpleMessage(
+            "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("تعويض المسافات المقطوعة"),
@@ -451,6 +459,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
+        "maghribMessage": MessageLookupByLibrary.simpleMessage(
+            "قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
         "mediumMoreThan20EmployeesLessThan100":
