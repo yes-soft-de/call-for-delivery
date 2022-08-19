@@ -33,10 +33,14 @@ class CustomAlertDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        actionsAlignment: onPressed == null ? MainAxisAlignment.center : null,
         actions: [
-          TextButton(
-              onPressed: onPressed,
-              child: Text(primaryButton ?? S.current.confirm)),
+          Visibility(
+            visible: onPressed != null,
+            child: TextButton(
+                onPressed: onPressed,
+                child: Text(primaryButton ?? S.current.confirm)),
+          ),
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();

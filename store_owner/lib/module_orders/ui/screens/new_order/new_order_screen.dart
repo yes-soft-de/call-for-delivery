@@ -5,9 +5,11 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
+import 'package:c4d/utils/helpers/prayer_dates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -87,6 +89,22 @@ class NewOrderScreenState extends State<NewOrderScreen>
       if (old != toController.text) {
         old = toController.text;
         locationParsing();
+      }
+    });
+  }
+
+  void showPrayerWarning() {
+    PrayerDate.getWarningMessage().then((value) {
+      if (value != null) {
+        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          showDialog(
+              context: context,
+              builder: (ctc) {
+                return CustomAlertDialog(
+                    onPressed:null,
+                    content: value);
+              });
+        });
       }
     });
   }
