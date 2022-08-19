@@ -237,10 +237,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               },
               subtitle: orderInfo.isCashPaymentConfirmedByStore == null
                   ? (S.current.NotConfirmed)
-                  : (orderInfo.isCashPaymentConfirmedByStore == 2
+                  : (orderInfo.isCashPaymentConfirmedByStore == 1
                       ? S.current.financePaid
                       : S.current.financeUnPaid),
-              title: S.current.confirmOrderCashAnswer,
+              title: S.current.confirmOrderCash,
             )),
 
         // rate
@@ -977,14 +977,14 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   onPressed: () {
                     Navigator.of(context).pop();
                     screenState.manager.confirmOrderCashFinance(screenState,
-                        OrderCashRequest(orderID: orderInfo.id, paid: 2));
+                        OrderCashRequest(orderID: orderInfo.id, paid: 1));
                   },
                   child: Text(S.of(context).yes)),
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     screenState.manager.confirmOrderCashFinance(screenState,
-                        OrderCashRequest(orderID: orderInfo.id, paid: 1));
+                        OrderCashRequest(orderID: orderInfo.id, paid: 2));
                   },
                   child: Text(S.of(context).no))
             ],

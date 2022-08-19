@@ -21,6 +21,7 @@ class OrdersListStateOrdersLoaded extends States {
           context: screenState.context,
           builder: (context) {
             return AlertDialog(
+              scrollable: true,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25)),
               title: Text(S.current.warnning),

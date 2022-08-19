@@ -82,24 +82,33 @@ class OrderCashCard extends StatelessWidget {
           padding: const EdgeInsets.only(right: 12.0, left: 12.0),
           child: Row(
             children: [
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.green, shape: StadiumBorder()),
-                  onPressed: () {
-                    answer(1);
-                  },
-                  child: Text(
-                    S.current.financePaid,
-                    style: TextStyle(color: Colors.white),
-                  )),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green, shape: StadiumBorder()),
+                onPressed: () {
+                  answer(1);
+                },
+                label: Text(
+                  S.current.financePaid,
+                  style: TextStyle(color: Colors.white),
+                ),
+                icon: Icon(
+                  Icons.thumb_up_alt_rounded,
+                  color: Colors.white,
+                ),
+              ),
               Spacer(),
-              ElevatedButton(
+              ElevatedButton.icon(
+                  icon: Icon(
+                    Icons.thumb_down_alt_rounded,
+                    color: Colors.white,
+                  ),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red, shape: StadiumBorder()),
                   onPressed: () {
                     answer(2);
                   },
-                  child: Text(
+                  label: Text(
                     S.current.financeUnPaid,
                     style: TextStyle(color: Colors.white),
                   ))
