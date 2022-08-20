@@ -219,6 +219,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "closeOrder": MessageLookupByLibrary.simpleMessage("close"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
+        "codeSendToYou":
+            MessageLookupByLibrary.simpleMessage("Code sent to your device"),
         "codeTimeOut": MessageLookupByLibrary.simpleMessage("Code has expired"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -237,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmOrderCash":
+            MessageLookupByLibrary.simpleMessage("Confirm receive order cash"),
         "confirmOrderCashAnswer":
             MessageLookupByLibrary.simpleMessage("Confirm order cash answer"),
         "confirmPasswordAgain":
@@ -336,6 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enquiries": MessageLookupByLibrary.simpleMessage("Orders Enquiries"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("Enquiry about order number"),
+        "enterCodeSentToYou":
+            MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -788,6 +794,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Register Success, Setup my profile"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
+        "rememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
@@ -1029,6 +1036,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
+            "You can resend verification after"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "You can\'t delete order, You exceeded time limit"),
         "youCannotDeleteOrderCaptainAccepted":

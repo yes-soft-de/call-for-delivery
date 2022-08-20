@@ -65,6 +65,14 @@ class ChatRepository {
     return OrderChatRoomsResponse.fromJson(response);
   }
 
+  Future<OrderChatRoomsResponse?> getOngoingOrderChat() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(Urls.GET_ONGOING_CHAT_ORDER,
+        headers: {'Authorization': 'Bearer ${token}'});
+    if (response == null) return null;
+    return OrderChatRoomsResponse.fromJson(response);
+  }
+
   // Future<void> needSupport() async {
   //   if (_authService.isLoggedIn == false) {
   //     await _apiClient.post(

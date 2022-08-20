@@ -213,7 +213,8 @@ class Urls {
   static const OWNER_HIDDEN_ORDERS_API =
       DOMAIN + '/v1/order/getordershiddenduetoexceedingdeliverytime';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
-  static const FILTER_OWNER_CASH_ORDERS_API = DOMAIN + '/v1/order/notansweredcashordersbystore';
+  static const FILTER_OWNER_CASH_ORDERS_API =
+      DOMAIN + '/v1/order/notansweredcashordersbystore';
   static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
@@ -236,11 +237,14 @@ class Urls {
       DOMAIN + '/v1/subscription/subscriptioncaptainoffer/create';
   static const GET_CHAT_ROOMS_API =
       DOMAIN + '/v1/orderchatroom/orderchatroomsforstorebeforeorderaccepted';
+  static const GET_ONGOING_CHAT_ORDER =
+      DOMAIN + '/v1/orderchatroom/ongoingorderschatroomsforstore';
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
   static const UPDATE_ORDER_API = DOMAIN + '/v1/order/orderupdate';
-  static const UPDATE_ORDER_CASH_FINANCE = DOMAIN + '/v1/order/confirmcashpaymentbystore';
+  static const UPDATE_ORDER_CASH_FINANCE =
+      DOMAIN + '/v1/order/confirmcashpaymentbystore';
   static const HIDE_ORDER_API = DOMAIN + '/v1/order/updateordertohidden';
 
   /*----------------------------bidorders-----------------------------*/

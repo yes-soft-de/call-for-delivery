@@ -25,6 +25,8 @@ class ChatManager {
 
   Future<OrderChatRoomsResponse?> getOrderChatRooms() =>
       _chatRepository.getOrderChatRooms();
+  Future<OrderChatRoomsResponse?> getOngoingOrderChat() =>
+      _chatRepository.getOngoingOrderChat();
 
   void needSupport() {
     //  _chatRepository.needSupport();

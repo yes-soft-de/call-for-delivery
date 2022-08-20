@@ -59,4 +59,15 @@ class ChatService {
     if (response.data == null) return DataModel.empty();
     return ChatRoomsModel.withData(response);
   }
+
+  Future<DataModel> getOngoingOrderChat() async {
+    OrderChatRoomsResponse? response = await _chatManager.getOngoingOrderChat();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return ChatRoomsModel.withData(response);
+  }
 }

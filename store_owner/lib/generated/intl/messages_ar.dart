@@ -211,6 +211,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "closeOrder": MessageLookupByLibrary.simpleMessage("مغلق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+        "codeSendToYou":
+            MessageLookupByLibrary.simpleMessage("رمز التحقق المرسل لجوالك"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
@@ -231,6 +233,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في إنشاء طلب جديد"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmOrderCash":
+            MessageLookupByLibrary.simpleMessage("تأكيد استلام المبلغ الكاش"),
         "confirmOrderCashAnswer": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من خيارك ، لايمكنك تغيير جوابك لاحقا"),
         "confirmPasswordAgain":
@@ -328,6 +332,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enquiries": MessageLookupByLibrary.simpleMessage("استفسارات الطلبات"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("استفسار بخصوص الطلب رقم"),
+        "enterCodeSentToYou":
+            MessageLookupByLibrary.simpleMessage("ادخل رمز التحقق"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -780,6 +786,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم تأكيد الحساب، اتجه للاشتراك"),
         "remainingAmountForCompany":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
+        "rememberMe": MessageLookupByLibrary.simpleMessage("تذكرني"),
         "remove": MessageLookupByLibrary.simpleMessage("إزالة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
@@ -1021,6 +1028,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youCanResendAfter":
+            MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "لايمكنك حذف الطلب ، لقد تجاوزت المدة المسموح بها"),
         "youCannotDeleteOrderCaptainAccepted":

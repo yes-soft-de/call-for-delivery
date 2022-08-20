@@ -163,7 +163,6 @@ class RegisterStateInit extends RegisterState {
                   ),
                   Expanded(
                     child: CustomLoginFormField(
-                      last: false,
                       controller: passwordController,
                       confirmationPassword: password2Controller.text,
                       password: true,
@@ -216,7 +215,7 @@ class RegisterStateInit extends RegisterState {
                       hintText: S.of(context).writePasswordAgain,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8.0,
                   )
                 ],
@@ -290,8 +289,7 @@ class RegisterStateInit extends RegisterState {
                       if (_registerKey.currentState!.validate()) {
                         if (usernameController.text.trim().startsWith('0')) {
                           CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.yourNumberStartWithZero)
+                                  title: S.current.warnning, message: S.current.yourNumberStartWithZero)
                               .show(context);
                         } else {
                           screen.registerClient(RegisterRequest(

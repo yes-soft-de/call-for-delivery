@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -54,13 +54,15 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   dynamic args;
-
+  var flag = true;
   @override
   Widget build(BuildContext context) {
     args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null) {
+    if (args != null && flag) {
       if (args is Map) {
         _currentState = RegisterStatePhoneCodeSent(this);
+        flag = false;
+        refresh();
       }
     }
     return GestureDetector(
@@ -74,7 +76,8 @@ class RegisterScreenState extends State<RegisterScreen> {
         appBar: CustomC4dAppBar.appBar(
           context,
           title: S.of(context).register,
-          canGoBack: canPop,
+          canGoBack:
+              _currentState is RegisterStatePhoneCodeSent ? false : canPop,
         ),
         body: FixedContainer(
           child: loadingSnapshot.connectionState != ConnectionState.waiting
@@ -136,7 +139,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void moveToNext() {
     Navigator.of(context)
-        .pushNamedAndRemoveUntil(ProfileRoutes.INIT_ACCOUNT, (route) => false);
+        .pushNamedAndRemoveUntil(SplashRoutes.SPLASH_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.registerSuccess)
         .show(context);

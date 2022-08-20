@@ -679,5 +679,10 @@
     "maghribMessage": "قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب",
     "asrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر",
     "fajrMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر",
-    "dhahrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر"
+    "dhahrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر",
+    "confirmOrderCash": "Confirm receive order cash",
+    "rememberMe": "Remember me",
+    "codeSendToYou": "Code sent to your device",
+    "enterCodeSentToYou": "Enter verification code",
+    "youCanResendAfter": "You can resend verification after"
 }

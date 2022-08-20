@@ -1,4 +1,8 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
+import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
+import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +13,7 @@ class LoginStateCodeSent extends LoginState {
   bool loading = false;
 
   LoginStateCodeSent(LoginScreenState screen) : super(screen) {
-    Future.delayed(Duration(seconds: 30), () {
+    Future.delayed(const Duration(seconds: 30), () {
       retryEnabled = true;
       screen.refresh();
     });
@@ -45,10 +49,18 @@ class LoginStateCodeSent extends LoginState {
           OutlinedButton(
             onPressed: retryEnabled
                 ? () {
-                    //screen.retryPhone();
+                    screen.resendCode(VerifyCodeRequest(
+                        userID: getIt<AuthService>().username,
+                        password: getIt<AuthPrefsHelper>().getPassword()));
                   }
                 : null,
-            child: Text(S.of(context).resendCode),
+            child: Text(
+              S.of(context).resendCode,
+              style: TextStyle(
+                color:
+                    retryEnabled ? Theme.of(context).colorScheme.primary : null,
+              ),
+            ),
           ),
           loading
               ? Text(S.of(context).loading)
@@ -59,11 +71,13 @@ class LoginStateCodeSent extends LoginState {
                     splashColor: Colors.transparent,
                     onTap: () {
                       loading = true;
-                      Future.delayed(Duration(seconds: 10), () {
+                      Future.delayed(const Duration(seconds: 10), () {
                         loading = false;
                       });
                       screen.refresh();
-                      //screen.confirmCaptainSMS(_confirmationController.text);
+                      screen.verifyClient(VerifyCodeRequest(
+                          userID: getIt<AuthService>().username,
+                          code: _confirmationController.text));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +86,7 @@ class LoginStateCodeSent extends LoginState {
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
                             S.of(context).confirm,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

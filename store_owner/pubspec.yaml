@@ -37,7 +37,7 @@ dependencies:
   # Custom SnackBar
   another_flushbar: ^1.10.22
   #Material
-  animated_bottom_navigation_bar: ^0.3.2
+  animated_bottom_navigation_bar: ^1.1.0
   # Custom Toast
   fluttertoast: ^8.0.8
   # Local Notifications
@@ -126,10 +126,7 @@ dependencies:
   dropdown_search: ^3.0.1
   file_picker: ^4.6.1
   open_file: ^3.2.1
-
-
-
-
+  flutter_swipe_detector: ^2.0.0
 
 
 dev_dependencies:
