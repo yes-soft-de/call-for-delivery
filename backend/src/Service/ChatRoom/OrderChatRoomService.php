@@ -89,7 +89,7 @@ class OrderChatRoomService
         $orderChatRooms = $this->orderChatRoomManager->getOnGoingOrdersChatRoomsForStore($userId);
 
         foreach ($orderChatRooms as $orderChatRoom) {
-            $orderChatRoom['roomId'] = $orderChatRoom['roomId']->toBase32();
+            $orderChatRoom['roomId'] = $orderChatRoom['roomId']?->toBase32();
 
             $orderChatRoom['images'] = $this->uploadFileHelperService->getImageParams($orderChatRoom['imagePath']);
 
