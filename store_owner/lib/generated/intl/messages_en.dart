@@ -272,6 +272,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create new Report"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
+        "credentialsBagHint": MessageLookupByLibrary.simpleMessage(
+            "Here you can find saved credentials "),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),

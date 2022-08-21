@@ -61,6 +61,9 @@ class AuthPrefsHelper {
     }
     suggestion.put(username, password);
     List<String> users = savedUsersCredential();
+    if (users.contains(username)) {
+      users.removeWhere((element) => element == username);
+    }
     users.add(username);
     suggestion.put('users', users);
   }

@@ -264,6 +264,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
         "created": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+        "credentialsBagHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا "),
         "currentBalance": MessageLookupByLibrary.simpleMessage("الرصيد الحالي"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),

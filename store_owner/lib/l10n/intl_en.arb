@@ -684,5 +684,6 @@
     "rememberMe": "Remember me",
     "codeSendToYou": "Code sent to your device",
     "enterCodeSentToYou": "Enter verification code",
-    "youCanResendAfter": "You can resend verification after"
+    "youCanResendAfter": "You can resend verification after",
+    "credentialsBagHint": "Here you can find saved credentials "
 }
