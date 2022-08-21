@@ -89,7 +89,7 @@ class LoginStateManager {
     if (_screenState.rememberMe) {
       Logger().info('Saving Credential',
           'Remember me with value ${_screenState.rememberMe}');
-      // AuthPrefsHelper().saveLoginCredential();
+      AuthPrefsHelper().saveLoginCredential();
     }
     return;
   }
