@@ -137,9 +137,13 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->setParameter('userId', $userId)
             
-            ->andWhere('captainFinancialDuesEntity.endDate = :date')
+            // ->andWhere('captainFinancialDuesEntity.endDate = :date')
 
-            ->setParameter('date', $date)
+            // ->setParameter('date', $date)
+
+            ->andWhere('captainFinancialDuesEntity.state = :state')
+
+            ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
 
             ->getQuery()
 
