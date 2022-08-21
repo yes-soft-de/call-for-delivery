@@ -8,6 +8,7 @@ class Datum {
   String? roomId;
   String? orderId;
   int? captainID;
+  String? avgRating;
   Datum(
       {this.id,
       this.captainName,
@@ -15,7 +16,8 @@ class Datum {
       this.images,
       this.roomId,
       this.orderId,
-      this.captainID});
+      this.captainID,
+      this.avgRating});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['id'] as int?,
@@ -26,7 +28,8 @@ class Datum {
           : Images.fromJson(json['images'] as Map<String, dynamic>),
       roomId: json['roomId'] as String?,
       orderId: json['orderId'] as String?,
-      captainID: json['captainId'] as int?);
+      captainID: json['captainId'] as int?,
+      avgRating: json['avgRating'] as String?);
 
   Map<String, dynamic> toJson() => {
         'id': id,

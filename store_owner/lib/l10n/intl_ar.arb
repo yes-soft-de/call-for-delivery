@@ -685,5 +685,6 @@
     "codeSendToYou": "رمز التحقق المرسل لجوالك",
     "enterCodeSentToYou": "ادخل رمز التحقق",
     "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
-    "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا "
+    "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
+    "chatRoomOrder":"غرفة محادثة الطلب"
 }

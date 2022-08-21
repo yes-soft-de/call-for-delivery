@@ -180,6 +180,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
+        "chatRoomOrder":
+            MessageLookupByLibrary.simpleMessage("Chat room order"),
         "chatWithCaptain":
             MessageLookupByLibrary.simpleMessage("Chat With Captain"),
         "chatWithStoreOwner":

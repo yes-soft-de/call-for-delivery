@@ -6909,6 +6909,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Chat room order`
+  String get chatRoomOrder {
+    return Intl.message(
+      'Chat room order',
+      name: 'chatRoomOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

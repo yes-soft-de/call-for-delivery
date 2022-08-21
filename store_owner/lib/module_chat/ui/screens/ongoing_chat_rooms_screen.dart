@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_chat/state_manager/ongoing_order_chat_state_manager.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -26,6 +27,10 @@ class OngoingOrderChatScreenState extends State<OngoingOrderChatScreen> {
 
   Future<void> getRooms() async {
     widget._stateManager.getRooms(this);
+  }
+
+  void rateCaptain(RatingRequest request) {
+    widget._stateManager.rateCaptain(this, request);
   }
 
   void deleteNotification(String id) {

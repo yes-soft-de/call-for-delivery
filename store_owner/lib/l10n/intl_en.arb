@@ -685,5 +685,6 @@
     "codeSendToYou": "Code sent to your device",
     "enterCodeSentToYou": "Enter verification code",
     "youCanResendAfter": "You can resend verification after",
-    "credentialsBagHint": "Here you can find saved credentials "
+    "credentialsBagHint": "Here you can find saved credentials ",
+    "chatRoomOrder": "Chat room order"
 }

@@ -7,8 +7,11 @@ import 'package:c4d/module_chat/ui/screens/ongoing_chat_rooms_screen.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/components/rating_form.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/request/rating_request.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 
@@ -23,68 +26,25 @@ class OngoingOrderChatLoadedState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Visibility(
-        visible: screenState.markerMode,
-        child: ScalingWidget(
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {
-              List<String> notifications = [];
-              model.forEach((element) {
-                if (element.marked) {
-                  notifications.add(element.id.toString());
-                }
-              });
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CustomAlertDialog(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          screenState.deleteNotifications(notifications);
-                        },
-                        content: S.current
-                            .areYouSureAboutDeleteSelectedNotifications);
-                  });
-            },
-            child: Icon(Icons.delete_rounded),
-          ),
-        ),
-      ),
-      body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: RefreshIndicator(
-          onRefresh: () {
-            return screenState.getRooms();
-          },
-          child: ListView(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            children: [
-              Visibility(
-                  visible: screenState.markerMode,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10.0,
-                      left: 10,
-                    ),
-                    child: Text(
-                      '${getSelectedItem()}' + ' ' + S.current.selected,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    children: getNotification(context)),
-              ),
-              SizedBox(
-                height: 75,
-              ),
-            ],
-          ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return screenState.getRooms();
+        },
+        child: ListView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: ListView(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  children: getNotification(context)),
+            ),
+            SizedBox(
+              height: 75,
+            ),
+          ],
         ),
       ),
     );
@@ -100,11 +60,6 @@ class OngoingOrderChatLoadedState extends States {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            // onLongPress: () {
-            //   screenState.markerMode = true;
-            //   element.marked = true;
-            //   screenState.refresh();
-            // },
             borderRadius: BorderRadius.circular(25),
             onTap: () {
               Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
@@ -162,34 +117,56 @@ class OngoingOrderChatLoadedState extends States {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            S.current.enquiryAboutOrder +
-                                ' #${element.orderId}',
+                            S.current.chatRoomOrder + ' #${element.orderId}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                     ),
-                    Visibility(
-                      visible: screenState.markerMode,
-                      replacement: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).colorScheme.primary),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.arrow_forward_rounded,
-                              color: Colors.white,
-                            ),
-                          )),
-                      child: Checkbox(
-                          value: element.marked,
-                          onChanged: (bool? check) {
-                            element.marked = check ?? false;
-                            screenState.refresh();
-                          }),
+                    ElevatedButton(
+                        onPressed: () {
+                          final TextEditingController controller =
+                              TextEditingController();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return RatingForm(
+                                    onPressed: (rate) {
+                                      Navigator.of(context).pop();
+                                      screenState.rateCaptain(RatingRequest(
+                                          comment: controller.text,
+                                          rating: rate,
+                                          rated: element.captainId,
+                                          orderId: int.tryParse(
+                                                  element.orderId ?? '') ??
+                                              -1));
+                                    },
+                                    message: S.current.rateCaptainMessage,
+                                    title: S.current.rateCaptain,
+                                    controller: controller);
+                              });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.amber, shape: StadiumBorder()),
+                        child: Text(
+                          S.current.rateCaptain,
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        )),
+                    SizedBox(
+                      width: 4,
                     ),
+                    Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).colorScheme.primary),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.arrow_forward_rounded,
+                            color: Colors.white,
+                          ),
+                        )),
                   ],
                 ),
               ),
@@ -206,15 +183,5 @@ class OngoingOrderChatLoadedState extends States {
       }
     });
     return children;
-  }
-
-  int getSelectedItem() {
-    int count = 0;
-    model.forEach((element) {
-      if (element.marked) {
-        count++;
-      }
-    });
-    return count;
   }
 }
