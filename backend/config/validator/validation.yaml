@@ -747,3 +747,10 @@ App\Request\Admin\Order\SubOrderCreateByAdminRequest:
             - NotBlank: ~
         primaryOrder:
             - NotBlank: ~
+
+App\Request\User\UserPasswordUpdateByLoggedInUserRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~

@@ -12,6 +12,7 @@ use App\Entity\UserEntity;
 use App\Manager\ResetPassword\ResetPasswordOrderManager;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
 use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
+use App\Request\User\UserPasswordUpdateByLoggedInUserRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Response\Admin\ResetPassword\ResetPasswordOrderGetForSuperAdminResponse;
 use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
@@ -133,5 +134,10 @@ class ResetPasswordOrderService
     public function deleteAllResetPasswordOrdersByUserId(int $userId): array
     {
         return $this->resetPasswordOrderManager->deleteAllResetPasswordOrdersByUserId($userId);
+    }
+
+    public function updateUserPasswordByLoggedInUser(UserPasswordUpdateByLoggedInUserRequest $request): UserRegisterResponse|string
+    {
+        return $this->userService->updateUserPasswordByLoggedInUser($request);
     }
 }

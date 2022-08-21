@@ -9,6 +9,7 @@ use App\Constant\User\UserReturnResultConstant;
 use App\Controller\BaseController;
 use App\Request\ResetPassword\ResetPasswordOrderCreateRequest;
 use App\Request\ResetPassword\VerifyResetPasswordCodeRequest;
+use App\Request\User\UserPasswordUpdateByLoggedInUserRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Service\ResetPassword\ResetPasswordOrderService;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -252,9 +253,11 @@ class ResetPasswordOrderController extends BaseController
     }
 
     /**
-     * @Route("updatepasswordwithtoken", name="updateUserPasswordWithToken", methods={"PUT"})
+     * Store, Captain, Supplier: update logged-in user password by the user him/her self
+     * @Route("updatepasswordbyloggedinuser", name="updatePasswordByLoggedInUser", methods={"PUT"})
      * @param Request $request
      * @return JsonResponse
+     *
      * @IsGranted("ROLE_USER")
      *
      * @OA\Tag(name="Reset Password Order")
@@ -262,8 +265,7 @@ class ResetPasswordOrderController extends BaseController
      * @OA\RequestBody(
      *      description="update old password request fields",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="userId"),
-     *          @OA\Property(type="string", property="password")
+     *          @OA\Property(type="string", property="password", description="The new password field")
      *      )
      * )
      *
@@ -290,11 +292,13 @@ class ResetPasswordOrderController extends BaseController
      *      )
      * )
      */
-    public function updateUserPasswordWithToken(Request $request): JsonResponse
+    public function updateUserPasswordByLoggedInUser(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, UserPasswordUpdateRequest::class, (object)$data);
+        $request = $this->autoMapping->map(stdClass::class, UserPasswordUpdateByLoggedInUserRequest::class, (object)$data);
+
+        $request->setId($this->getUserId());
 
         $violations = $this->validator->validate($request);
 
@@ -304,7 +308,7 @@ class ResetPasswordOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->resetPasswordOrderService->updateUserPassword($request);
+        $result = $this->resetPasswordOrderService->updateUserPasswordByLoggedInUser($request);
 
         if ($result === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_NOT_FOUND);
