@@ -250,4 +250,66 @@ class ResetPasswordOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * @Route("updatepasswordwithtoken", name="updateUserPasswordWithToken", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     * @IsGranted("ROLE_USER")
+     *
+     * @OA\Tag(name="Reset Password Order")
+     *
+     * @OA\RequestBody(
+     *      description="update old password request fields",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="userId"),
+     *          @OA\Property(type="string", property="password")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the info of the updated user",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example=""),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\User\UserRegisterResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns user not found error",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9005"),
+     *          @OA\Property(type="string", property="msg")
+     *      )
+     * )
+     */
+    public function updateUserPasswordWithToken(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, UserPasswordUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->resetPasswordOrderService->updateUserPassword($request);
+
+        if ($result === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_NOT_FOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
 }
