@@ -6,6 +6,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/ui/screens/ongoing_chat_rooms_screen.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
@@ -32,6 +33,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:new_version/new_version.dart';
+import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 
 @injectable
 class OwnerOrdersScreen extends StatefulWidget {
@@ -80,7 +82,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   Future<void> checkForUpdates(context) async {
     final newVersion = NewVersion();
     final VersionStatus? status = await newVersion.getVersionStatus();
-  if (status?.canUpdate == true) {
+    if (status?.canUpdate == true) {
       newVersion.showUpdateDialog(
         context: context,
         versionStatus: status!,
@@ -93,6 +95,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       );
     }
   }
+
+  bool openedBottom = false;
   @override
   void initState() {
     super.initState();
@@ -155,7 +159,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   int currentIndex = 0;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,53 +194,56 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         company: _companyInfo,
         isUnlimitedPackage: status?.unlimitedPackage ?? false,
       ),
-      floatingActionButton: DescribedFeatureOverlay(
-        onDismiss: dismiss,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(S.current.newOrder),
-        description: Text(S.current.newOrderHint),
-        featureId: 'newOrder',
-        tapTarget: Text(
-          S.current.newOrder,
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold),
-        ),
-        child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-                primary: currentIndex == 0
-                    ? null
-                    : StatusHelper.getOrderStatusColor(
-                        OrderStatusEnum.IN_STORE),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                )),
-            onPressed: status != null
-                ? () {
-                    if (status?.canCreateOrder == true) {
-                      Navigator.of(context)
-                          .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
-                    } else if (status?.status == S.current.inactiveStore) {
-                      Fluttertoast.showToast(msg: S.current.inactiveStore);
-                    } else {
-                      Navigator.of(context)
-                          .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
-                      CustomFlushBarHelper.createError(
-                              title: S.current.warnning,
-                              message:
-                                  SubscriptionsStatusHelper.getStatusMessage(
-                                      status?.status ?? ''))
-                          .show(context);
+      floatingActionButton: Visibility(
+        visible: openedBottom == false,
+        child: DescribedFeatureOverlay(
+          onDismiss: dismiss,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: Text(S.current.newOrder),
+          description: Text(S.current.newOrderHint),
+          featureId: 'newOrder',
+          tapTarget: Text(
+            S.current.newOrder,
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold),
+          ),
+          child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                  primary: currentIndex == 0
+                      ? null
+                      : StatusHelper.getOrderStatusColor(
+                          OrderStatusEnum.IN_STORE),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  )),
+              onPressed: status != null
+                  ? () {
+                      if (status?.canCreateOrder == true) {
+                        Navigator.of(context)
+                            .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
+                      } else if (status?.status == S.current.inactiveStore) {
+                        Fluttertoast.showToast(msg: S.current.inactiveStore);
+                      } else {
+                        Navigator.of(context).pushNamed(
+                            SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+                        CustomFlushBarHelper.createError(
+                                title: S.current.warnning,
+                                message:
+                                    SubscriptionsStatusHelper.getStatusMessage(
+                                        status?.status ?? ''))
+                            .show(context);
+                      }
                     }
-                  }
-                : null,
-            icon: Icon(Icons.add_rounded,
-                color: Theme.of(context).textTheme.button?.color),
-            label: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(S.current.newOrder,
-                  style: Theme.of(context).textTheme.button),
-            )),
+                  : null,
+              icon: Icon(Icons.add_rounded,
+                  color: Theme.of(context).textTheme.button?.color),
+              label: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(S.current.newOrder,
+                    style: Theme.of(context).textTheme.button),
+              )),
+        ),
       ),
       body: Column(
         children: [
@@ -307,7 +313,64 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           SizedBox(
             height: 16,
           ),
-          Expanded(child: _currentState.getUI(context))
+          Expanded(
+              child: SwipeDetector(
+                  onSwipe: (dir, offset) {
+                    if (dir == SwipeDirection.left ||
+                        dir == SwipeDirection.right ||
+                        dir == SwipeDirection.up) {
+                      openedBottom = true;
+                      setState(() {});
+                      GlobalVariable.mainScreenScaffold.currentState
+                          ?.showBottomSheet(
+                            (ctx) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    // space
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Center(
+                                        child: Container(
+                                          height: 4,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color:
+                                                Theme.of(context).disabledColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: getIt<OngoingOrderChatScreen>(),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25))),
+                            constraints: BoxConstraints(
+                              minHeight: 150,
+                              maxHeight: 500,
+                            ),
+                          )
+                          .closed
+                          .whenComplete(() {
+                            openedBottom = false;
+                            setState(() {});
+                          });
+                    }
+                  },
+                  child: _currentState.getUI(context)))
         ],
       ),
     );

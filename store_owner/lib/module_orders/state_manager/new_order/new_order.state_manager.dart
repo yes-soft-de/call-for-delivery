@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';
@@ -64,9 +65,24 @@ class NewOrderStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+            .show(screenState.context)
+            .whenComplete(() {
+          showPrayerWarning();
+        });
         FireStoreHelper().backgroundThread('Trigger');
-        screenState.showPrayerWarning();
+      }
+    });
+  }
+  void showPrayerWarning() {
+    PrayerDate.getWarningMessage().then((value) {
+      if (value != null) {
+        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          showDialog(
+              context: GlobalVariable.navState.currentContext!,
+              builder: (ctc) {
+                return CustomAlertDialog(onPressed: null, content: value);
+              });
+        });
       }
     });
   }

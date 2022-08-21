@@ -30,8 +30,9 @@ class PrayerDate {
         }
         var time = DateTime(DateTime.now().year, DateTime.now().month,
             DateTime.now().day, hour + extra, min);
+        log(time.difference(DateTime.now()).inMinutes.abs().toString());
+
         if (time.difference(DateTime.now()).inMinutes.abs() <= 15) {
-          log(time.difference(DateTime.now()).inMinutes.abs().toString());
           return PrayerHelper.getMessage(element);
         }
       }

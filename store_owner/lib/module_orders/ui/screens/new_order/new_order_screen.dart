@@ -93,21 +93,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
     });
   }
 
-  void showPrayerWarning() {
-    PrayerDate.getWarningMessage().then((value) {
-      if (value != null) {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-          showDialog(
-              context: context,
-              builder: (ctc) {
-                return CustomAlertDialog(
-                    onPressed:null,
-                    content: value);
-              });
-        });
-      }
-    });
-  }
 
   void locationParsing() {
     if (toController.text.isNotEmpty && toController.text != '') {

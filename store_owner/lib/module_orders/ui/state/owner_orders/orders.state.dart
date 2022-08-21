@@ -1,5 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_chat/ui/screens/ongoing_chat_rooms_screen.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
@@ -8,6 +10,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_average.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 
 class OrdersListStateOrdersLoaded extends States {
   final List<OrderModel> orders;
@@ -62,13 +65,14 @@ class OrdersListStateOrdersLoaded extends States {
           });
     }
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders());
+    return CustomListView.custom(children: getOrders(context));
   }
 
-  List<Widget> getOrders() {
-    var context = screenState.context;
+  List<Widget> getOrders(context) {
+    // var context = screenState.context;
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(Padding(

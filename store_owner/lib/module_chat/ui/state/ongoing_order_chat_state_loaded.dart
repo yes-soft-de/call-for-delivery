@@ -51,33 +51,6 @@ class OngoingOrderChatLoadedState extends States {
           ),
         ),
       ),
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.enquiries,
-          canGoBack: true,
-          onTap: screenState.markerMode ? () {} : null,
-          widget: screenState.markerMode
-              ? Checkbox(
-                  value: markAll,
-                  onChanged: (bool? check) {
-                    markAll = check ?? false;
-                    model.forEach((element) {
-                      element.marked = check ?? false;
-                    });
-                    screenState.refresh();
-                  })
-              : null,
-          actions: [
-            Visibility(
-              visible: screenState.markerMode,
-              child: CustomC4dAppBar.actionIcon(context, onTap: () {
-                screenState.markerMode = false;
-                model.forEach((element) {
-                  element.marked = false;
-                });
-                screenState.refresh();
-              }, icon: Icons.close_rounded),
-            )
-          ]),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: RefreshIndicator(
