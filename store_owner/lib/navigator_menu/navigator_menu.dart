@@ -8,6 +8,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
@@ -26,11 +27,13 @@ class NavigatorMenu extends StatefulWidget {
   final ProfileModel? profileModel;
   final CompanyInfoModel? company;
   final bool isUnlimitedPackage;
+  final OwnerOrdersScreenState screenState;
   NavigatorMenu(
       {this.width = 275,
       this.profileModel,
       this.company,
-      this.isUnlimitedPackage = false});
+      this.isUnlimitedPackage = false,
+      required this.screenState});
 
   @override
   _NavigatorMenuState createState() => _NavigatorMenuState();
@@ -144,7 +147,34 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 Navigator.of(context)
                     .pushNamed(OrdersRoutes.ORDERS_CASH_SCREEN);
               },
-              title: S.current.ordersCash),
+              title: S.current.confirmOrderCash),
+          CustomNavTile(
+              icon: Icons.chat_rounded,
+              onTap: () {
+                Navigator.of(context).pop();
+                widget.screenState.openedBottom = true;
+                widget.screenState.setState(() {});
+                GlobalVariable.mainScreenScaffold.currentState
+                    ?.showBottomSheet(
+                      (ctx) {
+                        return widget.screenState.getOngoingChatRoom();
+                      },
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(25))),
+                      constraints: BoxConstraints(
+                        minHeight: 150,
+                        maxHeight: 500,
+                      ),
+                    )
+                    .closed
+                    .whenComplete(() {
+                      widget.screenState.openedBottom = false;
+                      widget.screenState.setState(() {});
+                    });
+              },
+              title: S.current.onGoingOrderChatRooms),
           CustomNavTile(
               icon: Icons.hide_source_rounded,
               onTap: () {

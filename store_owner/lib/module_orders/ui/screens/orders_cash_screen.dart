@@ -46,10 +46,7 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    ordersFilter = FilterOrderRequest(
-        fromDate:
-            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-        toDate: DateTime.now().toIso8601String());
+    ordersFilter = FilterOrderRequest();
     widget._stateManager.getOrdersFilters(this, ordersFilter);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
@@ -81,7 +78,7 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderLog,
+            title: S.current.confirmOrderCash,
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
                 ordersFilter.fromDate =

@@ -193,6 +193,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         profileModel: currentProfile,
         company: _companyInfo,
         isUnlimitedPackage: status?.unlimitedPackage ?? false,
+        screenState: this,
       ),
       floatingActionButton: Visibility(
         visible: openedBottom == false,
@@ -324,35 +325,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       GlobalVariable.mainScreenScaffold.currentState
                           ?.showBottomSheet(
                             (ctx) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    // space
-                                    Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Center(
-                                        child: Container(
-                                          height: 4,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: getIt<OngoingOrderChatScreen>(),
-                                    ),
-                                  ],
-                                ),
-                              );
+                              return getOngoingChatRoom();
                             },
                             backgroundColor: Theme.of(context).backgroundColor,
                             shape: RoundedRectangleBorder(
@@ -388,5 +361,34 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   Future<bool> dismiss() async {
     return false;
+  }
+
+  Widget getOngoingChatRoom() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      ),
+      child: Column(
+        children: [
+          // space
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                height: 4,
+                width: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).disabledColor,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: getIt<OngoingOrderChatScreen>(),
+          ),
+        ],
+      ),
+    );
   }
 }

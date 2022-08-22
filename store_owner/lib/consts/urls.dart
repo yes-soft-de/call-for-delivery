@@ -24,6 +24,7 @@ class Urls {
   static const VERIFY_RESET_PASSWORD_CODE =
       DOMAIN + '/v1/resetpassword/verifyresetpasswordcode';
   static const UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepassword';
+  static const EASY_UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepasswordbyloggedinuser';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
   static const NOTIFICATION_API =
