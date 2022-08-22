@@ -174,6 +174,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("غير لغة"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("تعديل كلمة المرور"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("غرفة المحادثة"),
         "chatRoomOrder":
             MessageLookupByLibrary.simpleMessage("غرفة محادثة الطلب"),
@@ -556,6 +558,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatusUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث عرض السعر بنجاح"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
+        "onGoingOrderChatRooms":
+            MessageLookupByLibrary.simpleMessage("محادثات الطلبات الجارية"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),

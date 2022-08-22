@@ -179,6 +179,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("Change password"),
         "chatRoom": MessageLookupByLibrary.simpleMessage("Chat Room"),
         "chatRoomOrder":
             MessageLookupByLibrary.simpleMessage("Chat room order"),
@@ -566,6 +568,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatusUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Offer Status Updated Successfully"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
+        "onGoingOrderChatRooms":
+            MessageLookupByLibrary.simpleMessage("Ongoing chat rooms"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("On order package"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),

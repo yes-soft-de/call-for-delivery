@@ -686,5 +686,7 @@
     "enterCodeSentToYou": "ادخل رمز التحقق",
     "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
     "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
-    "chatRoomOrder":"غرفة محادثة الطلب"
+    "chatRoomOrder":"غرفة محادثة الطلب",
+    "changePassword":"تعديل كلمة المرور",
+    "onGoingOrderChatRooms":"محادثات الطلبات الجارية"
 }

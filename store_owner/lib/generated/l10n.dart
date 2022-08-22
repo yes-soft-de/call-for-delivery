@@ -6919,6 +6919,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Change password`
+  String get changePassword {
+    return Intl.message(
+      'Change password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing chat rooms`
+  String get onGoingOrderChatRooms {
+    return Intl.message(
+      'Ongoing chat rooms',
+      name: 'onGoingOrderChatRooms',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
