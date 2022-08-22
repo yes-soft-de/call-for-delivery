@@ -36,6 +36,8 @@ class AuthManager {
 
   Future<RegisterResponse?> updatePassRequest(UpdatePassRequest request) =>
       _authRepository.updatePassRequest(request);
+  Future<RegisterResponse?> easyUpdatePassword(UpdatePassRequest request) =>
+      _authRepository.easyUpdatePassword(request);
 
   Future<RegisterResponse?> verifyResetPassCodeRequest(
           VerifyResetPassCodeRequest request) =>

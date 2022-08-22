@@ -237,6 +237,21 @@ class AuthService {
     }
   }
 
+  Future<DataModel> easyResetPassword(UpdatePassRequest request) async {
+    // Create the profile in our database
+    RegisterResponse? registerResponse =
+        await _authManager.updatePassRequest(request);
+    if (registerResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (registerResponse.statusCode != '204') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          registerResponse.statusCode ?? '0'));
+    } else {
+      await loginApi(username, request.newPassword);
+      return DataModel.empty();
+    }
+  }
+
   Future<void> accountStatus() async {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {

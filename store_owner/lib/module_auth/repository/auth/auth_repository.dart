@@ -95,6 +95,17 @@ class AuthRepository {
     return RegisterResponse.fromJson(result);
   }
 
+  Future<RegisterResponse?> easyUpdatePassword(
+      UpdatePassRequest request) async {
+    var token = await getIt<AuthService>().getToken();
+    dynamic result = await _apiClient.get(
+      Urls.EASY_UPDATE_PASSWORD,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (result == null) return null;
+    return RegisterResponse.fromJson(result);
+  }
+
   Future<RegisterResponse?> verifyResetPassCodeRequest(
       VerifyResetPassCodeRequest request) async {
     dynamic result = await _apiClient.post(
