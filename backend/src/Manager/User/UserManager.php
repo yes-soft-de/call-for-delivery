@@ -8,6 +8,7 @@ use App\Constant\User\UserTypeConstant;
 use App\Entity\UserEntity;
 use App\Repository\UserEntityRepository;
 use App\Request\Admin\AdminRegisterRequest;
+use App\Request\User\UserPasswordUpdateByLoggedInUserRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Request\User\UserRegisterRequest;
@@ -278,5 +279,23 @@ class UserManager
         }
 
         return $userEntity;
+    }
+
+    public function updateUserPasswordByLoggedInUser(UserPasswordUpdateByLoggedInUserRequest $request): string|UserEntity
+    {
+        $userEntity = $this->userRepository->findOneBy(['id'=>$request->getId()]);
+
+        if (! $userEntity) {
+            return UserReturnResultConstant::USER_NOT_FOUND_RESULT;
+
+        } else {
+            $userEntity = $this->autoMapping->mapToObject(UserPasswordUpdateByLoggedInUserRequest::class, UserEntity::class, $request, $userEntity);
+
+            $userEntity->setPassword($this->encoder->hashPassword($userEntity, $request->getPassword()));
+
+            $this->entityManager->flush();
+
+            return $userEntity;
+        }
     }
 }

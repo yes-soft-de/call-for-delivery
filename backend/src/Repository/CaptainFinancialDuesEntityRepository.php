@@ -137,9 +137,13 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->setParameter('userId', $userId)
             
-            ->andWhere('captainFinancialDuesEntity.endDate = :date')
+            // ->andWhere('captainFinancialDuesEntity.endDate = :date')
 
-            ->setParameter('date', $date)
+            // ->setParameter('date', $date)
+
+            ->andWhere('captainFinancialDuesEntity.state = :state')
+
+            ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
 
             ->getQuery()
 
@@ -188,7 +192,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     //get the financial cycle to which the order belongs
-    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): CaptainFinancialDuesEntity
+    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): ?CaptainFinancialDuesEntity
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 

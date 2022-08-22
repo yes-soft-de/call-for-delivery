@@ -7,6 +7,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -36,7 +37,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Constant\Order\OrderIsHideConstant;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 
@@ -264,8 +265,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="object", property="dateCaptainArrived"),
      *                  @OA\Property(type="string", property="branchPhone"),
      *                  @OA\Property(type="boolean", property="orderIsMain"),
-     *                  @OA\Property(type="integer", property="isCaptainPaidToProvider"),
-     *                  @OA\Property(type="object", property="dateCaptainPaidToProvider"),
+     *                  @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
+     *                  @OA\Property(type="object", property="isCashPaymentConfirmedByStoreUpdateDate"),
      *                  @OA\Property(type="object", property="images",
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
@@ -1907,7 +1908,7 @@ class OrderController extends BaseController
 
     /**
      * store: Store confirmation whether payment has been made by the captain or not.
-     * @Route("orderupdateiscaptainpaidtoprovider", name="updateIsCaptainPaidToProvider", methods={"PUT"})
+     * @Route("confirmcashpaymentbystore", name="updateIsCashPaymentConfirmedByStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
@@ -1922,33 +1923,33 @@ class OrderController extends BaseController
      * )
      *
      * @OA\RequestBody (
-     *        description="Order Update Captain isCaptainPaidToProvider",
+     *        description="Update isCashPaymentConfirmedByStore of an order by store owner request",
      *        @OA\JsonContent(
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
      *         ),
      *      ),
      *
      * @OA\Response(
      *      response=204,
-     *      description="Return isCaptainPaidToProvider.",
+     *      description="Return isCashPaymentConfirmedByStore new value.",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
      *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="integer", property="isCaptainPaidToProvider"),
+     *              @OA\Property(type="integer", property="isCashPaymentConfirmedByStore"),
      *              )
      *       )
      * )
      *
      * @Security(name="Bearer")
      */
-    public function updateIsCaptainPaidToProvider(Request $request): JsonResponse
+    public function updateIsCashPaymentConfirmedByStore(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCaptainPaidToProviderRequest::class, (object) $data);
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCashPaymentConfirmedByStoreRequest::class, (object) $data);
             
         $violations = $this->validator->validate($request);
 
@@ -1958,7 +1959,7 @@ class OrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $response = $this->orderService->updateIsCaptainPaidToProvider($request);
+        $response = $this->orderService->updateIsCashPaymentConfirmedByStore($request);
 
         return $this->response($response, self::UPDATE);
     }
@@ -2021,6 +2022,59 @@ class OrderController extends BaseController
 
         $result = $this->orderService->calculateCostDeliveryOrder($request);
     
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * store: filter Cash Orders not answered by the store (paid or not paid)
+     * @Route("notansweredcashordersbystore", name="filterNotAnsweredCashOrdersByStore", methods={"POST"})
+     * @IsGranted("ROLE_OWNER")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Order\CashOrdersPaidOrNotFilterByStoreResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCashOrdersPaidOrNotByStore(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CashOrdersPaidOrNotFilterByStoreRequest::class, (object)$data);
+
+        $request->setStoreOwnerUserId($this->getUserId());
+
+        $result = $this->orderService->filterCashOrdersPaidOrNotByStore($request);
+
         return $this->response($result, self::FETCH);
     }
 }

@@ -15,6 +15,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -22,6 +23,7 @@ use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
+use App\Response\Order\CashOrdersPaidOrNotFilterByStoreResponse;
 use App\Response\Order\FilterBidOrderByStoreOwnerResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
@@ -69,8 +71,8 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Request\Order\UpdateOrderRequest;
 use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
-use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
+use App\Response\Order\OrderUpdateIsCashPaymentConfirmedByStoreResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
@@ -131,6 +133,13 @@ class OrderService
         if ($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
 
             return $canCreateOrder;
+        }
+
+        $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+
+            $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
         }
 
         $order = $this->orderManager->createOrder($request);
@@ -1126,6 +1135,7 @@ class OrderService
     }
 
     //Show the sub-order for captains if a car is available
+    //Show Temporarily hidden orders
     //Modify the field (isHide) from (ORDER_HIDE_TEMPORARILY) to (ORDER_SHOW)
     public function showSubOrderIfCarIsAvailable(int $userId, int $userType)
     {
@@ -1135,6 +1145,9 @@ class OrderService
             $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($order->getId());
 
             if ($checkRemainingCars === SubscriptionConstant::SUBSCRIPTION_OK) {
+              
+                $order->setCreatedAt(new DateTime('now'));
+
                 $order = $this->orderManager->updateIsHide($order, OrderIsHideConstant::ORDER_SHOW);
 
                 // save log of the action on order
@@ -1156,6 +1169,7 @@ class OrderService
     public function recyclingOrCancelOrder(RecyclingOrCancelOrderRequest $request): OrderCancelResponse|CanCreateOrderResponse|null|OrderResponse|string
     {
         $orderEntity = $this->orderManager->getOrderByOrderIdAndState($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+       
         if ($orderEntity) {
             if ($request->getCancel() === OrderIsCancelConstant::ORDER_CANCEL) {
 
@@ -1193,6 +1207,13 @@ class OrderService
             if ($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
 
                 return $canCreateOrder;
+            }
+           
+            $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+            if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+    
+                $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
             }
 
             $order = $this->orderManager->recyclingOrder($orderEntity, $request);
@@ -1411,9 +1432,9 @@ class OrderService
         return EraserResultConstant::STORE_HAS_NOT_ORDERS;
     }
 
-    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderUpdateIsCaptainPaidToProviderResponse
+    public function updateIsCashPaymentConfirmedByStore(OrderUpdateIsCashPaymentConfirmedByStoreRequest $request): ?OrderUpdateIsCashPaymentConfirmedByStoreResponse
     {
-        $order = $this->orderManager->updateIsCaptainPaidToProvider($request);
+        $order = $this->orderManager->updateIsCashPaymentConfirmedByStore($request);
 
         if ($order) {
             // create order log in order time line
@@ -1423,14 +1444,14 @@ class OrderService
             $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, null, null);
 
-            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCaptainPaidToProvider) 
-            if ($order->getIsCaptainPaidToProvider() !== $order->getPaidToProvider()) {
+            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
+            if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {
 
                 $this->notificationFirebaseService->notificationToAdmin($order->getId(), NotificationFirebaseConstant::CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE);
             }
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCaptainPaidToProviderResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCashPaymentConfirmedByStoreResponse::class, $order);
     }
 
     public function getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate(StoreOwnerProfileEntity $storeOwnerProfileEntity, $specificDateTime): array
@@ -1442,5 +1463,19 @@ class OrderService
     public function calculateCostDeliveryOrder(CalculateCostDeliveryOrderRequest $request): CalculateCostDeliveryOrderResponse
     {
         return $this->subscriptionService->calculateCostDeliveryOrder($request);
+    }
+
+    // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
+    public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->orderManager->filterCashOrdersPaidOrNotByStore($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", CashOrdersPaidOrNotFilterByStoreResponse::class, $order);
+        }
+
+        return $response;
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Response\ChatRoom;
 
+use OpenApi\Annotations as OA;
+
 class OrderChatRoomsStoreResponse
 {
-    
     /**
      * @var int $id
      */
@@ -21,7 +22,8 @@ class OrderChatRoomsStoreResponse
     public $usedAs;
 
     /**
-     * @var array|null $images
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"))
      */
     public $images;
 
@@ -39,4 +41,9 @@ class OrderChatRoomsStoreResponse
      * @var int|null $captainId
      */
     public $captainId;
+
+    /**
+     * @var string|null
+     */
+    public $avgRating;
 }

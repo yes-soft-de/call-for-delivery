@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Response\Admin\Order;
+namespace App\Response\Order;
 
 use DateTime;
 
-class FilterOrdersPaidOrNotPaidByAdminResponse
+class CashOrdersPaidOrNotFilterByStoreResponse
 {
     public int $id;
 

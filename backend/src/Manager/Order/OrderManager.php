@@ -15,6 +15,7 @@ use App\Repository\OrderEntityRepository;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
+use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
@@ -30,7 +31,7 @@ use App\Request\Order\SubOrderCreateRequest;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use App\Request\Order\UpdateOrderRequest;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
+use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 
 class OrderManager
 {
@@ -70,7 +71,7 @@ class OrderManager
        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
-       $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+    //    $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -511,7 +512,7 @@ class OrderManager
     {
         $orderEntity = $this->autoMapping->mapToObject(RecyclingOrCancelOrderRequest::class, OrderEntity::class, $request, $orderEntity);
 
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        // $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
 
@@ -632,7 +633,7 @@ class OrderManager
         return $this->orderRepository->getStoreOrdersByStoreOwnerId($storeOwnerId);
     }
 
-    public function updateIsCaptainPaidToProvider(OrderUpdateIsCaptainPaidToProviderRequest $request): ?OrderEntity
+    public function updateIsCashPaymentConfirmedByStore(OrderUpdateIsCashPaymentConfirmedByStoreRequest $request): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
@@ -640,9 +641,9 @@ class OrderManager
             return $orderEntity;
         }
 
-        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCaptainPaidToProviderRequest::class, OrderEntity::class, $request, $orderEntity);
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCashPaymentConfirmedByStoreRequest::class, OrderEntity::class, $request, $orderEntity);
 
-        $orderEntity->setDateCaptainPaidToProvider(new DateTime());
+        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime());
 
         $this->entityManager->flush();
 
@@ -653,5 +654,11 @@ class OrderManager
     {
         return $this->orderRepository->getStoreOrdersWhichTakenByUniqueCaptainsAfterSpecificDate($storeOwnerProfileEntity,
             $specificDateTime);
+    }
+
+    // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
+    public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
+    {
+        return $this->orderRepository->filterCashOrdersPaidOrNotByStore($request);
     }
 }

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\UserEntity;
 use App\Manager\User\UserManager;
+use App\Request\User\UserPasswordUpdateByLoggedInUserRequest;
 use App\Request\User\UserPasswordUpdateBySuperAdminRequest;
 use App\Request\User\UserPasswordUpdateRequest;
 use App\Request\User\UserVerificationStatusUpdateRequest;
@@ -133,5 +134,16 @@ class UserService
     public function deleteUserById(int $id): ?UserEntity
     {
         return $this->userManager->deleteUserById($id);
+    }
+
+    public function updateUserPasswordByLoggedInUser(UserPasswordUpdateByLoggedInUserRequest $request): string|UserRegisterResponse
+    {
+        $result = $this->userManager->updateUserPasswordByLoggedInUser($request);
+
+        if ($result === UserReturnResultConstant::USER_NOT_FOUND_RESULT) {
+            return $result;
+        }
+
+        return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $result);
     }
 }

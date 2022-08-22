@@ -725,6 +725,10 @@ class AdminOrderController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
+        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        }
+
         return $this->response($response, self::UPDATE);
     }
 
@@ -1273,5 +1277,56 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+     /**
+     * admin: filter Orders not answered by the store (paid or not paid)
+     * @Route("filterordersnotansweredbystore", name="filterOrdersNotAnsweredByTheStore", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\FilterOrdersPaidOrNotPaidByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterOrdersNotAnsweredByTheStore(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, FilterOrdersPaidOrNotPaidByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterOrdersNotAnsweredByTheStore($request);
+
+        return $this->response($result, self::FETCH);
     }
 }

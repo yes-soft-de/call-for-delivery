@@ -81,4 +81,26 @@ class OrderChatRoomService
     {
         return $this->orderChatRoomManager->deleteChatRoomByOrderIdAndCaptainId($orderId, $captainId);
     }
+
+    public function getOnGoingOrdersChatRoomsForStore(int $userId): ?array
+    {
+        $response = [];
+
+        $orderChatRooms = $this->orderChatRoomManager->getOnGoingOrdersChatRoomsForStore($userId);
+
+        foreach ($orderChatRooms as $orderChatRoom) {
+
+            if(!$orderChatRoom['id']) {
+               return null;
+            }
+
+            $orderChatRoom['roomId'] = $orderChatRoom['roomId']?->toBase32();
+
+            $orderChatRoom['images'] = $this->uploadFileHelperService->getImageParams($orderChatRoom['imagePath']);
+           
+            $response[] = $this->autoMapping->map("array", OrderChatRoomsStoreResponse::class, $orderChatRoom);
+        }
+
+        return $response;
+    }
 }

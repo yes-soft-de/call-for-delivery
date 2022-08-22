@@ -168,7 +168,7 @@ class AdminOrderManager
         $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        // $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
         $this->entityManager->persist($orderEntity);
         $this->entityManager->flush();
@@ -213,20 +213,25 @@ class AdminOrderManager
         return $orderEntity;
     }
     
-    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|OrderEntity|null
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|array|null
     {
         $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
 
         // currently, we can not update an order that its status is delivered
         if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
             return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
         }
 
-        if(! $orderEntity) {
-            return $orderEntity;
-        }
-        
+        $captainId = 0;
+
         if($request->getState() === OrderStateConstant::ORDER_STATE_PENDING){
+            // save the captain id in order to return it to the Service function for creating local notification for him/her
+            $captainId = $orderEntity->getCaptainId()->getCaptainId();
+
             $orderEntity->setCaptainId(null);
             $orderEntity->setDateCaptainArrived(null);
             $orderEntity->setIsCaptainArrived(false);
@@ -236,7 +241,7 @@ class AdminOrderManager
         
         $this->entityManager->flush();
         
-        return $orderEntity;
+        return [$orderEntity, $captainId];
     }
 
     public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
@@ -298,5 +303,15 @@ class AdminOrderManager
         $this->adminStoreOrderDetailsManager->createOrderDetailsByAdmin($orderEntity, $orderCreateRequest);
 
         return $orderEntity;
+    }
+
+    public function filterOrdersNotAnsweredByTheStore(FilterOrdersPaidOrNotPaidByAdminRequest $request): ?array
+    {
+        return $this->orderEntityRepository->filterOrdersNotAnsweredByTheStore($request);
+    }
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
     }
 }

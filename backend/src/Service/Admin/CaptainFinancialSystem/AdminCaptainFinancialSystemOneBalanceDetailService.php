@@ -43,7 +43,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
             $countOrdersWithoutDistance += 1;
             }
 
-           if($detailOrder['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH ) {
+           if($detailOrder['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $detailOrder['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO ) {
                 $amountForStore += $detailOrder['captainOrderCost'];
            }
         }

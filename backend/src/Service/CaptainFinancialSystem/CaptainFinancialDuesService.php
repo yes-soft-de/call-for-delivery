@@ -51,7 +51,7 @@ class CaptainFinancialDuesService
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
-        
+       
         if($financialSystemDetail) {
             //if not send order id get captain's active financial cycle 
             if(! $orderId) {
@@ -66,7 +66,13 @@ class CaptainFinancialDuesService
             //if send order id get the financial cycle to which the order belongs
             else {
                 //Get financial dues by orderId and userId
-                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);               
+                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);    
+              
+                if(! $captainFinancialDues) {
+                    // Create Captain Financial Dues
+                    return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+                    // $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+                }           
             }
 
             $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
@@ -172,10 +178,9 @@ class CaptainFinancialDuesService
     {        
         return $this->captainFinancialDuesManager->getLatestCaptainFinancialDues($captainId);
     }
-    // Deactivation of the financial system in the event of the end of the financial cycle date
-    // public function updateCaptainFinancialSystemDetail(int $userId): CaptainFinancialSystemDetailEntity|null      
+    // Check the end date of the financial cycle
     public function updateCaptainFinancialSystemDetail(int $userId)      
-    {     
+    {    
        $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
 
        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);

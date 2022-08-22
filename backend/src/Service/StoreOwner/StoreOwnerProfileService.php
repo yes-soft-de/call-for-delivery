@@ -46,7 +46,7 @@ class StoreOwnerProfileService
         }
 
         // create verification code for the user
-        //$this->createVerificationCodeForStoreOwner($userRegister);
+        $this->createVerificationCodeForStoreOwner($userRegister);
       
         return $this->autoMapping->map(UserEntity::class, UserRegisterResponse::class, $userRegister);
     }

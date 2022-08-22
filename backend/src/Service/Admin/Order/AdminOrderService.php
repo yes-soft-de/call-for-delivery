@@ -61,6 +61,7 @@ use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
+use App\Constant\Order\OrderIsHideConstant;
 
 class AdminOrderService
 {
@@ -305,7 +306,7 @@ class AdminOrderService
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
 
         if ($orderEntity !== null) {
-            // we need captain id for deleting related order chat room
+            // we need captain id for deleting related order chat room + create local notification for the captain
             $captainId = $orderEntity->getCaptainId()->getId();
 
             // we need also the user id of the captain in order to send a firebase notification later after updating the order
@@ -334,6 +335,9 @@ class AdminOrderService
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
                     NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
+
+                $this->notificationLocalService->createNotificationLocal($captainUserId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), $orderResult->getId());
 
                 //create firebase notification to store
                 try {
@@ -445,6 +449,13 @@ class AdminOrderService
         if ($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
             return $canCreateOrder;
         }
+       
+        $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+        if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+
+            $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+        }
 
         $request->setStoreOwner($storeOwnerProfile);
 
@@ -504,10 +515,18 @@ class AdminOrderService
     {
         $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
         if ($orderEntity) {
+            //Check the order if it is pending
             if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
                 return OrderStateConstant::ORDER_STATE_PENDING_INT;
             }
 
+            // Check whether the captain has received an order for a specific store
+            $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
+            if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN;
+            }
+
+            //Check availability of cars for the store
             $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($request->getOrderId());
 
             if ($checkRemainingCars === SubscriptionConstant::CARS_FINISHED) {
@@ -606,43 +625,59 @@ class AdminOrderService
 
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderByIdGetForAdminResponse|null
     {
-        $order = $this->adminOrderManager->updateOrderStateByAdmin($request);
+        $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
-        if ($order === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
+        if (! $orderResult) {
+            return $orderResult;
+        }
+
+        if ($orderResult === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
         }
-       
-        if($order) {
-            if($order->getCaptainId()) {
 
-                if( $order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                    //create or update captainFinancialDues
-                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
-                  
-                    //save the price of the order in cash in case the captain does not pay the store
-                    if( $order->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $order->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                        $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
-                        $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+        if (count($orderResult) > 0) {
+            if ($orderResult[0]) {
+                if ($orderResult[0]->getCaptainId()) {
+                    if ($orderResult[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        //create or update captainFinancialDues
+                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
+
+                        //save the price of the order in cash in case the captain does not pay the store
+                        if ($orderResult[0]->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderResult[0]->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
+                                OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
+
+                            $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($orderResult[0],
+                                OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
+                        }
+                    }
+
+                    // create firebase notification to captain
+                    try {
+                        $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($orderResult[0]->getCaptainId()->getCaptainId(),
+                            $orderResult[0]->getId(), $orderResult[0]->getState(), NotificationConstant::CAPTAIN);
+
+                    } catch (\Exception $e) {
+                        error_log($e);
+                    }
+
+                } else {
+                    if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+                        // order returned to pending status, so create a local notification for the captain
+                        $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(), $orderResult[0]->getId());
                     }
                 }
+                // insert new order log
+                $this->orderTimeLineService->createOrderLogsRequest($orderResult[0], $this->storeOrderDetailsService->getStoreBranchByOrderId($orderResult[0]->getId()));
 
-                // create firebase notification to captain
-                try{
-                    $this->notificationFirebaseService->notificationOrderStateForUserByAdmin($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
-                }
-                catch (\Exception $e){
-                    error_log($e);
-                }
+                // save log of the action on order
+                $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
             }
-            // insert new order log
-            $this->orderTimeLineService->createOrderLogsRequest($order, $this->storeOrderDetailsService->getStoreBranchByOrderId($order->getId()));
-
-            // save log of the action on order
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $orderResult[0]);
       }
       
     public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
@@ -809,4 +844,39 @@ class AdminOrderService
 
         return $this->autoMapping->map(OrderEntity::class, OrderCreateByAdminResponse::class, $order);
     }
+    
+    // filter Orders not answered by the store (paid or not paid)
+    public function filterOrdersNotAnsweredByTheStore(FilterOrdersPaidOrNotPaidByAdminRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->filterOrdersNotAnsweredByTheStore($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterOrdersPaidOrNotPaidByAdminResponse::class, $order);
+        }
+
+        return $response;
+    }
+
+    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int|null $primaryOrderId): int
+    {
+        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
+       
+        if ($orderEntity) {
+            //if the order not main
+            if ($orderEntity->getOrderIsMain() !== true) {
+                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) related
+            if ($primaryOrderId === $orderEntity->getId()) {
+
+                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+            }
+            //if the order main and (request order) not related
+            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+        }
+
+        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+    }    
 }
