@@ -253,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("عدد الموظفين العاملين"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "clientDistance":
+            MessageLookupByLibrary.simpleMessage("المسافة للعميل"),
         "clientLocation": MessageLookupByLibrary.simpleMessage("موقع العميل"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),

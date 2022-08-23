@@ -7809,6 +7809,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Client Distance`
+  String get clientDistance {
+    return Intl.message(
+      'Client Distance',
+      name: 'clientDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

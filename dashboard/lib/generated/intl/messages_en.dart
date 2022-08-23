@@ -257,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourSize":
             MessageLookupByLibrary.simpleMessage("Choose Your Size"),
         "city": MessageLookupByLibrary.simpleMessage("city"),
+        "clientDistance":
+            MessageLookupByLibrary.simpleMessage("Client Distance"),
         "clientLocation":
             MessageLookupByLibrary.simpleMessage("Client location"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),

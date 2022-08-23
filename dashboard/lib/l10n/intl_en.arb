@@ -775,5 +775,6 @@
     "captainOffer": "Captain offer",
     "offerStatus": "Offer status",
     "activeOffer": "Active Offer",
-    "unActiveOffer": "Inactive offer"
+    "unActiveOffer": "Inactive offer",
+    "clientDistance": "Client Distance"
 }
