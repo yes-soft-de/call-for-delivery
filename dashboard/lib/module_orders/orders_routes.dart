@@ -14,4 +14,5 @@ class OrdersRoutes {
   // ORDER CASH
   static const ORDER_CASH_CAPTAINS = '/order_cash_captains';
   static const ORDER_CASH_STORES = '/order_cash_stores';
+  static const ORDERS_RECEIVE_CASH = '/orders_receive_cash_stores';
 }

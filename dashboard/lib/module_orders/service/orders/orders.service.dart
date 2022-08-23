@@ -45,6 +45,31 @@ class OrdersService {
     return OrderModel.withData(response);
   }
 
+  Future<DataModel> getNotAnsweredOrderCash(FilterOrderRequest request) async {
+    OrdersResponse? response =
+        await _ordersManager.getNotAnsweredOrderCash(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
+  Future<DataModel> getConflictingAnswerOrderCash(
+      FilterOrderRequest request) async {
+    OrdersResponse? response =
+        await _ordersManager.getConflictingAnswerOrderCash(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
   Future<DataModel> getCaptainOrdersFilter(FilterOrderRequest request) async {
     OrderCaptainLogsResponse? response =
         await _ordersManager.getCaptainOrdersFilter(request);

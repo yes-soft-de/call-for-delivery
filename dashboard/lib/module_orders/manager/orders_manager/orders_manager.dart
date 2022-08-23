@@ -31,6 +31,13 @@ class OrdersManager {
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
+
+  Future<OrdersResponse?> getConflictingAnswerOrderCash(
+          FilterOrderRequest request) =>
+      _repository.getConflictingAnswerOrderCash(request);
+
+  Future<OrdersResponse?> getNotAnsweredOrderCash(FilterOrderRequest request) =>
+      _repository.getNotAnsweredOrderCash(request);
   Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(
           FilterOrderRequest request) =>
       _repository.getCaptainOrdersFilter(request);

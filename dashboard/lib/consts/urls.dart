@@ -125,6 +125,10 @@ class Urls {
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
+  static const OWNER_CASH_ORDERS_NOT_ANSWERED_API =
+      BASE_API_ORDER + '/filterordersnotansweredbystore';
+  static const OWNER_CONFLICTING_ANSWERS_ORDERS_API =
+      BASE_API_ORDER + '/filterdifferentansweredcashorders';
   static const FILTER_CAPTAIN_ORDERS_API =
       BASE_API_ORDER + '/filtercaptainordersbyadmin';
   static const GET_ORDER_LOGS_API =

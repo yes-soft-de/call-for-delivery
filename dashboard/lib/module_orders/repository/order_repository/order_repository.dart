@@ -49,6 +49,30 @@ class OrderRepository {
     return OrdersResponse.fromJson(response);
   }
 
+  Future<OrdersResponse?> getNotAnsweredOrderCash(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.OWNER_CASH_ORDERS_NOT_ANSWERED_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getConflictingAnswerOrderCash(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.OWNER_CONFLICTING_ANSWERS_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
   Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(
       FilterOrderRequest request) async {
     var token = await _authService.getToken();
