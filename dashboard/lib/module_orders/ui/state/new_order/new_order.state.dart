@@ -254,7 +254,6 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
-                    validator: false,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},

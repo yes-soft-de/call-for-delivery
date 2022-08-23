@@ -8,6 +8,7 @@ import 'total.dart';
 
 class Datum {
   int? id;
+  int? packageType;
   String? packageName;
   StartDate? startDate;
   EndDate? endDate;
@@ -41,7 +42,8 @@ class Datum {
       this.remainingOrders,
       this.isFuture,
       this.ordersExceedGeographicalRange,
-      this.packageNote});
+      this.packageNote,
+      this.packageType});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -52,6 +54,7 @@ class Datum {
         packageCarCount: json['packageCarCount'] as num?,
         packageName: json['packageName'] as String?,
         packageNote: json['packageNote'] as String?,
+        packageType: json['packageType'] as int?,
         startDate: json['startDate'] == null
             ? null
             : StartDate.fromJson(json['startDate'] as Map<String, dynamic>),
