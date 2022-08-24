@@ -878,5 +878,10 @@ class AdminOrderService
         }
 
         return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-    }    
+    } 
+
+    public function getOrders()
+    {
+       return $this->adminOrderManager->getOrders();
+    }  
 }

@@ -314,4 +314,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
     }
+
+    public function getOrders()
+    {
+        return $this->orderEntityRepository->getOrders();
+    }
 }
