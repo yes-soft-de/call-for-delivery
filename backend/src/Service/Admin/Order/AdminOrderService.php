@@ -16,6 +16,7 @@ use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
@@ -23,6 +24,7 @@ use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
 use App\Response\Admin\Order\BidOrderGetForAdminResponse;
 use App\Response\Admin\Order\CaptainNotArrivedOrderFilterResponse;
+use App\Response\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
@@ -880,6 +882,20 @@ class AdminOrderService
         return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
     } 
 
+    // filter cash orders which have different answers for cash payment
+    public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->filterDifferentAnsweredCashOrdersByAdmin($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", FilterDifferentlyAnsweredCashOrdersByAdminResponse::class, $order);
+        }
+
+        return $response;
+    }
+    
     public function getOrders()
     {
        return $this->adminOrderManager->getOrders();

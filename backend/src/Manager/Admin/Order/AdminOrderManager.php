@@ -7,6 +7,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
@@ -315,6 +316,12 @@ class AdminOrderManager
         return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
     }
 
+    // filter cash orders which have different answers for cash payment
+    public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
+    {
+        return $this->orderEntityRepository->filterDifferentAnsweredCashOrdersByAdmin($request);
+    }
+    
     public function getOrders()
     {
         return $this->orderEntityRepository->getOrders();
