@@ -7819,6 +7819,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Conflicts answer`
+  String get ordersCashConflictsAnswer {
+    return Intl.message(
+      'Conflicts answer',
+      name: 'ordersCashConflictsAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not answered by store`
+  String get ordersCashNotAnswered {
+    return Intl.message(
+      'Not answered by store',
+      name: 'ordersCashNotAnswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders cash`
+  String get ordersCash {
+    return Intl.message(
+      'Orders cash',
+      name: 'ordersCash',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

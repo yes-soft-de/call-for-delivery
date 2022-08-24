@@ -775,5 +775,8 @@
     "offerStatus": "حالة العرض",
     "activeOffer": "عرض فعال",
     "unActiveOffer": "عرض غير فعال",
-    "clientDistance": "المسافة للعميل"
+    "clientDistance": "المسافة للعميل",
+    "ordersCashConflictsAnswer": "اجوبة متعارضة",
+    "ordersCashNotAnswered": "طلبات دون جواب المتجر",
+    "ordersCash":"الطلبات الكاش"
 }

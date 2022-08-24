@@ -91,6 +91,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
+                  customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
+                      S.current.ordersCash, Icons.payments_rounded, true),
                 ],
                 page: widget.currentPage),
 

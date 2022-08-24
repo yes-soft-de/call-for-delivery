@@ -23,7 +23,9 @@ class DatumOrder {
   String? storeOwnerName;
   bool? orderIsMain;
   List<SubOrder>? subOrders;
-
+  int? isCashPaymentConfirmedByStore;
+  int? paidToProvider;
+  String? captainName;
   DatumOrder(
       {this.id,
       this.state,
@@ -43,8 +45,10 @@ class DatumOrder {
       this.storeOwnerName,
       this.orderIsMain,
       this.subOrders,
-      this.location
-      });
+      this.location,
+      this.isCashPaymentConfirmedByStore,
+      this.paidToProvider,
+      this.captainName});
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
         id: json['id'] as int?,
@@ -53,6 +57,10 @@ class DatumOrder {
         orderCost: json['orderCost'] as num?,
         orderType: json['orderType'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
+        paidToProvider: json['paidToProvider'] as int?,
+        captainName: json['captainName'] as String?,
+        isCashPaymentConfirmedByStore:
+            json['isCashPaymentConfirmedByStore'] as int?,
         note: json['note'] as String?,
         deliveryDate: json['deliveryDate'] == null
             ? null

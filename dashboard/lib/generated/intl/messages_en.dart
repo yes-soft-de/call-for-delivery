@@ -737,6 +737,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ordered not accepted"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "ordersCash": MessageLookupByLibrary.simpleMessage("Orders cash"),
+        "ordersCashConflictsAnswer":
+            MessageLookupByLibrary.simpleMessage("Conflicts answer"),
+        "ordersCashNotAnswered":
+            MessageLookupByLibrary.simpleMessage("Not answered by store"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "Orders exceed geographical range"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),

@@ -776,5 +776,8 @@
     "offerStatus": "Offer status",
     "activeOffer": "Active Offer",
     "unActiveOffer": "Inactive offer",
-    "clientDistance": "Client Distance"
+    "clientDistance": "Client Distance",
+    "ordersCashConflictsAnswer": "Conflicts answer",
+    "ordersCashNotAnswered": "Not answered by store",
+    "ordersCash": "Orders cash"
 }

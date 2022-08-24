@@ -732,6 +732,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الطلبات غير المسلمة"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "ordersCash": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
+        "ordersCashConflictsAnswer":
+            MessageLookupByLibrary.simpleMessage("اجوبة متعارضة"),
+        "ordersCashNotAnswered":
+            MessageLookupByLibrary.simpleMessage("طلبات دون جواب المتجر"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "الطلبات التي تجاوزت النطاق الجغرافي للباقة"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),

@@ -19,6 +19,9 @@ class OrderModel extends DataModel {
   late bool? orderIsMain;
   late LatLng? branchLocation;
   late String? destinationLink;
+  int? isCashPaymentConfirmedByStore;
+  int? paidToProvider;
+  String? captainName;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -30,7 +33,10 @@ class OrderModel extends DataModel {
       required this.storeName,
       required this.orderIsMain,
       this.destinationLink,
-      this.branchLocation});
+      this.branchLocation,
+      this.isCashPaymentConfirmedByStore,
+      this.paidToProvider,
+      this.captainName});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -50,6 +56,7 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       _orders.add(OrderModel(
+          captainName: element.captainName,
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
           deliveryDate: delivery,
@@ -59,7 +66,10 @@ class OrderModel extends DataModel {
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
           orderIsMain: element.orderIsMain,
-          branchLocation: LatLng(element.location?.lat, element.location?.lon),
+          paidToProvider: element.paidToProvider,
+          isCashPaymentConfirmedByStore: element.isCashPaymentConfirmedByStore,
+          branchLocation:
+              LatLng(element.location?.lat ?? 0, element.location?.lon ?? 0),
           destinationLink: element.destination?.link));
     });
   }

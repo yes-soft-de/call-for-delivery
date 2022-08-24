@@ -29,7 +29,9 @@ class OrdersReceiveCashStateManager {
     }
     if (screenState.currentIndex == 0) {
       getNotAnsweredOrder(screenState, request);
-    } else {}
+    } else {
+      getConflictingAnswerOrderCash(screenState, request);
+    }
   }
 
   void getNotAnsweredOrder(

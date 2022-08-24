@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/orders_recieve_cash_state_manager.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
@@ -76,17 +77,16 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderLog,
-            actions: [
-              CustomC4dAppBar.actionIcon(context, onTap: () {
-                ordersFilter.fromDate =
-                    DateTime(today.year, today.month, today.day, 0)
-                        .toIso8601String();
-                ordersFilter.toDate = DateTime.now().toIso8601String();
-                currentIndex = 0;
-                getOrders();
-              }, icon: Icons.restart_alt_rounded)
-            ]),
+            title: S.current.orderLog, icon: Icons.menu, onTap: () {
+          GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+        }, actions: [
+          CustomC4dAppBar.actionIcon(context, onTap: () {
+            ordersFilter.fromDate = null;
+            ordersFilter.toDate = null;
+            currentIndex = 0;
+            getOrders();
+          }, icon: Icons.restart_alt_rounded)
+        ]),
         body: Column(
           children: [
             SizedBox(
@@ -217,9 +217,9 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
               cursorColor: Theme.of(context).colorScheme.primary,
               items: [
                 FilterItem(
-                  label: S.current.pending,
+                  label: S.current.ordersCashNotAnswered,
                 ),
-                FilterItem(label: S.current.ongoing),
+                FilterItem(label: S.current.ordersCashConflictsAnswer),
               ],
               onItemSelected: (index) {
                 currentIndex = index;
