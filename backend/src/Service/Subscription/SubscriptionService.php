@@ -725,9 +725,14 @@ class SubscriptionService
         if($subscription) {
            
             $item['extraDistance'] = $this->getExtraDistance($subscription['geographicalRange'], $request->getStoreBranchToClientDistance());
-
-            $item['orderDeliveryCost'] = $subscription['packageCost'];
             
+            if($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+                $item['orderDeliveryCost'] = $subscription['packageCost'];
+            }
+            else{
+                $item['orderDeliveryCost'] = round($subscription['packageCost'] / $subscription['packageOrderCount'], 2);
+            }
+
             $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
             
             $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
