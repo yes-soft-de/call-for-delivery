@@ -211,4 +211,5 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       ),
     );
   }
+
 }
