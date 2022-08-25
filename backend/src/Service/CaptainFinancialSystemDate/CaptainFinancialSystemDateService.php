@@ -73,4 +73,17 @@ class CaptainFinancialSystemDateService
 
         return $countDays;
     }
+
+    public function subtractTwoDatesTest(DateTime $firstDate, DateTime $lastDate) : int
+    {
+        $countDays = 0;
+        $difference = $firstDate->diff($lastDate);
+
+        $countDays = $difference?->d; 
+        if($difference?->h === 23 && $difference?->i === 59 && $difference?->s === 59) {
+            $countDays += 1;
+        }
+
+        return $countDays;
+    }
 }

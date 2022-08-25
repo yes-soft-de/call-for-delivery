@@ -9,6 +9,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Controller\BaseController;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
@@ -1326,6 +1327,58 @@ class AdminOrderController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, FilterOrdersPaidOrNotPaidByAdminRequest::class, (object)$data);
 
         $result = $this->adminOrderService->filterOrdersNotAnsweredByTheStore($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter cash orders which have different answers for cash payment
+     * @Route("filterdifferentansweredcashorders", name="filterCashOrdersWhichHaveDifferentAnswersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="storeProfileId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterDifferentAnsweredCashOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, FilterDifferentlyAnsweredCashOrdersByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterDifferentAnsweredCashOrdersByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }

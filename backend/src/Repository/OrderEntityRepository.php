@@ -20,6 +20,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\SupplierCategoryEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
@@ -2274,5 +2275,90 @@ class OrderEntityRepository extends ServiceEntityRepository
         $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
+    }  
+    
+    // filter cash orders which have different answers for cash payment
+    public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
+                'orderEntity.paidToProvider', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName', 'storeOwnerProfileEntity.storeOwnerName')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId')
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
+            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore != orderEntity.paidToProvider')
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :payment')
+            ->setParameter('payment', OrderTypeConstant::ORDER_PAYMENT_CASH)
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getStoreProfileId() !== null && $request->getStoreProfileId() !== "") {
+            $query->andWhere('orderEntity.storeOwner = :storeOwner');
+            $query->setParameter('storeOwner', $request->getStoreProfileId());
+        }
+
+        if (($request->getFromDate() !== null && $request->getFromDate() !== "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            $query->andWhere('orderEntity.createdAt >= :createdAt');
+            $query->setParameter('createdAt', $request->getFromDate());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() !== null && $request->getToDate() !== "")) {
+            $query->andWhere('orderEntity.createdAt <= :createdAt');
+            $query->setParameter('createdAt', ($request->getToDate()));
+
+        } elseif (($request->getFromDate() !== null || $request->getFromDate() !== "") && ($request->getToDate() !== null && $request->getToDate() !== "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', ($request->getToDate()));
+        }
+
+        $query->groupBy('orderEntity.id');
+
+        return $query->getQuery()->getResult();
     }
+    
+    public function getOrders()
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('IDENTITY (orderEntity.captainId) as captainId')
+            ->addSelect('orderEntity.id, orderEntity.createdAt')
+            
+            ->andWhere('orderEntity.createdAt > :createdAt')
+            ->setParameter('createdAt', new DateTime('2022-08-19 '))
+           
+            ->andWhere('orderEntity.captainId IS NOT NULL')
+
+            ->getQuery()
+            ->getResult();
+    }  
 }
