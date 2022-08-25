@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
-import 'package:c4d/module_bid_order/bid_order_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
@@ -216,7 +215,7 @@ class StoreProfileLoadedState extends States {
               title: S.of(context).financeSubscriptions,
               onTapCard: () {
                 Navigator.of(context).pushNamed(
-                    SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT,
                     arguments: profile?.id ?? -1);
               }),
           cardTap(

@@ -1,18 +1,20 @@
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
+import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
 
 @injectable
-class StoresModule extends YesModule {
+class SubscriptionsModule extends YesModule {
   final StoreSubscriptionsFinanceScreen storeSubscriptionsFinanceScreen;
   final StoreSubscriptionsFinanceDetailsScreen
       storeSubscriptionsFinanceDetailsScreen;
+  final SubscriptionManagementScreen subscriptionManagementScreen;
 
-  StoresModule(this.storeSubscriptionsFinanceDetailsScreen,
-      this.storeSubscriptionsFinanceScreen) {
+  SubscriptionsModule(this.storeSubscriptionsFinanceDetailsScreen,
+      this.storeSubscriptionsFinanceScreen, this.subscriptionManagementScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -21,6 +23,8 @@ class StoresModule extends YesModule {
           storeSubscriptionsFinanceScreen,
       SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
           storeSubscriptionsFinanceDetailsScreen,
+      SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT: (context) =>
+          subscriptionManagementScreen,
     };
   }
 }
