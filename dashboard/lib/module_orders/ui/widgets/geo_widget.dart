@@ -132,6 +132,12 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
                                         '') +
                                     ' ' +
                                     S.current.sar),
+                            Divider(
+                              color: Theme.of(context).backgroundColor,
+                              thickness: 2.5,
+                              indent: 8,
+                              endIndent: 8,
+                            ),
                             getRow(
                                 S.current.total,
                                 (deliveryCostDetails?.total?.toString() ?? '') +
@@ -157,24 +163,42 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   }
 
   Widget getRow(String title, String subtitle) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor),
-          child: Text(title),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor),
-          child: Text(subtitle),
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.all(4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 125,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).backgroundColor),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Container(
+            width: 75,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).backgroundColor),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                subtitle,
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
