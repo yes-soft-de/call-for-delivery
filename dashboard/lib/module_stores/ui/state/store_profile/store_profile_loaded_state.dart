@@ -9,6 +9,7 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
+import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -215,7 +216,7 @@ class StoreProfileLoadedState extends States {
               title: S.of(context).financeSubscriptions,
               onTapCard: () {
                 Navigator.of(context).pushNamed(
-                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN,
                     arguments: profile?.id ?? -1);
               }),
           cardTap(

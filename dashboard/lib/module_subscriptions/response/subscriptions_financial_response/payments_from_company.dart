@@ -1,4 +1,4 @@
-import 'package:c4d/module_stores/response/subscriptions_financial_response/start_date.dart';
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/start_date.dart';
 
 class PaymentsFromStore {
   int? id;

@@ -1,6 +1,4 @@
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
-import 'package:c4d/module_stores/ui/screen/store_subscriptions_details_screen.dart';
-import 'package:c4d/module_stores/ui/screen/store_subscriptions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
@@ -24,24 +22,20 @@ class StoresModule extends YesModule {
   final StoresNeedsSupportScreen supportScreen;
   final OrderDetailsScreen _orderStatus;
   final OrderLogsScreen _logsScreen;
-  final StoreSubscriptionsFinanceScreen storeSubscriptionsFinanceScreen;
-  final StoreSubscriptionsFinanceDetailsScreen
-      storeSubscriptionsFinanceDetailsScreen;
   final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
   final OrderTimeLineScreen orderTimeLineScreen;
 
   StoresModule(
-      this.storesScreen,
-      this._storeInfoScreen,
-      this.storesInActiveScreen,
-      this.storeBalanceScreen,
-      this.supportScreen,
-      this._orderStatus,
-      this._logsScreen,
-      this.captainNotArrivedScreen,
-      this.orderTimeLineScreen,
-      this.storeSubscriptionsFinanceDetailsScreen,
-      this.storeSubscriptionsFinanceScreen) {
+    this.storesScreen,
+    this._storeInfoScreen,
+    this.storesInActiveScreen,
+    this.storeBalanceScreen,
+    this.supportScreen,
+    this._orderStatus,
+    this._logsScreen,
+    this.captainNotArrivedScreen,
+    this.orderTimeLineScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -55,10 +49,6 @@ class StoresModule extends YesModule {
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
-      StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN: (context) =>
-          storeSubscriptionsFinanceScreen,
-      StoresRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
-          storeSubscriptionsFinanceDetailsScreen,
     };
   }
 }

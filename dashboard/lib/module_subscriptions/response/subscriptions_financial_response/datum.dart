@@ -1,7 +1,6 @@
 import 'package:c4d/module_orders/response/orders_response/datum.dart';
-import 'package:c4d/module_stores/response/subscriptions_financial_response/captain_offer.dart';
-import 'package:c4d/module_stores/response/subscriptions_financial_response/payments_from_company.dart';
-
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/captain_offer.dart';
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/payments_from_company.dart';
 import 'end_date.dart';
 import 'start_date.dart';
 import 'total.dart';

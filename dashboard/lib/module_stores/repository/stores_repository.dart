@@ -4,7 +4,6 @@ import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
-import 'package:c4d/module_stores/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -136,16 +135,5 @@ class StoresRepository {
     );
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
-  }
-
-  Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance(
-      int storeId) async {
-    var token = await _authService.getToken();
-    var response = await _apiClient.get(
-      Urls.GET_STORE_SUBSCRIPTIONS_FINANCE + '/$storeId',
-      headers: {'Authorization': 'Bearer ' + '$token'},
-    );
-    if (response == null) return null;
-    return SubscriptionsFinancialResponse.fromJson(response);
   }
 }

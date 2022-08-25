@@ -1,4 +1,4 @@
-import 'package:c4d/module_stores/response/subscriptions_financial_response/subscriptions_financial_response.dart';
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
