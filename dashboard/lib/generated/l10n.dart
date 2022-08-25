@@ -7849,6 +7849,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Subscription management`
+  String get subscriptionManagement {
+    return Intl.message(
+      'Subscription management',
+      name: 'subscriptionManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current subscriptions`
+  String get currentSubscriptions {
+    return Intl.message(
+      'Current subscriptions',
+      name: 'currentSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create subscription`
+  String get createSubscription {
+    return Intl.message(
+      'Create subscription',
+      name: 'createSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit subscription`
+  String get editSubscriptions {
+    return Intl.message(
+      'Edit subscription',
+      name: 'editSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete future subscription`
+  String get deleteFutureSubscription {
+    return Intl.message(
+      'Delete future subscription',
+      name: 'deleteFutureSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not implemented yet`
+  String get notImplementedYet {
+    return Intl.message(
+      'Not implemented yet',
+      name: 'notImplementedYet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

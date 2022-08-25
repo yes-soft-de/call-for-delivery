@@ -778,5 +778,11 @@
     "clientDistance": "المسافة للعميل",
     "ordersCashConflictsAnswer": "اجوبة متعارضة",
     "ordersCashNotAnswered": "طلبات دون جواب المتجر",
-    "ordersCash":"الطلبات الكاش"
+    "ordersCash":"الطلبات الكاش",
+    "subscriptionManagement":"إدارة الاشتراكات",
+    "currentSubscriptions":"الاشتراكات الحالية",
+    "createSubscription":"إنشاء اشتراك",
+    "editSubscriptions":"تعديل الاشتراك",
+    "deleteFutureSubscription":"حذف كل الاشتراكات المستقبلية",
+    "notImplementedYet":"لم يتم تفعيل هذه الميزة بعد"
 }

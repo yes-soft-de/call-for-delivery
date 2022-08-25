@@ -779,5 +779,11 @@
     "clientDistance": "Client Distance",
     "ordersCashConflictsAnswer": "Conflicts answer",
     "ordersCashNotAnswered": "Not answered by store",
-    "ordersCash": "Orders cash"
+    "ordersCash": "Orders cash",
+    "subscriptionManagement": "Subscription management",
+    "currentSubscriptions": "Current subscriptions",
+    "createSubscription": "Create subscription",
+    "editSubscriptions": "Edit subscription",
+    "deleteFutureSubscription": "Delete future subscription",
+    "notImplementedYet": "Not implemented yet"
 }

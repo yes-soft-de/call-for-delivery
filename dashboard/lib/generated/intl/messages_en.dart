@@ -340,6 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "createNewReport":
             MessageLookupByLibrary.simpleMessage("Create new Report"),
+        "createSubscription":
+            MessageLookupByLibrary.simpleMessage("Create subscription"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "createdNewOrder":
@@ -355,6 +357,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrderStatus":
             MessageLookupByLibrary.simpleMessage("Order status"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
+        "currentSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Current subscriptions"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
@@ -373,6 +377,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
+        "deleteFutureSubscription":
+            MessageLookupByLibrary.simpleMessage("Delete future subscription"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
@@ -409,6 +415,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
+        "editSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Edit subscription"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
         "electronic": MessageLookupByLibrary.simpleMessage("Electronic"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -645,6 +653,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Can not remove it, The captain received the order"),
         "notCompletedAccount":
             MessageLookupByLibrary.simpleMessage("Not completed account"),
+        "notImplementedYet":
+            MessageLookupByLibrary.simpleMessage("Not implemented yet"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "You dont have a subscription yet"),
         "notVerified": MessageLookupByLibrary.simpleMessage(
@@ -1034,6 +1044,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Subscription Date"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("Subscription Inactive"),
+        "subscriptionManagement":
+            MessageLookupByLibrary.simpleMessage("Subscription management"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription Status"),
         "subscriptionsFinanceDetailsHint": MessageLookupByLibrary.simpleMessage(

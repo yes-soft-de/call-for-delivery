@@ -336,6 +336,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createNewOrder":
             MessageLookupByLibrary.simpleMessage("انشاء طلب جديد "),
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
+        "createSubscription":
+            MessageLookupByLibrary.simpleMessage("إنشاء اشتراك"),
         "created": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
@@ -351,6 +353,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrderStatus":
             MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
+        "currentSubscriptions":
+            MessageLookupByLibrary.simpleMessage("الاشتراكات الحالية"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),
@@ -370,6 +374,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
+        "deleteFutureSubscription": MessageLookupByLibrary.simpleMessage(
+            "حذف كل الاشتراكات المستقبلية"),
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
@@ -406,6 +412,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "editOrder": MessageLookupByLibrary.simpleMessage("تعديل الطلب"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
+        "editSubscriptions":
+            MessageLookupByLibrary.simpleMessage("تعديل الاشتراك"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال :"),
         "electronic": MessageLookupByLibrary.simpleMessage("إلكترونيات"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
@@ -640,6 +648,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكن إزالة الطلب لاستلام الكابتن للطلب"),
         "notCompletedAccount":
             MessageLookupByLibrary.simpleMessage("حساب غير مكتمل"),
+        "notImplementedYet":
+            MessageLookupByLibrary.simpleMessage("لم يتم تفعيل هذه الميزة بعد"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":
@@ -1027,6 +1037,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("الاشتراك غير مفعل"),
+        "subscriptionManagement":
+            MessageLookupByLibrary.simpleMessage("إدارة الاشتراكات"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "subscriptionsFinanceDetailsHint": MessageLookupByLibrary.simpleMessage(
