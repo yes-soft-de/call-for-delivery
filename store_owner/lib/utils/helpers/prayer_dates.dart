@@ -43,17 +43,6 @@ class PrayerDate {
 
 class PrayerHelper {
   static String getMessage(String status) {
-    if (status == 'Fajr') {
-      return S.current.fajrMessage;
-    } else if (status == 'Dhuhr') {
-      return S.current.dhahrMessage;
-    } else if (status == 'Asr') {
-      return S.current.asrMessage;
-    } else if (status == 'Maghrib') {
-      return S.current.maghribMessage;
-    } else if (status == 'Isha') {
-      return S.current.ishaMessage;
-    }
-    return '';
+    return S.current.prayerMessage;
   }
 }
