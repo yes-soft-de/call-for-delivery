@@ -19,6 +19,7 @@ use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 use  App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest;
 use DateTime;
+use App\Service\Admin\Order\AdminOrderService;
 
 class AdminCaptainFinancialSystemDetailService
 {
@@ -31,8 +32,9 @@ class AdminCaptainFinancialSystemDetailService
     private AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService;
     private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
+    private AdminOrderService $adminOrderService;
 
-    public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService, AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService, AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService, AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesService $captainFinancialDuesService)
+    public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService, AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService, AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService, AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService)
     {
         $this->captainPaymentService = $captainPaymentService;
         $this->adminCaptainFinancialSystemOneBalanceDetailService = $adminCaptainFinancialSystemOneBalanceDetailService;
@@ -43,6 +45,7 @@ class AdminCaptainFinancialSystemDetailService
         $this->adminCaptainFinancialSystemAccordingOnOrderService = $adminCaptainFinancialSystemAccordingOnOrderService;
         $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
         $this->captainFinancialDuesService = $captainFinancialDuesService;
+        $this->adminOrderService = $adminOrderService;
 
     }
 
@@ -131,5 +134,13 @@ class AdminCaptainFinancialSystemDetailService
         }
        
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);
+    }
+
+    //calculate orders that not belong to any financial dues
+    public function calculateOrdersThatNotBelongToAnyFinancialDues() 
+    {
+       $orders = $this->adminOrderService->getOrders();
+
+       $this->captainFinancialDuesService->calculateOrdersThatNotBelongToAnyFinancialDues($orders);     
     }
 }

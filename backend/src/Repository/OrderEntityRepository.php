@@ -2275,8 +2275,8 @@ class OrderEntityRepository extends ServiceEntityRepository
         $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
-    }
-
+    }  
+    
     // filter cash orders which have different answers for cash payment
     public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
     {
@@ -2346,4 +2346,19 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+    
+    public function getOrders()
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('IDENTITY (orderEntity.captainId) as captainId')
+            ->addSelect('orderEntity.id, orderEntity.createdAt')
+            
+            ->andWhere('orderEntity.createdAt > :createdAt')
+            ->setParameter('createdAt', new DateTime('2022-08-19 '))
+           
+            ->andWhere('orderEntity.captainId IS NOT NULL')
+
+            ->getQuery()
+            ->getResult();
+    }  
 }

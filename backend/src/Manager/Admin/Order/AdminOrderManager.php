@@ -321,4 +321,9 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterDifferentAnsweredCashOrdersByAdmin($request);
     }
+    
+    public function getOrders()
+    {
+        return $this->orderEntityRepository->getOrders();
+    }
 }

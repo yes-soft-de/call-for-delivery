@@ -211,4 +211,46 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->getOneOrNullResult();
     }
+
+    //--------------->START fix create financial dues
+    public function getCaptainFinancialDuesByUserIDAndOrderIdForFixByUserID(int $userId, int $orderId, $createdDate): ?CaptainFinancialDuesEntity
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+            ->setParameter('userId', $userId)
+           
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
+
+            ->andWhere('captainFinancialDuesEntity.startDate <= :createdDate')
+            ->andWhere('captainFinancialDuesEntity.endDate >= :createdDate')  
+            ->setParameter('createdDate', $createdDate)                
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+
+    public function getCaptainFinancialDuesByUserIDAndOrderIdForFix(int $captainId, int $orderId, $createdDate)
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+           
+            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->andWhere('captainFinancialDuesEntity.captain = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('captainFinancialDuesEntity.startDate <= :createdDate')
+            ->andWhere('captainFinancialDuesEntity.endDate >= :createdDate')  
+            ->setParameter('createdDate', $createdDate)          
+
+            ->getQuery()
+
+            ->getOneOrNullResult();
+    }
+    //--------------->END fix create financial dues
 }

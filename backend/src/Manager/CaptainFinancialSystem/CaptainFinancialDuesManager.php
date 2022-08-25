@@ -10,6 +10,7 @@ use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
 use DateTime;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDatesRequest;
 
 class CaptainFinancialDuesManager
 {
@@ -108,4 +109,35 @@ class CaptainFinancialDuesManager
     {  
         return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);
     } 
+
+    public function createCaptainFinancialDuesByOptionalDates(CreateCaptainFinancialDuesByOptionalDatesRequest $request): CaptainFinancialDuesEntity
+    {
+        $request->setCaptain($this->captainManager->getCaptainProfileById($request->getCaptain()));
+      
+        $captainFinancialDuesEntity = $this->autoMapping->map(CreateCaptainFinancialDuesByOptionalDatesRequest::class, CaptainFinancialDuesEntity::class, $request);
+       
+        $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
+       
+        $this->entityManager->persist($captainFinancialDuesEntity);
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function getCaptainProfile($captainProfileId)
+    {
+        return $this->captainManager->getCaptainProfileById($captainProfileId);      
+    }
+  
+    //--------------->START fix create financial dues  
+    public function getCaptainFinancialDuesByUserIDAndOrderIdForFixByUserID(int $userId, int $orderId, $createdDate): ?CaptainFinancialDuesEntity
+    {  
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderIdForFixByUserID($userId, $orderId, $createdDate);
+    } 
+
+    public function getCaptainFinancialDuesByUserIDAndOrderIdForFix(int $captainId, int $orderId, $createdDate)
+    {  
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderIdForFix($captainId, $orderId, $createdDate);
+    } 
+    //--------------->END fix create financial dues
 }

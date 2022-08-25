@@ -880,7 +880,7 @@ class AdminOrderService
         }
 
         return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-    }
+    } 
 
     // filter cash orders which have different answers for cash payment
     public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
@@ -895,4 +895,9 @@ class AdminOrderService
 
         return $response;
     }
+    
+    public function getOrders()
+    {
+       return $this->adminOrderManager->getOrders();
+    }  
 }
