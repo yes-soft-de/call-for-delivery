@@ -212,7 +212,7 @@ class StoreProfileLoadedState extends States {
               }),
           cardTap(
               image: ImageAsset.PAYMENT,
-              title: S.of(context).financeSubscriptions,
+              title: S.of(context).subscriptionManagement,
               onTapCard: () {
                 Navigator.of(context).pushNamed(
                     SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT,

@@ -235,7 +235,7 @@ class _CategoryFormState extends State<PackageForm> {
                   cost: int.parse(_costController.text),
                   carCount: int.parse(_carCountController.text),
                   city: _cityController.text,
-                  expired: int.parse(_geographicalRangeController.text),
+                  expired: int.parse(_expirdCountController.text),
                   status: status));
             } else {
               CustomFlushBarHelper.createError(

@@ -4,9 +4,11 @@ import 'package:c4d/module_subscriptions/ui/widget/control_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class SubscriptionManagementScreen extends StatefulWidget {
-  SubscriptionManagementScreen({Key? key}) : super(key: key);
+  SubscriptionManagementScreen();
 
   @override
   State<SubscriptionManagementScreen> createState() =>
@@ -15,7 +17,7 @@ class SubscriptionManagementScreen extends StatefulWidget {
 
 class SubscriptionManagementScreenState
     extends State<SubscriptionManagementScreen> {
-  bool flagArgs = false;
+  bool flagArgs = true;
   int profileId = -1;
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class SubscriptionManagementScreenState
               Fluttertoast.showToast(msg: S.current.notImplementedYet);
             },
             title: S.current.deleteFutureSubscription,
+            width: 200,
           ),
         ],
       ),

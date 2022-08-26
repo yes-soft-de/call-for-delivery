@@ -5,12 +5,14 @@ class ControlWidget extends StatelessWidget {
   final IconData icon;
   final bool? active;
   final Function() onPressed;
+  final double? width;
   const ControlWidget(
       {Key? key,
       required this.title,
       required this.icon,
       this.active,
-      required this.onPressed})
+      required this.onPressed,
+      this.width = null})
       : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class ControlWidget extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(25),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.43,
+          width: width ?? MediaQuery.of(context).size.width * 0.43,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               color: Theme.of(context).scaffoldBackgroundColor,

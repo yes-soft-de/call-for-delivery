@@ -15,6 +15,7 @@ import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
@@ -112,6 +113,7 @@ class MyApp extends StatefulWidget {
   final CarsModule _carsModule;
   final BidOrderModule _bidOrderModule;
   final OrdersModule _ordersModule;
+  final SubscriptionsModule _subscriptionsModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -133,7 +135,8 @@ class MyApp extends StatefulWidget {
       this._supplierModule,
       this._carsModule,
       this._bidOrderModule,
-      this._ordersModule);
+      this._ordersModule,
+      this._subscriptionsModule);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

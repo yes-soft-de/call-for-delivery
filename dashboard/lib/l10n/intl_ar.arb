@@ -783,6 +783,6 @@
     "currentSubscriptions":"الاشتراكات الحالية",
     "createSubscription":"إنشاء اشتراك",
     "editSubscriptions":"تعديل الاشتراك",
-    "deleteFutureSubscription":"حذف كل الاشتراكات المستقبلية",
+    "deleteFutureSubscription":"حذف الاشتراكات المستقبلية",
     "notImplementedYet":"لم يتم تفعيل هذه الميزة بعد"
 }
