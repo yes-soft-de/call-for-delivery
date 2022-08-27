@@ -1,5 +1,6 @@
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
+import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,13 @@ class SubscriptionsModule extends YesModule {
   final StoreSubscriptionsFinanceDetailsScreen
       storeSubscriptionsFinanceDetailsScreen;
   final SubscriptionManagementScreen subscriptionManagementScreen;
-
-  SubscriptionsModule(this.storeSubscriptionsFinanceDetailsScreen,
-      this.storeSubscriptionsFinanceScreen, this.subscriptionManagementScreen) {
+  final StoreSubscriptionsExpiredFinanceScreen
+      subscriptionsExpiredFinanceScreen;
+  SubscriptionsModule(
+      this.storeSubscriptionsFinanceDetailsScreen,
+      this.storeSubscriptionsFinanceScreen,
+      this.subscriptionManagementScreen,
+      this.subscriptionsExpiredFinanceScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -25,6 +30,8 @@ class SubscriptionsModule extends YesModule {
           storeSubscriptionsFinanceDetailsScreen,
       SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT: (context) =>
           subscriptionManagementScreen,
+      SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN: (context) =>
+          subscriptionsExpiredFinanceScreen,
     };
   }
 }

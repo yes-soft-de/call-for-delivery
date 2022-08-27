@@ -47,7 +47,9 @@ class SubscriptionManagementScreenState
           ControlWidget(
             icon: Icons.play_disabled_rounded,
             onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
+              Navigator.of(context).pushNamed(
+                  SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN,
+                  arguments: profileId);
             },
             title: S.current.expiredSubscriptions,
           ),
