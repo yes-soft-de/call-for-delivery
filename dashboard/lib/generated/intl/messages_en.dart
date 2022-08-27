@@ -451,6 +451,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Expiration Data"),
         "expiredSubscriptions":
             MessageLookupByLibrary.simpleMessage("Expired Subscriptions"),
+        "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
+            "Here you find all your expired subscriptions financial information with included all payments "),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "extraCost": MessageLookupByLibrary.simpleMessage("Extra Cost"),
         "extraCostHint": MessageLookupByLibrary.simpleMessage(

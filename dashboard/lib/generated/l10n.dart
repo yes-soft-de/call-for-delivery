@@ -7909,6 +7909,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Here you find all your expired subscriptions financial information with included all payments `
+  String get expiredSubscriptionsFinanceHint {
+    return Intl.message(
+      'Here you find all your expired subscriptions financial information with included all payments ',
+      name: 'expiredSubscriptionsFinanceHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

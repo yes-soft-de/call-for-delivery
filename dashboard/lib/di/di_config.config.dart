@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../hive/util/argument_hive_helper.dart' as _i3;
-import '../main.dart' as _i209;
+import '../main.dart' as _i211;
 import '../module_auth/authoriazation_module.dart' as _i113;
 import '../module_auth/manager/auth_manager/auth_manager.dart' as _i23;
 import '../module_auth/presistance/auth_prefs_helper.dart' as _i4;
@@ -31,7 +31,7 @@ import '../module_bid_order/service/bid_order_service.dart' as _i52;
 import '../module_bid_order/state_manager/bid_order_state_manager.dart' as _i53;
 import '../module_bid_order/ui/screen/bid_orders_screen.dart' as _i54;
 import '../module_bid_order/ui/screen/order_details_screen.dart' as _i114;
-import '../module_branches/branches_module.dart' as _i204;
+import '../module_branches/branches_module.dart' as _i206;
 import '../module_branches/manager/branches_manager.dart' as _i55;
 import '../module_branches/repository/branches_repository.dart' as _i26;
 import '../module_branches/service/branches_list_service.dart' as _i116;
@@ -40,14 +40,14 @@ import '../module_branches/state_manager/branches_list_state_manager/branches_li
 import '../module_branches/state_manager/init_branches_state_manager.dart'
     as _i138;
 import '../module_branches/state_manager/update_branches_state_manager/update_branches_state_manager.dart'
-    as _i169;
-import '../module_branches/ui/screens/branches_list_screen/branches_list_screen.dart'
     as _i170;
+import '../module_branches/ui/screens/branches_list_screen/branches_list_screen.dart'
+    as _i171;
 import '../module_branches/ui/screens/init_branches/init_branches_screen.dart'
-    as _i185;
+    as _i186;
 import '../module_branches/ui/screens/update_branches_screen/update_branches_screen.dart'
-    as _i203;
-import '../module_captain/captains_module.dart' as _i205;
+    as _i205;
+import '../module_captain/captains_module.dart' as _i207;
 import '../module_captain/hive/captain_hive_helper.dart' as _i5;
 import '../module_captain/manager/captains_manager.dart' as _i56;
 import '../module_captain/repository/captains_repository.dart' as _i27;
@@ -73,17 +73,17 @@ import '../module_captain/state_manager/plan_screen_state_manager.dart' as _i95;
 import '../module_captain/ui/screen/captain_account_balance_screen.dart'
     as _i118;
 import '../module_captain/ui/screen/captain_financial_details_screen.dart'
-    as _i175;
-import '../module_captain/ui/screen/captain_financial_dues_screen.dart'
     as _i176;
-import '../module_captain/ui/screen/captain_needs_support_screen.dart' as _i178;
-import '../module_captain/ui/screen/captain_profile_screen.dart' as _i177;
-import '../module_captain/ui/screen/captains_assign_order_screen.dart' as _i171;
+import '../module_captain/ui/screen/captain_financial_dues_screen.dart'
+    as _i177;
+import '../module_captain/ui/screen/captain_needs_support_screen.dart' as _i179;
+import '../module_captain/ui/screen/captain_profile_screen.dart' as _i178;
+import '../module_captain/ui/screen/captains_assign_order_screen.dart' as _i172;
 import '../module_captain/ui/screen/captains_list_screen.dart' as _i129;
 import '../module_captain/ui/screen/captains_offer_screen.dart' as _i126;
 import '../module_captain/ui/screen/change_captain_plan_screen.dart' as _i154;
 import '../module_captain/ui/screen/in_active_captains_screen.dart' as _i136;
-import '../module_categories/categories_module.dart' as _i180;
+import '../module_categories/categories_module.dart' as _i181;
 import '../module_categories/manager/categories_manager.dart' as _i62;
 import '../module_categories/repository/categories_repository.dart' as _i29;
 import '../module_categories/service/store_categories_service.dart' as _i63;
@@ -92,14 +92,14 @@ import '../module_categories/state_manager/categories_state_manager.dart'
 import '../module_categories/state_manager/packages_state_manager.dart' as _i91;
 import '../module_categories/ui/screen/categories_screen.dart' as _i131;
 import '../module_categories/ui/screen/packages_screen.dart' as _i152;
-import '../module_chat/chat_module.dart' as _i181;
+import '../module_chat/chat_module.dart' as _i182;
 import '../module_chat/manager/chat/chat_manager.dart' as _i64;
 import '../module_chat/presistance/chat_hive_helper.dart' as _i6;
 import '../module_chat/repository/chat/chat_repository.dart' as _i30;
 import '../module_chat/service/chat/char_service.dart' as _i65;
 import '../module_chat/state_manager/chat_state_manager.dart' as _i66;
 import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i132;
-import '../module_company/company_module.dart' as _i206;
+import '../module_company/company_module.dart' as _i208;
 import '../module_company/manager/company_manager.dart' as _i67;
 import '../module_company/repository/company_repository.dart' as _i31;
 import '../module_company/service/company_service.dart' as _i68;
@@ -107,10 +107,10 @@ import '../module_company/state_manager/company_financial_state_manager.dart'
     as _i133;
 import '../module_company/state_manager/company_profile_state_manager.dart'
     as _i134;
-import '../module_company/ui/screen/company_finance_screen.dart' as _i182;
-import '../module_company/ui/screen/company_profile_screen.dart' as _i183;
+import '../module_company/ui/screen/company_finance_screen.dart' as _i183;
+import '../module_company/ui/screen/company_profile_screen.dart' as _i184;
 import '../module_deep_links/repository/deep_link_repository.dart' as _i32;
-import '../module_delivary_car/cars_module.dart' as _i179;
+import '../module_delivary_car/cars_module.dart' as _i180;
 import '../module_delivary_car/manager/cars_manager.dart' as _i59;
 import '../module_delivary_car/repository/cars_repository.dart' as _i28;
 import '../module_delivary_car/service/cars_service.dart' as _i60;
@@ -120,7 +120,7 @@ import '../module_localization/presistance/localization_preferences_helper/local
     as _i9;
 import '../module_localization/service/localization_service/localization_service.dart'
     as _i10;
-import '../module_main/main_module.dart' as _i186;
+import '../module_main/main_module.dart' as _i187;
 import '../module_main/manager/home_manager.dart' as _i71;
 import '../module_main/repository/home_repository.dart' as _i34;
 import '../module_main/sceen/home_screen.dart' as _i135;
@@ -129,7 +129,7 @@ import '../module_main/service/home_service.dart' as _i72;
 import '../module_main/state_manager/home_state_manager.dart' as _i73;
 import '../module_network/http_client/http_client.dart' as _i18;
 import '../module_notice/manager/notice_manager.dart' as _i77;
-import '../module_notice/notice_module.dart' as _i187;
+import '../module_notice/notice_module.dart' as _i188;
 import '../module_notice/repository/notice_repository.dart' as _i37;
 import '../module_notice/service/notice_service.dart' as _i78;
 import '../module_notice/state_manager/notice_state_manager.dart' as _i79;
@@ -143,7 +143,7 @@ import '../module_notifications/service/local_notification_service/local_notific
     as _i8;
 import '../module_orders/hive/order_hive_helper.dart' as _i13;
 import '../module_orders/manager/orders_manager/orders_manager.dart' as _i40;
-import '../module_orders/orders_module.dart' as _i192;
+import '../module_orders/orders_module.dart' as _i193;
 import '../module_orders/repository/order_repository/order_repository.dart'
     as _i39;
 import '../module_orders/service/orders/orders.service.dart' as _i41;
@@ -179,7 +179,7 @@ import '../module_orders/ui/screens/orders_receive_cash_screen.dart' as _i151;
 import '../module_orders/ui/screens/orders_without_distance_screen.dart'
     as _i89;
 import '../module_payments/manager/payments_manager.dart' as _i92;
-import '../module_payments/payments_module.dart' as _i193;
+import '../module_payments/payments_module.dart' as _i194;
 import '../module_payments/repository/payments_repository.dart' as _i42;
 import '../module_payments/service/payments_service.dart' as _i93;
 import '../module_payments/state_manager/captain_finance_by_hours_state_manager.dart'
@@ -193,11 +193,11 @@ import '../module_payments/state_manager/payments_to_state_manager.dart'
 import '../module_payments/state_manager/store_balance_state_manager.dart'
     as _i99;
 import '../module_payments/ui/screen/captain_finance_by_hours_screen.dart'
-    as _i173;
-import '../module_payments/ui/screen/captain_finance_by_order_count_screen.dart'
-    as _i172;
-import '../module_payments/ui/screen/captain_finance_by_order_screen.dart'
     as _i174;
+import '../module_payments/ui/screen/captain_finance_by_order_count_screen.dart'
+    as _i173;
+import '../module_payments/ui/screen/captain_finance_by_order_screen.dart'
+    as _i175;
 import '../module_payments/ui/screen/payment_to_captain_screen.dart' as _i153;
 import '../module_payments/ui/screen/store_balance_screen.dart' as _i156;
 import '../module_settings/settings_module.dart' as _i155;
@@ -220,34 +220,38 @@ import '../module_stores/state_manager/order/order_time_line_state_manager.dart'
 import '../module_stores/state_manager/store_profile_state_manager.dart'
     as _i158;
 import '../module_stores/state_manager/stores_inactive_state_manager.dart'
-    as _i161;
-import '../module_stores/state_manager/stores_need_support_state_manager.dart'
     as _i162;
+import '../module_stores/state_manager/stores_need_support_state_manager.dart'
+    as _i163;
 import '../module_stores/state_manager/stores_state_manager.dart' as _i102;
-import '../module_stores/stores_module.dart' as _i207;
+import '../module_stores/stores_module.dart' as _i209;
 import '../module_stores/ui/screen/order/order_captain_not_arrived.dart'
-    as _i188;
-import '../module_stores/ui/screen/order/order_details_screen.dart' as _i189;
-import '../module_stores/ui/screen/order/order_logs_screen.dart' as _i190;
-import '../module_stores/ui/screen/order/order_time_line_screen.dart' as _i191;
-import '../module_stores/ui/screen/store_info_screen.dart' as _i194;
-import '../module_stores/ui/screen/stores_inactive_screen.dart' as _i196;
-import '../module_stores/ui/screen/stores_needs_support_screen.dart' as _i197;
-import '../module_stores/ui/screen/stores_screen.dart' as _i163;
+    as _i189;
+import '../module_stores/ui/screen/order/order_details_screen.dart' as _i190;
+import '../module_stores/ui/screen/order/order_logs_screen.dart' as _i191;
+import '../module_stores/ui/screen/order/order_time_line_screen.dart' as _i192;
+import '../module_stores/ui/screen/store_info_screen.dart' as _i195;
+import '../module_stores/ui/screen/stores_inactive_screen.dart' as _i198;
+import '../module_stores/ui/screen/stores_needs_support_screen.dart' as _i199;
+import '../module_stores/ui/screen/stores_screen.dart' as _i164;
 import '../module_subscriptions/manager/subscriptions_manager.dart' as _i103;
 import '../module_subscriptions/repository/subscriptions_repository.dart'
     as _i46;
-import '../module_subscriptions/service/store_service.dart' as _i104;
-import '../module_subscriptions/service/subscriptions_service.dart' as _i105;
+import '../module_subscriptions/service/store_service.dart' as _i105;
+import '../module_subscriptions/service/subscriptions_service.dart' as _i104;
 import '../module_subscriptions/state_manager/store_financial_subscriptions_details_state_manager.dart'
     as _i157;
-import '../module_subscriptions/state_manager/store_subscriptions_finance_state_manager.dart'
-    as _i160;
-import '../module_subscriptions/subscriptions_module.dart' as _i198;
-import '../module_subscriptions/ui/screen/store_subscriptions_details_screen.dart'
+import '../module_subscriptions/state_manager/store_subscriptions_expired_finance_state_manager.dart'
     as _i159;
+import '../module_subscriptions/state_manager/store_subscriptions_finance_state_manager.dart'
+    as _i161;
+import '../module_subscriptions/subscriptions_module.dart' as _i200;
+import '../module_subscriptions/ui/screen/store_subscriptions_details_screen.dart'
+    as _i160;
+import '../module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart'
+    as _i196;
 import '../module_subscriptions/ui/screen/store_subscriptions_screen.dart'
-    as _i195;
+    as _i197;
 import '../module_subscriptions/ui/screen/subscriptions_managment_screen.dart'
     as _i15;
 import '../module_supplier/manager/supplier_manager.dart' as _i49;
@@ -256,20 +260,20 @@ import '../module_supplier/service/supplier_service.dart' as _i109;
 import '../module_supplier/state_manager/in_active_supplier_state_manager.dart'
     as _i137;
 import '../module_supplier/state_manager/supplier_ads_state_manager.dart'
-    as _i164;
+    as _i165;
 import '../module_supplier/state_manager/supplier_list.dart' as _i110;
 import '../module_supplier/state_manager/supplier_need_support_state_manager.dart'
-    as _i166;
-import '../module_supplier/state_manager/supplier_profile_state_manager.dart'
     as _i167;
-import '../module_supplier/supplier_module.dart' as _i208;
-import '../module_supplier/ui/screen/in_active_supplier_screen.dart' as _i184;
-import '../module_supplier/ui/screen/supplier_ads_screen.dart' as _i199;
-import '../module_supplier/ui/screen/supplier_list_screen.dart' as _i168;
+import '../module_supplier/state_manager/supplier_profile_state_manager.dart'
+    as _i168;
+import '../module_supplier/supplier_module.dart' as _i210;
+import '../module_supplier/ui/screen/in_active_supplier_screen.dart' as _i185;
+import '../module_supplier/ui/screen/supplier_ads_screen.dart' as _i201;
+import '../module_supplier/ui/screen/supplier_list_screen.dart' as _i169;
 import '../module_supplier/ui/screen/supplier_needs_support_screen.dart'
-    as _i201;
-import '../module_supplier/ui/screen/supplier_profile_screen.dart' as _i202;
-import '../module_supplier_categories/categories_supplier_module.dart' as _i200;
+    as _i203;
+import '../module_supplier/ui/screen/supplier_profile_screen.dart' as _i204;
+import '../module_supplier_categories/categories_supplier_module.dart' as _i202;
 import '../module_supplier_categories/manager/categories_manager.dart' as _i106;
 import '../module_supplier_categories/repository/categories_repository.dart'
     as _i47;
@@ -278,7 +282,7 @@ import '../module_supplier_categories/service/supplier_categories_service.dart'
 import '../module_supplier_categories/state_manager/categories_state_manager.dart'
     as _i108;
 import '../module_supplier_categories/ui/screen/supplier_categories_screen.dart'
-    as _i165;
+    as _i166;
 import '../module_theme/pressistance/theme_preferences_helper.dart' as _i16;
 import '../module_theme/service/theme_service/theme_service.dart' as _i19;
 import '../module_upload/manager/upload_manager/upload_manager.dart' as _i22;
@@ -286,7 +290,7 @@ import '../module_upload/repository/upload_repository/upload_repository.dart'
     as _i17;
 import '../module_upload/service/image_upload/image_upload_service.dart'
     as _i35;
-import '../utils/global/global_state_manager.dart' as _i210;
+import '../utils/global/global_state_manager.dart' as _i212;
 import '../utils/helpers/firestore_helper.dart' as _i7;
 import '../utils/logger/logger.dart'
     as _i11; // ignore_for_file: unnecessary_lambdas
@@ -614,88 +618,91 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i156.StoreBalanceScreen(get<_i99.StoreBalanceStateManager>()));
   gh.factory<_i157.StoreFinancialSubscriptionsDuesDetailsStateManager>(() =>
       _i157.StoreFinancialSubscriptionsDuesDetailsStateManager(
-          get<_i93.PaymentsService>(), get<_i105.SubscriptionsService>()));
+          get<_i93.PaymentsService>(), get<_i104.SubscriptionsService>()));
   gh.factory<_i158.StoreProfileStateManager>(() =>
       _i158.StoreProfileStateManager(
           get<_i101.StoresService>(), get<_i35.ImageUploadService>()));
-  gh.factory<_i159.StoreSubscriptionsFinanceDetailsScreen>(() =>
-      _i159.StoreSubscriptionsFinanceDetailsScreen(
+  gh.factory<_i159.StoreSubscriptionsExpiredFinanceStateManager>(() =>
+      _i159.StoreSubscriptionsExpiredFinanceStateManager(
+          get<_i104.SubscriptionsService>()));
+  gh.factory<_i160.StoreSubscriptionsFinanceDetailsScreen>(() =>
+      _i160.StoreSubscriptionsFinanceDetailsScreen(
           get<_i157.StoreFinancialSubscriptionsDuesDetailsStateManager>()));
-  gh.factory<_i160.StoreSubscriptionsFinanceStateManager>(() =>
-      _i160.StoreSubscriptionsFinanceStateManager(
-          get<_i105.SubscriptionsService>()));
-  gh.factory<_i161.StoresInActiveStateManager>(() =>
-      _i161.StoresInActiveStateManager(get<_i101.StoresService>(),
+  gh.factory<_i161.StoreSubscriptionsFinanceStateManager>(() =>
+      _i161.StoreSubscriptionsFinanceStateManager(
+          get<_i104.SubscriptionsService>()));
+  gh.factory<_i162.StoresInActiveStateManager>(() =>
+      _i162.StoresInActiveStateManager(get<_i101.StoresService>(),
           get<_i24.AuthService>(), get<_i35.ImageUploadService>()));
-  gh.factory<_i162.StoresNeedsSupportStateManager>(
-      () => _i162.StoresNeedsSupportStateManager(get<_i101.StoresService>()));
-  gh.factory<_i163.StoresScreen>(
-      () => _i163.StoresScreen(get<_i102.StoresStateManager>()));
-  gh.factory<_i164.SupplierAdsStateManager>(
-      () => _i164.SupplierAdsStateManager(get<_i109.SupplierService>()));
-  gh.factory<_i165.SupplierCategoriesScreen>(() =>
-      _i165.SupplierCategoriesScreen(
+  gh.factory<_i163.StoresNeedsSupportStateManager>(
+      () => _i163.StoresNeedsSupportStateManager(get<_i101.StoresService>()));
+  gh.factory<_i164.StoresScreen>(
+      () => _i164.StoresScreen(get<_i102.StoresStateManager>()));
+  gh.factory<_i165.SupplierAdsStateManager>(
+      () => _i165.SupplierAdsStateManager(get<_i109.SupplierService>()));
+  gh.factory<_i166.SupplierCategoriesScreen>(() =>
+      _i166.SupplierCategoriesScreen(
           get<_i108.SupplierCategoriesStateManager>()));
-  gh.factory<_i166.SupplierNeedsSupportStateManager>(() =>
-      _i166.SupplierNeedsSupportStateManager(get<_i109.SupplierService>()));
-  gh.factory<_i167.SupplierProfileStateManager>(
-      () => _i167.SupplierProfileStateManager(get<_i109.SupplierService>()));
-  gh.factory<_i168.SuppliersScreen>(
-      () => _i168.SuppliersScreen(get<_i110.SuppliersStateManager>()));
-  gh.factory<_i169.UpdateBranchStateManager>(
-      () => _i169.UpdateBranchStateManager(get<_i116.BranchesListService>()));
-  gh.factory<_i170.BranchesListScreen>(
-      () => _i170.BranchesListScreen(get<_i117.BranchesListStateManager>()));
-  gh.factory<_i171.CaptainAssignOrderScreen>(() =>
-      _i171.CaptainAssignOrderScreen(
+  gh.factory<_i167.SupplierNeedsSupportStateManager>(() =>
+      _i167.SupplierNeedsSupportStateManager(get<_i109.SupplierService>()));
+  gh.factory<_i168.SupplierProfileStateManager>(
+      () => _i168.SupplierProfileStateManager(get<_i109.SupplierService>()));
+  gh.factory<_i169.SuppliersScreen>(
+      () => _i169.SuppliersScreen(get<_i110.SuppliersStateManager>()));
+  gh.factory<_i170.UpdateBranchStateManager>(
+      () => _i170.UpdateBranchStateManager(get<_i116.BranchesListService>()));
+  gh.factory<_i171.BranchesListScreen>(
+      () => _i171.BranchesListScreen(get<_i117.BranchesListStateManager>()));
+  gh.factory<_i172.CaptainAssignOrderScreen>(() =>
+      _i172.CaptainAssignOrderScreen(
           get<_i119.CaptainAssignOrderStateManager>()));
-  gh.factory<_i172.CaptainFinanceByCountOrderScreen>(() =>
-      _i172.CaptainFinanceByCountOrderScreen(
+  gh.factory<_i173.CaptainFinanceByCountOrderScreen>(() =>
+      _i173.CaptainFinanceByCountOrderScreen(
           get<_i121.CaptainFinanceByOrderCountStateManager>()));
-  gh.factory<_i173.CaptainFinanceByHoursScreen>(() =>
-      _i173.CaptainFinanceByHoursScreen(
+  gh.factory<_i174.CaptainFinanceByHoursScreen>(() =>
+      _i174.CaptainFinanceByHoursScreen(
           get<_i120.CaptainFinanceByHoursStateManager>()));
-  gh.factory<_i174.CaptainFinanceByOrderScreen>(() =>
-      _i174.CaptainFinanceByOrderScreen(
+  gh.factory<_i175.CaptainFinanceByOrderScreen>(() =>
+      _i175.CaptainFinanceByOrderScreen(
           get<_i122.CaptainFinanceByOrderStateManager>()));
-  gh.factory<_i175.CaptainFinancialDuesDetailsScreen>(() =>
-      _i175.CaptainFinancialDuesDetailsScreen(
+  gh.factory<_i176.CaptainFinancialDuesDetailsScreen>(() =>
+      _i176.CaptainFinancialDuesDetailsScreen(
           get<_i123.CaptainFinancialDuesDetailsStateManager>()));
-  gh.factory<_i176.CaptainFinancialDuesScreen>(() =>
-      _i176.CaptainFinancialDuesScreen(
+  gh.factory<_i177.CaptainFinancialDuesScreen>(() =>
+      _i177.CaptainFinancialDuesScreen(
           get<_i124.CaptainFinancialDuesStateManager>()));
-  gh.factory<_i177.CaptainProfileScreen>(() =>
-      _i177.CaptainProfileScreen(get<_i127.CaptainProfileStateManager>()));
-  gh.factory<_i178.CaptainsNeedsSupportScreen>(() =>
-      _i178.CaptainsNeedsSupportScreen(
+  gh.factory<_i178.CaptainProfileScreen>(() =>
+      _i178.CaptainProfileScreen(get<_i127.CaptainProfileStateManager>()));
+  gh.factory<_i179.CaptainsNeedsSupportScreen>(() =>
+      _i179.CaptainsNeedsSupportScreen(
           get<_i128.CaptainsNeedsSupportStateManager>()));
-  gh.factory<_i179.CarsModule>(() => _i179.CarsModule(get<_i130.CarsScreen>()));
-  gh.factory<_i180.CategoriesModule>(() => _i180.CategoriesModule(
+  gh.factory<_i180.CarsModule>(() => _i180.CarsModule(get<_i130.CarsScreen>()));
+  gh.factory<_i181.CategoriesModule>(() => _i181.CategoriesModule(
       get<_i131.CategoriesScreen>(), get<_i152.PackagesScreen>()));
-  gh.factory<_i181.ChatModule>(
-      () => _i181.ChatModule(get<_i132.ChatPage>(), get<_i24.AuthService>()));
-  gh.factory<_i182.CompanyFinanceScreen>(() =>
-      _i182.CompanyFinanceScreen(get<_i133.CompanyFinanceStateManager>()));
-  gh.factory<_i183.CompanyProfileScreen>(() =>
-      _i183.CompanyProfileScreen(get<_i134.CompanyProfileStateManager>()));
-  gh.factory<_i184.InActiveSupplierScreen>(() =>
-      _i184.InActiveSupplierScreen(get<_i137.InActiveSupplierStateManager>()));
-  gh.factory<_i185.InitBranchesScreen>(
-      () => _i185.InitBranchesScreen(get<_i138.InitBranchesStateManager>()));
-  gh.factory<_i186.MainModule>(
-      () => _i186.MainModule(get<_i139.MainScreen>(), get<_i135.HomeScreen>()));
-  gh.factory<_i187.NoticeModule>(
-      () => _i187.NoticeModule(get<_i141.NoticeScreen>()));
-  gh.factory<_i188.OrderCaptainNotArrivedScreen>(() =>
-      _i188.OrderCaptainNotArrivedScreen(
+  gh.factory<_i182.ChatModule>(
+      () => _i182.ChatModule(get<_i132.ChatPage>(), get<_i24.AuthService>()));
+  gh.factory<_i183.CompanyFinanceScreen>(() =>
+      _i183.CompanyFinanceScreen(get<_i133.CompanyFinanceStateManager>()));
+  gh.factory<_i184.CompanyProfileScreen>(() =>
+      _i184.CompanyProfileScreen(get<_i134.CompanyProfileStateManager>()));
+  gh.factory<_i185.InActiveSupplierScreen>(() =>
+      _i185.InActiveSupplierScreen(get<_i137.InActiveSupplierStateManager>()));
+  gh.factory<_i186.InitBranchesScreen>(
+      () => _i186.InitBranchesScreen(get<_i138.InitBranchesStateManager>()));
+  gh.factory<_i187.MainModule>(
+      () => _i187.MainModule(get<_i139.MainScreen>(), get<_i135.HomeScreen>()));
+  gh.factory<_i188.NoticeModule>(
+      () => _i188.NoticeModule(get<_i141.NoticeScreen>()));
+  gh.factory<_i189.OrderCaptainNotArrivedScreen>(() =>
+      _i189.OrderCaptainNotArrivedScreen(
           get<_i144.OrderCaptainNotArrivedStateManager>()));
-  gh.factory<_i189.OrderDetailsScreen>(
-      () => _i189.OrderDetailsScreen(get<_i148.OrderStatusStateManager>()));
-  gh.factory<_i190.OrderLogsScreen>(
-      () => _i190.OrderLogsScreen(get<_i146.OrderLogsStateManager>()));
-  gh.factory<_i191.OrderTimeLineScreen>(
-      () => _i191.OrderTimeLineScreen(get<_i149.OrderTimeLineStateManager>()));
-  gh.factory<_i192.OrdersModule>(() => _i192.OrdersModule(
+  gh.factory<_i190.OrderDetailsScreen>(
+      () => _i190.OrderDetailsScreen(get<_i148.OrderStatusStateManager>()));
+  gh.factory<_i191.OrderLogsScreen>(
+      () => _i191.OrderLogsScreen(get<_i146.OrderLogsStateManager>()));
+  gh.factory<_i192.OrderTimeLineScreen>(
+      () => _i192.OrderTimeLineScreen(get<_i149.OrderTimeLineStateManager>()));
+  gh.factory<_i193.OrdersModule>(() => _i193.OrdersModule(
       get<_i145.OrderLogsScreen>(),
       get<_i86.OrdersCashCaptainScreen>(),
       get<_i150.OrdersCashStoreScreen>(),
@@ -706,93 +713,97 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i142.OrderActionLogsScreen>(),
       get<_i89.OrdersWithoutDistanceScreen>(),
       get<_i151.OrdersReceiveCashScreen>()));
-  gh.factory<_i193.PaymentsModule>(() => _i193.PaymentsModule(
-      get<_i172.CaptainFinanceByCountOrderScreen>(),
-      get<_i173.CaptainFinanceByHoursScreen>(),
-      get<_i174.CaptainFinanceByOrderScreen>(),
+  gh.factory<_i194.PaymentsModule>(() => _i194.PaymentsModule(
+      get<_i173.CaptainFinanceByCountOrderScreen>(),
+      get<_i174.CaptainFinanceByHoursScreen>(),
+      get<_i175.CaptainFinanceByOrderScreen>(),
       get<_i153.PaymentsToCaptainScreen>(),
       get<_i156.StoreBalanceScreen>()));
-  gh.factory<_i194.StoreInfoScreen>(
-      () => _i194.StoreInfoScreen(get<_i158.StoreProfileStateManager>()));
-  gh.factory<_i195.StoreSubscriptionsFinanceScreen>(() =>
-      _i195.StoreSubscriptionsFinanceScreen(
-          get<_i160.StoreSubscriptionsFinanceStateManager>()));
-  gh.factory<_i196.StoresInActiveScreen>(() =>
-      _i196.StoresInActiveScreen(get<_i161.StoresInActiveStateManager>()));
-  gh.factory<_i197.StoresNeedsSupportScreen>(() =>
-      _i197.StoresNeedsSupportScreen(
-          get<_i162.StoresNeedsSupportStateManager>()));
-  gh.factory<_i198.SubscriptionsModule>(() => _i198.SubscriptionsModule(
-      get<_i159.StoreSubscriptionsFinanceDetailsScreen>(),
-      get<_i195.StoreSubscriptionsFinanceScreen>(),
-      get<_i15.SubscriptionManagementScreen>()));
-  gh.factory<_i199.SupplierAdsScreen>(
-      () => _i199.SupplierAdsScreen(get<_i164.SupplierAdsStateManager>()));
-  gh.factory<_i200.SupplierCategoriesModule>(() =>
-      _i200.SupplierCategoriesModule(get<_i165.SupplierCategoriesScreen>()));
-  gh.factory<_i201.SupplierNeedsSupportScreen>(() =>
-      _i201.SupplierNeedsSupportScreen(
-          get<_i166.SupplierNeedsSupportStateManager>()));
-  gh.factory<_i202.SupplierProfileScreen>(() =>
-      _i202.SupplierProfileScreen(get<_i167.SupplierProfileStateManager>()));
-  gh.factory<_i203.UpdateBranchScreen>(
-      () => _i203.UpdateBranchScreen(get<_i169.UpdateBranchStateManager>()));
-  gh.factory<_i204.BranchesModule>(() => _i204.BranchesModule(
-      get<_i170.BranchesListScreen>(),
-      get<_i203.UpdateBranchScreen>(),
-      get<_i185.InitBranchesScreen>()));
-  gh.factory<_i205.CaptainsModule>(() => _i205.CaptainsModule(
+  gh.factory<_i195.StoreInfoScreen>(
+      () => _i195.StoreInfoScreen(get<_i158.StoreProfileStateManager>()));
+  gh.factory<_i196.StoreSubscriptionsExpiredFinanceScreen>(() =>
+      _i196.StoreSubscriptionsExpiredFinanceScreen(
+          get<_i159.StoreSubscriptionsExpiredFinanceStateManager>()));
+  gh.factory<_i197.StoreSubscriptionsFinanceScreen>(() =>
+      _i197.StoreSubscriptionsFinanceScreen(
+          get<_i161.StoreSubscriptionsFinanceStateManager>()));
+  gh.factory<_i198.StoresInActiveScreen>(() =>
+      _i198.StoresInActiveScreen(get<_i162.StoresInActiveStateManager>()));
+  gh.factory<_i199.StoresNeedsSupportScreen>(() =>
+      _i199.StoresNeedsSupportScreen(
+          get<_i163.StoresNeedsSupportStateManager>()));
+  gh.factory<_i200.SubscriptionsModule>(() => _i200.SubscriptionsModule(
+      get<_i160.StoreSubscriptionsFinanceDetailsScreen>(),
+      get<_i197.StoreSubscriptionsFinanceScreen>(),
+      get<_i15.SubscriptionManagementScreen>(),
+      get<_i196.StoreSubscriptionsExpiredFinanceScreen>()));
+  gh.factory<_i201.SupplierAdsScreen>(
+      () => _i201.SupplierAdsScreen(get<_i165.SupplierAdsStateManager>()));
+  gh.factory<_i202.SupplierCategoriesModule>(() =>
+      _i202.SupplierCategoriesModule(get<_i166.SupplierCategoriesScreen>()));
+  gh.factory<_i203.SupplierNeedsSupportScreen>(() =>
+      _i203.SupplierNeedsSupportScreen(
+          get<_i167.SupplierNeedsSupportStateManager>()));
+  gh.factory<_i204.SupplierProfileScreen>(() =>
+      _i204.SupplierProfileScreen(get<_i168.SupplierProfileStateManager>()));
+  gh.factory<_i205.UpdateBranchScreen>(
+      () => _i205.UpdateBranchScreen(get<_i170.UpdateBranchStateManager>()));
+  gh.factory<_i206.BranchesModule>(() => _i206.BranchesModule(
+      get<_i171.BranchesListScreen>(),
+      get<_i205.UpdateBranchScreen>(),
+      get<_i186.InitBranchesScreen>()));
+  gh.factory<_i207.CaptainsModule>(() => _i207.CaptainsModule(
       get<_i126.CaptainOffersScreen>(),
       get<_i136.InActiveCaptainsScreen>(),
       get<_i129.CaptainsScreen>(),
-      get<_i177.CaptainProfileScreen>(),
-      get<_i178.CaptainsNeedsSupportScreen>(),
+      get<_i178.CaptainProfileScreen>(),
+      get<_i179.CaptainsNeedsSupportScreen>(),
       get<_i118.CaptainAccountBalanceScreen>(),
-      get<_i175.CaptainFinancialDuesDetailsScreen>(),
-      get<_i176.CaptainFinancialDuesScreen>(),
+      get<_i176.CaptainFinancialDuesDetailsScreen>(),
+      get<_i177.CaptainFinancialDuesScreen>(),
       get<_i154.PlanScreen>(),
-      get<_i171.CaptainAssignOrderScreen>()));
-  gh.factory<_i206.CompanyModule>(() => _i206.CompanyModule(
-      get<_i183.CompanyProfileScreen>(), get<_i182.CompanyFinanceScreen>()));
-  gh.factory<_i207.StoresModule>(() => _i207.StoresModule(
-      get<_i163.StoresScreen>(),
-      get<_i194.StoreInfoScreen>(),
-      get<_i196.StoresInActiveScreen>(),
+      get<_i172.CaptainAssignOrderScreen>()));
+  gh.factory<_i208.CompanyModule>(() => _i208.CompanyModule(
+      get<_i184.CompanyProfileScreen>(), get<_i183.CompanyFinanceScreen>()));
+  gh.factory<_i209.StoresModule>(() => _i209.StoresModule(
+      get<_i164.StoresScreen>(),
+      get<_i195.StoreInfoScreen>(),
+      get<_i198.StoresInActiveScreen>(),
       get<_i156.StoreBalanceScreen>(),
-      get<_i197.StoresNeedsSupportScreen>(),
-      get<_i189.OrderDetailsScreen>(),
-      get<_i190.OrderLogsScreen>(),
-      get<_i188.OrderCaptainNotArrivedScreen>(),
-      get<_i191.OrderTimeLineScreen>()));
-  gh.factory<_i208.SupplierModule>(() => _i208.SupplierModule(
-      get<_i184.InActiveSupplierScreen>(),
-      get<_i168.SuppliersScreen>(),
-      get<_i202.SupplierProfileScreen>(),
-      get<_i201.SupplierNeedsSupportScreen>(),
-      get<_i199.SupplierAdsScreen>()));
-  gh.factory<_i209.MyApp>(() => _i209.MyApp(
+      get<_i199.StoresNeedsSupportScreen>(),
+      get<_i190.OrderDetailsScreen>(),
+      get<_i191.OrderLogsScreen>(),
+      get<_i189.OrderCaptainNotArrivedScreen>(),
+      get<_i192.OrderTimeLineScreen>()));
+  gh.factory<_i210.SupplierModule>(() => _i210.SupplierModule(
+      get<_i185.InActiveSupplierScreen>(),
+      get<_i169.SuppliersScreen>(),
+      get<_i204.SupplierProfileScreen>(),
+      get<_i203.SupplierNeedsSupportScreen>(),
+      get<_i201.SupplierAdsScreen>()));
+  gh.factory<_i211.MyApp>(() => _i211.MyApp(
       get<_i19.AppThemeDataService>(),
       get<_i10.LocalizationService>(),
       get<_i69.FireNotificationService>(),
       get<_i8.LocalNotificationService>(),
       get<_i98.SplashModule>(),
       get<_i113.AuthorizationModule>(),
-      get<_i181.ChatModule>(),
+      get<_i182.ChatModule>(),
       get<_i155.SettingsModule>(),
-      get<_i186.MainModule>(),
-      get<_i207.StoresModule>(),
-      get<_i180.CategoriesModule>(),
-      get<_i206.CompanyModule>(),
-      get<_i204.BranchesModule>(),
-      get<_i187.NoticeModule>(),
-      get<_i205.CaptainsModule>(),
-      get<_i193.PaymentsModule>(),
-      get<_i200.SupplierCategoriesModule>(),
-      get<_i208.SupplierModule>(),
-      get<_i179.CarsModule>(),
+      get<_i187.MainModule>(),
+      get<_i209.StoresModule>(),
+      get<_i181.CategoriesModule>(),
+      get<_i208.CompanyModule>(),
+      get<_i206.BranchesModule>(),
+      get<_i188.NoticeModule>(),
+      get<_i207.CaptainsModule>(),
+      get<_i194.PaymentsModule>(),
+      get<_i202.SupplierCategoriesModule>(),
+      get<_i210.SupplierModule>(),
+      get<_i180.CarsModule>(),
       get<_i115.BidOrderModule>(),
-      get<_i192.OrdersModule>(),
-      get<_i198.SubscriptionsModule>()));
-  gh.singleton<_i210.GlobalStateManager>(_i210.GlobalStateManager());
+      get<_i193.OrdersModule>(),
+      get<_i200.SubscriptionsModule>()));
+  gh.singleton<_i212.GlobalStateManager>(_i212.GlobalStateManager());
   return get;
 }

@@ -785,5 +785,6 @@
     "createSubscription": "Create subscription",
     "editSubscriptions": "Edit subscription",
     "deleteFutureSubscription": "Delete future subscription",
-    "notImplementedYet": "Not implemented yet"
+    "notImplementedYet": "Not implemented yet",
+    "expiredSubscriptionsFinanceHint": "Here you find all your expired subscriptions financial information with included all payments "
 }

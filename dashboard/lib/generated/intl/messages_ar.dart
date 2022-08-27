@@ -447,6 +447,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
         "expiredSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراك منتهي"),
+        "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "extraCost": MessageLookupByLibrary.simpleMessage("التكلفة الإضافية"),
         "extraCostHint": MessageLookupByLibrary.simpleMessage(

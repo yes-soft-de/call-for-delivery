@@ -778,11 +778,12 @@
     "clientDistance": "المسافة للعميل",
     "ordersCashConflictsAnswer": "اجوبة متعارضة",
     "ordersCashNotAnswered": "طلبات دون جواب المتجر",
-    "ordersCash":"الطلبات الكاش",
-    "subscriptionManagement":"إدارة الاشتراكات",
-    "currentSubscriptions":"الاشتراكات الحالية",
-    "createSubscription":"إنشاء اشتراك",
-    "editSubscriptions":"تعديل الاشتراك",
-    "deleteFutureSubscription":"حذف الاشتراكات المستقبلية",
-    "notImplementedYet":"لم يتم تفعيل هذه الميزة بعد"
+    "ordersCash": "الطلبات الكاش",
+    "subscriptionManagement": "إدارة الاشتراكات",
+    "currentSubscriptions": "الاشتراكات الحالية",
+    "createSubscription": "إنشاء اشتراك",
+    "editSubscriptions": "تعديل الاشتراك",
+    "deleteFutureSubscription": "حذف الاشتراكات المستقبلية",
+    "notImplementedYet": "لم يتم تفعيل هذه الميزة بعد",
+    "expiredSubscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"
 }
