@@ -27,16 +27,20 @@ class OrderLogCreateMessage
      */
     private $supplierProfile;
 
-    public function __construct(int $orderId, int $action, int $createdBy, int $createdByUserType, ?int $storeOwnerBranch,
-                                ?int $storeOwnerProfile, ?int $supplierProfile)
+    public static function create(int $orderId, int $action, int $createdBy, int $createdByUserType, ?int $storeOwnerBranch,
+                                  ?int $storeOwnerProfile, ?int $supplierProfile): self
     {
-        $this->orderId = $orderId;
-        $this->action = $action;
-        $this->createdBy = $createdBy;
-        $this->createdByUserType = $createdByUserType;
-        $this->storeOwnerBranch = $storeOwnerBranch;
-        $this->storeOwnerProfile = $storeOwnerProfile;
-        $this->supplierProfile = $supplierProfile;
+        $orderLogCreateMessage = new OrderLogCreateMessage();
+
+        $orderLogCreateMessage->orderId = $orderId;
+        $orderLogCreateMessage->action = $action;
+        $orderLogCreateMessage->createdBy = $createdBy;
+        $orderLogCreateMessage->createdByUserType = $createdByUserType;
+        $orderLogCreateMessage->storeOwnerBranch = $storeOwnerBranch;
+        $orderLogCreateMessage->storeOwnerProfile = $storeOwnerProfile;
+        $orderLogCreateMessage->supplierProfile = $supplierProfile;
+
+        return $orderLogCreateMessage;
     }
 
     public function getOrderId(): int

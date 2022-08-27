@@ -2,6 +2,9 @@
 
 namespace App\MessageHandler\OrderLog;
 
+use App\Entity\OrderEntity;
+use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\SupplierProfileEntity;
 use App\Message\OrderLog\OrderLogCreateMessage;
 use App\Repository\OrderEntityRepository;
 use App\Repository\StoreOwnerBranchEntityRepository;
@@ -37,19 +40,24 @@ class CreateOrderLogMessagesHandler implements MessageSubscriberInterface
         $orderEntity = $this->orderEntityRepository->findOneBy(['id'=>$orderLogCreateMessage->getOrderId()]);
 
         if ($orderEntity) {
-            $storeBranchEntity = $orderLogCreateMessage->getStoreOwnerBranch();
-            $supplierProfileEntity = $orderLogCreateMessage->getSupplierProfile();
-
-            if ($storeBranchEntity) {
-                $storeBranchEntity = $this->storeOwnerBranchEntityRepository->findOneBy(['id'=>$storeBranchEntity]);
-            }
-
-            if ($supplierProfileEntity) {
-                $supplierProfileEntity = $this->supplierProfileEntityRepository->findOneBy(['id'=>$supplierProfileEntity]);
-            }
-
-            $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderEntity, $orderLogCreateMessage->getCreatedBy(),
-                $orderLogCreateMessage->getCreatedByUserType(), $orderLogCreateMessage->getAction(), $storeBranchEntity, $supplierProfileEntity);
+            $this->initializeAndCreateOrderLog($orderEntity, $orderLogCreateMessage);
         }
+    }
+
+    public function initializeAndCreateOrderLog(OrderEntity $orderEntity, OrderLogCreateMessage $orderLogCreateMessage)
+    {
+        $storeBranchEntity = $orderLogCreateMessage->getStoreOwnerBranch();
+        $supplierProfileEntity = $orderLogCreateMessage->getSupplierProfile();
+
+        if ($storeBranchEntity) {
+            $storeBranchEntity = $this->storeOwnerBranchEntityRepository->findOneBy(['id'=>$storeBranchEntity]);
+        }
+
+        if ($supplierProfileEntity) {
+            $supplierProfileEntity = $this->supplierProfileEntityRepository->findOneBy(['id'=>$supplierProfileEntity]);
+        }
+
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderEntity, $orderLogCreateMessage->getCreatedBy(),
+            $orderLogCreateMessage->getCreatedByUserType(), $orderLogCreateMessage->getAction(), $storeBranchEntity, $supplierProfileEntity);
     }
 }
