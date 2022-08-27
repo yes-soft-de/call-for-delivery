@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FilterBar extends StatefulWidget {
   /// current index of the selected item
-  int currentIndex;
+  final int currentIndex;
 
   /// return the new index of selected item
   final Function(int) onItemSelected;
@@ -78,6 +78,7 @@ class _FilterBarState extends State<FilterBar> {
   late double off;
   bool end = true;
   String? myLocalChanges;
+  int currentIndex = 0;
   @override
   void initState() {
     firstUse = true;
@@ -85,13 +86,14 @@ class _FilterBarState extends State<FilterBar> {
     super.initState();
   }
 
-  void _reset() {
+  void _reset([bool first = true]) {
     animationDuration = widget.animationDuration;
     cursorRadius = widget.cursorRadius;
     floating = widget.floating;
     borderRadius = widget.borderRadius;
     padding = widget.padding;
-    firstUse = true;
+    firstUse = first;
+    currentIndex = widget.currentIndex;
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       try {
         if (firstUse) {
@@ -99,9 +101,8 @@ class _FilterBarState extends State<FilterBar> {
             itemSize.add(element.currentContext?.size ?? Size(0, 0));
           });
         }
-        RenderBox render = _keys[widget.currentIndex]
-            .currentContext
-            ?.findRenderObject() as RenderBox;
+        RenderBox render =
+            _keys[currentIndex].currentContext?.findRenderObject() as RenderBox;
         initialOffset = render.localToGlobal(Offset.fromDirection(1, -16));
         if (initialOffset != null) {
           initialOffset = Offset(initialOffset!.dx, initialOffset!.dx);
@@ -120,6 +121,9 @@ class _FilterBarState extends State<FilterBar> {
       _reset();
     } else if (curserNotInPlace()) {
       _reset();
+    }
+    if (widget.currentIndex != currentIndex) {
+      _reset(false);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -149,12 +153,8 @@ class _FilterBarState extends State<FilterBar> {
                 duration: animationDuration,
                 curve: Curves.easeInOut,
                 child: Container(
-                  height: itemSize.isEmpty
-                      ? 10
-                      : itemSize[widget.currentIndex].height,
-                  width: itemSize.isEmpty
-                      ? 10
-                      : itemSize[widget.currentIndex].width,
+                  height: itemSize.isEmpty ? 10 : itemSize[currentIndex].height,
+                  width: itemSize.isEmpty ? 10 : itemSize[currentIndex].width,
                   decoration: BoxDecoration(
                     color: widget.cursorColor,
                     gradient: LinearGradient(colors: [
@@ -191,12 +191,12 @@ class _FilterBarState extends State<FilterBar> {
               splashColor: Colors.transparent,
               key: _keys[element.index],
               onTap: () {
-                if (widget.currentIndex != element.index) {
+                if (currentIndex != element.index) {
                   if (firstUse == false) {
                     end = false;
                   }
                 }
-                widget.currentIndex = element.index;
+                currentIndex = element.index;
                 if (firstUse) {
                   firstUse = false;
                 }
@@ -213,7 +213,7 @@ class _FilterBarState extends State<FilterBar> {
                 } catch (e) {
                   print(e);
                 }
-                widget.onItemSelected(widget.currentIndex);
+                widget.onItemSelected(currentIndex);
                 setState(() {});
               },
               child: Center(
@@ -222,7 +222,7 @@ class _FilterBarState extends State<FilterBar> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: widget.currentIndex == element.index && end
+                    color: currentIndex == element.index && end
                         ? widget.selectedContent
                         : widget.unselectedContent,
                   ),
@@ -238,9 +238,8 @@ class _FilterBarState extends State<FilterBar> {
 
   List<Size> itemSize = [];
   bool curserNotInPlace() {
-    RenderBox render = _keys[widget.currentIndex]
-        .currentContext
-        ?.findRenderObject() as RenderBox;
+    RenderBox render =
+        _keys[currentIndex].currentContext?.findRenderObject() as RenderBox;
     var correctOffset = render.localToGlobal(Offset.fromDirection(1, -16));
     correctOffset = Offset(correctOffset.dx, correctOffset.dx);
     if (correctOffset == initialOffset) {

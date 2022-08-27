@@ -41,7 +41,7 @@ class CreateCaptainProfileRequest {
   });
 
   Map<String, dynamic> toJSON() {
-    return {
+    var data = {
       'captainName': name,
       'image': image,
       'drivingLicence': drivingLicence,
@@ -55,5 +55,18 @@ class CreateCaptainProfileRequest {
       'bankAccountNumber': bankAccountNumber,
       'bankName': bankName
     };
+    if (data['age'] == null) {
+      data.remove('age');
+    }
+    if (data['drivingLicence'] == null) {
+      data.remove('drivingLicence');
+    }
+    if (data['identity'] == null) {
+      data.remove('identity');
+    }
+    if (data['mechanicLicense'] == null) {
+      data.remove('mechanicLicense');
+    }
+    return data;
   }
 }

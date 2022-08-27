@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/module_init/init_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
+import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -139,8 +140,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void moveToNext() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        InitAccountRoutes.INIT_ACCOUNT_SCREEN, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(SplashRoutes.SPLASH_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.registerSuccess)
         .show(context);

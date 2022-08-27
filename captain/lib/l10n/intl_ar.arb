@@ -46,11 +46,11 @@
     "openChatRoom": "افتح غرفة المحادثة",
     "orders": "الطلبات",
     "currentOrders": "طلباتي",
-    "nearbyOrders": "الطلبات القريبة",
-    "chatWithStoreOwner": "التحدث مع صاحب المحل",
-    "whatsappWithStoreOwner": "صاحب المحل",
+    "nearbyOrders": "الطلبات الجديدة",
+    "chatWithStoreOwner": "التحدث مع صاحب المتجر",
+    "whatsappWithStoreOwner": "صاحب المتجر",
     "whatsappWithClient": "الزبون",
-    "getDirection": "موقع المحل (الاستلام)",
+    "getDirection": "موقع المتجر (الاستلام)",
     "settings": "الاعدادات",
     "iAm": "من أنا",
     "skip": "تخطي",
@@ -152,7 +152,7 @@
     "pleaseProvideUsWithTheClientName": "الرجاء تزويدنا باسم الزبون، او التخطي",
     "pleaseProvideUsTheClientPhoneNumber": "الرجاء تزويدنا رقم الزبون او التخطي",
     "storeName": "اسم المحل التجاري",
-    "storePhone": "رقم هاتف المحل",
+    "storePhone": "رقم هاتف المتجر",
     "phoneIsRequired": "الرجاء تزويدنا برقم الهاتف",
     "newName": "اسم جديد",
     "ourPackages": "باقاتنا",
@@ -218,7 +218,6 @@
     "addBranch": "إضافة فرع",
     "addBranchSuccess": "تمت إضافة الفرع بنجاح",
     "addBranchFailure": "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا",
-
     "ourService": "خدماتنا",
     "mostSoldProduct": "المنتجات الأكثر مبيعا",
     "bestStore": "أفضل المتاجر",
@@ -484,7 +483,6 @@
     "yourRequestSent": "تم إرسال طلبك",
     "partners": "شركائنا",
     "paymentsVia": "إيصال المدفوعات عبر",
-
     "similarProducts": "المنتجات المتشابهة",
     "paymentPortalHint": "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15",
     "tax": "القيمة المضافة ال %15",
@@ -709,27 +707,35 @@
     "youAreOffline": "الحالة الحالية لك (غير نشط) لاتسمح لك بقبول طلبات حاليا الرجاء تغييرها ثم المحاولة لاحقا",
     "orderCanceled": "تم إلغاء الطلب من قبل المتجر ، لذلك لا يمكنك قبوله بعد الآن",
     "orderIsHidden": "الطلب تم إخفاءه حاليا الرجاء انتظار إعادة نشره لاحقا",
-    "userNotVerified": "المستخدم يحتاج لتأكيد هويته"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "userNotVerified": "المستخدم يحتاج لتأكيد هويته",
+    "codeSendToYou": "رمز التحقق المرسل لجوالك",
+    "enterCodeSentToYou": "ادخل رمز التحقق",
+    "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
+    "pleaseCheckYourInternetConnection": "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا",
+    "tryAgain": "إعادة المحاولة",
+    "newVersion": "نسخة جديدة",
+    "newVersionHint": "تتوفر نسخة جديدة من تطبيقنا الرجاء التحديث من النسخة ^ إلى النسخة & لضمان جودة الخدمة",
+    "later": "لاحقا",
+    "attachFile": "إرفاق ملف",
+    "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
+    "captainProfileNotCompleted": "حسابك غير مكتمل بعد لايمكنك قبول هذل الطلب او تعديله حتى استكمال معلوماتك",
+    "orderCanceledYouCannotAccept": "تم إلغاء لطلب لايمكنك قبوله بعد الآن",
+    "youCannotAcceptAnotherOrderFromThisStore": "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
+    "optional": "اختياري",
+    "welcomeCaptain": "أهلا بعودتك يا كابتن !",
+    "hereOrdersWillBeShown": "هنا ستظهر الطلبات الجديدة ",
+    "hereAcceptedOrderShown": "هنا ستظهر الطلبات المستلمة",
+    "currentLocation": "موقعك الحالي",
+    "receivingLocation": "موقع الاستلام",
+    "deliveryDestination": "موقع التسليم",
+    "thereIsFarawayOrder": "هناك طلبات بعيدة متوفرة",
+    "show": "إظهار",
+    "unShow": "عدم إظهار",
+    "farOrders": "الطلبات البعيدة",
+    "rememberMe": "تذكرني",
+    "pleaseCorrectProvidedDistance": "من فضلك قم بتصحيح المسافة المدخلة",
+    "orderNotifications": "التنبيهات",
+    "activateOrderNotification": "فعل التنبهات وابدأ باستقبال الطلبات",
+    "activeOrderNotification": "فعل التنبيهات",
+    "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"
 }

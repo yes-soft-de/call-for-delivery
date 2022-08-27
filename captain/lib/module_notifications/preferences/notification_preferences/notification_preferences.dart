@@ -7,7 +7,24 @@ class NotificationsPrefHelper {
   void setNotificationPath(String ringtone) {
     box.put('Ringtone', ringtone);
   }
+
   String getNotification() {
     return box.get('Ringtone') ?? 'assets/sounds/ringtone1.wav';
+  }
+
+  void setHomeIndex(int index) {
+    box.put('homeIndex', index);
+  }
+
+  int getHomeIndex() {
+    return box.get('homeIndex') ?? 0;
+  }
+
+  void setFarOrders(bool show) {
+    box.put('far_orders', show);
+  }
+
+  bool getFarOrder() {
+    return box.get('far_orders') ?? false;
   }
 }

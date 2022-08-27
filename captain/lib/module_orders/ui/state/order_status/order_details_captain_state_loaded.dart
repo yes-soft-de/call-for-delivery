@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/alert_container.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.dart';
@@ -24,7 +25,9 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -152,28 +155,34 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         const SizedBox(
                           height: 8,
                         ),
-                        Text(
-                          S.current.HisComment,
-                          style: Theme.of(context).textTheme.button,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                orderInfo.ratingComment ?? '',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
+                        Visibility(
+                            visible: orderInfo.ratingComment != null,
+                            child: Column(
+                              children: [
+                                Text(
+                                  S.current.HisComment,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        orderInfo.ratingComment ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))
                       ],
                     ),
                   ),
@@ -356,19 +365,12 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     title: Text(S.current.branchLocation),
                     subtitle: orderInfo.branchCoordinate != null &&
                             screenState.myLocation != null
-                        ? Text(S.current.distance +
-                            ' ' +
-                            (Geolocator.distanceBetween(
-                                        screenState.myLocation?.latitude ?? 0,
-                                        screenState.myLocation?.longitude ?? 0,
-                                        orderInfo.branchCoordinate?.latitude ??
-                                            0,
-                                        orderInfo.branchCoordinate?.longitude ??
-                                            0) /
-                                    1000)
-                                .toStringAsFixed(2)
-                                .toString() +
-                            ' ${S.current.km}')
+                        ? GeoDistanceText(
+                            destance: (d) {},
+                            destination: screenState.myLocation ?? LatLng(0, 0),
+                            origin: orderInfo.branchCoordinate ?? LatLng(0, 0),
+                            leading: S.current.distance,
+                          )
                         : Text(S.current.destination +
                             ' ' +
                             S.current.destinationUnavailable),
@@ -404,6 +406,56 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                 height: 100,
                                 imageSource: orderInfo.image ?? '',
                                 width: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: orderInfo.pdf != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: const Icon(
+                          Icons.attach_file_rounded,
+                        ),
+                        title: Text(S.current.attachedFile),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          var url = orderInfo.pdf?.pdfPreview;
+                          canLaunch(url ?? '').then((value) {
+                            if (value) {
+                              launch(url ?? '');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.unavailable);
+                            }
+                          });
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: const Icon(
+                                  FontAwesomeIcons.filePdf,
+                                  color: Colors.red,
+                                  size: 95,
+                                ),
                               ),
                             ),
                           ),
@@ -515,96 +567,86 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      String url = '';
-                      if (orderInfo.destinationCoordinate != null) {
-                        url = LauncherLinkHelper.getMapsLink(
-                            orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.longitude ?? 0);
-                      } else if (orderInfo.destinationLink != null) {
-                        url = orderInfo.destinationLink ?? '';
-                      }
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.location_pin),
-                      title: Text(S.current.locationOfCustomer),
-                      subtitle: Visibility(
-                        visible:
-                            StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                                StatusHelper.getOrderStatusIndex(
-                                    OrderStatusEnum.IN_STORE),
-                        replacement: Visibility(
-                          visible: orderInfo.branchCoordinate != null &&
-                              orderInfo.destinationCoordinate != null,
-                          replacement: Text(S.current.distance +
-                              ' ' +
-                              S.current.destinationUnavailable),
-                          child: Text(S.current.distance +
-                              ' ' +
-                              (Geolocator.distanceBetween(
-                                          orderInfo
-                                                  .branchCoordinate?.latitude ??
-                                              0,
-                                          orderInfo.branchCoordinate
-                                                  ?.longitude ??
-                                              0,
-                                          orderInfo.destinationCoordinate
-                                                  ?.latitude ??
-                                              0,
-                                          orderInfo.destinationCoordinate
-                                                  ?.longitude ??
-                                              0) /
-                                      1000)
-                                  .toStringAsFixed(2)
-                                  .toString() +
-                              ' ${S.current.km}'),
-                        ),
-                        child: Visibility(
-                            visible: screenState.myLocation != null &&
-                                orderInfo.destinationCoordinate != null,
-                            child: Text(S.current.distance +
-                                ' ' +
-                                (Geolocator.distanceBetween(
-                                            screenState.myLocation?.latitude ??
-                                                0,
-                                            screenState.myLocation?.longitude ??
-                                                0,
-                                            orderInfo.destinationCoordinate
-                                                    ?.latitude ??
-                                                0,
-                                            orderInfo.destinationCoordinate
-                                                    ?.longitude ??
-                                                0) /
-                                        1000)
-                                    .toStringAsFixed(2)
-                                    .toString() +
-                                ' ${S.current.km}'),
-                            replacement: Text(S.current.distance +
-                                ' ' +
-                                S.current.destinationUnavailable)),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward),
-                    ),
+                Visibility(
+                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                      StatusHelper.getOrderStatusIndex(
+                          OrderStatusEnum.DELIVERING),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
                   ),
                 ),
+                Visibility(
+                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                      StatusHelper.getOrderStatusIndex(
+                          OrderStatusEnum.DELIVERING),
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(25),
+                        onTap: () {
+                          String url = '';
+                          if (orderInfo.destinationCoordinate != null) {
+                            url = LauncherLinkHelper.getMapsLink(
+                                orderInfo.destinationCoordinate?.latitude ?? 0,
+                                orderInfo.destinationCoordinate?.longitude ??
+                                    0);
+                          } else if (orderInfo.destinationLink != null) {
+                            url = orderInfo.destinationLink ?? '';
+                          }
+                          canLaunch(url).then((value) {
+                            if (value) {
+                              launch(url);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.invalidMapLink);
+                            }
+                          });
+                        },
+                        child: ListTile(
+                          leading: const Icon(Icons.location_pin),
+                          title: Text(S.current.locationOfCustomer),
+                          subtitle: Visibility(
+                            visible: StatusHelper.getOrderStatusIndex(
+                                    orderInfo.state) >
+                                StatusHelper.getOrderStatusIndex(
+                                    OrderStatusEnum.IN_STORE),
+                            replacement: Visibility(
+                              visible:
+                                  orderInfo.storeBranchToClientDistance != null,
+                              replacement: Text(S.current.distance +
+                                  ' ' +
+                                  S.current.destinationUnavailable),
+                              child: Text(S.current.distance +
+                                  ' ' +
+                                  orderInfo.storeBranchToClientDistance
+                                      .toString() +
+                                  ' ' +
+                                  S.current.km),
+                            ),
+                            child: Visibility(
+                                visible: screenState.myLocation != null &&
+                                    orderInfo.destinationCoordinate != null,
+                                child: GeoDistanceText(
+                                  leading: S.current.distance,
+                                  destance: (dist) {},
+                                  destination:
+                                      orderInfo.destinationCoordinate ??
+                                          LatLng(0, 0),
+                                  origin:
+                                      screenState.myLocation ?? LatLng(0, 0),
+                                ),
+                                replacement: Text(S.current.distance +
+                                    ' ' +
+                                    S.current.destinationUnavailable)),
+                          ),
+                          trailing: const Icon(Icons.arrow_forward),
+                        ),
+                      )),
+                )
               ],
             ),
           ),
@@ -688,12 +730,28 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           // location
           Row(
             children: [
+              // store location
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.red[900]!,
                   icon: Icons.location_on_rounded,
                   subtitle: S.current.storeLocation,
                   title: S.current.location,
+                  onLongTap: () {
+                    String url = '';
+                    if (orderInfo.branchCoordinate != null) {
+                      url = LauncherLinkHelper.getMapsLink(
+                          orderInfo.branchCoordinate?.latitude ?? 0,
+                          orderInfo.branchCoordinate?.longitude ?? 0);
+                    } else if (orderInfo.destinationLink != null) {
+                      url = orderInfo.destinationLink ?? '';
+                    }
+                    try {
+                      launch(url);
+                    } catch (e) {
+                      Fluttertoast.showToast(msg: url);
+                    }
+                  },
                   onTap: () {
                     String url = '';
                     if (orderInfo.branchCoordinate != null) {
@@ -707,37 +765,64 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       if (value) {
                         launch(url);
                       } else {
-                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        Fluttertoast.showToast(
+                            msg: S.current.invalidMapLink + url);
                       }
                     });
                   },
                   short: true,
                 ),
               ),
-              Expanded(
-                child: OrderButton(
-                  backgroundColor: Colors.red[900]!,
-                  icon: Icons.location_history_rounded,
-                  subtitle: S.current.destinationPoint,
-                  title: S.current.location,
-                  short: true,
-                  onTap: () {
-                    String url = '';
-                    if (orderInfo.destinationCoordinate != null) {
-                      url = LauncherLinkHelper.getMapsLink(
-                          orderInfo.destinationCoordinate?.latitude ?? 0,
-                          orderInfo.destinationCoordinate?.longitude ?? 0);
-                    } else if (orderInfo.destinationLink != null) {
-                      url = orderInfo.destinationLink ?? '';
-                    }
-                    canLaunch(url).then((value) {
-                      if (value) {
-                        launch(url);
-                      } else {
-                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+              // client location
+              Visibility(
+                visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                    StatusHelper.getOrderStatusIndex(
+                        OrderStatusEnum.DELIVERING),
+                child: Expanded(
+                  child: OrderButton(
+                    backgroundColor: Colors.red[900]!,
+                    icon: Icons.location_history_rounded,
+                    subtitle: S.current.destinationPoint,
+                    title: S.current.location,
+                    short: true,
+                    onLongTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
                       }
-                    });
-                  },
+                      if (url == '') {
+                        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        return;
+                      }
+                      try {
+                        launch(url);
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: S.current.invalidMapLink + url);
+                      }
+                    },
+                    onTap: () {
+                      String url = '';
+                      if (orderInfo.destinationCoordinate != null) {
+                        url = LauncherLinkHelper.getMapsLink(
+                            orderInfo.destinationCoordinate?.latitude ?? 0,
+                            orderInfo.destinationCoordinate?.longitude ?? 0);
+                      } else if (orderInfo.destinationLink != null) {
+                        url = orderInfo.destinationLink ?? '';
+                      }
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        } else {
+                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                        }
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
@@ -745,6 +830,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           // whatsapp
           Row(
             children: [
+              // store owner
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,
@@ -752,7 +838,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   subtitle: S.current.whatsappWithStoreOwner,
                   title: S.current.whatsapp,
                   onTap: () {
-                    var url = 'https://wa.me/${orderInfo.storePhone}';
+                    var url = 'https://wa.me/${orderInfo.branchPhone}';
                     canLaunch(url).then((value) {
                       if (value) {
                         launch(url);
@@ -762,6 +848,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   short: true,
                 ),
               ),
+              // client
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,

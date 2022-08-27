@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/order_details_response/file_pdf_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
 import 'created_at.dart';
@@ -27,7 +28,7 @@ class Data {
   Destination? location;
   String? phone;
   String? usedAs;
-  String? rating;
+  num? rating;
   String? ratingComment;
   String? branchPhone;
   int? storeId;
@@ -35,6 +36,8 @@ class Data {
   int? isHide;
   bool? orderIsMain;
   List<SubOrder>? subOrders;
+  FilePdfResponse? pdf;
+  String? storeBranchToClientDistance;
   Data(
       {this.id,
       this.state,
@@ -65,11 +68,18 @@ class Data {
       this.paidToProvider,
       this.isHide,
       this.orderIsMain,
-      this.subOrders});
+      this.subOrders,
+      this.pdf,
+      this.storeBranchToClientDistance});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
       state: json['state'] as String?,
+      storeBranchToClientDistance:
+          json['storeBranchToClientDistance'] as String?,
+      pdf: json['filePdf'] == null
+          ? null
+          : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
       orderType: json['orderType'] as int?,
@@ -96,7 +106,7 @@ class Data {
       captainId: json['captainUserId']?.toString(),
       phone: json['phone'] as String?,
       storeOwnerName: json['storeOwnerName'] as String?,
-      rating: json['rating']?.toString(),
+      rating: json['rating'],
       ratingComment: json['ratingComment'] as String?,
       branchPhone: json['branchPhone'] as String?,
       location: json['location'] == null

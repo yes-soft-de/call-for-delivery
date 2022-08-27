@@ -78,8 +78,11 @@ class _CustomFormFieldState extends State<ChatFormField> {
                   inputFormatters: widget.numbers
                       ? <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+                          FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
                         ]
-                      : [],
+                      : [
+                          FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
+                        ],
                   onChanged: (v) {
                     if (widget.onChanged != null) {
                       widget.onChanged!();

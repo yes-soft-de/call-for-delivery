@@ -70,14 +70,12 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         Logger().info('Location enabled', '$value');
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 25,
+          distanceFilter: 0,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
           Logger().info(
               'Location with us ', myLocation?.toJson().toString() ?? 'null');
-          if (mounted) {
-            setState(() {});
-          }
+          setState(() {});
         });
       }
     });

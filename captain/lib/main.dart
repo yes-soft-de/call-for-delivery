@@ -7,6 +7,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_init/init_account_module.dart';
 import 'package:c4d/module_my_notifications/my_notifications_module.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
+import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_plan/plan_module.dart';
 import 'package:c4d/module_profile/module_profile.dart';
@@ -153,10 +154,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 roomID: notificationModel.chatNotification?.roomID ?? '',
                 userID: notificationModel.chatNotification?.senderID,
                 userType: 'store'));
-      } else {
+      } else if (notificationModel.navigateRoute != null) {
         Navigator.pushNamed(GlobalVariable.navState.currentContext!,
             notificationModel.navigateRoute ?? '',
             arguments: notificationModel.argument);
+      } else {
+        NotificationsPrefHelper().setHomeIndex(1);
       }
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {

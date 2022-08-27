@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class OrderButton extends StatelessWidget {
   final Function()? onTap;
+  final Function()? onLongTap;
   final Color backgroundColor;
   final IconData icon;
   final String title;
@@ -14,7 +15,8 @@ class OrderButton extends StatelessWidget {
       required this.icon,
       required this.subtitle,
       required this.title,
-      this.short = false})
+      this.short = false,
+      this.onLongTap})
       : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class OrderButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: ListTile(
+            onLongPress: onLongTap,
             minLeadingWidth: short ? 8 : null,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),

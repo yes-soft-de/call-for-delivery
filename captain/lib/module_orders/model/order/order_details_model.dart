@@ -7,6 +7,7 @@ import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -46,6 +47,8 @@ class OrderDetailsModel extends DataModel {
   late List<OrderModel> subOrders;
   late bool? orderIsMain;
   late DateTime createDateTime;
+  PdfModel? pdf;
+  String? storeBranchToClientDistance;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -78,7 +81,9 @@ class OrderDetailsModel extends DataModel {
       required this.subOrders,
       required this.isHide,
       required this.orderIsMain,
-      required this.createDateTime});
+      required this.createDateTime,
+      required this.pdf,
+      required this.storeBranchToClientDistance});
 
   late OrderDetailsModel _orders;
 
@@ -98,7 +103,9 @@ class OrderDetailsModel extends DataModel {
         DateFormat.yMMMEd()
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     _orders = OrderDetailsModel(
-      rating: element?.rating,
+      rating: element?.rating != null
+          ? FixedNumber.getFixedNumber(element?.rating ?? 0)
+          : null,
       image: element?.image?.image,
       branchName: element?.branchName ?? S.current.unknown,
       createdDate: create,
@@ -137,6 +144,13 @@ class OrderDetailsModel extends DataModel {
       subOrders: _getOrders(element?.subOrders ?? []),
       orderIsMain: element?.orderIsMain,
       createDateTime: DateHelper.convert(element?.createdAt?.timestamp),
+      pdf: element?.pdf != null
+          ? PdfModel(
+              pdfOnServerPath: element?.pdf?.fileUrl,
+              pdfPreview: element?.pdf?.file,
+              pdfBaseUrl: element?.pdf?.baseUrl)
+          : null,
+      storeBranchToClientDistance: element?.storeBranchToClientDistance,
     );
     // _orders.distance = _distance(
     //     _orders,
@@ -144,7 +158,6 @@ class OrderDetailsModel extends DataModel {
     //             StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE)
     //         ? location
     //         : _orders.branchCoordinate);
- 
   }
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
     List<OrderModel> orders = [];
@@ -170,13 +183,27 @@ class OrderDetailsModel extends DataModel {
           subOrders: [],
           state: StatusHelper.getStatusEnum(element.state),
           isHide: -1,
-          distance: S.current.destinationUnavailable,
+          distance: 0,
           location: LatLng(element.location?.latitude?.toDouble() ?? 0,
               element.location?.longitude?.toDouble() ?? 0),
-          paymentMethod: ''));
+          paymentMethod: element.payment ?? 'cash',
+          storeBranchToClientDistance: element.storeBranchToClientDistance,
+          storeName: element.storeOwnerName ?? S.current.unknown));
     });
     return orders;
   }
 
   OrderDetailsModel get data => _orders;
+}
+
+class PdfModel {
+  String? pdfFilePath;
+  String? pdfOnServerPath;
+  String? pdfPreview;
+  String? pdfBaseUrl;
+  PdfModel(
+      {this.pdfFilePath,
+      this.pdfOnServerPath,
+      this.pdfPreview,
+      this.pdfBaseUrl});
 }

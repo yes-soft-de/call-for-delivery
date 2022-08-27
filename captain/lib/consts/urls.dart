@@ -2,18 +2,23 @@
 // Dev Domain => http://134.209.241.49
 
 class Urls {
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
-  
-  static const String IMAGES_ROOT = 'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
+
+  static const String IMAGES_ROOT =
+      'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
+  static const String GEO_DISTANCE = BASE_API + '/v1/geodistance/geodistance';
   static const UPLOAD_API = BASE_API + '/uploadfile';
   static const SIGN_UP_API = BASE_API + '/v1/captain/captainregister';
   static const OWNER_PROFILE_API = BASE_API + '/userprofile';
   static const CREATE_TOKEN_API = BASE_API + '/login_check';
   static const VERIFY_CODE_API = BASE_API + '/v1/verification/verifycode';
-  static const CHECK_USER_VERIFIED_API = BASE_API + '/v1/verification/checkverificationstatus';
-  static const RESEND_CODE_API = BASE_API + '/v1/verification/resendnewverificationcode';
-  static const RESET_PASSWORD = BASE_API + '/v1/resetpassword/resetpasswordorder';
+  static const CHECK_USER_VERIFIED_API =
+      BASE_API + '/v1/verification/checkverificationstatus';
+  static const RESEND_CODE_API =
+      BASE_API + '/v1/verification/resendnewverificationcode';
+  static const RESET_PASSWORD =
+      BASE_API + '/v1/resetpassword/resetpasswordorder';
   static const VERIFY_RESET_PASSWORD_CODE =
       BASE_API + '/v1/resetpassword/verifyresetpasswordcode';
   static const UPDATE_PASSWORD = BASE_API + '/v1/resetpassword/updatepassword';

@@ -107,7 +107,7 @@ class MenuScreen extends StatelessWidget {
               ),
               ListTileSwitch(
                   value: profileModel.isOnline ?? false,
-                  leading: const Icon(Icons.wifi_rounded),
+                  leading: const Icon(Icons.circle_notifications),
                   onChanged: (mode) {
                     profileModel.isOnline = mode;
                     screenState.refresh();
@@ -118,7 +118,7 @@ class MenuScreen extends StatelessWidget {
                   switchActiveColor: Theme.of(context).colorScheme.primary,
                   title: Row(
                     children: [
-                      Text(S.current.myStatus),
+                      Text(S.current.orderNotifications),
                       const Spacer(),
                       Text(
                         profileModel.isOnline == true ? ' ON ' : ' OFF ',

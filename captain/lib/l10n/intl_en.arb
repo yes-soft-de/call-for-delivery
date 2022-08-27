@@ -207,7 +207,6 @@
     "notSubscription": "You dont have a subscription yet",
     "subscribe": "Subscribe",
     "captainNotActive": "Your account not activated yet please wait",
-
     "failureRenew": "Your renew has been failed please try again",
     "store": "Store",
     "updateBranches": "Update Branches",
@@ -220,7 +219,6 @@
     "addBranch": "Add Branch",
     "addBranchSuccess": "Branch has been added successfully",
     "addBranchFailure": "Sorry your request for add branch faild please try again",
-
     "ourService": "Our Service",
     "mostSoldProduct": "Most Sold Product",
     "bestStore": "Best Store",
@@ -493,7 +491,6 @@
     "send": "Send",
     "yourRequestSent": "Your Request have been sent",
     "partners": "Our partners",
-
     "paymentsVia": "Payments via",
     "similarProducts": "Similar Products",
     "paymentPortalHint": "All prices in payments portal are included with 15% vat",
@@ -708,48 +705,35 @@
     "youAreOffline": "You are offline you can't accept any order right now",
     "orderCanceled": "Order has been canceled you can't accept it any more please go back to home screen ",
     "orderIsHidden": "This order has been hided you cannot accept it please wait until to recycle it",
-    "userNotVerified": "User not verified"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "userNotVerified": "User not verified",
+    "codeSendToYou": "Code sent to your device",
+    "enterCodeSentToYou": "Enter verification code",
+    "youCanResendAfter": "You can resend verification after",
+    "pleaseCheckYourInternetConnection": "Please check your internet connection , and try again",
+    "tryAgain": "Try again",
+    "newVersion": "New version",
+    "newVersionHint": "There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future",
+    "later": "Later",
+    "attachFile": "Attach file",
+    "attachedFile": "This order has attached file",
+    "captainProfileNotCompleted": "Captain profile note completed yet , so you cannot accept it now ",
+    "orderCanceledYouCannotAccept": "This order cancelled , You cannot accept any more",
+    "youCannotAcceptAnotherOrderFromThisStore": "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again",
+    "optional": "Optional",
+    "welcomeCaptain": "Welcome Captain !",
+    "hereOrdersWillBeShown": "Here orders will be shown",
+    "hereAcceptedOrderShown": "Here accepted orders will be shown",
+    "currentLocation": "Current location",
+    "receivingLocation": "Receiving location",
+    "deliveryDestination": "Delivery location",
+    "thereIsFarawayOrder": "There is far away orders ",
+    "show": "Show",
+    "unShow": "Un Show",
+    "farOrders": "Far",
+    "rememberMe": "Remember me",
+    "pleaseCorrectProvidedDistance": "Please correct provided distance",
+    "orderNotifications": "Status",
+    "activateOrderNotification": "Activate notifications and start delivering order",
+    "activeOrderNotification": "Activate notification",
+    "yourNumberStartWithZero": "Your number start with zero please remove it and try again"
 }

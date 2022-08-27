@@ -27,6 +27,7 @@ class InitCaptainPlanLoadedState extends States {
       : super(screenState) {
     try {
       _scrollController.addListener(() {
+        first = false;
         screenState.refresh();
       });
     } catch (e) {
@@ -46,6 +47,7 @@ class InitCaptainPlanLoadedState extends States {
     S.current.planByOrderCount
   ];
   ScrollController _scrollController = ScrollController();
+  bool first = true;
   @override
   Widget getUI(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -400,6 +402,9 @@ class InitCaptainPlanLoadedState extends States {
   }
 
   bool maxOffset() {
+    if (first && getPlanes().length > 1 && screenState.selectedPlan != null) {
+      return true;
+    }
     if (_scrollController.hasClients) {
       return _scrollController.position.maxScrollExtent >
           _scrollController.offset;

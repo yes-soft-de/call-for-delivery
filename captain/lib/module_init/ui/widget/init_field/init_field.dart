@@ -10,6 +10,7 @@ class InitField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final bool number;
   final Function()? onChanged;
+  final bool optional;
   const InitField(
       {Key? key,
       required this.icon,
@@ -19,7 +20,8 @@ class InitField extends StatelessWidget {
       this.last = false,
       this.validator,
       this.onChanged,
-      this.number = false})
+      this.number = false,
+      this.optional = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class InitField extends StatelessWidget {
                   controller: controller,
                   hintText: hint,
                   last: last,
+                  validator: optional == false,
                   validatorFunction: validator,
                   onChanged: (s) {
                     if (onChanged != null) {

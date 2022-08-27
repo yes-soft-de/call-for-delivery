@@ -90,10 +90,12 @@ class FireNotificationService {
                             notificationModel.chatNotification?.roomID ?? '',
                         userID: notificationModel.chatNotification?.senderID,
                         userType: 'store'));
-              } else {
+              } else if (notificationModel.navigateRoute != null) {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,
                     notificationModel.navigateRoute ?? '',
                     arguments: notificationModel.argument);
+              } else {
+                NotificationsPrefHelper().setHomeIndex(1);
               }
             },
           );

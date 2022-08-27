@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 @injectable
 class AuthPrefsHelper {
   var box = Hive.box('Authorization');
-
+  var suggestion = Hive.box('Suggestions');
   void setUsername(String username) {
     box.put('username', username);
   }
@@ -82,6 +82,27 @@ class AuthPrefsHelper {
       throw AuthorizationException('Token not found');
     }
     return token;
+  }
+
+  void saveLoginCredential() {
+    var username = getUsername();
+    var password = getPassword();
+    if (username == null || password == null) {
+      return;
+    }
+    suggestion.put(username, password);
+    List<String> users = savedUsersCredential();
+    users.add(username);
+    suggestion.put('users', users);
+  }
+
+  String getSavedPasswordCredential(String user) {
+    return suggestion.get(user) ?? '';
+  }
+
+  List<String> savedUsersCredential() {
+    List<String> users = suggestion.get('users') ?? [];
+    return users;
   }
 
   /// @return DateTime tokenDate

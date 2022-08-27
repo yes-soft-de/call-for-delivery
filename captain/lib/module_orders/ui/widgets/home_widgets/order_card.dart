@@ -176,26 +176,30 @@ class OrderCard extends StatelessWidget {
 
 class NearbyOrdersCard extends StatelessWidget {
   final String orderNumber;
-  final String deliveryDate;
   final String orderCost;
-  final String distance;
+  final Widget distance;
+  final String? branchToDestination;
   final String? note;
   final String branchName;
   final bool credit;
   final bool orderIsMain;
   final String? primaryTitle;
   final Color? background;
+  final String storeName;
+  final Function() acceptOrder;
   const NearbyOrdersCard(
       {required this.orderNumber,
+      this.branchToDestination,
       required this.distance,
-      required this.deliveryDate,
       required this.orderCost,
       required this.note,
       required this.branchName,
       required this.credit,
       this.orderIsMain = false,
       this.background,
-      this.primaryTitle});
+      this.primaryTitle,
+      required this.storeName,
+      required this.acceptOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +216,7 @@ class NearbyOrdersCard extends StatelessWidget {
             color,
           ])),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
             Row(
@@ -276,46 +280,135 @@ class NearbyOrdersCard extends StatelessWidget {
                 ),
               ],
             ),
-            // order number & order status
+            // order number & order date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
                     title: S.current.orderNumber, subtitle: orderNumber),
                 verticalTile(context,
-                    title: S.current.branch, subtitle: branchName),
+                    title: S.current.store,
+                    subtitle: storeName + ' | ' + branchName),
               ],
             ),
             // divider
             divider(context),
-            // order date & create date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.deliverDate, subtitle: deliveryDate),
-                verticalTile(context,
-                    title: S.current.destination, subtitle: distance),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.carSide,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.currentLocation,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
+                      ),
+                    ],
+                  ),
+                  dotedDivider(context),
+                  distance,
+                  dotedDivider(context),
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.box,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.receivingLocation,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
+                      ),
+                    ],
+                  ),
+                  dotedDivider(context),
+                  Text(
+                    (branchToDestination ?? S.current.unknown) +
+                        ' ${S.current.km}',
+                    style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                    textScaleFactor: 1,
+                  ),
+                  dotedDivider(context),
+                  Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.home,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        size: 15,
+                      ),
+                      Text(
+                        S.current.deliveryDestination,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                        textScaleFactor: 1,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            // divider
             divider(context),
-            // order cost
+            // order cost & accept order
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Visibility(
-                  visible: credit,
-                  child: verticalTile(context,
-                      title: S.current.cost, subtitle: S.current.paid),
-                  replacement: verticalTile(context,
-                      title: S.current.cost,
-                      subtitle: orderCost + ' ' + S.current.sar),
+                  visible: orderCost != '0' || credit,
+                  child: Visibility(
+                    visible: credit,
+                    child: verticalTile(context,
+                        title: S.current.paymentMethod,
+                        subtitle: S.current.paid),
+                    replacement: verticalTile(context,
+                        title: S.current.paymentMethod,
+                        subtitle: orderCost +
+                            ' ' +
+                            S.current.sar +
+                            ' | ' +
+                            S.current.cash),
+                  ),
                 ),
-                Icon(
-                  Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).textTheme.button?.color,
-                )
+                Visibility(
+                  replacement: ElevatedButton.icon(
+                    onPressed: () {
+                      acceptOrder();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green, shape: StadiumBorder()),
+                    label: Text(
+                      S.current.accept,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    icon: const Icon(
+                      Icons.thumb_up_alt_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                  visible: false,
+                  child: Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                ),
               ],
             ),
           ],
@@ -343,6 +436,21 @@ class NearbyOrdersCard extends StatelessWidget {
     );
   }
 
+  Widget verticalTileForDistance(context,
+      {required String title, required Widget subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.button?.color),
+        ),
+        distance,
+      ],
+    );
+  }
+
   Widget divider(context) {
     Color dividerColor =
         Theme.of(context).textTheme.button?.color ?? Colors.white;
@@ -352,6 +460,21 @@ class NearbyOrdersCard extends StatelessWidget {
       indent: 16,
       endIndent: 16,
       color: dividerColor,
+    );
+  }
+
+  Widget dotedDivider(context) {
+    Color dividerColor =
+        Theme.of(context).textTheme.button?.color ?? Colors.white;
+    return Row(
+      children: [
+        Container(
+          width: 5,
+          height: 5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25), color: dividerColor),
+        ),
+      ],
     );
   }
 }

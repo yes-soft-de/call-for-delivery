@@ -7109,6 +7109,306 @@ class S {
       args: [],
     );
   }
+
+  /// `Code sent to your device`
+  String get codeSendToYou {
+    return Intl.message(
+      'Code sent to your device',
+      name: 'codeSendToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter verification code`
+  String get enterCodeSentToYou {
+    return Intl.message(
+      'Enter verification code',
+      name: 'enterCodeSentToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can resend verification after`
+  String get youCanResendAfter {
+    return Intl.message(
+      'You can resend verification after',
+      name: 'youCanResendAfter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your internet connection , and try again`
+  String get pleaseCheckYourInternetConnection {
+    return Intl.message(
+      'Please check your internet connection , and try again',
+      name: 'pleaseCheckYourInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get tryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New version`
+  String get newVersion {
+    return Intl.message(
+      'New version',
+      name: 'newVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future`
+  String get newVersionHint {
+    return Intl.message(
+      'There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future',
+      name: 'newVersionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get later {
+    return Intl.message(
+      'Later',
+      name: 'later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain profile note completed yet , so you cannot accept it now `
+  String get captainProfileNotCompleted {
+    return Intl.message(
+      'Captain profile note completed yet , so you cannot accept it now ',
+      name: 'captainProfileNotCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order cancelled , You cannot accept any more`
+  String get orderCanceledYouCannotAccept {
+    return Intl.message(
+      'This order cancelled , You cannot accept any more',
+      name: 'orderCanceledYouCannotAccept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot accept another order from this store , before you delivering orders belongs to this store after that try again`
+  String get youCannotAcceptAnotherOrderFromThisStore {
+    return Intl.message(
+      'You cannot accept another order from this store , before you delivering orders belongs to this store after that try again',
+      name: 'youCannotAcceptAnotherOrderFromThisStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Optional`
+  String get optional {
+    return Intl.message(
+      'Optional',
+      name: 'optional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome Captain !`
+  String get welcomeCaptain {
+    return Intl.message(
+      'Welcome Captain !',
+      name: 'welcomeCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here orders will be shown`
+  String get hereOrdersWillBeShown {
+    return Intl.message(
+      'Here orders will be shown',
+      name: 'hereOrdersWillBeShown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here accepted orders will be shown`
+  String get hereAcceptedOrderShown {
+    return Intl.message(
+      'Here accepted orders will be shown',
+      name: 'hereAcceptedOrderShown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current location`
+  String get currentLocation {
+    return Intl.message(
+      'Current location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receiving location`
+  String get receivingLocation {
+    return Intl.message(
+      'Receiving location',
+      name: 'receivingLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery location`
+  String get deliveryDestination {
+    return Intl.message(
+      'Delivery location',
+      name: 'deliveryDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is far away orders `
+  String get thereIsFarawayOrder {
+    return Intl.message(
+      'There is far away orders ',
+      name: 'thereIsFarawayOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show`
+  String get show {
+    return Intl.message(
+      'Show',
+      name: 'show',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Un Show`
+  String get unShow {
+    return Intl.message(
+      'Un Show',
+      name: 'unShow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Far`
+  String get farOrders {
+    return Intl.message(
+      'Far',
+      name: 'farOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remember me`
+  String get rememberMe {
+    return Intl.message(
+      'Remember me',
+      name: 'rememberMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please correct provided distance`
+  String get pleaseCorrectProvidedDistance {
+    return Intl.message(
+      'Please correct provided distance',
+      name: 'pleaseCorrectProvidedDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get orderNotifications {
+    return Intl.message(
+      'Status',
+      name: 'orderNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate notifications and start delivering order`
+  String get activateOrderNotification {
+    return Intl.message(
+      'Activate notifications and start delivering order',
+      name: 'activateOrderNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate notification`
+  String get activeOrderNotification {
+    return Intl.message(
+      'Activate notification',
+      name: 'activeOrderNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Your number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

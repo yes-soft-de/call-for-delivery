@@ -108,11 +108,18 @@ class PlanService {
 
   Future<List<FinancialAccountDetail>?> _getTranslated(
       CaptainAccountBalanceResponse actionResponse) async {
-    var translated = <FinancialAccountDetail>[];
-    translated = actionResponse.data!.financialAccountDetails!;
-    for (var element in translated) {
-      element.message = await Trans.translateService(element.message ?? '');
+    try {
+      var translated = <FinancialAccountDetail>[];
+      translated = actionResponse.data!.financialAccountDetails!;
+      for (var element in translated) {
+        if (element.message == null) {
+          continue;
+        }
+        element.message = await Trans.translateService(element.message ?? '');
+      }
+      return translated;
+    } catch (e) {
+      return actionResponse.data!.financialAccountDetails;
     }
-    return translated;
   }
 }
