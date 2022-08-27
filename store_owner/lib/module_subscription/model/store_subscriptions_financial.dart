@@ -1,7 +1,10 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/captain_offer.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/payments_from_company.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/subscriptions_financial_response.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
@@ -17,8 +20,9 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late List<PaymentModel> paymentsFromStore;
   late Total total;
   late List<CaptainOffer> captainsOffer;
-
+  late List<OrderModel> ordersExceedGeographicalRange;
   List<StoreSubscriptionsFinanceModel> _data = [];
+  int? packageType;
   StoreSubscriptionsFinanceModel(
       {required this.id,
       required this.status,
@@ -29,39 +33,70 @@ class StoreSubscriptionsFinanceModel extends DataModel {
       required this.endDate,
       required this.paymentsFromStore,
       required this.total,
-      required this.captainsOffer});
+      required this.captainsOffer,
+      required this.ordersExceedGeographicalRange,
+      required this.packageType});
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var datum = response.data;
     datum?.forEach((element) {
       _data.add(StoreSubscriptionsFinanceModel(
-          endDate: DateFormat.yMd()
-              .format(DateHelper.convert(element.endDate?.timestamp)),
-          id: element.id ?? -1,
-          paymentsFromStore: _getPayments(element.paymentsFromStore ?? []),
-          startDate: DateFormat.yMd()
-              .format(DateHelper.convert(element.startDate?.timestamp)),
-          status: element.status ?? '',
-          total: Total(
-              advancePayment: element.total?.advancePayment,
-              packageCost: element.total?.packageCost ?? 0,
-              sumPayments: element.total?.sumPayments ?? 0,
-              total: element.total?.total ?? 0,
-              captainOffers: element.total?.captainOffers ?? 0),
-          flag: element.flag,
-          note: element.note,
-          packageName: element.packageName ?? S.current.unknown,
-          captainsOffer: _getCaptainsOffer(element.captainOffers ?? [])));
+        endDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.endDate?.timestamp)),
+        id: element.id ?? -1,
+        paymentsFromStore: _getPayments(element.paymentsFromStore ?? []),
+        startDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.startDate?.timestamp)),
+        status: element.status ?? '',
+        total: Total(
+            advancePayment: element.total?.advancePayment,
+            packageCost: element.total?.packageCost ?? 0,
+            sumPayments: element.total?.sumPayments ?? 0,
+            total: element.total?.total ?? 0,
+            captainOffer: element.total?.captainOfferPrice ?? 0,
+            requiredToPay: element.total?.requiredToPay ?? 0,
+            extraCost: element.total?.extraCost ?? 0,
+            totalDistanceExtra: element.total?.totalDistanceExtra ?? 0),
+        flag: element.flag,
+        note: element.note,
+        packageName: element.packageName ?? S.current.unknown,
+        captainsOffer: element.captainOffers ?? [],
+        ordersExceedGeographicalRange:
+            _getOrders(element.ordersExceedGeographicalRange ?? []),
+        packageType: element.packageType,
+      ));
     });
   }
   List<StoreSubscriptionsFinanceModel> get data => _data;
-  List<CaptainOffer> _getCaptainsOffer(List<CaptainOffer> offers) {
-    List<CaptainOffer> captains = [];
-    offers.forEach((element) {
-      captains.add(CaptainOffer(
-          id: element.id, price: element.price, startDate: element.startDate));
+  List<OrderModel> _getOrders(List<DatumOrder> o) {
+    List<OrderModel> orders = [];
+    o.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      // delivery date
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      //
+      orders.add(OrderModel(
+          branchName: element.branchName ?? S.current.unknown,
+          id: element.id ?? -1,
+          createdDate: create,
+          deliveryDate: delivery,
+          note: element.note ?? '',
+          orderCost: element.orderCost ?? 0,
+          state: StatusHelper.getStatusEnum(element.state),
+          orderIsMain: false,
+          isHide: -1,
+          orders: [],
+          orderType: -1));
     });
-    return captains;
+    return orders;
   }
 
   List<PaymentModel> _getPayments(List<PaymentsFromStore> p) {
@@ -94,11 +129,17 @@ class Total {
   num packageCost;
   num sumPayments;
   num total;
-  num captainOffers;
+  num captainOffer;
+  num requiredToPay;
+  num totalDistanceExtra;
+  num extraCost;
   Total(
       {required this.advancePayment,
       required this.packageCost,
       required this.sumPayments,
       required this.total,
-      required this.captainOffers});
+      required this.captainOffer,
+      required this.requiredToPay,
+      required this.extraCost,
+      required this.totalDistanceExtra});
 }

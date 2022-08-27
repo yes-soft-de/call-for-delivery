@@ -12,16 +12,13 @@ import 'package:c4d/utils/images/images.dart';
 
 class LoginStateInit extends LoginState {
   LoginStateInit(LoginScreenState screen, {String? error}) : super(screen) {
-    countryController.text = '966';
+    screen.countryController.text = '966';
     if (error != null) {
       CustomFlushBarHelper.createError(
               title: S.current.warnning, message: error)
           .show(screen.context);
     }
   }
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController countryController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
   @override
   Widget getUI(BuildContext context) {
@@ -72,7 +69,7 @@ class LoginStateInit extends LoginState {
                   ),
                   Expanded(
                     child: CustomLoginFormField(
-                        controller: usernameController,
+                        controller: screen.usernameController,
                         phone: true,
                         hintText: '5xxxxxxxx'),
                   ),
@@ -86,7 +83,7 @@ class LoginStateInit extends LoginState {
                           halfField: true,
                           contentPadding:
                               EdgeInsets.only(left: 8.0, right: 8.0),
-                          controller: countryController,
+                          controller: screen.countryController,
                           numbers: true,
                           phoneHint: false,
                           maxLength: 3,
@@ -145,51 +142,67 @@ class LoginStateInit extends LoginState {
                   Expanded(
                     child: CustomLoginFormField(
                       last: true,
-                      controller: passwordController,
+                      controller: screen.passwordController,
                       password: true,
                       hintText: S.of(context).password,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8.0,
                   )
                 ],
               ),
-              Container(
+              // Container(
+              //   height: 16,
+              // ),
+              CheckboxListTile(
+                  title: Text(S.current.rememberMe),
+                  value: screen.rememberMe,
+                  onChanged: (check) {
+                    screen.rememberMe = check ?? false;
+                    screen.refresh();
+                  }),
+              const SizedBox(
                 height: 16,
               ),
-              Visibility(
-                visible: false,
-                child: InkWell(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      if (usernameController.text.isNotEmpty) {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return CustomAlertDialog(
-                                  content: S.of(context).informSendCode,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    screen.restPass(ResetPassRequest(
-                                        userID: countryController.text +
-                                            usernameController.text));
-                                  });
-                            });
-                      } else {
-                        CustomFlushBarHelper.createError(
-                                title: S.current.warnning,
-                                message: S.current.pleaseInputPhoneNumber)
-                            .show(context);
-                      }
-                    },
-                    child: Center(
-                        child: Text(
-                      S.of(context).forgotPass,
-                      style: TextStyle(
-                          color: Theme.of(context).disabledColor,
-                          fontWeight: FontWeight.bold),
-                    ))),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 75,
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        if (screen.usernameController.text.isNotEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return CustomAlertDialog(
+                                    content: S.of(context).informSendCode,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      screen.restPass(ResetPassRequest(
+                                          userID: screen
+                                                  .countryController.text +
+                                              screen.usernameController.text));
+                                    });
+                              });
+                        } else {
+                          CustomFlushBarHelper.createError(
+                                  title: S.current.warnning,
+                                  message: S.current.pleaseInputPhoneNumber)
+                              .show(context);
+                        }
+                      },
+                      child: Text(
+                        S.of(context).forgotPass,
+                        style: TextStyle(
+                            color: Theme.of(context).disabledColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               Container(
                 height: 150,
@@ -211,8 +224,9 @@ class LoginStateInit extends LoginState {
                   firstButtonTab: () {
                     if (_loginKey.currentState!.validate()) {
                       screen.loginClient(
-                          countryController.text + usernameController.text,
-                          passwordController.text);
+                          screen.countryController.text +
+                              screen.usernameController.text,
+                          screen.passwordController.text);
                     }
                   }),
             ),

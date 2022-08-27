@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/datum.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/captain_offer.dart';
 import 'package:c4d/module_subscription/response/subscriptions_financial_response/payments_from_company.dart';
 import 'end_date.dart';
@@ -15,7 +16,8 @@ class Datum {
   List<PaymentsFromStore>? paymentsFromStore;
   Total? total;
   List<CaptainOffer>? captainOffers;
-
+  List<DatumOrder>? ordersExceedGeographicalRange;
+  int? packageType;
   Datum(
       {this.id,
       this.packageName,
@@ -26,11 +28,18 @@ class Datum {
       this.flag,
       this.paymentsFromStore,
       this.total,
-      this.captainOffers});
+      this.captainOffers,
+      this.ordersExceedGeographicalRange,
+      this.packageType});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
         packageName: json['packageName'] as String?,
+        packageType: json['packageType'] as int?,
+        ordersExceedGeographicalRange:
+            (json['ordersExceedGeographicalRange'] as List<dynamic>?)
+                ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
+                .toList(),
         startDate: json['startDate'] == null
             ? null
             : StartDate.fromJson(json['startDate'] as Map<String, dynamic>),

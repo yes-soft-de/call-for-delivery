@@ -30,10 +30,10 @@ class AuthRepository {
   }
 
   Future<RegisterResponse?> verifyUser(VerifyCodeRequest request) async {
+    var token = await getIt<AuthService>().getToken();
     dynamic result = await _apiClient.post(
-      Urls.VERIFY_CODE_API,
-      request.toJson(),
-    );
+        Urls.VERIFY_CODE_API, request.toJson(),
+        headers: {'Authorization': 'Bearer $token'});
     if (result == null) return null;
     return RegisterResponse.fromJson(result);
   }
@@ -95,6 +95,17 @@ class AuthRepository {
     return RegisterResponse.fromJson(result);
   }
 
+  Future<RegisterResponse?> easyUpdatePassword(
+      UpdatePassRequest request) async {
+    var token = await getIt<AuthService>().getToken();
+    dynamic result = await _apiClient.get(
+      Urls.EASY_UPDATE_PASSWORD,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (result == null) return null;
+    return RegisterResponse.fromJson(result);
+  }
+
   Future<RegisterResponse?> verifyResetPassCodeRequest(
       VerifyResetPassCodeRequest request) async {
     dynamic result = await _apiClient.post(
@@ -119,7 +130,7 @@ class AuthRepository {
     var token = await getIt<AuthService>().getToken();
     dynamic result = await _apiClient.put(
       Urls.DELETE_USER,
-      {'status':'maintenanceMood'},
+      {'status': 'maintenanceMood'},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (result == null) return null;

@@ -1,16 +1,11 @@
 import 'dart:io';
 import 'package:c4d/di/di_config.dart';
-import 'package:c4d/module_auth/manager/auth_manager/auth_manager.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:flutter/material.dart';
@@ -276,6 +271,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 );
                               });
                             });
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.lock_reset_rounded),
+                      title: Text(
+                        S.of(context).changePassword,
+                      ),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                        child: Icon(
+                          Icons.arrow_forward_rounded,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AuthorizationRoutes.RESET_PASS_SCREEN);
                       },
                     ),
                     ListTile(

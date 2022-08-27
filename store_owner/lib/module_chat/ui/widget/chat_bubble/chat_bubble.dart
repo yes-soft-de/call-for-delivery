@@ -6,6 +6,7 @@ import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class ChatBubbleWidget extends StatefulWidget {
   final bool? showImage;
   final String message;
@@ -73,14 +74,14 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                               ),
                             )
                           : SelectableLinkify(
-                            onOpen: (link) async {
+                              onOpen: (link) async {
                                 if (await canLaunch(link.url)) {
                                   await launch(link.url);
                                 } else {
                                   Fluttertoast.showToast(msg: 'Invalid link');
                                 }
                               },
-                             text: '${widget.message}',
+                              text: '${widget.message}',
                               textAlign: reg.hasMatch(widget.message)
                                   ? TextAlign.right
                                   : TextAlign.left,

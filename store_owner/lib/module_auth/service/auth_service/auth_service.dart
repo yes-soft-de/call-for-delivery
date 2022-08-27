@@ -68,22 +68,22 @@ class AuthService {
       throw AuthorizationException(
           StatusCodeHelper.getStatusCodeMessages(response?.statusCode ?? '0'));
     }
-    // RegisterResponse? responseVerify = await _authManager
-    //     .checkUserIfVerified(VerifyCodeRequest(userID: username));
-
-    // if (responseVerify?.statusCode != '200') {
-    //   _prefsHelper.setUsername(username);
-    //   _prefsHelper.setPassword(password);
-    //   _authSubject.add(AuthStatus.CODE_SENT);
-    //   throw AuthorizationException(
-    //       StatusCodeHelper.getStatusCodeMessages(responseVerify?.statusCode ?? '0'));
-    // }
+    RegisterResponse? responseVerify = await _authManager
+        .checkUserIfVerified(VerifyCodeRequest(userID: username));
+    if (responseVerify?.statusCode != '200') {
+      _prefsHelper.setUsername(username);
+      _prefsHelper.setPassword(password);
+      _prefsHelper.setToken(loginResult.token);
+      _authSubject.add(AuthStatus.CODE_SENT);
+      throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
+          responseVerify?.statusCode ?? '0'));
+    }
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
     await accountStatus();
-    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted'){
-       _authSubject.addError(S.current.invalidCredentials);
+    if (_prefsHelper.getAccountStatusPhase() == 'userDeleted') {
+      _authSubject.addError(S.current.invalidCredentials);
       throw AuthorizationException(S.current.invalidCredentials);
     }
     _authSubject.add(AuthStatus.AUTHORIZED);
@@ -183,7 +183,7 @@ class AuthService {
   }
 
   Future<void> resetPassRequest(ResetPassRequest request) async {
-    request.role = 'ROLE_CLIENT';
+    request.role = 'ROLE_OWNER';
     // Create the profile in our database
     RegisterResponse? registerResponse =
         await _authManager.resetPassRequest(request);
@@ -231,7 +231,24 @@ class AuthService {
       throw AuthorizationException(StatusCodeHelper.getStatusCodeMessages(
           registerResponse.statusCode ?? '0'));
     } else {
-      loginApi(username, request.newPassword);
+      loginApi(username, request.newPassword).whenComplete(() {
+        _authSubject.add(AuthStatus.PASSWORD_RESET);
+      });
+    }
+  }
+
+  Future<DataModel> easyResetPassword(UpdatePassRequest request) async {
+    // Create the profile in our database
+    RegisterResponse? registerResponse =
+        await _authManager.updatePassRequest(request);
+    if (registerResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (registerResponse.statusCode != '204') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
+          registerResponse.statusCode ?? '0'));
+    } else {
+      await loginApi(username, request.newPassword);
+      return DataModel.empty();
     }
   }
 

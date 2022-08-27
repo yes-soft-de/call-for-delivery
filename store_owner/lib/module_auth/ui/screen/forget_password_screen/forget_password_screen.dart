@@ -1,14 +1,14 @@
 import 'dart:async';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/forget_password_request/update_password_request.dart';
 import 'package:c4d/module_auth/request/forget_password_request/verify_new_password_request.dart';
 import 'package:c4d/module_auth/state_manager/forget_state_manager/forget_password_state_manager.dart';
 import 'package:c4d/module_auth/ui/states/forget_password_state/forget_password_code_sent.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
@@ -37,21 +37,18 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
   void initState() {
     super.initState();
     canPop = Navigator.of(context).canPop();
-
     loadingSnapshot = const AsyncSnapshot.nothing();
     _currentStates = ForgotStatePhoneCodeSent(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       if (mounted) {
-        setState(() {
-          _currentStates = event;
-        });
+        _currentStates = event;
+        setState(() {});
       }
     });
     widget._stateManager.loadingStream.listen((event) {
       if (mounted) {
-        setState(() {
-          loadingSnapshot = event;
-        });
+        loadingSnapshot = event;
+        setState(() {});
       }
     });
   }
@@ -95,8 +92,8 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
   }
 
   void moveToLogin() {
-    // Navigator.of(context)
-    //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        OrdersRoutes.OWNER_ORDERS_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.passwordUpdatedSuccess)

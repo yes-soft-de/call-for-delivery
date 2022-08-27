@@ -7,11 +7,12 @@ import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
 
 @injectable
 class OrderRecyclingScreen extends StatefulWidget {
@@ -76,7 +77,37 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
         widget._stateManager.getOrder(this, orderId, false);
       }
     });
+    var old = toController.text;
+    toController.addListener(() {
+      if (old != toController.text) {
+        old = toController.text;
+        locationParsing();
+      }
+    });
     super.initState();
+  }
+
+  void locationParsing() {
+    if (toController.text.isNotEmpty && toController.text != '') {
+      if (toController.text.contains(' ') || toController.text.contains('\n')) {
+        toController.text = Cleaner.clean(toController.text);
+      }
+      var data = toController.text.trim();
+      var link = Uri.tryParse(data);
+      if (link != null && link.queryParameters['q'] != null) {
+        customerLocation = LatLng(
+          double.parse(link.queryParameters['q']!.split(',')[0]),
+          double.parse(link.queryParameters['q']!.split(',')[1]),
+        );
+        setState(() {});
+      } else {
+        customerLocation = null;
+        setState(() {});
+      }
+    } else {
+      customerLocation = null;
+      setState(() {});
+    }
   }
 
   void refresh() {

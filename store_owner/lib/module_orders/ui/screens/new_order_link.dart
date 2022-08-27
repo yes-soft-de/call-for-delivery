@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order_link_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,19 +81,36 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
         setState(() {});
       }
     });
+    var old = toController.text;
     toController.addListener(() {
-      if (toController.text.isNotEmpty && toController.text != '') {
-        var data = toController.text.trim();
-        var link = Uri.tryParse(data);
-        if (link != null && link.queryParameters['q'] != null) {
-          customerLocation = LatLng(
-            double.parse(link.queryParameters['q']!.split(',')[0]),
-            double.parse(link.queryParameters['q']!.split(',')[1]),
-          );
-          setState(() {});
-        }
+      if (old != toController.text) {
+        old = toController.text;
+        locationParsing();
       }
     });
+  }
+
+  void locationParsing() {
+    if (toController.text.isNotEmpty && toController.text != '') {
+      if (toController.text.contains(' ') || toController.text.contains('\n')) {
+        toController.text = Cleaner.clean(toController.text);
+      }
+      var data = toController.text.trim();
+      var link = Uri.tryParse(data);
+      if (link != null && link.queryParameters['q'] != null) {
+        customerLocation = LatLng(
+          double.parse(link.queryParameters['q']!.split(',')[0]),
+          double.parse(link.queryParameters['q']!.split(',')[1]),
+        );
+        setState(() {});
+      } else {
+        customerLocation = null;
+        setState(() {});
+      }
+    } else {
+      customerLocation = null;
+      setState(() {});
+    }
   }
 
   @override

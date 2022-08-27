@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -6,14 +7,15 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
-import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
-import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -22,26 +24,25 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class OrderRecyclingLoaded extends States {
   OrderDetailsModel orderInfo;
   final OrderRecyclingScreenState screenState;
-  OrderRecyclingLoaded(
-    this.screenState,
-    this.orderInfo,
-  ) : super(screenState) {
+  List<BranchesModel> branches;
+  OrderRecyclingLoaded(this.screenState, this.orderInfo, this.branches)
+      : super(screenState) {
     screenState.orderDetailsController.text = orderInfo.note ?? '';
     screenState.noteController.text = orderInfo.note ?? '';
     screenState.receiptNameController.text = orderInfo.customerName;
-
     var number = orderInfo.customerPhone;
     if (number == S.current.unknown) number = '';
     if (number.isNotEmpty || number != '') {
@@ -64,21 +65,33 @@ class OrderRecyclingLoaded extends States {
     orderIsMain = orderInfo.orderIsMain;
     imagePath = orderInfo.imagePath;
     image = orderInfo.image;
+    pdfModel = PdfModel(
+        pdfBaseUrl: orderInfo.pdf?.pdfBaseUrl,
+        pdfPreview: orderInfo.pdf?.pdfPreview,
+        pdfOnServerPath: orderInfo.pdf?.pdfOnServerPath);
+    distance = orderInfo.storeBranchToClientDistance;
+    print(screenState.branch);
+    try {
+      activeBranch =
+          branches.firstWhere((element) => element.id == orderInfo.branchID);
+    } catch (e) {}
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
   String _selectedPaymentMethod = 'online';
-  DateTime orderDate = DateTime.now();
+  DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Branch? activeBranch;
+  BranchesModel? activeBranch;
   LatLng? destination;
   Uint8List? memoryBytes;
   String? imagePath;
   int orderType = 1;
   bool orderIsMain = false;
   String? image;
+  PdfModel? pdfModel;
+  String? distance;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -183,7 +196,6 @@ class OrderRecyclingLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
-                    validator: false,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
@@ -198,6 +210,28 @@ class OrderRecyclingLoaded extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.customerLocation != null &&
+                        activeBranch != null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              destance: (d) {
+                                distance = d;
+                              },
+                            )),
+                      ),
+                    )),
                 // order details
                 ListTile(
                   title: LabelText(S.of(context).orderDetails),
@@ -375,6 +409,101 @@ class OrderRecyclingLoaded extends States {
                     ), // send
                   ],
                 ),
+                // upload pdf
+                Visibility(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0, left: 24),
+                        child: Text(
+                          S.current.attachFile,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 16),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            var isDark =
+                                getIt<ThemePreferencesHelper>().isDarkMode();
+                            FilePicker.platform.pickFiles(
+                                allowedExtensions: ['pdf'],
+                                type: FileType.custom).then((result) async {
+                              if (result != null) {
+                                File file = File(result.files.single.path!);
+                                pdfModel = PdfModel(pdfFilePath: file.path);
+                                screenState.refresh();
+                              } else {
+                                // User canceled the picker
+                              }
+                            });
+                          },
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Checked(
+                                checked: pdfModel?.pdfFilePath != null ||
+                                    pdfModel?.pdfOnServerPath != null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(18),
+                                      color: Theme.of(context).backgroundColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.attach_file_rounded,
+                                        color: Theme.of(context).disabledColor,
+                                      ),
+                                      Text(
+                                        S.current.pressHere,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .disabledColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                checkedWidget: Visibility(
+                                  visible: pdfModel?.pdfFilePath != null ||
+                                      pdfModel?.pdfOnServerPath != null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FontAwesomeIcons.filePdf,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ), // send
+                    ],
+                  ),
+                ),
+
                 // delivery date
                 Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
@@ -415,7 +544,9 @@ class OrderRecyclingLoaded extends States {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              time.format(context).toString(),
+                              orderDate == null
+                                  ? S.current.now
+                                  : time.format(context).toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -451,6 +582,29 @@ class OrderRecyclingLoaded extends States {
                   ),
                 ),
                 // payment method
+                Visibility(
+                    visible: screenState.payments == 'card' &&
+                        screenState.priceController.text.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Flushbar(
+                        title: S.current.warnning,
+                        message: S.current.orderPriceOnCreditWarning,
+                        titleColor: Colors.white,
+                        messageColor: Colors.white,
+                        backgroundColor: Colors.amber,
+                        borderRadius: BorderRadius.circular(25),
+                        mainButton: TextButton(
+                          onPressed: () {
+                            screenState.priceController.clear();
+                            screenState.refresh();
+                          },
+                          child: Text(S.current.remove,
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                    )),
+
                 ListTile(
                   title: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -653,7 +807,9 @@ class OrderRecyclingLoaded extends States {
           screenState,
           CreateOrderRequest(
               order: screenState.orderId,
+              pdf: pdfModel?.getPdfRequest(),
               cancel: -1,
+              distance: distance,
               orderIsMain: orderIsMain,
               orderType: orderType,
               fromBranch: screenState.branch,
@@ -668,7 +824,9 @@ class OrderRecyclingLoaded extends States {
               detail: screenState.orderDetailsController.text.trim(),
               orderCost: num.tryParse(screenState.priceController.text.trim()),
               image: value,
-              date: orderDate.toUtc().toIso8601String(),
+              date: orderDate == null
+                  ? DateTime.now().toUtc().toIso8601String()
+                  : orderDate?.toUtc().toIso8601String(),
               payment: screenState.payments));
     });
   }
@@ -681,6 +839,8 @@ class OrderRecyclingLoaded extends States {
             order: screenState.orderId,
             cancel: -1,
             orderType: orderType,
+            pdf: pdfModel?.getPdfRequest(),
+            distance: distance,
             orderIsMain: orderIsMain,
             fromBranch: screenState.branch,
             recipientName: screenState.receiptNameController.text.trim(),
@@ -694,17 +854,43 @@ class OrderRecyclingLoaded extends States {
             detail: screenState.orderDetailsController.text.trim(),
             orderCost: num.tryParse(screenState.priceController.text.trim()),
             image: imagePath ?? null,
-            date: orderDate.toUtc().toIso8601String(),
+            date: orderDate == null
+                ? DateTime.now().toUtc().toIso8601String()
+                : orderDate?.toUtc().toIso8601String(),
             payment: screenState.payments));
   }
 
   void createOrder() {
     if (imagePath == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else if (image != null && imagePath != null && memoryBytes == null) {
-      createOrderWithoutImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithoutImage();
+        });
+      } else {
+        createOrderWithoutImage();
+      }
     } else {
-      createOrderWithImage();
+      if (pdfModel?.pdfFilePath != null) {
+        screenState.currentState = LoadingState(screenState);
+        screenState.refresh();
+        pdfModel?.uploadPdf().then((value) {
+          createOrderWithImage();
+        });
+      } else {
+        createOrderWithImage();
+      }
     }
   }
 

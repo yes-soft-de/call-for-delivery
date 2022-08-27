@@ -31,7 +31,8 @@ class ErrorState extends States {
       appBar: hasAppbar
           ? CustomC4dAppBar.appBar(context,
               canGoBack: canGoBack,
-              title: title, colorIcon: Theme.of(context).colorScheme.error)
+              title: title,
+              colorIcon: Theme.of(context).colorScheme.error)
           : null,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(

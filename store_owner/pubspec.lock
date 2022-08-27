@@ -28,7 +28,7 @@ packages:
       name: animated_bottom_navigation_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "1.1.0"
   another_flushbar:
     dependency: "direct main"
     description:
@@ -232,6 +232,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -295,6 +302,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  dropdown_search:
+    dependency: "direct main"
+    description:
+      name: dropdown_search
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   equatable:
     dependency: transitive
     description:
@@ -330,6 +344,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.6.1"
   firebase:
     dependency: transitive
     description:
@@ -604,6 +625,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  flutter_swipe_detector:
+    dependency: "direct main"
+    description:
+      name: flutter_swipe_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -752,6 +780,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.0"
   http:
     dependency: transitive
     description:
@@ -990,6 +1025,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  new_version:
+    dependency: "direct dev"
+    description:
+      name: new_version
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.1"
   package_config:
     dependency: transitive
     description:
@@ -1694,7 +1743,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.11"
+    version: "2.5.2"
   wkt_parser:
     dependency: transitive
     description:

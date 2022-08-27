@@ -1,3 +1,5 @@
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -30,14 +32,18 @@ class ForgotPassStateManager {
         case AuthStatus.CODE_SENT:
           _forgotStateSubject.add(ForgotStatePhoneCodeSent(_screenState));
           break;
+        case AuthStatus.PASSWORD_RESET:
+          _loadingStateSubject.add(const AsyncSnapshot.nothing());
+          break;
         default:
           _forgotStateSubject.add(ForgotStatePhoneCodeSent(_screenState));
           break;
       }
     }).onError((err) {
       _loadingStateSubject.add(const AsyncSnapshot.nothing());
-      _forgotStateSubject
-          .add(ForgotStatePhoneCodeSent(_screenState, error: err));
+      CustomFlushBarHelper.createError(title: S.current.warnning, message: err)
+          .show(_screenState.context);
+      _forgotStateSubject.add(ForgotStateUpdatePassword(_screenState));
     });
   }
 
@@ -67,7 +73,6 @@ class ForgotPassStateManager {
       UpdatePassRequest request, ForgotPassScreenState _forgotScreenState) {
     _loadingStateSubject.add(const AsyncSnapshot.waiting());
     _screenState = _forgotScreenState;
-    _authService.updatePassword(request).whenComplete(
-        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
+    _authService.updatePassword(request);
   }
 }

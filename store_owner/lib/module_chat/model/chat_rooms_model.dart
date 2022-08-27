@@ -11,6 +11,7 @@ class ChatRoomsModel extends DataModel {
   late String? orderId;
   late bool marked;
   late int? captainId;
+  num? avgRating;
   List<ChatRoomsModel> _data = [];
   ChatRoomsModel(
       {required this.id,
@@ -20,7 +21,8 @@ class ChatRoomsModel extends DataModel {
       required this.roomId,
       required this.orderId,
       required this.marked,
-      required this.captainId});
+      required this.captainId,
+      required this.avgRating});
   ChatRoomsModel.withData(OrderChatRoomsResponse response) {
     var list = response.data;
     list?.forEach((element) {
@@ -31,7 +33,8 @@ class ChatRoomsModel extends DataModel {
           images: element.images?.image,
           orderId: element.orderId,
           marked: false,
-          captainId: element.captainID));
+          captainId: element.captainID,
+          avgRating: num.tryParse(element.avgRating ?? '')));
     });
   }
 

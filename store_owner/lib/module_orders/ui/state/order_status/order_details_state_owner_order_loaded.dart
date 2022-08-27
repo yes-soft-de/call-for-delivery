@@ -8,6 +8,7 @@ import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
@@ -20,6 +21,7 @@ import 'package:c4d/utils/request/rating_request.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -92,63 +94,66 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     SizedBox(
                       width: 16,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.delivery_dining_rounded,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 240),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: orderInfo.state ==
-                                            OrderStatusEnum.FINISHED
-                                        ? S.current.orderHandledDoneByCaptain +
-                                            ' '
-                                        : S.current.orderHandledByCaptain + ' ',
-                                    style: TextStyle(color: Colors.white)),
-                                TextSpan(
-                                    text: orderInfo.captainName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.delivery_dining_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Container(
+                            width: 220,
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: orderInfo.state ==
+                                              OrderStatusEnum.FINISHED
+                                          ? S.current
+                                                  .orderHandledDoneByCaptain +
+                                              ' '
+                                          : S.current.orderHandledByCaptain +
+                                              ' ',
+                                      style: TextStyle(color: Colors.white)),
+                                  TextSpan(
+                                      text: orderInfo.captainName,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                ],
+                              ),
+                              softWrap: true,
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 75,
-                        decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadiusDirectional.only(
-                                topEnd: Radius.circular(25),
-                                bottomEnd: Radius.circular(25))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                orderInfo.captainRating,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Icon(
-                                Icons.star_rounded,
-                                color: Colors.white,
-                              )
-                            ],
+                          SizedBox(
+                            width: 8,
                           ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 75,
+                      decoration: BoxDecoration(
+                          color: Colors.yellow,
+                          borderRadius: BorderRadiusDirectional.only(
+                              topEnd: Radius.circular(25),
+                              bottomEnd: Radius.circular(25))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              orderInfo.captainRating,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Icon(
+                              Icons.star_rounded,
+                              color: Colors.white,
+                            )
+                          ],
                         ),
                       ),
                     )
@@ -221,6 +226,23 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       : S.current.captainNotInStore),
               title: S.current.captainLocation,
             )),
+        // captain finance confirmation
+        Visibility(
+            visible: OrderStatusEnum.FINISHED == orderInfo.state,
+            child: OrderButton(
+              backgroundColor: Colors.orange,
+              icon: Icons.question_mark_rounded,
+              onTap: () {
+                showConfirmOrderCash();
+              },
+              subtitle: orderInfo.isCashPaymentConfirmedByStore == null
+                  ? (S.current.NotConfirmed)
+                  : (orderInfo.isCashPaymentConfirmedByStore == 1
+                      ? S.current.financePaid
+                      : S.current.financeUnPaid),
+              title: S.current.confirmOrderCash,
+            )),
+
         // rate
         Visibility(
           visible: orderInfo.roomID != null,
@@ -498,6 +520,56 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   ),
                 ),
                 Visibility(
+                  visible: orderInfo.pdf != null,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.attach_file_rounded,
+                        ),
+                        title: Text(S.current.attachedFile),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          var url = orderInfo.pdf?.pdfPreview;
+                          canLaunch(url ?? '').then((value) {
+                            if (value) {
+                              launch(url ?? '');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: S.current.unavailable);
+                            }
+                          });
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: Icon(
+                                  FontAwesomeIcons.filePdf,
+                                  color: Colors.red,
+                                  size: 100,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: DottedLine(
+                            dashColor: Theme.of(context).disabledColor,
+                            lineThickness: 2.5,
+                            dashRadius: 25),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
                   visible: orderInfo.note != null,
                   child: ListTile(
                     leading: Icon(
@@ -709,22 +781,11 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       title: Text(S.current.locationOfCustomer),
                       subtitle: Visibility(
                         replacement: Text(S.current.destinationUnavailable),
-                        visible: screenState.myLocation != null &&
-                            orderInfo.destinationCoordinate != null,
+                        visible: orderInfo.storeBranchToClientDistance != null,
                         child: Text(S.current.distance +
                             ' ' +
-                            (Geolocator.distanceBetween(
-                                        screenState.myLocation?.latitude ?? 0,
-                                        screenState.myLocation?.longitude ?? 0,
-                                        orderInfo.destinationCoordinate
-                                                ?.latitude ??
-                                            0,
-                                        orderInfo.destinationCoordinate
-                                                ?.longitude ??
-                                            0) /
-                                    1000)
-                                .toStringAsFixed(2)
-                                .toString() +
+                            (orderInfo.storeBranchToClientDistance ??
+                                S.current.unknown) +
                             ' ${S.current.km}'),
                       ),
                       trailing: Icon(Icons.arrow_forward),
@@ -893,6 +954,37 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   onPressed: () {
                     Navigator.of(context).pop();
                     showFlush(context, false);
+                  },
+                  child: Text(S.of(context).no))
+            ],
+          );
+        });
+  }
+
+  void showConfirmOrderCash() {
+    var context = screenState.context;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(S.current.warnning),
+            content: Container(
+              child: Text(S.of(context).confirmingIfReceiveOrderCost),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    screenState.manager.confirmOrderCashFinance(screenState,
+                        OrderCashRequest(orderID: orderInfo.id, paid: 1));
+                  },
+                  child: Text(S.of(context).yes)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    screenState.manager.confirmOrderCashFinance(screenState,
+                        OrderCashRequest(orderID: orderInfo.id, paid: 2));
                   },
                   child: Text(S.of(context).no))
             ],

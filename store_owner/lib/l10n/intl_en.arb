@@ -397,10 +397,8 @@
     "yourRequestSent": "Your Request have been sent",
     "forgotPass": "Forgot password?",
     "partners": "Our partners",
-
     "paymentsVia": "Payments via",
     "newPassword": "New password",
-
     "confirmNewPass": "Confirm new password",
     "passwordUpdatedSuccess": "Password updated successfully",
     "informSendCode": "We will send a verification code to your number",
@@ -607,11 +605,9 @@
     "offerStatusUpdatedSuccessfully": "Offer Status Updated Successfully",
     "waitingSupplier": "Waiting Supplier",
     "waitingCaptain": "Waiting Captain",
-
     "offerPrice": "Offer price",
     "deliverCost": "Deliver Cost",
     "profitMargin": "Profit Margin",
-
     "transCount": "Transportation Count",
     "carModel": "Car model",
     "pendingOffer": "pending",
@@ -640,63 +636,58 @@
     "iAgreeOn": "I agree to the",
     "terms": "terms of use",
     "privacy": "privacy policy",
-    "and": " & "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "and": " & ",
+    "attachFile": "Attach file",
+    "attachedFile": "This order has attached file",
+    "now": "Now",
+    "newVersion": "New version",
+    "newVersionHint": "There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future",
+    "later": "Later",
+    "onOrderPackage": "On order package",
+    "geographicalRange": "Geographical range",
+    "extraCost": "Extra Cost",
+    "extraCostHint": "Extra cost for every kilometer over geographical range",
+    "deliveryCost": "Delivery cost",
+    "extraDistance": "Extra Distance",
+    "extraOrderDeliveryCost": "Extra order delivery cost",
+    "orderDeliveryCost": "Order delivery cost",
+    "deliveryCostDetails": "Delivery cost details",
+    "orderWithoutDistance": "Order without distance",
+    "branchLocation": "Branch location",
+    "clientLocation": "Client location",
+    "distanceUpdatedSuccessfully": "Distance updated successfully",
+    "updateDistance": "Update distance",
+    "ordersExceedGeographicalRange": "Orders exceed geographical range",
+    "totalExtraDistance": "Total extra distance",
+    "captainOffer": "Captain offer",
+    "activeOffer": "Active Offer",
+    "unActiveOffer": "Inactive offer",
+    "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
+    "remove": "Remove",
+    "ordersCashHint": "Here you need to confirm if you received order cost from captain or not",
+    "ordersCash": "Orders cash",
+    "confirmOrderCashAnswer": "Confirm order cash answer",
+    "captainsOffer": "Captains offer",
+    "requiredToPay": "Required to pay",
+    "leftToPay": "Left to pay",
+    "packageType": "Package type",
+    "packageTypeOnOrder": "On order",
+    "packageTypeRegular": "Regular",
+    "confirmingIfReceiveOrderCost": "Please confirm if you receive order cost from captain please answer with yes or no",
+    "yourNumberStartWithZero": "Your number start with zero please remove it and try again",
+    "ishaMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء",
+    "maghribMessage": "قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب",
+    "asrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر",
+    "fajrMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر",
+    "dhahrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر",
+    "confirmOrderCash": "Confirm receive order cash",
+    "rememberMe": "Remember me",
+    "codeSendToYou": "Code sent to your device",
+    "enterCodeSentToYou": "Enter verification code",
+    "youCanResendAfter": "You can resend verification after",
+    "credentialsBagHint": "Here you can find saved credentials ",
+    "chatRoomOrder": "Chat room order",
+    "changePassword": "Change password",
+    "onGoingOrderChatRooms":"Ongoing chat rooms"
 
 }

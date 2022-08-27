@@ -1,6 +1,7 @@
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
@@ -34,11 +35,16 @@ class OrdersManager {
   Future<OrdersResponse?> getMyOrders() => _repository.getMyOrders();
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
+  Future<OrdersResponse?> getOrdersCash(FilterOrderRequest request) =>
+      _repository.getOrdersCash(request);
 
   // Future<Map> getOrder(int orderId) => _repository.getOrder(orderId);
 
   Future<ActionResponse?> deleteOrder(int orderId) =>
       _repository.deleteOrder(orderId);
+
+  Future<ActionResponse?> confirmOrderCashFinance(OrderCashRequest request) =>
+      _repository.confirmOrderCashFinance(request);
   Future<ActionResponse?> ratingCaptain(RatingRequest request) =>
       _repository.rateCaptain(request);
 

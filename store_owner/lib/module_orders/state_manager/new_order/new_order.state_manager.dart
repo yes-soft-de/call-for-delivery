@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';
@@ -11,9 +12,11 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/state/new_order/new_order.state.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
+import 'package:c4d/utils/helpers/prayer_dates.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -51,19 +54,35 @@ class NewOrderStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.addNewOrder(request).then((value) {
       if (value.hasError) {
-        getIt<GlobalStateManager>().update();
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-      } else {
         getIt<GlobalStateManager>().update();
+      } else {
         Navigator.pop(screenState.context);
+        getIt<GlobalStateManager>().update();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+            .show(screenState.context)
+            .whenComplete(() {
+          showPrayerWarning();
+        });
         FireStoreHelper().backgroundThread('Trigger');
+      }
+    });
+  }
+  void showPrayerWarning() {
+    PrayerDate.getWarningMessage().then((value) {
+      if (value != null) {
+        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          showDialog(
+              context: GlobalVariable.navState.currentContext!,
+              builder: (ctc) {
+                return CustomAlertDialog(onPressed: null, content: value);
+              });
+        });
       }
     });
   }

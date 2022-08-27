@@ -5,7 +5,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/hive/about_hive_helper.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
-import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/services.dart';
@@ -118,8 +117,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String> needForLogging(bool login) async {
     try {
       if (login) {
-        await getIt<AuthService>().accountStatus();
-        return AuthPrefsHelper().getAccountStatusPhase();
+        try {
+          await widget._authService.refreshToken();
+          await getIt<AuthService>().accountStatus();
+          return AuthPrefsHelper().getAccountStatusPhase();
+        } catch (e) {
+          return AuthorizationRoutes.LOGIN_SCREEN;
+        }
       } else if (AboutHiveHelper().getWelcome()) {
         return AuthorizationRoutes.LOGIN_SCREEN;
       } else {

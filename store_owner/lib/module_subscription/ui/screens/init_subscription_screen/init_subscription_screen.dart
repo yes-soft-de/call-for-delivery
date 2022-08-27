@@ -54,7 +54,7 @@ class InitSubscriptionScreenState extends State<InitSubscriptionScreen> {
   @override
   void initState() {
     canPop = Navigator.of(context).canPop();
-   _streamSubscription = widget._stateManager.stateStream.listen((event) {
+    _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});

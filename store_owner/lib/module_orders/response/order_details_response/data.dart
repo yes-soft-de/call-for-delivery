@@ -1,7 +1,9 @@
 import 'package:c4d/module_orders/response/order_details_response/captain.dart';
+import 'package:c4d/module_orders/response/order_details_response/file_pdf_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 
 import 'created_at.dart';
 import 'delivery_date.dart';
@@ -24,6 +26,7 @@ class Data {
   int? storeOwnerBranchId;
   String? branchName;
   Images? image;
+  FilePdfResponse? pdf;
   String? roomId;
   String? captainId;
   bool? isCaptainArrived;
@@ -39,6 +42,8 @@ class Data {
   String? captainName;
   String? captainPhone;
   Captain? captainDetails;
+  String? storeBranchToClientDistance;
+  int? isCashPaymentConfirmedByStore;
   Data(
       {this.id,
       this.state,
@@ -70,11 +75,19 @@ class Data {
       this.subOrders,
       this.captainName,
       this.captainPhone,
-      this.captainDetails});
+      this.captainDetails,
+      this.pdf,
+      this.storeBranchToClientDistance,
+      this.isCashPaymentConfirmedByStore});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
       id: json['id'] as int?,
+      isCashPaymentConfirmedByStore:
+          json['isCashPaymentConfirmedByStore'] as int?,
       state: json['state'] as String?,
+      storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
+          ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
+          : null,
       payment: json['payment'] as String?,
       orderCost: json['orderCost'] as num?,
       orderType: json['orderType'] as int?,
@@ -99,6 +112,9 @@ class Data {
       image: json['images'] == null
           ? null
           : Images.fromJson(json['images'] as Map<String, dynamic>),
+      pdf: json['filePdf'] == null
+          ? null
+          : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
       recipientName: json['recipientName'] as String?,
       recipientPhone: json['recipientPhone'] as String?,
       detail: json['detail'] as String?,

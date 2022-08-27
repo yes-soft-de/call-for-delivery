@@ -13,6 +13,7 @@ import 'package:c4d/utils/text_style/text_style.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class UpdatesLoadedState extends States {
   UpdateScreenState screenState;
   List<UpdateModel> model;

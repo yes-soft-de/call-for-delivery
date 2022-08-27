@@ -6419,6 +6419,526 @@ class S {
       args: [],
     );
   }
+
+  /// `Attach file`
+  String get attachFile {
+    return Intl.message(
+      'Attach file',
+      name: 'attachFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order has attached file`
+  String get attachedFile {
+    return Intl.message(
+      'This order has attached file',
+      name: 'attachedFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Now`
+  String get now {
+    return Intl.message(
+      'Now',
+      name: 'now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New version`
+  String get newVersion {
+    return Intl.message(
+      'New version',
+      name: 'newVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future`
+  String get newVersionHint {
+    return Intl.message(
+      'There is new version of our app available to update , please update from ^ to & now to avoid having any problems in future',
+      name: 'newVersionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get later {
+    return Intl.message(
+      'Later',
+      name: 'later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On order package`
+  String get onOrderPackage {
+    return Intl.message(
+      'On order package',
+      name: 'onOrderPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Geographical range`
+  String get geographicalRange {
+    return Intl.message(
+      'Geographical range',
+      name: 'geographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Cost`
+  String get extraCost {
+    return Intl.message(
+      'Extra Cost',
+      name: 'extraCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra cost for every kilometer over geographical range`
+  String get extraCostHint {
+    return Intl.message(
+      'Extra cost for every kilometer over geographical range',
+      name: 'extraCostHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery cost`
+  String get deliveryCost {
+    return Intl.message(
+      'Delivery cost',
+      name: 'deliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Distance`
+  String get extraDistance {
+    return Intl.message(
+      'Extra Distance',
+      name: 'extraDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra order delivery cost`
+  String get extraOrderDeliveryCost {
+    return Intl.message(
+      'Extra order delivery cost',
+      name: 'extraOrderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order delivery cost`
+  String get orderDeliveryCost {
+    return Intl.message(
+      'Order delivery cost',
+      name: 'orderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery cost details`
+  String get deliveryCostDetails {
+    return Intl.message(
+      'Delivery cost details',
+      name: 'deliveryCostDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order without distance`
+  String get orderWithoutDistance {
+    return Intl.message(
+      'Order without distance',
+      name: 'orderWithoutDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch location`
+  String get branchLocation {
+    return Intl.message(
+      'Branch location',
+      name: 'branchLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client location`
+  String get clientLocation {
+    return Intl.message(
+      'Client location',
+      name: 'clientLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance updated successfully`
+  String get distanceUpdatedSuccessfully {
+    return Intl.message(
+      'Distance updated successfully',
+      name: 'distanceUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update distance`
+  String get updateDistance {
+    return Intl.message(
+      'Update distance',
+      name: 'updateDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders exceed geographical range`
+  String get ordersExceedGeographicalRange {
+    return Intl.message(
+      'Orders exceed geographical range',
+      name: 'ordersExceedGeographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total extra distance`
+  String get totalExtraDistance {
+    return Intl.message(
+      'Total extra distance',
+      name: 'totalExtraDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain offer`
+  String get captainOffer {
+    return Intl.message(
+      'Captain offer',
+      name: 'captainOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active Offer`
+  String get activeOffer {
+    return Intl.message(
+      'Active Offer',
+      name: 'activeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive offer`
+  String get unActiveOffer {
+    return Intl.message(
+      'Inactive offer',
+      name: 'unActiveOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remove order price after setting payment method to credit`
+  String get orderPriceOnCreditWarning {
+    return Intl.message(
+      'Please remove order price after setting payment method to credit',
+      name: 'orderPriceOnCreditWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message(
+      'Remove',
+      name: 'remove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you need to confirm if you received order cost from captain or not`
+  String get ordersCashHint {
+    return Intl.message(
+      'Here you need to confirm if you received order cost from captain or not',
+      name: 'ordersCashHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders cash`
+  String get ordersCash {
+    return Intl.message(
+      'Orders cash',
+      name: 'ordersCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm order cash answer`
+  String get confirmOrderCashAnswer {
+    return Intl.message(
+      'Confirm order cash answer',
+      name: 'confirmOrderCashAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains offer`
+  String get captainsOffer {
+    return Intl.message(
+      'Captains offer',
+      name: 'captainsOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Required to pay`
+  String get requiredToPay {
+    return Intl.message(
+      'Required to pay',
+      name: 'requiredToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Left to pay`
+  String get leftToPay {
+    return Intl.message(
+      'Left to pay',
+      name: 'leftToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package type`
+  String get packageType {
+    return Intl.message(
+      'Package type',
+      name: 'packageType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On order`
+  String get packageTypeOnOrder {
+    return Intl.message(
+      'On order',
+      name: 'packageTypeOnOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Regular`
+  String get packageTypeRegular {
+    return Intl.message(
+      'Regular',
+      name: 'packageTypeRegular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please confirm if you receive order cost from captain please answer with yes or no`
+  String get confirmingIfReceiveOrderCost {
+    return Intl.message(
+      'Please confirm if you receive order cost from captain please answer with yes or no',
+      name: 'confirmingIfReceiveOrderCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Your number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء`
+  String get ishaMessage {
+    return Intl.message(
+      'قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء',
+      name: 'ishaMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب`
+  String get maghribMessage {
+    return Intl.message(
+      'قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب',
+      name: 'maghribMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر`
+  String get asrMessage {
+    return Intl.message(
+      'قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر',
+      name: 'asrMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر`
+  String get fajrMessage {
+    return Intl.message(
+      'قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر',
+      name: 'fajrMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر`
+  String get dhahrMessage {
+    return Intl.message(
+      'قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر',
+      name: 'dhahrMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm receive order cash`
+  String get confirmOrderCash {
+    return Intl.message(
+      'Confirm receive order cash',
+      name: 'confirmOrderCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remember me`
+  String get rememberMe {
+    return Intl.message(
+      'Remember me',
+      name: 'rememberMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code sent to your device`
+  String get codeSendToYou {
+    return Intl.message(
+      'Code sent to your device',
+      name: 'codeSendToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter verification code`
+  String get enterCodeSentToYou {
+    return Intl.message(
+      'Enter verification code',
+      name: 'enterCodeSentToYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can resend verification after`
+  String get youCanResendAfter {
+    return Intl.message(
+      'You can resend verification after',
+      name: 'youCanResendAfter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you can find saved credentials `
+  String get credentialsBagHint {
+    return Intl.message(
+      'Here you can find saved credentials ',
+      name: 'credentialsBagHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat room order`
+  String get chatRoomOrder {
+    return Intl.message(
+      'Chat room order',
+      name: 'chatRoomOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change password`
+  String get changePassword {
+    return Intl.message(
+      'Change password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing chat rooms`
+  String get onGoingOrderChatRooms {
+    return Intl.message(
+      'Ongoing chat rooms',
+      name: 'onGoingOrderChatRooms',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,9 +1,13 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -95,49 +99,140 @@ class StoreSubscriptionsFinanceDetailsScreenState
                 background:
                     SubscriptionsStatusHelper.getStatusColor(model.status))),
         RowBubble(
-            firstBubble: verticalBubble(title: S.current.captainOffers),
+            firstBubble: verticalBubble(title: S.current.packageType),
             secondBubble: verticalBubble(
-                title: FixedNumber.getFixedNumber(model.total.captainOffers) +
+                title: model.packageType == 1
+                    ? S.current.packageTypeOnOrder
+                    : S.current.packageTypeRegular)),
+        // subscription details
+        Divider(
+          thickness: 2.5,
+          color: Theme.of(context).backgroundColor,
+          indent: 32,
+          endIndent: 32,
+        ),
+        Visibility(
+          visible: model.ordersExceedGeographicalRange.isNotEmpty,
+          child: Column(
+            children: [
+              RowBubble(
+                  firstBubble: verticalBubble(
+                      title: S.current.ordersExceedGeographicalRange),
+                  secondBubble: verticalBubble(
+                      title: model.ordersExceedGeographicalRange.length
+                              .toString() +
+                          ' ' +
+                          S.current.sOrder)),
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return Scaffold(
+                            appBar: CustomC4dAppBar.appBar(context,
+                                title: S.current.order),
+                            body: Column(
+                              children: [
+                                Expanded(
+                                  child: ListView(
+                                    children: getOrders(context,
+                                        model.ordersExceedGeographicalRange),
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(S.current.close))
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                  child: Text(
+                    S.current.showAll,
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ],
+          ),
+        ),
+        //
+        Divider(
+          thickness: 2.5,
+          color: Theme.of(context).backgroundColor,
+          indent: 32,
+          endIndent: 32,
+        ),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.totalExtraDistance),
+            secondBubble: verticalBubble(
+                title:
+                    FixedNumber.getFixedNumber(model.total.totalDistanceExtra)
+                            .toString() +
+                        ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.extraCost),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.extraCost)
+                        .toString() +
                     ' ${S.current.sar}')),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(), primary: Colors.amber),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return AlertDialog(
-                      title: Text(S.current.captainOffers),
-                      scrollable: true,
-                      content: Container(
-                        child: Column(
-                          children: getCaptainOffers(model),
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(S.current.cancel))
-                      ],
-                    );
-                  });
-            },
-            child: Text(
-              S.current.captainOffers,
-              style: TextStyle(color: Colors.white),
-            )),
         RowBubble(
             firstBubble: verticalBubble(title: S.current.packageCost),
             secondBubble: verticalBubble(
-                title:
-                    model.total.packageCost.toString() + ' ${S.current.sar}')),
+                title: FixedNumber.getFixedNumber(model.total.packageCost)
+                        .toString() +
+                    ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.captainsOffer),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.captainOffer)
+                        .toString() +
+                    ' ${S.current.sar}')),
+        Visibility(
+          visible: model.captainsOffer.isNotEmpty,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: StadiumBorder(), primary: Colors.amber),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: Text(S.current.captainOffers),
+                        scrollable: true,
+                        content: Container(
+                          child: Column(
+                            children: getCaptainOffers(model),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(S.current.cancel))
+                        ],
+                      );
+                    });
+              },
+              child: Text(
+                S.current.captainOffers,
+                style: TextStyle(color: Colors.white),
+              )),
+        ),
+
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
             secondBubble: verticalBubble(
                 title:
                     model.total.sumPayments.toString() + ' ${S.current.sar}')),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.requiredToPay),
+            secondBubble: verticalBubble(
+                title: FixedNumber.getFixedNumber(model.total.requiredToPay)
+                        .toString() +
+                    ' ${S.current.sar}')),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Divider(
@@ -151,7 +246,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
           constraints: BoxConstraints(minWidth: 125, maxWidth: 150),
           child: verticalBubble(
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
-              title: S.current.total,
+              title: S.current.leftToPay,
               background: model.total.advancePayment == false
                   ? Colors.green
                   : Colors.red),
@@ -177,6 +272,29 @@ class StoreSubscriptionsFinanceDetailsScreenState
           subtitle: Text(date),
         ),
       ));
+    });
+    return widgets;
+  }
+
+  List<Widget> getOrders(context, List<OrderModel> orders) {
+    List<Widget> widgets = [];
+    orders.forEach((element) {
+      widgets.add(
+        InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.id);
+            },
+            child: OwnerOrderCard(
+              createdDate: element.createdDate,
+              deliveryDate: element.deliveryDate,
+              note: element.note,
+              orderCost: element.orderCost,
+              orderNumber: element.id.toString(),
+              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+              orderIsMain: element.orderIsMain,
+            )),
+      );
     });
     return widgets;
   }

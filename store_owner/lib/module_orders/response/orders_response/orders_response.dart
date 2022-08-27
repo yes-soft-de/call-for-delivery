@@ -3,7 +3,7 @@ import 'datum.dart';
 class OrdersResponse {
   String? statusCode;
   String? msg;
-  List<Datum>? data;
+  List<DatumOrder>? data;
 
   OrdersResponse({this.statusCode, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class OrdersResponse {
         statusCode: json['status_code'] as String?,
         msg: json['msg'] as String?,
         data: (json['Data'] as List<dynamic>?)
-            ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+            ?.map((e) => DatumOrder.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
 

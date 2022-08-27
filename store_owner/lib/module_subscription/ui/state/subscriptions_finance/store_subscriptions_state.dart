@@ -101,9 +101,9 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         children: [
                           Expanded(
                               child: verticalBubble(
-                                  title: S.current.packageCost,
+                                  title: S.current.requiredToPay,
                                   subtitle: FixedNumber.getFixedNumber(
-                                          element.total.packageCost) +
+                                          element.total.requiredToPay) +
                                       ' ${S.current.sar}')),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -129,7 +129,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         children: [
                           Expanded(
                             child: verticalBubble(
-                                title: S.current.total,
+                                title: S.current.leftToPay,
                                 subtitle: FixedNumber.getFixedNumber(
                                         element.total.total) +
                                     ' ${S.current.sar}',

@@ -12,7 +12,7 @@ class ForgotStatePhoneCodeSent extends States {
   bool retryEnabled = false;
   ForgotPassScreenState screen;
   ForgotStatePhoneCodeSent(this.screen, {String? error}) : super(screen) {
-    Future.delayed(const Duration(seconds: 60), () {
+    Future.delayed(const Duration(seconds: 60), () {}).whenComplete(() {
       retryEnabled = true;
       screen.refresh();
     });

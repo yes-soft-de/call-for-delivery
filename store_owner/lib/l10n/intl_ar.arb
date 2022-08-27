@@ -224,7 +224,6 @@
     "addBranch": "إضافة فرع",
     "addBranchSuccess": "تمت إضافة الفرع بنجاح",
     "addBranchFailure": "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا",
-
     "ourService": "خدماتنا",
     "mostSoldProduct": "المنتجات الأكثر مبيعا",
     "bestStore": "أفضل المتاجر",
@@ -310,7 +309,7 @@
     "updateOrders": "تعديل الطلبات",
     "updateOrderNote": "يمكنك تعديل الطلب من خلال النافذة الحالية",
     "welcomeToOurApp": "أهلا بك في تطبيق تواصلنا",
-    "updateOrderSuccess": "نم تعديل طلبك بنجاح",
+    "updateOrderSuccess": "تم تعديل طلبك بنجاح",
     "username": "اسم المستخدم",
     "registerHint": "اسم مستخدم أو رقم هاتف",
     "registerSuccess": "تم تسجيل حسابك بنجاح",
@@ -398,7 +397,6 @@
     "forgotPass": "هل نسيت كلمة المرور؟",
     "partners": "شركائنا",
     "paymentsVia": "إيصال المدفوعات عبر",
-
     "newPassword": "كلمة السر الجديدة",
     "confirmNewPass": "تأكيد كلمة السر الجديدة",
     "passwordUpdatedSuccess": "تم تحديث كلمة المرور بنجاح",
@@ -555,7 +553,7 @@
     "dear": "عزيزنا",
     "orderAverage35": "نود تذكيرك لسداد الدفعة الثانية من رسوم الباقة وذلك لكي نستمر بخدمتكم . حيث تم استهلاك 35% من رسوم الباقة وشكرا",
     "orderAverage40": "تذكير ثاني لسداد الدفعة الثانية من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 40% من رصيد الباقة وشكرا",
-    "orderAverage75": "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنهتم استهلاك 75% من رصيد الباقة وشكرا",
+    "orderAverage75": "نود تذكيرك لسداد الدفعة الأخيرة من رسوم الباقة وذلك لكي نستمر بخدمتكن . حيث أنه تم استهلاك 75% من رصيد الباقة وشكرا",
     "orderAverage80": "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا",
     "youConsumed": "لقد استهلكت",
     "captainOrderCost": "المبلغ الذي استلمه الكابتن",
@@ -593,13 +591,11 @@
     "recycleOrder": "إعادة تدوير الطلب",
     "notificationSound": "صوت الإشعار",
     "ringtone": "نغمة",
-
     "title": "عنوان الطلب",
     "description": "وصف للطلب",
     "open": "مفتوح",
     "closeOrder": "مغلق",
     "openOrder": "الطلبات المفتوحة",
-
     "orderCategory": "فئة الطلب",
     "chooseCategory": "أختر فئة",
     "newBidOrder": "طلب مناقصة جديد",
@@ -610,12 +606,9 @@
     "offerStatusUpdatedSuccessfully": "تم تحديث عرض السعر بنجاح",
     "waitingSupplier": "انتظار مورد",
     "waitingCaptain": "انتظار كابتن",
-
-
     "offerPrice": "سعر العرض",
     "deliverCost": "تكلفة التوصيل",
     "profitMargin": "عمولة",
-
     "transCount": "عدد النقلات",
     "carModel": "نوع السيارة",
     "pendingOffer": "قيد الإنتظار",
@@ -642,18 +635,58 @@
     "iAgreeOn": "أوافق على سياسة",
     "terms": "الاستخدام",
     "privacy": "الخصوصية",
-    "and": " و "
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "and": " و ",
+    "attachFile": "إرفاق ملف",
+    "attachedFile": "هذا الطلب يحتوي على ملف مرفق",
+    "now": "الآن",
+    "newVersion": "نسخة جديدة",
+    "newVersionHint": "تتوفر نسخة جديدة من تطبيقنا الرجاء التحديث من النسخة ^ إلى النسخة & لضمان جودة الخدمة",
+    "later": "لاحقا",
+    "updatePersonalInformation": "تعديل البيانات الشخصية",
+    "onOrderPackage": "باقة على الطلب",
+    "geographicalRange": "نطاق الباقة الجغرافي",
+    "extraCost": "التكلفة الإضافية",
+    "extraCostHint": "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي",
+    "deliveryCost": "سعر التوصيل",
+    "extraDistance": "المسافة الإضافية",
+    "extraOrderDeliveryCost": "تكلفة التوصيل الإضافية",
+    "orderDeliveryCost": "سعر توصيل الطلب",
+    "deliveryCostDetails": "تفاصيل سعر التوصيل",
+    "orderWithoutDistance": "الطلبات دون مسافات",
+    "branchLocation": "موقع الفرع",
+    "clientLocation": "موقع العميل",
+    "distanceUpdatedSuccessfully": "تم تحديث المسافة بنجاح",
+    "updateDistance": "تحديث المسافة",
+    "ordersExceedGeographicalRange": "الطلبات التي تجاوزت النطاق الجغرافي للباقة",
+    "totalExtraDistance": "إجمالي المسافات التي تجاوزت النطاق",
+    "captainOffer": "عرض الكابتن",
+    "activeOffer": "عرض فعال",
+    "unActiveOffer": "عرض غير فعال",
+    "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
+    "remove": "إزالة",
+    "ordersCashHint": "هنا يتوجب عليك تأكيد تسديد سعر الطلبية من الكابتن ام لا",
+    "ordersCash": "الطلبات الكاش",
+    "confirmOrderCashAnswer": "هل أنت متأكد من خيارك ، لايمكنك تغيير جوابك لاحقا",
+    "captainsOffer": "عروض الكباتن",
+    "requiredToPay": "المطلوب للدفع",
+    "leftToPay": "المتبقي للدفع",
+    "packageType": "نوع الباقة",
+    "packageTypeOnOrder": "باقة على الطلب",
+    "packageTypeRegular": "باقة عادية",
+    "confirmingIfReceiveOrderCost": "يرجى التأكيد من استلام سعر الطلبية من الكابتن ، الرجاء الجواب بنعم في حالة الاستلام ولا في حالة النفي",
+    "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر",
+    "ishaMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء",
+    "maghribMessage": "قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب",
+    "asrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر",
+    "fajrMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر",
+    "dhahrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر",
+    "confirmOrderCash": "تأكيد استلام المبلغ الكاش",
+    "rememberMe": "تذكرني",
+    "codeSendToYou": "رمز التحقق المرسل لجوالك",
+    "enterCodeSentToYou": "ادخل رمز التحقق",
+    "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
+    "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
+    "chatRoomOrder":"غرفة محادثة الطلب",
+    "changePassword":"تعديل كلمة المرور",
+    "onGoingOrderChatRooms":"محادثات الطلبات الجارية"
 }

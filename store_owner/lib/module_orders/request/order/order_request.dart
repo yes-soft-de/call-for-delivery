@@ -14,6 +14,8 @@ class CreateOrderRequest {
   bool? orderIsMain;
   int? cancel;
   int? order;
+  String? pdf;
+  String? distance;
   CreateOrderRequest(
       {this.fromBranch,
       this.note,
@@ -29,7 +31,9 @@ class CreateOrderRequest {
       this.orderType,
       this.orderIsMain,
       this.order,
-      this.cancel});
+      this.cancel,
+      this.pdf,
+      this.distance});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -52,6 +56,9 @@ class CreateOrderRequest {
     if (this.orderCost != null) {
       data['orderCost'] = this.orderCost;
     }
+    if (this.pdf != null) {
+      data['filePdf'] = this.pdf;
+    }
     if (this.detail != null && this.detail?.isNotEmpty == true) {
       data['detail'] = this.detail;
     }
@@ -69,6 +76,10 @@ class CreateOrderRequest {
     }
     if (orderIsMain != null) {
       data['orderIsMain'] = this.orderIsMain;
+    }
+    if (distance != null) {
+      data['storeBranchToClientDistance'] =
+          double.tryParse(this.distance!.replaceAll(',', ''));
     }
     return data;
   }

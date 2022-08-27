@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @injectable
 class PrivecyPolicy extends StatelessWidget {
@@ -27,8 +30,15 @@ class PrivecyPolicy extends StatelessWidget {
               future: getText(local),
               builder: (_, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(
-                    snapshot.data.toString(),
+                  return Linkify(
+                    onOpen: (link) async {
+                      if (await canLaunch(link.url)) {
+                        await launch(link.url);
+                      } else {
+                        Fluttertoast.showToast(msg: 'Invalid link');
+                      }
+                    },
+                    text: snapshot.data.toString(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 15,

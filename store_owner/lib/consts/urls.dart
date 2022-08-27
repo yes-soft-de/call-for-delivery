@@ -4,23 +4,27 @@
 // Named Domain ===> ''
 
 class Urls {
-  static const String DOMAIN = 'http://134.209.241.49';
+  static const String DOMAIN = 'http://46.101.100.62';
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String IMAGES_ROOT =
       'https://c4d-media.s3.eu-central-1.amazonaws.com' + '/upload/';
   static const UPLOAD_API = DOMAIN + '/uploadfile';
+  static const UPLOAD_PDF_API = DOMAIN + '/uploadpdffile';
   static const SIGN_UP_API = BASE_API + '/storeownerregister';
   static const OWNER_PROFILE_API = BASE_API + '/storeowner';
   static const GET_OWNER_PROFILE_API = BASE_API + '/storeownerprofilebyid';
   static const CREATE_TOKEN_API = DOMAIN + '/login_check';
-  static const VERIFY_CODE_API = BASE_API + '/verifycode';
-  static const CHECK_USER_VERIFIED_API = BASE_API + '/checkverificationstatus';
-  static const RESEND_CODE_API = BASE_API + '/resendnewverificationcode';
-  static const RESET_PASSWORD = BASE_API + '/resetpasswordorder';
+  static const VERIFY_CODE_API = DOMAIN + '/v1/verification/verifycode';
+  static const CHECK_USER_VERIFIED_API =
+      DOMAIN + '/v1/verification/checkverificationstatus';
+  static const RESEND_CODE_API =
+      DOMAIN + '/v1/verification/resendnewverificationcode';
+  static const RESET_PASSWORD = DOMAIN + '/v1/resetpassword/resetpasswordorder';
   static const VERIFY_RESET_PASSWORD_CODE =
-      BASE_API + '/verifyresetpasswordcode';
-  static const UPDATE_PASSWORD = BASE_API + '/updatepassword';
+      DOMAIN + '/v1/resetpassword/verifyresetpasswordcode';
+  static const UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepassword';
+  static const EASY_UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepasswordbyloggedinuser';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
   static const NOTIFICATION_API =
@@ -212,6 +216,8 @@ class Urls {
   static const OWNER_HIDDEN_ORDERS_API =
       DOMAIN + '/v1/order/getordershiddenduetoexceedingdeliverytime';
   static const FILTER_OWNER_ORDERS_API = DOMAIN + '/v1/order/filterorders';
+  static const FILTER_OWNER_CASH_ORDERS_API =
+      DOMAIN + '/v1/order/notansweredcashordersbystore';
   static const DELETE_ORDER = DOMAIN + '/v1/order/ordercancel';
   static const DELETE_BRANCH_API = DOMAIN + '/v1/StoreOwnerBranch/deletebranch';
   static const ACCOUNT_STATUS =
@@ -234,12 +240,16 @@ class Urls {
       DOMAIN + '/v1/subscription/subscriptioncaptainoffer/create';
   static const GET_CHAT_ROOMS_API =
       DOMAIN + '/v1/orderchatroom/orderchatroomsforstorebeforeorderaccepted';
+  static const GET_ONGOING_CHAT_ORDER =
+      DOMAIN + '/v1/orderchatroom/ongoingorderschatroomsforstore';
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
   static const UPDATE_ORDER_API = DOMAIN + '/v1/order/orderupdate';
+  static const UPDATE_ORDER_CASH_FINANCE =
+      DOMAIN + '/v1/order/confirmcashpaymentbystore';
   static const HIDE_ORDER_API = DOMAIN + '/v1/order/updateordertohidden';
- 
+
   /*----------------------------bidorders-----------------------------*/
   static const GET_SUPPLIER_CATEGORY =
       DOMAIN + '/v1/suppliercategory/activesuppliercategoriesforstore';
@@ -252,4 +262,7 @@ class Urls {
       DOMAIN + '/v1/priceoffer/priceoffersbybidorderidforstore/';
   static const UPDATE_OFFER_STATE = DOMAIN + '/v1/priceoffer/priceofferstatus';
   static const CANCEL_BID_ORDER = DOMAIN + '/v1/order/bidordercancel/';
+  static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
+  static const GEO_DISTANCE_WITH_DELIVERY_COST =
+      DOMAIN + '/v1/geodistance/geodistanceandcostdelivered';
 }
