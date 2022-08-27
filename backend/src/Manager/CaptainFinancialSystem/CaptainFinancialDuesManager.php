@@ -105,9 +105,9 @@ class CaptainFinancialDuesManager
         return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDuesByUserId($userId);
     } 
 
-    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): ?CaptainFinancialDuesEntity
+    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
     {  
-        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);
     } 
 
     public function createCaptainFinancialDuesByOptionalDates(CreateCaptainFinancialDuesByOptionalDatesRequest $request): CaptainFinancialDuesEntity
