@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -20,5 +21,27 @@ class SubscriptionsRepository {
     );
     if (response == null) return null;
     return SubscriptionsFinancialResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> renewPackage(int packageId) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.RENEW_SUBSCRIPTION_API,
+      {'packageID': '$packageId'},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> extendSubscriptions() async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.EXTEND_SUBSCRIPTION_API,
+      {},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }
