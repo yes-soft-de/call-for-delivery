@@ -6,20 +6,16 @@ use DateTime;
 
 class CaptainFinancialSystemDateService
 {    
+    //get date in string format
     public function getFromDateAndToDateForCaptainFinancialSystemOneAndThtree() {
         $date = new datetime('now');
-        //get 20 month with fromDate)
-        $fromDate = $date->format('Y-m-20');
-        //get (fromDate) as integer
-        $timestamp = strtotime($fromDate);
-        //get next Month
-        $month = date('m', $timestamp ) + 1;
-        ///get 19 next Month
-        $toDate = $date->format('Y-'.$month.'-19');
+        $fromDate = $date->format('Y-m-d');
+        $toDate = $date->format('Y-m-d');
 
         return ["fromDate" => $fromDate, "toDate" => $toDate];
     }
 
+    //get date from 20 to 19 next month
     public function getFromDateAndToDateForCaptainFinancialSystemTwo() {
         $date = new datetime('now');
         //get 20 month with fromDate)
@@ -33,17 +29,11 @@ class CaptainFinancialSystemDateService
 
         return ["fromDate" => $fromDate, "toDate" => $toDate];
     }
-
+    //get date in date format
     public function getFromDateAndToDate() {
         $date = new datetime('now');
-        //get 20 month with fromDate)
-        $fromDate = $date->format('Y-m-20');
-        //get (fromDate) as integer
-        $timestamp = strtotime($fromDate);
-        //get next Month
-        $month = date('m', $timestamp ) + 1;
-        ///get 19 next Month
-        $toDate = $date->format('Y-'.$month.'-19');
+        $fromDate = $date->format('Y-m-d');
+        $toDate = $date->format('Y-m-d');
 
         return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
     }
@@ -70,6 +60,9 @@ class CaptainFinancialSystemDateService
         $difference = $firstDate->diff($lastDate);
 
         $countDays = $difference?->d; 
+        if($difference?->d === 0 && $difference?->h === 23 && $difference?->i === 59 && $difference?->s === 59) {
+            $countDays += 1;
+        }
 
         return $countDays;
     }

@@ -48,14 +48,14 @@ class CaptainFinancialDuesService
         $this->captainFinancialSystemDetailServiceTwo = $captainFinancialSystemDetailServiceTwo;
     }
     // create or update (captainFinancialDues)
-    public function captainFinancialDues(int $userId, $orderId = null)
+    public function captainFinancialDues(int $userId, $orderId = null, $orderCreatedAt = null)
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
         if($financialSystemDetail) {
             //if not send order id get captain's active financial cycle 
-            if(! $orderId) {
+            if(! $orderId && ! $orderCreatedAt) {
                 //Get Captain's Active Financial Dues 
                 $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
                         
@@ -66,8 +66,9 @@ class CaptainFinancialDuesService
             }
             //if send order id get the financial cycle to which the order belongs
             else {
+               $orderCreatedAt = $orderCreatedAt->format('y-m-d 00:00:00'); 
                 //Get financial dues by orderId and userId
-                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId);    
+                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);    
               
                 if(! $captainFinancialDues) {
                     // Create Captain Financial Dues

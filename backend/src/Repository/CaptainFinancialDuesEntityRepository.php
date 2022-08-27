@@ -192,7 +192,7 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     //get the financial cycle to which the order belongs
-    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId): ?CaptainFinancialDuesEntity
+    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
@@ -204,8 +204,11 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
 
-            ->andWhere('captainFinancialDuesEntity.startDate <= orderEntity.createdAt')
-            ->andWhere('captainFinancialDuesEntity.endDate >= orderEntity.createdAt')            
+            // ->andWhere('captainFinancialDuesEntity.startDate <= orderEntity.createdAt')
+            // ->andWhere('captainFinancialDuesEntity.endDate >= orderEntity.createdAt')   
+            ->andWhere('captainFinancialDuesEntity.startDate <= :orderCreatedAt')
+            ->andWhere('captainFinancialDuesEntity.endDate >= :orderCreatedAt')           
+            ->setParameter('orderCreatedAt', $orderCreatedAt)                
 
             ->getQuery()
 

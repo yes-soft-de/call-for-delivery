@@ -60,9 +60,6 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
 
         $query->where('captainFinancialSystemDetailEntity.captain = :captainId');
         $query->setParameter('captainId', $captainId);
-        //TODO remove comments next time
-        // $query->andWhere('captainFinancialSystemDetailEntity.status = :status');
-        // $query->setParameter('status', CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE);
         $item = $query->addSelect('captainFinancialSystemDetailEntity.captainFinancialSystemType')->getQuery()->getOneOrNullResult();
        
         if($item) {
