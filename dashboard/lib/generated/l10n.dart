@@ -7919,6 +7919,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Package extend`
+  String get packageExtend {
+    return Intl.message(
+      'Package extend',
+      name: 'packageExtend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package extended successfully`
+  String get packageExtendedSuccessfully {
+    return Intl.message(
+      'Package extended successfully',
+      name: 'packageExtendedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

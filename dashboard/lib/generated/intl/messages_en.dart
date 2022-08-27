@@ -774,6 +774,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("Packages categories\'s"),
         "packageCost": MessageLookupByLibrary.simpleMessage("Package Cost"),
+        "packageExtend": MessageLookupByLibrary.simpleMessage("Package extend"),
+        "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Package extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package info"),
         "packageName": MessageLookupByLibrary.simpleMessage("Package name"),
         "packageOrderCount":

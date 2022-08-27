@@ -769,6 +769,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("تصنيفات الباقات"),
         "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراك"),
+        "packageExtend": MessageLookupByLibrary.simpleMessage("تمديد اضطراري"),
+        "packageExtendedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم التمديد بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الباقة"),
         "packageName": MessageLookupByLibrary.simpleMessage("اسم الباقة"),
         "packageOrderCount":
