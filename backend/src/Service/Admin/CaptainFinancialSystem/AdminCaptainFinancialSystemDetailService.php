@@ -53,7 +53,7 @@ class AdminCaptainFinancialSystemDetailService
     {
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->adminCaptainFinancialSystemDetailManager->getCaptainFinancialSystemDetailForAdmin($captainId);
-    
+  
         if($financialSystemDetail) {
 
             $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues

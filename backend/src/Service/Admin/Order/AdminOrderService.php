@@ -754,7 +754,7 @@ class AdminOrderService
 
         if ($order) {
             if ($order->getCaptainId()?->getCaptainId()) {
-                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId());
+                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
             }
 
             // save log of the action on order
