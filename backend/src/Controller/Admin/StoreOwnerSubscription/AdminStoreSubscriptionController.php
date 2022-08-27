@@ -65,7 +65,16 @@ class AdminStoreSubscriptionController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *             ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse"),
+     *              @OA\Property(type="array", property="oldSubscriptions",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse")
+     *                  )
+     *              ),
+     *              @OA\Property(type="array", property="currentAndFutureSubscriptions",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse")
+     *                  )
+     *              )
      *      )
      *    )
      *  )
