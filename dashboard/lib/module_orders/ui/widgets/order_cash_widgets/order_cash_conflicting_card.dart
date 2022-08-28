@@ -52,18 +52,14 @@ class OrderCashConflictCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                verticalTile(
-                  context,
-                  title: S.current.captain + ' (${captain})',
-                  subtitle: captainAnswer,
-                  fontSize: 12
-                ),
-                verticalTile(
-                  context,
-                  title: S.current.store + ' (${store})',
-                  subtitle: storeAnswer,
-                  fontSize: 12
-                ),
+                verticalTile(context,
+                    title: S.current.captain + ' (${captain})',
+                    subtitle: captainAnswer,
+                    fontSize: 12),
+                verticalTile(context,
+                    title: S.current.store + ' (${store})',
+                    subtitle: storeAnswer,
+                    fontSize: 12),
               ],
             ),
           ],
@@ -84,10 +80,9 @@ class OrderCashConflictCard extends StatelessWidget {
               color: Theme.of(context).textTheme.button?.color),
         ),
         Text(subtitle,
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(fontWeight: FontWeight.normal,)),
+            style: Theme.of(context).textTheme.button?.copyWith(
+                  fontWeight: FontWeight.normal,
+                )),
       ],
     );
   }
