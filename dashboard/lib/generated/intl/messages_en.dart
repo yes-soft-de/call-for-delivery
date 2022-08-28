@@ -427,6 +427,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no packages in this category"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "endedSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Ended subscriptions"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -1186,6 +1188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

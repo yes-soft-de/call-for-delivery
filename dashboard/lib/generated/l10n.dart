@@ -7949,6 +7949,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Validation`
+  String get validation {
+    return Intl.message(
+      'Validation',
+      name: 'validation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ended subscriptions`
+  String get endedSubscriptions {
+    return Intl.message(
+      'Ended subscriptions',
+      name: 'endedSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

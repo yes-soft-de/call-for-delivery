@@ -424,6 +424,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("قائمة فارغة"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "endedSubscriptions":
+            MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -1180,6 +1182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
+        "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":
