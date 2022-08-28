@@ -279,7 +279,9 @@ class Urls {
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';
   static const RENEW_SUBSCRIPTION_API =
-      BASE_API_SUBSCRIPTION + '/subscriptionbyadmin';
+      DOMAIN + '/v1/subscription/subscriptionbyadmin';
   static const EXTEND_SUBSCRIPTION_API =
       BASE_API_SUBSCRIPTION + '/extrasubscriptionforday';
+  static const SUBSCRIBE_TO_PACKAGE_API =
+      BASE_API_SUBSCRIPTION + '/createsubscription';
 }
