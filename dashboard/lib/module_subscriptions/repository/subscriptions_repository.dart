@@ -26,7 +26,7 @@ class SubscriptionsRepository {
 
   Future<ActionResponse?> renewPackage(int storeID) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.post(
+    var response = await _apiClient.put(
       Urls.RENEW_SUBSCRIPTION_API,
       {'storeProfileId': storeID},
       headers: {'Authorization': 'Bearer ' + '$token'},

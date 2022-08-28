@@ -65,6 +65,8 @@ class InitSubscriptionsLoadedState extends States {
                           _selectedPackageId = null;
                           // call for packages
                           _selectedCategories = value;
+                          screenState.getPackages(
+                              int.tryParse(_selectedCategories ?? '') ?? -1);
                           screenState.refresh();
                         }),
                   ),

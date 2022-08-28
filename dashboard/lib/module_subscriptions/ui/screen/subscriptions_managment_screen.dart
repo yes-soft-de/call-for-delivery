@@ -33,7 +33,8 @@ class SubscriptionManagementScreenState
     super.initState();
   }
 
-  StoreSubscriptionManagementStateManager get stateManager => stateManager;
+  StoreSubscriptionManagementStateManager get stateManager =>
+      widget._stateManager;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;

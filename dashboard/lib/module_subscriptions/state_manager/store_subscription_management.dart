@@ -25,11 +25,15 @@ class StoreSubscriptionManagementStateManager {
     _stateSubject.add(LoadingState(screenState));
     _subscriptionService.renewPackage(storeID).then((value) {
       if (value.hasError) {
+        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
       } else {
+        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.successRenew)
             .show(screenState.context);

@@ -61,7 +61,10 @@ class CreateSubscriptionScreenState extends State<CreateSubscriptionScreen> {
     widget._stateManager.subscribePackage(this, request);
   }
 
-  void getPackages() {}
+  void getPackages(int selectedCategories) {
+    widget._stateManager.getPackages(this, selectedCategories);
+  }
+
   int storeID = -1;
   @override
   Widget build(BuildContext context) {

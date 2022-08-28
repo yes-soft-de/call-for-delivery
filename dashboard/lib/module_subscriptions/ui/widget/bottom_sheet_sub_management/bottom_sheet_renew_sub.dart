@@ -56,6 +56,12 @@ class BottomSheetRenewSubscription extends StatelessWidget {
                     label: S.current.renewOldPlan,
                     onPressed: renewOldPlan,
                   ),
+                  Divider(
+                    indent: 16,
+                    endIndent: 16,
+                    color: Theme.of(context).backgroundColor,
+                    thickness: 2.5,
+                  ),
                   CustomTextButton(
                     label: S.current.subscribeToCaptainOffer,
                     onPressed: () {},
