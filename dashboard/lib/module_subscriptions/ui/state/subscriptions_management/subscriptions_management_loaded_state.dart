@@ -51,9 +51,9 @@ class SubscriptionManagementStateLoaded extends States {
                       },
                       renewNewPlan: () {
                         Navigator.of(context).pop();
-                        // Navigator.of(context).pushNamed(
-                        //     SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN,
-                        //     arguments: S.current.renewSubscription);
+                        Navigator.of(context).pushNamed(
+                            SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_SCREEN,
+                            arguments: S.current.renewSubscription);
                       },
                       renewOldPlan: () {
                         Navigator.of(context).pop();
